@@ -1,0 +1,50 @@
+Endgame: Singularity Changelog
+
+v0.16 (released 2005.09.12):
+- Moved code to subdirectory.
+- Added Changelog/AUTHOR files (Phil Bordelon)
+- Research and jobs are displayed better. (Phil Bordelon)
+- Fixed job crash bug. (Phil Bordelon)
+- Current research is listed next to the base name.
+- Invisible buttons cannot be clicked anymore.
+- Bases can be discovered/the game can be lost.
+
+v0.15 (released 2005.09.11):
+- Slight performance increase.
+- Added help text for researching nothing.
+- Added some sound.
+- Covert bases are now constructable.
+- Locations will only show up if bases are constructable there.
+- Jobs added.
+
+v0.14 (released 2005.09.10):
+- Fixed a crash when building some bases. (Phil Bordelon)
+- Reduced speed when completing research and bases. (Phil Bordelon)
+- Savegames will properly store research cost. (Phil Bordelon)
+- The "Build Item" screen will only come up once.
+- Fixed overpaying for bases.
+- Construction of bases that require CPU time is now possible.
+- Maintenance costs for bases correctly taken.
+
+v0.13 (released 2005.09.09):
+- Bases give a notification when completed.
+- Fixed a few spelling mistakes. (Phil Bordelon)
+- Fixed a crash. (Phil Bordelon)
+
+v0.12 (released 2005.09.08):
+- Number of bases for each location listed on world map.
+- Closing game window from map or base screens no longer results in a traceback.
+- Buttons light up when hovered over.
+- Fixed crash from undefined tech.
+
+v0.11 (released 2005.09.05):
+- Saving/loading.
+- Game will no longer crash in listboxes when choosing a blank item.
+- Long listboxes handle clicking correctly.
+- Fixed crash related to building new bases.
+- Shortcut for building base items works.
+- Shortcut for building new bases added.
+- Network items work now.
+
+v0.10 (released 2005.09.03):
+- Initial release.
