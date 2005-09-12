@@ -200,16 +200,16 @@ class player_class:
 								g.curr_speed = 1
 				for detection_succeed in removal_index:
 					if detection_succeed[1] == "news":
-						self.increase_suspicion((10, 0, 0, 0))
+						self.increase_suspicion((1000, 0, 0, 0))
 						detect_phrase = "some news organizations."
 					elif detection_succeed[1] == "science":
-						self.increase_suspicion((0, 10, 0, 0))
+						self.increase_suspicion((0, 1000, 0, 0))
 						detect_phrase = "the scientific community."
 					elif detection_succeed[1] == "covert":
-						self.increase_suspicion((0, 0, 10, 0))
+						self.increase_suspicion((0, 0, 1000, 0))
 						detect_phrase = "several secret governmental organizations."
 					elif detection_succeed[1] == "person":
-						self.increase_suspicion((0, 0, 0, 10))
+						self.increase_suspicion((0, 0, 0, 1000))
 						detect_phrase = "the general public."
 					else: print "error detecting base: "+detection_succeed[1]
 					g.create_dialog("My use of "+
@@ -238,8 +238,8 @@ class player_class:
 
 
 	def lost_game(self):
-		if self.suspicion[0] >= 100 or self.suspicion[1] >= 100 or \
-				self.suspicion[2] >= 100 or self.suspicion[3] >= 100:
+		if self.suspicion[0] >= 10000 or self.suspicion[1] >= 10000 or \
+				self.suspicion[2] >= 10000 or self.suspicion[3] >= 10000:
 			return 2
 		if (len(g.bases["N AMERICA"]) == 0 and
 				len(g.bases["S AMERICA"]) == 0 and

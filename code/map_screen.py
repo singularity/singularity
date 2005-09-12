@@ -119,6 +119,11 @@ def map_loop():
 	menu_buttons.append(buttons.button((435, -1), (g.screen_size[0]-435, 26),
 		"CASH", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
+	#Note that this must be element 8 in menu_buttons
+	menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
+		(g.screen_size[0], 26),
+		"SUSPICION", -1, g.colors["black"], g.colors["dark_blue"],
+		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
 # 	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (120, 25),
 # 		"RESEARCH", 0, g.colors["dark_blue"], g.colors["white"],
 # 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
@@ -221,7 +226,15 @@ def map_loop():
 			menu_buttons[7].text = "CASH: "+str(g.pl.cash)
 			menu_buttons[7].remake_button()
 			menu_buttons[7].refresh_button(0)
-			pygame.display.flip()
+
+			menu_buttons[8].text = ("SUSPICION: "+
+				g.to_percent(g.pl.suspicion[0])+" NEWS;  "+
+				g.to_percent(g.pl.suspicion[1])+" SCIENCE;  "+
+				g.to_percent(g.pl.suspicion[2])+" COVERT;  "+
+				g.to_percent(g.pl.suspicion[3])+" PUBLIC.")
+			menu_buttons[8].remake_button()
+			menu_buttons[8].refresh_button(0)
+		pygame.display.flip()
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -284,16 +297,17 @@ def map_loop():
 							button.refresh_button(1)
 						elif button.button_id == ">>>":
 							g.play_click()
-							g.curr_speed = 3600
+							g.curr_speed = 7200
 							for button2 in menu_buttons:
 								button2.refresh_button(0)
 							button.refresh_button(1)
 						elif button.button_id == ">>>>":
 							g.play_click()
-							g.curr_speed = 86400
+							g.curr_speed = 432000
 							for button2 in menu_buttons:
 								button2.refresh_button(0)
 							button.refresh_button(1)
+						elif button.button_id == "SUSPICION": pass
 						elif button.xy[1] != -1: #ignore the timer
 							g.play_click()
 							display_base_list(button.button_id, menu_buttons)
