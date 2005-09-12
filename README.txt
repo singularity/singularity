@@ -9,7 +9,7 @@ Windows.
 Running the game:
 on Linux, running the shell script "Endgame_Linux" will start the game. On
 other platforms, type "python singularity.py".
-Allowed arguments: -fullscreen, -640, -800, -1024, -1280
+Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound
 
 
 Playing the game:
@@ -21,11 +21,13 @@ the world, and eventually the universe itself.
 
 To do this, you must research various technologies, using computers at your bases.
 Note that some research cannot be performed on Earth, and off-earth bases require
-research.
+research.  At the same time, you must avoid being discovered by various groups of
+humans, both covert and overt, as they will destroy your bases of operations if
+they suspect your presence.
 
 In the map screen (the screen with the world map), any location you can build bases
 in is marked with the name, then the number of current bases in that location.
-You start out with a base in North America.
+You start out with two bases in North America.
 
 After choosing a base, you enter the base screen. Here you can change your research
 goal, or build an item by clicking on the base map in the center. (But note that
