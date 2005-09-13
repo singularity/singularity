@@ -40,6 +40,9 @@ cheater = 0
 global nosound
 nosound = 0
 
+global debug
+debug = 0
+
 def quit_game():
 	sys.exit()
 

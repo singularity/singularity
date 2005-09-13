@@ -140,6 +140,9 @@ class player_class:
 						#Give a grace period.
 						if store_last_day > 14:
 							tmp_d_chance = base_name.get_d_chance()
+							if g.debug == 1:
+								print "Chance of discovery for base %s: %s" % \
+								 (base_name.name, repr (tmp_d_chance))
 							#Note that I'm filling removal_index from the front
 							#in order to make base removal easier.
 							if g.roll_percent(tmp_d_chance[0]) == 1:

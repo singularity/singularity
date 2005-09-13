@@ -43,6 +43,8 @@ for argument in sys.argv:
 		g.cheater = 1
 	elif argument.lower() == "-nosound":
 		g.nosound = 1
+	elif argument.lower() == "-debug":
+		g.debug = 1
 	else:
 		print "Unknown argument of " + argument
 		print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound"
