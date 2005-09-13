@@ -253,6 +253,16 @@ def roll_percent(roll_against):
 	if roll_against < rand_num: return 0
 	return 1
 
+#Takes a number of minutes, and returns a string suitable for display.
+def to_time(raw_time):
+	if raw_time/60 > 48:
+		return str(raw_time/(24*60)) +" days"
+	elif raw_time/60 > 1:
+		return str(raw_time/(60)) +" hours"
+	else:
+		return str(raw_time) +" minutes"
+
+
 #
 #load/save
 #

@@ -33,7 +33,8 @@ class item_class:
 class item:
 	def __init__(self, item_type):
 		self.item_type = item_type
-		self.cost = item_type.cost
+		self.cost = (item_type.cost[0], item_type.cost[1],
+						item_type.cost[2]*24*60)
 		self.built = 0
 	def study(self, cost_towards):
 		self.cost = (self.cost[0]-cost_towards[0], self.cost[1]-cost_towards[1],
@@ -48,5 +49,18 @@ class item:
 	def build(self):
 		self.cost = (0, 0, 0)
 		self.built = 1
+	def work_on(self, minutes):
+		if self.built == 1: return
+		if self.cost[2] == 0:
+			money_towards = self.cost[0]
+		else:
+			tmp_base_time = (self.cost[2]* g.pl.labor_bonus) /10000
+			money_towards=(minutes*self.cost[0]) / (tmp_base_time)
+		if money_towards <= g.pl.cash:
+			g.pl.cash -= money_towards
+			self.study((money_towards, 0, minutes))
+
+
+
 
 

@@ -407,12 +407,7 @@ def display_base_list(location, menu_buttons):
 	elif tmp != -1 and tmp != "":
 		if g.bases[location][tmp].built == 0:
 			string = "Under Construction. \\n Completion in "
-			if g.bases[location][tmp].cost[2]/60 > 24:
-				string += str(g.bases[location][tmp].cost[2]/(24*60)) +" days. \\n "
-			elif g.bases[location][tmp].cost[2]/60 > 0:
-				string += str(g.bases[location][tmp].cost[2]/60) +" hours. \\n "
-			else:
-				string += str(g.bases[location][tmp].cost[2]) +" minutes. \\n "
+			string += g.to_time(g.bases[location][tmp].cost[2]) + ". \\n "
 			string += "Remaining cost: "+str(g.bases[location][tmp].cost[0])
 			string +=" money, and "+str(g.bases[location][tmp].cost[1])
 			string +=" processor time."

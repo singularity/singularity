@@ -185,21 +185,41 @@ def refresh_base(menu_buttons, base):
 	else: item_name = base.usage[0].item_type.name+" x "+str(base.has_item())
 	g.print_string(g.screen, "Processor: " + item_name,
 		g.font[0][18], -1, (xstart+5, ystart+15), g.colors["white"])
+	if base.usage[len(base.usage)-1] != 0:
+		if base.usage[len(base.usage)-1].built == 0:
+			g.print_string(g.screen, "Completion in " +
+				g.to_time(base.usage[len(base.usage)-1].cost[2]),
+				g.font[0][18], -1, (xstart+5, ystart+30), g.colors["white"])
 
 	if base.extra_items[0] == 0: item_name = "None"
 	else: item_name = base.extra_items[0].item_type.name
 	g.print_string(g.screen, "Reactor: " + item_name,
 		g.font[0][18], -1, (xstart+5, ystart+65), g.colors["white"])
+	if base.extra_items[0] != 0:
+		if base.extra_items[0].built == 0:
+			g.print_string(g.screen, "Completion in " +
+				g.to_time(base.extra_items[0].cost[2]),
+				g.font[0][18], -1, (xstart+5, ystart+80), g.colors["white"])
 
 	if base.extra_items[1] == 0: item_name = "None"
 	else: item_name = base.extra_items[1].item_type.name
 	g.print_string(g.screen, "Network: " + item_name,
 		g.font[0][18], -1, (xstart+5, ystart+115), g.colors["white"])
+	if base.extra_items[1] != 0:
+		if base.extra_items[1].built == 0:
+			g.print_string(g.screen, "Completion in " +
+				g.to_time(base.extra_items[1].cost[2]),
+				g.font[0][18], -1, (xstart+5, ystart+130), g.colors["white"])
 
 	if base.extra_items[2] == 0: item_name = "None"
 	else: item_name = base.extra_items[2].item_type.name
 	g.print_string(g.screen, "Security: " + item_name,
 		g.font[0][18], -1, (xstart+5, ystart+165), g.colors["white"])
+	if base.extra_items[2] != 0:
+		if base.extra_items[2].built == 0:
+			g.print_string(g.screen, "Completion in " +
+				g.to_time(base.extra_items[2].cost[2]),
+				g.font[0][18], -1, (xstart+5, ystart+190), g.colors["white"])
 
 	for button in menu_buttons:
 		button.refresh_button(0)
