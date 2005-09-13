@@ -351,7 +351,7 @@ def refresh_item(base, item_name, xy_loc):
 	g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
 
 	#Base info
-	g.print_string(g.screen, "Current Money: "+str(g.pl.cash),
+	g.print_string(g.screen, "Money: "+str(g.pl.cash)+" ("+str(g.pl.future_cash())+")",
 		g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
 	#item cost
@@ -510,7 +510,7 @@ def refresh_tech(base, tech_name, xy):
 	g.print_string(g.screen, "Processor power per day: "+str(base.processor_time()),
 		g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
-	g.print_string(g.screen, "Current Money: "+str(g.pl.cash),
+	g.print_string(g.screen, "Money: "+str(g.pl.cash)+" ("+str(g.pl.future_cash())+")",
 		g.font[0][20], -1, (xy[0]+160, xy[1]+25), g.colors["white"])
 
 

@@ -267,6 +267,21 @@ class player_class:
 			return 1
 		return 0
 
+	#returns the amount of cash available after taking into account all
+	#current projects in construction.
+	def future_cash(self):
+		result_cash = self.cash
+		for base_loc in g.bases:
+			for base_name in g.bases[base_loc]:
+				result_cash -= base_name.cost[0]
+				if g.techs.has_key(base_name.studying):
+					result_cash -= g.techs[base_name.studying].cost[0]
+				for item in base_name.usage:
+					if item != 0: result_cash -= item.cost[0]
+				for item in base_name.extra_items:
+					if item != 0: result_cash -= item.cost[0]
+		return result_cash
+
 
 
 # 						money_towards = base_name.cost[0] / \
