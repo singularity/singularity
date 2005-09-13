@@ -222,7 +222,7 @@ def save_game(savegame_name):
 	save_loc = "../saves/" + savegame_name
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
-	pickle.dump("singularity_3", savefile)
+	pickle.dump("singularity_4", savefile)
 
 	#general player data
 	pickle.dump(pl.cash, savefile)
@@ -274,18 +274,26 @@ def save_game(savegame_name):
 			pickle.dump(base_name.cost[0], savefile)
 			pickle.dump(base_name.cost[1], savefile)
 			pickle.dump(base_name.cost[2], savefile)
-			for y in range(len(base_name.usage)):
-				for x in range(len(base_name.usage[0])):
-					if base_name.usage[y][x] == 0:
-						pickle.dump(0, savefile)
-					else:
-						pickle.dump(
-							base_name.usage[y][x].item_type.name, savefile)
-						pickle.dump(base_name.usage[y][x].built, savefile)
-						pickle.dump(base_name.usage[y][x].cost[0], savefile)
-						pickle.dump(base_name.usage[y][x].cost[1], savefile)
-						pickle.dump(base_name.usage[y][x].cost[2], savefile)
-
+			for x in range(len(base_name.usage)):
+				if base_name.usage[x] == 0:
+					pickle.dump(0, savefile)
+				else:
+					pickle.dump(
+						base_name.usage[x].item_type.name, savefile)
+					pickle.dump(base_name.usage[x].built, savefile)
+					pickle.dump(base_name.usage[x].cost[0], savefile)
+					pickle.dump(base_name.usage[x].cost[1], savefile)
+					pickle.dump(base_name.usage[x].cost[2], savefile)
+			for x in range(len(base_name.extra_items)):
+				if base_name.extra_items[x] == 0:
+					pickle.dump(0, savefile)
+				else:
+					pickle.dump(
+						base_name.extra_items[x].item_type.name, savefile)
+					pickle.dump(base_name.extra_items[x].built, savefile)
+					pickle.dump(base_name.extra_items[x].cost[0], savefile)
+					pickle.dump(base_name.extra_items[x].cost[1], savefile)
+					pickle.dump(base_name.extra_items[x].cost[2], savefile)
 
 	savefile.close()
 
@@ -303,7 +311,7 @@ def load_game(loadgame_name):
 	loadfile=open(load_loc, 'r')
 
 	#check the savefile version
-	if pickle.load(loadfile) != "singularity_3":
+	if pickle.load(loadfile) != "singularity_4":
 		print loadgame_name + " is not a savegame, or is old."
 		return -1
 
@@ -368,18 +376,26 @@ def load_game(loadgame_name):
 			bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
 			bases[base_loc][len(bases[base_loc])-1].cost = base_cost
 
-			for y in range(len(bases[base_loc][len(bases[base_loc])-1].usage)):
-				for x in range(len(
-						bases[base_loc][len(bases[base_loc])-1].usage[0])):
-					tmp = pickle.load(loadfile)
-					if tmp == 0: continue
-					bases[base_loc][len(bases[base_loc])-1].usage[y][x] = \
-						item.item(items[tmp])
-					bases[base_loc][len(bases[base_loc])
-						-1].usage[y][x].built = pickle.load(loadfile)
-					bases[base_loc][len(bases[base_loc])-1].usage[y][x].cost = \
-						(pickle.load(loadfile), pickle.load(loadfile),
-										pickle.load(loadfile))
+			for x in range(len(bases[base_loc][len(bases[base_loc])-1].usage)):
+				tmp = pickle.load(loadfile)
+				if tmp == 0: continue
+				bases[base_loc][len(bases[base_loc])-1].usage[x] = \
+					item.item(items[tmp])
+				bases[base_loc][len(bases[base_loc])
+					-1].usage[x].built = pickle.load(loadfile)
+				bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
+					(pickle.load(loadfile), pickle.load(loadfile),
+									pickle.load(loadfile))
+			for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
+				tmp = pickle.load(loadfile)
+				if tmp == 0: continue
+				bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
+					item.item(items[tmp])
+				bases[base_loc][len(bases[base_loc])
+					-1].extra_items[x].built = pickle.load(loadfile)
+				bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
+					(pickle.load(loadfile), pickle.load(loadfile),
+									pickle.load(loadfile))
 
 	loadfile.close()
 
