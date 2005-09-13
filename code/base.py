@@ -87,6 +87,11 @@ class base:
 			(temp_d_chance[2]*(10000+g.pl.suspicion[2])/10000),
 			(temp_d_chance[3]*(10000+g.pl.suspicion[3])/10000))
 
+		temp_d_chance = ((temp_d_chance[0]*(10000+self.suspicion[0])/10000),
+			(temp_d_chance[1]*(10000+self.suspicion[1])/10000),
+			(temp_d_chance[2]*(10000+self.suspicion[2])/10000),
+			(temp_d_chance[3]*(10000+self.suspicion[3])/10000))
+
 		if self.extra_items[0] != 0:
 			temp_d_chance = ((temp_d_chance[0]*3)/4,
 				(temp_d_chance[1]*3)/4,
