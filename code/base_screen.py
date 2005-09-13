@@ -213,6 +213,13 @@ def build_item(base, item_type):
 # 			if base.usage[i][j] == 0: free_item = 1
 # 	if free_item == 0: return
 
+	if base.base_type.size == 1:
+		g.create_dialog("I cannot build in this base; I do not have physical "+
+			" access.", g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+			(200, 200), g.colors["dark_blue"],
+			g.colors["white"], g.colors["white"])
+		return 0
+
 	list_size = 10
 	item_list = []
 	for item_name in g.items:
