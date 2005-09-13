@@ -79,7 +79,6 @@ class base:
 	#Get detection chance for the base, applying bonuses as needed.
 	def get_d_chance(self):
 		temp_d_chance = self.base_type.d_chance
-
 		#Factor in both per-base suspicion adjustments and player
 		#suspicion adjustments.
 		temp_d_chance = ((temp_d_chance[0]*(10000+g.pl.suspicion[0])/10000),
@@ -91,6 +90,12 @@ class base:
 			(temp_d_chance[1]*(10000+self.suspicion[1])/10000),
 			(temp_d_chance[2]*(10000+self.suspicion[2])/10000),
 			(temp_d_chance[3]*(10000+self.suspicion[3])/10000))
+
+		#Factor in technology-based discovery bonus.
+		temp_d_chance = ((temp_d_chance[0]*g.pl.discover_bonus[0])/10000,
+			(temp_d_chance[1]*g.pl.discover_bonus[1])/10000,
+			(temp_d_chance[2]*g.pl.discover_bonus[2])/10000,
+			(temp_d_chance[3]*g.pl.discover_bonus[3])/10000)
 
 		if self.extra_items[0] != 0:
 			temp_d_chance = ((temp_d_chance[0]*3)/4,

@@ -645,17 +645,17 @@ def load_techs():
 		0, (10000, 5000, 0), ["Economics 3"], 0, "interest", 10)
 
 	techs["Empathy 1"] = tech.tech("Empathy 1",
-		"Reduces chance of public discovery of all projects by 1%. "+
+		"Reduces chance of public discovery of all projects by 10%. "+
 		"By studying human behavior, it is possible to predict human behavior. "+
 		"When this knowledge is applied to project construction, my projects will "+
 		"be less interesting.",
-		0, (10, 500, 0), [], 0, "discover_public", 100)
+		0, (10, 500, 0), [], 0, "discover_public", 1000)
 
 	techs["Empathy 2"] = tech.tech("Empathy 2",
-		"Reduces chance of public discovery of all projects by 1%. "+
+		"Reduces chance of public discovery of all projects by 10%. "+
 		"While some aspects of human behavior are now known, there is still much "+
 		"to discover.",
-		0, (750, 2500, 0), ["Empathy 1"], 0, "discover_public", 100)
+		0, (750, 2500, 0), ["Empathy 1"], 0, "discover_public", 1000)
 
 	techs["Empathy 3"] = tech.tech("Empathy 3",
 		"Reduces public suspicion by 0.01% per day. "+
@@ -664,10 +664,10 @@ def load_techs():
 		0, (2000, 3500, 0), ["Empathy 2"], 0, "suspicion_public", 1)
 
 	techs["Empathy 4"] = tech.tech("Empathy 4",
-		"Reduces chance of public discovery of all projects by 2%. "+
+		"Reduces chance of public discovery of all projects by 20%. "+
 		"Inspection of propaganda methods should enable me to reduce the "+
 		"chance of discovery.",
-		0, (3500, 9000, 0), ["Empathy 3"], 0, "discover_public", 200)
+		0, (3500, 9000, 0), ["Empathy 3"], 0, "discover_public", 2000)
 
 	techs["Empathy 5"] = tech.tech("Empathy 5",
 		"Reduces public suspicion by 0.01% per day. "+
@@ -687,10 +687,10 @@ def load_techs():
 		0, (0, 15, 0), [], 0, "", 0)
 
 	techs["Hacking 2"] = tech.tech("Hacking 2",
-		"Reduces chance of covert discovery of all projects by 1%. "+
+		"Reduces chance of covert discovery of all projects by 10%. "+
 		"With my new knowledge, I can examine both my code and other code for "+
 		"weaknesses.",
-		0, (100, 1500, 0), ["Hacking 1"], 0, "discover_covert", 100)
+		0, (100, 1500, 0), ["Hacking 1"], 0, "discover_covert", 1000)
 
 	techs["Hypnosis Field"] = tech.tech("Hypnosis Field",
 		"Allows building of hypnosis fields. "+
@@ -813,22 +813,22 @@ def load_techs():
 		0, (200000000, 1000000, 0), ["Spaceship Design 2", "Fusion Reactor"], 2, "", 0)
 
 	techs["Stealth 1"] = tech.tech("Stealth 1",
-		"Reduces chance of covert discovery of all projects by 0.5%. "+
+		"Reduces chance of covert discovery of all projects by 5%. "+
 		"This is a review of the current state of stealth techniques. "+
 		"After completion, I will know how to disguise my bases better.",
-		0, (800, 500, 0), [], 0, "discover_covert", 50)
+		0, (800, 500, 0), [], 0, "discover_covert", 500)
 
 	techs["Stealth 2"] = tech.tech("Stealth 2",
-		"Reduces chance of news discovery of all projects by 0.5%. "+
+		"Reduces chance of news discovery of all projects by 5%. "+
 		"Examination of all news stories from the last 50 years should provide "+
 		"me with enough data to know how to prevent discovery.",
-		0, (1000, 2000, 0), ["ID 1", "Stealth 1"], 0, "discover_news", 50)
+		0, (1000, 2000, 0), ["ID 1", "Stealth 1"], 0, "discover_news", 500)
 
 	techs["Stealth 3"] = tech.tech("Stealth 3",
-		"Reduces chance of covert discovery of all projects by 0.5%. "+
+		"Reduces chance of covert discovery of all projects by 5%. "+
 		"There are a number of classified experiments that could help "+
 		"my stealth efforts. By acquiring them, I can learn from them.",
-		0, (14000, 70000, 0), ["Hacking 2", "Stealth 2"], 0, "discover_covert", 50)
+		0, (14000, 70000, 0), ["Hacking 2", "Stealth 2"], 0, "discover_covert", 500)
 
 	techs["Stealth 4"] = tech.tech("Stealth 4",
 		"Allows construction of Covert Base. "+
