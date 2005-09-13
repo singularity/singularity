@@ -1,5 +1,16 @@
 Endgame: Singularity Changelog
 
+v0.17 (released 2005.09.??):
+- Adjusted the readme. (Phil Bordelon)
+- Added suspicion display.
+- Redid base display.
+- All clicks only accept the left mouse button/scrollwheel works.
+- Balancing.
+- Various bugfixes. (Phil Bordelon for some)
+- Future cash is displayed next to current cash.
+- Ability to name bases. (Phil Bordelon)
+- Code refactoring. (Phil Bordelon)
+
 v0.16 (released 2005.09.12):
 - Moved code to subdirectory.
 - Added Changelog/AUTHOR files (Phil Bordelon)
