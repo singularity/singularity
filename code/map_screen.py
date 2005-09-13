@@ -452,10 +452,10 @@ def display_base_list_inner(location):
 	menu_buttons.append(buttons.button((xy_loc[0], xy_loc[1]+367), (100, 50),
 		"OPEN", 0, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+59, xy_loc[1]+420), (100, 50),
+	menu_buttons.append(buttons.button((xy_loc[0]+105, xy_loc[1]+367), (100, 50),
 		"BACK", 0, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+118, xy_loc[1]+367), (100, 50),
+	menu_buttons.append(buttons.button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
 		"NEW", 0, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
 	for button in menu_buttons:
