@@ -186,6 +186,73 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
+valid_input_characters = {
+	pygame.K_a: 'a',
+	pygame.K_b: 'b',
+	pygame.K_c: 'c',
+	pygame.K_d: 'd',
+	pygame.K_e: 'e',
+	pygame.K_f: 'f',
+	pygame.K_g: 'g',
+	pygame.K_h: 'h',
+	pygame.K_i: 'i',
+	pygame.K_j: 'j',
+	pygame.K_k: 'k',
+	pygame.K_l: 'l',
+	pygame.K_m: 'm',
+	pygame.K_n: 'n',
+	pygame.K_o: 'o',
+	pygame.K_p: 'p',
+	pygame.K_q: 'q',
+	pygame.K_r: 'r',
+	pygame.K_s: 's',
+	pygame.K_t: 't',
+	pygame.K_u: 'u',
+	pygame.K_v: 'v',
+	pygame.K_w: 'w',
+	pygame.K_x: 'x',
+	pygame.K_y: 'y',
+	pygame.K_z: 'z',
+	pygame.K_0: '0',
+	pygame.K_1: '1',
+	pygame.K_2: '2',
+	pygame.K_3: '3',
+	pygame.K_4: '4',
+	pygame.K_5: '5',
+	pygame.K_6: '6',
+	pygame.K_7: '7',
+	pygame.K_8: '8',
+	pygame.K_9: '9',
+	pygame.K_SPACE: ' '
+}
+
+def create_textbox(starting_text, box_font, xy, size, max_length, bg_color, out_color, text_color):
+	screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
+	screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
+	print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5))
+
+	#If the cursor is in a blank string, we want it at the beginning;
+	#otherwise put it after the last character.
+	cursor_loc = len(starting_text)
+	if cursor_loc > 0:
+	   cursor_loc += 1
+
+	work_string = starting_text
+	while 1:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT: quit_game()
+			elif event.type == pygame.KEYDOWN:
+				if (event.key == pygame.K_ESCAPE or
+				 event.key == pygame.K_RETURN): return work_string
+				elif (event.key == pygame.BACKSPACE or
+				 event.key == pygame.DELETE):
+					if cursor_loc > 0:
+						work_string = work_string[:-1]
+						cursor_loc -= 1
+				elif event.key in valid_input_characters:
+					if cursor_loc < max_length:
+						work_string += valid_input_characters[event.key]
+						cursor_loc += 1
 
 #Takes a number (in string form) and adds commas to it to aid in human viewing.
 def add_commas(string):
