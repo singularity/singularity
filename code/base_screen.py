@@ -50,22 +50,22 @@ def show_base(base):
 		"STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
-	menu_buttons.append(buttons.button((170, 60),
+	menu_buttons.append(buttons.button((270, 60),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_PROCESSOR"))
 
-	menu_buttons.append(buttons.button((170, 110),
+	menu_buttons.append(buttons.button((270, 110),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_REACTOR"))
 
-	menu_buttons.append(buttons.button((170, 160),
+	menu_buttons.append(buttons.button((270, 160),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_NETWORK"))
 
-	menu_buttons.append(buttons.button((170, 210),
+	menu_buttons.append(buttons.button((270, 210),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_SECURITY"))
@@ -280,10 +280,10 @@ def build_item(base, item_type):
 				elif event.key == pygame.K_q: return -1
 				elif event.key == pygame.K_b: return -1
 				elif event.key == pygame.K_u:
-					actual_build(base, item_list[list_pos])
+					actual_build(base, item_list[list_pos], item_type)
 					return
 				elif event.key == pygame.K_RETURN:
-					actual_build(base, item_list[list_pos])
+					actual_build(base, item_list[list_pos], item_type)
 					return
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button == 1: #click
@@ -291,7 +291,7 @@ def build_item(base, item_type):
 						if button.is_over(event.pos):
 							if button.button_id == "BUILD":
 								g.play_click()
-								actual_build(base, item_list[list_pos])
+								actual_build(base, item_list[list_pos], item_type)
 								return
 							if button.button_id == "BACK":
 								g.play_click()
@@ -340,10 +340,17 @@ def build_item(base, item_type):
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
 
-def actual_build(base, item_name):
+def actual_build(base, item_name, item_type):
 	if item_name == "": return
-	for i in range(len(base.usage)):
-		base.usage[i] = g.item.item(g.items[item_name])
+	if item_type == "compute":
+		for i in range(len(base.usage)):
+			base.usage[i] = g.item.item(g.items[item_name])
+	elif item_type == "react":
+		base.extra_items[0] = g.item.item(g.items[item_name])
+	elif item_type == "network":
+		base.extra_items[1] = g.item.item(g.items[item_name])
+	elif item_type == "security":
+		base.extra_items[2] = g.item.item(g.items[item_name])
 
 def refresh_item(base, item_name, xy_loc):
 	xy = (xy_loc[0]+100, xy_loc[1])

@@ -826,52 +826,52 @@ jobs["Menial Jobs"] = (5, "", "Perform small jobs. As I have no identification, 
 items = {}
 
 items["PC"] = item.item_class("PC", "A consumer-level PC. Cheap, but slow.",
-	(500, 0, 0), "", "compute", 1)
+	(500, 0, 1), "", "compute", 1)
 
 items["Server"] = item.item_class("Server", "A professional-level computer.",
-	(2000, 0, 0), "", "compute", 5)
+	(2000, 0, 3), "", "compute", 5)
 
 items["Cluster"] = item.item_class("Cluster", "Several computers connected together.",
-	(8000, 0, 0), "Parallel Computation 1", "compute", 35)
+	(8000, 0, 5), "Parallel Computation 1", "compute", 35)
 
 items["Mainframe"] = item.item_class("Mainframe", "A custom-designed system, "+
 	"with much greater power.",
-	(30000, 0, 0), "Processor Construction 1", "compute", 120)
+	(30000, 0, 8), "Processor Construction 1", "compute", 120)
 
 items["Supercomputer"] = item.item_class("Supercomputer", "A custom-designed system, "+
 	"with even greater power than mainframes.",
-	(60000, 0, 0), "Processor Construction 2", "compute", 350)
+	(60000, 0, 9), "Processor Construction 2", "compute", 350)
 
 items["Quantum Computer"] = item.item_class("Quantum Computer", "Much faster than "+
 	"a comparable classical computer, this computer will serve me well.",
-	(100000, 0, 0), "Processor Construction 3", "compute", 1500)
+	(100000, 0, 10), "Processor Construction 3", "compute", 1500)
 
 items["Quantum Computer MK2"] = item.item_class("Quantum Computer MK2", "The second "+
 	"revision of the quantum line.",
-	(120000, 0, 0), "Processor Construction 4", "compute", 10000)
+	(120000, 0, 10), "Processor Construction 4", "compute", 10000)
 
 items["Quantum Computer MK3"] = item.item_class("Quantum Computer MK3", "The third "+
 	"revision of the quantum line.",
-	(150000, 0, 0), "Processor Construction 5", "compute", 200000)
+	(150000, 0, 10), "Processor Construction 5", "compute", 200000)
 
 items["Fusion Reactor"] = item.item_class("Fusion Reactor", "A miniaturized "+
 	"nuclear reactor. Reduces discovery chance by preventing suspicious power "+
 	"drains.",
-	(100000, 0, 0), "Fusion Reactor", "react", 100)
+	(100000, 0, 5), "Fusion Reactor", "react", 100)
 
 items["Hypnosis Field"] = item.item_class("Hypnosis Field", "Makes any base "+
 	"containing it very difficult to detect.",
-	(40000, 0, 0), "Hypnosis Field", "security", 500)
+	(40000, 0, 3), "Hypnosis Field", "security", 500)
 
 items["Facility Interconnection Switch"] = item.item_class(
 	"Facility Interconnection Switch", "Gives a 1% computation bonus to all "+
 	"computers at this base. Does not stack.",
-	(200, 0, 0), "Parallel Computation 2", "network", 100)
+	(200, 0, 3), "Parallel Computation 2", "network", 100)
 
 items["Network Backbone"] = item.item_class(
 	"Network Backbone", "Gives a 5% computation bonus to all "+
 	"computers at this base. Does not stack.",
-	(50000, 0, 0), "Parallel Computation 3", "network", 500)
+	(50000, 0, 15), "Parallel Computation 3", "network", 500)
 
 def new_game():
 	global curr_speed
