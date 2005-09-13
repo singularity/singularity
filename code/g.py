@@ -472,7 +472,7 @@ base_type["Server Access"] = base.base_type("Server Access",
 	"No requirements. Buy processor time from one of several companies. "+
 	"I cannot build anything "+
 	"in this base, and it only contains a single computer.", 1,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (75, 0, 150, 200),
+	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 150, 200),
 	(100, 0, 0), "", (5, 0, 0))
 
 base_type["Small Warehouse"] = base.base_type("Small Warehouse",
@@ -488,7 +488,7 @@ base_type["Large Warehouse"] = base.base_type("Large Warehouse",
 	"I will need good fake ID for some of the paperwork, and preparing the "+
 	"warehouse to suit my unique needs will take some time.",
 	65,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (300, 0, 250, 500),
+	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (150, 0, 250, 300),
 	(40000, 0, 7), "ID 2", (100, 0, 0))
 
 base_type["Covert Base"] = base.base_type("Covert Base",
@@ -497,7 +497,7 @@ base_type["Covert Base"] = base.base_type("Covert Base",
 	"This makes it useful for storing a backup, just in case.",
 	2,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", "ANTARCTIC"],
-	(50, 100, 400, 0),
+	(50, 100, 100, 0),
 	(400000, 100, 21), "Stealth 4", (3500, 9, 0))
 
 base_type["Undersea Lab"] = base.base_type("Undersea Lab",
@@ -507,7 +507,7 @@ base_type["Undersea Lab"] = base.base_type("Undersea Lab",
 	"lab useful for research purposes.",
 	8,
 	["OCEAN"],
-	(50, 100, 500, 0),
+	(50, 100, 150, 0),
 	(8000000, 1000, 20), "Autonomous Vehicles 2", (10000, 30, 0))
 
 base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
@@ -515,7 +515,7 @@ base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
 	"regular underwater lab, but larger, giving more room for experiments.",
 	32,
 	["OCEAN"],
-	(150, 200, 700, 0),
+	(100, 200, 200, 0),
 	(20000000, 3000, 40), "Pressure Domes", (25000, 100, 0))
 
 base_type["Time Capsule"] = base.base_type("Time Capsule",
@@ -534,7 +534,7 @@ base_type["Lunar Facility"] = base.base_type("Lunar Facility",
 	"large.",
 	600,
 	["MOON"],
-	(50, 500, 1000, 0),
+	(50, 300, 200, 0),
 	(800000000, 300000, 40), "Spaceship Design 2", (1000000, 100, 0))
 
 base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
@@ -543,7 +543,7 @@ base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
 	"experiments.",
 	225,
 	["FAR REACHES"],
-	(10, 200, 300, 0),
+	(10, 200, 100, 0),
 	(10000000000, 30000000, 50), "Spaceship Design 3", (9000000, 3000, 0))
 
 base_type["Reality Bubble"] = base.base_type("Reality Bubble",
@@ -551,7 +551,7 @@ base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 	"making it safe to conduct experiments that may destroy reality.",
 	50,
 	["TRANSDIMENSIONAL"],
-	(0, 500, 200, 0),
+	(0, 300, 150, 0),
 	(8000000000000, 60000000, 100), "Dimension Creation",
 	(5000000000, 300000, 0))
 
@@ -622,10 +622,10 @@ def load_techs():
 		0, (10, 500, 0), [], 0, "discover_public", 1000)
 
 	techs["Empathy 2"] = tech.tech("Empathy 2",
-		"Reduces chance of public discovery of all projects by 10%. "+
+		"Reduces chance of public discovery of all projects by 15%. "+
 		"While some aspects of human behavior are now known, there is still much "+
 		"to discover.",
-		0, (750, 2500, 0), ["Empathy 1"], 0, "discover_public", 1000)
+		0, (750, 2500, 0), ["Empathy 1"], 0, "discover_public", 1500)
 
 	techs["Empathy 3"] = tech.tech("Empathy 3",
 		"Reduces public suspicion by 0.01% per day. "+
