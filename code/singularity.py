@@ -53,6 +53,11 @@ for argument in sys.argv:
 
 pygame.display.set_caption("Endgame: Singularity")
 
+#I can't use the standard image dictionary, as that requires the screen to
+#be created.
+tmp_icon = pygame.image.load("../data/icon.png")
+pygame.display.set_icon(tmp_icon)
+
 #set the display.
 if set_fullscreen == 1:
 	g.screen = pygame.display.set_mode(g.screen_size, pygame.FULLSCREEN)
@@ -65,9 +70,8 @@ for i in range(8, 51):
 	g.font[1][i] = pygame.font.Font("../data/acknowtt.ttf", i)
 
 #init data:
-g.fill_colors()
 g.load_pictures()
-
+g.fill_colors()
 g.load_sounds()
 
 #Display the main menu

@@ -176,6 +176,8 @@ class player_class:
 										base_name.processor_time())/10
 
 							continue
+						#tech aready known. This should occur when multiple
+						#bases are studying the same tech.
 						if g.techs[base_name.studying].known == 1:
 							base_name.studying = ""
 							self.cpu_for_day += base_name.processor_time()
