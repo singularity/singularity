@@ -229,7 +229,7 @@ valid_input_characters = {
 def create_textbox(starting_text, box_font, xy, size, max_length, bg_color, out_color, text_color):
 	screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
 	screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
-	print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5))
+	print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
 
 	#If the cursor is in a blank string, we want it at the beginning;
 	#otherwise put it after the last character.
@@ -241,22 +241,26 @@ def create_textbox(starting_text, box_font, xy, size, max_length, bg_color, out_
 	pygame.display.flip()
 	while 1:
 		for event in pygame.event.get():
+			need_redraw = 0
 			if event.type == pygame.QUIT: quit_game()
 			elif event.type == pygame.KEYDOWN:
 				if (event.key == pygame.K_ESCAPE or
 				 event.key == pygame.K_RETURN): return work_string
-				elif (event.key == pygame.BACKSPACE or
-				 event.key == pygame.DELETE):
+				elif (event.key == pygame.K_BACKSPACE or
+				 event.key == pygame.K_DELETE):
 					if cursor_loc > 0:
 						work_string = work_string[:-1]
 						cursor_loc -= 1
-						pygame.display.flip()
-						
+						need_redraw = 1
 				elif event.key in valid_input_characters:
 					if cursor_loc < max_length:
 						work_string += valid_input_characters[event.key]
 						cursor_loc += 1
-						pygame.display.flip()
+						need_redraw = 1
+			if need_redraw:
+				screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
+				print_string(screen, work_string, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
+				pygame.display.flip()
 
 #Takes a number (in string form) and adds commas to it to aid in human viewing.
 def add_commas(string):
