@@ -225,6 +225,15 @@ class player_class:
 					g.bases[base_loc].pop(detection_succeed[0])
 					needs_refresh = 1
 					g.base.renumber_bases(g.bases[base_loc])
+			#I need to recheck after going through all bases as research
+			#worked on by multiple bases doesn't get erased properly otherwise.
+			for base_loc in g.bases:
+				for base in g.bases[base_loc]:
+					if base.studying == "": continue
+					if g.jobs.has_key(base.studying): continue
+					if g.techs[base.studying].known == 1:
+						base.studying = ""
+
 		return needs_refresh
 	def increase_suspicion(self, amount):
 		self.suspicion = (self.suspicion[0]+amount[0], self.suspicion[1]+amount[1],
