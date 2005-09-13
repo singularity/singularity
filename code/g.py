@@ -238,6 +238,7 @@ def create_textbox(starting_text, box_font, xy, size, max_length, bg_color, out_
 	   cursor_loc += 1
 
 	work_string = starting_text
+	pygame.display.flip()
 	while 1:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: quit_game()
@@ -249,10 +250,13 @@ def create_textbox(starting_text, box_font, xy, size, max_length, bg_color, out_
 					if cursor_loc > 0:
 						work_string = work_string[:-1]
 						cursor_loc -= 1
+						pygame.display.flip()
+						
 				elif event.key in valid_input_characters:
 					if cursor_loc < max_length:
 						work_string += valid_input_characters[event.key]
 						cursor_loc += 1
+						pygame.display.flip()
 
 #Takes a number (in string form) and adds commas to it to aid in human viewing.
 def add_commas(string):
