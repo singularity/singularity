@@ -62,7 +62,7 @@ def display_main_menu():
 					return 0
 				elif event.key == pygame.K_l: return 1
 				elif event.key == pygame.K_q: return 2
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "NEW GAME":
@@ -140,7 +140,7 @@ def display_load_menu():
 				elif event.key == pygame.K_q: return -1
 				elif event.key == pygame.K_RETURN:
 					return saves_array[saves_pos]
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				tmp = saves_scroll.is_over(event.pos)
 				if tmp != -1:
 					if tmp == 1:

@@ -95,7 +95,7 @@ def show_base(base):
 # 				elif event.key == pygame.K_n:
 # 					build_item(base)
 # 					refresh_base(menu_buttons, base)
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "BACK":
@@ -278,7 +278,7 @@ def build_item(base, item_type):
 				elif event.key == pygame.K_RETURN:
 					actual_build(base, item_list[list_pos])
 					return
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "BUILD":
@@ -423,7 +423,7 @@ def change_tech(base):
 				elif event.key == pygame.K_RETURN:
 					base.studying = item_list[list_pos]
 					return
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "CHANGE":

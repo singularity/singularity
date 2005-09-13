@@ -67,7 +67,7 @@ def display_pause_menu():
 				elif event.key == pygame.K_n: return 2
 				elif event.key == pygame.K_l: return 3
 				elif event.key == pygame.K_q: return 4
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "RESUME":
@@ -264,7 +264,7 @@ def map_loop():
 				elif event.key == pygame.K_r:
 					display_base_list("TRANSDIMENSIONAL", menu_buttons)
 
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "OPTIONS":
@@ -476,7 +476,7 @@ def display_base_list_inner(location):
 					return base_id_list[base_pos]
 				elif event.key == pygame.K_RETURN:
 					return base_id_list[base_pos]
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "OPEN":
@@ -582,7 +582,7 @@ def build_new_base_window(location):
 					return temp_base_list[base_pos]
 				elif event.key == pygame.K_RETURN:
 					return temp_base_list[base_pos]
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.button_id == "BUILD":
@@ -642,8 +642,7 @@ def refresh_new_base(base_name, xy):
 # 			g.font[0][16], -1, (xy[0]+290, xy[1]+90), g.colors["white"])
 #
 	#Size
-	string = "Size: "+str(g.base_type[base_name].size[0])+"x"
-	string += str(g.base_type[base_name].size[1])
+	string = "Size: "+str(g.base_type[base_name].size)
 	g.print_string(g.screen, string,
 			g.font[0][20], -1, (xy[0]+160, xy[1]+110), g.colors["white"])
 

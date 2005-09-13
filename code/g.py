@@ -177,7 +177,7 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
 				if event.key == pygame.K_ESCAPE: return
 				elif event.key == pygame.K_RETURN: return
 				elif event.key == pygame.K_o: return
-			elif event.type == pygame.MOUSEBUTTONUP:
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
 						if button.text == "OK":
