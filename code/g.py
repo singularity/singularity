@@ -254,7 +254,10 @@ def create_textbox(starting_text, box_font, xy, size, max_length, bg_color, out_
 						need_redraw = 1
 				elif event.key in valid_input_characters:
 					if cursor_loc < max_length:
-						work_string += valid_input_characters[event.key]
+						char_to_add = valid_input_characters[event.key]
+						if event.mod & pygame.KMOD_SHIFT != 0:
+							char_to_add = char_to_add.upper()
+						work_string += char_to_add
 						cursor_loc += 1
 						need_redraw = 1
 			if need_redraw:
