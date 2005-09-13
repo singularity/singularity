@@ -44,22 +44,22 @@ class base:
 		self.built = built
 		self.studying = ""
 
+		#Base suspicion is currently unused
 		self.suspicion = (0, 0, 0, 0)
-		self.usage = []
-		for i in range(self.base_type.size[1]):
-			self.usage.append([])
-			for j in range(self.base_type.size[0]):
-				self.usage[i].append(0)
+		self.usage = [0] * self.base_type.size
+# 		for i in range(self.base_type.size):
+# 			self.usage.append(0)
 		if self.base_type.base_name == "Stolen Computer Time":
-			self.usage[0][0] = g.item.item(g.items["PC"])
-			self.usage[0][0].build()
+			self.usage[0] = g.item.item(g.items["PC"])
+			self.usage[0].build()
 		elif self.base_type.base_name == "Server Access":
-			self.usage[0][0] = g.item.item(g.items["Server"])
-			self.usage[0][0].build()
+			self.usage[0] = g.item.item(g.items["Server"])
+			self.usage[0].build()
 		elif self.base_type.base_name == "Time Capsule":
-			self.usage[0][0] = g.item.item(g.items["PC"])
-			self.usage[0][0].build()
-
+			self.usage[0] = g.item.item(g.items["PC"])
+			self.usage[0].build()
+		#Reactor, network, security.
+		self.extra_items = [0] * 3
 
 		self.cost = (0, 0, 0)
 		if built == 0:
@@ -82,52 +82,41 @@ class base:
 
 		#Factor in both per-base suspicion adjustments and player
 		#suspicion adjustments.
-		temp_d_chance = ((temp_d_chance[0]*(10000+self.suspicion[0])/10000),
-			(temp_d_chance[1]*(10000+self.suspicion[1])/10000),
-			(temp_d_chance[2]*(10000+self.suspicion[2])/10000),
-			(temp_d_chance[3]*(10000+self.suspicion[3])/10000))
-
 		temp_d_chance = ((temp_d_chance[0]*(10000+g.pl.suspicion[0])/10000),
 			(temp_d_chance[1]*(10000+g.pl.suspicion[1])/10000),
 			(temp_d_chance[2]*(10000+g.pl.suspicion[2])/10000),
 			(temp_d_chance[3]*(10000+g.pl.suspicion[3])/10000))
 
-		if self.has_item("Fusion Reactor") != 0:
+		if self.extra_items[0] != 0:
 			temp_d_chance = ((temp_d_chance[0]*3)/4,
 				(temp_d_chance[1]*3)/4,
 				(temp_d_chance[2]*3)/4,
 				(temp_d_chance[3]*3)/4)
-		if self.has_item("Hypnosis Field") != 0:
+		if self.extra_items[2] != 0:
 			temp_d_chance = (temp_d_chance[0]/2,
 				temp_d_chance[1]/2,
 				temp_d_chance[2]/2,
 				temp_d_chance[3]/2)
 		return temp_d_chance
-	#Return the number of units the given base has of an item.
-	def has_item(self, item_name):
+	#Return the number of units the given base has of a computer.
+	def has_item(self):
 		num_items = 0
-		for i in range(self.base_type.size[1]):
-			for j in range(self.base_type.size[0]):
-				if self.usage[i][j] == 0: continue
-				if self.usage[i][j].item_type.name == item_name and \
-					self.usage[i][j].built == 1:
-					num_items += 1
+		for item in self.usage:
+			if item == 0: continue
+			if item.built == 0: continue
+			num_items += 1
 		return num_items
 
 	#Return how many units of CPU the base can contribute each day.
 	def processor_time(self):
 		comp_power = 0
 		compute_bonus = 0
-		for i in range(self.base_type.size[1]):
-			for j in range(self.base_type.size[0]):
-				if self.usage[i][j] == 0: continue
-				if self.usage[i][j].item_type.item_type == "compute" and \
-					self.usage[i][j].built == 1:
-						comp_power += self.usage[i][j].item_type.item_qual
-				if self.usage[i][j].item_type.item_type == "compute_bonus" and \
-					self.usage[i][j].built == 1:
-						if compute_bonus < self.usage[i][j].item_type.item_qual:
-							compute_bonus = self.usage[i][j].item_type.item_qual
+		for item in self.usage:
+			if item == 0: continue
+			if item.built == 0: continue
+			comp_power += item.item_type.item_qual
+		if self.extra_items[1] != 0:
+			compute_bonus = self.extra_items[1].item_type.item_qual
 		return (comp_power * (10000+compute_bonus))/10000
 
 	#For the given tech, return 1 if the base can study it, or 0 otherwise.

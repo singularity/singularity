@@ -95,21 +95,20 @@ class player_class:
 								g.curr_speed = 1
  					else:
 						#Construction of items:
- 						for i in range(base_name.base_type.size[1]):
- 							for j in range(base_name.base_type.size[0]):
-								if base_name.usage[i][j] == 0: continue
-								if base_name.usage[i][j].built == 0:
-									if base_name.usage[i][j].cost[2] == 0:
-										money_towards = base_name.usage[i][j].cost[0]
-									else:
-										tmp_base_time = (base_name.usage[i][j].cost[2]*
-											g.pl.labor_bonus) /10000
-										money_towards=(time_min*base_name.usage[i][j].cost[0] \
-											) / (tmp_base_time)
-									if money_towards <= self.cash:
-										self.cash -= money_towards
-										base_name.usage[i][j].study((money_towards,
-												0, time_min))
+ 						for i in range(base_name.base_type.size):
+							if base_name.usage[i] == 0: continue
+							if base_name.usage[i].built == 0:
+								if base_name.usage[i].cost[2] == 0:
+									money_towards = base_name.usage[i].cost[0]
+								else:
+									tmp_base_time = (base_name.usage[i].cost[2]*
+										g.pl.labor_bonus) /10000
+									money_towards=(time_min*base_name.usage[i].cost[0] \
+										) / (tmp_base_time)
+								if money_towards <= self.cash:
+									self.cash -= money_towards
+									base_name.usage[i].study((money_towards,
+											0, time_min))
 
 
 		if store_last_day != self.time_day:

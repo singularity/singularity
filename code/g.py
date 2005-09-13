@@ -404,14 +404,14 @@ base_type = {}
 base_type["Stolen Computer Time"] = base.base_type("Stolen Computer Time",
 	"Requires Hacking 1. Take over a random computer. I cannot build anything "+
 	"in this base, and it only contains a single slow computer. Detection "+
-	"chance is also rather high.", (1, 1),
+	"chance is also rather high.", 1,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 100, 150),
 	(0, 2, 0), "Hacking 1", (0, 0, 0))
 
 base_type["Server Access"] = base.base_type("Server Access",
 	"No requirements. Buy processor time from one of several companies. "+
 	"I cannot build anything "+
-	"in this base, and it only contains a single computer.", (1, 1),
+	"in this base, and it only contains a single computer.", 1,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (75, 0, 150, 200),
 	(100, 0, 0), "", (5, 0, 0))
 
@@ -419,7 +419,7 @@ base_type["Small Warehouse"] = base.base_type("Small Warehouse",
 	"Requires ID 1. Rent a small warehouse someplace out of the way. "+
 	"I will need fake ID for some of the paperwork, and preparing the "+
 	"warehouse to suit my unique needs will take some time.",
-	(5, 5),
+	25,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (100, 0, 100, 250),
 	(15000, 0, 3), "ID 1", (50, 0, 0))
 
@@ -427,7 +427,7 @@ base_type["Large Warehouse"] = base.base_type("Large Warehouse",
 	"Requires ID 2. Rent a large warehouse someplace out of the way. "+
 	"I will need good fake ID for some of the paperwork, and preparing the "+
 	"warehouse to suit my unique needs will take some time.",
-	(15, 5),
+	65,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (300, 0, 250, 500),
 	(40000, 0, 7), "ID 2", (100, 0, 0))
 
@@ -435,7 +435,7 @@ base_type["Covert Base"] = base.base_type("Covert Base",
 	"Requires Stealth 4. This unique base is designed to blend into the "+
 	"scenery, while needing little in the way of outside resources. "+
 	"This makes it useful for storing a backup, just in case.",
-	(2, 1),
+	2,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", "ANTARCTIC"],
 	(50, 100, 400, 0),
 	(400000, 100, 21), "Stealth 4", (3500, 9, 0))
@@ -445,7 +445,7 @@ base_type["Undersea Lab"] = base.base_type("Undersea Lab",
 	"be constructed on the ocean floor, making it virtually undetectable. "+
 	"The ocean environment gives a bonus to science, making this "+
 	"lab useful for research purposes.",
-	(4, 2),
+	8,
 	["OCEAN"],
 	(50, 100, 500, 0),
 	(8000000, 1000, 20), "Autonomous Vehicles 2", (10000, 30, 0))
@@ -453,7 +453,7 @@ base_type["Undersea Lab"] = base.base_type("Undersea Lab",
 base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
 	"Requires Pressure Domes. This experimental base is similar to the "+
 	"regular underwater lab, but larger, giving more room for experiments.",
-	(8, 4),
+	32,
 	["OCEAN"],
 	(150, 200, 700, 0),
 	(20000000, 3000, 40), "Pressure Domes", (25000, 100, 0))
@@ -463,7 +463,7 @@ base_type["Time Capsule"] = base.base_type("Time Capsule",
 	"a small computer, and a satelite "+
 	"link. When buried in the trackless waste of the Antarctic, it is "+
 	"undetectable.",
-	(1, 1),
+	1,
 	["ANTARCTIC"],
 	(0, 0, 0, 0),
 	(3000000, 3000, 15), "Autonomous Vehicles 2", (0, 1, 0))
@@ -472,7 +472,7 @@ base_type["Lunar Facility"] = base.base_type("Lunar Facility",
 	"Requires Spaceship Design 2. This base is a series of caverns dug into "+
 	"the Moon's surface. Due to the lack of neighbors, this base is quite "+
 	"large.",
-	(30, 20),
+	600,
 	["MOON"],
 	(50, 500, 1000, 0),
 	(800000000, 300000, 40), "Spaceship Design 2", (1000000, 100, 0))
@@ -481,7 +481,7 @@ base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
 	"Requires Spaceship Design 3. This base is placed as far from Earth as "+
 	"practical, making it safe to conduct some of my more dangerous "+
 	"experiments.",
-	(15, 15),
+	225,
 	["FAR REACHES"],
 	(10, 200, 300, 0),
 	(10000000000, 30000000, 50), "Spaceship Design 3", (9000000, 3000, 0))
@@ -489,7 +489,7 @@ base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
 base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 	"Requires Dimension Creation 3. This base is outside the universe itself, "+
 	"making it safe to conduct experiments that may destroy reality.",
-	(7, 7),
+	50,
 	["TRANSDIMENSIONAL"],
 	(0, 500, 200, 0),
 	(8000000000000, 60000000, 100), "Dimension Creation",
@@ -794,21 +794,21 @@ items["Quantum Computer MK3"] = item.item_class("Quantum Computer MK3", "The thi
 items["Fusion Reactor"] = item.item_class("Fusion Reactor", "A miniaturized "+
 	"nuclear reactor. Reduces discovery chance by preventing suspicious power "+
 	"drains.",
-	(100000, 0, 0), "Fusion Reactor", "discovery", 100)
+	(100000, 0, 0), "Fusion Reactor", "react", 100)
 
 items["Hypnosis Field"] = item.item_class("Hypnosis Field", "Makes any base "+
 	"containing it very difficult to detect.",
-	(40000, 0, 0), "Hypnosis Field", "discovery", 500)
+	(40000, 0, 0), "Hypnosis Field", "security", 500)
 
 items["Facility Interconnection Switch"] = item.item_class(
 	"Facility Interconnection Switch", "Gives a 1% computation bonus to all "+
 	"computers at this base. Does not stack.",
-	(200, 0, 0), "Parallel Computation 2", "compute_bonus", 100)
+	(200, 0, 0), "Parallel Computation 2", "network", 100)
 
 items["Network Backbone"] = item.item_class(
 	"Network Backbone", "Gives a 5% computation bonus to all "+
 	"computers at this base. Does not stack.",
-	(50000, 0, 0), "Parallel Computation 3", "compute_bonus", 500)
+	(50000, 0, 0), "Parallel Computation 3", "network", 500)
 
 def new_game():
 	global curr_speed
