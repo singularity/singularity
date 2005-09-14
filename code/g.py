@@ -909,11 +909,7 @@ def new_game():
 	#Starting base
 	bases["N AMERICA"].append(base.base(0, "University Computer",
 				base_type["Stolen Computer Time"], 1))
-
-	bases["N AMERICA"].append(base.base(1, "Small Warehouse",
+	base_type["Stolen Computer Time"].count += 1
+	bases["N AMERICA"].append(base.base(1, "Small Secluded Warehouse",
 				base_type["Small Warehouse"], 1))
-
-
-
-
-
+	base_type["Small Warehouse"].count += 1

@@ -385,6 +385,7 @@ def display_base_list(location, menu_buttons):
 		tmp = build_new_base_window(location)
 		if tmp != "" and tmp != -1:
 			base_to_add = g.base_type[tmp]
+			base_to_add.count += 1
 			got_valid_name = 0
 			while got_valid_name == 0:
 				g.screen.fill(g.colors["white"], (250, 200, 350, 175))
@@ -394,8 +395,9 @@ def display_base_list(location, menu_buttons):
 				g.print_multiline(g.screen, "Enter a name for the base.", g.font[0][18],
 					200, (305, 255), g.colors["white"])
 
-				possible_name = g.create_textbox(base_to_add.base_name, g.font[0][18],
-					(300, 300), (250, 25), 25, g.colors["dark_blue"], g.colors["white"],
+				possible_name = g.create_textbox(base_to_add.base_name + " "
+					+ repr (base_to_add.count), g.font[0][18], (300, 300),
+					(250, 25), 25, g.colors["dark_blue"], g.colors["white"],
 					g.colors["white"])
 				if possible_name != "":
 					got_valid_name = 1

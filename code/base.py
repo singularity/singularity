@@ -35,6 +35,7 @@ class base_type:
 		self.cost = cost
 		self.prereq = prereq
 		self.mainten = mainten
+		self.count = 0
 
 class base:
 	def __init__(self, ID, name, base_type, built):
