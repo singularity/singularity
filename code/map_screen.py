@@ -388,17 +388,19 @@ def display_base_list(location, menu_buttons):
 			base_to_add.count += 1
 			got_valid_name = 0
 			while got_valid_name == 0:
-				g.screen.fill(g.colors["white"], (250, 200, 350, 175))
-				g.screen.fill(g.colors["light_blue"], (251, 201, 348, 173))
-			        g.screen.fill(g.colors["white"], (300, 250, 250, 25))
-				g.screen.fill(g.colors["dark_blue"], (301, 251, 248, 23))
-				g.print_multiline(g.screen, "Enter a name for the base.", g.font[0][18],
-					200, (305, 255), g.colors["white"])
+# 				g.screen.fill(g.colors["white"], (250, 200, 350, 175))
+# 				g.screen.fill(g.colors["light_blue"], (251, 201, 348, 173))
+# 			        g.screen.fill(g.colors["white"], (300, 250, 250, 25))
+# 				g.screen.fill(g.colors["dark_blue"], (301, 251, 248, 23))
+# 				g.print_multiline(g.screen, "Enter a name for the base.", g.font[0][18],
+# 					200, (305, 255), g.colors["white"])
 
-				possible_name = g.create_textbox(base_to_add.base_name + " "
-					+ repr (base_to_add.count), g.font[0][18], (300, 300),
-					(250, 25), 25, g.colors["dark_blue"], g.colors["white"],
-					g.colors["white"])
+				possible_name = g.create_textbox("Enter a name for the base.",
+					base_to_add.base_name + " "
+					+ repr (base_to_add.count), g.font[0][18],
+					(g.screen_size[0]/2-100, 100), (200, 100), 25,
+					g.colors["dark_blue"], g.colors["white"], g.colors["white"],
+					g.colors["light_blue"])
 				if possible_name != "":
 					got_valid_name = 1
 			g.bases[location].append(g.base.base(len(g.bases[location]),

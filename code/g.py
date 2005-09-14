@@ -192,41 +192,79 @@ valid_input_characters = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
 			  'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
 			  '0','1','2','3','4','5','6','7','8','9','.',' ')
 
-def create_textbox(starting_text, box_font, xy, size, max_length, bg_color, out_color, text_color):
+def create_textbox(descript_text, starting_text, box_font, xy, size,
+		max_length, bg_color, out_color, text_color, text_bg_color):
 	screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
 	screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
-	print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
-
+	screen.fill(out_color, (xy[0]+5, xy[1]+size[1]-30, size[0]-10, 25))
+#	print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
+	print_multiline(screen, descript_text, box_font,
+					size[1]-10, (xy[0]+5, xy[1]+5), text_color)
 	#If the cursor is in a blank string, we want it at the beginning;
 	#otherwise put it after the last character.
 	cursor_loc = len(starting_text)
-	if cursor_loc > 0:
-	   cursor_loc += 1
+# 	if cursor_loc > 0:
+# 	   cursor_loc += 1
+
+	menu_buttons = []
+	menu_buttons.append(buttons.button((xy[0]+size[0]/2-50, xy[1]+size[1]+5),
+		(100, 50), "OK", 0, colors["dark_blue"], colors["white"], colors["light_blue"],
+		colors["white"], font[1][30]))
 
 	work_string = starting_text
+	for button in menu_buttons:
+		button.refresh_button(0)
 	pygame.display.flip()
+	sel_button = -1
+	need_redraw = True
 	while 1:
+		if need_redraw:
+			draw_cursor_pos = box_font.size(work_string[:cursor_loc])
+			screen.fill(text_bg_color, (xy[0]+6, xy[1]+size[1]-29,
+					size[0]-12, 23))
+			screen.fill(text_color, (xy[0]+6+draw_cursor_pos[0], xy[1]+size[1]-28,
+				1, draw_cursor_pos[1]))
+			print_string(screen, work_string, box_font, -1, (xy[0]+7,
+					xy[1]+size[1]-28), text_color)
+			pygame.display.flip()
+			need_redraw = False
 		for event in pygame.event.get():
-			need_redraw = 0
 			if event.type == pygame.QUIT: quit_game()
 			elif event.type == pygame.KEYDOWN:
 				if (event.key == pygame.K_ESCAPE or
 				 event.key == pygame.K_RETURN): return work_string
-				elif (event.key == pygame.K_BACKSPACE or
-				 event.key == pygame.K_DELETE):
+				elif (event.key == pygame.K_BACKSPACE):
 					if cursor_loc > 0:
-						work_string = work_string[:-1]
+						work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
 						cursor_loc -= 1
-						need_redraw = 1
+						need_redraw = True
+				elif (event.key == pygame.K_DELETE):
+					if cursor_loc < len(work_string):
+						work_string = work_string[:cursor_loc]+work_string[cursor_loc+1:]
+						need_redraw = True
+				elif (event.key == pygame.K_LEFT):
+					cursor_loc -= 1
+					if cursor_loc < 0: cursor_loc = 0
+					need_redraw = True
+				elif (event.key == pygame.K_RIGHT):
+					cursor_loc += 1
+					if cursor_loc > len(work_string): cursor_loc = len(work_string)
+					need_redraw = True
 				elif event.unicode in valid_input_characters:
 					if cursor_loc < max_length:
-						work_string += event.unicode
+						work_string = work_string[:cursor_loc]+event.unicode+ \
+										work_string[cursor_loc:]
 						cursor_loc += 1
-						need_redraw = 1
-			if need_redraw:
-				screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
-				print_string(screen, work_string, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
-				pygame.display.flip()
+						need_redraw = True
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+				for button in menu_buttons:
+					if button.is_over(event.pos):
+						if button.text == "OK":
+							play_click()
+							return work_string
+			elif event.type == pygame.MOUSEMOTION:
+				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+
 
 #Takes a number (in string form) and adds commas to it to aid in human viewing.
 def add_commas(string):
