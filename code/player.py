@@ -150,6 +150,7 @@ class player_class:
 						if self.cash < 0: self.cash = 0
 						#Yes, this can result in negative numbers. That's fine.
 						self.cpu_for_day -= base_name.base_type.mainten[1]
+						if self.cpu_for_day < 0: self.cpu_for_day = 0
 
 
 						#study

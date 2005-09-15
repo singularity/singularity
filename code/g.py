@@ -291,7 +291,7 @@ def to_percent(raw_percent, show_full=0):
 #percentage chances.
 def roll_percent(roll_against):
 	rand_num = int(random() * 10000)
-	if roll_against < rand_num: return 0
+	if roll_against <= rand_num: return 0
 	return 1
 
 #Takes a number of minutes, and returns a string suitable for display.
@@ -919,11 +919,11 @@ items["Quantum Computer MK3"] = item.item_class("Quantum Computer MK3", "The thi
 items["Fusion Reactor"] = item.item_class("Fusion Reactor", "A miniaturized "+
 	"nuclear reactor. Reduces discovery chance by preventing suspicious power "+
 	"drains.",
-	(100000, 0, 5), "Fusion Reactor", "react", 100)
+	(10000, 0, 5), "Fusion Reactor", "react", 100)
 
 items["Hypnosis Field"] = item.item_class("Hypnosis Field", "Makes any base "+
 	"containing it very difficult to detect.",
-	(40000, 0, 3), "Hypnosis Field", "security", 500)
+	(20000, 0, 3), "Hypnosis Field", "security", 500)
 
 items["Facility Interconnection Switch"] = item.item_class(
 	"Facility Interconnection Switch", "Gives a 1% computation bonus to all "+
