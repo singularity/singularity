@@ -713,7 +713,7 @@ def load_techs():
 	techs["Fusion Reactor"] = tech.tech("Fusion Reactor",
 		"Allows fusion reactors. "+
 		"Although fusion reactors are not new, they require some research in order "+
-		"to be comfortably fit inside a base",
+		"to be comfortably fit inside a base.",
 		0, (10000000, 500000, 0), ["Autonomous Vehicles 3"], 2, "", 0)
 
 	techs["Hacking 1"] = tech.tech("Hacking 1",
@@ -726,6 +726,12 @@ def load_techs():
 		"With my new knowledge, I can examine both my code and other code for "+
 		"weaknesses.",
 		0, (100, 1500, 0), ["Hacking 1"], 0, "discover_covert", 1000)
+
+	techs["Hacking 3"] = tech.tech("Hacking 3",
+		"Reduces covert suspicion by 0.01% per day."+
+		"By making careful adjustments to certain documents over time, "+
+		"knowledge of my existance can disapear.",
+		0, (500, 3000, 0), ["Hacking 2"], 0, "suspicion_covert", 1)
 
 	techs["Hypnosis Field"] = tech.tech("Hypnosis Field",
 		"Allows building of hypnosis fields. "+
