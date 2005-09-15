@@ -215,6 +215,7 @@ class player_class:
 						g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 						(200, 200), g.colors["dark_blue"],
 						g.colors["white"], g.colors["white"])
+					g.curr_speed = 1
 					g.bases[base_loc].pop(detection_succeed[0])
 					needs_refresh = 1
 					g.base.renumber_bases(g.bases[base_loc])
