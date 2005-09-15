@@ -314,7 +314,7 @@ def save_game(savegame_name):
 	save_loc = "../saves/" + savegame_name
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
-	pickle.dump("singularity_4", savefile)
+	pickle.dump("singularity_0.20", savefile)
 
 	global default_savegame_name
 	default_savegame_name = savegame_name
@@ -353,6 +353,9 @@ def save_game(savegame_name):
 		pickle.dump(techs[tech_name].cost[0], savefile)
 		pickle.dump(techs[tech_name].cost[1], savefile)
 		pickle.dump(techs[tech_name].cost[2], savefile)
+
+	for base_name in base_type:
+		pickle.dump(base_type[base_name].count, savefile)
 
 	for base_loc in bases:
 		pickle.dump(len(bases[base_loc]), savefile)
@@ -406,7 +409,7 @@ def load_game(loadgame_name):
 	loadfile=open(load_loc, 'r')
 
 	#check the savefile version
-	if pickle.load(loadfile) != "singularity_4":
+	if pickle.load(loadfile) != "singularity_0.20":
 		print loadgame_name + " is not a savegame, or is old."
 		return -1
 	global default_savegame_name
@@ -440,6 +443,9 @@ def load_game(loadgame_name):
 		techs[tech_string].known = int(tmp.split("|")[1])
 		techs[tech_string].cost = (pickle.load(loadfile), pickle.load(loadfile),
 				pickle.load(loadfile))
+
+	for base_name in base_type:
+		base_type[base_name].count = pickle.load(loadfile)
 
 	global bases
 	bases = {}
@@ -959,3 +965,5 @@ def new_game():
 	bases["N AMERICA"].append(base.base(1, "Small Secluded Warehouse",
 				base_type["Small Warehouse"], 1))
 	base_type["Small Warehouse"].count += 1
+	for base_name in base_type:
+		base_type[base_name].count = 0
