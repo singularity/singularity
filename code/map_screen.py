@@ -322,7 +322,15 @@ def map_loop():
 def handle_pause_menu(tmp, menu_buttons):
 	if tmp == 0: refresh_map(menu_buttons)
 	elif tmp == 1: #Save
-		g.save_game("testing")
+		possible_name = g.create_textbox("Save your game under what name?",
+			g.default_savegame_name, g.font[0][18],
+					(g.screen_size[0]/2-100, 100), (200, 100), 25,
+					g.colors["dark_blue"], g.colors["white"], g.colors["white"],
+					g.colors["light_blue"])
+		if possible_name == "":
+			refresh_map(menu_buttons)
+			return -1
+		g.save_game(possible_name)
 		refresh_map(menu_buttons)
 	elif tmp == 2: return 0
 	elif tmp == 3: #Load
@@ -385,9 +393,17 @@ def display_base_list(location, menu_buttons):
 		tmp = build_new_base_window(location)
 		if tmp != "" and tmp != -1:
 			base_to_add = g.base_type[tmp]
+			possible_name = g.create_textbox("Enter a name for the base.",
+				base_to_add.base_name + " "
+				+ repr (base_to_add.count+1), g.font[0][18],
+				(g.screen_size[0]/2-100, 100), (200, 100), 25,
+				g.colors["dark_blue"], g.colors["white"], g.colors["white"],
+				g.colors["light_blue"])
+			if possible_name == "":
+				refresh_map(menu_buttons)
+				return
 			base_to_add.count += 1
-			got_valid_name = 0
-			while got_valid_name == 0:
+#			while got_valid_name == 0:
 # 				g.screen.fill(g.colors["white"], (250, 200, 350, 175))
 # 				g.screen.fill(g.colors["light_blue"], (251, 201, 348, 173))
 # 			        g.screen.fill(g.colors["white"], (300, 250, 250, 25))
@@ -395,14 +411,6 @@ def display_base_list(location, menu_buttons):
 # 				g.print_multiline(g.screen, "Enter a name for the base.", g.font[0][18],
 # 					200, (305, 255), g.colors["white"])
 
-				possible_name = g.create_textbox("Enter a name for the base.",
-					base_to_add.base_name + " "
-					+ repr (base_to_add.count), g.font[0][18],
-					(g.screen_size[0]/2-100, 100), (200, 100), 25,
-					g.colors["dark_blue"], g.colors["white"], g.colors["white"],
-					g.colors["light_blue"])
-				if possible_name != "":
-					got_valid_name = 1
 			g.bases[location].append(g.base.base(len(g.bases[location]),
 				tmp, g.base_type[tmp], 0))
 			g.bases[location][-1].name = possible_name

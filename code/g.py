@@ -43,6 +43,9 @@ nosound = 0
 global debug
 debug = 0
 
+global default_savegame_name
+default_savegame_name = "player"
+
 def quit_game():
 	sys.exit()
 
@@ -231,8 +234,8 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: quit_game()
 			elif event.type == pygame.KEYDOWN:
-				if (event.key == pygame.K_ESCAPE or
-				 event.key == pygame.K_RETURN): return work_string
+				if (event.key == pygame.K_ESCAPE): return ""
+				elif (event.key == pygame.K_RETURN): return work_string
 				elif (event.key == pygame.K_BACKSPACE):
 					if cursor_loc > 0:
 						work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
@@ -312,6 +315,9 @@ def save_game(savegame_name):
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
 	pickle.dump("singularity_4", savefile)
+
+	global default_savegame_name
+	default_savegame_name = savegame_name
 
 	#general player data
 	pickle.dump(pl.cash, savefile)
@@ -403,6 +409,8 @@ def load_game(loadgame_name):
 	if pickle.load(loadfile) != "singularity_4":
 		print loadgame_name + " is not a savegame, or is old."
 		return -1
+	global default_savegame_name
+	default_savegame_name = loadgame_name
 
 	#general player data
 	global pl
