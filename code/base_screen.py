@@ -406,6 +406,7 @@ def change_tech(base):
 	list_size = 10
 
 	item_list = []
+	item_list.append("Nothing")
 	if g.techs["ID 4"].known == 1: item_list.append("Expert Jobs")
 	elif g.techs["ID 3"].known == 1: item_list.append("Intermediate Jobs")
 	elif g.techs["ID 1"].known == 1: item_list.append("Basic Jobs")
@@ -471,6 +472,7 @@ def change_tech(base):
 				elif event.key == pygame.K_b: return -1
 				elif event.key == pygame.K_RETURN:
 					base.studying = item_list[list_pos]
+					if base.studying == "Nothing": base.studying = ""
 					return
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button == 1:
@@ -479,6 +481,7 @@ def change_tech(base):
 							if button.button_id == "CHANGE":
 								g.play_click()
 								base.studying = item_list[list_pos]
+								if base.studying == "Nothing": base.studying = ""
 								return
 							if button.button_id == "BACK":
 								g.play_click()
@@ -542,7 +545,7 @@ def refresh_tech(base, tech_name, xy):
 
 
 	#None selected
-	if tech_name == "":
+	if tech_name == "" or tech_name == "Nothing":
 		g.print_string(g.screen, "Nothing",
 			g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
 		string = "Stops research. I will use the available processor power "+ \
