@@ -68,7 +68,8 @@ class base:
 								base_type.cost[2]*24*60)
 
 	def study(self, cost_towards):
-		if cost_towards[1] < 0: print cost_towards[1]
+		if cost_towards[1] < 0 and g.debug == 1:
+		   print "WARNING: Got a negative cost_towards for CPU.  Something is deeply amiss."
 		self.cost = (self.cost[0]-cost_towards[0], self.cost[1]-cost_towards[1],
 						self.cost[2]-cost_towards[2])
 		if self.cost[0] <= 0: self.cost = (0, self.cost[1], self.cost[2])
