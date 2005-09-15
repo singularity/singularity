@@ -279,8 +279,8 @@ def add_commas(string):
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
-def to_percent(raw_percent):
-	if raw_percent % 100 != 0:
+def to_percent(raw_percent, show_full=0):
+	if raw_percent % 100 != 0 or show_full == 1:
 		tmp_string = str(raw_percent % 100)
 		if len(tmp_string) == 1: tmp_string = "0"+tmp_string
 		return str(raw_percent / 100)+"."+tmp_string+"%"

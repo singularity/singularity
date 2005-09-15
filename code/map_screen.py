@@ -229,10 +229,10 @@ def map_loop():
 			menu_buttons[7].refresh_button(0)
 
 			menu_buttons[8].text = ("SUSPICION: NEWS: "+
-				g.to_percent(g.pl.suspicion[0])+"  SCIENCE: "+
-				g.to_percent(g.pl.suspicion[1])+"  COVERT: "+
-				g.to_percent(g.pl.suspicion[2])+"  PUBLIC: "+
-				g.to_percent(g.pl.suspicion[3])+".")
+				g.to_percent(g.pl.suspicion[0], 1)+"  SCIENCE: "+
+				g.to_percent(g.pl.suspicion[1], 1)+"  COVERT: "+
+				g.to_percent(g.pl.suspicion[2], 1)+"  PUBLIC: "+
+				g.to_percent(g.pl.suspicion[3], 1)+".")
 			menu_buttons[8].remake_button()
 			menu_buttons[8].refresh_button(0)
 		pygame.display.flip()
