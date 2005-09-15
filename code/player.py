@@ -34,7 +34,7 @@ class player_class:
 		self.labor_bonus = 10000
 		self.job_bonus = 10000
 		self.discover_bonus = (10000, 10000, 10000, 10000)
-		self.suspicion_bonus = (0, 0, 0, 0)
+		self.suspicion_bonus = (1, 1, 1, 1)
 		self.suspicion = (0, 0, 0, 0)
 
 	def give_time(self, time_sec):

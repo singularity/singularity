@@ -1,16 +1,19 @@
 Endgame: Singularity Changelog
 
 v0.20 (released 2005.09.14):
-- Adjusted the readme. (Phil Bordelon)
-- Added suspicion display.
-- Redid base display.
-- All clicks only accept the left mouse button/scrollwheel works.
-- Balancing.
-- Various bugfixes. (Phil Bordelon for some)
-- Future cash is displayed next to current cash.
-- Ability to name bases. (Phil Bordelon)
-- Code refactoring. (Phil Bordelon)
-- Bases and savegames can be named. (Phil Bordelon)
+- Adjusted the README. (Phil)
+- Added suspicion display. (emh)
+- Slow time back to normal when a base is discovered. (emh)
+- Redid base display. (emh)
+- All clicks only accept the left mouse button. (emh)
+- Scrollwheel works. (emh)
+- Balancing. (emh)
+- Various bugfixes. (Phil, emh)
+- Future cash is displayed next to current cash. (emh)
+- Code refactoring. (Phil)
+- Bases and savegames can be named. (Phil, emh)
+- Default base names are unique. (Phil)
+- Suspicion reduces automatically over time. (Phil)
 
 v0.16 (released 2005.09.12):
 - Moved code to subdirectory.
