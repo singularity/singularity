@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-v0.17 (released 2005.09.??):
+v0.20 (released 2005.09.14):
 - Adjusted the readme. (Phil Bordelon)
 - Added suspicion display.
 - Redid base display.
@@ -10,6 +10,7 @@ v0.17 (released 2005.09.??):
 - Future cash is displayed next to current cash.
 - Ability to name bases. (Phil Bordelon)
 - Code refactoring. (Phil Bordelon)
+- Bases and savegames can be named. (Phil Bordelon)
 
 v0.16 (released 2005.09.12):
 - Moved code to subdirectory.

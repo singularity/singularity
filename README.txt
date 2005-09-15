@@ -1,4 +1,4 @@
-Endgame: Singularity 0.16
+Endgame: Singularity 0.20
 
 Requirements:
 Recent version of Python, pygame, and SDL_image. This game should work on Linux,

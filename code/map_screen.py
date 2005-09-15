@@ -335,10 +335,10 @@ def handle_pause_menu(tmp, menu_buttons):
 	elif tmp == 2: return 0
 	elif tmp == 3: #Load
 		load_return = main_menu.display_load_menu()
-		if load_return == -1:
+		if load_return == -1 or load_return == "":
 			refresh_map(menu_buttons)
 		else:
-			g.load_game("testing")
+			g.load_game(load_return)
 			refresh_map(menu_buttons)
 	elif tmp == 4: g.quit_game()
 	return -1
