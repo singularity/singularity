@@ -958,6 +958,8 @@ def new_game():
 	if cheater == 1:
 		for tech in techs:
 			techs[tech].known = 1
+	for base_name in base_type:
+		base_type[base_name].count = 0
 	#Starting base
 	bases["N AMERICA"].append(base.base(0, "University Computer",
 				base_type["Stolen Computer Time"], 1))
@@ -965,5 +967,3 @@ def new_game():
 	bases["N AMERICA"].append(base.base(1, "Small Secluded Warehouse",
 				base_type["Small Warehouse"], 1))
 	base_type["Small Warehouse"].count += 1
-	for base_name in base_type:
-		base_type[base_name].count = 0
