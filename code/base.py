@@ -43,6 +43,7 @@ class base:
 		self.name = name
 		self.base_type = base_type
 		self.built = built
+		self.built_date = g.pl.time_day
 		self.studying = ""
 
 		#Base suspicion is currently unused

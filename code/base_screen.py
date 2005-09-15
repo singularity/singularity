@@ -556,10 +556,17 @@ def refresh_tech(base, tech_name, xy):
 	if g.jobs.has_key (tech_name):
 		g.print_string(g.screen, tech_name,
 			g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
-		g.print_string(g.screen,
-			g.add_commas(str(g.jobs[tech_name][0]*base.processor_time()))+
-			" Money per day.",
-			g.font[0][22], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
+		if g.techs["ID 5"].known == 1:
+			g.print_string(g.screen,
+				g.add_commas(str(int(
+					(g.jobs[tech_name][0]*base.processor_time())*1.1)))+
+					" Money per day.", g.font[0][22], -1, (xy[0]+160, xy[1]+65),
+					g.colors["white"])
+		else:
+			g.print_string(g.screen,
+				g.add_commas(str(g.jobs[tech_name][0]*base.processor_time()))+
+				" Money per day.",
+				g.font[0][22], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 		g.print_multiline(g.screen, g.jobs[tech_name][2],
 			g.font[0][18], 290, (xy[0]+160, xy[1]+85), g.colors["white"])
 		return

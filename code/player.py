@@ -129,7 +129,7 @@ class player_class:
 					if base_name.built == 1:
 						#Does base get detected?
 						#Give a grace period.
-						if store_last_day > 14:
+						if self.time_day - base_name.built_date > 14:
 							tmp_d_chance = base_name.get_d_chance()
 							if g.debug == 1:
 								print "Chance of discovery for base %s: %s" % \

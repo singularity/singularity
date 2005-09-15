@@ -363,6 +363,7 @@ def save_game(savegame_name):
 			pickle.dump(base_name.ID, savefile)
 			pickle.dump(base_name.name, savefile)
 			pickle.dump(base_name.base_type.base_name, savefile)
+			pickle.dump(base_name.built_date, savefile)
 			pickle.dump(base_name.studying, savefile)
 			pickle.dump(base_name.suspicion[0], savefile)
 			pickle.dump(base_name.suspicion[1], savefile)
@@ -467,6 +468,7 @@ def load_game(loadgame_name):
 			base_name = pickle.load(loadfile)
 			base_type_name = pickle.load(loadfile)
 			base_studying = pickle.load(loadfile)
+			built_date = pickle.load(loadfile)
 			base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
 					pickle.load(loadfile), pickle.load(loadfile))
 			base_built = pickle.load(loadfile)
@@ -478,6 +480,7 @@ def load_game(loadgame_name):
 			bases[base_loc][len(bases[base_loc])-1].studying = base_studying
 			bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
 			bases[base_loc][len(bases[base_loc])-1].cost = base_cost
+			bases[base_loc][len(bases[base_loc])-1].built_date = built_date
 
 			for x in range(len(bases[base_loc][len(bases[base_loc])-1].usage)):
 				tmp = pickle.load(loadfile)
