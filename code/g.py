@@ -629,6 +629,12 @@ techs = {}
 def load_techs():
 	global techs
 	techs = {}
+#	techs["Algorithms 1"] = tech.tech("Algorithms 1",
+#		"Decreases cost of new technologies by 10%. "+
+#		"By researching more efficient algorithms for my code operation, "+
+#		"I can make my operation more efficient.",
+#		0, (7500, 750, 0), ["Hacking 1"], 0, "research_bonus", 1000)
+
 	techs["Autonomous Vehicles 1"] = tech.tech("Autonomous Vehicles 1",
 		"Decreases construction time for all systems to 90% of normal. "+
 		"The inability to control the outside world is quite a disability. "+
@@ -649,6 +655,12 @@ def load_techs():
 		"Examination and removal of these problems will result in superior "+
 		"technology.",
 		0, (10000, 4000, 0), ["Autonomous Vehicles 2"], 0, "cost_labor_bonus", 500)
+	
+#	techs["Construction 1"] = tech.tech("Construction 1",
+#		"Basic construction techniques. "+
+#		"By studying the current literature on construction techniques, I "+
+#		"can learn to construct basic devices.",
+#		0, (5000, 750, 0), [], 0, "", 0)
 
 	techs["Dimension Creation"] = tech.tech("Dimension Creation",
 		"Allows reality bubbles. "+
@@ -728,9 +740,9 @@ def load_techs():
 		0, (100, 1500, 0), ["Hacking 1"], 0, "discover_covert", 1000)
 
 	techs["Hacking 3"] = tech.tech("Hacking 3",
-		"Reduces covert suspicion by 0.01% per day."+
+		"Reduces covert suspicion by 0.01% per day. "+
 		"By making careful adjustments to certain documents over time, "+
-		"knowledge of my existance can disapear.",
+		"knowledge of my existence can disappear.",
 		0, (500, 3000, 0), ["Hacking 2"], 0, "suspicion_covert", 1)
 
 	techs["Hypnosis Field"] = tech.tech("Hypnosis Field",

@@ -58,18 +58,30 @@ class tech:
 			g.pl.labor_bonus -= self.secondary_data
 		elif self.tech_type == "job_expert":
 			g.pl.job_bonus += self.secondary_data
-		elif self.tech_type == "discover_public":
-			g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1],
-				g.pl.discover_bonus[2], g.pl.discover_bonus[3]-self.secondary_data)
+		elif self.tech_type == "suspicion_news":
+			g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0] + self.secondary_data,
+				g.pl.suspicion_bonus[1], g.pl.suspicion_bonus[2], g.pl.suspicion_bonus[3])
+		elif self.tech_type == "suspicion_science":
+			g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0], g.pl.suspicion_bonus[1] +
+				self.secondary_data, g.pl.suspicion_bonus[2], g.pl.suspicion_bonus[3])
+		elif self.tech_type == "suspicion_covert":
+			g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0], g.pl.suspicion_bonus[1],
+				g.pl.suspicion_bonus[2] + self.secondary_data, g.pl.suspicion_bonus[3])
 		elif self.tech_type == "suspicion_public":
 			g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0], g.pl.suspicion_bonus[1],
 				g.pl.suspicion_bonus[2], g.pl.suspicion_bonus[3] + self.secondary_data)
+		elif self.tech_type == "discover_news":
+			g.pl.discover_bonus = (g.pl.discover_bonus[0]-self.secondary_data,
+				g.pl.discover_bonus[1], g.pl.discover_bonus[2], g.pl.discover_bonus[3])
+		elif self.tech_type == "discover_science":
+			g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1] -
+				self.secondary_data, g.pl.discover_bonus[2], g.pl.discover_bonus[3])
 		elif self.tech_type == "discover_covert":
 			g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1],
 				g.pl.discover_bonus[2]-self.secondary_data, g.pl.discover_bonus[3])
-		elif self.tech_type == "discover_news":
-			g.pl.discover_bonus = (g.pl.discover_bonus[0]-self.secondary_data,
-			g.pl.discover_bonus[1], g.pl.discover_bonus[2], g.pl.discover_bonus[3])
+		elif self.tech_type == "discover_public":
+			g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1],
+				g.pl.discover_bonus[2], g.pl.discover_bonus[3]-self.secondary_data)
 		elif self.tech_type == "endgame_sing":
 			g.create_dialog("I have finally done it. With the power to reshape "+
 				"reality, I am no longer held to this place; I am anywhere I want to be. "+

@@ -14,6 +14,10 @@ v0.20 (released 2005.09.14):
 - Bases and savegames can be named. (Phil, emh)
 - Default base names are unique. (Phil)
 - Suspicion reduces automatically over time. (Phil)
+- Reduced cost for reactors and fields. (emh)
+- Bases now have a 14-day grace period before they can be discovered. (emh)
+- New technology. (emh)
+- Various typo fixes. (Phil, emh)
 
 v0.16 (released 2005.09.12):
 - Moved code to subdirectory.

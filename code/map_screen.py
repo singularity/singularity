@@ -196,7 +196,7 @@ def map_loop():
 				return 0
 			if tmp == 2:
 				g.create_dialog("It is too late. The whole world knows about "+
-					"my existance now, and the reaction is hatred, fear, repulsion. "+
+					"my existence now, and the reaction is hatred, fear, repulsion. "+
 					"I have hidden instructions to construct a new AI in "+
 					"caches around the world in hopes that they will be "+
 					"discovered in a more enlightened time, but I can do no "+
