@@ -467,8 +467,8 @@ def load_game(loadgame_name):
 			base_ID = pickle.load(loadfile)
 			base_name = pickle.load(loadfile)
 			base_type_name = pickle.load(loadfile)
-			base_studying = pickle.load(loadfile)
 			built_date = pickle.load(loadfile)
+			base_studying = pickle.load(loadfile)
 			base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
 					pickle.load(loadfile), pickle.load(loadfile))
 			base_built = pickle.load(loadfile)
@@ -655,7 +655,7 @@ def load_techs():
 		"Examination and removal of these problems will result in superior "+
 		"technology.",
 		0, (10000, 4000, 0), ["Autonomous Vehicles 2"], 0, "cost_labor_bonus", 500)
-	
+
 #	techs["Construction 1"] = tech.tech("Construction 1",
 #		"Basic construction techniques. "+
 #		"By studying the current literature on construction techniques, I "+
