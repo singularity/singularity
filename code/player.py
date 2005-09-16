@@ -63,13 +63,13 @@ class player_class:
 				for base_name in g.bases[base_loc]:
 					#Construction of new bases:
 					if base_name.built == 0:
-						if base_name.cost[2] == 0:
+						tmp_base_time = (base_name.cost[2] * g.pl.labor_bonus) /10000
+						if tmp_base_time == 0:
 							money_towards = base_name.cost[0]
 							cpu_towards = base_name.cost[1]
 							if cpu_towards > self.cpu_for_day:
 								cpu_towards = self.cpu_for_day
 						else:
-							tmp_base_time = (base_name.cost[2] * g.pl.labor_bonus) /10000
 							money_towards = (time_min*base_name.cost[0]) / \
 							(tmp_base_time)
 							if money_towards > base_name.cost[0]:
