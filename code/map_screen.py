@@ -88,6 +88,92 @@ def display_pause_menu():
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
+def display_cheat_list(menu_buttons):
+	if g.cheater == 0: return
+	xy_loc = (g.screen_size[0]/2 - 100, 50)
+
+	#Border
+	g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200, 350))
+	g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198, 348))
+	menu_buttons = []
+	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
+		"GIVE MONEY", 5, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+80), (180, 50),
+		"GIVE TECH", 5, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
+		"USELESS", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
+		"SUPERSPEED", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
+		"RESUME", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+
+	for button in menu_buttons:
+		button.refresh_button(0)
+	pygame.display.flip()
+
+	sel_button = -1
+	while 1:
+		g.clock.tick(60)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT: g.quit_game()
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE: return 0
+				elif event.key == pygame.K_r: return
+				elif event.key == pygame.K_s:
+					g.curr_speed = 864000
+					return
+				elif event.key == pygame.K_t:
+					#create a temp base, in order to reuse the tech-changing code
+					tmp_base = g.base.base(1, "tmp_base",
+					g.base_type["Reality Bubble"], 1)
+					base_screen.change_tech(tmp_base)
+					if g.techs.has_key(tmp_base.studying):
+						g.techs[tmp_base.studying].gain_tech()
+					return
+				elif event.key == pygame.K_m:
+					cash_amount = g.create_textbox("How much cash?",
+					"", g.font[0][18],
+					(g.screen_size[0]/2-100, 100), (200, 100), 25,
+					g.colors["dark_blue"], g.colors["white"],
+					g.colors["white"], g.colors["light_blue"])
+					if cash_amount.isdigit() == False: return
+					g.pl.cash += int(cash_amount)
+					return
+			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+				for button in menu_buttons:
+					if button.is_over(event.pos):
+						if button.button_id == "RESUME":
+							return
+						if button.button_id == "SUPERSPEED":
+							g.curr_speed = 864000
+							return
+						if button.button_id == "NEW GAME":
+							g.play_click()
+							return 2
+						elif button.button_id == "GIVE TECH":
+							#create a temp base, in order to reuse the tech-changing code
+							tmp_base = g.base.base(1, "tmp_base",
+							g.base_type["Reality Bubble"], 1)
+							base_screen.change_tech(tmp_base)
+							if g.techs.has_key(tmp_base.studying):
+								g.techs[tmp_base.studying].gain_tech()
+							return
+						if button.button_id == "GIVE MONEY":
+							cash_amount = g.create_textbox("How much cash?",
+							"", g.font[0][18],
+							(g.screen_size[0]/2-100, 100), (200, 100), 25,
+							g.colors["dark_blue"], g.colors["white"],
+							g.colors["white"], g.colors["light_blue"])
+							if cash_amount.isdigit() == False: return
+							g.pl.cash += int(cash_amount)
+							return
+			elif event.type == pygame.MOUSEMOTION:
+				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
 def map_loop():
 	menu_buttons = []
@@ -265,7 +351,8 @@ def map_loop():
 				elif event.key == pygame.K_r:
 					display_base_list("TRANSDIMENSIONAL", menu_buttons)
 				elif event.key == pygame.K_BACKQUOTE:
-					display_base_list("TRANSDIMENSIONAL", menu_buttons)
+					display_cheat_list(menu_buttons)
+					refresh_map(menu_buttons)
 
 			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
