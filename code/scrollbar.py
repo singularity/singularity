@@ -80,6 +80,6 @@ class scrollbar:
 			elif xy[1] >= self.xy[1]+self.start_y + self.size_y: #lower gutter
 				return 4
 			#If I want the gripper working, code here.
-		return 0
+		return -1
 
 
