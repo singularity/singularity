@@ -103,7 +103,7 @@ def display_cheat_list(menu_buttons):
 		"GIVE TECH", 5, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
 	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
-		"USELESS", 0, g.colors["dark_blue"], g.colors["white"],
+		"END CONSTR.", 0, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
 	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
 		"SUPERSPEED", 0, g.colors["dark_blue"], g.colors["white"],
@@ -126,6 +126,13 @@ def display_cheat_list(menu_buttons):
 				elif event.key == pygame.K_r: return
 				elif event.key == pygame.K_s:
 					g.curr_speed = 864000
+					return
+				elif event.key == pygame.K_e:
+					for base_loc in g.bases:
+						for base_name in g.bases[base_loc]:
+							if base_name.built == 0:
+								base_name.study((999999999, 999999999,
+										999999999))
 					return
 				elif event.key == pygame.K_t:
 					#create a temp base, in order to reuse the tech-changing code
@@ -152,9 +159,13 @@ def display_cheat_list(menu_buttons):
 						if button.button_id == "SUPERSPEED":
 							g.curr_speed = 864000
 							return
-						if button.button_id == "NEW GAME":
-							g.play_click()
-							return 2
+						if button.button_id == "END CONSTR.":
+							for base_loc in g.bases:
+								for base_name in g.bases[base_loc]:
+									if base_name.built == 0:
+										base_name.study((999999999, 999999999,
+												999999999))
+							return
 						elif button.button_id == "GIVE TECH":
 							#create a temp base, in order to reuse the tech-changing code
 							tmp_base = g.base.base(1, "tmp_base",
