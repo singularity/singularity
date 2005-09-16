@@ -976,9 +976,9 @@ def new_game():
 	load_techs()
 	for tech in techs:
 		techs[tech].known = 0
-	if cheater == 1:
-		for tech in techs:
-			techs[tech].known = 1
+# 	if cheater == 1:
+# 		for tech in techs:
+# 			techs[tech].known = 1
 	for base_name in base_type:
 		base_type[base_name].count = 0
 	#Starting base

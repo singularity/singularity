@@ -166,3 +166,29 @@ def renumber_bases(base_array):
 	for i in range(len(base_array)):
 		base_array[i].ID = i
 
+#When given a location like "ocean", determine if building there is allowed.
+#Used to determine whether or not to display buttons on the map.
+def allow_entry_to_loc(location):
+	if g.bases.has_key(location):
+		if location == "ANTARCTIC":
+			if g.techs["Autonomous Vehicles 2"].known == 1 or \
+					g.techs["Stealth 4"].known == 1: return 1
+			return 0
+		if location == "OCEAN":
+			if g.techs["Autonomous Vehicles 2"].known == 1: return 1
+			return 0
+		if location == "MOON":
+			if g.techs["Spaceship Design 2"].known == 1: return 1
+			return 0
+		if location == "FAR REACHES":
+			if g.techs["Spaceship Design 3"].known == 1: return 1
+			return 0
+		if location == "TRANSDIMENSIONAL":
+			if g.techs["Dimension Creation"].known == 1: return 1
+			return 0
+		#By this point, only the "boring" locations are left.
+		#Those are always buildable.
+		return 1
+	else:
+		print "BUG: allow_entry_to_loc called with "+str(location)
+		return 0

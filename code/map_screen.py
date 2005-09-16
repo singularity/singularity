@@ -264,6 +264,8 @@ def map_loop():
 					display_base_list("FAR REACHES", menu_buttons)
 				elif event.key == pygame.K_r:
 					display_base_list("TRANSDIMENSIONAL", menu_buttons)
+				elif event.key == pygame.K_BACKQUOTE:
+					display_base_list("TRANSDIMENSIONAL", menu_buttons)
 
 			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
@@ -352,32 +354,9 @@ def refresh_map(menu_buttons):
 		if g.bases.has_key(button.button_id):
 			#determine if building in a location is possible. If so, show the
 			#button.
-			if button.button_id == "ANTARCTIC":
-				if g.techs["Autonomous Vehicles 2"].known == 1 or \
-						g.techs["Stealth 4"].known == 1:
-					button.visible = 1
-				else:
-					button.visible = 0
-			if button.button_id == "OCEAN":
-				if g.techs["Autonomous Vehicles 2"].known == 1:
-					button.visible = 1
-				else:
-					button.visible = 0
-			if button.button_id == "MOON":
-				if g.techs["Spaceship Design 2"].known == 1:
-					button.visible = 1
-				else:
-					button.visible = 0
-			if button.button_id == "FAR REACHES":
-				if g.techs["Spaceship Design 3"].known == 1:
-					button.visible = 1
-				else:
-					button.visible = 0
-			if button.button_id == "TRANSDIMENSIONAL":
-				if g.techs["Dimension Creation"].known == 1:
-					button.visible = 1
-				else:
-					button.visible = 0
+			if g.base.allow_entry_to_loc(button.button_id) == 1:
+				button.visible = 1
+			else: button.visible = 0
 
 			button.text = button.button_id + " ("
 			button.text += str(len(g.bases[button.button_id]))+")"
@@ -386,6 +365,8 @@ def refresh_map(menu_buttons):
 	pygame.display.flip()
 
 def display_base_list(location, menu_buttons):
+	if g.base.allow_entry_to_loc(location) == 0: return
+
 	tmp = display_base_list_inner(location)
 	refresh_map(menu_buttons)
 	pygame.display.flip()
