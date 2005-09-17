@@ -51,10 +51,10 @@ class item:
 		self.built = 1
 	def work_on(self, minutes):
 		if self.built == 1: return
-		if self.cost[2] == 0:
+		tmp_base_time = (self.cost[2] * g.pl.labor_bonus) /10000
+		if tmp_base_time == 0:
 			money_towards = self.cost[0]
 		else:
-			tmp_base_time = (self.cost[2]* g.pl.labor_bonus) /10000
 			money_towards=(minutes*self.cost[0]) / (tmp_base_time)
 		if money_towards <= g.pl.cash:
 			g.pl.cash -= money_towards

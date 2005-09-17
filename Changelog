@@ -1,5 +1,8 @@
 Endgame: Singularity Changelog
 
+v0.20 (released 2005.09.??):
+- Game will not crash when building a base in rare circumstances
+  (emh; Christan Brink for bug report)
 v0.20 (released 2005.09.14):
 - Adjusted the README. (Phil)
 - Added suspicion display. (emh)

@@ -88,64 +88,51 @@ def show_base(base):
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE: return
-				elif event.key == pygame.K_b: return
-				elif event.key == pygame.K_c:
-					change_tech(base)
+				elif event.key == pygame.K_p:
+					build_item(base, "compute")
 					refresh_base(menu_buttons, base)
-# 				elif event.key == pygame.K_n:
-# 					build_item(base)
-# 					refresh_base(menu_buttons, base)
-			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-				for button in menu_buttons:
-					if button.is_over(event.pos):
-						if button.button_id == "BACK":
-							g.play_click()
-							return
-						if button.button_id == "CHANGE":
-							g.play_click()
-							change_tech(base)
-							refresh_base(menu_buttons, base)
- 						elif button.button_id == "C_PROCESSOR":
-							g.play_click()
-							build_item(base, "compute")
-							refresh_base(menu_buttons, base)
- 						elif button.button_id == "C_REACTOR":
-							g.play_click()
-							build_item(base, "react")
-							refresh_base(menu_buttons, base)
- 						elif button.button_id == "C_NETWORK":
-							g.play_click()
-							build_item(base, "network")
-							refresh_base(menu_buttons, base)
- 						elif button.button_id == "C_SECURITY":
-							g.play_click()
-							build_item(base, "security")
-							refresh_base(menu_buttons, base)
-						elif button.xy[1] != -1 and button.xy[1] != g.screen_size[1]-25:
-							if button.xy[0] == event.pos[0] or \
-									button.xy[1] == event.pos[1]: continue
-							g.play_click()
-							build_item(base)
-							refresh_base(menu_buttons, base)
+				elif event.key == pygame.K_r:
+					build_item(base, "react")
+					refresh_base(menu_buttons, base)
+				elif event.key == pygame.K_n:
+					build_item(base, "network")
+					refresh_base(menu_buttons, base)
+				elif event.key == pygame.K_s:
+					build_item(base, "security")
+					refresh_base(menu_buttons, base)
 			elif event.type == pygame.MOUSEMOTION:
-				#I can't use the generic function because of the
-				#item buttons
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-# 				new_sel_button = -1
-# 				for button_num in range(len(menu_buttons)):
-# 					if menu_buttons[button_num].is_over(event.pos) == 1:
-# 						if menu_buttons[button_num].text == "":
-# 							new_sel_button = -1
-# 							break
-# 						new_sel_button = button_num
-# 						break
-# 				if sel_button != new_sel_button:
-# 					if sel_button != -1:
-# 						menu_buttons[sel_button].refresh_button(0)
-# 					if new_sel_button != -1:
-# 						menu_buttons[new_sel_button].refresh_button(1)
-# 					sel_button = new_sel_button
-# 					pygame.display.flip()
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "BACK":
+						g.play_click()
+						return
+					if button.button_id == "CHANGE":
+						g.play_click()
+						change_tech(base)
+						refresh_base(menu_buttons, base)
+					elif button.button_id == "C_PROCESSOR":
+						g.play_click()
+						build_item(base, "compute")
+						refresh_base(menu_buttons, base)
+					elif button.button_id == "C_REACTOR":
+						g.play_click()
+						build_item(base, "react")
+						refresh_base(menu_buttons, base)
+					elif button.button_id == "C_NETWORK":
+						g.play_click()
+						build_item(base, "network")
+						refresh_base(menu_buttons, base)
+					elif button.button_id == "C_SECURITY":
+						g.play_click()
+						build_item(base, "security")
+						refresh_base(menu_buttons, base)
+					elif button.xy[1] != -1 and button.xy[1] != g.screen_size[1]-25:
+						if button.xy[0] == event.pos[0] or \
+								button.xy[1] == event.pos[1]: continue
+						g.play_click()
+						build_item(base)
+						refresh_base(menu_buttons, base)
 
 def refresh_base(menu_buttons, base):
 	g.screen.fill(g.colors["black"])
@@ -298,24 +285,15 @@ def build_item(base, item_type):
 					listbox.refresh_list(item_listbox, item_scroll,
 										list_pos, item_list)
 				elif event.key == pygame.K_q: return -1
-				elif event.key == pygame.K_b: return -1
-				elif event.key == pygame.K_u:
-					actual_build(base, item_list[list_pos], item_type)
-					return
+# 				elif event.key == pygame.K_b: return -1
+# 				elif event.key == pygame.K_u:
+# 					actual_build(base, item_list[list_pos], item_type)
+# 					return
 				elif event.key == pygame.K_RETURN:
 					actual_build(base, item_list[list_pos], item_type)
 					return
 			elif event.type == pygame.MOUSEBUTTONUP:
-				if event.button == 1: #click
-					for button in menu_buttons:
-						if button.is_over(event.pos):
-							if button.button_id == "BUILD":
-								g.play_click()
-								actual_build(base, item_list[list_pos], item_type)
-								return
-							if button.button_id == "BACK":
-								g.play_click()
-								return -1
+				if event.button == 1:
 					tmp = item_scroll.is_over(event.pos)
 					if tmp != -1:
 						if tmp == 1:
@@ -358,6 +336,15 @@ def build_item(base, item_type):
 										list_pos, item_list)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "BUILD":
+						g.play_click()
+						actual_build(base, item_list[list_pos], item_type)
+						return
+					if button.button_id == "BACK":
+						g.play_click()
+						return -1
 
 
 def actual_build(base, item_name, item_type):

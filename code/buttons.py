@@ -94,6 +94,17 @@ class button:
 		xy[0] <= self.xy[0] + self.size[0] and xy[1] <= self.xy[1] + self.size[1]:
 			return 1
 		return 0
+	#Returns 1 if the event should activate this button. Checks for keypresses
+	#and button clicks.
+	def was_activated(self, event):
+		if self.visible == 0: return 0
+		if event.type == pygame.KEYDOWN and self.underline_char != -1:
+			if event.unicode.lower() == self.text[self.underline_char].lower():
+				return 1
+			return 0
+		elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+			return self.is_over(event.pos)
+		else: return 0
 
 def refresh_buttons(sel_button, menu_buttons, event):
 	new_sel_button = -1
