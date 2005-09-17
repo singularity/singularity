@@ -162,6 +162,7 @@ class player_class:
 						if g.jobs.has_key(base_name.studying):
 							self.cash += (g.jobs[base_name.studying][0]*
 										base_name.processor_time())
+							#TECH
 							if g.techs["ID 5"].known == 1:
 								#10% bonus income
 								self.cash += (g.jobs[base_name.studying][0]*

@@ -171,6 +171,7 @@ def renumber_bases(base_array):
 def allow_entry_to_loc(location):
 	if g.bases.has_key(location):
 		if location == "ANTARCTIC":
+			#TECH (also, look below)
 			if g.techs["Autonomous Vehicles 2"].known == 1 or \
 					g.techs["Stealth 4"].known == 1: return 1
 			return 0

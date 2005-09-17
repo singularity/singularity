@@ -376,6 +376,7 @@ def change_tech(base):
 
 	item_list = []
 	item_list.append("Nothing")
+	#TECH
 	if g.techs["ID 4"].known == 1: item_list.append("Expert Jobs")
 	elif g.techs["ID 3"].known == 1: item_list.append("Intermediate Jobs")
 	elif g.techs["ID 1"].known == 1: item_list.append("Basic Jobs")
@@ -512,6 +513,7 @@ def refresh_tech(base, tech_name, xy):
 	if g.jobs.has_key (tech_name):
 		g.print_string(g.screen, tech_name,
 			g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
+		#TECH
 		if g.techs["ID 5"].known == 1:
 			g.print_string(g.screen,
 				g.add_commas(str(int(
