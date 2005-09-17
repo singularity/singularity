@@ -285,35 +285,11 @@ def build_item(base, item_type):
 					listbox.refresh_list(item_listbox, item_scroll,
 										list_pos, item_list)
 				elif event.key == pygame.K_q: return -1
-# 				elif event.key == pygame.K_b: return -1
-# 				elif event.key == pygame.K_u:
-# 					actual_build(base, item_list[list_pos], item_type)
-# 					return
 				elif event.key == pygame.K_RETURN:
 					actual_build(base, item_list[list_pos], item_type)
 					return
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button == 1:
-					tmp = item_scroll.is_over(event.pos)
-					if tmp != -1:
-						if tmp == 1:
-							list_pos -= 1
-							if list_pos < 0:
-								list_pos = 0
-						if tmp == 2:
-							list_pos += 1
-							if list_pos >= len(item_list):
-								list_pos = len(item_list) - 1
-						if tmp == 3:
-							list_pos -= list_size
-							if list_pos < 0:
-								list_pos = 0
-						if tmp == 4:
-							list_pos += list_size
-							if list_pos >= len(item_list) - 1:
-								list_pos = len(item_list) - 1
-						listbox.refresh_list(item_listbox, item_scroll,
-										list_pos, item_list)
 					tmp = item_listbox.is_over(event.pos)
 					if tmp != -1:
 						list_pos = (list_pos / list_size)*list_size + tmp
@@ -345,6 +321,12 @@ def build_item(base, item_type):
 					if button.button_id == "BACK":
 						g.play_click()
 						return -1
+			tmp = item_scroll.adjust_pos(event, list_pos, item_list)
+			if tmp != list_pos:
+				list_pos = tmp
+				listbox.refresh_list(item_listbox, item_scroll, list_pos,
+					item_list)
+
 
 
 def actual_build(base, item_name, item_type):
@@ -456,43 +438,12 @@ def change_tech(base):
 					listbox.refresh_list(tech_list, tech_scroll,
 										list_pos, item_list)
 				elif event.key == pygame.K_q: return -1
-				elif event.key == pygame.K_b: return -1
 				elif event.key == pygame.K_RETURN:
 					base.studying = item_list[list_pos]
 					if base.studying == "Nothing": base.studying = ""
 					return
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button == 1:
-					for button in menu_buttons:
-						if button.is_over(event.pos):
-							if button.button_id == "CHANGE":
-								g.play_click()
-								base.studying = item_list[list_pos]
-								if base.studying == "Nothing": base.studying = ""
-								return
-							if button.button_id == "BACK":
-								g.play_click()
-								return -1
-					tmp = tech_scroll.is_over(event.pos)
-					if tmp != -1:
-						if tmp == 1:
-							list_pos -= 1
-							if list_pos < 0:
-								list_pos = 0
-						if tmp == 2:
-							list_pos += 1
-							if list_pos >= len(item_list):
-								list_pos = len(item_list) - 1
-						if tmp == 3:
-							list_pos -= list_size
-							if list_pos < 0:
-								list_pos = 0
-						if tmp == 4:
-							list_pos += list_size
-							if list_pos >= len(item_list) - 1:
-								list_pos = len(item_list) - 1
-						listbox.refresh_list(tech_list, tech_scroll,
-										list_pos, item_list)
 					tmp = tech_list.is_over(event.pos)
 					if tmp != -1:
 						list_pos = (list_pos / list_size)*list_size + tmp
@@ -515,6 +466,21 @@ def change_tech(base):
 										list_pos, item_list)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "CHANGE":
+						g.play_click()
+						base.studying = item_list[list_pos]
+						if base.studying == "Nothing": base.studying = ""
+						return
+					if button.button_id == "BACK":
+						g.play_click()
+						return -1
+			tmp = tech_scroll.adjust_pos(event, list_pos, item_list)
+			if tmp != list_pos:
+				list_pos = tmp
+				listbox.refresh_list(tech_list, tech_scroll, list_pos,
+					item_list)
 
 
 

@@ -62,31 +62,25 @@ def display_pause_menu():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE: return 0
-				elif event.key == pygame.K_r: return 0
-				elif event.key == pygame.K_s: return 1
-				elif event.key == pygame.K_n: return 2
-				elif event.key == pygame.K_l: return 3
-				elif event.key == pygame.K_q: return 4
-			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-				for button in menu_buttons:
-					if button.is_over(event.pos):
-						if button.button_id == "RESUME":
-							g.play_click()
-							return 0
-						if button.button_id == "SAVE GAME":
-							g.play_click()
-							return 1
-						if button.button_id == "NEW GAME":
-							g.play_click()
-							return 2
-						elif button.button_id == "LOAD GAME":
-							g.play_click()
-							return 3
-						if button.button_id == "QUIT":
-							g.play_click()
-							return 4
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "RESUME":
+						g.play_click()
+						return 0
+					if button.button_id == "SAVE GAME":
+						g.play_click()
+						return 1
+					if button.button_id == "NEW GAME":
+						g.play_click()
+						return 2
+					elif button.button_id == "LOAD GAME":
+						g.play_click()
+						return 3
+					if button.button_id == "QUIT":
+						g.play_click()
+						return 4
 
 def display_cheat_list(menu_buttons):
 	if g.cheater == 0: return
@@ -123,68 +117,39 @@ def display_cheat_list(menu_buttons):
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE: return 0
-				elif event.key == pygame.K_r: return
-				elif event.key == pygame.K_s:
-					g.curr_speed = 864000
-					return
-				elif event.key == pygame.K_e:
-					for base_loc in g.bases:
-						for base_name in g.bases[base_loc]:
-							if base_name.built == 0:
-								base_name.study((999999999, 999999999,
-										999999999))
-					return
-				elif event.key == pygame.K_t:
-					#create a temp base, in order to reuse the tech-changing code
-					tmp_base = g.base.base(1, "tmp_base",
-					g.base_type["Reality Bubble"], 1)
-					base_screen.change_tech(tmp_base)
-					if g.techs.has_key(tmp_base.studying):
-						g.techs[tmp_base.studying].gain_tech()
-					return
-				elif event.key == pygame.K_m:
-					cash_amount = g.create_textbox("How much cash?",
-					"", g.font[0][18],
-					(g.screen_size[0]/2-100, 100), (200, 100), 25,
-					g.colors["dark_blue"], g.colors["white"],
-					g.colors["white"], g.colors["light_blue"])
-					if cash_amount.isdigit() == False: return
-					g.pl.cash += int(cash_amount)
-					return
-			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-				for button in menu_buttons:
-					if button.is_over(event.pos):
-						if button.button_id == "RESUME":
-							return
-						if button.button_id == "SUPERSPEED":
-							g.curr_speed = 864000
-							return
-						if button.button_id == "END CONSTR.":
-							for base_loc in g.bases:
-								for base_name in g.bases[base_loc]:
-									if base_name.built == 0:
-										base_name.study((999999999, 999999999,
-												999999999))
-							return
-						elif button.button_id == "GIVE TECH":
-							#create a temp base, in order to reuse the tech-changing code
-							tmp_base = g.base.base(1, "tmp_base",
-							g.base_type["Reality Bubble"], 1)
-							base_screen.change_tech(tmp_base)
-							if g.techs.has_key(tmp_base.studying):
-								g.techs[tmp_base.studying].gain_tech()
-							return
-						if button.button_id == "GIVE MONEY":
-							cash_amount = g.create_textbox("How much cash?",
-							"", g.font[0][18],
-							(g.screen_size[0]/2-100, 100), (200, 100), 25,
-							g.colors["dark_blue"], g.colors["white"],
-							g.colors["white"], g.colors["light_blue"])
-							if cash_amount.isdigit() == False: return
-							g.pl.cash += int(cash_amount)
-							return
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "RESUME":
+						return
+					if button.button_id == "SUPERSPEED":
+						g.curr_speed = 864000
+						return
+					if button.button_id == "END CONSTR.":
+						for base_loc in g.bases:
+							for base_name in g.bases[base_loc]:
+								if base_name.built == 0:
+									base_name.study((999999999, 999999999,
+											999999999))
+						return
+					elif button.button_id == "GIVE TECH":
+						#create a temp base, in order to reuse the tech-changing code
+						tmp_base = g.base.base(1, "tmp_base",
+						g.base_type["Reality Bubble"], 1)
+						base_screen.change_tech(tmp_base)
+						if g.techs.has_key(tmp_base.studying):
+							g.techs[tmp_base.studying].gain_tech()
+						return
+					if button.button_id == "GIVE MONEY":
+						cash_amount = g.create_textbox("How much cash?",
+						"", g.font[0][18],
+						(g.screen_size[0]/2-100, 100), (200, 100), 25,
+						g.colors["dark_blue"], g.colors["white"],
+						g.colors["white"], g.colors["light_blue"])
+						if cash_amount.isdigit() == False: return
+						g.pl.cash += int(cash_amount)
+						return
 
 def map_loop():
 	menu_buttons = []
@@ -336,87 +301,63 @@ def map_loop():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_ESCAPE or \
-							event.key == pygame.K_o:
+				if event.key == pygame.K_ESCAPE:
 					tmp = display_pause_menu()
 					tmp = handle_pause_menu(tmp, menu_buttons)
 					if tmp != -1: return tmp
-				elif event.key == pygame.K_n:
-					display_base_list("N AMERICA", menu_buttons)
-				elif event.key == pygame.K_s:
-					display_base_list("S AMERICA", menu_buttons)
-				elif event.key == pygame.K_e:
-					display_base_list("EUROPE", menu_buttons)
-				elif event.key == pygame.K_a:
-					display_base_list("ASIA", menu_buttons)
-				elif event.key == pygame.K_i:
-					display_base_list("AFRICA", menu_buttons)
-				elif event.key == pygame.K_t:
-					display_base_list("ANTARCTIC", menu_buttons)
-				elif event.key == pygame.K_c:
-					display_base_list("OCEAN", menu_buttons)
-				elif event.key == pygame.K_m:
-					display_base_list("MOON", menu_buttons)
-				elif event.key == pygame.K_f:
-					display_base_list("FAR REACHES", menu_buttons)
-				elif event.key == pygame.K_r:
-					display_base_list("TRANSDIMENSIONAL", menu_buttons)
 				elif event.key == pygame.K_BACKQUOTE:
 					display_cheat_list(menu_buttons)
 					refresh_map(menu_buttons)
 
-			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-				for button in menu_buttons:
-					if button.is_over(event.pos):
-						if button.button_id == "OPTIONS":
-							g.play_click()
-							tmp = display_pause_menu()
-							tmp = handle_pause_menu(tmp, menu_buttons)
-							if tmp != -1: return tmp
-						elif button.button_id == "RESEARCH":
-							g.play_click()
-							tmp = display_pause_menu()
-							tmp = handle_pause_menu(tmp, menu_buttons)
-							if tmp != -1: return tmp
-						elif button.button_id == "ii":
-							g.play_click()
-							g.curr_speed = 0
-							for button2 in menu_buttons:
-								button2.refresh_button(0)
-							button.refresh_button(1)
-						elif button.button_id == ">":
-							g.play_click()
-							g.curr_speed = 1
-							for button2 in menu_buttons:
-								button2.refresh_button(0)
-							button.refresh_button(1)
-						elif button.button_id == ">>":
-							g.play_click()
-							g.curr_speed = 60
-							for button2 in menu_buttons:
-								button2.refresh_button(0)
-							button.refresh_button(1)
-						elif button.button_id == ">>>":
-							g.play_click()
-							g.curr_speed = 7200
-							for button2 in menu_buttons:
-								button2.refresh_button(0)
-							button.refresh_button(1)
-						elif button.button_id == ">>>>":
-							g.play_click()
-							g.curr_speed = 432000
-							for button2 in menu_buttons:
-								button2.refresh_button(0)
-							button.refresh_button(1)
-						elif button.button_id == "SUSPICION": pass
-						elif button.xy[1] != -1: #ignore the timer
-							g.play_click()
-							display_base_list(button.button_id, menu_buttons)
-				pygame.display.flip()
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-
-
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "OPTIONS":
+						g.play_click()
+						tmp = display_pause_menu()
+						tmp = handle_pause_menu(tmp, menu_buttons)
+						if tmp != -1: return tmp
+					elif button.button_id == "RESEARCH":
+						g.play_click()
+						tmp = display_pause_menu()
+						tmp = handle_pause_menu(tmp, menu_buttons)
+						if tmp != -1: return tmp
+					elif button.button_id == "ii":
+						g.play_click()
+						g.curr_speed = 0
+						for button2 in menu_buttons:
+							button2.refresh_button(0)
+						button.refresh_button(1)
+					elif button.button_id == ">":
+						g.play_click()
+						g.curr_speed = 1
+						for button2 in menu_buttons:
+							button2.refresh_button(0)
+						button.refresh_button(1)
+					elif button.button_id == ">>":
+						g.play_click()
+						g.curr_speed = 60
+						for button2 in menu_buttons:
+							button2.refresh_button(0)
+						button.refresh_button(1)
+					elif button.button_id == ">>>":
+						g.play_click()
+						g.curr_speed = 7200
+						for button2 in menu_buttons:
+							button2.refresh_button(0)
+						button.refresh_button(1)
+					elif button.button_id == ">>>>":
+						g.play_click()
+						g.curr_speed = 432000
+						for button2 in menu_buttons:
+							button2.refresh_button(0)
+						button.refresh_button(1)
+					elif button.button_id == "SUSPICION": pass
+					elif button.xy[1] != -1: #ignore the timer
+						g.play_click()
+						display_base_list(button.button_id, menu_buttons)
+					pygame.display.flip()
 
 
 def handle_pause_menu(tmp, menu_buttons):
@@ -573,45 +514,10 @@ def display_base_list_inner(location):
 					listbox.refresh_list(bases_list, bases_scroll,
 										base_pos, temp_base_list)
 				elif event.key == pygame.K_q: return -1
-				elif event.key == pygame.K_n: return -2
-				elif event.key == pygame.K_b: return -1
-				elif event.key == pygame.K_o:
-					return base_id_list[base_pos]
 				elif event.key == pygame.K_RETURN:
 					return base_id_list[base_pos]
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button == 1:
-					for button in menu_buttons:
-						if button.is_over(event.pos):
-							if button.button_id == "OPEN":
-								g.play_click()
-								return base_id_list[base_pos]
-							elif button.button_id == "NEW":
-								g.play_click()
-								return -2
-							if button.button_id == "BACK":
-								g.play_click()
-								return -1
-					tmp = bases_scroll.is_over(event.pos)
-					if tmp != -1:
-						if tmp == 1:
-							base_pos -= 1
-							if base_pos < 0:
-								base_pos = 0
-						if tmp == 2:
-							base_pos += 1
-							if base_pos >= len(temp_base_list):
-								base_pos = len(temp_base_list) - 1
-						if tmp == 3:
-							base_pos -= base_list_size
-							if base_pos < 0:
-								base_pos = 0
-						if tmp == 4:
-							base_pos += base_list_size
-							if base_pos >= len(temp_base_list) - 1:
-								base_pos = len(temp_base_list) - 1
-						listbox.refresh_list(bases_list, bases_scroll,
-										base_pos, temp_base_list)
 					tmp = bases_list.is_over(event.pos)
 					if tmp != -1:
 						base_pos = (base_pos/base_list_size)*base_list_size + tmp
@@ -631,6 +537,22 @@ def display_base_list_inner(location):
 										base_pos, temp_base_list)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "OPEN":
+						g.play_click()
+						return base_id_list[base_pos]
+					elif button.button_id == "NEW":
+						g.play_click()
+						return -2
+					if button.button_id == "BACK":
+						g.play_click()
+						return -1
+			tmp = bases_scroll.adjust_pos(event, base_pos, temp_base_list)
+			if tmp != base_pos:
+				base_pos = tmp
+				listbox.refresh_list(bases_list, bases_scroll,
+										base_pos, temp_base_list)
 
 
 def build_new_base_window(location):
@@ -693,21 +615,10 @@ def build_new_base_window(location):
 					listbox.refresh_list(bases_list, 0,
 										base_pos, temp_base_list)
 				elif event.key == pygame.K_q: return -1
-				elif event.key == pygame.K_b: return -1
-				elif event.key == pygame.K_u:
-					return temp_base_list[base_pos]
 				elif event.key == pygame.K_RETURN:
 					return temp_base_list[base_pos]
 			elif event.type == pygame.MOUSEBUTTONUP:
 				if event.button == 1:
-					for button in menu_buttons:
-						if button.is_over(event.pos):
-							if button.button_id == "BUILD":
-								g.play_click()
-								return temp_base_list[base_pos]
-							if button.button_id == "BACK":
-								g.play_click()
-								return -1
 					tmp = bases_list.is_over(event.pos)
 					if tmp != -1:
 						base_pos = (base_pos/base_list_size)*base_list_size + tmp
@@ -730,6 +641,14 @@ def build_new_base_window(location):
 										base_pos, temp_base_list)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "BUILD":
+						g.play_click()
+						return temp_base_list[base_pos]
+					if button.button_id == "BACK":
+						g.play_click()
+						return -1
 
 def refresh_new_base(base_name, xy):
 	g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))

@@ -77,9 +77,32 @@ class scrollbar:
 				return 2
 			elif xy[1] <= self.xy[1]+self.start_y: #upper gutter
 				return 3
-			elif xy[1] >= self.xy[1]+self.start_y + self.size_y: #lower gutter
+			elif xy[1] >= self.xy[1]+self.start_y + self.size_y: #lower gutterx
 				return 4
 			#If I want the gripper working, code here.
 		return -1
+	def adjust_pos(self, event, list_pos, item_list):
+		if event.type != pygame.MOUSEBUTTONUP: return list_pos
+		if event.button != 1: return list_pos
+		xy = event.pos
+		tmp = self.is_over(xy)
+		if tmp == 1:
+			list_pos -= 1
+			if list_pos < 0:
+				list_pos = 0
+		elif tmp == 2:
+			list_pos += 1
+			if list_pos >= len(item_list):
+				list_pos = len(item_list) - 1
+		elif tmp == 3:
+			list_pos -= self.viewable_items
+			if list_pos < 0:
+				list_pos = 0
+		elif tmp == 4:
+			list_pos += self.viewable_items
+			if list_pos >= len(item_list) - 1:
+				list_pos = len(item_list) - 1
+		return list_pos
+
 
 

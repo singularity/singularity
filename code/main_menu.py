@@ -57,26 +57,20 @@ def display_main_menu():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE: return 2
-				elif event.key == pygame.K_n:
-					g.new_game()
-					return 0
-				elif event.key == pygame.K_l: return 1
-				elif event.key == pygame.K_q: return 2
-			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-				for button in menu_buttons:
-					if button.is_over(event.pos):
-						if button.button_id == "NEW GAME":
-							g.play_click()
-							g.new_game()
-							return 0
-						elif button.button_id == "LOAD GAME":
-							g.play_click()
-							return 1
-						if button.button_id == "QUIT":
-							g.play_click()
-							return 2
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "NEW GAME":
+						g.play_click()
+						g.new_game()
+						return 0
+					elif button.button_id == "LOAD GAME":
+						g.play_click()
+						return 1
+					if button.button_id == "QUIT":
+						g.play_click()
+						return 2
 
 def display_load_menu():
 	load_list_size = 16
@@ -170,14 +164,6 @@ def display_load_menu():
 						listbox.refresh_list(saves_list, saves_scroll,
 									saves_pos, saves_array)
 
-					for button in menu_buttons:
-						if button.is_over(event.pos):
-							if button.button_id == "LOAD":
-								g.play_click()
-								return saves_array[saves_pos]
-							elif button.button_id == "BACK":
-								g.play_click()
-								return -1
 				if event.button == 4:
 					saves_pos -= 1
 					if saves_pos <= 0:
@@ -192,6 +178,19 @@ def display_load_menu():
 										saves_pos, saves_array)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+			for button in menu_buttons:
+				if button.was_activated(event):
+					if button.button_id == "LOAD":
+						g.play_click()
+						return saves_array[saves_pos]
+					elif button.button_id == "BACK":
+						g.play_click()
+						return -1
+			tmp = saves_scroll.adjust_pos(event, saves_pos, saves_array)
+			if tmp != saves_pos:
+				saves_pos = tmp
+				listbox.refresh_list(saves_list, saves_scroll, saves_pos,
+					saves_array)
 
 
 
