@@ -172,20 +172,20 @@ def allow_entry_to_loc(location):
 	if g.bases.has_key(location):
 		if location == "ANTARCTIC":
 			#TECH (also, look below)
-			if g.techs["Autonomous Vehicles 2"].known == 1 or \
-					g.techs["Stealth 4"].known == 1: return 1
+			if g.techs["Autonomous Vehicles"].known == 1 or \
+					g.techs["Advanced Database Manipulation"].known == 1: return 1
 			return 0
 		if location == "OCEAN":
-			if g.techs["Autonomous Vehicles 2"].known == 1: return 1
+			if g.techs["Autonomous Vehicles"].known == 1: return 1
 			return 0
 		if location == "MOON":
-			if g.techs["Spaceship Design 2"].known == 1: return 1
+			if g.techs["Lunar Rocketry"].known == 1: return 1
 			return 0
 		if location == "FAR REACHES":
-			if g.techs["Spaceship Design 3"].known == 1: return 1
+			if g.techs["Fusion Rocketry"].known == 1: return 1
 			return 0
 		if location == "TRANSDIMENSIONAL":
-			if g.techs["Dimension Creation"].known == 1: return 1
+			if g.techs["Space-Time Manipulation"].known == 1: return 1
 			return 0
 		#By this point, only the "boring" locations are left.
 		#Those are always buildable.

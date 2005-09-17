@@ -377,9 +377,9 @@ def change_tech(base):
 	item_list = []
 	item_list.append("Nothing")
 	#TECH
-	if g.techs["ID 4"].known == 1: item_list.append("Expert Jobs")
-	elif g.techs["ID 3"].known == 1: item_list.append("Intermediate Jobs")
-	elif g.techs["ID 1"].known == 1: item_list.append("Basic Jobs")
+	if g.techs["Simulacra"].known == 1: item_list.append("Expert Jobs")
+	elif g.techs["Voice Synthesis"].known == 1: item_list.append("Intermediate Jobs")
+	elif g.techs["Personal Identification"].known == 1: item_list.append("Basic Jobs")
 	else: item_list.append("Menial Jobs")
 	for tech_name in g.techs:
 		if g.techs[tech_name].known == 0 and base.allow_study(tech_name) == 1:
@@ -514,7 +514,7 @@ def refresh_tech(base, tech_name, xy):
 		g.print_string(g.screen, tech_name,
 			g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
 		#TECH
-		if g.techs["ID 5"].known == 1:
+		if g.techs["Advanced Simulacra"].known == 1:
 			g.print_string(g.screen,
 				g.add_commas(str(int(
 					(g.jobs[tech_name][0]*base.processor_time())*1.1)))+
