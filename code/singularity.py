@@ -86,7 +86,7 @@ while 1:
 			load_okay = g.load_game(load_action)
 			if load_okay != -1:
 				game_action = map_screen.map_loop()
-			break
+			else: break
 	elif game_action == 2: #Quit
 		g.quit_game()
 
