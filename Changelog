@@ -1,14 +1,16 @@
 Endgame: Singularity Changelog
 
 v0.21 (released 2005.09.??):
-- Game will not crash when building a base or item in rare circumstances
+- Game will not crash when building a base or item in rare circumstances.
   (emh; Christan Brink (among others) for bug report)
 - Fixed a few broken keyboard shortcuts, and redid the code to make this bug
   harder to create. (emh)
 - Renamed almost all technologies. (Phil)
 - Various typos. (Phil)
 - The current speed will be highlighted. (emh; solitonwave Borg for suggestion)
-- Changed endgame tech name (emh; Daniel Radetsky for suggestion)
+- Changed endgame tech name. (emh; Daniel Radetsky for suggestion)
+- Simplified savegame format. (emh; anonymous for suggestion)
+- Fixed crash when loading a game, then starting a new game. (emh)
 
 v0.20 (released 2005.09.14):
 - Adjusted the README. (Phil)

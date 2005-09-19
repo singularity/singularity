@@ -408,6 +408,7 @@ def refresh_map(menu_buttons):
 				(g.screen_size[0], g.screen_size[0]/2)),
 				(0, g.screen_size[1]/2-g.screen_size[0]/4))
 	for button in menu_buttons:
+		button.stay_selected = 0
 		if g.bases.has_key(button.button_id):
 			#determine if building in a location is possible. If so, show the
 			#button.
@@ -418,6 +419,12 @@ def refresh_map(menu_buttons):
 			button.text = button.button_id + " ("
 			button.text += str(len(g.bases[button.button_id]))+")"
 			button.remake_button()
+		elif ((button.button_id == "ii" and g.curr_speed == 0) or
+				(button.button_id == ">" and g.curr_speed == 1) or
+				(button.button_id == ">>" and g.curr_speed == 60) or
+				(button.button_id == ">>>" and g.curr_speed == 7200) or
+				(button.button_id == ">>>>" and g.curr_speed == 432000)):
+			button.stay_selected = 1
 		button.refresh_button(0)
 	pygame.display.flip()
 
