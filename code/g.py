@@ -311,10 +311,10 @@ def save_game(savegame_name):
 	#If there is no save directory, make one.
 	if path.exists("../saves") == 0:
 		mkdir("../saves")
-	save_loc = "../saves/" + savegame_name
+	save_loc = "../saves/" + savegame_name + ".sav"
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
-	pickle.dump("singularity_0.21", savefile)
+	pickle.dump("singularity_0.22", savefile)
 
 	global default_savegame_name
 	default_savegame_name = savegame_name
@@ -381,17 +381,26 @@ def load_game(loadgame_name):
 	#If there is no save directory, make one.
 	if path.exists("../saves") == 0:
 		mkdir("../saves")
-	load_loc = "../saves/" + loadgame_name
-	if path.exists("../saves/"+loadgame_name) == 0:
-		print "file "+load_loc+" does not exist."
-		return -1
+	load_loc = "../saves/" + loadgame_name + ".sav"
+	if path.exists(load_loc) == 0:
+		# Try the old-style savefile location.  This should be removed in
+		# a few versions.
+		load_loc = "../saves/" + loadgame_name
+		if path.exists(load_loc) == 0:
+			print "file "+load_loc+" does not exist."
+			return -1
 	loadfile=open(load_loc, 'r')
 
 	#check the savefile version
 	load_version = pickle.load(loadfile)
-	if load_version != "singularity_0.21" and load_version != "singularity_0.20":
+	valid_savefile_versions = (
+		"singularity_0.20",
+		"singularity_0.21",
+		"singularity_0.22"
+	)
+	if load_version not in valid_savefile_versions:
 		loadfile.close()
-		print loadgame_name + " is not a savegame, or is old."
+		print loadgame_name + " is not a savegame, or is too old to work."
 		return -1
 	global default_savegame_name
 	default_savegame_name = loadgame_name

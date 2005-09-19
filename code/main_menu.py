@@ -82,8 +82,12 @@ def display_load_menu():
 	saves_array = []
 	temp_saves_array = listdir("../saves")
 	for save_name in temp_saves_array:
-		if save_name[:1] != "." and save_name  != "CVS":
-			saves_array.append(save_name)
+		if save_name[0] != "." and save_name != "CVS":
+			# If it's a new-style save, trim the .sav bit.
+			if len (save_name) > 4 and save_name[-4:] == ".sav":
+				save_name = save_name[:-4]
+			if save_name not in saves_array:
+				saves_array.append(save_name)
 
 	while len(saves_array) % load_list_size != 0 or len(saves_array) == 0:
 		saves_array.append("")
