@@ -1,9 +1,10 @@
 Endgame: Singularity Changelog
 
-v0.22 (released 2005.09.??):
+v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
   they will save with a .sav extension, and the old save will not be used
   any more. (Phil)
+- Fixed loading 0.20 saves with technologies currently being researched. (emh)
 
 v0.21 (released 2005.09.19):
 - Game will not crash when building a base or item in rare circumstances.
