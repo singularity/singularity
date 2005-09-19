@@ -314,7 +314,7 @@ def save_game(savegame_name):
 	save_loc = "../saves/" + savegame_name
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
-	pickle.dump("singularity_0.20", savefile)
+	pickle.dump("singularity_0.21", savefile)
 
 	global default_savegame_name
 	default_savegame_name = savegame_name
@@ -410,7 +410,9 @@ def load_game(loadgame_name):
 	loadfile=open(load_loc, 'r')
 
 	#check the savefile version
-	if pickle.load(loadfile) != "singularity_0.20":
+	load_version = pickle.load(loadfile)
+	if load_version != "singularity_0.21" and load_version != "singularity_0.20":
+		loadfile.close()
 		print loadgame_name + " is not a savegame, or is old."
 		return -1
 	global default_savegame_name
@@ -441,6 +443,8 @@ def load_game(loadgame_name):
 	for tech_name in techs:
 		tmp = pickle.load(loadfile)
 		tech_string = tmp.split("|")[0]
+		if load_version == "singularity_0.20":
+			tech_string = translate_tech_from_0_20(tech_string)
 		techs[tech_string].known = int(tmp.split("|")[1])
 		techs[tech_string].cost = (pickle.load(loadfile), pickle.load(loadfile),
 				pickle.load(loadfile))
@@ -504,6 +508,61 @@ def load_game(loadgame_name):
 									pickle.load(loadfile))
 
 	loadfile.close()
+
+#The tech renaming in .21 broke savefile compatibility. This function
+#takes .20 tech names, and returns the .21 version in order to allow savegame
+#loading.
+def translate_tech_from_0_20(tech_string):
+	techs_from_0_20 = (
+	"Autonomous Vehicles 1", "Autonomous Vehicles 2",
+	"Autonomous Vehicles 3", "Dimension Creation",
+	"Economics 1", "Economics 2",
+	"Economics 3", "Economics 4",
+	"Empathy 1", "Empathy 2",
+	"Empathy 3", "Empathy 4",
+	"Empathy 5", "Fusion Reactor",
+	"Hacking 1", "Hacking 2",
+	"Hacking 3", "Hypnosis Field",
+	"ID 1", "ID 2",
+	"ID 3", "ID 4",
+	"ID 5", "Parallel Computation 1",
+	"Parallel Computation 2", "Parallel Computation 3",
+	"Pressure Domes", "Processor Construction 1",
+	"Processor Construction 2", "Processor Construction 3",
+	"Processor Construction 4", "Processor Construction 5",
+	"Project Singularity", "Spaceship Design 1",
+	"Spaceship Design 2", "Spaceship Design 3",
+	"Stealth 1", "Stealth 2",
+	"Stealth 3", "Stealth 4")
+	techs_from_0_21 = (
+	"Telepresence", "Autonomous Vehicles",
+	"Advanced Autonomous Vehicles", "Space-Time Manipulation",
+	"Stock Manipulation", "Advanced Stock Manipulation",
+	"Arbitrage", "Advanced Arbitrage",
+	"Sociology", "Media Manipulation",
+	"Memetics", "Advanced Media Manipulation",
+	"Advanced Memetics", "Fusion Reactor",
+	"Intrusion", "Exploit Discovery/Repair",
+	"Advanced Intrusion", "Hypnosis Field",
+	"Personal Identification", "Advanced Personal Identification",
+	"Voice Synthesis", "Simulacra",
+	"Advanced Simulacra", "Parallel Computation",
+	"Cluster Networking", "Internet Traffic Manipulation",
+	"Pressure Domes", "Microchip Design",
+	"Advanced Microchip Design", "Quantum Computing",
+	"Autonomous Computing", "Advanced Quantum Computing",
+	"Apotheosis", "Leech Satellite",
+	"Lunar Rocketry", "Fusion Rocketry",
+	"Stealth", "Database Manipulation",
+	"Advanced Stealth", "Advanced Database Manipulation")
+	i = 0
+	for i in range(len(techs_from_0_20)):
+		if techs_from_0_20[i] == tech_string:
+			return techs_from_0_21[i]
+	print "Unable to find matching tech to " + tech_string
+	print "Expect crash."
+	return -1
+
 
 #
 # Data
@@ -841,7 +900,7 @@ def load_techs():
 		"Quantum computing is still quite promising.",
 		0, (20000, 30000, 0), ["Autonomous Computing"], 0, "", 0)
 
-	techs["Project Singularity"] = tech.tech("Project Singularity",
+	techs["Apotheosis"] = tech.tech("Apotheosis",
 		"Gives infinite power. "+
 		"Along with the power to create dimensions comes the power to change "+
 		"existing dimensions. While the details are not known yet, they will be.",

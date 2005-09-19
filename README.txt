@@ -6,6 +6,11 @@ Windows, and Mac OSX as long as the preceding requirements are met. However,
 all development was done in Linux, so glitches may be present in OSX and
 Windows.
 
+Windows:
+You will need to install Python (http://python.org/download/) and PyGame:
+(http://www.pygame.org/download.shtml). Once these are installed, double-click
+on singularity.py to start the game.
+
 Running the game:
 on Linux, running the shell script "Endgame_Linux" will start the game. On
 other platforms, type "python singularity.py".

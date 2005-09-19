@@ -165,18 +165,23 @@ def map_loop():
 	menu_buttons.append(buttons.button((300, 0), (25, 25),
 		"ii", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	if g.curr_speed == 0: menu_buttons[2].stay_selected = 1
 	menu_buttons.append(buttons.button((324, 0), (25, 25),
 		">", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	if g.curr_speed == 1: menu_buttons[3].stay_selected = 1
 	menu_buttons.append(buttons.button((348, 0), (25, 25),
 		">>", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	if g.curr_speed == 60: menu_buttons[4].stay_selected = 1
 	menu_buttons.append(buttons.button((372, 0), (28, 25),
 		">>>", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	if g.curr_speed == 7200: menu_buttons[5].stay_selected = 1
 	menu_buttons.append(buttons.button((399, 0), (36, 25),
 		">>>>", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	if g.curr_speed == 432000: menu_buttons[6].stay_selected = 1
 	#Note that this must be element 7 in menu_buttons
 	menu_buttons.append(buttons.button((435, -1), (g.screen_size[0]-435, 26),
 		"CASH", -1, g.colors["black"], g.colors["dark_blue"],
@@ -238,6 +243,7 @@ def map_loop():
 	sel_button = -1
 	refresh_map(menu_buttons)
 
+	#I set this to 1000 to force an immediate refresh.
 	milli_clock = 1000
 	while 1:
 		milli_clock += g.clock.tick(60) * g.curr_speed
@@ -327,31 +333,41 @@ def map_loop():
 						g.play_click()
 						g.curr_speed = 0
 						for button2 in menu_buttons:
+							button2.stay_selected = 0
 							button2.refresh_button(0)
+						button.stay_selected = 1
 						button.refresh_button(1)
 					elif button.button_id == ">":
 						g.play_click()
 						g.curr_speed = 1
 						for button2 in menu_buttons:
+							button2.stay_selected = 0
 							button2.refresh_button(0)
+						button.stay_selected = 1
 						button.refresh_button(1)
 					elif button.button_id == ">>":
 						g.play_click()
 						g.curr_speed = 60
 						for button2 in menu_buttons:
+							button2.stay_selected = 0
 							button2.refresh_button(0)
+						button.stay_selected = 1
 						button.refresh_button(1)
 					elif button.button_id == ">>>":
 						g.play_click()
 						g.curr_speed = 7200
 						for button2 in menu_buttons:
+							button2.stay_selected = 0
 							button2.refresh_button(0)
+						button.stay_selected = 1
 						button.refresh_button(1)
 					elif button.button_id == ">>>>":
 						g.play_click()
 						g.curr_speed = 432000
 						for button2 in menu_buttons:
+							button2.stay_selected = 0
 							button2.refresh_button(0)
+						button.stay_selected = 1
 						button.refresh_button(1)
 					elif button.button_id == "SUSPICION": pass
 					elif button.xy[1] != -1: #ignore the timer
@@ -380,7 +396,9 @@ def handle_pause_menu(tmp, menu_buttons):
 			refresh_map(menu_buttons)
 		else:
 			g.load_game(load_return)
-			refresh_map(menu_buttons)
+			map_loop()
+#			refresh_map(menu_buttons)
+			return 0
 	elif tmp == 4: g.quit_game()
 	return -1
 

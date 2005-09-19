@@ -35,6 +35,7 @@ class button:
 		self.underline_char = underline_char
 		self.font = font
 		self.button_id = button_id
+		self.stay_selected = 0
 		if button_id == "":
 			self.button_id = self.text
 
@@ -84,6 +85,7 @@ class button:
 
 	def refresh_button(self, selected):
 		if self.visible == 0: return 0
+		if self.stay_selected == 1: selected = 1
 		if selected == 0:
 			g.screen.blit(self.button_surface, self.xy)
 		else:
