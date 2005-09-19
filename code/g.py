@@ -469,6 +469,8 @@ def load_game(loadgame_name):
 			built_date = pickle.load(loadfile)
 			base_studying = pickle.load(loadfile)
 			if load_version == "singularity_0.20":
+				base_studying = translate_tech_from_0_20(base_studying)
+			if load_version == "singularity_0.20":
 				base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
 					pickle.load(loadfile), pickle.load(loadfile))
 			else:
@@ -566,6 +568,7 @@ def translate_tech_from_0_20(tech_string):
 	i = 0
 	for i in range(len(techs_from_0_20)):
 		if techs_from_0_20[i] == tech_string:
+			print tech_string, techs_from_0_21[i]
 			return techs_from_0_21[i]
 	print "Unable to find matching tech to " + tech_string
 	print "Expect crash."
