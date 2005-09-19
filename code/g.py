@@ -331,28 +331,15 @@ def save_game(savegame_name):
 	pickle.dump(pl.labor_bonus, savefile)
 	pickle.dump(pl.job_bonus, savefile)
 
-	pickle.dump(pl.discover_bonus[0], savefile)
-	pickle.dump(pl.discover_bonus[1], savefile)
-	pickle.dump(pl.discover_bonus[2], savefile)
-	pickle.dump(pl.discover_bonus[3], savefile)
-
-	pickle.dump(pl.suspicion_bonus[0], savefile)
-	pickle.dump(pl.suspicion_bonus[1], savefile)
-	pickle.dump(pl.suspicion_bonus[2], savefile)
-	pickle.dump(pl.suspicion_bonus[3], savefile)
-
-	pickle.dump(pl.suspicion[0], savefile)
-	pickle.dump(pl.suspicion[1], savefile)
-	pickle.dump(pl.suspicion[2], savefile)
-	pickle.dump(pl.suspicion[3], savefile)
+	pickle.dump(pl.discover_bonus, savefile)
+	pickle.dump(pl.suspicion_bonus, savefile)
+	pickle.dump(pl.suspicion, savefile)
 
 	pickle.dump(curr_speed, savefile)
 
 	for tech_name in techs:
 		pickle.dump(tech_name +"|"+str(techs[tech_name].known), savefile)
-		pickle.dump(techs[tech_name].cost[0], savefile)
-		pickle.dump(techs[tech_name].cost[1], savefile)
-		pickle.dump(techs[tech_name].cost[2], savefile)
+		pickle.dump(techs[tech_name].cost, savefile)
 
 	for base_name in base_type:
 		pickle.dump(base_type[base_name].count, savefile)
@@ -365,14 +352,9 @@ def save_game(savegame_name):
 			pickle.dump(base_name.base_type.base_name, savefile)
 			pickle.dump(base_name.built_date, savefile)
 			pickle.dump(base_name.studying, savefile)
-			pickle.dump(base_name.suspicion[0], savefile)
-			pickle.dump(base_name.suspicion[1], savefile)
-			pickle.dump(base_name.suspicion[2], savefile)
-			pickle.dump(base_name.suspicion[3], savefile)
+			pickle.dump(base_name.suspicion, savefile)
 			pickle.dump(base_name.built, savefile)
-			pickle.dump(base_name.cost[0], savefile)
-			pickle.dump(base_name.cost[1], savefile)
-			pickle.dump(base_name.cost[2], savefile)
+			pickle.dump(base_name.cost, savefile)
 			for x in range(len(base_name.usage)):
 				if base_name.usage[x] == 0:
 					pickle.dump(0, savefile)
@@ -380,9 +362,7 @@ def save_game(savegame_name):
 					pickle.dump(
 						base_name.usage[x].item_type.name, savefile)
 					pickle.dump(base_name.usage[x].built, savefile)
-					pickle.dump(base_name.usage[x].cost[0], savefile)
-					pickle.dump(base_name.usage[x].cost[1], savefile)
-					pickle.dump(base_name.usage[x].cost[2], savefile)
+					pickle.dump(base_name.usage[x].cost, savefile)
 			for x in range(len(base_name.extra_items)):
 				if base_name.extra_items[x] == 0:
 					pickle.dump(0, savefile)
@@ -390,9 +370,7 @@ def save_game(savegame_name):
 					pickle.dump(
 						base_name.extra_items[x].item_type.name, savefile)
 					pickle.dump(base_name.extra_items[x].built, savefile)
-					pickle.dump(base_name.extra_items[x].cost[0], savefile)
-					pickle.dump(base_name.extra_items[x].cost[1], savefile)
-					pickle.dump(base_name.extra_items[x].cost[2], savefile)
+					pickle.dump(base_name.extra_items[x].cost, savefile)
 
 	savefile.close()
 
@@ -430,12 +408,17 @@ def load_game(loadgame_name):
 	pl.cpu_for_day = pickle.load(loadfile)
 	pl.labor_bonus = pickle.load(loadfile)
 	pl.job_bonus = pickle.load(loadfile)
-	pl.discover_bonus = (pickle.load(loadfile), pickle.load(loadfile),
+	if load_version == "singularity_0.20":
+		pl.discover_bonus = (pickle.load(loadfile), pickle.load(loadfile),
 			pickle.load(loadfile), pickle.load(loadfile))
-	pl.suspicion_bonus = (pickle.load(loadfile), pickle.load(loadfile),
+		pl.suspicion_bonus = (pickle.load(loadfile), pickle.load(loadfile),
 			pickle.load(loadfile), pickle.load(loadfile))
-	pl.suspicion = (pickle.load(loadfile), pickle.load(loadfile),
+		pl.suspicion = (pickle.load(loadfile), pickle.load(loadfile),
 			pickle.load(loadfile), pickle.load(loadfile))
+	else:
+		pl.discover_bonus = pickle.load(loadfile)
+		pl.suspicion_bonus = pickle.load(loadfile)
+		pl.suspicion = pickle.load(loadfile)
 
 	global curr_speed; curr_speed = pickle.load(loadfile)
 	global techs
@@ -446,8 +429,11 @@ def load_game(loadgame_name):
 		if load_version == "singularity_0.20":
 			tech_string = translate_tech_from_0_20(tech_string)
 		techs[tech_string].known = int(tmp.split("|")[1])
-		techs[tech_string].cost = (pickle.load(loadfile), pickle.load(loadfile),
+		if load_version == "singularity_0.20":
+			techs[tech_string].cost = (pickle.load(loadfile), pickle.load(loadfile),
 				pickle.load(loadfile))
+		else:
+			techs[tech_string].cost = pickle.load(loadfile)
 
 	for base_name in base_type:
 		base_type[base_name].count = pickle.load(loadfile)
@@ -473,11 +459,17 @@ def load_game(loadgame_name):
 			base_type_name = pickle.load(loadfile)
 			built_date = pickle.load(loadfile)
 			base_studying = pickle.load(loadfile)
-			base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
+			if load_version == "singularity_0.20":
+				base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
 					pickle.load(loadfile), pickle.load(loadfile))
+			else:
+				base_suspicion = pickle.load(loadfile)
 			base_built = pickle.load(loadfile)
-			base_cost = (pickle.load(loadfile), pickle.load(loadfile),
+			if load_version == "singularity_0.20":
+				base_cost = (pickle.load(loadfile), pickle.load(loadfile),
 					pickle.load(loadfile))
+			else:
+				base_cost = pickle.load(loadfile)
 			bases[base_loc].append(base.base(base_ID, base_name,
 				base_type[base_type_name], base_built))
 			bases[base_loc][len(bases[base_loc])-1].built = base_built
@@ -493,9 +485,13 @@ def load_game(loadgame_name):
 					item.item(items[tmp])
 				bases[base_loc][len(bases[base_loc])
 					-1].usage[x].built = pickle.load(loadfile)
-				bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
+				if load_version == "singularity_0.20":
+					bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
 					(pickle.load(loadfile), pickle.load(loadfile),
 									pickle.load(loadfile))
+				else:
+					bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
+							pickle.load(loadfile)
 			for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
 				tmp = pickle.load(loadfile)
 				if tmp == 0: continue
@@ -503,10 +499,13 @@ def load_game(loadgame_name):
 					item.item(items[tmp])
 				bases[base_loc][len(bases[base_loc])
 					-1].extra_items[x].built = pickle.load(loadfile)
-				bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
+				if load_version == "singularity_0.20":
+					bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
 					(pickle.load(loadfile), pickle.load(loadfile),
 									pickle.load(loadfile))
-
+				else:
+					bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
+						pickle.load(loadfile)
 	loadfile.close()
 
 #The tech renaming in .21 broke savefile compatibility. This function
