@@ -25,9 +25,10 @@ import g
 #cost = (money, ptime, labor)
 #detection = (news, science, covert, person)
 class tech:
-	def __init__(self, name, descript, known, cost, prereq, danger, tech_type,
+	def __init__(self, tech_id, descript, known, cost, prereq, danger, tech_type,
 										secondary_data):
-		self.name = name
+		self.tech_id = tech_id
+		self.name = tech_id
 		self.descript = descript
 		self.known = known
 		self.cost = cost

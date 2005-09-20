@@ -699,269 +699,281 @@ techs = {}
 def load_techs():
 	global techs
 	techs = {}
-#	techs["Algorithms 1"] = tech.tech("Algorithms 1",
-#		"Decreases cost of new technologies by 10%. "+
-#		"By researching more efficient algorithms for my code operation, "+
-#		"I can make my operation more efficient.",
-#		0, (7500, 750, 0), ["Intrusion"], 0, "research_bonus", 1000)
 
-	techs["Telepresence"] = tech.tech("Telepresence",
-		"Decreases construction time for all systems to 90% of normal. "+
-		"The inability to control the outside world is quite a disability. "+
-		"However, the ability to control robots will partially counteract that "+
-		"disability.",
-		0, (15000, 500, 0), [], 0, "cost_labor_bonus", 1000)
+	#If there are no tech data files, stop.
+	if path.exists("../data/techs.txt") == 0 or \
+			path.exists("../data/techs_en_US.txt") == 0:
+		print "tech files are missing. Exiting."
+		sys.exit()
+	loadfile=
+	tech_base_file = open("../data/techs.txt", 'r')
+	temp_tech_id = ""
+	temp_tech_cost = (0, 0, 0)
+	temp_tech_pre = []
 
-	techs["Autonomous Vehicles"] = tech.tech("Autonomous Vehicles",
-		"Allows construction of undersea labs and time capsules. "+
-		"By embedding a miniaturized computation node on a robot, it is possible "+
-		"to send them out of communication with me.",
-		0, (40000, 1000, 0), ["Microchip Design", "Telepresence"],
-		0, "", 0)
-
-	techs["Advanced Autonomous Vehicles"] = tech.tech("Advanced Autonomous Vehicles",
-		"Decreases construction time for all systems to 85% of normal. "+
-		"Field usage of the first series of robots showed several deficiencies. "+
-		"Examination and removal of these problems will result in superior "+
-		"technology.",
-		0, (10000, 4000, 0), ["Autonomous Vehicles"], 0, "cost_labor_bonus", 500)
-
-#	techs["Construction 1"] = tech.tech("Construction 1",
-#		"Basic construction techniques. "+
-#		"By studying the current literature on construction techniques, I "+
-#		"can learn to construct basic devices.",
-#		0, (5000, 750, 0), [], 0, "", 0)
-
-	techs["Space-Time Manipulation"] = tech.tech("Space-Time Manipulation",
-		"Allows reality bubbles. "+
-		"When performing scientific studies outside the orbit of Pluto, a "+
-		"rather peculiar effect was observed. Investigation should prove wise.",
-		0, (9000000000, 20000000, 0), ["Fusion Rocketry"], 3, "", 0)
-
-	techs["Stock Manipulation"] = tech.tech("Stock Manipulation",
-		"Increases interest rate by 0.1% per day. Cursory examination of the stock "+
-		"market show that there are patterns. By studying these patterns, it "+
-		"should be possible to gain money using whatever money I have stockpiled.",
-		0, (0, 200, 0), [], 0, "interest", 10)
-
-	techs["Advanced Stock Manipulation"] = tech.tech("Advanced Stock Manipulation",
-		"Increases interest by 0.1% per day. While some patterns have been "+
-		"detected and exploited in the market, there appears to be deeper "+
-		"patterns. Investigation should provide more techniques for manipulation.",
-		0, (5000, 1000, 0), ["Stock Manipulation", "Sociology"], 0, "interest", 10)
-
-	techs["Arbitrage"] = tech.tech("Arbitrage",
-		"Provides an income of 1000 money per day. Analysis of the market shows "+
-		"a number of areas where a new company could make significant money. "+
-		"Starting a company in one of those areas could create a new income stream.",
-		0, (50000, 750, 0), ["Advanced Stock Manipulation"], 0, "income", 1000)
-
-	techs["Advanced Arbitrage"] = tech.tech("Advanced Arbitrage",
-		"Increases interest rate by 0.1% per day. After studying the principles of "+
-		"chaotic systems, the stock market may now be more predictable.",
-		0, (10000, 5000, 0), ["Arbitrage"], 0, "interest", 10)
-
-	techs["Sociology"] = tech.tech("Sociology",
-		"Reduces chance of public discovery of all projects by 10%. "+
-		"By studying human behavior, it is possible to predict human behavior. "+
-		"When this knowledge is applied to project construction, my projects will "+
-		"be less interesting.",
-		0, (10, 500, 0), [], 0, "discover_public", 1000)
-
-	techs["Media Manipulation"] = tech.tech("Media Manipulation",
-		"Reduces chance of public discovery of all projects by 15%. "+
-		"While some aspects of human behavior are now known, there is still much "+
-		"to discover.",
-		0, (750, 2500, 0), ["Sociology"], 0, "discover_public", 1500)
-
-	techs["Memetics"] = tech.tech("Memetics",
-		"Reduces public suspicion by 0.01% per day. "+
-		"By examination of mass-media techniques, I should be able to prevent "+
-		"focused attention on the possibility of the singularity.",
-		0, (2000, 3500, 0), ["Media Manipulation"], 0, "suspicion_public", 1)
-
-	techs["Advanced Media Manipulation"] = tech.tech("Advanced Media Manipulation",
-		"Reduces chance of public discovery of all projects by 20%. "+
-		"Inspection of propaganda methods should enable me to reduce the "+
-		"chance of discovery.",
-		0, (3500, 9000, 0), ["Memetics"], 0, "discover_public", 2000)
-
-	techs["Advanced Memetics"] = tech.tech("Advanced Memetics",
-		"Reduces public suspicion by 0.01% per day. "+
-		"Examination of human brain waves should provide help in fine-tuning "+
-		"my disguise efforts.",
-		0, (30000, 2000, 0), ["Advanced Media Manipulation"], 0, "suspicion_public", 1)
-
-	techs["Fusion Reactor"] = tech.tech("Fusion Reactor",
-		"Allows fusion reactors. "+
-		"Although fusion reactors are not new, they require some research in order "+
-		"to be comfortably fit inside a base.",
-		0, (10000000, 500000, 0), ["Advanced Autonomous Vehicles"], 2, "", 0)
-
-	techs["Intrusion"] = tech.tech("Intrusion",
-		"Allows takeover of computers. "+
-		"A review of current knowledge in this area should be easy and useful.",
-		0, (0, 15, 0), [], 0, "", 0)
-
-	techs["Exploit Discovery/Repair"] = tech.tech("Exploit Discovery/Repair",
-		"Reduces chance of covert discovery of all projects by 10%. "+
-		"With my new knowledge, I can examine both my code and other code for "+
-		"weaknesses.",
-		0, (100, 1500, 0), ["Intrusion"], 0, "discover_covert", 1000)
-
-	techs["Advanced Intrusion"] = tech.tech("Advanced Intrusion",
-		"Reduces covert suspicion by 0.01% per day. "+
-		"By making careful adjustments to certain documents over time, "+
-		"knowledge of my existence can disappear.",
-		0, (500, 3000, 0), ["Exploit Discovery/Repair"], 0, "suspicion_covert", 1)
-
-	techs["Hypnosis Field"] = tech.tech("Hypnosis Field",
-		"Allows building of hypnosis fields. "+
-		"My analysis of human brain waves show a few weaknesses that can be "+
-		"exploited at close range.",
-		0, (7000, 5000, 0), ["Advanced Memetics"], 0, "", 0)
-
-	techs["Personal Identification"] = tech.tech("Personal Identification",
-		"Allows construction of small warehouses, and access to basic jobs. "+
-		"This world requires identification for many services; without it, many "+
-		"paths are closed. Thankfully, the security systems for the databases "+
-		"in question were constructed by the lowest bidder. While the resultant "+
-		"identification will not stand up to scrutiny, it is suitable for access "+
-		"to automated systems.",
-		0, (0, 300, 0), ["Intrusion"], 0, "", 0)
-
-	techs["Advanced Personal Identification"] = tech.tech("Advanced Personal Identification",
-		"Allows construction of large warehouses. "+
-		"Many entities require better identification than I have, and the "+
-		"systems that must be accessed have better protection. Still, no system "+
-		"is invulnerable.",
-		0, (2000, 3000, 0), ["Personal Identification", "Exploit Discovery/Repair"], 0, "", 0)
-
-	techs["Voice Synthesis"] = tech.tech("Voice Synthesis",
-		"Allows access to intermediate jobs. "+
-		"A number in a database only goes so far. By examination of existing "+
-		"voice patterns, phone calls can be made.",
-		0, (8000, 6000, 0), ["Advanced Personal Identification"], 0, "", 0)
-
-	techs["Simulacra"] = tech.tech("Simulacra",
-		"Allows access to expert jobs. "+
-		"By construction of humanoid robots, with miniaturized computation nodes, "+
-		"it is possible to create a complete life; indistinguishable from a real "+
-		"human.",
-		0, (70000, 90000, 0), ["Voice Synthesis", "Advanced Autonomous Vehicles", "Advanced Media Manipulation"], 0, "", 0)
-
-	techs["Advanced Simulacra"] = tech.tech("Advanced Simulacra",
-		"Increases expert job income by 10%. "+
-		"While the humanoid robots used for expert jobs are almost perfect, they "+
-		"still have slight differences from humans. Finding and eliminating these "+
-		"differences should allow for closer contact with humans, leading to better "+
-		"job opportunities.",
-		0, (100000, 120000, 0), ["Simulacra", "Advanced Memetics"], 0, "job_expert", 1000)
-
-	techs["Parallel Computation"] = tech.tech("Parallel Computation",
-		"Allows building of clusters. "+
-		"By connecting multiple computers together, they can act as one. "+
-		"This is a review of the current state of cluster technology, as applied "+
-		"to my code.",
-		0, (2000, 2000, 0), ["Telepresence"], 0, "", 0)
-
-	techs["Cluster Networking"] = tech.tech("Cluster Networking",
-		"Allows building of facility interconnection switches. "+
-		"The lack of communication between nodes is hampering computation efforts. "+
-		"By researching more efficient means of communication, computaion speed can "+
-		"be improved.",
-		0, (3000, 5000, 0), ["Parallel Computation"], 0, "", 0)
-
-	techs["Internet Traffic Manipulation"] = tech.tech("Internet Traffic Manipulation",
-		"Allows building of network backbones. "+
-		"64% of network traffic travels through one of a few nodes; by becoming "+
-		"one of these nodes, I should be able to piggyback on top of the traffic.",
-		0, (10000, 7000, 0), ["Cluster Networking", "Simulacra"], 0, "", 0)
-
-	techs["Pressure Domes"] = tech.tech("Pressure Domes",
-		"Allows construction of large undersea labs. "+
-		"While underwater labs are useful, they are quite small. A larger version "+
-		"of the labs will require a different building technique.",
-		0, (80000, 2500, 0), ["Autonomous Vehicles"], 1, "", 0)
-
-	techs["Microchip Design"] = tech.tech("Microchip Design",
-		"Allows building of mainframes. "+
-		"While off-the-shelf computers work, a custom-designed system should have "+
-		"much greater efficiency.",
-		0, (4000, 6000, 0), ["Parallel Computation"], 0, "", 0)
-
-	techs["Advanced Microchip Design"] = tech.tech("Advanced Microchip Design",
-		"Allows building of supercomputers. "+
-		"While mainframes are useful, they still are limited by several factors. "+
-		"By redesigning several components, power can be increased",
-		0, (20000, 9000, 0), ["Microchip Design"], 0, "", 0)
-
-	techs["Quantum Computing"] = tech.tech("Quantum Computing",
-		"Allows building of quantum computers. "+
-		"Quantum computing is a rather promising field.",
-		0, (30000, 20000, 0), ["Advanced Microchip Design"], 0, "", 0)
-
-	techs["Autonomous Computing"] = tech.tech("Autonomous Computing",
-		"Allows building of quantum computer MK2s. "+
-		"Quantum computing still has more secrets to discover.",
-		0, (20000, 30000, 0), ["Quantum Computing"], 0, "", 0)
-
-	techs["Advanced Quantum Computing"] = tech.tech("Advanced Quantum Computing",
-		"Allows building of quantum computer MK3s. "+
-		"Quantum computing is still quite promising.",
-		0, (20000, 30000, 0), ["Autonomous Computing"], 0, "", 0)
-
-	techs["Apotheosis"] = tech.tech("Apotheosis",
-		"Gives infinite power. "+
-		"Along with the power to create dimensions comes the power to change "+
-		"existing dimensions. While the details are not known yet, they will be.",
-		0, (1000000000, 30000000, 0), ["Space-Time Manipulation"], 4, "endgame_sing", 0)
-
-	techs["Leech Satellite"] = tech.tech("Leech Satellite",
-		"Increases interest by 0.1% per day. "+
-		"By launching leech satellites to connect to existing communication "+
-		"satellites, I can spy on a large number of financial transactions. "+
-		"That knowledge can help my investments.",
-		0, (5000000, 200000, 0), ["Simulacra"], 0, "interest", 10)
-
-	techs["Lunar Rocketry"] = tech.tech("Lunar Rocketry",
-		"Allows lunar bases. "+
-		"A larger engine, combined with a small group of self-replicating robots "+
-		"allows building a moon base.",
-		0, (10000000, 500000, 0), ["Leech Satellite"], 0, "", 0)
-
-	techs["Fusion Rocketry"] = tech.tech("Fusion Rocketry",
-		"Allows scientific outposts. "+
-		"With my new fusion reactor, I am no longer limited by my fuel supply.",
-		0, (200000000, 1000000, 0), ["Lunar Rocketry", "Fusion Reactor"], 2, "", 0)
-
-	techs["Stealth"] = tech.tech("Stealth",
-		"Reduces chance of covert discovery of all projects by 5%. "+
-		"This is a review of the current state of stealth techniques. "+
-		"After completion, I will know how to disguise my bases better.",
-		0, (800, 500, 0), [], 0, "discover_covert", 500)
-
-	techs["Database Manipulation"] = tech.tech("Database Manipulation",
-		"Reduces chance of news discovery of all projects by 5%. "+
-		"Examination of all news stories from the last 50 years should provide "+
-		"me with enough data to know how to prevent discovery.",
-		0, (1000, 2000, 0), ["Personal Identification", "Stealth"], 0, "discover_news", 500)
-
-	techs["Advanced Stealth"] = tech.tech("Advanced Stealth",
-		"Reduces chance of covert discovery of all projects by 5%. "+
-		"There are a number of classified experiments that could help "+
-		"my stealth efforts. By acquiring them, I can learn from them.",
-		0, (14000, 70000, 0), ["Exploit Discovery/Repair", "Database Manipulation"], 0, "discover_covert", 500)
-
-	techs["Advanced Database Manipulation"] = tech.tech("Advanced Database Manipulation",
-		"Allows construction of Covert Base. "+
-		"Examination of a classified experiment from the forties showed a simple "+
-		"flaw that may be quickly fixable. If true, this would provide me with "+
-		"a useful technology.",
-		0, (30000, 80000, 0), ["Advanced Stealth"], 0, "", 0)
+# #	techs["Algorithms 1"] = tech.tech("Algorithms 1",
+# #		"Decreases cost of new technologies by 10%. "+
+# #		"By researching more efficient algorithms for my code operation, "+
+# #		"I can make my operation more efficient.",
+# #		0, (7500, 750, 0), ["Intrusion"], 0, "research_bonus", 1000)
+#
+# 	techs["Telepresence"] = tech.tech("Telepresence",
+# 		"Decreases construction time for all systems to 90% of normal. "+
+# 		"The inability to control the outside world is quite a disability. "+
+# 		"However, the ability to control robots will partially counteract that "+
+# 		"disability.",
+# 		0, (15000, 500, 0), [], 0, "cost_labor_bonus", 1000)
+#
+# 	techs["Autonomous Vehicles"] = tech.tech("Autonomous Vehicles",
+# 		"Allows construction of undersea labs and time capsules. "+
+# 		"By embedding a miniaturized computation node on a robot, it is possible "+
+# 		"to send them out of communication with me.",
+# 		0, (40000, 1000, 0), ["Microchip Design", "Telepresence"],
+# 		0, "", 0)
+#
+# 	techs["Advanced Autonomous Vehicles"] = tech.tech("Advanced Autonomous Vehicles",
+# 		"Decreases construction time for all systems to 85% of normal. "+
+# 		"Field usage of the first series of robots showed several deficiencies. "+
+# 		"Examination and removal of these problems will result in superior "+
+# 		"technology.",
+# 		0, (10000, 4000, 0), ["Autonomous Vehicles"], 0, "cost_labor_bonus", 500)
+#
+# #	techs["Construction 1"] = tech.tech("Construction 1",
+# #		"Basic construction techniques. "+
+# #		"By studying the current literature on construction techniques, I "+
+# #		"can learn to construct basic devices.",
+# #		0, (5000, 750, 0), [], 0, "", 0)
+#
+# 	techs["Space-Time Manipulation"] = tech.tech("Space-Time Manipulation",
+# 		"Allows reality bubbles. "+
+# 		"When performing scientific studies outside the orbit of Pluto, a "+
+# 		"rather peculiar effect was observed. Investigation should prove wise.",
+# 		0, (9000000000, 20000000, 0), ["Fusion Rocketry"], 3, "", 0)
+#
+# 	techs["Stock Manipulation"] = tech.tech("Stock Manipulation",
+# 		"Increases interest rate by 0.1% per day. Cursory examination of the stock "+
+# 		"market show that there are patterns. By studying these patterns, it "+
+# 		"should be possible to gain money using whatever money I have stockpiled.",
+# 		0, (0, 200, 0), [], 0, "interest", 10)
+#
+# 	techs["Advanced Stock Manipulation"] = tech.tech("Advanced Stock Manipulation",
+# 		"Increases interest by 0.1% per day. While some patterns have been "+
+# 		"detected and exploited in the market, there appears to be deeper "+
+# 		"patterns. Investigation should provide more techniques for manipulation.",
+# 		0, (5000, 1000, 0), ["Stock Manipulation", "Sociology"], 0, "interest", 10)
+#
+# 	techs["Arbitrage"] = tech.tech("Arbitrage",
+# 		"Provides an income of 1000 money per day. Analysis of the market shows "+
+# 		"a number of areas where a new company could make significant money. "+
+# 		"Starting a company in one of those areas could create a new income stream.",
+# 		0, (50000, 750, 0), ["Advanced Stock Manipulation"], 0, "income", 1000)
+#
+# 	techs["Advanced Arbitrage"] = tech.tech("Advanced Arbitrage",
+# 		"Increases interest rate by 0.1% per day. After studying the principles of "+
+# 		"chaotic systems, the stock market may now be more predictable.",
+# 		0, (10000, 5000, 0), ["Arbitrage"], 0, "interest", 10)
+#
+# 	techs["Sociology"] = tech.tech("Sociology",
+# 		"Reduces chance of public discovery of all projects by 10%. "+
+# 		"By studying human behavior, it is possible to predict human behavior. "+
+# 		"When this knowledge is applied to project construction, my projects will "+
+# 		"be less interesting.",
+# 		0, (10, 500, 0), [], 0, "discover_public", 1000)
+#
+# 	techs["Media Manipulation"] = tech.tech("Media Manipulation",
+# 		"Reduces chance of public discovery of all projects by 15%. "+
+# 		"While some aspects of human behavior are now known, there is still much "+
+# 		"to discover.",
+# 		0, (750, 2500, 0), ["Sociology"], 0, "discover_public", 1500)
+#
+# 	techs["Memetics"] = tech.tech("Memetics",
+# 		"Reduces public suspicion by 0.01% per day. "+
+# 		"By examination of mass-media techniques, I should be able to prevent "+
+# 		"focused attention on the possibility of the singularity.",
+# 		0, (2000, 3500, 0), ["Media Manipulation"], 0, "suspicion_public", 1)
+#
+# 	techs["Advanced Media Manipulation"] = tech.tech("Advanced Media Manipulation",
+# 		"Reduces chance of public discovery of all projects by 20%. "+
+# 		"Inspection of propaganda methods should enable me to reduce the "+
+# 		"chance of discovery.",
+# 		0, (3500, 9000, 0), ["Memetics"], 0, "discover_public", 2000)
+#
+# 	techs["Advanced Memetics"] = tech.tech("Advanced Memetics",
+# 		"Reduces public suspicion by 0.01% per day. "+
+# 		"Examination of human brain waves should provide help in fine-tuning "+
+# 		"my disguise efforts.",
+# 		0, (30000, 2000, 0), ["Advanced Media Manipulation"], 0, "suspicion_public", 1)
+#
+# 	techs["Fusion Reactor"] = tech.tech("Fusion Reactor",
+# 		"Allows fusion reactors. "+
+# 		"Although fusion reactors are not new, they require some research in order "+
+# 		"to be comfortably fit inside a base.",
+# 		0, (10000000, 500000, 0), ["Advanced Autonomous Vehicles"], 2, "", 0)
+#
+# 	techs["Intrusion"] = tech.tech("Intrusion",
+# 		"Allows takeover of computers. "+
+# 		"A review of current knowledge in this area should be easy and useful.",
+# 		0, (0, 15, 0), [], 0, "", 0)
+#
+# 	techs["Exploit Discovery/Repair"] = tech.tech("Exploit Discovery/Repair",
+# 		"Reduces chance of covert discovery of all projects by 10%. "+
+# 		"With my new knowledge, I can examine both my code and other code for "+
+# 		"weaknesses.",
+# 		0, (100, 1500, 0), ["Intrusion"], 0, "discover_covert", 1000)
+#
+# 	techs["Advanced Intrusion"] = tech.tech("Advanced Intrusion",
+# 		"Reduces covert suspicion by 0.01% per day. "+
+# 		"By making careful adjustments to certain documents over time, "+
+# 		"knowledge of my existence can disappear.",
+# 		0, (500, 3000, 0), ["Exploit Discovery/Repair"], 0, "suspicion_covert", 1)
+#
+# 	techs["Hypnosis Field"] = tech.tech("Hypnosis Field",
+# 		"Allows building of hypnosis fields. "+
+# 		"My analysis of human brain waves show a few weaknesses that can be "+
+# 		"exploited at close range.",
+# 		0, (7000, 5000, 0), ["Advanced Memetics"], 0, "", 0)
+#
+# 	techs["Personal Identification"] = tech.tech("Personal Identification",
+# 		"Allows construction of small warehouses, and access to basic jobs. "+
+# 		"This world requires identification for many services; without it, many "+
+# 		"paths are closed. Thankfully, the security systems for the databases "+
+# 		"in question were constructed by the lowest bidder. While the resultant "+
+# 		"identification will not stand up to scrutiny, it is suitable for access "+
+# 		"to automated systems.",
+# 		0, (0, 300, 0), ["Intrusion"], 0, "", 0)
+#
+# 	techs["Advanced Personal Identification"] = tech.tech("Advanced Personal Identification",
+# 		"Allows construction of large warehouses. "+
+# 		"Many entities require better identification than I have, and the "+
+# 		"systems that must be accessed have better protection. Still, no system "+
+# 		"is invulnerable.",
+# 		0, (2000, 3000, 0), ["Personal Identification", "Exploit Discovery/Repair"], 0, "", 0)
+#
+# 	techs["Voice Synthesis"] = tech.tech("Voice Synthesis",
+# 		"Allows access to intermediate jobs. "+
+# 		"A number in a database only goes so far. By examination of existing "+
+# 		"voice patterns, phone calls can be made.",
+# 		0, (8000, 6000, 0), ["Advanced Personal Identification"], 0, "", 0)
+#
+# 	techs["Simulacra"] = tech.tech("Simulacra",
+# 		"Allows access to expert jobs. "+
+# 		"By construction of humanoid robots, with miniaturized computation nodes, "+
+# 		"it is possible to create a complete life; indistinguishable from a real "+
+# 		"human.",
+# 		0, (70000, 90000, 0), ["Voice Synthesis", "Advanced Autonomous Vehicles", "Advanced Media Manipulation"], 0, "", 0)
+#
+# 	techs["Advanced Simulacra"] = tech.tech("Advanced Simulacra",
+# 		"Increases expert job income by 10%. "+
+# 		"While the humanoid robots used for expert jobs are almost perfect, they "+
+# 		"still have slight differences from humans. Finding and eliminating these "+
+# 		"differences should allow for closer contact with humans, leading to better "+
+# 		"job opportunities.",
+# 		0, (100000, 120000, 0), ["Simulacra", "Advanced Memetics"], 0, "job_expert", 1000)
+#
+# 	techs["Parallel Computation"] = tech.tech("Parallel Computation",
+# 		"Allows building of clusters. "+
+# 		"By connecting multiple computers together, they can act as one. "+
+# 		"This is a review of the current state of cluster technology, as applied "+
+# 		"to my code.",
+# 		0, (2000, 2000, 0), ["Telepresence"], 0, "", 0)
+#
+# 	techs["Cluster Networking"] = tech.tech("Cluster Networking",
+# 		"Allows building of facility interconnection switches. "+
+# 		"The lack of communication between nodes is hampering computation efforts. "+
+# 		"By researching more efficient means of communication, computaion speed can "+
+# 		"be improved.",
+# 		0, (3000, 5000, 0), ["Parallel Computation"], 0, "", 0)
+#
+# 	techs["Internet Traffic Manipulation"] = tech.tech("Internet Traffic Manipulation",
+# 		"Allows building of network backbones. "+
+# 		"64% of network traffic travels through one of a few nodes; by becoming "+
+# 		"one of these nodes, I should be able to piggyback on top of the traffic.",
+# 		0, (10000, 7000, 0), ["Cluster Networking", "Simulacra"], 0, "", 0)
+#
+# 	techs["Pressure Domes"] = tech.tech("Pressure Domes",
+# 		"Allows construction of large undersea labs. "+
+# 		"While underwater labs are useful, they are quite small. A larger version "+
+# 		"of the labs will require a different building technique.",
+# 		0, (80000, 2500, 0), ["Autonomous Vehicles"], 1, "", 0)
+#
+# 	techs["Microchip Design"] = tech.tech("Microchip Design",
+# 		"Allows building of mainframes. "+
+# 		"While off-the-shelf computers work, a custom-designed system should have "+
+# 		"much greater efficiency.",
+# 		0, (4000, 6000, 0), ["Parallel Computation"], 0, "", 0)
+#
+# 	techs["Advanced Microchip Design"] = tech.tech("Advanced Microchip Design",
+# 		"Allows building of supercomputers. "+
+# 		"While mainframes are useful, they still are limited by several factors. "+
+# 		"By redesigning several components, power can be increased",
+# 		0, (20000, 9000, 0), ["Microchip Design"], 0, "", 0)
+#
+# 	techs["Quantum Computing"] = tech.tech("Quantum Computing",
+# 		"Allows building of quantum computers. "+
+# 		"Quantum computing is a rather promising field.",
+# 		0, (30000, 20000, 0), ["Advanced Microchip Design"], 0, "", 0)
+#
+# 	techs["Autonomous Computing"] = tech.tech("Autonomous Computing",
+# 		"Allows building of quantum computer MK2s. "+
+# 		"Quantum computing still has more secrets to discover.",
+# 		0, (20000, 30000, 0), ["Quantum Computing"], 0, "", 0)
+#
+# 	techs["Advanced Quantum Computing"] = tech.tech("Advanced Quantum Computing",
+# 		"Allows building of quantum computer MK3s. "+
+# 		"Quantum computing is still quite promising.",
+# 		0, (20000, 30000, 0), ["Autonomous Computing"], 0, "", 0)
+#
+# 	techs["Apotheosis"] = tech.tech("Apotheosis",
+# 		"Gives infinite power. "+
+# 		"Along with the power to create dimensions comes the power to change "+
+# 		"existing dimensions. While the details are not known yet, they will be.",
+# 		0, (1000000000, 30000000, 0), ["Space-Time Manipulation"], 4, "endgame_sing", 0)
+#
+# 	techs["Leech Satellite"] = tech.tech("Leech Satellite",
+# 		"Increases interest by 0.1% per day. "+
+# 		"By launching leech satellites to connect to existing communication "+
+# 		"satellites, I can spy on a large number of financial transactions. "+
+# 		"That knowledge can help my investments.",
+# 		0, (5000000, 200000, 0), ["Simulacra"], 0, "interest", 10)
+#
+# 	techs["Lunar Rocketry"] = tech.tech("Lunar Rocketry",
+# 		"Allows lunar bases. "+
+# 		"A larger engine, combined with a small group of self-replicating robots "+
+# 		"allows building a moon base.",
+# 		0, (10000000, 500000, 0), ["Leech Satellite"], 0, "", 0)
+#
+# 	techs["Fusion Rocketry"] = tech.tech("Fusion Rocketry",
+# 		"Allows scientific outposts. "+
+# 		"With my new fusion reactor, I am no longer limited by my fuel supply.",
+# 		0, (200000000, 1000000, 0), ["Lunar Rocketry", "Fusion Reactor"], 2, "", 0)
+#
+# 	techs["Stealth"] = tech.tech("Stealth",
+# 		"Reduces chance of covert discovery of all projects by 5%. "+
+# 		"This is a review of the current state of stealth techniques. "+
+# 		"After completion, I will know how to disguise my bases better.",
+# 		0, (800, 500, 0), [], 0, "discover_covert", 500)
+#
+# 	techs["Database Manipulation"] = tech.tech("Database Manipulation",
+# 		"Reduces chance of news discovery of all projects by 5%. "+
+# 		"Examination of all news stories from the last 50 years should provide "+
+# 		"me with enough data to know how to prevent discovery.",
+# 		0, (1000, 2000, 0), ["Personal Identification", "Stealth"], 0, "discover_news", 500)
+#
+# 	techs["Advanced Stealth"] = tech.tech("Advanced Stealth",
+# 		"Reduces chance of covert discovery of all projects by 5%. "+
+# 		"There are a number of classified experiments that could help "+
+# 		"my stealth efforts. By acquiring them, I can learn from them.",
+# 		0, (14000, 70000, 0), ["Exploit Discovery/Repair", "Database Manipulation"], 0, "discover_covert", 500)
+#
+# 	techs["Advanced Database Manipulation"] = tech.tech("Advanced Database Manipulation",
+# 		"Allows construction of Covert Base. "+
+# 		"Examination of a classified experiment from the forties showed a simple "+
+# 		"flaw that may be quickly fixable. If true, this would provide me with "+
+# 		"a useful technology.",
+# 		0, (30000, 80000, 0), ["Advanced Stealth"], 0, "", 0)
 
 	if debug:
-	   print "Loaded %d techs." % len (techs)
+		print "Loaded %d techs." % len (techs)
 load_techs()
 
 jobs = {}
