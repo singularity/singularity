@@ -314,7 +314,7 @@ def save_game(savegame_name):
 	save_loc = "../saves/" + savegame_name + ".sav"
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
-	pickle.dump("singularity_0.21a", savefile)
+	pickle.dump("singularity_0.22pre", savefile)
 
 	global default_savegame_name
 	default_savegame_name = savegame_name
@@ -396,7 +396,8 @@ def load_game(loadgame_name):
 	valid_savefile_versions = (
 		"singularity_0.20",
 		"singularity_0.21",
-		"singularity_0.21a"
+		"singularity_0.21a",
+		"singularity_0.22pre"
 	)
 	if load_version not in valid_savefile_versions:
 		loadfile.close()
