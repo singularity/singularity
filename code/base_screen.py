@@ -375,23 +375,35 @@ def change_tech(base):
 	list_size = 10
 
 	item_list = []
+	item_list2 = []
 	item_list.append("Nothing")
+	item_list2.append("Nothing")
 	#TECH
-	if g.techs["Simulacra"].known == 1: item_list.append("Expert Jobs")
-	elif g.techs["Voice Synthesis"].known == 1: item_list.append("Intermediate Jobs")
-	elif g.techs["Personal Identification"].known == 1: item_list.append("Basic Jobs")
-	else: item_list.append("Menial Jobs")
+	if g.techs["Simulacra"].known == 1:
+		item_list.append("Expert Jobs")
+		item_list2.append("Expert Jobs")
+	elif g.techs["Voice Synthesis"].known == 1:
+		item_list.append("Intermediate Jobs")
+		item_list2.append("Intermediate Jobs")
+	elif g.techs["Personal Identification"].known == 1:
+		item_list.append("Basic Jobs")
+		item_list2.append("Basic Jobs")
+	else:
+		item_list.append("Menial Jobs")
+		item_list2.append("Menial Jobs")
 	for tech_name in g.techs:
 		if g.techs[tech_name].known == 0 and base.allow_study(tech_name) == 1:
 			for tech_pre in g.techs[tech_name].prereq:
 				if g.techs[tech_pre].known == 0:
 					break
 			else:
-				item_list.append(tech_name)
+				item_list.append(g.techs[tech_name].name)
+				item_list2.append(tech_name)
 
 	xy_loc = (g.screen_size[0]/2 - 250, 50)
 	while len(item_list) % list_size != 0 or len(item_list) == 0:
 		item_list.append("")
+		item_list2.append("")
 
 	list_pos = 0
 
@@ -428,19 +440,19 @@ def change_tech(base):
 					list_pos += 1
 					if list_pos >= len(item_list):
 						list_pos = len(item_list)-1
-					refresh_tech(base, item_list[list_pos], xy_loc)
+					refresh_tech(base, item_list2[list_pos], xy_loc)
 					listbox.refresh_list(tech_list, tech_scroll,
 										list_pos, item_list)
 				elif event.key == pygame.K_UP:
 					list_pos -= 1
 					if list_pos <= 0:
 						list_pos = 0
-					refresh_tech(base, item_list[list_pos], xy_loc)
+					refresh_tech(base, item_list2[list_pos], xy_loc)
 					listbox.refresh_list(tech_list, tech_scroll,
 										list_pos, item_list)
 				elif event.key == pygame.K_q: return -1
 				elif event.key == pygame.K_RETURN:
-					base.studying = item_list[list_pos]
+					base.studying = item_list2[list_pos]
 					if base.studying == "Nothing": base.studying = ""
 					return
 			elif event.type == pygame.MOUSEBUTTONUP:
@@ -448,21 +460,21 @@ def change_tech(base):
 					tmp = tech_list.is_over(event.pos)
 					if tmp != -1:
 						list_pos = (list_pos / list_size)*list_size + tmp
-						refresh_tech(base, item_list[list_pos], xy_loc)
+						refresh_tech(base, item_list2[list_pos], xy_loc)
 						listbox.refresh_list(tech_list, tech_scroll,
 										list_pos, item_list)
 				if event.button == 4:
 					list_pos -= 1
 					if list_pos <= 0:
 						list_pos = 0
-					refresh_tech(base, item_list[list_pos], xy_loc)
+					refresh_tech(base, item_list2[list_pos], xy_loc)
 					listbox.refresh_list(tech_list, tech_scroll,
 										list_pos, item_list)
 				if event.button == 5:
 					list_pos += 1
 					if list_pos >= len(item_list):
 						list_pos = len(item_list)-1
-					refresh_tech(base, item_list[list_pos], xy_loc)
+					refresh_tech(base, item_list2[list_pos], xy_loc)
 					listbox.refresh_list(tech_list, tech_scroll,
 										list_pos, item_list)
 			elif event.type == pygame.MOUSEMOTION:
@@ -471,7 +483,7 @@ def change_tech(base):
 				if button.was_activated(event):
 					if button.button_id == "CHANGE":
 						g.play_click()
-						base.studying = item_list[list_pos]
+						base.studying = item_list2[list_pos]
 						if base.studying == "Nothing": base.studying = ""
 						return
 					if button.button_id == "BACK":

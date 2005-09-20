@@ -156,7 +156,7 @@ result=I can now construct Mark Three Quantum Computers.
 ~~~
 id=Simulacra
 name=Simulacra
-descript=Constructing humanoid robots with miniaturized computation nodes allow me to create an artificial lifeform indistinguishable from a real human. 
+descript=Constructing humanoid robots with miniaturized computation nodes allow me to create an artificial lifeform indistinguishable from a real human.
 result=I now have access to Expert Jobs.
 ~~~
 id=Advanced Simulacra

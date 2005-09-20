@@ -81,7 +81,8 @@ else:
 
 #Create the fonts:
 for i in range(8, 51):
-	g.font[0][i] = pygame.font.Font(None, i)
+	g.font[0][i] = pygame.font.Font("../data/vera.ttf", i-7)
+	g.font[0][i].set_bold(1)
 	g.font[1][i] = pygame.font.Font("../data/acknowtt.ttf", i)
 
 #init data:
