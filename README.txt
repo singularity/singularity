@@ -1,4 +1,4 @@
-Endgame: Singularity 0.20
+Endgame: Singularity 0.22
 
 Requirements:
 Recent version of Python, pygame, and SDL_image. This game should work on Linux,
@@ -16,6 +16,13 @@ on Linux, running the shell script "Endgame_Linux" will start the game. On
 other platforms, type "python singularity.py".
 Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound
 
+Note about save files:
+Endgame: Singularity is still under heavy development.  As such, the save file
+format (and its contents) are still in flux.  We will try our best to keep old
+save files loading, but don't be surprised if some mildly strange things happen
+when you load up old saves.  We will clearly note in the Changelog when we
+break savefile compatibility, and the game will refuse to load completely
+incompatible saves.
 
 Playing the game:
 Use mouse control. Buttons have underlined letters to indicate shortcuts.

@@ -1,5 +1,8 @@
 Endgame: Singularity Changelog
 
+v0.22 (release 2005.09.??):
+  [To read about the save file compatibility policy, please see README.txt.]
+
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
   they will save with a .sav extension, and the old save will not be used
