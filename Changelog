@@ -12,6 +12,7 @@ v0.22 (release 2005.09.??):
   result. (emh)
 - Complete rewrite of technology descriptions, better matching the new names.
   (Phil)
+- Minor cleanup of base descriptions. (Phil)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but

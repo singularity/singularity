@@ -607,21 +607,21 @@ base_type = {}
 
 #Base types
 base_type["Stolen Computer Time"] = base.base_type("Stolen Computer Time",
-	"Requires Intrusion. Take over a random computer. I cannot build anything "+
+	"Take over a random computer. I cannot build anything "+
 	"in this base, and it only contains a single slow computer. Detection "+
 	"chance is also rather high.", 1,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 100, 150),
 	(0, 2, 0), "Intrusion", (0, 0, 0))
 
 base_type["Server Access"] = base.base_type("Server Access",
-	"No requirements. Buy processor time from one of several companies. "+
+	"Buy processor time from one of several companies. "+
 	"I cannot build anything "+
 	"in this base, and it only contains a single computer.", 1,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 150, 200),
 	(100, 0, 0), "", (5, 0, 0))
 
 base_type["Small Warehouse"] = base.base_type("Small Warehouse",
-	"Requires Personal Identification. Rent a small warehouse someplace out of the way. "+
+	"Rent a small warehouse someplace out of the way. "+
 	"I will need fake ID for some of the paperwork, and preparing the "+
 	"warehouse to suit my unique needs will take some time.",
 	25,
@@ -629,7 +629,7 @@ base_type["Small Warehouse"] = base.base_type("Small Warehouse",
 	(15000, 0, 3), "Personal Identification", (50, 0, 0))
 
 base_type["Large Warehouse"] = base.base_type("Large Warehouse",
-	"Requires Advanced Personal Identification. Rent a large warehouse someplace out of the way. "+
+	"Rent a large warehouse someplace out of the way. "+
 	"I will need good fake ID for some of the paperwork, and preparing the "+
 	"warehouse to suit my unique needs will take some time.",
 	65,
@@ -637,7 +637,7 @@ base_type["Large Warehouse"] = base.base_type("Large Warehouse",
 	(40000, 0, 7), "Advanced Personal Identification", (100, 0, 0))
 
 base_type["Covert Base"] = base.base_type("Covert Base",
-	"Requires Advanced Database Manipulation. This unique base is designed to blend into the "+
+	"This unique base is designed to blend into the "+
 	"scenery, while needing little in the way of outside resources. "+
 	"This makes it useful for storing a backup, just in case.",
 	2,
@@ -646,7 +646,7 @@ base_type["Covert Base"] = base.base_type("Covert Base",
 	(400000, 100, 21), "Advanced Database Manipulation", (3500, 9, 0))
 
 base_type["Undersea Lab"] = base.base_type("Undersea Lab",
-	"Requires Autonomous Vehicles. This experimental base is designed to "+
+	"This experimental base is designed to "+
 	"be constructed on the ocean floor, making it virtually undetectable. "+
 	"The ocean environment gives a bonus to science, making this "+
 	"lab useful for research purposes.",
@@ -656,7 +656,7 @@ base_type["Undersea Lab"] = base.base_type("Undersea Lab",
 	(8000000, 1000, 20), "Autonomous Vehicles", (10000, 30, 0))
 
 base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
-	"Requires Pressure Domes. This experimental base is similar to the "+
+	"This experimental base is similar to the "+
 	"regular underwater lab, but larger, giving more room for experiments.",
 	32,
 	["OCEAN"],
@@ -664,7 +664,7 @@ base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
 	(20000000, 3000, 40), "Pressure Domes", (25000, 100, 0))
 
 base_type["Time Capsule"] = base.base_type("Time Capsule",
-	"Requires Autonomous Vehicles. This base consists of nothing more than "+
+	"This base consists of nothing more than "+
 	"a small computer, and a satelite "+
 	"link. When buried in the trackless waste of the Antarctic, it is "+
 	"undetectable.",
@@ -674,7 +674,7 @@ base_type["Time Capsule"] = base.base_type("Time Capsule",
 	(3000000, 3000, 15), "Autonomous Vehicles", (0, 1, 0))
 
 base_type["Lunar Facility"] = base.base_type("Lunar Facility",
-	"Requires Lunar Rocketry. This base is a series of caverns dug into "+
+	"This base is a series of caverns dug into "+
 	"the Moon's surface. Due to the lack of neighbors, this base is quite "+
 	"large.",
 	600,
@@ -683,7 +683,7 @@ base_type["Lunar Facility"] = base.base_type("Lunar Facility",
 	(800000000, 300000, 40), "Lunar Rocketry", (1000000, 100, 0))
 
 base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
-	"Requires Fusion Rocketry. This base is placed as far from Earth as "+
+	"This base is placed as far from Earth as "+
 	"practical, making it safe to conduct some of my more dangerous "+
 	"experiments.",
 	225,
@@ -692,7 +692,7 @@ base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
 	(10000000000, 30000000, 50), "Fusion Rocketry", (9000000, 3000, 0))
 
 base_type["Reality Bubble"] = base.base_type("Reality Bubble",
-	"Requires Space-Time Manipulation. This base is outside the universe itself, "+
+	"This base is outside the universe itself, "+
 	"making it safe to conduct experiments that may destroy reality.",
 	50,
 	["TRANSDIMENSIONAL"],
