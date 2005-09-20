@@ -705,11 +705,81 @@ def load_techs():
 			path.exists("../data/techs_en_US.txt") == 0:
 		print "tech files are missing. Exiting."
 		sys.exit()
-	loadfile=
 	tech_base_file = open("../data/techs.txt", 'r')
 	temp_tech_id = ""
 	temp_tech_cost = (0, 0, 0)
 	temp_tech_pre = []
+	temp_tech_danger = 0
+	temp_tech_type = ""
+	temp_tech_second = 0
+	for line in tech_base_file:
+		line=line.strip()
+		if line == "" or line[0] == "#": continue
+		#add a new tech.
+		if line.strip() == "~~~":
+			if temp_tech_id != "":
+				techs[temp_tech_id]=tech.tech(temp_tech_id, "", 0,
+					temp_tech_cost, temp_tech_pre, temp_tech_danger,
+					temp_tech_type, temp_tech_second)
+			temp_tech_id = ""
+			temp_tech_cost = (0, 0, 0)
+			temp_tech_pre = []
+			temp_tech_danger = 0
+			temp_tech_type = ""
+			temp_tech_second = 0
+			continue
+		command = line.split("=", 1)[0].strip().lower()
+		command_text= line.split("=", 1)[1].strip()
+		if command == "id":
+			temp_tech_id = command_text
+		elif command == "danger":
+			temp_tech_danger = int(command_text)
+		elif command == "cost":
+			cost_array = command_text.split(",", 2)
+			if len(cost_array) != 3:
+				print "error with cost given: "+command_text
+				sys.exit()
+			temp_tech_cost = (int(cost_array[0]), int(cost_array[1]),
+					int(cost_array[2]))
+		elif command == "pre":
+			temp_tech_pre.append(command_text)
+		elif command == "type":
+			cost_array = command_text.split(",", 1)
+			if len(cost_array) != 2:
+				print "error with type given: "+command_text
+				sys.exit()
+			temp_tech_type = cost_array[0]
+			temp_tech_second = int(cost_array[1])
+		else:
+			print "Unknown command of "+command+" in techs.txt."
+	tech_base_file.close()
+
+	tech_desc_file = open("../data/techs_en_US.txt", 'r')
+	temp_tech_id = ""
+	temp_tech_name = ""
+	temp_tech_descript = ""
+	for line in tech_desc_file:
+		line=line.strip()
+		if line == "" or line[0] == "#": continue
+		#add a new tech.
+		if line.strip() == "~~~":
+			if temp_tech_id != "":
+				techs[temp_tech_id].name = temp_tech_name
+				techs[temp_tech_id].descript = temp_tech_descript
+			temp_tech_id = ""
+			temp_tech_name = ""
+			temp_tech_descript = ""
+			continue
+		command = line.split("=", 1)[0].strip().lower()
+		command_text= line.split("=", 1)[1].strip()
+		if command == "id":
+			temp_tech_id = command_text
+		elif command == "name":
+			temp_tech_name = command_text
+		elif command == "descript":
+			temp_tech_descript = command_text
+	tech_desc_file.close()
+
 
 # #	techs["Algorithms 1"] = tech.tech("Algorithms 1",
 # #		"Decreases cost of new technologies by 10%. "+
