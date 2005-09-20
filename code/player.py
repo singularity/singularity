@@ -28,7 +28,7 @@ class player_class:
 		self.time_min = time_min
 		self.time_hour = time_hour
 		self.time_day = time_day
-		self.interest_rate = 0
+		self.interest_rate = 1
 		self.income = 0
 		self.cpu_for_day = 0
 		self.labor_bonus = 10000
