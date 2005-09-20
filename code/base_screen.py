@@ -41,12 +41,12 @@ def show_base(base):
 		"DETECTION CHANCE", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
-	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (70, 25),
-		"CHANGE", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (170, 25),
+		"CHANGE RESEARCH", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][20], "CHANGE"))
 
-	menu_buttons.append(buttons.button((70, g.screen_size[1]-25),
-		(g.screen_size[0]-70, 26),
+	menu_buttons.append(buttons.button((170, g.screen_size[1]-25),
+		(g.screen_size[0]-40, 26),
 		"STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 

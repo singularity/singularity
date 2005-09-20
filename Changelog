@@ -2,6 +2,8 @@ Endgame: Singularity Changelog
 
 v0.22 (release 2005.09.??):
   [To read about the save file compatibility policy, please see README.txt.]
+- The starting money gains a minimal amount of interest (as opposed to none).
+  (Phil)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
