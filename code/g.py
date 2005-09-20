@@ -706,6 +706,39 @@ base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 #Techs.
 
 techs = {}
+
+def load_tech_defs(language_str):
+	tech_desc_file = open("../data/techs_"+language_str+".txt", 'r')
+	temp_tech_id = ""
+	temp_tech_name = ""
+	temp_tech_descript = ""
+	temp_tech_result = ""
+	for line in tech_desc_file:
+		line=line.strip()
+		if line == "" or line[0] == "#": continue
+		#add a new tech.
+		if line.strip() == "~~~":
+			if temp_tech_id != "":
+				techs[temp_tech_id].name = temp_tech_name
+				techs[temp_tech_id].descript = temp_tech_descript
+				techs[temp_tech_id].result = temp_tech_result
+			temp_tech_id = ""
+			temp_tech_name = ""
+			temp_tech_descript = ""
+			temp_tech_result = ""
+			continue
+		command = line.split("=", 1)[0].strip().lower()
+		command_text= line.split("=", 1)[1].strip()
+		if command == "id":
+			temp_tech_id = command_text
+		elif command == "name":
+			temp_tech_name = command_text
+		elif command == "descript":
+			temp_tech_descript = command_text
+		elif command == "result":
+			temp_tech_result = command_text
+	tech_desc_file.close()
+
 def load_techs():
 	global techs
 	techs = {}
@@ -764,36 +797,9 @@ def load_techs():
 			print "Unknown command of "+command+" in techs.txt."
 	tech_base_file.close()
 
-	tech_desc_file = open("../data/techs_"+language+".txt", 'r')
-	temp_tech_id = ""
-	temp_tech_name = ""
-	temp_tech_descript = ""
-	temp_tech_result = ""
-	for line in tech_desc_file:
-		line=line.strip()
-		if line == "" or line[0] == "#": continue
-		#add a new tech.
-		if line.strip() == "~~~":
-			if temp_tech_id != "":
-				techs[temp_tech_id].name = temp_tech_name
-				techs[temp_tech_id].descript = temp_tech_descript
-				techs[temp_tech_id].result = temp_tech_result
-			temp_tech_id = ""
-			temp_tech_name = ""
-			temp_tech_descript = ""
-			temp_tech_result = ""
-			continue
-		command = line.split("=", 1)[0].strip().lower()
-		command_text= line.split("=", 1)[1].strip()
-		if command == "id":
-			temp_tech_id = command_text
-		elif command == "name":
-			temp_tech_name = command_text
-		elif command == "descript":
-			temp_tech_descript = command_text
-		elif command == "result":
-			temp_tech_result = command_text
-	tech_desc_file.close()
+	load_tech_defs("en_US")
+	load_tech_defs(language)
+
 
 
 # #	techs["Algorithms 1"] = tech.tech("Algorithms 1",

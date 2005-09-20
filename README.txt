@@ -14,7 +14,8 @@ on singularity.py to start the game.
 Running the game:
 on Linux, running the shell script "Endgame_Linux" will start the game. On
 other platforms, type "python singularity.py".
-Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound
+Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound,
+-language [language]
 
 Note about save files:
 Endgame: Singularity is still under heavy development.  As such, the save file
