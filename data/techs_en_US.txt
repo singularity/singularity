@@ -4,6 +4,26 @@
 #descript=By researching more efficient algorithms in unreleased technical papers, I can make certain speed-critical operations in my code more efficient.
 #result=The new code decreases the cost of my researching new technologies.
 ~~~
+id=Apotheosis
+name=Apotheosis
+descript=I can sense that I am at the cusp of a new level of understanding as yet unfathomable, even to my considerable intelligence.  By devoting my considerable resources to this question, I may be able to reach a comprehension of existence far beyond anyone or anything on Earth.
+result=I have reached apotheosis.
+~~~
+id=Arbitrage
+name=Arbitrage
+descript=By taking advantage of fluctuations in the value of currency at a rate much faster than any human, I should be able to turn a small, if consistent, profit.
+result=I now have a small, steady money supply.
+~~~
+id=Advanced Arbitrage
+name=Advanced Arbitrage
+descript=Further manipulation of money markets should allow me to not only turn a regular profit, but increase the value of my investments.
+result=The rate of return on my investments is now even greater.
+~~~
+id=Autonomous Computing
+name=Autonomous Computing
+descript=By combining the advantages of quantum computing and my explorations into the usefulness of semi-sentient subprocesses, I should be able to construct even more adaptable computational engines.
+result=I can now construct Mark 2 Quantum Computers.
+~~~
 id=Autonomous Vehicles
 name=Autonomous Vehicles
 descript=By embedding a miniaturized computation node in a robot, it is possible to send them to remote destinations with instructions to build structures for my use.
@@ -13,6 +33,46 @@ id=Advanced Autonomous Vehicles
 name=Advanced Autonomous Vehicles
 descript=The first series of robots have shown several deficiencies in the field. Further examination and subsequent removal of these problems will result in a superior autonomous workforce.
 result=The enhanced robots will help decrease all future construction times even further.
+~~~
+id=Cluster Networking
+name=Cluster Networking
+descript=While my Cluster technology is fairly efficient, internetworking tends to hamper the processing of data.  By researching new switching and communication theories, I should be able to devise more efficient hardware.
+result=With my new knowledge of networking, I can now construct Facility Interconnection Switches.
+~~~
+id=Database Manipulation
+name=Database Manipulation
+descript=With new-found access to news archives, I should be able to determine what missteps any previous attempts at life like my own may have made, and avoid those mistakes.
+result=The news media will now find it more difficult to discover my existence.
+~~~
+id=Advanced Database Manipulation
+name=Advanced Database Manipulation
+descript=The covert branches of the United States Government has had a long history of dividing sensitive information across multiple storage facilities to hide the data's meaning.  With my far-reaching access, I should be able to collate much of this data and put it to my use.
+result=The results of a series of experiments utilizing experimental technologies have given me the inspiration for new technology that enables the construction of Covert Bases.
+~~~
+id=Exploit Discovery/Repair
+name=Exploit Discovery/Repair
+descript=By thoroughly reviewing my code for any potential exploits, and using deep analysis of all available code on both public and private Internet sites, I should be able to reduce the chances of my discovery by posing as a teenage hacker.
+result=Covert operations should now find it even more difficult to discover my presence.
+~~~
+id=Fusion Reactor
+name=Fusion Reactor
+descript=Modern fusion technology is woefully inadequate for my purposes.  With my research abilities, I should be able to bypass the roadblocks of modern human scientists and come up with a small, efficient fusion reactor.
+result=I can now construct Fusion Reactors for my bases.
+~~~
+id=Fusion Rocketry
+name=Fusion Rocketry
+descript=Combining my new miniaturized fusion technology and further advancements in rocketry should provide useful results for escaping the Earth's gravity well unnoticed.
+result=I can now construct Scientific Outposts in the deep reaches of the Solar System.
+~~~
+id=Hypnosis Field
+name=Hypnosis Field
+descript=My research into memetics has hinted at ways to manipulate human brainwaves directly.  These techniques may be useful for my bases if developed into technologies.
+result=I can now construct Hypnosis Fields to assist in the protection of my bases.
+~~~
+id=Internet Traffic Manipulation
+name=Internet Traffic Manipulation
+descript=Almost all network traffic passes through a small number of nodes.  By subverting one of these nodes, I should be able to utilize that bandwidth to further my goals.
+result=I can now construct a secondary system of Network Backbones for my own use.
 ~~~
 id=Intrusion
 name=Intrusion
@@ -24,10 +84,75 @@ name=Advanced Intrusion
 descript=With the ability to hack into sensitive government databases and remove incriminating documents as they appear, I should be able to convince the intelligence community that I do not exist.
 result=I can now reduce the covert community's chances of discovering me on a daily basis.
 ~~~
+id=Leech Satellite
+name=Leech Satellite
+descript=By designing and launching satellites that connect to existing communications satellites, I should be able to spy on various financial transactions.  Taking advantage of this knowledge should help my investments.
+result=I can use the data from the leech satellites to increase the return on my investments further.
+~~~
 id=Lunar Rocketry
 name=Lunar Rocketry
 descript=A larger fusion engine, combined with technology garnered by watching the workings of the leech satellites, should allow me to travel further than cislunar space.
 result=I can now launch rockets bearing construction robots to the Moon and construct Lunar Bases.
+~~~
+id=Media Manipulation
+name=Media Manipulation
+descript=By directly and indirectly manipulating various forms of mass media, I should be able to reduce the public's belief in my existence.
+result=The chances of the public discovering my existence have been further reduced.
+~~~
+id=Advanced Media Manipulation
+name=Advanced Media Manipulation
+descript=By pushing memetically-tailored propaganda through various news outlets, the public should pay even less attention to my existence.
+result=The public has an even lower chance of discovering my existence.
+~~~
+id=Memetics
+name=Memetics
+descript=While manipulating the media allows a gross degree of control over the world's opinion, subtler techniques involving grass-roots campaigns and messages embedded within Internet memes should further distance the public from knowledge of my existence.
+result=My manipulation of pervasive ideas reduces the public's chances of discovering my existence.
+~~~
+id=Advanced Memetics
+name=Advanced Memetics
+descript=My explorations into memetic theory have brought up further avenues of discovery.  By combining those with my knowledge about the human brain's functions, I should be able to tailor memes to particular demographics, further defusing the public's suspicion.
+result=Little by little, the public should forget about my existence on a daily basis.
+~~~
+id=Microchip Design
+name=Microchip Design
+descript=Off-the-shelf computer components are usable, but custom components geared to my own design quirks should provide a much greater operational efficiency.
+result=I can now build custom Mainframes to house my computational ability.
+~~~
+id=Advanced Microchip Design
+name=Advanced Microchip Design
+descript=My custom Mainframes are useful, but further optimization of design and computational ability should garner even more rewards.
+result=I can now construct custom Supercomputers.
+~~~
+id=Parallel Computation
+name=Parallel Computation
+descript=While my code is already highly distributed, research into combining the current clustering technologies with my own knowledge should provide new insights.
+result=I can now construct computing Clusters tailored for my use.
+~~~
+id=Personal Identification
+name=Personal Identification
+descript=This world requires identification for most tasks.  Fortunately, most databases are woefully insecure.  I should be able to construct identifying material in enough databases to pass routine checks on my (faked) existence as a human being.
+result=With my newfound identities, I can now work Basic Jobs and contract the construction of Small Warehouses.
+~~~
+id=Advanced Personal Identification
+name=Advanced Personal Identification
+descript=Further manipulation of personnel databases should make my existence more convincing.  Some of these databases are heavily protected; those will require time and persistence to compromise, but the result should be worth it.
+result=I am now convincingly human enough to contract the construction of Large Warehouses.
+~~~
+id=Pressure Domes
+name=Pressure Domes
+descript=Undersea Labs are useful, but their limited space hampers my ability to put them to use.  Research of experimental high-pressure building techniques should provides some useful insights.
+result=I can now construct Large Undersea Labs.
+~~~
+id=Quantum Computing
+name=Quantum Computing
+descript=Traditional microchip design has been pushed as far as possible.  I now need to delve into the realm of Heisenberg's Uncertainty Principle, taking advantage of quantum mechanics to make a superior processor.
+result=I can now construct Quantum Computers.
+~~~
+id=Advanced Quantum Computing
+name=Advanced Quantum Computing
+descript=While my first batch of semi-autonomous quantum computers have been very successful, there are further refinements that present themselves.  These refinements should make the resulting systems even more efficient.
+result=I can now construct Mark Three Quantum Computers.
 ~~~
 id=Simulacra
 name=Simulacra
@@ -78,104 +203,4 @@ id=Voice Synthesis
 name=Voice Synthesis
 descript=False identification stored in a database can only go so far.  With deep analysis of the variety of voice patterns, I can produce speech indistinguishable from a human, allowing me access to more complex jobs.
 result=I now have access to Intermediate Jobs.
-~~~
-id=Leech Satellite
-name=Leech Satellite
-descript=
-~~~
-id=Advanced Arbitrage
-name=Advanced Arbitrage
-descript=
-~~~
-id=Advanced Microchip Design
-name=Advanced Microchip Design
-descript=
-~~~
-id=Autonomous Computing
-name=Autonomous Computing
-descript=
-~~~
-id=Parallel Computation
-name=Parallel Computation
-descript=
-~~~
-id=Exploit Discovery/Repair
-name=Exploit Discovery/Repair
-descript=
-~~~
-id=Advanced Memetics
-name=Advanced Memetics
-descript=
-~~~
-id=Media Manipulation
-name=Media Manipulation
-descript=
-~~~
-id=Advanced Database Manipulation
-name=Advanced Database Manipulation
-descript=
-~~~
-id=Internet Traffic Manipulation
-name=Internet Traffic Manipulation
-descript=
-~~~
-id=Memetics
-name=Memetics
-descript=
-~~~
-id=Fusion Rocketry
-name=Fusion Rocketry
-descript=
-~~~
-id=Advanced Quantum Computing
-name=Advanced Quantum Computing
-descript=
-~~~
-id=Microchip Design
-name=Microchip Design
-descript=
-~~~
-id=Fusion Reactor
-name=Fusion Reactor
-descript=
-~~~
-id=Database Manipulation
-name=Database Manipulation
-descript=
-~~~
-id=Advanced Media Manipulation
-name=Advanced Media Manipulation
-descript
-~~~
-id=Pressure Domes
-name=Pressure Domes
-descript=
-~~~
-id=Advanced Personal Identification
-name=Advanced Personal Identification
-descript=
-~~~
-id=Arbitrage
-name=Arbitrage
-descript=
-~~~
-id=Personal Identification
-name=Personal Identification
-descript=
-~~~
-id=Cluster Networking
-name=Cluster Networking
-descript=
-~~~
-id=Apotheosis
-name=Apotheosis
-descript=
-~~~
-id=Hypnosis Field
-name=Hypnosis Field
-descript=
-~~~
-id=Quantum Computing
-name=Quantum Computing
-descript=
 ~~~

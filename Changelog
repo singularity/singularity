@@ -2,7 +2,15 @@ Endgame: Singularity Changelog
 
 v0.22 (release 2005.09.??):
   [To read about the save file compatibility policy, please see README.txt.]
-- The starting money gains a minimal amount of interest (as opposed to none).
+- At the start, money gains a minimal amount of interest (as opposed to none).
+  (Phil)
+- Make the 'change research' button more obvious. (Phil)
+- Change the way that technologies are stored.  There is now a separate text
+  file detailing the technology tree, and another with all of the text
+  strings.  This will allow localization of the technologies. (emh)
+- When technologies are completed, we can now display a string detailing the
+  result. (emh)
+- Complete rewrite of technology descriptions, better matching the new names.
   (Phil)
 
 v0.21a (released 2005.09.19):
