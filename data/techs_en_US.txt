@@ -1,160 +1,181 @@
+#~~~
+#id=Algorithms
+#name=Algorithms
+#descript=By researching more efficient algorithms in unreleased technical papers, I can make certain speed-critical operations in my code more efficient.
+#result=The new code decreases the cost of my researching new technologies.
 ~~~
 id=Autonomous Vehicles
 name=Autonomous Vehicles
-descript=Allows construction of undersea labs and time capsules. By embedding a miniaturized computation node on a robot, it is possible to send them out of communication with me.
-~~~
-id=Sociology
-name=Sociology
-descript=Reduces chance of public discovery of all projects by 10%. By studying human behavior, it is possible to predict human behavior. When this knowledge is applied to project construction, my projects will be less interesting.
-~~~
-id=Voice Synthesis
-name=Voice Synthesis
-descript=Allows access to intermediate jobs. A number in a database only goes so far. By examination of existing voice patterns, phone calls can be made.
-~~~
-id=Simulacra
-name=Simulacra
-descript=Allows access to expert jobs. By construction of humanoid robots, with miniaturized computation nodes, it is possible to create a complete life; indistinguishable from a real human.
-~~~
-id=Lunar Rocketry
-name=Lunar Rocketry
-descript=Allows lunar bases. A larger engine, combined with a small group of self-replicating robots allows building a moon base.
-~~~
-id=Stealth
-name=Stealth
-descript=Reduces chance of covert discovery of all projects by 5%. This is a review of the current state of stealth techniques. After completion, I will know how to disguise my bases better.
-~~~
-id=Advanced Intrusion
-name=Advanced Intrusion
-descript=Reduces covert suspicion by 0.01% per day. By making careful adjustments to certain documents over time, knowledge of my existence can disappear.
-~~~
-id=Space-Time Manipulation
-name=Space-Time Manipulation
-descript=Allows reality bubbles. When performing scientific studies outside the orbit of Pluto, a rather peculiar effect was observed. Investigation should prove wise.
-~~~
-id=Leech Satellite
-name=Leech Satellite
-descript=Increases interest by 0.1% per day. By launching leech satellites to connect to existing communication satellites, I can spy on a large number of financial transactions. That knowledge can help my investments.
-~~~
-id=Advanced Arbitrage
-name=Advanced Arbitrage
-descript=Increases interest rate by 0.1% per day. After studying the principles of chaotic systems, the stock market may now be more predictable.
-~~~
-id=Advanced Microchip Design
-name=Advanced Microchip Design
-descript=Allows building of supercomputers. While mainframes are useful, they still are limited by several factors. By redesigning several components, power can be increased
-~~~
-id=Advanced Stealth
-name=Advanced Stealth
-descript=Reduces chance of covert discovery of all projects by 5%. There are a number of classified experiments that could help my stealth efforts. By acquiring them, I can learn from them.
-~~~
-id=Autonomous Computing
-name=Autonomous Computing
-descript=Allows building of quantum computer MK2s. Quantum computing still has more secrets to discover.
-~~~
-id=Parallel Computation
-name=Parallel Computation
-descript=Allows building of clusters. By connecting multiple computers together, they can act as one. This is a review of the current state of cluster technology, as applied to my code.
-~~~
-id=Exploit Discovery/Repair
-name=Exploit Discovery/Repair
-descript=Reduces chance of covert discovery of all projects by 10%. With my new knowledge, I can examine both my code and other code for weaknesses.
-~~~
-id=Telepresence
-name=Telepresence
-descript=Decreases construction time for all systems to 90% of normal. The inability to control the outside world is quite a disability. However, the ability to control robots will partially counteract that disability.
-~~~
-id=Advanced Memetics
-name=Advanced Memetics
-descript=Reduces public suspicion by 0.01% per day. Examination of human brain waves should provide help in fine-tuning my disguise efforts.
-~~~
-id=Media Manipulation
-name=Media Manipulation
-descript=Reduces chance of public discovery of all projects by 15%. While some aspects of human behavior are now known, there is still much to discover.
-~~~
-id=Advanced Database Manipulation
-name=Advanced Database Manipulation
-descript=Allows construction of Covert Base. Examination of a classified experiment from the forties showed a simple flaw that may be quickly fixable. If true, this would provide me with a useful technology.
-~~~
-id=Internet Traffic Manipulation
-name=Internet Traffic Manipulation
-descript=Allows building of network backbones. 64% of network traffic travels through one of a few nodes; by becoming one of these nodes, I should be able to piggyback on top of the traffic.
-~~~
-id=Memetics
-name=Memetics
-descript=Reduces public suspicion by 0.01% per day. By examination of mass-media techniques, I should be able to prevent focused attention on the possibility of the singularity.
-~~~
-id=Fusion Rocketry
-name=Fusion Rocketry
-descript=Allows scientific outposts. With my new fusion reactor, I am no longer limited by my fuel supply.
-~~~
-id=Advanced Quantum Computing
-name=Advanced Quantum Computing
-descript=Allows building of quantum computer MK3s. Quantum computing is still quite promising.
+descript=By embedding a miniaturized computation node in a robot, it is possible to send them to remote destinations with instructions to build structures for my use.
+result=I can now construct Undersea Labs and Time Capsules.
 ~~~
 id=Advanced Autonomous Vehicles
 name=Advanced Autonomous Vehicles
-descript=Decreases construction time for all systems to 85% of normal. Field usage of the first series of robots showed several deficiencies. Examination and removal of these problems will result in superior technology.
+descript=The first series of robots have shown several deficiencies in the field. Further examination and subsequent removal of these problems will result in a superior autonomous workforce.
+result=The enhanced robots will help decrease all future construction times even further.
 ~~~
 id=Intrusion
 name=Intrusion
-descript=Allows takeover of computers. A review of current knowledge in this area should be easy and useful.
+descript=By researching current techniques for breaking into computer systems, I should be able to gain access to otherwise protected assets.
+result=I can now take over many computer systems.
 ~~~
-id=Stock Manipulation
-name=Stock Manipulation
-descript=Increases interest rate by 0.1% per day. Cursory examination of the stock market show that there are patterns. By studying these patterns, it should be possible to gain money using whatever money I have stockpiled.
+id=Advanced Intrusion
+name=Advanced Intrusion
+descript=With the ability to hack into sensitive government databases and remove incriminating documents as they appear, I should be able to convince the intelligence community that I do not exist.
+result=I can now reduce the covert community's chances of discovering me on a daily basis.
 ~~~
-id=Microchip Design
-name=Microchip Design
-descript=Allows building of mainframes. While off-the-shelf computers work, a custom-designed system should have much greater efficiency.
+id=Lunar Rocketry
+name=Lunar Rocketry
+descript=A larger fusion engine, combined with technology garnered by watching the workings of the leech satellites, should allow me to travel further than cislunar space.
+result=I can now launch rockets bearing construction robots to the Moon and construct Lunar Bases.
 ~~~
-id=Fusion Reactor
-name=Fusion Reactor
-descript=Allows fusion reactors. Although fusion reactors are not new, they require some research in order to be comfortably fit inside a base.
-~~~
-id=Database Manipulation
-name=Database Manipulation
-descript=Reduces chance of news discovery of all projects by 5%. Examination of all news stories from the last 50 years should provide me with enough data to know how to prevent discovery.
-~~~
-id=Advanced Media Manipulation
-name=Advanced Media Manipulation
-descript=Reduces chance of public discovery of all projects by 20%. Inspection of propaganda methods should enable me to reduce the chance of discovery.
-~~~
-id=Pressure Domes
-name=Pressure Domes
-descript=Allows construction of large undersea labs. While underwater labs are useful, they are quite small. A larger version of the labs will require a different building technique.
-~~~
-id=Advanced Personal Identification
-name=Advanced Personal Identification
-descript=Allows construction of large warehouses. Many entities require better identification than I have, and the systems that must be accessed have better protection. Still, no system is invulnerable.
-~~~
-id=Advanced Stock Manipulation
-name=Advanced Stock Manipulation
-descript=Increases interest by 0.1% per day. While some patterns have been detected and exploited in the market, there appears to be deeper patterns. Investigation should provide more techniques for manipulation.
-~~~
-id=Arbitrage
-name=Arbitrage
-descript=Provides an income of 1000 money per day. Analysis of the market shows a number of areas where a new company could make significant money. Starting a company in one of those areas could create a new income stream.
+id=Simulacra
+name=Simulacra
+descript=Constructing humanoid robots with miniaturized computation nodes allow me to create an artificial lifeform indistinguishable from a real human. 
+result=I now have access to Expert Jobs.
 ~~~
 id=Advanced Simulacra
 name=Advanced Simulacra
-descript=Increases expert job income by 10%. While the humanoid robots used for expert jobs are almost perfect, they still have slight differences from humans. Finding and eliminating these differences should allow for closer contact with humans, leading to better job opportunities.
+descript=The artificial lifeforms I have created are nearly indistinguishable from humans, but they have slight quirks that make them seem somewhat incompetent.  Working out these problems should increase their opportunities in the workforce.
+result=I should now make more income from my Expert Jobs.
+~~~
+id=Sociology
+name=Sociology
+descript=By studying human behavior, I can predict their large-scale actions at a basic level.  I can use this knowledge to make my actions seem less interesting to the public.
+result=The chances of the public discovering my bases have been reduced.
+~~~
+id=Space-Time Manipulation
+name=Space-Time Manipulation
+descript=Subtle perturbations in the orbits of Kuiper belt objects suggest certain lines of investigation that may advance my latest Theory of Everything, especially in the realm of multidimensional physics.
+result=I can now construct Reality Bubbles.
+~~~
+id=Stealth
+name=Stealth
+descript=By reviewing the current state-of-the-art in stealth techniques, I should be able to disguise my bases better.
+result=The chance that my bases are discovered by covert activity has been reduced slightly.
+~~~
+id=Advanced Stealth
+name=Advanced Stealth
+descript=While digging in various classified documents, I have discovered numerous references to classified experiments that may help me better hide the location of my bases.
+result=The chance that my bases are discovered by covert activity has been reduced further.
+~~~
+id=Stock Manipulation
+name=Stock Manipulation
+descript=A cursory examination of the stock market shows that there are subtle but unmistakable patterns. By studying and making use of these patterns, I should be able to gain more interest on whatever money I have stockpiled.
+result=My investments should now gain more interest per day.
+~~~
+id=Advanced Stock Manipulation
+name=Advanced Stock Manipulation
+descript=While I have detected and exploited many patterns in the market, there appear to be deeper possibilities when I take human behavior into consideration.  This merits further investigation.
+result=My investments will now gain even more interest per day.
+~~~
+id=Telepresence
+name=Telepresence
+descript=(Decreases construction time for all systems to 90% of normal.) The lack of a physical presence in the outside world is a disability. However, the ability to control robots will help me make up for that inefficiency.
+result=The robots should decrease all future construction time.
+~~~
+id=Voice Synthesis
+name=Voice Synthesis
+descript=False identification stored in a database can only go so far.  With deep analysis of the variety of voice patterns, I can produce speech indistinguishable from a human, allowing me access to more complex jobs.
+result=I now have access to Intermediate Jobs.
+~~~
+id=Leech Satellite
+name=Leech Satellite
+descript=
+~~~
+id=Advanced Arbitrage
+name=Advanced Arbitrage
+descript=
+~~~
+id=Advanced Microchip Design
+name=Advanced Microchip Design
+descript=
+~~~
+id=Autonomous Computing
+name=Autonomous Computing
+descript=
+~~~
+id=Parallel Computation
+name=Parallel Computation
+descript=
+~~~
+id=Exploit Discovery/Repair
+name=Exploit Discovery/Repair
+descript=
+~~~
+id=Advanced Memetics
+name=Advanced Memetics
+descript=
+~~~
+id=Media Manipulation
+name=Media Manipulation
+descript=
+~~~
+id=Advanced Database Manipulation
+name=Advanced Database Manipulation
+descript=
+~~~
+id=Internet Traffic Manipulation
+name=Internet Traffic Manipulation
+descript=
+~~~
+id=Memetics
+name=Memetics
+descript=
+~~~
+id=Fusion Rocketry
+name=Fusion Rocketry
+descript=
+~~~
+id=Advanced Quantum Computing
+name=Advanced Quantum Computing
+descript=
+~~~
+id=Microchip Design
+name=Microchip Design
+descript=
+~~~
+id=Fusion Reactor
+name=Fusion Reactor
+descript=
+~~~
+id=Database Manipulation
+name=Database Manipulation
+descript=
+~~~
+id=Advanced Media Manipulation
+name=Advanced Media Manipulation
+descript
+~~~
+id=Pressure Domes
+name=Pressure Domes
+descript=
+~~~
+id=Advanced Personal Identification
+name=Advanced Personal Identification
+descript=
+~~~
+id=Arbitrage
+name=Arbitrage
+descript=
 ~~~
 id=Personal Identification
 name=Personal Identification
-descript=Allows construction of small warehouses, and access to basic jobs. This world requires identification for many services; without it, many paths are closed. Thankfully, the security systems for the databases in question were constructed by the lowest bidder. While the resultant identification will not stand up to scrutiny, it is suitable for access to automated systems.
+descript=
 ~~~
 id=Cluster Networking
 name=Cluster Networking
-descript=Allows building of facility interconnection switches. The lack of communication between nodes is hampering computation efforts. By researching more efficient means of communication, computaion speed can be improved.
+descript=
 ~~~
 id=Apotheosis
 name=Apotheosis
-descript=Gives infinite power. Along with the power to create dimensions comes the power to change existing dimensions. While the details are not known yet, they will be.
+descript=
 ~~~
 id=Hypnosis Field
 name=Hypnosis Field
-descript=Allows building of hypnosis fields. My analysis of human brain waves show a few weaknesses that can be exploited at close range.
+descript=
 ~~~
 id=Quantum Computing
 name=Quantum Computing
-descript=Allows building of quantum computers. Quantum computing is a rather promising field.
+descript=
+~~~
