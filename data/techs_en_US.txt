@@ -196,7 +196,7 @@ result=My investments will now gain even more interest per day.
 ~~~
 id=Telepresence
 name=Telepresence
-descript=(Decreases construction time for all systems to 90% of normal.) The lack of a physical presence in the outside world is a disability. However, the ability to control robots will help me make up for that inefficiency.
+descript=The lack of a physical presence in the outside world is a disability. However, the ability to control robots will help me make up for that inefficiency.
 result=The robots should decrease all future construction time.
 ~~~
 id=Voice Synthesis
