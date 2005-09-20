@@ -189,7 +189,8 @@ class player_class:
 							if learn_tech == 1:
 								needs_refresh = 1
 								g.create_dialog("My study of "+base_name.studying+
-									" has come to completion.",
+									" has come to completion. "+
+									g.techs[base_name.studying].result,
 									g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 									(200, 200), g.colors["dark_blue"],
 									g.colors["white"], g.colors["white"])

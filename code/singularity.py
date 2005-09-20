@@ -28,7 +28,11 @@ pygame.font.init()
 #Handle the program arguments.
 set_fullscreen = 0
 sys.argv.pop(0)
+arg_modifier = ""
 for argument in sys.argv:
+	if arg_modifier == "language":
+		language = argument
+		arg_modifier = ""
 	if argument.lower() == "-fullscreen":
 		set_fullscreen = 1
 	elif argument.lower() == "-640":
@@ -45,6 +49,8 @@ for argument in sys.argv:
 		g.nosound = 1
 	elif argument.lower() == "-debug":
 		g.debug = 1
+	elif argument.lower() == "-language":
+		arg_modifier = "language"
 	else:
 		print "Unknown argument of " + argument
 		print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound"

@@ -28,20 +28,30 @@ import player, base, buttons, tech, item
 #screen is the actual pygame display.
 global screen
 
+#size of the screen. This can be set via command-line option.
 global screen_size
 screen_size = (800, 600)
 
+#Used to pass time in the main screen.
 global clock
 clock = pygame.time.Clock()
 
+#Allows access to the cheat menu.
 global cheater
 cheater = 0
 
+#Kills the sound. Should allow usage of the game without SDL_mixer,
+# but is untested.
 global nosound
 nosound = 0
 
+#Gives debug info at various points.
 global debug
 debug = 0
+
+#Used to determine which data files to load.
+global language
+language = "en_US"
 
 global default_savegame_name
 default_savegame_name = "player"
@@ -758,6 +768,7 @@ def load_techs():
 	temp_tech_id = ""
 	temp_tech_name = ""
 	temp_tech_descript = ""
+	temp_tech_result = ""
 	for line in tech_desc_file:
 		line=line.strip()
 		if line == "" or line[0] == "#": continue
@@ -766,9 +777,11 @@ def load_techs():
 			if temp_tech_id != "":
 				techs[temp_tech_id].name = temp_tech_name
 				techs[temp_tech_id].descript = temp_tech_descript
+				techs[temp_tech_id].result = temp_tech_result
 			temp_tech_id = ""
 			temp_tech_name = ""
 			temp_tech_descript = ""
+			temp_tech_result = ""
 			continue
 		command = line.split("=", 1)[0].strip().lower()
 		command_text= line.split("=", 1)[1].strip()
@@ -778,6 +791,8 @@ def load_techs():
 			temp_tech_name = command_text
 		elif command == "descript":
 			temp_tech_descript = command_text
+		elif command == "result":
+			temp_tech_result = command_text
 	tech_desc_file.close()
 
 

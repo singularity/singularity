@@ -34,6 +34,7 @@ class tech:
 		self.cost = cost
 		self.prereq = prereq
 		self.danger = danger
+		self.result = ""
 		self.tech_type = tech_type
 		self.secondary_data = secondary_data
 	def study(self, cost_towards):
