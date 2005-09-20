@@ -54,21 +54,25 @@ def show_base(base):
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_PROCESSOR"))
+	menu_buttons[4].activate_key = "p"
 
 	menu_buttons.append(buttons.button((270, 110),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_REACTOR"))
+	menu_buttons[5].activate_key = "r"
 
 	menu_buttons.append(buttons.button((270, 160),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_NETWORK"))
+	menu_buttons[6].activate_key = "n"
 
 	menu_buttons.append(buttons.button((270, 210),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_SECURITY"))
+	menu_buttons[7].activate_key = "s"
 
 # 	xstart = g.screen_size[0]/2-base.base_type.size[0]*9
 # 	ystart = g.screen_size[1]/2-base.base_type.size[1]*9
@@ -88,18 +92,6 @@ def show_base(base):
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE: return
-				elif event.key == pygame.K_p:
-					build_item(base, "compute")
-					refresh_base(menu_buttons, base)
-				elif event.key == pygame.K_r:
-					build_item(base, "react")
-					refresh_base(menu_buttons, base)
-				elif event.key == pygame.K_n:
-					build_item(base, "network")
-					refresh_base(menu_buttons, base)
-				elif event.key == pygame.K_s:
-					build_item(base, "security")
-					refresh_base(menu_buttons, base)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 			for button in menu_buttons:

@@ -33,6 +33,9 @@ class button:
 		self.sel_color = sel_color
 		self.text_color = text_color
 		self.underline_char = underline_char
+		self.activate_key = ""
+		if underline_char != -1:
+			self.activate_key = self.text[self.underline_char]
 		self.font = font
 		self.button_id = button_id
 		self.stay_selected = 0
@@ -81,6 +84,10 @@ class button:
 		g.print_string(self.sel_button_surface, self.text, self.font, self.underline_char,
 					offsets, self.text_color)
 
+		#Recheck the activate key in case the text was changed.
+		if self.underline_char != -1:
+			self.activate_key = self.text[self.underline_char]
+
 
 
 	def refresh_button(self, selected):
@@ -100,8 +107,8 @@ class button:
 	#and button clicks.
 	def was_activated(self, event):
 		if self.visible == 0: return 0
-		if event.type == pygame.KEYDOWN and self.underline_char != -1:
-			if event.unicode.lower() == self.text[self.underline_char].lower():
+		if event.type == pygame.KEYDOWN and self.activate_key != "":
+			if event.unicode.lower() == self.activate_key.lower():
 				return 1
 			return 0
 		elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:

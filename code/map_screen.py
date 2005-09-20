@@ -166,22 +166,27 @@ def map_loop():
 		"ii", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
 	if g.curr_speed == 0: menu_buttons[2].stay_selected = 1
+	menu_buttons[2].activate_key = "0"
 	menu_buttons.append(buttons.button((324, 0), (25, 25),
 		">", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
 	if g.curr_speed == 1: menu_buttons[3].stay_selected = 1
+	menu_buttons[3].activate_key = "1"
 	menu_buttons.append(buttons.button((348, 0), (25, 25),
 		">>", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
 	if g.curr_speed == 60: menu_buttons[4].stay_selected = 1
+	menu_buttons[4].activate_key = "2"
 	menu_buttons.append(buttons.button((372, 0), (28, 25),
 		">>>", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
 	if g.curr_speed == 7200: menu_buttons[5].stay_selected = 1
+	menu_buttons[5].activate_key = "3"
 	menu_buttons.append(buttons.button((399, 0), (36, 25),
 		">>>>", -1, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
 	if g.curr_speed == 432000: menu_buttons[6].stay_selected = 1
+	menu_buttons[6].activate_key = "4"
 	#Note that this must be element 7 in menu_buttons
 	menu_buttons.append(buttons.button((435, -1), (g.screen_size[0]-435, 26),
 		"CASH", -1, g.colors["black"], g.colors["dark_blue"],
