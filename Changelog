@@ -16,6 +16,11 @@ v0.22 (release 2005.09.??):
 - New default font (Bitstream Vera Sans), especially useful for systems that
   don't have a default Pygame font for some reason (emh; reported by Brian
   Ropers-Huilman)
+- Hotkeys for the various speed settings (1-4). (emh)
+- Call the 'per day' code for however many days is necessary since the last
+  call. (emh)
+- Change the grace period for bases to start when construction is complete.
+  (emh)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
