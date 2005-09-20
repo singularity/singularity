@@ -162,6 +162,8 @@ def refresh_base(menu_buttons, base):
 		study_display_string = "NOTHING"
 	elif g.jobs.has_key(study_display_string):
 		action_display_string = "WORKING: "
+	elif g.techs.has_key(study_display_string):
+		study_display_string = g.techs[study_display_string].name
 	menu_buttons[3].text = action_display_string + study_display_string
 	menu_buttons[3].remake_button()
 	#Item display

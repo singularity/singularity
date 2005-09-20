@@ -188,7 +188,8 @@ class player_class:
 								(money_towards, tmp_base_time, 0))
 							if learn_tech == 1:
 								needs_refresh = 1
-								g.create_dialog("My study of "+base_name.studying+
+								g.create_dialog("My study of "+
+									g.techs[base_name.studying].name+
 									" has come to completion. "+
 									g.techs[base_name.studying].result,
 									g.font[0][18], (g.screen_size[0]/2 - 100, 50),
