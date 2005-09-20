@@ -52,7 +52,7 @@ Evil Mr Henry
 Phil Bordelon
 
 Code License:
-Copyright (C) 2005 Free Software Foundation
+Copyright (C) 2005 Evil Mr Henry and Phil Bordelon
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
