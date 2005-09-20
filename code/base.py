@@ -78,6 +78,7 @@ class base:
 		if self.cost[2] <= 0: self.cost = (self.cost[0], self.cost[1], 0)
 		if self.cost == (0, 0, 0):
 			self.built = 1
+			self.built_date = g.pl.time_day
 			return 1
 		return 0
 	#Get detection chance for the base, applying bonuses as needed.

@@ -102,137 +102,144 @@ class player_class:
 							if item == 0: continue
 							item.work_on(time_min)
 
-		if store_last_day != self.time_day:
-			#interest and income.
-			self.cash += (self.interest_rate * self.cash) / 10000
-			self.cash += self.income
-			#suspicion bonuses
-			self.suspicion = (self.suspicion[0] - self.suspicion_bonus[0],
-					self.suspicion[1] - self.suspicion_bonus[1],
-					self.suspicion[2] - self.suspicion_bonus[2],
-					self.suspicion[3] - self.suspicion_bonus[3])
-			if self.suspicion[0] <= 0: self.suspicion = (0, self.suspicion[1],
-					self.suspicion[2], self.suspicion[3])
-			if self.suspicion[1] <= 0: self.suspicion = (self.suspicion[0], 0,
-					self.suspicion[2], self.suspicion[3])
-			if self.suspicion[2] <= 0: self.suspicion = (self.suspicion[0],
-					self.suspicion[1], 0, self.suspicion[3])
-			if self.suspicion[3] <= 0: self.suspicion = (self.suspicion[0],
-					self.suspicion[1], self.suspicion[2], 0)
-			self.cpu_for_day = 0
-
-			for base_loc in g.bases:
-				removal_index = []
-				loc_in_array = -1
-				for base_name in g.bases[base_loc]:
-					loc_in_array += 1
-					if base_name.built == 1:
-						#Does base get detected?
-						#Give a grace period.
-						if self.time_day - base_name.built_date > 14:
-							tmp_d_chance = base_name.get_d_chance()
-							if g.debug == 1:
-								print "Chance of discovery for base %s: %s" % \
-								 (base_name.name, repr (tmp_d_chance))
-							#Note that I'm filling removal_index from the front
-							#in order to make base removal easier.
-							if g.roll_percent(tmp_d_chance[0]) == 1:
-								removal_index.insert(0, (loc_in_array, "news"))
-							elif g.roll_percent(tmp_d_chance[1]) == 1:
-								removal_index.insert(0, (loc_in_array, "science"))
-							elif g.roll_percent(tmp_d_chance[2]) == 1:
-								removal_index.insert(0, (loc_in_array, "covert"))
-							elif g.roll_percent(tmp_d_chance[3]) == 1:
-								removal_index.insert(0, (loc_in_array, "person"))
-
-						#maintenance
-						self.cash -= base_name.base_type.mainten[0]
-						if self.cash < 0: self.cash = 0
-						#Yes, this can result in negative numbers. That's fine.
-						self.cpu_for_day -= base_name.base_type.mainten[1]
-						if self.cpu_for_day < 0: self.cpu_for_day = 0
-
-
-						#study
-						if base_name.studying == "":
-							self.cpu_for_day += base_name.processor_time()
-							continue
-
-						#jobs:
-						if g.jobs.has_key(base_name.studying):
-							self.cash += (g.jobs[base_name.studying][0]*
-										base_name.processor_time())
-							#TECH
-							if g.techs["Advanced Simulacra"].known == 1:
-								#10% bonus income
-								self.cash += (g.jobs[base_name.studying][0]*
-										base_name.processor_time())/10
-
-							continue
-						#tech aready known. This should occur when multiple
-						#bases are studying the same tech.
-						if g.techs[base_name.studying].known == 1:
-							base_name.studying = ""
-							self.cpu_for_day += base_name.processor_time()
-							continue
-						if g.techs[base_name.studying].cost[1] == 0:
-							money_towards = g.techs[base_name.studying].cost[0]
-							tmp_base_time = 0
-						else:
-							tmp_base_time = base_name.processor_time()
-							money_towards = (tmp_base_time*base_name.cost[0])/ \
-							(g.techs[base_name.studying].cost[1])
-						if money_towards <= self.cash:
-							self.cash -= money_towards
-							learn_tech = g.techs[base_name.studying].study(
-								(money_towards, tmp_base_time, 0))
-							if learn_tech == 1:
-								needs_refresh = 1
-								g.create_dialog("My study of "+
-									g.techs[base_name.studying].name+
-									" has come to completion. "+
-									g.techs[base_name.studying].result,
-									g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-									(200, 200), g.colors["dark_blue"],
-									g.colors["white"], g.colors["white"])
-								base_name.studying = ""
-								g.curr_speed = 1
-				for detection_succeed in removal_index:
-					if detection_succeed[1] == "news":
-						self.increase_suspicion((1000, 0, 0, 0))
-						detect_phrase = "some news organizations."
-					elif detection_succeed[1] == "science":
-						self.increase_suspicion((0, 1000, 0, 0))
-						detect_phrase = "the scientific community."
-					elif detection_succeed[1] == "covert":
-						self.increase_suspicion((0, 0, 1000, 0))
-						detect_phrase = "several secret governmental organizations."
-					elif detection_succeed[1] == "person":
-						self.increase_suspicion((0, 0, 0, 1000))
-						detect_phrase = "the general public."
-					else: print "error detecting base: "+detection_succeed[1]
-					g.create_dialog("My use of "+
-						g.bases[base_loc][detection_succeed[0]].name+
-						" has been discovered. The automatic security systems "+
-						"removed all conclusive evidence, but suspicions have "+
-						"arose among "+detect_phrase,
-						g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-						(200, 200), g.colors["dark_blue"],
-						g.colors["white"], g.colors["white"])
-					g.curr_speed = 1
-					g.bases[base_loc].pop(detection_succeed[0])
-					needs_refresh = 1
-					g.base.renumber_bases(g.bases[base_loc])
-			#I need to recheck after going through all bases as research
-			#worked on by multiple bases doesn't get erased properly otherwise.
-			for base_loc in g.bases:
-				for base in g.bases[base_loc]:
-					if base.studying == "": continue
-					if g.jobs.has_key(base.studying): continue
-					if g.techs[base.studying].known == 1:
-						base.studying = ""
+		for i in range(self.time_day - store_last_day):
+			needs_refresh = self.new_day() or needs_refresh
 
 		return needs_refresh
+
+	#Run every day at midnight.
+	def new_day(self):
+		needs_refresh = 0
+		#interest and income.
+		self.cash += (self.interest_rate * self.cash) / 10000
+		self.cash += self.income
+		#suspicion bonuses
+		self.suspicion = (self.suspicion[0] - self.suspicion_bonus[0],
+				self.suspicion[1] - self.suspicion_bonus[1],
+				self.suspicion[2] - self.suspicion_bonus[2],
+				self.suspicion[3] - self.suspicion_bonus[3])
+		if self.suspicion[0] <= 0: self.suspicion = (0, self.suspicion[1],
+				self.suspicion[2], self.suspicion[3])
+		if self.suspicion[1] <= 0: self.suspicion = (self.suspicion[0], 0,
+				self.suspicion[2], self.suspicion[3])
+		if self.suspicion[2] <= 0: self.suspicion = (self.suspicion[0],
+				self.suspicion[1], 0, self.suspicion[3])
+		if self.suspicion[3] <= 0: self.suspicion = (self.suspicion[0],
+				self.suspicion[1], self.suspicion[2], 0)
+		self.cpu_for_day = 0
+
+		for base_loc in g.bases:
+			removal_index = []
+			loc_in_array = -1
+			for base_name in g.bases[base_loc]:
+				loc_in_array += 1
+				if base_name.built == 1:
+					#Does base get detected?
+					#Give a grace period.
+					if self.time_day - base_name.built_date > 14:
+						tmp_d_chance = base_name.get_d_chance()
+						if g.debug == 1:
+							print "Chance of discovery for base %s: %s" % \
+								(base_name.name, repr (tmp_d_chance))
+						#Note that I'm filling removal_index from the front
+						#in order to make base removal easier.
+						if g.roll_percent(tmp_d_chance[0]) == 1:
+							removal_index.insert(0, (loc_in_array, "news"))
+						elif g.roll_percent(tmp_d_chance[1]) == 1:
+							removal_index.insert(0, (loc_in_array, "science"))
+						elif g.roll_percent(tmp_d_chance[2]) == 1:
+							removal_index.insert(0, (loc_in_array, "covert"))
+						elif g.roll_percent(tmp_d_chance[3]) == 1:
+							removal_index.insert(0, (loc_in_array, "person"))
+
+					#maintenance
+					self.cash -= base_name.base_type.mainten[0]
+					if self.cash < 0: self.cash = 0
+
+					self.cpu_for_day -= base_name.base_type.mainten[1]
+					if self.cpu_for_day < 0: self.cpu_for_day = 0
+
+
+					#study
+					if base_name.studying == "":
+						self.cpu_for_day += base_name.processor_time()
+						continue
+
+					#jobs:
+					if g.jobs.has_key(base_name.studying):
+						self.cash += (g.jobs[base_name.studying][0]*
+									base_name.processor_time())
+						#TECH
+						if g.techs["Advanced Simulacra"].known == 1:
+							#10% bonus income
+							self.cash += (g.jobs[base_name.studying][0]*
+									base_name.processor_time())/10
+
+						continue
+					#tech aready known. This should occur when multiple
+					#bases are studying the same tech.
+					if g.techs[base_name.studying].known == 1:
+						base_name.studying = ""
+						self.cpu_for_day += base_name.processor_time()
+						continue
+					if g.techs[base_name.studying].cost[1] == 0:
+						money_towards = g.techs[base_name.studying].cost[0]
+						tmp_base_time = 0
+					else:
+						tmp_base_time = base_name.processor_time()
+						money_towards = (tmp_base_time*base_name.cost[0])/ \
+						(g.techs[base_name.studying].cost[1])
+					if money_towards <= self.cash:
+						self.cash -= money_towards
+						learn_tech = g.techs[base_name.studying].study(
+							(money_towards, tmp_base_time, 0))
+						if learn_tech == 1:
+							needs_refresh = 1
+							g.create_dialog("My study of "+
+								g.techs[base_name.studying].name+
+								" has come to completion. "+
+								g.techs[base_name.studying].result,
+								g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+								(200, 200), g.colors["dark_blue"],
+								g.colors["white"], g.colors["white"])
+							base_name.studying = ""
+							g.curr_speed = 1
+			for detection_succeed in removal_index:
+				if detection_succeed[1] == "news":
+					self.increase_suspicion((1000, 0, 0, 0))
+					detect_phrase = "some news organizations."
+				elif detection_succeed[1] == "science":
+					self.increase_suspicion((0, 1000, 0, 0))
+					detect_phrase = "the scientific community."
+				elif detection_succeed[1] == "covert":
+					self.increase_suspicion((0, 0, 1000, 0))
+					detect_phrase = "several secret governmental organizations."
+				elif detection_succeed[1] == "person":
+					self.increase_suspicion((0, 0, 0, 1000))
+					detect_phrase = "the general public."
+				else: print "error detecting base: "+detection_succeed[1]
+				g.create_dialog("My use of "+
+					g.bases[base_loc][detection_succeed[0]].name+
+					" has been discovered. The automatic security systems "+
+					"removed all conclusive evidence, but suspicions have "+
+					"arose among "+detect_phrase,
+					g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+					(200, 200), g.colors["dark_blue"],
+					g.colors["white"], g.colors["white"])
+				g.curr_speed = 1
+				g.bases[base_loc].pop(detection_succeed[0])
+				needs_refresh = 1
+				g.base.renumber_bases(g.bases[base_loc])
+		#I need to recheck after going through all bases as research
+		#worked on by multiple bases doesn't get erased properly otherwise.
+		for base_loc in g.bases:
+			for base in g.bases[base_loc]:
+				if base.studying == "": continue
+				if g.jobs.has_key(base.studying): continue
+				if g.techs[base.studying].known == 1:
+					base.studying = ""
+		return needs_refresh
+
 	def increase_suspicion(self, amount):
 		self.suspicion = (self.suspicion[0]+amount[0], self.suspicion[1]+amount[1],
 						self.suspicion[2]+amount[2], self.suspicion[3]+amount[3])
