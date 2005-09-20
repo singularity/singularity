@@ -667,10 +667,10 @@ base_type["Time Capsule"] = base.base_type("Time Capsule",
 	"This base consists of nothing more than "+
 	"a small computer, and a satelite "+
 	"link. When buried in the trackless waste of the Antarctic, it is "+
-	"undetectable.",
+	"nearly undetectable.",
 	1,
 	["ANTARCTIC"],
-	(0, 0, 0, 0),
+	(0, 10, 10, 0),
 	(3000000, 3000, 15), "Autonomous Vehicles", (0, 1, 0))
 
 base_type["Lunar Facility"] = base.base_type("Lunar Facility",
