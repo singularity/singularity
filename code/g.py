@@ -712,7 +712,7 @@ def load_techs():
 
 	#If there are no tech data files, stop.
 	if path.exists("../data/techs.txt") == 0 or \
-			path.exists("../data/techs_en_US.txt") == 0:
+			path.exists("../data/techs_"+language+".txt") == 0:
 		print "tech files are missing. Exiting."
 		sys.exit()
 	tech_base_file = open("../data/techs.txt", 'r')
@@ -764,7 +764,7 @@ def load_techs():
 			print "Unknown command of "+command+" in techs.txt."
 	tech_base_file.close()
 
-	tech_desc_file = open("../data/techs_en_US.txt", 'r')
+	tech_desc_file = open("../data/techs_"+language+".txt", 'r')
 	temp_tech_id = ""
 	temp_tech_name = ""
 	temp_tech_descript = ""

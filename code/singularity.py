@@ -31,8 +31,14 @@ sys.argv.pop(0)
 arg_modifier = ""
 for argument in sys.argv:
 	if arg_modifier == "language":
-		language = argument
+		#I'm not quite sure if this can be used as an attack, but stripping
+		#these characters should annoy any potential attacks.
+		argument = argument.replace("/", "")
+		argument = argument.replace("\\", "")
+		argument = argument.replace(".", "")
+		g.language = argument
 		arg_modifier = ""
+		continue
 	if argument.lower() == "-fullscreen":
 		set_fullscreen = 1
 	elif argument.lower() == "-640":
@@ -55,7 +61,9 @@ for argument in sys.argv:
 		print "Unknown argument of " + argument
 		print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound"
 		sys.exit()
-
+if arg_modifier == "language":
+	print "-language option requires language to be specified."
+	sys.exit()
 
 pygame.display.set_caption("Endgame: Singularity")
 
