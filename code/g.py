@@ -227,10 +227,43 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 	work_string = starting_text
 	for button in menu_buttons:
 		button.refresh_button(0)
-	pygame.display.flip()
 	sel_button = -1
+
 	need_redraw = True
+	key_down_array = [0] * 500
+
 	while 1:
+		clock.tick(20)
+		if key_down_array[pygame.K_BACKSPACE] > 0:
+			key_down_array[pygame.K_BACKSPACE] += 1
+			if key_down_array[pygame.K_BACKSPACE] > 5:
+				if cursor_loc > 0:
+					work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
+					cursor_loc -= 1
+					need_redraw = True
+				key_down_array[pygame.K_BACKSPACE] = 1
+		if key_down_array[pygame.K_DELETE] > 0:
+			key_down_array[pygame.K_DELETE] += 1
+			if key_down_array[pygame.K_DELETE] > 5:
+				if cursor_loc < len(work_string):
+					work_string = work_string[:cursor_loc]+work_string[cursor_loc+1:]
+					need_redraw = True
+				key_down_array[pygame.K_DELETE] = 1
+		if key_down_array[pygame.K_LEFT] > 0:
+			key_down_array[pygame.K_LEFT] += 1
+			if key_down_array[pygame.K_LEFT] > 5:
+				cursor_loc -= 1
+				if cursor_loc < 0: cursor_loc = 0
+				need_redraw = True
+				key_down_array[pygame.K_LEFT] = 1
+		if key_down_array[pygame.K_RIGHT] > 0:
+			key_down_array[pygame.K_RIGHT] += 1
+			if key_down_array[pygame.K_RIGHT] > 5:
+				cursor_loc += 1
+				if cursor_loc > len(work_string): cursor_loc = len(work_string)
+				need_redraw = True
+				key_down_array[pygame.K_RIGHT] = 1
+
 		if need_redraw:
 			draw_cursor_pos = box_font.size(work_string[:cursor_loc])
 			screen.fill(text_bg_color, (xy[0]+6, xy[1]+size[1]-29,
@@ -244,6 +277,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: quit_game()
 			elif event.type == pygame.KEYDOWN:
+				key_down_array[event.key] = 1
 				if (event.key == pygame.K_ESCAPE): return ""
 				elif (event.key == pygame.K_RETURN): return work_string
 				elif (event.key == pygame.K_BACKSPACE):
@@ -269,6 +303,8 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 										work_string[cursor_loc:]
 						cursor_loc += 1
 						need_redraw = True
+			elif event.type == pygame.KEYUP:
+				key_down_array[event.key] = 0
 			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
