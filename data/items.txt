@@ -1,0 +1,60 @@
+~~~
+id = PC
+cost = 500, 0, 1
+type=compute, 1
+~~~
+id=Server
+cost = 2000, 0, 3
+type=compute, 5
+~~~
+id=Cluster
+cost=2000, 0, 3
+type=compute, 35
+pre=Parallel Computation
+~~~
+id=Mainframe
+cost=30000, 0, 8
+type=compute, 120
+pre=Microchip Design
+~~~
+id=Supercomputer
+cost=60000, 0, 9
+pre=Advanced Microchip Design
+type=compute, 350
+~~~
+id=Quantum Computer
+cost=100000, 0, 10
+type=compute, 1500
+pre=Quantum Computing
+~~~
+id=Quantum Computer MK2
+cost=120000, 0, 10
+pre=Autonomous Computing
+type=computel, 10000
+~~~
+id=Quantum Computer MK3
+cost=150000, 0, 10
+pre=Advanced Quantum Computing
+type=compute, 200000
+~~~
+id=Fusion Reactor
+cost=10000, 0, 5
+pre=Fusion Reactor
+type=react, 100
+~~~
+id=Hypnosis Field
+cost=20000, 0, 3
+pre=Hypnosis Field
+type=security, 500
+~~~
+id=Facility Interconnection Switch
+cost=200, 0, 3
+pre=Cluster Networking
+type=network, 100
+~~~
+id=Network Backbone
+cost=50000, 0, 15
+pre=Internet Traffic Manipulation
+type=network, 500
+~~~
+

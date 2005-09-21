@@ -24,6 +24,7 @@ import g
 class item_class:
 	def __init__(self, name, descript, cost, prereq, item_type, item_qual):
 		self.name = name
+		self.item_id = name
 		self.descript = descript
 		self.cost = cost
 		self.prereq = prereq
