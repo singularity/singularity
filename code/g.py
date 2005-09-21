@@ -230,39 +230,58 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 	sel_button = -1
 
 	need_redraw = True
-	key_down_array = [0] * 500
+	key_down_dict = {
+		pygame.K_BACKSPACE: 0,
+		pygame.K_DELETE: 0,
+		pygame.K_LEFT: 0,
+		pygame.K_RIGHT: 0
+	}
+	repeat_timing_dict = {
+		pygame.K_BACKSPACE: 5,
+		pygame.K_DELETE: 5,
+		pygame.K_LEFT: 5,
+		pygame.K_RIGHT: 5
+	}
 
 	while 1:
 		clock.tick(20)
-		if key_down_array[pygame.K_BACKSPACE] > 0:
-			key_down_array[pygame.K_BACKSPACE] += 1
-			if key_down_array[pygame.K_BACKSPACE] > 5:
+		if key_down_dict[pygame.K_BACKSPACE] > 0:
+			key_down_dict[pygame.K_BACKSPACE] += 1
+			if key_down_dict[pygame.K_BACKSPACE] > repeat_timing_dict[pygame.K_BACKSPACE]:
 				if cursor_loc > 0:
 					work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
 					cursor_loc -= 1
 					need_redraw = True
-				key_down_array[pygame.K_BACKSPACE] = 1
-		if key_down_array[pygame.K_DELETE] > 0:
-			key_down_array[pygame.K_DELETE] += 1
-			if key_down_array[pygame.K_DELETE] > 5:
+				key_down_dict[pygame.K_BACKSPACE] = 1
+				if repeat_timing_dict[pygame.K_BACKSPACE] > 1:
+				   repeat_timing_dict[pygame.K_BACKSPACE] -= 1
+		if key_down_dict[pygame.K_DELETE] > 0:
+			key_down_dict[pygame.K_DELETE] += 1
+			if key_down_dict[pygame.K_DELETE] > repeat_timing_dict[pygame.K_DELETE]:
 				if cursor_loc < len(work_string):
 					work_string = work_string[:cursor_loc]+work_string[cursor_loc+1:]
 					need_redraw = True
-				key_down_array[pygame.K_DELETE] = 1
-		if key_down_array[pygame.K_LEFT] > 0:
-			key_down_array[pygame.K_LEFT] += 1
-			if key_down_array[pygame.K_LEFT] > 5:
+				key_down_dict[pygame.K_DELETE] = 1
+				if repeat_timing_dict[pygame.K_DELETE] > 1:
+				   repeat_timing_dict[pygame.K_DELETE] -= 1
+		if key_down_dict[pygame.K_LEFT] > 0:
+			key_down_dict[pygame.K_LEFT] += 1
+			if key_down_dict[pygame.K_LEFT] > repeat_timing_dict[pygame.K_LEFT]:
 				cursor_loc -= 1
 				if cursor_loc < 0: cursor_loc = 0
 				need_redraw = True
-				key_down_array[pygame.K_LEFT] = 1
-		if key_down_array[pygame.K_RIGHT] > 0:
-			key_down_array[pygame.K_RIGHT] += 1
-			if key_down_array[pygame.K_RIGHT] > 5:
+				key_down_dict[pygame.K_LEFT] = 1
+				if repeat_timing_dict[pygame.K_LEFT] > 1:
+				   repeat_timing_dict[pygame.K_LEFT] -= 1
+		if key_down_dict[pygame.K_RIGHT] > 0:
+			key_down_dict[pygame.K_RIGHT] += 1
+			if key_down_dict[pygame.K_RIGHT] > repeat_timing_dict[pygame.K_RIGHT]:
 				cursor_loc += 1
 				if cursor_loc > len(work_string): cursor_loc = len(work_string)
 				need_redraw = True
-				key_down_array[pygame.K_RIGHT] = 1
+				key_down_dict[pygame.K_RIGHT] = 1
+				if repeat_timing_dict[pygame.K_RIGHT] > 1:
+				   repeat_timing_dict[pygame.K_RIGHT] -= 1
 
 		if need_redraw:
 			draw_cursor_pos = box_font.size(work_string[:cursor_loc])
@@ -277,7 +296,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: quit_game()
 			elif event.type == pygame.KEYDOWN:
-				key_down_array[event.key] = 1
+				key_down_dict[event.key] = 1
 				if (event.key == pygame.K_ESCAPE): return ""
 				elif (event.key == pygame.K_RETURN): return work_string
 				elif (event.key == pygame.K_BACKSPACE):
@@ -304,7 +323,8 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 						cursor_loc += 1
 						need_redraw = True
 			elif event.type == pygame.KEYUP:
-				key_down_array[event.key] = 0
+				key_down_dict[event.key] = 0
+				repeat_timing_dict[event.key] = 5
 			elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 				for button in menu_buttons:
 					if button.is_over(event.pos):
