@@ -880,6 +880,7 @@ def load_items():
 	item_base_file.close()
 
 	load_item_defs("en_US")
+	load_item_defs(language)
 
 def load_item_defs(language_str):
 	item_desc_file = open("../data/items_"+language_str+".txt", 'r')
@@ -907,7 +908,6 @@ def load_item_defs(language_str):
 		elif command == "descript":
 			temp_item_descript = command_text
 	item_desc_file.close()
-load_items()
 
 # items["PC"] = item.item_class("PC", "A consumer-level PC. Cheap, but slow.",
 # 	(500, 0, 1), "", "compute", 1)

@@ -89,6 +89,7 @@ for i in range(8, 51):
 g.load_pictures()
 g.fill_colors()
 g.load_sounds()
+g.load_items()
 
 #Display the main menu
 while 1:
