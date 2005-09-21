@@ -208,12 +208,6 @@ def refresh_base(menu_buttons, base):
 
 
 def build_item(base, item_type):
-# 	free_item = 0
-# 	for i in range(len(base.usage)):
-# 		for j in range(len(base.usage[0])):
-# 			if base.usage[i][j] == 0: free_item = 1
-# 	if free_item == 0: return
-
 	if base.base_type.size == 1:
 		g.create_dialog("I cannot build in this base; I do not have physical "+
 			" access.", g.font[0][18], (g.screen_size[0]/2 - 100, 50),
@@ -223,16 +217,19 @@ def build_item(base, item_type):
 
 	list_size = 10
 	item_list = []
+	item_display_list = []
 	for item_name in g.items:
 		if g.items[item_name].item_type == item_type:
 			if g.items[item_name].prereq == "":
 				item_list.append(item_name)
+				item_display_list.append(g.items[item_name].name)
 			elif g.techs[g.items[item_name].prereq].known == 1:
 				item_list.append(item_name)
-
+				item_display_list.append(g.items[item_name].name)
 	xy_loc = (g.screen_size[0]/2 - 250, 50)
 	while len(item_list) % list_size != 0 or len(item_list) == 0:
 		item_list.append("")
+		item_display_list.append("")
 
 	list_pos = 0
 
@@ -254,8 +251,8 @@ def build_item(base, item_type):
 	for button in menu_buttons:
 		button.refresh_button(0)
 
-	refresh_item(base, item_list[list_pos], xy_loc)
-	listbox.refresh_list(item_listbox, item_scroll, list_pos, item_list)
+	refresh_item(base, item_display_list[list_pos], xy_loc)
+	listbox.refresh_list(item_listbox, item_scroll, list_pos, item_display_list)
 
 	sel_button = -1
 	while 1:
@@ -270,14 +267,14 @@ def build_item(base, item_type):
 						list_pos = len(item_list)-1
 					refresh_item(base, item_list[list_pos], xy_loc)
 					listbox.refresh_list(item_listbox, item_scroll,
-										list_pos, item_list)
+										list_pos, item_display_list)
 				elif event.key == pygame.K_UP:
 					list_pos -= 1
 					if list_pos <= 0:
 						list_pos = 0
 					refresh_item(base, item_list[list_pos], xy_loc)
 					listbox.refresh_list(item_listbox, item_scroll,
-										list_pos, item_list)
+										list_pos, item_display_list)
 				elif event.key == pygame.K_q: return -1
 				elif event.key == pygame.K_RETURN:
 					actual_build(base, item_list[list_pos], item_type)
@@ -289,21 +286,21 @@ def build_item(base, item_type):
 						list_pos = (list_pos / list_size)*list_size + tmp
 						refresh_item(base, item_list[list_pos], xy_loc)
 						listbox.refresh_list(item_listbox, item_scroll,
-										list_pos, item_list)
+										list_pos, item_display_list)
 				if event.button == 4:
 					list_pos -= 1
 					if list_pos <= 0:
 						list_pos = 0
 					refresh_item(base, item_list[list_pos], xy_loc)
 					listbox.refresh_list(item_listbox, item_scroll,
-										list_pos, item_list)
+										list_pos, item_display_list)
 				if event.button == 5:
 					list_pos += 1
 					if list_pos >= len(item_list):
 						list_pos = len(item_list)-1
 					refresh_item(base, item_list[list_pos], xy_loc)
 					listbox.refresh_list(item_listbox, item_scroll,
-										list_pos, item_list)
+										list_pos, item_display_list)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 			for button in menu_buttons:
@@ -319,7 +316,7 @@ def build_item(base, item_type):
 			if tmp != list_pos:
 				list_pos = tmp
 				listbox.refresh_list(item_listbox, item_scroll, list_pos,
-					item_list)
+					item_display_list)
 
 
 
@@ -327,12 +324,25 @@ def actual_build(base, item_name, item_type):
 	if item_name == "": return
 	if item_type == "compute":
 		for i in range(len(base.usage)):
+			if base.usage[i] != 0:
+				if base.usage[i].item_type.item_id == \
+						g.items[item_name].item_id:
+					continue
 			base.usage[i] = g.item.item(g.items[item_name])
 	elif item_type == "react":
+		if base.extra_items[0] != 0:
+			if base.extra_items[0].item_type.item_id == g.items[item_name].item_id:
+				return
 		base.extra_items[0] = g.item.item(g.items[item_name])
 	elif item_type == "network":
+		if base.extra_items[1] != 0:
+			if base.extra_items[1].item_type.item_id == g.items[item_name].item_id:
+				return
 		base.extra_items[1] = g.item.item(g.items[item_name])
 	elif item_type == "security":
+		if base.extra_items[2] != 0:
+			if base.extra_items[2].item_type.item_id == g.items[item_name].item_id:
+				return
 		base.extra_items[2] = g.item.item(g.items[item_name])
 
 def refresh_item(base, item_name, xy_loc):
