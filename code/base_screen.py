@@ -50,25 +50,25 @@ def show_base(base):
 		"STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
-	menu_buttons.append(buttons.button((270, 60),
+	menu_buttons.append(buttons.button((320, 60),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_PROCESSOR"))
 	menu_buttons[4].activate_key = "p"
 
-	menu_buttons.append(buttons.button((270, 110),
+	menu_buttons.append(buttons.button((320, 110),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_REACTOR"))
 	menu_buttons[5].activate_key = "r"
 
-	menu_buttons.append(buttons.button((270, 160),
+	menu_buttons.append(buttons.button((320, 160),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_NETWORK"))
 	menu_buttons[6].activate_key = "n"
 
-	menu_buttons.append(buttons.button((270, 210),
+	menu_buttons.append(buttons.button((320, 210),
 		(70, 26),
 		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][15], "C_SECURITY"))
@@ -159,8 +159,8 @@ def refresh_base(menu_buttons, base):
 	menu_buttons[3].text = action_display_string + study_display_string
 	menu_buttons[3].remake_button()
 	#Item display
-	g.screen.fill(g.colors["white"], (xstart, ystart, 250, g.screen_size[1]-100))
-	g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 248, g.screen_size[1]-102))
+	g.screen.fill(g.colors["white"], (xstart, ystart, 300, g.screen_size[1]-100))
+	g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 298, g.screen_size[1]-102))
 
 	if base.usage[0] == 0: item_name = "None"
 	else: item_name = base.usage[0].item_type.name+" x "+str(base.has_item())
