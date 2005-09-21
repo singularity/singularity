@@ -48,7 +48,7 @@ class listbox:
 					self.size[0]-2, self.size[1]/self.viewable_items-1))
 
 	def refresh_listbox(self, selected, lines_array):
-		if len(lines_array) % self.viewable_items != 0:
+		if len(lines_array) != self.viewable_items:
 			print "CRASH WARNING: len(lines_array)="+str(len(lines_array))
 			print "CRASH WARNING: self.viewable_items="+str(self.viewable_items)
 

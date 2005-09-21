@@ -275,6 +275,23 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 						if button.text == "OK":
 							play_click()
 							return work_string
+				if (event.pos[0] > xy[0]+6 and event.pos[1] > xy[1]+size[1]-29 and
+				event.pos[0] < xy[0]+size[0]-6 and event.pos[1] < xy[1]+size[1]-6):
+					cursor_x = event.pos[0] - (xy[0]+6)
+					prev_x = 0
+					for i in range(1, len(work_string)):
+						if (box_font.size(work_string[:i])[0]+prev_x)/2 >= cursor_x:
+							cursor_loc=i-1
+							need_redraw = True
+							break
+						elif box_font.size(work_string[:i])[0] >= cursor_x:
+							cursor_loc=i
+							need_redraw = True
+							break
+						prev_x = box_font.size(work_string[:i])[0]
+					else:
+						cursor_loc=i+1
+						need_redraw = True
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
