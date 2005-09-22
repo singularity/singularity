@@ -5,7 +5,7 @@ v0.22 (release 2005.09.??):
 - At the start, money gains a minimal amount of interest (as opposed to none).
   (Phil)
 - Make the 'change research' button more obvious. (Phil)
-- Change the way that technologies are stored.  There is now a separate text
+- Change the way that technologies/items are stored.  There is now a separate text
   file detailing the technology tree, and another with all of the text
   strings.  This will allow localization of the technologies. (emh)
 - When technologies are completed, we can now display a string detailing the
@@ -21,6 +21,7 @@ v0.22 (release 2005.09.??):
   call. (emh)
 - Change the grace period for bases to start when construction is complete.
   (emh)
+- Keys can repeat/mouse can be used when in textboxes. (emh)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
