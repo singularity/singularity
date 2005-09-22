@@ -683,14 +683,14 @@ base_type["Stolen Computer Time"] = base.base_type("Stolen Computer Time",
 	"Take over a random computer. I cannot build anything "+
 	"in this base, and it only contains a single slow computer. Detection "+
 	"chance is also rather high.", 1,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 100, 150),
+	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 75, 100),
 	(0, 2, 0), "Intrusion", (0, 0, 0))
 
 base_type["Server Access"] = base.base_type("Server Access",
 	"Buy processor time from one of several companies. "+
 	"I cannot build anything "+
 	"in this base, and it only contains a single computer.", 1,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 150, 200),
+	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 100, 150),
 	(100, 0, 0), "", (5, 0, 0))
 
 base_type["Small Warehouse"] = base.base_type("Small Warehouse",
@@ -698,7 +698,7 @@ base_type["Small Warehouse"] = base.base_type("Small Warehouse",
 	"I will need fake ID for some of the paperwork, and preparing the "+
 	"warehouse to suit my unique needs will take some time.",
 	25,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (100, 0, 100, 250),
+	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (75, 0, 75, 200),
 	(15000, 0, 3), "Personal Identification", (50, 0, 0))
 
 base_type["Large Warehouse"] = base.base_type("Large Warehouse",
@@ -706,7 +706,7 @@ base_type["Large Warehouse"] = base.base_type("Large Warehouse",
 	"I will need good fake ID for some of the paperwork, and preparing the "+
 	"warehouse to suit my unique needs will take some time.",
 	65,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (150, 0, 250, 300),
+	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (100, 0, 200, 250),
 	(40000, 0, 7), "Advanced Personal Identification", (100, 0, 0))
 
 base_type["Covert Base"] = base.base_type("Covert Base",
@@ -715,7 +715,7 @@ base_type["Covert Base"] = base.base_type("Covert Base",
 	"This makes it useful for storing a backup, just in case.",
 	2,
 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", "ANTARCTIC"],
-	(50, 100, 100, 0),
+	(50, 75, 75, 0),
 	(400000, 100, 21), "Advanced Database Manipulation", (3500, 9, 0))
 
 base_type["Undersea Lab"] = base.base_type("Undersea Lab",
@@ -725,7 +725,7 @@ base_type["Undersea Lab"] = base.base_type("Undersea Lab",
 	"lab useful for research purposes.",
 	8,
 	["OCEAN"],
-	(50, 100, 150, 0),
+	(50, 100, 125, 0),
 	(8000000, 1000, 20), "Autonomous Vehicles", (10000, 30, 0))
 
 base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
@@ -733,7 +733,7 @@ base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
 	"regular underwater lab, but larger, giving more room for experiments.",
 	32,
 	["OCEAN"],
-	(100, 200, 200, 0),
+	(100, 175, 175, 0),
 	(20000000, 3000, 40), "Pressure Domes", (25000, 100, 0))
 
 base_type["Time Capsule"] = base.base_type("Time Capsule",
@@ -752,7 +752,7 @@ base_type["Lunar Facility"] = base.base_type("Lunar Facility",
 	"large.",
 	600,
 	["MOON"],
-	(50, 300, 200, 0),
+	(50, 250, 10, 0),
 	(800000000, 300000, 40), "Lunar Rocketry", (1000000, 100, 0))
 
 base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
@@ -761,7 +761,7 @@ base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
 	"experiments.",
 	225,
 	["FAR REACHES"],
-	(10, 200, 100, 0),
+	(10, 175, 0, 0),
 	(10000000000, 30000000, 50), "Fusion Rocketry", (9000000, 3000, 0))
 
 base_type["Reality Bubble"] = base.base_type("Reality Bubble",
@@ -769,7 +769,7 @@ base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 	"making it safe to conduct experiments that may destroy reality.",
 	50,
 	["TRANSDIMENSIONAL"],
-	(0, 300, 150, 0),
+	(0, 250, 0, 0),
 	(8000000000000, 60000000, 100), "Space-Time Manipulation",
 	(5000000000, 300000, 0))
 
