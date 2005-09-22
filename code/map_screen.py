@@ -87,8 +87,8 @@ def display_cheat_list(menu_buttons):
 	xy_loc = (g.screen_size[0]/2 - 100, 50)
 
 	#Border
-	g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200, 350))
-	g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198, 348))
+	g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200, 420))
+	g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198, 418))
 	menu_buttons = []
 	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
 		"GIVE MONEY", 5, g.colors["dark_blue"], g.colors["white"],
@@ -103,6 +103,9 @@ def display_cheat_list(menu_buttons):
 		"SUPERSPEED", 0, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
 	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
+		"KILL SUSP.", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+360), (180, 50),
 		"RESUME", 0, g.colors["dark_blue"], g.colors["white"],
 		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
 
@@ -123,10 +126,10 @@ def display_cheat_list(menu_buttons):
 				if button.was_activated(event):
 					if button.button_id == "RESUME":
 						return
-					if button.button_id == "SUPERSPEED":
+					elif button.button_id == "SUPERSPEED":
 						g.curr_speed = 864000
 						return
-					if button.button_id == "END CONSTR.":
+					elif button.button_id == "END CONSTR.":
 						for base_loc in g.bases:
 							for base_name in g.bases[base_loc]:
 								if base_name.built == 0:
@@ -141,7 +144,7 @@ def display_cheat_list(menu_buttons):
 						if g.techs.has_key(tmp_base.studying):
 							g.techs[tmp_base.studying].gain_tech()
 						return
-					if button.button_id == "GIVE MONEY":
+					elif button.button_id == "GIVE MONEY":
 						cash_amount = g.create_textbox("How much cash?",
 						"", g.font[0][18],
 						(g.screen_size[0]/2-100, 100), (200, 100), 25,
@@ -149,6 +152,9 @@ def display_cheat_list(menu_buttons):
 						g.colors["white"], g.colors["light_blue"])
 						if cash_amount.isdigit() == False: return
 						g.pl.cash += int(cash_amount)
+						return
+					elif button.button_id == "KILL SUSP.":
+						g.pl.suspicion = (0, 0, 0, 0)
 						return
 
 def map_loop():

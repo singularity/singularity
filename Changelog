@@ -23,6 +23,7 @@ v0.22 (release 2005.09.??):
   (emh)
 - Keys can repeat/mouse can be used when in textboxes. (emh, Phil)
 - Reduce discovery chances for most agencies for most bases. (Phil)
+- Add a new cheat. (Phil)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
