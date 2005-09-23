@@ -55,12 +55,14 @@ for argument in sys.argv:
 		g.nosound = 1
 	elif argument.lower() == "-debug":
 		g.debug = 1
+	elif argument.lower() == "-grab":
+		pygame.event.set_grab(1)
 	elif argument.lower() == "-language":
 		arg_modifier = "language"
 	else:
 		print "Unknown argument of " + argument
 		print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280,",
-		print " -nosound, -language [language]"
+		print " -nosound, -language [language], -grab"
 		sys.exit()
 if arg_modifier == "language":
 	print "-language option requires language to be specified."
