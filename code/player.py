@@ -187,7 +187,8 @@ class player_class:
 						tmp_base_time = 0
 					else:
 						tmp_base_time = base_name.processor_time()
-						money_towards = (tmp_base_time*base_name.cost[0])/ \
+						money_towards = (tmp_base_time*
+						g.techs[base_name.studying].cost[0])/ \
 						(g.techs[base_name.studying].cost[1])
 					if money_towards <= self.cash:
 						self.cash -= money_towards

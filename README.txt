@@ -47,7 +47,7 @@ In the map screen (the screen with the world map), any location you can build ba
 in is marked with the name, then the number of current bases in that location.
 You start out with two bases in North America.
 
-After choosing a base, you enter the base screen. Here you can change your research
+After choosing a base, enter the base screen. Here you can change your research
 goal, or build an item by clicking on the base map in the center. (But note that
 your beginning base does not allow building.)
 
