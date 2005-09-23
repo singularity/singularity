@@ -182,6 +182,7 @@ class player_class:
 						base_name.studying = ""
 						self.cpu_for_day += base_name.processor_time()
 						continue
+					#Actually study.
 					if g.techs[base_name.studying].cost[1] == 0:
 						money_towards = g.techs[base_name.studying].cost[0]
 						tmp_base_time = 0
@@ -190,9 +191,12 @@ class player_class:
 						money_towards = (tmp_base_time*
 						g.techs[base_name.studying].cost[0])/ \
 						(g.techs[base_name.studying].cost[1])
-						if money_towards > g.techs[base_name.studying].cost[1]:
-							money_towards=g.techs[base_name.studying].cost[1]
+						if money_towards > g.techs[base_name.studying].cost[0]:
+							money_towards=g.techs[base_name.studying].cost[0]
 					if money_towards <= self.cash:
+						if g.debug == 1:
+							print "Studying "+base_name.studying +": "+ \
+							str(money_towards)+" Money, "+str(tmp_base_time)+" CPU"
 						self.cash -= money_towards
 						learn_tech = g.techs[base_name.studying].study(
 							(money_towards, tmp_base_time, 0))
