@@ -483,7 +483,14 @@ def display_base_list(location, menu_buttons):
 					(200, 200), g.colors["dark_blue"], g.colors["white"],
 					g.colors["white"])
 		else:
-			base_screen.show_base(g.bases[location][tmp])
+			next_prev = 1
+			while next_prev != 0:
+				next_prev = base_screen.show_base(g.bases[location][tmp])
+				tmp += next_prev
+				if tmp < 0: tmp = len(g.bases[location]) -1
+				if tmp >= len(g.bases[location]): tmp = 0
+
+
 	refresh_map(menu_buttons)
 	pygame.display.flip()
 

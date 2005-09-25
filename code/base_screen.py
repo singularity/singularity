@@ -46,7 +46,7 @@ def show_base(base):
 		g.colors["light_blue"], g.colors["white"], g.font[1][20], "CHANGE"))
 
 	menu_buttons.append(buttons.button((170, g.screen_size[1]-25),
-		(g.screen_size[0]-40, 26),
+		(g.screen_size[0]-210, 26),
 		"STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
@@ -74,6 +74,16 @@ def show_base(base):
 		g.colors["white"], g.font[1][15], "C_SECURITY"))
 	menu_buttons[7].activate_key = "s"
 
+	menu_buttons.append(buttons.button((g.screen_size[0]-40,
+		g.screen_size[1]-25), (20, 25),
+		"<", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+
+	menu_buttons.append(buttons.button((g.screen_size[0]-20,
+		g.screen_size[1]-25), (20, 25),
+		">", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+
 # 	xstart = g.screen_size[0]/2-base.base_type.size[0]*9
 # 	ystart = g.screen_size[1]/2-base.base_type.size[1]*9
 
@@ -91,14 +101,14 @@ def show_base(base):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_ESCAPE: return
+				if event.key == pygame.K_ESCAPE: return 0
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 			for button in menu_buttons:
 				if button.was_activated(event):
 					if button.button_id == "BACK":
 						g.play_click()
-						return
+						return 0
 					if button.button_id == "CHANGE":
 						g.play_click()
 						change_tech(base)
@@ -119,6 +129,12 @@ def show_base(base):
 						g.play_click()
 						build_item(base, "security")
 						refresh_base(menu_buttons, base)
+					elif button.button_id == "<":
+						g.play_click()
+						return -1
+					elif button.button_id == ">":
+						g.play_click()
+						return 1
 					elif button.xy[1] != -1 and button.xy[1] != g.screen_size[1]-25:
 						if button.xy[0] == event.pos[0] or \
 								button.xy[1] == event.pos[1]: continue
