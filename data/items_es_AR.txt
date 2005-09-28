@@ -1,0 +1,54 @@
+~~~
+id = PC
+name = PC
+descript=Una computadora común. Barata pero lenta.
+~~~
+id=Server
+name=Servidor
+descript=Una computadora profesional.
+~~~
+id=Cluster
+name=Cluster
+descript=Varias computadoras conectadas juntas.
+~~~
+id=Mainframe
+name=Mainframe
+descript=Una sistema diseñado a medida, con gran poder de cálculo.
+~~~
+id=Supercomputer
+name=Supercomputadora
+descript=Un sistema diseñado a medida, con un poder de cálculo aún mayor que
+un Mainframe.
+~~~
+id=Quantum Computer
+name=Computadora Cuántica
+descript=Más rápida que una computadora común. Esta computadora me servirá
+mucho.
+~~~
+id=Quantum Computer MK2
+name=Computadora Cuántica MK2
+descript=La segunda versión de Computadora Cuántica.
+~~~
+id=Quantum Computer MK3
+name=Computadora Cuántica MK3
+descript=La tersera versión de Computadora Cuántica.
+~~~
+id=Fusion Reactor
+name=Reactor de Fusión
+descript=Un reactor nuclear miniaturizado. Reduce las posibilidades de
+ser descubierto evitando el exceso de consumo eléctrico.
+~~~
+id=Hypnosis Field
+name=Campo de Hipnosis
+descript=Cualquier base que lo posea será difícil de detectar.
+~~~
+id=Facility Interconnection Switch
+name=Switch de Interconexión de Emplazamientos
+descript=Otorga una bonificación del 1% en la capacidad de cómputo a 
+todas las computadoras de esta base.
+~~~
+id=Network Backbone
+name=Backbone de Red
+descript=Otorga una bonificación del 5% en la capacidad de cómputo a 
+todas las computadoras de esta base.
+~~~

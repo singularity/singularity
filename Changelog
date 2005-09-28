@@ -26,6 +26,7 @@ v0.22 (release 2005.09.??):
 - Added a new cheat. (Phil)
 - Fixed tech studying when money is needed. (emh)
 - Added next/prev base buttons. (emh, Borg[MDQ] for suggestion)
+- es_AR translation (our first!) (Borg[MDQ], very minor fixups by Phil)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
