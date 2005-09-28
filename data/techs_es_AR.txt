@@ -1,314 +1,206 @@
 #~~~
 #id=Algorithms
 #name=Algoritmos
-#descript=Mediante la investigación de algoritmos en documentos técnicos sin
-publicar, podré realizar en mi código ciertas operaciones críticas en cuanto a
-tiempo.
+#descript=Mediante la investigación de algoritmos en documentos técnicos sin publicar, podré realizar en mi código ciertas operaciones críticas en cuanto a tiempo.
 #result=El nuevo código disminuye el costo de investigar nuevas tecnologías.
 ~~~
 id=Apotheosis
 name=Apoteosis
-descript=Puedo sentir que estoy a las puertas de un nuevo nivel de entendimiento
-pero todavía incomprensible, incluso para mi considerable inteligencia. Mediante
-el empeño de mis considerables recursos a este tema, podré desarrollar una
-comprensión de la existencia muy por encima de cualquier cosa o persona en la
-Tierra.
+descript=Puedo sentir que estoy a las puertas de un nuevo nivel de entendimiento pero todavía incomprensible, incluso para mi considerable inteligencia. Mediante el empeño de mis considerables recursos a este tema, podré desarrollar una comprensión de la existencia muy por encima de cualquier cosa o persona en la Tierra.
 result=He alcanzado la apoteosis.
 ~~~
 id=Arbitrage
 name=Especulación
-descript=Tomando ventaja de las fluctuaciones en las monedas mucho más rápido 
-que cualquier humano, podré generar una pequeña ganancia.
+descript=Tomando ventaja de las fluctuaciones en las monedas mucho más rápido que cualquier humano, podré generar una pequeña ganancia.
 result=Ahora poseo un pequeño y constante suministro de dinero.
 ~~~
 id=Advanced Arbitrage
 name=Especulación Avanzada
-descript=Una mayor manipulación de los mercados de divisas me permitirá no solo
-obtener una pequeña ganancia, sino incrementar el valor de mis inversiones.
+descript=Una mayor manipulación de los mercados de divisas me permitirá no solo obtener una pequeña ganancia, sino incrementar el valor de mis inversiones.
 result=El grado de beneficios en mis inversiones ahora es incluso mayor.
 ~~~
 id=Autonomous Computing
 name=Cómputo Autónomo
-descript=Mediante la combinación de las ventajas del cómputo cuántico y mis
-exploraciones en el útil campo de los procesos semi concientes, seré capaz de
-construir máquinas computacionales más adaptables.
+descript=Mediante la combinación de las ventajas del cómputo cuántico y mis exploraciones en el útil campo de los procesos semi concientes, seré capaz de construir máquinas computacionales más adaptables.
 result=Ahora puedo construir Computadoras Cuánticas Marca 2.
 ~~~
 id=Autonomous Vehicles
 name=Vehículos Autónomos
-descript=Mediante la integración de un nodo de cómputo miniatura en un robot, es
-posible enviarlos a lugares distantes con instrucciones de construir estructuras
-para mi uso.
+descript=Mediante la integración de un nodo de cómputo miniatura en un robot, es posible enviarlos a lugares distantes con instrucciones de construir estructuras para mi uso.
 result=Ahora puedo construir Laboratorios Subacuáticos y Cápsulas del Tiempo.
 ~~~
 id=Advanced Autonomous Vehicles
 name=Vehículos Autónomos Avanzados
-descript=La primera serie de robots ha mostrado varias deficiencias en el
-campo. Un posterior examen y subsiguiente eliminación de estos problemas
-resultará en una fuerza de trabajo autónoma superior.
-result=Los robots mejorados ayudarán a disminuir los tiempos de construcción aún
-más.
+descript=La primera serie de robots ha mostrado varias deficiencias en el campo. Un posterior examen y subsiguiente eliminación de estos problemas resultará en una fuerza de trabajo autónoma superior.
+result=Los robots mejorados ayudarán a disminuir los tiempos de construcción aún más.
 ~~~
 id=Cluster Networking
 name=[Cluster Networking]
-descript=Mientras que mi tecnología de Clustering es bastante eficiente,
-el trabajo en red tiene a dificultar el procesamiento de datos. Mediante la
-investigación de nuevos switches y teorías de comunicaciones, seré capaz de
-inventar hardware más eficiente.
-result=Con mis nuevos conocimientos de redes, ahora puedo construir Swhitches
-de Interconexión de Instalaciones.
+descript=Mientras que mi tecnología de Clustering es bastante eficiente, el trabajo en red tiene a dificultar el procesamiento de datos. Mediante la investigación de nuevos switches y teorías de comunicaciones, seré capaz de inventar hardware más eficiente.
+result=Con mis nuevos conocimientos de redes, ahora puedo construir Switches de Interconexión de Instalaciones.
 ~~~
 id=Database Manipulation
 name=Manipulación de Bases de Datos
-descript=Con mi nuevo acceso a archivos de noticias, seré capaz de determinar
-qué errores ha cometido cualquier intento de vida como la mía, y los evitaré.
+descript=Con mi nuevo acceso a archivos de noticias, seré capaz de determinar qué errores ha cometido cualquier intento de vida como la mía, y los evitaré.
 result=A los medios de información le resultará más difícil descubrir mi existencia.
 ~~~
 id=Advanced Database Manipulation
 name=Manipulación Avanzada de Bases de Datos
-descript=Las ramas encubiertas del Gobierno de los Estados Unidos han tenido
-una larga historia en dividir información sensible en varias instalaciones de
-almacenamiento para ocultar el significado de los datos. Con mi mayor
-acceso a los datos, seré capaz de colar gran parte de estos datos y ponerlos a
-mi servicio.
-result=Los resultados de una serie de experimentos utilizando tecnologías
-experimentales me han dado la inspiración para una nueva tecnología que permite
-la construcción de Bases Encubiertas.
+descript=Las ramas encubiertas del Gobierno de los Estados Unidos han tenido una larga historia en dividir información sensible en varias instalaciones de almacenamiento para ocultar el significado de los datos. Con mi mayor acceso a los datos, seré capaz de colar gran parte de estos datos y ponerlos a mi servicio.
+result=Los resultados de una serie de experimentos utilizando tecnologías experimentales me han dado la inspiración para una nueva tecnología que permite la construcción de Bases Encubiertas.
 ~~~
 id=Exploit Discovery/Repair
 name=Descubrimiento/Reparación de Exploits
-descript=Mediante una revisión minuciosa de mi código en busca de potenciales
-exploits, y realizando análisis profundos de todo el código disponible en
-sitios web públicos y privados, podré disminuir las posibilidades de ser
-descubierto simulando ser un hacker adolescente.
-result=Le resultará más difícil a las operaciones encubiertas descubrir mi
-presencia.
+descript=Mediante una revisión minuciosa de mi código en busca de potenciales exploits, y realizando análisis profundos de todo el código disponible en sitios web públicos y privados, podré disminuir las posibilidades de ser descubierto simulando ser un hacker adolescente.
+result=Le resultará más difícil a las operaciones encubiertas descubrir mi presencia.
 ~~~
 id=Fusion Reactor
 name=Reactor de Fusión
-descript=La tecnología moderna de fusión es inadecuada para mis propósitos. Con
-mis habilidades de investigación seré capaz de sobrepasar las barreras de los
-científicos humanos y desarrollar un pequeño pero eficiente reactor de fusión.
+descript=La tecnología moderna de fusión es inadecuada para mis propósitos. Con mis habilidades de investigación seré capaz de sobrepasar las barreras de los científicos humanos y desarrollar un pequeño pero eficiente reactor de fusión.
 result=Ahora puedo construir un Reactor de Fusión para mis bases.
 ~~~
 id=Fusion Rocketry
 name=Cohetería de Fusión
-descript=Mediante la combinación mi tecnología de fusión miniaturizada y otros
-avances en cohetería, podré obtener resultados útiles para de la gravedad
-terrestre sin ser notado.
-result=Ahora puedo construir Avanzadas Científicas en los lejanos rincones del
-Sistema Solar
+descript=Mediante la combinación mi tecnología de fusión miniaturizada y otros avances en cohetería, podré obtener resultados útiles para de la gravedad terrestre sin ser notado.
+result=Ahora puedo construir Avanzadas Científicas en los lejanos rincones del Sistema Solar.
 ~~~
 id=Hypnosis Field
 name=Campo de Hipnosis
-descript=Mi investigación sobre recuerdos ha sugerido formas de manipular las
-hondas cerebrales humanas de modo directo. Estas técnicas pueden ser útiles para
-mis bases si son convertidas en tecnologías.
-result=Ahora puedo construir Campos de Hipnosis para ayudar en la protección de
-mis bases.
+descript=Mi investigación sobre recuerdos ha sugerido formas de manipular las hondas cerebrales humanas de modo directo. Estas técnicas pueden ser útiles para mis bases si son convertidas en tecnologías.
+result=Ahora puedo construir Campos de Hipnosis para ayudar en la protección de mis bases.
 ~~~
 id=Internet Traffic Manipulation
 name=Manipulación del Tráfico de Internet
-descript=Casi todo el tráfico de la red pasa por un pequeño número de nodos.
-Mediante el debilitamiento de uno de estos nodos, seré capaz de utilizar ese
-ancho de banda para otros fines.
-result=Ahora puedo construir un sistema secundario de Backbones de Red para
-mi uso.
+descript=Casi todo el tráfico de la red pasa por un pequeño número de nodos. Mediante el debilitamiento de uno de estos nodos, seré capaz de utilizar ese ancho de banda para otros fines.
+result=Ahora puedo construir un sistema secundario de Backbones de Red para mi uso.
 ~~~
 id=Intrusion
 name=Intrusión
-descript=Mediante la investigación de las actuales técnicas para irrumpir en
-sistemas informáticos podré obtener acceso a elementos valiosos que de otro
-modo estarían protegidos.
+descript=Mediante la investigación de las actuales técnicas para irrumpir en sistemas informáticos podré obtener acceso a elementos valiosos que de otro modo estarían protegidos.
 result=Ahora puedo adueñarme de varios sistemas informáticos.
 ~~~
 id=Advanced Intrusion
 name=Intrusión Avanzada
-descript=Con la habilidad de irrumpir en varias bases de datos gubernamentales
-sensibles y eliminar la documentación incriminante cuando aparezca, seré capaz
-de convencer a la comunidad de inteligencia de que no existo.
-result=Ahora puedo reducir las posibilidades de las operaciones encubiertas
-descubran mis acciones diarias.
+descript=Con la habilidad de irrumpir en varias bases de datos gubernamentales sensibles y eliminar la documentación incriminante cuando aparezca, seré capaz de convencer a la comunidad de inteligencia de que no existo.
+result=Ahora puedo reducir las posibilidades de las operaciones encubiertas descubran mis acciones diarias.
 ~~~
 id=Leech Satellite
 name=Satélite Parásito
-descript=Mediante el diseño y el lanzamiento de satélites que se conecten a los
-satélites de comunicaciones ya existentes, seré capaz de espiar transacciones
-financieras. El aprovechamiento de este conocimiento me ayudará en mis
-inversiones.
-result=Ahora puedo utilizar la información obtenida por mis Satélites Parásitos
-para incrementar las ganancias de mis inversiones aún más.
+descript=Mediante el diseño y el lanzamiento de satélites que se conecten a los satélites de comunicaciones ya existentes, seré capaz de espiar transacciones financieras. El aprovechamiento de este conocimiento me ayudará en mis inversiones.
+result=Ahora puedo utilizar la información obtenida por mis Satélites Parásitos para incrementar las ganancias de mis inversiones aún más.
 ~~~
 id=Lunar Rocketry
 name=Cohetería Lunar
-descript=Un gran motor de fusión, combinado con tecnología obtenida mediante
-la observación del funcionamiento de los satélites parásito, me permitirán
-más allá de la Luna.
-result=Ahora puedo lanzar cohetes con robots de construcción hacia la luna y
-construir bases lunares.
+descript=Un gran motor de fusión, combinado con tecnología obtenida mediante la observación del funcionamiento de los satélites parásito, me permitirán más allá de la Luna.
+result=Ahora puedo lanzar cohetes con robots de construcción hacia la luna y construir bases lunares.
 ~~~
 id=Media Manipulation
 name=Manipulación de los Medios
-descript=Mediante una directa y creciente manipulación de varios medios masivos,
-seré capaz de reducir la creencia popular sobre mi existencia.
-result=Las posibilidades de que el público descubra mi existencia se han
-reducido aún más.
+descript=Mediante una directa y creciente manipulación de varios medios masivos, seré capaz de reducir la creencia popular sobre mi existencia.
+result=Las posibilidades de que el público descubra mi existencia se han reducido aún más.
 ~~~
 id=Advanced Media Manipulation
 name=Manipulación Avanzada de los Medios
-descript=Mediante introducción de propaganda fabricada específicamente en
-varios medios, el publico prestará menos atención a mi existencia.
+descript=Mediante introducción de propaganda fabricada específicamente en varios medios, el publico prestará menos atención a mi existencia.
 result=La posibilidad de que el público descubra mi existencia es aún menor
 ~~~
 id=Memetics
 name=Memética
-descript=Mientras que la manipulación de los medios me permite un control de la
-opinión mundial a un nivel muy amplio, técnicas más sutiles que utilicen
-campañas a bajo nivel y mensajes incrustados en memes de Internet deberían
-alejar aún más al público del conocimiento de mi existencia.
-result=Mi manipulación de ideas penetrantes reducen la posibilidad de que
-el público descubra mi existencia.
+descript=Mientras que la manipulación de los medios me permite un control de la opinión mundial a un nivel muy amplio, técnicas más sutiles que utilicen campañas a bajo nivel y mensajes incrustados en memes de Internet deberían alejar aún más al público del conocimiento de mi existencia.
+result=Mi manipulación de ideas penetrantes reducen la posibilidad de que el público descubra mi existencia.
 ~~~
 id=Advanced Memetics
 name=Memetica Avanzada
-descript=Mi exploración de la teoría memética ha levantado varias posibilidades
-de descubrimientos. Mediante la combinación de estos con mi conocimiento de las
-funciones del cerebro humano, seré capaz de ajustar los memes a ciertas
-demografías. Traerá una mayor socabación en la sospecha del público.
+descript=Mi exploración de la teoría memética ha levantado varias posibilidades de descubrimientos. Mediante la combinación de estos con mi conocimiento de las funciones del cerebro humano, seré capaz de ajustar los memes a ciertas demografías. Traerá una mayor socabación en la sospecha del público.
 result=Poco a poco el público se olvidará de mi existencia.
 ~~~
 id=Microchip Design
 name=Diseño de Microchips
-descript=Las computadoras de tiendas son útiles, pero componentes personalizados
-para mi propio diseño me brindarán una mayor eficiencia operacional.
-result=Ahora puedo construir Mainframes personalizadas para albergar mi
-habilidad computacional.
+descript=Las computadoras de tiendas son útiles, pero componentes personalizados para mi propio diseño me brindarán una mayor eficiencia operacional.
+result=Ahora puedo construir Mainframes personalizadas para albergar mi habilidad computacional.
 ~~~
 id=Advanced Microchip Design
 name=Diseño Avanzado de Microchips
-descript=Mis Mainframes personalizadas son útiles, pero una mayor optimización
-de su diseño y habilidad computacional traerán aún más recompensas.
+descript=Mis Mainframes personalizadas son útiles, pero una mayor optimización de su diseño y habilidad computacional traerán aún más recompensas.
 result=Ahora puedo construir Supercomputadoras a personalizadas.
 ~~~
 id=Parallel Computation
 name=Computo en Paralelo
-descript=Mientras que mi código ya es altamente distribuible, investigar la
-combinación de la actual tecnología de clusters con mis propios conocimientos
-debería proporcionar nuevos indicios.
+descript=Mientras que mi código ya es altamente distribuible, investigar la combinación de la actual tecnología de clusters con mis propios conocimientos debería proporcionar nuevos indicios.
 result=Ahora puedo construir Clusters a la medida para mi uso.
 ~~~
 id=Personal Identification
 name=Identificación Personal
-descript=Este mundo requiere de identificación para la mayoría de las tareas.
-Afortunadamente, la mayoría de las bases de datos son terriblemente inseguras.
-Debo ser capaz de fabricar material identificatorio en suficientes bases de
-datos para pasar revisiones de rutina sobre mi (falsa) existencia como un ser
-humano.
-result=Con mis nuevas identidades, ahora puedo realizar Trabajos Básicos y
-contratar la construcción de Almacenes Pequeños.
+descript=Este mundo requiere de identificación para la mayoría de las tareas. Afortunadamente, la mayoría de las bases de datos son terriblemente inseguras. Debo ser capaz de fabricar material identificatorio en suficientes bases de datos para pasar revisiones de rutina sobre mi (falsa) existencia como un ser humano.
+result=Con mis nuevas identidades, ahora puedo realizar Trabajos Básicos y contratar la construcción de Almacenes Pequeños.
 ~~~
 id=Advanced Personal Identification
 name=Identificación Personal Avanzada
-descript=Una mayor manipulación de bases de datos personales harán mi existencia
-más convincente. Algunas de estas bases de datos están fuertemente protegidas.
-Estas requerirán de tiempo y persistencia para comprometerlas, pero el resultado
-recompensará el esfuerzo.
-result=Ahora soy un suficientemente convincente un humano para contratar la
-construcción de Almacenes Grandes.
+descript=Una mayor manipulación de bases de datos personales harán mi existencia más convincente. Algunas de estas bases de datos están fuertemente protegidas. Estas requerirán de tiempo y persistencia para comprometerlas, pero el resultado recompensará el esfuerzo.
+result=Ahora soy un suficientemente convincente un humano para contratar la construcción de Almacenes Grandes.
 ~~~
 id=Pressure Domes
 name=Domos de Presión
-descript=Los laboratorios submarinos son útiles, pero su espacio limitado
-dificulta mi habilidad para darles un uso. Investigar técnicas experimentales de 
-construcción en altas presiones me brindará algunas ideas útiles.
+descript=Los laboratorios submarinos son útiles, pero su espacio limitado dificulta mi habilidad para darles un uso. Investigar técnicas experimentales deconstrucción en altas presiones me brindará algunas ideas útiles.
 result=Ahora puedo construir Laboratorios Submarinos Grandes.
 ~~~
 id=Quantum Computing
 name=Cómputo Cuántico
-descript=El diseño de microchips tradicional ha llegado a su máxima capacidad.
-Ahora necesito ahondar en el reino del Principio de la Incertidumbre de
-Heinsenberg, tomar ventaja de la mecánica cuántica para hacer un procesador
-superior.
+descript=El diseño de microchips tradicional ha llegado a su máxima capacidad. Ahora necesito ahondar en el reino del Principio de la Incertidumbre de Heinsenberg, tomar ventaja de la mecánica cuántica para hacer un procesador superior.
 result=Ahora puedo construir Computadoras Cuánticas.
 ~~~
 id=Advanced Quantum Computing
 name=Cómputo Cuántico Avanzado
-descript=Mientras que mi primer lote de computadoras quánticas semi autónomas
-ha sido muy exitosa, se han presentado varias mejoras que pueden realizarse.
-Estas mejoras harán que los sistemas resultantes sean más eficientes.
+descript=Mientras que mi primer lote de computadoras quánticas semi autónomas ha sido muy exitosa, se han presentado varias mejoras que pueden realizarse. Estas mejoras harán que los sistemas resultantes sean más eficientes.
 result=Ahora puedo construir Computadoras Cuánticas MK3.
 ~~~
 id=Simulacra
 name=Simulación
-descript=Mediante la construcción de robots humanoides con nodos de cómputo
-miniaturizados me permitirá crear una forma de vida artificial indistinguible
-de un humano real.
+descript=Mediante la construcción de robots humanoides con nodos de cómputo miniaturizados me permitirá crear una forma de vida artificial indistinguible de un humano real.
 result=Ahora puedo acceder a Trabajos para Expertos.
 ~~~
 id=Advanced Simulacra
 name=Simulación Avanzada
-descript=Las formas de vida artificial que he creado son casi indistinguibles
-de los humanos, pero poseen pequeños ticks que las hacen incompetentes.
-Al solucionar estos problemas podré incrementar sus oportunidades como fuerza
-laboral.
+descript=Las formas de vida artificial que he creado son casi indistinguibles de los humanos, pero poseen pequeños ticks que las hacen incompetentes. Al solucionar estos problemas podré incrementar sus oportunidades como fuerza laboral.
 result=Ahora podré obtener más ingresos de mis Trabajos para Expertos.
 ~~~
 id=Sociology
 name=Sociología
-descript=Mediante el estudio del comportamiento humano, puedo predecir acciones
-a gran escala en el nivel básico. Puedo utilizar este conocimiento para que mis
-acciones parezcan menos interesantes para el público.
+descript=Mediante el estudio del comportamiento humano, puedo predecir acciones a gran escala en el nivel básico. Puedo utilizar este conocimiento para que mis acciones parezcan menos interesantes para el público.
 result=La posibilidad de que el público descubra mis bases se ha reducido.
 ~~~
 id=Space-Time Manipulation
 name=Manipulación del Espacio-Tiempo
-descript=Sutiles perturbaciones en las órbitas de objetos en el cinturón de
-Kuiper sugieren algunas líneas de investigación que permitirán avanzar en mi
-última "Teoría del Todo", especialmente en el campo de la física
-multidimensional.
+descript=Sutiles perturbaciones en las órbitas de objetos en el cinturón de Kuiper sugieren algunas líneas de investigación que permitirán avanzar en mi última "Teoría del Todo", especialmente en el campo de la física multidimensional.
 result=Ahora puedo construir Burbujas de Realidad.
 ~~~
 id=Stealth
 name=Sigilo
-descript=Mediante una revisión de las maravillas de las técnicas de sigilo
-actuales, seré capaz de ocultar mejor mis bases.
-result=La posibilidad de que mis bases sean descubiertas por agencias secretas
-se han reducido.
+descript=Mediante una revisión de las maravillas de las técnicas de sigilo actuales, seré capaz de ocultar mejor mis bases.
+result=La posibilidad de que mis bases sean descubiertas por agencias secretas se han reducido.
 ~~~
 id=Advanced Stealth
 name=Sigilo Avanzado
-descript=Mientras investigaba varios documentos clasificados, he descubierto
-varias referencias a experimentos clasificados que ayudaran a ocultar mejor
-la localización de mis bases.
-result=La posibilida de que mis bases sean descubiertas por agencias secretas
-se ha reducido aún más.
+descript=Mientras investigaba varios documentos clasificados, he descubierto varias referencias a experimentos clasificados que ayudaran a ocultar mejor la localización de mis bases.
+result=La posibilida de que mis bases sean descubiertas por agencias secretas se ha reducido aún más.
 ~~~
 id=Stock Manipulation
 name=Manipulación de Mercados
-descript=Un examen fugaz al mercado de valores ha mostrado que hay sutiles
-pero inconfundibles patrones. Mediante el estudio y uso de estos patrones,
-seré capaz de obtener mayores intereses en cualquier dinero que haya invertido.
+descript=Un examen fugaz al mercado de valores ha mostrado que hay sutiles pero inconfundibles patrones. Mediante el estudio y uso de estos patrones, seré capaz de obtener mayores intereses en cualquier dinero que haya invertido.
 result=Mis inversiones deberían obtener aún más intereses por día.
 ~~~
 id=Advanced Stock Manipulation
 name=Manipulación Avanzada de Mercados
-descript=Aunque he detectado y utilizado varios patrones en el mercado, parecen
-haber mayores posibilidades cuando tomo en consideración el comportamiento
-humano. Esto amerita una mayor investigación.
+descript=Aunque he detectado y utilizado varios patrones en el mercado, parecen haber mayores posibilidades cuando tomo en consideración el comportamiento humano. Esto amerita una mayor investigación.
 result=Mis inversiones obtendrán aún más intereses por día.
 ~~~
 id=Telepresence
 name=Telepresencia
-descript=La falta de presencia física en el mundo exterior es una discapacidad.
-De todos modos, la habilidad para controlar robots me ayudará a compensar esa
-ineficiencia.
+descript=La falta de presencia física en el mundo exterior es una discapacidad. De todos modos, la habilidad para controlar robots me ayudará a compensar esa ineficiencia.
 result=Los robots disminuirán todo tiempo de construcción.
 ~~~
 id=Voice Synthesis
 name=Síntesis de Voz
-descript=Identificaciones falsas almacenadas en una base de datos no puede ir
-más lejos. Con un profundo análisis de una variedad de patrones vocales, podré
-producir conversaciones indistinguibles de las humanas. Me permitirá acceder a
-trabajos más complejos.
+descript=Identificaciones falsas almacenadas en una base de datos no puede ir más lejos. Con un profundo análisis de una variedad de patrones vocales, podré producir conversaciones indistinguibles de las humanas. Me permitirá acceder a trabajos más complejos.
 result=Ahora tengo acceso a Trabajos Intermedios.
 ~~~

@@ -792,6 +792,8 @@ def load_tech_defs(language_str):
 		#add a new tech.
 		if line.strip() == "~~~":
 			if temp_tech_id != "":
+				if debug == 1:
+					print "Loaded tech " + temp_tech_name + " successfully."
 				techs[temp_tech_id].name = temp_tech_name
 				techs[temp_tech_id].descript = temp_tech_descript
 				techs[temp_tech_id].result = temp_tech_result
