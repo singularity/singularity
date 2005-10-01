@@ -774,8 +774,6 @@ base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 	(5000000000, 300000, 0))
 
 
-
-
 #Techs.
 
 techs = {}
