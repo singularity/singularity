@@ -860,55 +860,6 @@ def load_techs():
 					temp_tech_cost, temp_tech_pre, temp_tech_danger,
 					temp_tech_type, temp_tech_second)
 
-
-# 	temp_tech_id = ""
-# 	temp_tech_cost = (0, 0, 0)
-# 	temp_tech_pre = []
-# 	temp_tech_danger = 0
-# 	temp_tech_type = ""
-# 	temp_tech_second = 0
-# 	for line in tech_base_file:
-# 		line=line.strip()
-# 		if line == "" or line[0] == "#": continue
-# 		#add a new tech.
-# 		if line.strip() == "~~~":
-# 			if temp_tech_id != "":
-# 				techs[temp_tech_id]=tech.tech(temp_tech_id, "", 0,
-# 					temp_tech_cost, temp_tech_pre, temp_tech_danger,
-# 					temp_tech_type, temp_tech_second)
-# 			temp_tech_id = ""
-# 			temp_tech_cost = (0, 0, 0)
-# 			temp_tech_pre = []
-# 			temp_tech_danger = 0
-# 			temp_tech_type = ""
-# 			temp_tech_second = 0
-# 			continue
-# 		command = line.split("=", 1)[0].strip().lower()
-# 		command_text= line.split("=", 1)[1].strip()
-# 		if command == "id":
-# 			temp_tech_id = command_text
-# 		elif command == "danger":
-# 			temp_tech_danger = int(command_text)
-# 		elif command == "cost":
-# 			cost_array = command_text.split(",", 2)
-# 			if len(cost_array) != 3:
-# 				print "error with cost given: "+command_text
-# 				sys.exit()
-# 			temp_tech_cost = (int(cost_array[0]), int(cost_array[1]),
-# 					int(cost_array[2]))
-# 		elif command == "pre":
-# 			temp_tech_pre.append(command_text)
-# 		elif command == "type":
-# 			cost_array = command_text.split(",", 1)
-# 			if len(cost_array) != 2:
-# 				print "error with type given: "+command_text
-# 				sys.exit()
-# 			temp_tech_type = cost_array[0]
-# 			temp_tech_second = int(cost_array[1])
-# 		else:
-# 			print "Unknown command of "+command+" in techs.txt."
-# 	tech_base_file.close()
-
 	load_tech_defs("en_US")
 	load_tech_defs(language)
 
@@ -942,132 +893,56 @@ def load_items():
 	items = {}
 
 	#If there are no item data files, stop.
-	if path.exists("../data/items.txt") == 0 or \
-			path.exists("../data/items_"+language+".txt") == 0:
+	if not path.exists("../data/items.txt") or \
+			not path.exists("../data/items_"+language+".txt") or \
+			not path.exists("../data/items_en_US.txt"):
 		print "item files are missing. Exiting."
 		sys.exit()
-	item_base_file = open("../data/items.txt", 'r')
-	temp_item_id = ""
-	temp_item_cost = (0, 0, 0)
-	temp_item_pre = ""
-	temp_item_type = ""
-	temp_item_second = 0
-	for line in item_base_file:
-		line=line.strip()
-		if line == "" or line[0] == "#": continue
-		#add a new item.
-		if line.strip() == "~~~":
-			if temp_item_id != "":
-				items[temp_item_id]=item.item_class(temp_item_id, "",
-					temp_item_cost, temp_item_pre,
-					temp_item_type, temp_item_second)
-			temp_item_id = ""
-			temp_item_cost = (0, 0, 0)
-			temp_item_pre = ""
-			temp_item_type = ""
-			temp_item_second = 0
-			continue
-		command = line.split("=", 1)[0].strip().lower()
-		command_text= line.split("=", 1)[1].strip()
-		if command == "id":
-			temp_item_id = command_text
-		elif command == "cost":
-			cost_array = command_text.split(",", 2)
-			if len(cost_array) != 3:
-				print "error with cost given: "+command_text
-				sys.exit()
-			temp_item_cost = (int(cost_array[0]), int(cost_array[1]),
-					int(cost_array[2]))
-		elif command == "pre":
-			temp_item_pre = command_text
-		elif command == "type":
-			cost_array = command_text.split(",", 1)
+
+	temp_item_array = generic_load("items.txt")
+	for item_name in temp_item_array:
+		if (not item_name.has_key("id")):
+			print "item lacks id in items.txt"
+		if (not item_name.has_key("cost")):
+			print "item lacks cost in items.txt"
+		cost_array = item_name["cost"].split(",", 2)
+		if len(cost_array) != 3:
+			print "error with cost given: "+item_name["cost"]
+			sys.exit()
+		temp_item_cost = (int(cost_array[0]), int(cost_array[1]),
+			int(cost_array[2]))
+		if item_name.has_key("pre"):
+			temp_item_pre = item_name["pre"]
+		else: temp_item_pre = ""
+		temp_item_type = ""
+		temp_item_second = 0
+		if item_name.has_key("type"):
+			cost_array = item_name["type"].split(",", 1)
 			if len(cost_array) != 2:
-				print "error with type given: "+command_text
+				print "error with type given: "+item_name["type"]
 				sys.exit()
 			temp_item_type = cost_array[0]
 			temp_item_second = int(cost_array[1])
-		else:
-			print "Unknown command of "+command+" in items.txt."
-	item_base_file.close()
+
+		items[item_name["id"]]=item.item_class(item_name["id"], "",
+					temp_item_cost, temp_item_pre,
+					temp_item_type, temp_item_second)
 
 	load_item_defs("en_US")
 	load_item_defs(language)
 
 def load_item_defs(language_str):
-	item_desc_file = open("../data/items_"+language_str+".txt", 'r')
-	temp_item_id = ""
-	temp_item_name = ""
-	temp_item_descript = ""
-	for line in item_desc_file:
-		line=line.strip()
-		if line == "" or line[0] == "#": continue
-		#add a new item.
-		if line.strip() == "~~~":
-			if temp_item_id != "":
-				items[temp_item_id].name = temp_item_name
-				items[temp_item_id].descript = temp_item_descript
-			temp_item_id = ""
-			temp_item_name = ""
-			temp_item_descript = ""
-			continue
-		command = line.split("=", 1)[0].strip().lower()
-		command_text= line.split("=", 1)[1].strip()
-		if command == "id":
-			temp_item_id = command_text
-		elif command == "name":
-			temp_item_name = command_text
-		elif command == "descript":
-			temp_item_descript = command_text
-	item_desc_file.close()
+	temp_item_array = generic_load("items_"+language_str+".txt")
+	for item_name in temp_item_array:
+		if (not item_name.has_key("id")):
+			print "item lacks id in items_"+language_str+".txt"
+		if item_name.has_key("name"):
+			items[item_name["id"]].name = item_name["name"]
+		if item_name.has_key("descript"):
+			items[item_name["id"]].descript = item_name["descript"]
 
-# items["PC"] = item.item_class("PC", "A consumer-level PC. Cheap, but slow.",
-# 	(500, 0, 1), "", "compute", 1)
-#
-# items["Server"] = item.item_class("Server", "A professional-level computer.",
-# 	(2000, 0, 3), "", "compute", 5)
-#
-# items["Cluster"] = item.item_class("Cluster", "Several computers connected together.",
-# 	(8000, 0, 5), "Parallel Computation", "compute", 35)
-#
-# items["Mainframe"] = item.item_class("Mainframe", "A custom-designed system, "+
-# 	"with much greater power.",
-# 	(30000, 0, 8), "Microchip Design", "compute", 120)
-#
-# items["Supercomputer"] = item.item_class("Supercomputer", "A custom-designed system, "+
-# 	"with even greater power than mainframes.",
-# 	(60000, 0, 9), "Advanced Microchip Design", "compute", 350)
-#
-# items["Quantum Computer"] = item.item_class("Quantum Computer", "Much faster than "+
-# 	"a comparable classical computer, this computer will serve me well.",
-# 	(100000, 0, 10), "Quantum Computing", "compute", 1500)
-#
-# items["Quantum Computer MK2"] = item.item_class("Quantum Computer MK2", "The second "+
-# 	"revision of the quantum line.",
-# 	(120000, 0, 10), "Autonomous Computing", "compute", 10000)
-#
-# items["Quantum Computer MK3"] = item.item_class("Quantum Computer MK3", "The third "+
-# 	"revision of the quantum line.",
-# 	(150000, 0, 10), "Advanced Quantum Computing", "compute", 200000)
-#
-# items["Fusion Reactor"] = item.item_class("Fusion Reactor", "A miniaturized "+
-# 	"nuclear reactor. Reduces discovery chance by preventing suspicious power "+
-# 	"drains.",
-# 	(10000, 0, 5), "Fusion Reactor", "react", 100)
-#
-# items["Hypnosis Field"] = item.item_class("Hypnosis Field", "Makes any base "+
-# 	"containing it very difficult to detect.",
-# 	(20000, 0, 3), "Hypnosis Field", "security", 500)
-#
-# items["Facility Interconnection Switch"] = item.item_class(
-# 	"Facility Interconnection Switch", "Gives a 1% computation bonus to all "+
-# 	"computers at this base. Does not stack.",
-# 	(200, 0, 3), "Cluster Networking", "network", 100)
-#
-# items["Network Backbone"] = item.item_class(
-# 	"Network Backbone", "Gives a 5% computation bonus to all "+
-# 	"computers at this base. Does not stack.",
-# 	(50000, 0, 15), "Internet Traffic Manipulation", "network", 500)
+
+
 
 def new_game():
 	global curr_speed
