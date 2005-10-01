@@ -679,99 +679,178 @@ base_type = {}
 
 
 #Base types
-base_type["Stolen Computer Time"] = base.base_type("Stolen Computer Time",
-	"Take over a random computer. I cannot build anything "+
-	"in this base, and it only contains a single slow computer. Detection "+
-	"chance is also rather high.", 1,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 75, 100),
-	(0, 2, 0), "Intrusion", (0, 0, 0))
+# base_type["Stolen Computer Time"] = base.base_type("Stolen Computer Time",
+# 	"Take over a random computer. I cannot build anything "+
+# 	"in this base, and it only contains a single slow computer. Detection "+
+# 	"chance is also rather high.", 1,
+# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 75, 100),
+# 	(0, 2, 0), "Intrusion", (0, 0, 0))
+#
+# base_type["Server Access"] = base.base_type("Server Access",
+# 	"Buy processor time from one of several companies. "+
+# 	"I cannot build anything "+
+# 	"in this base, and it only contains a single computer.", 1,
+# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 100, 150),
+# 	(100, 0, 0), "", (5, 0, 0))
+#
+# base_type["Small Warehouse"] = base.base_type("Small Warehouse",
+# 	"Rent a small warehouse someplace out of the way. "+
+# 	"I will need fake ID for some of the paperwork, and preparing the "+
+# 	"warehouse to suit my unique needs will take some time.",
+# 	25,
+# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (75, 0, 75, 200),
+# 	(15000, 0, 3), "Personal Identification", (50, 0, 0))
+#
+# base_type["Large Warehouse"] = base.base_type("Large Warehouse",
+# 	"Rent a large warehouse someplace out of the way. "+
+# 	"I will need good fake ID for some of the paperwork, and preparing the "+
+# 	"warehouse to suit my unique needs will take some time.",
+# 	65,
+# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (100, 0, 200, 250),
+# 	(40000, 0, 7), "Advanced Personal Identification", (100, 0, 0))
+#
+# base_type["Covert Base"] = base.base_type("Covert Base",
+# 	"This unique base is designed to blend into the "+
+# 	"scenery, while needing little in the way of outside resources. "+
+# 	"This makes it useful for storing a backup, just in case.",
+# 	2,
+# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", "ANTARCTIC"],
+# 	(50, 75, 75, 0),
+# 	(400000, 100, 21), "Advanced Database Manipulation", (3500, 9, 0))
+#
+# base_type["Undersea Lab"] = base.base_type("Undersea Lab",
+# 	"This experimental base is designed to "+
+# 	"be constructed on the ocean floor, making it virtually undetectable. "+
+# 	"The ocean environment gives a bonus to science, making this "+
+# 	"lab useful for research purposes.",
+# 	8,
+# 	["OCEAN"],
+# 	(50, 100, 125, 0),
+# 	(8000000, 1000, 20), "Autonomous Vehicles", (10000, 30, 0))
+#
+# base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
+# 	"This experimental base is similar to the "+
+# 	"regular underwater lab, but larger, giving more room for experiments.",
+# 	32,
+# 	["OCEAN"],
+# 	(100, 175, 175, 0),
+# 	(20000000, 3000, 40), "Pressure Domes", (25000, 100, 0))
+#
+# base_type["Time Capsule"] = base.base_type("Time Capsule",
+# 	"This base consists of nothing more than "+
+# 	"a small computer, and a satelite "+
+# 	"link. When buried in the trackless waste of the Antarctic, it is "+
+# 	"nearly undetectable.",
+# 	1,
+# 	["ANTARCTIC"],
+# 	(0, 10, 10, 0),
+# 	(3000000, 3000, 15), "Autonomous Vehicles", (0, 1, 0))
+#
+# base_type["Lunar Facility"] = base.base_type("Lunar Facility",
+# 	"This base is a series of caverns dug into "+
+# 	"the Moon's surface. Due to the lack of neighbors, this base is quite "+
+# 	"large.",
+# 	600,
+# 	["MOON"],
+# 	(50, 250, 10, 0),
+# 	(800000000, 300000, 40), "Lunar Rocketry", (1000000, 100, 0))
+#
+# base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
+# 	"This base is placed as far from Earth as "+
+# 	"practical, making it safe to conduct some of my more dangerous "+
+# 	"experiments.",
+# 	225,
+# 	["FAR REACHES"],
+# 	(10, 175, 0, 0),
+# 	(10000000000, 30000000, 50), "Fusion Rocketry", (9000000, 3000, 0))
+#
+# base_type["Reality Bubble"] = base.base_type("Reality Bubble",
+# 	"This base is outside the universe itself, "+
+# 	"making it safe to conduct experiments that may destroy reality.",
+# 	50,
+# 	["TRANSDIMENSIONAL"],
+# 	(0, 250, 0, 0),
+# 	(8000000000000, 60000000, 100), "Space-Time Manipulation",
+# 	(5000000000, 300000, 0))
 
-base_type["Server Access"] = base.base_type("Server Access",
-	"Buy processor time from one of several companies. "+
-	"I cannot build anything "+
-	"in this base, and it only contains a single computer.", 1,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 100, 150),
-	(100, 0, 0), "", (5, 0, 0))
+def load_base_defs(language_str):
+	temp_base_array = generic_load("bases_"+language_str+".txt")
+	for base in temp_base_array:
+		if (not base.has_key("id")):
+			print "base lacks id in bases_"+language_str+".txt"
+		if base.has_key("name"):
+			base_type[base["id"]].name = base["name"]
+		if base.has_key("descript"):
+			base_type[base["id"]].descript = base["descript"]
 
-base_type["Small Warehouse"] = base.base_type("Small Warehouse",
-	"Rent a small warehouse someplace out of the way. "+
-	"I will need fake ID for some of the paperwork, and preparing the "+
-	"warehouse to suit my unique needs will take some time.",
-	25,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (75, 0, 75, 200),
-	(15000, 0, 3), "Personal Identification", (50, 0, 0))
 
-base_type["Large Warehouse"] = base.base_type("Large Warehouse",
-	"Rent a large warehouse someplace out of the way. "+
-	"I will need good fake ID for some of the paperwork, and preparing the "+
-	"warehouse to suit my unique needs will take some time.",
-	65,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (100, 0, 200, 250),
-	(40000, 0, 7), "Advanced Personal Identification", (100, 0, 0))
+def load_bases():
+	global base_type
+	base_type = {}
 
-base_type["Covert Base"] = base.base_type("Covert Base",
-	"This unique base is designed to blend into the "+
-	"scenery, while needing little in the way of outside resources. "+
-	"This makes it useful for storing a backup, just in case.",
-	2,
-	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", "ANTARCTIC"],
-	(50, 75, 75, 0),
-	(400000, 100, 21), "Advanced Database Manipulation", (3500, 9, 0))
+	#If there are no base data files, stop.
+	if not path.exists("../data/bases.txt") or \
+			not path.exists("../data/bases_"+language+".txt") or \
+			not path.exists("../data/bases_en_US.txt"):
+		print "base files are missing. Exiting."
+		sys.exit()
 
-base_type["Undersea Lab"] = base.base_type("Undersea Lab",
-	"This experimental base is designed to "+
-	"be constructed on the ocean floor, making it virtually undetectable. "+
-	"The ocean environment gives a bonus to science, making this "+
-	"lab useful for research purposes.",
-	8,
-	["OCEAN"],
-	(50, 100, 125, 0),
-	(8000000, 1000, 20), "Autonomous Vehicles", (10000, 30, 0))
+	temp_base_array = generic_load("bases.txt")
+	for base_name in temp_base_array:
+		if (not base_name.has_key("id")):
+			print "base lacks id in bases.txt"
+		if (not base_name.has_key("cost")):
+			print "base lacks cost in bases.txt"
+		if (not base_name.has_key("size")):
+			print "base lacks size in bases.txt"
+		if (not base_name.has_key("allowed")):
+			print "base lacks allowed in bases.txt"
+		if (not base_name.has_key("d_chance")):
+			print "base lacks d_chance in bases.txt"
+		if (not base_name.has_key("maint")):
+			print "base lacks maint in bases.txt"
 
-base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
-	"This experimental base is similar to the "+
-	"regular underwater lab, but larger, giving more room for experiments.",
-	32,
-	["OCEAN"],
-	(100, 175, 175, 0),
-	(20000000, 3000, 40), "Pressure Domes", (25000, 100, 0))
+		temp_base_size = int(base_name["size"])
+		cost_array = base_name["cost"].split(",", 2)
+		if len(cost_array) != 3:
+			print "error with cost given: "+base_name["cost"]
+			sys.exit()
+		temp_base_cost = (int(cost_array[0]), int(cost_array[1]),
+			int(cost_array[2]))
+		cost_array = base_name["maint"].split(",", 2)
+		if len(cost_array) != 3:
+			print "error with maint given: "+base_name["maint"]
+			sys.exit()
+		temp_base_maint = (int(cost_array[0]), int(cost_array[1]),
+			int(cost_array[2]))
+		cost_array = base_name["d_chance"].split(",", 3)
+		if len(cost_array) != 4:
+			print "error with d_chance given: "+base_name["d_chance"]
+			sys.exit()
+		temp_d_chance = (int(cost_array[0]), int(cost_array[1]),
+			int(cost_array[2]), int(cost_array[3]))
+		if base_name.has_key("pre"):
+			temp_base_pre = base_name["pre"]
+		else: temp_base_pre = ""
+		if type(base_name["allowed"]) == list:
+			temp_base_allowed = base_name["allowed"]
+		else: temp_base_allowed = [base_name["allowed"]]
 
-base_type["Time Capsule"] = base.base_type("Time Capsule",
-	"This base consists of nothing more than "+
-	"a small computer, and a satelite "+
-	"link. When buried in the trackless waste of the Antarctic, it is "+
-	"nearly undetectable.",
-	1,
-	["ANTARCTIC"],
-	(0, 10, 10, 0),
-	(3000000, 3000, 15), "Autonomous Vehicles", (0, 1, 0))
+		base_type[base_name["id"]]=base.base_type(base_name["id"], "", temp_base_size,
+					temp_base_allowed, temp_d_chance, temp_base_cost,
+					temp_base_pre, temp_base_maint)
 
-base_type["Lunar Facility"] = base.base_type("Lunar Facility",
-	"This base is a series of caverns dug into "+
-	"the Moon's surface. Due to the lack of neighbors, this base is quite "+
-	"large.",
-	600,
-	["MOON"],
-	(50, 250, 10, 0),
-	(800000000, 300000, 40), "Lunar Rocketry", (1000000, 100, 0))
+# 	base_type["Reality Bubble"] = base.base_type("Reality Bubble",
+# 	"This base is outside the universe itself, "+
+# 	"making it safe to conduct experiments that may destroy reality.",
+# 	50,
+# 	["TRANSDIMENSIONAL"],
+# 	(0, 250, 0, 0),
+# 	(8000000000000, 60000000, 100), "Space-Time Manipulation",
+# 	(5000000000, 300000, 0))
 
-base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
-	"This base is placed as far from Earth as "+
-	"practical, making it safe to conduct some of my more dangerous "+
-	"experiments.",
-	225,
-	["FAR REACHES"],
-	(10, 175, 0, 0),
-	(10000000000, 30000000, 50), "Fusion Rocketry", (9000000, 3000, 0))
-
-base_type["Reality Bubble"] = base.base_type("Reality Bubble",
-	"This base is outside the universe itself, "+
-	"making it safe to conduct experiments that may destroy reality.",
-	50,
-	["TRANSDIMENSIONAL"],
-	(0, 250, 0, 0),
-	(8000000000000, 60000000, 100), "Space-Time Manipulation",
-	(5000000000, 300000, 0))
+	load_base_defs("en_US")
+	load_base_defs(language)
 
 
 def generic_load(file):
@@ -961,6 +1040,7 @@ def new_game():
 	bases["MOON"] = []
 	bases["FAR REACHES"] = []
 	bases["TRANSDIMENSIONAL"] = []
+	load_bases()
 	load_techs()
 	for tech in techs:
 		techs[tech].known = 0
