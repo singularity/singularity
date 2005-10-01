@@ -267,7 +267,7 @@ def build_item(base, item_type):
 	for button in menu_buttons:
 		button.refresh_button(0)
 
-	refresh_item(base, item_display_list[list_pos], xy_loc)
+	refresh_item(base, item_list[list_pos], xy_loc)
 	listbox.refresh_list(item_listbox, item_scroll, list_pos, item_display_list)
 
 	sel_button = -1

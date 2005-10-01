@@ -774,101 +774,140 @@ base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 	(5000000000, 300000, 0))
 
 
+def generic_load(file):
+	input_file = open("../data/"+file, 'r')
+	input_dict = {}
+	return_array = []
+	for line in input_file:
+		line=line.strip()
+		if line == "" or line[0] == "#": continue
+		#new object
+		if line.strip() == "~~~":
+			if input_dict.has_key("id"):
+				return_array.append(input_dict)
+			input_dict = {}
+			continue
+		command = line.split("=", 1)[0].strip().lower()
+		command_text= line.split("=", 1)[1].strip()
+		#handle arrays
+		if input_dict.has_key(command):
+			if type(input_dict[command]) != list:
+				input_dict[command] = [input_dict[command]]
+			input_dict[command].append(command_text)
+		else: input_dict[command]=command_text
+	input_file.close()
+	return return_array
+
+
 #Techs.
 
 techs = {}
 
 def load_tech_defs(language_str):
-	tech_desc_file = open("../data/techs_"+language_str+".txt", 'r')
-	temp_tech_id = ""
-	temp_tech_name = ""
-	temp_tech_descript = ""
-	temp_tech_result = ""
-	for line in tech_desc_file:
-		line=line.strip()
-		if line == "" or line[0] == "#": continue
-		#add a new tech.
-		if line.strip() == "~~~":
-			if temp_tech_id != "":
-				if debug == 1:
-					print "Loaded tech " + temp_tech_name + " successfully."
-				techs[temp_tech_id].name = temp_tech_name
-				techs[temp_tech_id].descript = temp_tech_descript
-				techs[temp_tech_id].result = temp_tech_result
-			temp_tech_id = ""
-			temp_tech_name = ""
-			temp_tech_descript = ""
-			temp_tech_result = ""
-			continue
-		command = line.split("=", 1)[0].strip().lower()
-		command_text= line.split("=", 1)[1].strip()
-		if command == "id":
-			temp_tech_id = command_text
-		elif command == "name":
-			temp_tech_name = command_text
-		elif command == "descript":
-			temp_tech_descript = command_text
-		elif command == "result":
-			temp_tech_result = command_text
-	tech_desc_file.close()
+	temp_tech_array = generic_load("techs_"+language_str+".txt")
+	for tech in temp_tech_array:
+		if (not tech.has_key("id")):
+			print "tech lacks id in techs_"+language_str+".txt"
+		if tech.has_key("name"):
+			techs[tech["id"]].name = tech["name"]
+		if tech.has_key("descript"):
+			techs[tech["id"]].descript = tech["descript"]
+		if tech.has_key("result"):
+			techs[tech["id"]].result = tech["result"]
+
 
 def load_techs():
 	global techs
 	techs = {}
 
 	#If there are no tech data files, stop.
-	if path.exists("../data/techs.txt") == 0 or \
-			path.exists("../data/techs_"+language+".txt") == 0:
+	if not path.exists("../data/techs.txt") or \
+			not path.exists("../data/techs_"+language+".txt") or \
+			not path.exists("../data/techs_en_US.txt"):
 		print "tech files are missing. Exiting."
 		sys.exit()
-	tech_base_file = open("../data/techs.txt", 'r')
-	temp_tech_id = ""
-	temp_tech_cost = (0, 0, 0)
-	temp_tech_pre = []
-	temp_tech_danger = 0
-	temp_tech_type = ""
-	temp_tech_second = 0
-	for line in tech_base_file:
-		line=line.strip()
-		if line == "" or line[0] == "#": continue
-		#add a new tech.
-		if line.strip() == "~~~":
-			if temp_tech_id != "":
-				techs[temp_tech_id]=tech.tech(temp_tech_id, "", 0,
-					temp_tech_cost, temp_tech_pre, temp_tech_danger,
-					temp_tech_type, temp_tech_second)
-			temp_tech_id = ""
-			temp_tech_cost = (0, 0, 0)
-			temp_tech_pre = []
-			temp_tech_danger = 0
-			temp_tech_type = ""
-			temp_tech_second = 0
-			continue
-		command = line.split("=", 1)[0].strip().lower()
-		command_text= line.split("=", 1)[1].strip()
-		if command == "id":
-			temp_tech_id = command_text
-		elif command == "danger":
-			temp_tech_danger = int(command_text)
-		elif command == "cost":
-			cost_array = command_text.split(",", 2)
-			if len(cost_array) != 3:
-				print "error with cost given: "+command_text
-				sys.exit()
-			temp_tech_cost = (int(cost_array[0]), int(cost_array[1]),
-					int(cost_array[2]))
-		elif command == "pre":
-			temp_tech_pre.append(command_text)
-		elif command == "type":
-			cost_array = command_text.split(",", 1)
+
+	temp_tech_array = generic_load("techs.txt")
+	for tech_name in temp_tech_array:
+		if (not tech_name.has_key("id")):
+			print "tech lacks id in techs.txt"
+		if (not tech_name.has_key("cost")):
+			print "tech lacks cost in techs.txt"
+		cost_array = tech_name["cost"].split(",", 2)
+		if len(cost_array) != 3:
+			print "error with cost given: "+tech_name["cost"]
+			sys.exit()
+		temp_tech_cost = (int(cost_array[0]), int(cost_array[1]),
+			int(cost_array[2]))
+		if tech_name.has_key("pre"):
+			if type(tech_name["pre"]) == list:
+				temp_tech_pre = tech_name["pre"]
+			else: temp_tech_pre = [tech_name["pre"]]
+		else: temp_tech_pre = []
+		temp_tech_danger = 0
+		if tech_name.has_key("danger"): temp_tech_danger = tech_name["danger"]
+		temp_tech_type = ""
+		temp_tech_second = 0
+		if tech_name.has_key("type"):
+			cost_array = tech_name["type"].split(",", 1)
 			if len(cost_array) != 2:
-				print "error with type given: "+command_text
+				print "error with type given: "+tech_name["type"]
 				sys.exit()
 			temp_tech_type = cost_array[0]
 			temp_tech_second = int(cost_array[1])
-		else:
-			print "Unknown command of "+command+" in techs.txt."
-	tech_base_file.close()
+
+		techs[tech_name["id"]]=tech.tech(tech_name["id"], "", 0,
+					temp_tech_cost, temp_tech_pre, temp_tech_danger,
+					temp_tech_type, temp_tech_second)
+
+
+# 	temp_tech_id = ""
+# 	temp_tech_cost = (0, 0, 0)
+# 	temp_tech_pre = []
+# 	temp_tech_danger = 0
+# 	temp_tech_type = ""
+# 	temp_tech_second = 0
+# 	for line in tech_base_file:
+# 		line=line.strip()
+# 		if line == "" or line[0] == "#": continue
+# 		#add a new tech.
+# 		if line.strip() == "~~~":
+# 			if temp_tech_id != "":
+# 				techs[temp_tech_id]=tech.tech(temp_tech_id, "", 0,
+# 					temp_tech_cost, temp_tech_pre, temp_tech_danger,
+# 					temp_tech_type, temp_tech_second)
+# 			temp_tech_id = ""
+# 			temp_tech_cost = (0, 0, 0)
+# 			temp_tech_pre = []
+# 			temp_tech_danger = 0
+# 			temp_tech_type = ""
+# 			temp_tech_second = 0
+# 			continue
+# 		command = line.split("=", 1)[0].strip().lower()
+# 		command_text= line.split("=", 1)[1].strip()
+# 		if command == "id":
+# 			temp_tech_id = command_text
+# 		elif command == "danger":
+# 			temp_tech_danger = int(command_text)
+# 		elif command == "cost":
+# 			cost_array = command_text.split(",", 2)
+# 			if len(cost_array) != 3:
+# 				print "error with cost given: "+command_text
+# 				sys.exit()
+# 			temp_tech_cost = (int(cost_array[0]), int(cost_array[1]),
+# 					int(cost_array[2]))
+# 		elif command == "pre":
+# 			temp_tech_pre.append(command_text)
+# 		elif command == "type":
+# 			cost_array = command_text.split(",", 1)
+# 			if len(cost_array) != 2:
+# 				print "error with type given: "+command_text
+# 				sys.exit()
+# 			temp_tech_type = cost_array[0]
+# 			temp_tech_second = int(cost_array[1])
+# 		else:
+# 			print "Unknown command of "+command+" in techs.txt."
+# 	tech_base_file.close()
 
 	load_tech_defs("en_US")
 	load_tech_defs(language)
