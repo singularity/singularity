@@ -35,7 +35,7 @@ descript=La primera serie de robots ha mostrado varias deficiencias en el campo.
 result=Los robots mejorados ayudarán a disminuir los tiempos de construcción aún más.
 ~~~
 id=Cluster Networking
-name=[Cluster Networking]
+name=Red de clusters
 descript=Mientras que mi tecnología de Clustering es bastante eficiente, el trabajo en red tiene a dificultar el procesamiento de datos. Mediante la investigación de nuevos switches y teorías de comunicaciones, seré capaz de inventar hardware más eficiente.
 result=Con mis nuevos conocimientos de redes, ahora puedo construir Switches de Interconexión de Instalaciones.
 ~~~

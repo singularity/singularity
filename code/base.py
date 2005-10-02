@@ -27,6 +27,7 @@ import g
 class base_type:
 	def __init__(self, name, descript, size, regions, d_chance, cost,
 						prereq, mainten):
+		self.base_id = name
 		self.base_name = name
 		self.descript = descript
 		self.size = size
@@ -51,13 +52,13 @@ class base:
 		self.usage = [0] * self.base_type.size
 # 		for i in range(self.base_type.size):
 # 			self.usage.append(0)
-		if self.base_type.base_name == "Stolen Computer Time":
+		if self.base_type.base_id == "Stolen Computer Time":
 			self.usage[0] = g.item.item(g.items["PC"])
 			self.usage[0].build()
-		elif self.base_type.base_name == "Server Access":
+		elif self.base_type.base_id == "Server Access":
 			self.usage[0] = g.item.item(g.items["Server"])
 			self.usage[0].build()
-		elif self.base_type.base_name == "Time Capsule":
+		elif self.base_type.base_id == "Time Capsule":
 			self.usage[0] = g.item.item(g.items["PC"])
 			self.usage[0].build()
 		#Reactor, network, security.

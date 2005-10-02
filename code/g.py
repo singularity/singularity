@@ -779,7 +779,7 @@ def load_base_defs(language_str):
 		if (not base.has_key("id")):
 			print "base lacks id in bases_"+language_str+".txt"
 		if base.has_key("name"):
-			base_type[base["id"]].name = base["name"]
+			base_type[base["id"]].base_name = base["name"]
 		if base.has_key("descript"):
 			base_type[base["id"]].descript = base["descript"]
 

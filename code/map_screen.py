@@ -603,17 +603,20 @@ def build_new_base_window(location):
 	base_list_size = 16
 
 	temp_base_list = []
+	temp_base_display_list = []
 	for base_name in g.base_type:
 		for region in g.base_type[base_name].regions:
 			if g.base_type[base_name].prereq == "" or \
 					g.techs[g.base_type[base_name].prereq].known == 1:
 				if region == location:
-					temp_base_list.append(g.base_type[base_name].base_name)
+					temp_base_list.append(base_name)
+					temp_base_display_list.append(g.base_type[base_name].base_name)
 
 	xy_loc = (g.screen_size[0]/2 - 209, 50)
 
 	while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
 		temp_base_list.append("")
+		temp_base_display_list.append("")
 
 	base_pos = 0
 
@@ -635,7 +638,7 @@ def build_new_base_window(location):
 
 	refresh_new_base(temp_base_list[base_pos], xy_loc)
 
-	listbox.refresh_list(bases_list, 0, base_pos, temp_base_list)
+	listbox.refresh_list(bases_list, 0, base_pos, temp_base_display_list)
 
 	sel_button = -1
 	while 1:
@@ -650,14 +653,14 @@ def build_new_base_window(location):
 						base_pos = len(temp_base_list)-1
 					refresh_new_base(temp_base_list[base_pos], xy_loc)
 					listbox.refresh_list(bases_list, 0,
-										base_pos, temp_base_list)
+										base_pos, temp_base_display_list)
 				elif event.key == pygame.K_UP:
 					base_pos -= 1
 					if base_pos <= 0:
 						base_pos = 0
 					refresh_new_base(temp_base_list[base_pos], xy_loc)
 					listbox.refresh_list(bases_list, 0,
-										base_pos, temp_base_list)
+										base_pos, temp_base_display_list)
 				elif event.key == pygame.K_q: return -1
 				elif event.key == pygame.K_RETURN:
 					return temp_base_list[base_pos]
@@ -668,21 +671,21 @@ def build_new_base_window(location):
 						base_pos = (base_pos/base_list_size)*base_list_size + tmp
 						refresh_new_base(temp_base_list[base_pos], xy_loc)
 						listbox.refresh_list(bases_list, 0,
-										base_pos, temp_base_list)
+										base_pos, temp_base_display_list)
 				if event.button == 4:
 					base_pos -= 1
 					if base_pos <= 0:
 						base_pos = 0
 					refresh_new_base(temp_base_list[base_pos], xy_loc)
 					listbox.refresh_list(bases_list, 0,
-										base_pos, temp_base_list)
+										base_pos, temp_base_display_list)
 				if event.button == 5:
 					base_pos += 1
 					if base_pos >= len(temp_base_list):
 						base_pos = len(temp_base_list)-1
 					refresh_new_base(temp_base_list[base_pos], xy_loc)
 					listbox.refresh_list(bases_list, 0,
-										base_pos, temp_base_list)
+										base_pos, temp_base_display_list)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 			for button in menu_buttons:
