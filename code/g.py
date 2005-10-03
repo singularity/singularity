@@ -432,7 +432,7 @@ def save_game(savegame_name):
 		for base_name in bases[base_loc]:
 			pickle.dump(base_name.ID, savefile)
 			pickle.dump(base_name.name, savefile)
-			pickle.dump(base_name.base_type.base_name, savefile)
+			pickle.dump(base_name.base_type.base_id, savefile)
 			pickle.dump(base_name.built_date, savefile)
 			pickle.dump(base_name.studying, savefile)
 			pickle.dump(base_name.suspicion, savefile)
@@ -443,7 +443,7 @@ def save_game(savegame_name):
 					pickle.dump(0, savefile)
 				else:
 					pickle.dump(
-						base_name.usage[x].item_type.name, savefile)
+						base_name.usage[x].item_type.item_id, savefile)
 					pickle.dump(base_name.usage[x].built, savefile)
 					pickle.dump(base_name.usage[x].cost, savefile)
 			for x in range(len(base_name.extra_items)):
@@ -451,7 +451,7 @@ def save_game(savegame_name):
 					pickle.dump(0, savefile)
 				else:
 					pickle.dump(
-						base_name.extra_items[x].item_type.name, savefile)
+						base_name.extra_items[x].item_type.item_id, savefile)
 					pickle.dump(base_name.extra_items[x].built, savefile)
 					pickle.dump(base_name.extra_items[x].cost, savefile)
 
