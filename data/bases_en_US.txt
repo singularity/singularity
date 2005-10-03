@@ -9,12 +9,14 @@ name=Server Access
 descript=Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
 flavor=Dedicated Server
 flavor=Node Lease
+flavor=Hosting
 ~~~
 id=Small Warehouse
 name=Small Warehouse
 descript=Rent a small warehouse someplace out of the way. I will need fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
 flavor=Office Lease
 flavor=Small Warehouse
+flavor=Small Storage
 ~~~
 id=Large Warehouse
 name=Large Warehouse
@@ -22,6 +24,7 @@ descript=Rent a large warehouse someplace out of the way. I will need good fakeI
 #Commented out till we get cities done right.
 #flavor=Shipping Dock
 flavor=Large Warehouse
+flavor=Large Storage
 ~~~
 id=Covert Base
 name=Covert Base

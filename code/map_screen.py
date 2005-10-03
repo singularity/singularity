@@ -28,6 +28,7 @@ import scrollbar
 import listbox
 import main_menu
 import base_screen
+import research_screen
 
 def display_pause_menu():
 	xy_loc = (g.screen_size[0]/2 - 100, 50)
@@ -199,13 +200,13 @@ def map_loop():
 		"CASH", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
 	#Note that this must be element 8 in menu_buttons
-	menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
-		(g.screen_size[0], 26),
+	menu_buttons.append(buttons.button((120, g.screen_size[1]-25),
+		(g.screen_size[0]-120, 26),
 		"SUSPICION", -1, g.colors["black"], g.colors["dark_blue"],
-		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
-# 	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (120, 25),
-# 		"RESEARCH", 0, g.colors["dark_blue"], g.colors["white"],
-# 		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size-2]))
+	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (120, 25),
+		"RESEARCH", 0, g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
 
 	menu_buttons.append(buttons.button((
 			g.screen_size[0]*15/100, g.screen_size[1]*25/100), -1,
@@ -338,9 +339,8 @@ def map_loop():
 						if tmp != -1: return tmp
 					elif button.button_id == "RESEARCH":
 						g.play_click()
-						tmp = display_pause_menu()
-						tmp = handle_pause_menu(tmp, menu_buttons)
-						if tmp != -1: return tmp
+						tmp = research_screen.main_research_screen()
+						refresh_map(menu_buttons)
 					elif button.button_id == "ii":
 						g.play_click()
 						g.curr_speed = 0
