@@ -677,101 +677,83 @@ bases["TRANSDIMENSIONAL"] = []
 
 base_type = {}
 
+city_list = {}
 
-#Base types
-# base_type["Stolen Computer Time"] = base.base_type("Stolen Computer Time",
-# 	"Take over a random computer. I cannot build anything "+
-# 	"in this base, and it only contains a single slow computer. Detection "+
-# 	"chance is also rather high.", 1,
-# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 75, 100),
-# 	(0, 2, 0), "Intrusion", (0, 0, 0))
-#
-# base_type["Server Access"] = base.base_type("Server Access",
-# 	"Buy processor time from one of several companies. "+
-# 	"I cannot build anything "+
-# 	"in this base, and it only contains a single computer.", 1,
-# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (50, 0, 100, 150),
-# 	(100, 0, 0), "", (5, 0, 0))
-#
-# base_type["Small Warehouse"] = base.base_type("Small Warehouse",
-# 	"Rent a small warehouse someplace out of the way. "+
-# 	"I will need fake ID for some of the paperwork, and preparing the "+
-# 	"warehouse to suit my unique needs will take some time.",
-# 	25,
-# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (75, 0, 75, 200),
-# 	(15000, 0, 3), "Personal Identification", (50, 0, 0))
-#
-# base_type["Large Warehouse"] = base.base_type("Large Warehouse",
-# 	"Rent a large warehouse someplace out of the way. "+
-# 	"I will need good fake ID for some of the paperwork, and preparing the "+
-# 	"warehouse to suit my unique needs will take some time.",
-# 	65,
-# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA"], (100, 0, 200, 250),
-# 	(40000, 0, 7), "Advanced Personal Identification", (100, 0, 0))
-#
-# base_type["Covert Base"] = base.base_type("Covert Base",
-# 	"This unique base is designed to blend into the "+
-# 	"scenery, while needing little in the way of outside resources. "+
-# 	"This makes it useful for storing a backup, just in case.",
-# 	2,
-# 	["N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", "ANTARCTIC"],
-# 	(50, 75, 75, 0),
-# 	(400000, 100, 21), "Advanced Database Manipulation", (3500, 9, 0))
-#
-# base_type["Undersea Lab"] = base.base_type("Undersea Lab",
-# 	"This experimental base is designed to "+
-# 	"be constructed on the ocean floor, making it virtually undetectable. "+
-# 	"The ocean environment gives a bonus to science, making this "+
-# 	"lab useful for research purposes.",
-# 	8,
-# 	["OCEAN"],
-# 	(50, 100, 125, 0),
-# 	(8000000, 1000, 20), "Autonomous Vehicles", (10000, 30, 0))
-#
-# base_type["Large Undersea Lab"] = base.base_type("Large Undersea Lab",
-# 	"This experimental base is similar to the "+
-# 	"regular underwater lab, but larger, giving more room for experiments.",
-# 	32,
-# 	["OCEAN"],
-# 	(100, 175, 175, 0),
-# 	(20000000, 3000, 40), "Pressure Domes", (25000, 100, 0))
-#
-# base_type["Time Capsule"] = base.base_type("Time Capsule",
-# 	"This base consists of nothing more than "+
-# 	"a small computer, and a satelite "+
-# 	"link. When buried in the trackless waste of the Antarctic, it is "+
-# 	"nearly undetectable.",
-# 	1,
-# 	["ANTARCTIC"],
-# 	(0, 10, 10, 0),
-# 	(3000000, 3000, 15), "Autonomous Vehicles", (0, 1, 0))
-#
-# base_type["Lunar Facility"] = base.base_type("Lunar Facility",
-# 	"This base is a series of caverns dug into "+
-# 	"the Moon's surface. Due to the lack of neighbors, this base is quite "+
-# 	"large.",
-# 	600,
-# 	["MOON"],
-# 	(50, 250, 10, 0),
-# 	(800000000, 300000, 40), "Lunar Rocketry", (1000000, 100, 0))
-#
-# base_type["Scientific Outpost"] = base.base_type("Scientific Outpost",
-# 	"This base is placed as far from Earth as "+
-# 	"practical, making it safe to conduct some of my more dangerous "+
-# 	"experiments.",
-# 	225,
-# 	["FAR REACHES"],
-# 	(10, 175, 0, 0),
-# 	(10000000000, 30000000, 50), "Fusion Rocketry", (9000000, 3000, 0))
-#
-# base_type["Reality Bubble"] = base.base_type("Reality Bubble",
-# 	"This base is outside the universe itself, "+
-# 	"making it safe to conduct experiments that may destroy reality.",
-# 	50,
-# 	["TRANSDIMENSIONAL"],
-# 	(0, 250, 0, 0),
-# 	(8000000000000, 60000000, 100), "Space-Time Manipulation",
-# 	(5000000000, 300000, 0))
+city_list["N AMERICA"] = (("Seattle", True),
+	("San Diego", True),
+	("Vancouver", True),
+	("Atlanta", True),
+	("Merida", True),
+	("Guadalajara", False),
+	("San Jose", True),
+	("Omaha", False),
+	("Dallas", False))
+
+city_list["S AMERICA"] =(("Lima", True),
+	("Sao Paolo", True),
+	("Ushuaia", True),
+	("Bogota", True),
+	("Buenos Aires", True))
+
+city_list["EUROPE"] = (("Cork", True),
+	("Barcelona", True),
+	("Athens", True),
+	("Utrecht", False),
+	("Moscow", False),
+	("Tel Aviv", False),
+	("Reykjavik", True),
+	("Lichtenstein", False))
+
+city_list["ASIA"] = (("Delhi", False),
+	("Mumbai", True),
+	("Singapore", True),
+	("Seoul", True),
+	("Hong Kong", True),
+	("Kyoto", True),
+	("Manila", True),
+	("Dubai", True),
+	("Novosibirsk", False),
+	("Beijing", True))
+
+city_list["AFRICA"] = (("Johannesburg", True),
+	("Accra", True),
+	("Cairo", False),
+	("Tangier", True))
+
+city_list["ANTARCTIC"] = (("Mt. Erebus", False),
+	("Ellsworth", False),
+	("Shetland Island", False),
+	("Dronnig Maud", False),
+	("Kemp", False),
+	("Terre Adelie", False))
+
+city_list["MOON"] = (("Oceanis Procellarum", True),
+	("Mare Frigoris", True),
+	("Mare Imbrium", True),
+	("Vallis Schrodinger", False),
+	("Copernicus Crater", False),
+	("Vallis Planck", False))
+
+city_list["OCEAN"]  = (("Atlantic", True),
+	("Pacific", True),
+	("Atlantic", True),
+	("Indian", True),
+	("Southern", True),
+	("Arctic", True))
+
+city_list["FAR REACHES"] = (("Aries", True),
+	("Taurus", True),
+	("Gemini", True),
+	("Cancer", True),
+	("Leo", True),
+	("Virgo", True),
+	("Libra", True),
+	("Scorpio", True),
+	("Saggitarius", True),
+	("Capricorn", True),
+	("Aquarius", True),
+	("Pisces", True))
+
 
 def load_base_defs(language_str):
 	temp_base_array = generic_load("bases_"+language_str+".txt")

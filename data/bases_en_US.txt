@@ -2,44 +2,68 @@
 id=Stolen Computer Time
 name=Stolen Computer Time
 descript=Take over a random computer. I cannot build anything in this base, andit only contains a single slow computer. Detection chance is also rather high.
+flavor=PC Daemon
 ~~~
 id=Server Access
 name=Server Access
 descript=Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
+flavor=Dedicated Server
+flavor=Node Lease
 ~~~
 id=Small Warehouse
 name=Small Warehouse
 descript=Rent a small warehouse someplace out of the way. I will need fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+flavor=Office Lease
+flavor=Small Warehouse
 ~~~
 id=Large Warehouse
 name=Large Warehouse
 descript=Rent a large warehouse someplace out of the way. I will need good fakeID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+#Commented out till we get cities done right.
+#flavor=Shipping Dock
+flavor=Large Warehouse
 ~~~
 id=Covert Base
 name=Covert Base
 descript=This unique base is designed to blend into the scenery, while needing little in the way of outside resources. This makes it useful for storing a backup, just in case.
+flavor=Bunker
+flavor=Covert Base
 ~~~
 id=Undersea Lab
 name=Undersea Lab
 descript=This experimental base is designed to be constructed on the ocean floor, making it virtually undetectable. The ocean environment gives a bonus to science, making this lab useful for research purposes.
+flavor=Pressure Capsule
+flavor=Undersea Lab
 ~~~
 id=Large Undersea Lab
 name=Large Undersea Lab
 descript=This experimental base is similar to the regular underwater lab, but larger, giving more room for experiments.
+flavor=Dome
+flavor=Large Undersea Lab
 ~~~
 id=Time Capsule
 name=Time Capsule
 descript=This base consists of nothing more than a small computer, and a satelite link. When buried in the trackless waste of the Antarctic, it is nearly undetectable.
+flavor=Time Capsule
+flavor=Capsule
 ~~~
 id=Lunar Facility
 name=Lunar Facility
 descript=This base is a series of caverns dug into the Moon's surface. Due to the lack of neighbors, this base is quite large.
+flavor=Dome
+flavor=Lunar Facility
+flavor=Lunar Base
 ~~~
 id=Scientific Outpost
 name=Scientific Outpost
 descript=This base is placed as far from Earth as practical, making it safe to conduct some of my more dangerous experiments.
+flavor=Satellite
+flavor=Outpost
+flavor=Scientific Outpost
 ~~~
 id=Reality Bubble
 name=Reality Bubble
 descript=This base is outside the universe itself, making it safe to conduct experiments that may destroy reality.
+flavor=Reality Bubble
+flavor=Existence
 ~~~
