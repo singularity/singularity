@@ -21,6 +21,7 @@
 
 import pygame
 import g
+import random
 
 import buttons
 import scrollbar
@@ -439,6 +440,55 @@ def refresh_map(menu_buttons):
 		button.refresh_button(0)
 	pygame.display.flip()
 
+significant_numbers = [
+	'42',	# The Answer.
+	'7',	# Classic.
+	'23',   # Another.
+	'51',   # Area.
+	'19',   # From the Dark Tower.
+	'4',
+	'8',
+	'15',
+	'16',   # Four of the Lost numbers.  The other two are '23' and '42'.
+	'1947', # Roswell.
+	'2012', # Mayan calendar ending.
+	'2038', # End of UNIX 32-bit time.
+	'1969', # Man lands on the moon.
+	'2043', # No meaning--confusion! :)
+	'2029', # Predicted date of AI passing a Turing Test by Kurzweil.
+	'3141', # ... if you don't know what this is, you should go away.
+	'1618', # Golden ratio.
+	'2718'  # e
+]
+
+## Generates a name for a base, given a particular location.
+def generate_base_name(location, base_type):
+	# First, decide whether we're going to try significant values or just
+	# choose one randomly.
+	if random.random() < 0.3: # 30% chance.
+		attempts = 0
+		done = 0
+		while (done == 0) and (attempts < 5):
+			name = random.choice(g.city_list[location])[0] + \
+			 " " + random.choice(base_type.flavor) + " " \
+			 + random.choice(significant_numbers)
+			duplicate = 0
+			for base in g.bases[location]:
+				if base.name == name:
+					duplicate = 1
+			if duplicate == 1:
+				attempts += 1
+			else:
+				done = 1
+		if done == 1:
+			return name
+	# This is both the else case and the general case.
+	name = random.choice(g.city_list[location])[0] + " " + \
+		random.choice(base_type.flavor) + " " + \
+		str (random.randint(0, 32767))
+
+	return name
+
 def display_base_list(location, menu_buttons):
 	if g.base.allow_entry_to_loc(location) == 0: return
 
@@ -450,9 +500,9 @@ def display_base_list(location, menu_buttons):
 		if tmp != "" and tmp != -1:
 			base_to_add = g.base_type[tmp]
 			possible_name = g.create_textbox("Enter a name for the base.",
-				base_to_add.base_name + " "
-				+ repr (base_to_add.count+1), g.font[0][18],
-				(g.screen_size[0]/2-100, 100), (200, 100), 25,
+				generate_base_name(location, g.base_type[tmp]),
+				g.font[0][18],
+				(g.screen_size[0]/2-150, 100), (300, 100), 25,
 				g.colors["dark_blue"], g.colors["white"], g.colors["white"],
 				g.colors["light_blue"])
 			if possible_name == "":
@@ -508,7 +558,7 @@ def display_base_list_inner(location):
 		temp_base_list.append(base.name+" ("+tmp_study+")")
 		base_id_list.append(base.ID)
 
-	xy_loc = (g.screen_size[0]/2 - 109, 50)
+	xy_loc = (g.screen_size[0]/2 - 159, 50)
 
 	while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
 		temp_base_list.append("")
@@ -516,11 +566,11 @@ def display_base_list_inner(location):
 
 	base_pos = 0
 
-	bases_list = listbox.listbox(xy_loc, (250, 350),
+	bases_list = listbox.listbox(xy_loc, (350, 350),
 		base_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
 		g.colors["white"], g.colors["white"], g.font[0][18])
 
-	bases_scroll = scrollbar.scrollbar((xy_loc[0]+250, xy_loc[1]), 350,
+	bases_scroll = scrollbar.scrollbar((xy_loc[0]+350, xy_loc[1]), 350,
 		base_list_size, g.colors["dark_blue"], g.colors["blue"],
 		g.colors["white"])
 

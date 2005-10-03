@@ -27,6 +27,10 @@ v0.22 (release 2005.09.??):
 - Fixed tech studying when money is needed. (emh)
 - Added next/prev base buttons. (emh, Borg[MDQ] for suggestion)
 - es_AR translation (our first!) (Borg[MDQ], very minor fixups by Phil)
+- Moved more things into data files. (emh)
+- Flavored names and numbers for the bases. (idea by heatsink, implementation
+  by emh and Phil)
+- Translation-related crash fix. (emh)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but
