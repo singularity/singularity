@@ -913,7 +913,7 @@ def load_techs():
 			else: temp_tech_pre = [tech_name["pre"]]
 		else: temp_tech_pre = []
 		temp_tech_danger = 0
-		if tech_name.has_key("danger"): temp_tech_danger = tech_name["danger"]
+		if tech_name.has_key("danger"): temp_tech_danger = int(tech_name["danger"])
 		temp_tech_type = ""
 		temp_tech_second = 0
 		if tech_name.has_key("type"):
