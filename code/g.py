@@ -528,6 +528,7 @@ def load_game(loadgame_name):
 		else:
 			techs[tech_string].cost = pickle.load(loadfile)
 
+	load_bases()
 	for base_name in base_type:
 		base_type[base_name].count = pickle.load(loadfile)
 

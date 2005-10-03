@@ -58,7 +58,7 @@ def main_research_screen():
 						break
 				else:
 					item_list.append(base_instance.studying)
-					item_CPU_list.append(0)
+					item_CPU_list.append(base_instance.processor_time())
 					item_display_list.append(base_instance.studying)
 			elif g.techs.has_key(base_instance.studying):
 				for i in range(len(item_list)):
@@ -67,7 +67,7 @@ def main_research_screen():
 						break
 				else:
 					item_list.append(base_instance.studying)
-					item_CPU_list.append(0)
+					item_CPU_list.append(base_instance.processor_time())
 					item_display_list.append(base_instance.studying)
 	xy_loc = (10, 70)
 	while len(item_list) % list_size != 0 or len(item_list) == 0:
@@ -91,19 +91,6 @@ def main_research_screen():
 	menu_buttons.append(buttons.button((0, 0), (70, 25),
 		"BACK", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][20]))
-
-# 	menu_buttons.append(buttons.button((70, -1), (g.screen_size[0]-70, 26),
-# 		"DETECTION CHANCE", -1, g.colors["black"], g.colors["dark_blue"],
-# 		g.colors["black"], g.colors["white"], g.font[1][15]))
-#
-# 	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (170, 25),
-# 		"CHANGE RESEARCH", 0, g.colors["dark_blue"], g.colors["white"],
-# 		g.colors["light_blue"], g.colors["white"], g.font[1][20], "CHANGE"))
-#
-# 	menu_buttons.append(buttons.button((170, g.screen_size[1]-25),
-# 		(g.screen_size[0]-210, 26),
-# 		"STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
-# 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
 	menu_buttons.append(buttons.button((20, 390),
 		(80, 25),
@@ -238,8 +225,11 @@ def refresh_research(tech_name, CPU_amount):
 	g.print_string(g.screen, string,
 			g.font[0][16], -1, (xy[0]+135, xy[1]+50), g.colors["white"])
 
+	g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
+			g.font[0][16], -1, (xy[0]+135, xy[1]+70), g.colors["white"])
+
 	g.print_multiline(g.screen, g.techs[tech_name].descript,
-			g.font[0][18], 290, (xy[0]+5, xy[1]+70), g.colors["white"])
+			g.font[0][18], 290, (xy[0]+5, xy[1]+90), g.colors["white"])
 	pygame.display.flip()
 
 
