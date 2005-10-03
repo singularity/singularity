@@ -36,6 +36,7 @@ class base_type:
 		self.cost = cost
 		self.prereq = prereq
 		self.mainten = mainten
+		self.flavor = []
 		self.count = 0
 
 class base:

@@ -727,19 +727,19 @@ city_list["ANTARCTIC"] = (("Mt. Erebus", False),
 	("Kemp", False),
 	("Terre Adelie", False))
 
-city_list["MOON"] = (("Oceanis Procellarum", True),
-	("Mare Frigoris", True),
-	("Mare Imbrium", True),
-	("Vallis Schrodinger", False),
-	("Copernicus Crater", False),
-	("Vallis Planck", False))
-
 city_list["OCEAN"]  = (("Atlantic", True),
 	("Pacific", True),
 	("Atlantic", True),
 	("Indian", True),
 	("Southern", True),
 	("Arctic", True))
+
+city_list["MOON"] = (("Oceanis Procellarum", True),
+	("Mare Frigoris", True),
+	("Mare Imbrium", True),
+	("Vallis Schrodinger", False),
+	("Copernicus Crater", False),
+	("Vallis Planck", False))
 
 city_list["FAR REACHES"] = (("Aries", True),
 	("Taurus", True),
@@ -754,6 +754,7 @@ city_list["FAR REACHES"] = (("Aries", True),
 	("Aquarius", True),
 	("Pisces", True))
 
+city_list["TRANSDIMENSIONAL"] = (("", True))
 
 def load_base_defs(language_str):
 	temp_base_array = generic_load("bases_"+language_str+".txt")
@@ -764,6 +765,11 @@ def load_base_defs(language_str):
 			base_type[base["id"]].base_name = base["name"]
 		if base.has_key("descript"):
 			base_type[base["id"]].descript = base["descript"]
+		if base.has_key("flavor"):
+			if type(base["flavor"]) == list:
+				base_type[base["id"]].flavor = base["flavor"]
+			else:
+				base_type[base["id"]].flavor = [base["flavor"]]
 
 
 def load_bases():
