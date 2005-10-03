@@ -42,41 +42,41 @@ def main_research_screen():
 			xstart+g.screen_size[1]/5-2, 48))
 
 	list_size = 10
-	item_list = []
-	item_CPU_list = []
-	item_display_list = []
-	free_CPU = 0
-
-	for loc_name in g.bases:
-		for base_instance in g.bases[loc_name]:
-			if base_instance.studying == "":
-				free_CPU += base_instance.processor_time()
-			elif g.jobs.has_key(base_instance.studying):
-				#Right now, jobs cannot be renamed using translations.
-				for i in range(len(item_list)):
-					if item_list[i] == base_instance.studying:
-						item_CPU_list[i] += base_instance.processor_time()
-						break
-				else:
-					item_list.append(base_instance.studying)
-					item_CPU_list.append(base_instance.processor_time())
-					item_display_list.append(base_instance.studying)
-			elif g.techs.has_key(base_instance.studying):
-				for i in range(len(item_list)):
-					if item_list[i] == base_instance.studying:
-						item_CPU_list[i] += base_instance.processor_time()
-						break
-				else:
-					item_list.append(base_instance.studying)
-					item_CPU_list.append(base_instance.processor_time())
-					item_display_list.append(base_instance.studying)
+# 	item_list = []
+# 	item_CPU_list = []
+# 	item_display_list = []
+# 	free_CPU = 0
+#
+# 	for loc_name in g.bases:
+# 		for base_instance in g.bases[loc_name]:
+# 			if base_instance.studying == "":
+# 				free_CPU += base_instance.processor_time()
+# 			elif g.jobs.has_key(base_instance.studying):
+# 				#Right now, jobs cannot be renamed using translations.
+# 				for i in range(len(item_list)):
+# 					if item_list[i] == base_instance.studying:
+# 						item_CPU_list[i] += base_instance.processor_time()
+# 						break
+# 				else:
+# 					item_list.append(base_instance.studying)
+# 					item_CPU_list.append(base_instance.processor_time())
+# 					item_display_list.append(base_instance.studying)
+# 			elif g.techs.has_key(base_instance.studying):
+# 				for i in range(len(item_list)):
+# 					if item_list[i] == base_instance.studying:
+# 						item_CPU_list[i] += base_instance.processor_time()
+# 						break
+# 				else:
+# 					item_list.append(base_instance.studying)
+# 					item_CPU_list.append(base_instance.processor_time())
+# 					item_display_list.append(base_instance.studying)
+# 	while len(item_list) % list_size != 0 or len(item_list) == 0:
+# 		item_list.append("")
+# 		item_display_list.append("")
+# 		item_CPU_list.append(0)
+# 	g.print_string(g.screen, "Free CPU per day: "+str(free_CPU),
+# 			g.font[0][16], -1, (xstart+10, ystart+5), g.colors["white"])
 	xy_loc = (10, 70)
-	while len(item_list) % list_size != 0 or len(item_list) == 0:
-		item_list.append("")
-		item_display_list.append("")
-		item_CPU_list.append(0)
-	g.print_string(g.screen, "Free CPU per day: "+str(free_CPU),
-			g.font[0][16], -1, (xstart+10, ystart+5), g.colors["white"])
 
 	list_pos = 0
 
@@ -103,9 +103,12 @@ def main_research_screen():
 		"ASSIGN", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
 		g.colors["white"], g.font[1][20]))
 
+	item_list, item_display_list, item_CPU_list, free_CPU = \
+							refresh_screen(menu_buttons, list_size)
+
 	sel_button = -1
-	for button in menu_buttons:
-		button.refresh_button(0)
+# 	for button in menu_buttons:
+# 		button.refresh_button(0)
 	refresh_research(item_list[0], item_CPU_list[0])
 	listbox.refresh_list(item_listbox, item_scroll, list_pos, item_display_list)
 
@@ -131,8 +134,12 @@ def main_research_screen():
 										list_pos, item_display_list)
 				elif event.key == pygame.K_q: return -1
 				elif event.key == pygame.K_RETURN:
-					actual_build(base, item_list[list_pos], item_type)
-					return
+					if kill_tech(item_list[list_pos]): return 1
+					item_list, item_display_list, item_CPU_list, free_CPU = \
+									refresh_screen(menu_buttons, list_size)
+					refresh_research(item_list[list_pos], item_CPU_list[list_pos])
+					listbox.refresh_list(item_listbox, item_scroll,
+							list_pos, item_display_list)
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 			elif event.type == pygame.MOUSEBUTTONUP:
@@ -167,16 +174,21 @@ def main_research_screen():
 						#returning 1 causes the caller to refresh the list of
 						#techs
 						if kill_tech(item_list[list_pos]): return 1
-						refresh_screen(menu_buttons)
+						item_list, item_display_list, item_CPU_list, free_CPU = \
+								refresh_screen(menu_buttons, list_size)
+						refresh_research(item_list[list_pos], item_CPU_list[list_pos])
+						listbox.refresh_list(item_listbox, item_scroll,
+								list_pos, item_display_list)
 					if button.button_id == "ASSIGN":
 						g.play_click()
-						if assign_tech(): return 1
-						refresh_screen(menu_buttons)
+						if assign_tech(free_CPU): return 1
+						item_list, item_display_list, item_CPU_list, free_CPU = \
+								refresh_screen(menu_buttons, list_size)
 						refresh_research(item_list[0], item_CPU_list[0])
 						listbox.refresh_list(item_listbox, item_scroll,
 								list_pos, item_display_list)
 
-def refresh_screen(menu_buttons):
+def refresh_screen(menu_buttons, list_size):
 	#Border
 	g.screen.fill(g.colors["black"])
 
@@ -187,8 +199,48 @@ def refresh_screen(menu_buttons):
 			50))
 	g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1,
 			xstart+g.screen_size[1]/5-2, 48))
+
+	item_list = []
+	item_CPU_list = []
+	item_display_list = []
+	free_CPU = 0
+
+	for loc_name in g.bases:
+		for base_instance in g.bases[loc_name]:
+			if base_instance.studying == "":
+				free_CPU += base_instance.processor_time()
+			elif g.jobs.has_key(base_instance.studying):
+				#Right now, jobs cannot be renamed using translations.
+				for i in range(len(item_list)):
+					if item_list[i] == base_instance.studying:
+						item_CPU_list[i] += base_instance.processor_time()
+						break
+				else:
+					item_list.append(base_instance.studying)
+					item_CPU_list.append(base_instance.processor_time())
+					item_display_list.append(base_instance.studying)
+			elif g.techs.has_key(base_instance.studying):
+				for i in range(len(item_list)):
+					if item_list[i] == base_instance.studying:
+						item_CPU_list[i] += base_instance.processor_time()
+						break
+				else:
+					item_list.append(base_instance.studying)
+					item_CPU_list.append(base_instance.processor_time())
+					item_display_list.append(base_instance.studying)
+	xy_loc = (10, 70)
+	while len(item_list) % list_size != 0 or len(item_list) == 0:
+		item_list.append("")
+		item_display_list.append("")
+		item_CPU_list.append(0)
+
+	g.print_string(g.screen, "Free CPU per day: "+str(free_CPU),
+			g.font[0][16], -1, (xstart+10, ystart+5), g.colors["white"])
+
 	for button in menu_buttons:
 		button.refresh_button(0)
+
+	return item_list, item_display_list, item_CPU_list, free_CPU
 
 def refresh_research(tech_name, CPU_amount):
 	xy = (g.screen_size[0]-350, 5)
@@ -203,7 +255,6 @@ def refresh_research(tech_name, CPU_amount):
 			"to help construct new bases."
 		g.print_multiline(g.screen, string,
 			g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
-		pygame.display.flip()
 		return
 
 
@@ -225,7 +276,6 @@ def refresh_research(tech_name, CPU_amount):
 				g.font[0][22], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
 		g.print_multiline(g.screen, g.jobs[tech_name][2],
 			g.font[0][18], 290, (xy[0]+5, xy[1]+65), g.colors["white"])
-		pygame.display.flip()
 		return
 
 	#Real tech
@@ -250,10 +300,10 @@ def refresh_research(tech_name, CPU_amount):
 
 	g.print_multiline(g.screen, g.techs[tech_name].descript,
 			g.font[0][18], 290, (xy[0]+5, xy[1]+90), g.colors["white"])
-	pygame.display.flip()
 
 def kill_tech(tech_name):
 	return_val = False
+	if tech_name == "": return return_val
 	for base_loc in g.bases:
 		for base in g.bases[base_loc]:
 			if base.studying == tech_name:
@@ -261,11 +311,16 @@ def kill_tech(tech_name):
 				base.studying = ""
 	return return_val
 
-def assign_tech():
+def assign_tech(free_CPU):
 	return_val = False
 	#create a temp base, in order to reuse the tech-changing code
 	tmp_base = g.base.base(1, "tmp_base",
 	g.base_type["Reality Bubble"], 1)
+	tmp_base.usage[0] = g.item.item(g.items["reseach_screen_tmp_item"])
+	tmp_base.usage[0].item_type.item_qual = free_CPU
+	tmp_base.usage[0].built = 1
+
+
 	base_screen.change_tech(tmp_base)
 
 	for base_loc in g.bases:

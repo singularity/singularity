@@ -996,6 +996,12 @@ def load_items():
 					temp_item_cost, temp_item_pre,
 					temp_item_type, temp_item_second)
 
+	#this is used by the research screen in order for the assign research
+	#screen to have the right amount of CPU. It is a computer, unbuildable,
+	#and with an adjustable amount of power.
+	items["reseach_screen_tmp_item"]=item.item_class("reseach_screen_tmp_item",
+		"", (0, 0, 0), "unknown_tech", "compute", 0)
+
 	load_item_defs("en_US")
 	load_item_defs(language)
 

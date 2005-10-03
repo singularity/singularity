@@ -188,3 +188,9 @@ id=Quantum Computing
 cost=30000, 20000, 0
 pre=Advanced Microchip Design
 ~~~
+#this tech is used for anything that needs to be unbuildable. Note the
+#circular dependance on itself.
+id=unknown_tech
+cost=1000000000, 10000000000, 0
+pre=unknown_tech
+~~~
