@@ -339,7 +339,8 @@ def map_loop():
 						if tmp != -1: return tmp
 					elif button.button_id == "RESEARCH":
 						g.play_click()
-						tmp = research_screen.main_research_screen()
+						while research_screen.main_research_screen() == 1:
+							pass
 						refresh_map(menu_buttons)
 					elif button.button_id == "ii":
 						g.play_click()
