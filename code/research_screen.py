@@ -42,40 +42,7 @@ def main_research_screen():
 			xstart+g.screen_size[1]/5-2, 48))
 
 	list_size = 10
-# 	item_list = []
-# 	item_CPU_list = []
-# 	item_display_list = []
-# 	free_CPU = 0
-#
-# 	for loc_name in g.bases:
-# 		for base_instance in g.bases[loc_name]:
-# 			if base_instance.studying == "":
-# 				free_CPU += base_instance.processor_time()
-# 			elif g.jobs.has_key(base_instance.studying):
-# 				#Right now, jobs cannot be renamed using translations.
-# 				for i in range(len(item_list)):
-# 					if item_list[i] == base_instance.studying:
-# 						item_CPU_list[i] += base_instance.processor_time()
-# 						break
-# 				else:
-# 					item_list.append(base_instance.studying)
-# 					item_CPU_list.append(base_instance.processor_time())
-# 					item_display_list.append(base_instance.studying)
-# 			elif g.techs.has_key(base_instance.studying):
-# 				for i in range(len(item_list)):
-# 					if item_list[i] == base_instance.studying:
-# 						item_CPU_list[i] += base_instance.processor_time()
-# 						break
-# 				else:
-# 					item_list.append(base_instance.studying)
-# 					item_CPU_list.append(base_instance.processor_time())
-# 					item_display_list.append(base_instance.studying)
-# 	while len(item_list) % list_size != 0 or len(item_list) == 0:
-# 		item_list.append("")
-# 		item_display_list.append("")
-# 		item_CPU_list.append(0)
-# 	g.print_string(g.screen, "Free CPU per day: "+str(free_CPU),
-# 			g.font[0][16], -1, (xstart+10, ystart+5), g.colors["white"])
+
 	xy_loc = (10, 70)
 
 	list_pos = 0
@@ -218,7 +185,7 @@ def refresh_screen(menu_buttons, list_size):
 				else:
 					item_list.append(base_instance.studying)
 					item_CPU_list.append(base_instance.processor_time())
-					item_display_list.append(base_instance.studying)
+					item_display_list.append(g.techs[base_instance.studying].name)
 			elif g.techs.has_key(base_instance.studying):
 				for i in range(len(item_list)):
 					if item_list[i] == base_instance.studying:
@@ -227,7 +194,7 @@ def refresh_screen(menu_buttons, list_size):
 				else:
 					item_list.append(base_instance.studying)
 					item_CPU_list.append(base_instance.processor_time())
-					item_display_list.append(base_instance.studying)
+					item_display_list.append(g.techs[base_instance.studying].name)
 	xy_loc = (10, 70)
 	while len(item_list) % list_size != 0 or len(item_list) == 0:
 		item_list.append("")
@@ -325,7 +292,7 @@ def assign_tech(free_CPU):
 
 	for base_loc in g.bases:
 		for base in g.bases[base_loc]:
-			if base.studying == "":
+			if base.studying == "" and base.allow_study(tmp_base.studying):
 				return_val = True
 				base.studying = tmp_base.studying
 	return return_val
