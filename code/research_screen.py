@@ -174,6 +174,7 @@ def refresh_screen(menu_buttons, list_size):
 
 	for loc_name in g.bases:
 		for base_instance in g.bases[loc_name]:
+			if base_instance.built != 1: continue
 			if base_instance.studying == "":
 				free_CPU += base_instance.processor_time()
 			elif g.jobs.has_key(base_instance.studying):

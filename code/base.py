@@ -138,6 +138,7 @@ class base:
 
 	#For the given tech, return 1 if the base can study it, or 0 otherwise.
 	def allow_study(self, tech_name):
+		if self.built != 1: return 0
 		if g.techs[tech_name].danger == 0: return 1
 		if g.techs[tech_name].danger == 1:
 			for region in self.base_type.regions:
