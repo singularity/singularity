@@ -33,6 +33,7 @@ v0.22 (release 2005.09.??):
 - Translation-related crash fix. (emh)
 - Global Research Screen; allows changing research for all bases. (emh)
 - Items give dialog upon completion. (emh; Jens Becker for suggestion)
+- Expanded a few listboxes in order to fit the larger base names/techs. (emh)
 
 v0.21a (released 2005.09.19):
 - Added '.sav' extension to new save files.  Old ones will still load, but

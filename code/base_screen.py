@@ -420,18 +420,18 @@ def change_tech(base):
 				item_list.append(g.techs[tech_name].name)
 				item_list2.append(tech_name)
 
-	xy_loc = (g.screen_size[0]/2 - 250, 50)
+	xy_loc = (g.screen_size[0]/2 - 300, 50)
 	while len(item_list) % list_size != 0 or len(item_list) == 0:
 		item_list.append("")
 		item_list2.append("")
 
 	list_pos = 0
 
-	tech_list = listbox.listbox(xy_loc, (200, 300),
+	tech_list = listbox.listbox(xy_loc, (250, 300),
 		list_size, 1, g.colors["dark_blue"], g.colors["blue"],
 		g.colors["white"], g.colors["white"], g.font[0][18])
 
-	tech_scroll = scrollbar.scrollbar((xy_loc[0]+200, xy_loc[1]), 300,
+	tech_scroll = scrollbar.scrollbar((xy_loc[0]+250, xy_loc[1]), 300,
 		list_size, g.colors["dark_blue"], g.colors["blue"],
 		g.colors["white"])
 
@@ -518,7 +518,7 @@ def change_tech(base):
 
 
 def refresh_tech(base, tech_name, xy):
-	xy = (xy[0]+100, xy[1])
+	xy = (xy[0]+150, xy[1])
 	g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
 	g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
 
