@@ -211,9 +211,9 @@ def refresh_screen(menu_buttons, list_size):
 	return item_list, item_display_list, item_CPU_list, free_CPU
 
 def refresh_research(tech_name, CPU_amount):
-	xy = (g.screen_size[0]-350, 5)
-	g.screen.fill(g.colors["white"], (xy[0], xy[1], 300, 350))
-	g.screen.fill(g.colors["dark_blue"], (xy[0]+1, xy[1]+1, 298, 348))
+	xy = (g.screen_size[0]-360, 5)
+	g.screen.fill(g.colors["white"], (xy[0], xy[1], 310, 350))
+	g.screen.fill(g.colors["dark_blue"], (xy[0]+1, xy[1]+1, 308, 348))
 
 	#None selected
 	if tech_name == "" or tech_name == "Nothing":
@@ -261,10 +261,10 @@ def refresh_research(tech_name, CPU_amount):
 
 	string = g.add_commas(str(g.techs[tech_name].cost[1]))+" CPU"
 	g.print_string(g.screen, string,
-			g.font[0][20], -1, (xy[0]+135, xy[1]+50), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+165, xy[1]+50), g.colors["white"])
 
 	g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
-			g.font[0][20], -1, (xy[0]+135, xy[1]+70), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+105, xy[1]+70), g.colors["white"])
 
 	g.print_multiline(g.screen, g.techs[tech_name].descript,
 			g.font[0][18], 290, (xy[0]+5, xy[1]+90), g.colors["white"])

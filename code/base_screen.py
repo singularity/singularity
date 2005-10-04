@@ -518,9 +518,9 @@ def change_tech(base):
 
 
 def refresh_tech(base, tech_name, xy):
-	xy = (xy[0]+150, xy[1])
-	g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
-	g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
+	xy = (xy[0]+140, xy[1])
+	g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 310, 350))
+	g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 308, 348))
 
 	#Base info
 	g.print_string(g.screen, "Processor power per day: "+str(base.processor_time()),
@@ -576,7 +576,7 @@ def refresh_tech(base, tech_name, xy):
 
 	string = g.add_commas(str(g.techs[tech_name].cost[1]))+" CPU"
 	g.print_string(g.screen, string,
-			g.font[0][20], -1, (xy[0]+310, xy[1]+80), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+320, xy[1]+80), g.colors["white"])
 
 	g.print_multiline(g.screen, g.techs[tech_name].descript,
 			g.font[0][18], 290, (xy[0]+160, xy[1]+100), g.colors["white"])
