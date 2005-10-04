@@ -559,7 +559,7 @@ def display_base_list_inner(location):
 		temp_base_list.append(base.name+" ("+tmp_study+")")
 		base_id_list.append(base.ID)
 
-	xy_loc = (g.screen_size[0]/2 - 159, 50)
+	xy_loc = (g.screen_size[0]/2 - 259, 50)
 
 	while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
 		temp_base_list.append("")
@@ -567,11 +567,11 @@ def display_base_list_inner(location):
 
 	base_pos = 0
 
-	bases_list = listbox.listbox(xy_loc, (350, 350),
+	bases_list = listbox.listbox(xy_loc, (500, 350),
 		base_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
 		g.colors["white"], g.colors["white"], g.font[0][18])
 
-	bases_scroll = scrollbar.scrollbar((xy_loc[0]+350, xy_loc[1]), 350,
+	bases_scroll = scrollbar.scrollbar((xy_loc[0]+500, xy_loc[1]), 350,
 		base_list_size, g.colors["dark_blue"], g.colors["blue"],
 		g.colors["white"])
 
