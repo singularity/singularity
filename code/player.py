@@ -95,12 +95,34 @@ class player_class:
 								g.curr_speed = 1
  					else:
 						#Construction of items:
+						tmp = 0
  						for item in base_name.usage:
 							if item == 0: continue
-							item.work_on(time_min)
+							tmp = item.work_on(time_min) or tmp
+						if tmp == 1:
+							needs_refresh = 1
+							g.create_dialog("Constuction of "+
+								item.item_type.name+
+								" has come to completion in "+
+								base_name.name+".",
+								g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+								(200, 200), g.colors["dark_blue"],
+								g.colors["white"], g.colors["white"])
+							g.curr_speed = 1
 						for item in base_name.extra_items:
 							if item == 0: continue
-							item.work_on(time_min)
+							tmp = item.work_on(time_min)
+							if tmp == 1:
+								needs_refresh = 1
+								g.create_dialog("Constuction of "+
+									item.item_type.name+
+									" has come to completion in "+
+									base_name.name+".",
+									g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+									(200, 200), g.colors["dark_blue"],
+									g.colors["white"], g.colors["white"])
+								g.curr_speed = 1
+
 
 		for i in range(self.time_day - store_last_day):
 			needs_refresh = self.new_day() or needs_refresh

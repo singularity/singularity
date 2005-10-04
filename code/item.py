@@ -59,7 +59,7 @@ class item:
 			money_towards=(minutes*self.cost[0]) / (tmp_base_time)
 		if money_towards <= g.pl.cash:
 			g.pl.cash -= money_towards
-			self.study((money_towards, 0, minutes))
+			return self.study((money_towards, 0, minutes))
 
 
 
