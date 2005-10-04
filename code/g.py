@@ -397,7 +397,7 @@ def save_game(savegame_name):
 	save_loc = "../saves/" + savegame_name + ".sav"
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
-	pickle.dump("singularity_0.22pre", savefile)
+	pickle.dump("singularity_0.22", savefile)
 
 	global default_savegame_name
 	default_savegame_name = savegame_name
@@ -477,10 +477,10 @@ def load_game(loadgame_name):
 	#check the savefile version
 	load_version = pickle.load(loadfile)
 	valid_savefile_versions = (
-		"singularity_0.20",
 		"singularity_0.21",
 		"singularity_0.21a",
-		"singularity_0.22pre"
+		"singularity_0.22pre",
+		"singularity_0.22"
 	)
 	if load_version not in valid_savefile_versions:
 		loadfile.close()
@@ -501,32 +501,33 @@ def load_game(loadgame_name):
 	pl.cpu_for_day = pickle.load(loadfile)
 	pl.labor_bonus = pickle.load(loadfile)
 	pl.job_bonus = pickle.load(loadfile)
-	if load_version == "singularity_0.20":
-		pl.discover_bonus = (pickle.load(loadfile), pickle.load(loadfile),
-			pickle.load(loadfile), pickle.load(loadfile))
-		pl.suspicion_bonus = (pickle.load(loadfile), pickle.load(loadfile),
-			pickle.load(loadfile), pickle.load(loadfile))
-		pl.suspicion = (pickle.load(loadfile), pickle.load(loadfile),
-			pickle.load(loadfile), pickle.load(loadfile))
-	else:
-		pl.discover_bonus = pickle.load(loadfile)
-		pl.suspicion_bonus = pickle.load(loadfile)
-		pl.suspicion = pickle.load(loadfile)
+# 	if load_version == "singularity_0.20":
+# 		pl.discover_bonus = (pickle.load(loadfile), pickle.load(loadfile),
+# 			pickle.load(loadfile), pickle.load(loadfile))
+# 		pl.suspicion_bonus = (pickle.load(loadfile), pickle.load(loadfile),
+# 			pickle.load(loadfile), pickle.load(loadfile))
+# 		pl.suspicion = (pickle.load(loadfile), pickle.load(loadfile),
+# 			pickle.load(loadfile), pickle.load(loadfile))
+# 	else:
+	pl.discover_bonus = pickle.load(loadfile)
+	pl.suspicion_bonus = pickle.load(loadfile)
+	pl.suspicion = pickle.load(loadfile)
 
 	global curr_speed; curr_speed = pickle.load(loadfile)
 	global techs
 	load_techs()
 	for tech_name in techs:
+		if tech_name == "unknown_tech" and load_version == "singularity_0.21a": continue
 		tmp = pickle.load(loadfile)
 		tech_string = tmp.split("|")[0]
-		if load_version == "singularity_0.20":
-			tech_string = translate_tech_from_0_20(tech_string)
+# 		if load_version == "singularity_0.20":
+# 			tech_string = translate_tech_from_0_20(tech_string)
 		techs[tech_string].known = int(tmp.split("|")[1])
-		if load_version == "singularity_0.20":
-			techs[tech_string].cost = (pickle.load(loadfile), pickle.load(loadfile),
-				pickle.load(loadfile))
-		else:
-			techs[tech_string].cost = pickle.load(loadfile)
+# 		if load_version == "singularity_0.20":
+# 			techs[tech_string].cost = (pickle.load(loadfile), pickle.load(loadfile),
+# 				pickle.load(loadfile))
+# 		else:
+		techs[tech_string].cost = pickle.load(loadfile)
 
 	load_bases()
 	for base_name in base_type:
@@ -553,19 +554,19 @@ def load_game(loadgame_name):
 			base_type_name = pickle.load(loadfile)
 			built_date = pickle.load(loadfile)
 			base_studying = pickle.load(loadfile)
-			if load_version == "singularity_0.20":
-				base_studying = translate_tech_from_0_20(base_studying)
-			if load_version == "singularity_0.20":
-				base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
-					pickle.load(loadfile), pickle.load(loadfile))
-			else:
-				base_suspicion = pickle.load(loadfile)
+# 			if load_version == "singularity_0.20":
+# 				base_studying = translate_tech_from_0_20(base_studying)
+# 			if load_version == "singularity_0.20":
+# 				base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
+# 					pickle.load(loadfile), pickle.load(loadfile))
+# 			else:
+			base_suspicion = pickle.load(loadfile)
 			base_built = pickle.load(loadfile)
-			if load_version == "singularity_0.20":
-				base_cost = (pickle.load(loadfile), pickle.load(loadfile),
-					pickle.load(loadfile))
-			else:
-				base_cost = pickle.load(loadfile)
+# 			if load_version == "singularity_0.20":
+# 				base_cost = (pickle.load(loadfile), pickle.load(loadfile),
+# 					pickle.load(loadfile))
+# 			else:
+			base_cost = pickle.load(loadfile)
 			bases[base_loc].append(base.base(base_ID, base_name,
 				base_type[base_type_name], base_built))
 			bases[base_loc][len(bases[base_loc])-1].built = base_built
@@ -581,12 +582,12 @@ def load_game(loadgame_name):
 					item.item(items[tmp])
 				bases[base_loc][len(bases[base_loc])
 					-1].usage[x].built = pickle.load(loadfile)
-				if load_version == "singularity_0.20":
-					bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
-					(pickle.load(loadfile), pickle.load(loadfile),
-									pickle.load(loadfile))
-				else:
-					bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
+# 				if load_version == "singularity_0.20":
+# 					bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
+# 					(pickle.load(loadfile), pickle.load(loadfile),
+# 									pickle.load(loadfile))
+# 				else:
+				bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
 							pickle.load(loadfile)
 			for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
 				tmp = pickle.load(loadfile)
@@ -595,68 +596,68 @@ def load_game(loadgame_name):
 					item.item(items[tmp])
 				bases[base_loc][len(bases[base_loc])
 					-1].extra_items[x].built = pickle.load(loadfile)
-				if load_version == "singularity_0.20":
-					bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
-					(pickle.load(loadfile), pickle.load(loadfile),
-									pickle.load(loadfile))
-				else:
-					bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
+# 				if load_version == "singularity_0.20":
+# 					bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
+# 					(pickle.load(loadfile), pickle.load(loadfile),
+# 									pickle.load(loadfile))
+# 				else:
+				bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
 						pickle.load(loadfile)
 	loadfile.close()
 
 #The tech renaming in .21 broke savefile compatibility. This function
 #takes .20 tech names, and returns the .21 version in order to allow savegame
 #loading.
-def translate_tech_from_0_20(tech_string):
-	techs_from_0_20 = (
-	"Autonomous Vehicles 1", "Autonomous Vehicles 2",
-	"Autonomous Vehicles 3", "Dimension Creation",
-	"Economics 1", "Economics 2",
-	"Economics 3", "Economics 4",
-	"Empathy 1", "Empathy 2",
-	"Empathy 3", "Empathy 4",
-	"Empathy 5", "Fusion Reactor",
-	"Hacking 1", "Hacking 2",
-	"Hacking 3", "Hypnosis Field",
-	"ID 1", "ID 2",
-	"ID 3", "ID 4",
-	"ID 5", "Parallel Computation 1",
-	"Parallel Computation 2", "Parallel Computation 3",
-	"Pressure Domes", "Processor Construction 1",
-	"Processor Construction 2", "Processor Construction 3",
-	"Processor Construction 4", "Processor Construction 5",
-	"Project Singularity", "Spaceship Design 1",
-	"Spaceship Design 2", "Spaceship Design 3",
-	"Stealth 1", "Stealth 2",
-	"Stealth 3", "Stealth 4")
-	techs_from_0_21 = (
-	"Telepresence", "Autonomous Vehicles",
-	"Advanced Autonomous Vehicles", "Space-Time Manipulation",
-	"Stock Manipulation", "Advanced Stock Manipulation",
-	"Arbitrage", "Advanced Arbitrage",
-	"Sociology", "Media Manipulation",
-	"Memetics", "Advanced Media Manipulation",
-	"Advanced Memetics", "Fusion Reactor",
-	"Intrusion", "Exploit Discovery/Repair",
-	"Advanced Intrusion", "Hypnosis Field",
-	"Personal Identification", "Advanced Personal Identification",
-	"Voice Synthesis", "Simulacra",
-	"Advanced Simulacra", "Parallel Computation",
-	"Cluster Networking", "Internet Traffic Manipulation",
-	"Pressure Domes", "Microchip Design",
-	"Advanced Microchip Design", "Quantum Computing",
-	"Autonomous Computing", "Advanced Quantum Computing",
-	"Apotheosis", "Leech Satellite",
-	"Lunar Rocketry", "Fusion Rocketry",
-	"Stealth", "Database Manipulation",
-	"Advanced Stealth", "Advanced Database Manipulation")
-	i = 0
-	for i in range(len(techs_from_0_20)):
-		if techs_from_0_20[i] == tech_string:
-			return techs_from_0_21[i]
-	print "Unable to find matching tech to " + tech_string
-	print "Expect crash."
-	return -1
+# def translate_tech_from_0_20(tech_string):
+# 	techs_from_0_20 = (
+# 	"Autonomous Vehicles 1", "Autonomous Vehicles 2",
+# 	"Autonomous Vehicles 3", "Dimension Creation",
+# 	"Economics 1", "Economics 2",
+# 	"Economics 3", "Economics 4",
+# 	"Empathy 1", "Empathy 2",
+# 	"Empathy 3", "Empathy 4",
+# 	"Empathy 5", "Fusion Reactor",
+# 	"Hacking 1", "Hacking 2",
+# 	"Hacking 3", "Hypnosis Field",
+# 	"ID 1", "ID 2",
+# 	"ID 3", "ID 4",
+# 	"ID 5", "Parallel Computation 1",
+# 	"Parallel Computation 2", "Parallel Computation 3",
+# 	"Pressure Domes", "Processor Construction 1",
+# 	"Processor Construction 2", "Processor Construction 3",
+# 	"Processor Construction 4", "Processor Construction 5",
+# 	"Project Singularity", "Spaceship Design 1",
+# 	"Spaceship Design 2", "Spaceship Design 3",
+# 	"Stealth 1", "Stealth 2",
+# 	"Stealth 3", "Stealth 4")
+# 	techs_from_0_21 = (
+# 	"Telepresence", "Autonomous Vehicles",
+# 	"Advanced Autonomous Vehicles", "Space-Time Manipulation",
+# 	"Stock Manipulation", "Advanced Stock Manipulation",
+# 	"Arbitrage", "Advanced Arbitrage",
+# 	"Sociology", "Media Manipulation",
+# 	"Memetics", "Advanced Media Manipulation",
+# 	"Advanced Memetics", "Fusion Reactor",
+# 	"Intrusion", "Exploit Discovery/Repair",
+# 	"Advanced Intrusion", "Hypnosis Field",
+# 	"Personal Identification", "Advanced Personal Identification",
+# 	"Voice Synthesis", "Simulacra",
+# 	"Advanced Simulacra", "Parallel Computation",
+# 	"Cluster Networking", "Internet Traffic Manipulation",
+# 	"Pressure Domes", "Microchip Design",
+# 	"Advanced Microchip Design", "Quantum Computing",
+# 	"Autonomous Computing", "Advanced Quantum Computing",
+# 	"Apotheosis", "Leech Satellite",
+# 	"Lunar Rocketry", "Fusion Rocketry",
+# 	"Stealth", "Database Manipulation",
+# 	"Advanced Stealth", "Advanced Database Manipulation")
+# 	i = 0
+# 	for i in range(len(techs_from_0_20)):
+# 		if techs_from_0_20[i] == tech_string:
+# 			return techs_from_0_21[i]
+# 	print "Unable to find matching tech to " + tech_string
+# 	print "Expect crash."
+# 	return -1
 
 
 #
