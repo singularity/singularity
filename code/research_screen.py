@@ -290,6 +290,7 @@ def assign_tech(free_CPU):
 
 
 	base_screen.change_tech(tmp_base)
+	if tmp_base.studying == "": return False
 
 	for base_loc in g.bases:
 		for base in g.bases[base_loc]:

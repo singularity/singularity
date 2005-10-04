@@ -756,7 +756,7 @@ city_list["FAR REACHES"] = (("Aries", True),
 	("Aquarius", True),
 	("Pisces", True))
 
-city_list["TRANSDIMENSIONAL"] = (("", True))
+city_list["TRANSDIMENSIONAL"] = (("", True), ("", True))
 
 def load_base_defs(language_str):
 	temp_base_array = generic_load("bases_"+language_str+".txt")

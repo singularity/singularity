@@ -250,7 +250,7 @@ def map_loop():
 			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
 	menu_buttons.append(buttons.button((
 			g.screen_size[0]*35/100, g.screen_size[1]*10/100), -1,
-			"TRANSDIMENSIONAL", 1, g.colors["dark_blue"], g.colors["white"],
+			"TRANSDIMENSIONAL", 5, g.colors["dark_blue"], g.colors["white"],
 			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
 
 	sel_button = -1
