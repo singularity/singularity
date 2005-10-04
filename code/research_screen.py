@@ -186,7 +186,7 @@ def refresh_screen(menu_buttons, list_size):
 				else:
 					item_list.append(base_instance.studying)
 					item_CPU_list.append(base_instance.processor_time())
-					item_display_list.append(g.techs[base_instance.studying].name)
+					item_display_list.append(base_instance.studying)
 			elif g.techs.has_key(base_instance.studying):
 				for i in range(len(item_list)):
 					if item_list[i] == base_instance.studying:

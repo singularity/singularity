@@ -34,7 +34,8 @@ v0.22 (release 2005.09.??):
 - Flavored names and numbers for the bases. (idea by heatsink, implementation
   by emh and Phil)
 - Translation-related crash fix. (emh)
-- Global Research Screen; allows changing research for all bases. (emh)
+- Global Research Screen; allows changing research for all bases. (emh, very
+  minor fixups by Phil)
 - Items give dialog upon completion. (emh; Jens Becker for suggestion)
 - Expanded a few listboxes in order to fit the larger base names/techs. (emh)
 
