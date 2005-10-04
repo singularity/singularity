@@ -568,15 +568,15 @@ def refresh_tech(base, tech_name, xy):
 	#tech cost
 	string = "Tech Cost:"
 	g.print_string(g.screen, string,
-			g.font[0][16], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
 	string = g.add_commas(str(g.techs[tech_name].cost[0]))+" Money"
 	g.print_string(g.screen, string,
-			g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
 	string = g.add_commas(str(g.techs[tech_name].cost[1]))+" CPU"
 	g.print_string(g.screen, string,
-			g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
 
 	g.print_multiline(g.screen, g.techs[tech_name].descript,
 			g.font[0][18], 290, (xy[0]+160, xy[1]+100), g.colors["white"])

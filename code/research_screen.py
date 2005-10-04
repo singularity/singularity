@@ -253,18 +253,18 @@ def refresh_research(tech_name, CPU_amount):
 	#tech cost
 	string = "Tech Cost:"
 	g.print_string(g.screen, string,
-			g.font[0][16], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
 
 	string = g.add_commas(str(g.techs[tech_name].cost[0]))+" Money"
 	g.print_string(g.screen, string,
-			g.font[0][16], -1, (xy[0]+5, xy[1]+50), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+5, xy[1]+50), g.colors["white"])
 
 	string = g.add_commas(str(g.techs[tech_name].cost[1]))+" CPU"
 	g.print_string(g.screen, string,
-			g.font[0][16], -1, (xy[0]+135, xy[1]+50), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+135, xy[1]+50), g.colors["white"])
 
 	g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
-			g.font[0][16], -1, (xy[0]+135, xy[1]+70), g.colors["white"])
+			g.font[0][20], -1, (xy[0]+135, xy[1]+70), g.colors["white"])
 
 	g.print_multiline(g.screen, g.techs[tech_name].descript,
 			g.font[0][18], 290, (xy[0]+5, xy[1]+90), g.colors["white"])
