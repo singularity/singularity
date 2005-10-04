@@ -30,7 +30,7 @@ pre=Quantum Computing
 id=Quantum Computer MK2
 cost=120000, 0, 10
 pre=Autonomous Computing
-type=computel, 10000
+type=compute, 10000
 ~~~
 id=Quantum Computer MK3
 cost=150000, 0, 10
