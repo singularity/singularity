@@ -2,6 +2,9 @@ Endgame: Singularity Changelog
 
 v0.22 (release 2005.09.??):
   [To read about the save file compatibility policy, please see README.txt.]
+  NOTE: Save files from versions 0.21 and above should work.  Save files from
+  versions 0.20 and before will not work.
+
 - At the start, money gains a minimal amount of interest (as opposed to none).
   (Phil)
 - Make the 'change research' button more obvious. (Phil)
