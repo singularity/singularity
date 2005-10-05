@@ -1,1 +1,72 @@
- 
+~~~
+id=Stolen Computer Time
+name=Tiempo de Cómputo Robado
+descript=Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detección son también bastante altas.
+flavor=Servicio
+~~~
+id=Server Access
+name=Acceso a Servidor
+descript=Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
+flavor=Servidor Dedicado
+flavor=Alquiler de Nodo
+flavor=Hosting
+~~~
+id=Small Warehouse
+name=Almacén Pequeño
+descript=Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
+flavor=Oficina Alquilada
+flavor=Almacén Pequeño
+flavor=Depósito Pequeño
+~~~
+id=Large Warehouse
+name=Almacén Grande
+descript=Alquila un gran almacén en un lugar alejado. Necesitaré una buena identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
+#Commented out till we get cities done right.
+#flavor=Puerto de Embarque
+flavor=Almacén Grande
+flavor=Depósito Grande
+~~~
+id=Covert Base
+name=Base Encubierta
+descript=Esta base especial está diseñada para confundirse con el ambiente y utilizar pocos recursos externos. Esto la hace útil para almacenar backups, por si acaso.
+flavor=Bunker
+flavor=Base Encubierta
+~~~
+id=Undersea Lab
+name=Laboratorio Submarino
+descript=Esta base experimental está diseñada para ser construida en el lecho oceánico, haciéndola virtualmente indetectable. El ambiente oceánico le otorga un bonus a la ciencia, haciéndo este laboratorio útil para propósitos científicos.
+flavor=Cápsula de Presión
+flavor=Laboratorio Submarino
+~~~
+id=Large Undersea Lab
+name=Laboratorio Submarino Grande
+descript=Esta base experimental es similar al Laboratorio Submarino común, pero más grande, permitiendo más lugar para experimentos.
+flavor=Domo
+flavor=Laboratorio Submarino Grande
+~~~
+id=Time Capsule
+name=Cápsula de Tiempo
+descript=Esta base consta de nada más que una pequeña computadora y un link satelita. Enterrada en la inmesidad de la Antártida, es prácticamente indetectable.
+flavor=Cápsula de Tiempo
+flavor=Cápsula
+~~~
+id=Lunar Facility
+name=Instalación Lunar
+descript=Esta base consta de una serie de cavernas cavadas bajo la superficie lunar. Debido a la ausensia de vecinos, esta base es bastante grande.
+flavor=Domo
+flavor=Instalación Lunar
+flavor=Base Lunar
+~~~
+id=Scientific Outpost
+name=Avanzada Científica
+descript=Esta base está ubicada tan lejos de la Tierra como me resulte práctica, haciéndola segura para llevar a cabo algunos de mis experimentos más peligrosos.
+flavor=Satélite
+flavor=Puesto Avanzado
+flavor=Avanzada Científica
+~~~
+id=Reality Bubble
+name=Burbuja de Realidad
+descript=Esta base se encuentra fuera del universo mismo, haciéndola segura para llevar a cabo experimentos que podrían destruir la realidad misma.
+flavor=Burbuja de Realidad
+flavor=Existencia
+~~~
