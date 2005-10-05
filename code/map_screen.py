@@ -663,7 +663,7 @@ def build_new_base_window(location):
 					temp_base_list.append(base_name)
 					temp_base_display_list.append(g.base_type[base_name].base_name)
 
-	xy_loc = (g.screen_size[0]/2 - 209, 50)
+	xy_loc = (g.screen_size[0]/2 - 289, 50)
 
 	while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
 		temp_base_list.append("")
@@ -671,7 +671,7 @@ def build_new_base_window(location):
 
 	base_pos = 0
 
-	bases_list = listbox.listbox(xy_loc, (150, 350),
+	bases_list = listbox.listbox(xy_loc, (230, 350),
 		base_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
 		g.colors["white"], g.colors["white"], g.font[0][18])
 
@@ -749,6 +749,7 @@ def build_new_base_window(location):
 						return -1
 
 def refresh_new_base(base_name, xy):
+	xy = (xy[0]+80, xy[1])
 	g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
 	g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
 	if base_name == "": return
