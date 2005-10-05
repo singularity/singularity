@@ -1,13 +1,13 @@
 Endgame: Singularity 0.22
 
 Requirements:
-Recent version of Python, pygame, and SDL_image. This game should work on Linux,
-Windows, and Mac OSX as long as the preceding requirements are met. However,
-all development was done in Linux, so glitches may be present in OSX and
+Recent versions of Python, pygame, and SDL_image. This game should work on Linux,
+Windows, and Mac OS X as long as the preceding requirements are met. However,
+all development was done in Linux, so glitches may be present in OS X and
 Windows.
 
 Windows:
-You will need to install Python (http://python.org/download/) and PyGame:
+You will need to install Python (http://python.org/download/) and Pygame:
 (http://www.pygame.org/download.shtml). Once these are installed, double-click
 on singularity.py to start the game.
 
