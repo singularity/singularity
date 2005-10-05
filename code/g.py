@@ -353,12 +353,19 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 
 
 #Takes a number (in string form) and adds commas to it to aid in human viewing.
-def add_commas(string):
-	new_string = ""
-	for i in range(len(string), 0, -3):
-		if string[i:i+3] != "":
-			new_string += ","+string[i:i+3]
-	return string[:(len(string)-1)%3+1]+new_string
+def add_commas(tmp_string):
+	string = tmp_string[::-1]
+	output_string = ""
+	for i in range(len(string)):
+		if i % 3 == 0 and i != 0: output_string = ","+output_string
+		output_string = string[i] + output_string
+	return output_string
+
+# 	new_string = ""
+# 	for i in range(len(string), 0, -3):
+# 		if string[i:i+3] != "":
+# 			new_string += ","+string[i:i+3]
+# 	return string[:(len(string)-1)%3+1]+new_string
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
