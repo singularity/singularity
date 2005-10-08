@@ -703,6 +703,7 @@ city_list["S AMERICA"] =(("Lima", True),
 	("Sao Paolo", True),
 	("Ushuaia", True),
 	("Bogota", True),
+	("Mar del Plata", True),
 	("Buenos Aires", True))
 
 city_list["EUROPE"] = (("Cork", True),

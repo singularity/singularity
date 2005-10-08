@@ -540,6 +540,11 @@ def display_base_list(location, menu_buttons):
 				tmp += next_prev
 				if tmp < 0: tmp = len(g.bases[location]) -1
 				if tmp >= len(g.bases[location]): tmp = 0
+				while g.bases[location][tmp].built != 1:
+					tmp += next_prev
+					if tmp < 0: tmp = len(g.bases[location]) -1
+					if tmp >= len(g.bases[location]): tmp = 0
+
 
 
 	refresh_map(menu_buttons)
