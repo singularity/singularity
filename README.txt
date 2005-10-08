@@ -55,6 +55,21 @@ your beginning base does not allow building.)
 Credits:
 Evil Mr Henry
 Phil Bordelon
+Borg[MDQ] (translation into Spanish)
+
+Contributing:
+All suggestions, translations, code, etc. are welcomed, though it would be
+wise to tell us before starting work on any large projects. Contact
+evilmrhenry@emhsoft.net for more details.
+
+Contributing translations:
+To add a new translation, make copies of all *_en_US files in the data
+subdirectory, renaming the copies to *_name_of_language. For each file,
+translate all strings except id to the new language, and test with the
+-language name_of_language option. It is expected to use the CC
+Attribution-ShareAlike license. (Since the files you are translating
+are under that license, I'm not sure you could get away with a different
+license.)
 
 Code License:
 Copyright (C) 2005 Evil Mr Henry and Phil Bordelon
@@ -72,6 +87,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+Data License:
+The sounds, the text files, and the icons in the data subdirectory are under
+the Creative Commons Licence "Attribution-ShareAlike 2.5":
+
+You are free:
+
+    * to copy, distribute, display, and perform the work
+    * to make derivative works
+    * to make commercial use of the work
+
+Under the following conditions:
+Attribution. You must attribute the work in the manner specified by the author or licensor.
+Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under a license identical to this one.
+
+    * For any reuse or distribution, you must make clear to others the license terms of this work.
+    * Any of these conditions can be waived if you get permission from the copyright holder.
+
+See the file Attribution-ShareAlike 2.5.html for the legal-quality license.
 
 
 Graphic License:

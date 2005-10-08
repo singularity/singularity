@@ -430,6 +430,7 @@ def save_game(savegame_name):
 	for tech_name in techs:
 		pickle.dump(tech_name +"|"+str(techs[tech_name].known), savefile)
 		pickle.dump(techs[tech_name].cost, savefile)
+	pickle.dump("~~~", savefile)
 
 	for base_name in base_type:
 		pickle.dump(base_type[base_name].count, savefile)
@@ -527,6 +528,7 @@ def load_game(loadgame_name):
 	for tech_name in techs:
 		if tech_name == "unknown_tech" and load_version == "singularity_0.21a": continue
 		tmp = pickle.load(loadfile)
+		if tmp == "~~~": break
 		tech_string = tmp.split("|")[0]
 # 		if load_version == "singularity_0.20":
 # 			tech_string = translate_tech_from_0_20(tech_string)
