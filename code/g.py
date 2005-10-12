@@ -431,10 +431,11 @@ def save_game(savegame_name):
 	pickle.dump("~~~", savefile)
 
 	for base_name in base_type:
-		pickle.dump(base_type[base_name].count, savefile)
+		pickle.dump(base_name+"|"+str(base_type[base_name].count), savefile)
+	pickle.dump("~~~", savefile)
 
 	for base_loc in bases:
-		pickle.dump(len(bases[base_loc]), savefile)
+		pickle.dump(base_loc+"|"+str(len(bases[base_loc])), savefile)
 		for base_name in bases[base_loc]:
 			pickle.dump(base_name.ID, savefile)
 			pickle.dump(base_name.name, savefile)
@@ -485,7 +486,6 @@ def load_game(loadgame_name):
 	valid_savefile_versions = (
 		"singularity_0.21",
 		"singularity_0.21a",
-		"singularity_0.22pre",
 		"singularity_0.22",
                 "singularity_0.23pre"
 	)
@@ -536,10 +536,30 @@ def load_game(loadgame_name):
 # 				pickle.load(loadfile))
 # 		else:
 		techs[tech_string].cost = pickle.load(loadfile)
+	else:
+		#get rid of the ~~~ break line.
+		if (load_version != "singularity_0.21" and
+					load_version != "singularity_0.21a" and
+					load_version != "singularity_0.22"):
+			pickle.load(loadfile)
 
 	load_bases()
 	for base_name in base_type:
-		base_type[base_name].count = pickle.load(loadfile)
+		if (load_version == "singularity_0.21" or
+					load_version == "singularity_0.21a" or
+					load_version == "singularity_0.22"):
+			base_type[base_name].count = pickle.load(loadfile)
+		else:
+			tmp_string = pickle.load(loadfile)
+			if tmp_string == "~~~": break
+			base_type[tmp_string.split("|", 1)[0]].count = \
+								int(tmp_string.split("|", 1)[1])
+	else:
+		#get rid of the ~~~ break line.
+		if (load_version != "singularity_0.21" and
+					load_version != "singularity_0.21a" and
+					load_version != "singularity_0.22"):
+			pickle.load(loadfile)
 
 	global bases
 	bases = {}
@@ -555,25 +575,22 @@ def load_game(loadgame_name):
 	bases["TRANSDIMENSIONAL"] = []
 
 	for base_loc in bases:
-		num_of_bases = pickle.load(loadfile)
+		if (load_version == "singularity_0.21" or
+					load_version == "singularity_0.21a" or
+					load_version == "singularity_0.22"):
+			num_of_bases = pickle.load(loadfile)
+		else:
+			tmp_string = pickle.load(loadfile)
+			base_loc = tmp_string.split("|", 1)[0]
+			num_of_bases = int(tmp_string.split("|", 1)[1])
 		for i in range(num_of_bases):
 			base_ID = pickle.load(loadfile)
 			base_name = pickle.load(loadfile)
 			base_type_name = pickle.load(loadfile)
 			built_date = pickle.load(loadfile)
 			base_studying = pickle.load(loadfile)
-# 			if load_version == "singularity_0.20":
-# 				base_studying = translate_tech_from_0_20(base_studying)
-# 			if load_version == "singularity_0.20":
-# 				base_suspicion = (pickle.load(loadfile), pickle.load(loadfile),
-# 					pickle.load(loadfile), pickle.load(loadfile))
-# 			else:
 			base_suspicion = pickle.load(loadfile)
 			base_built = pickle.load(loadfile)
-# 			if load_version == "singularity_0.20":
-# 				base_cost = (pickle.load(loadfile), pickle.load(loadfile),
-# 					pickle.load(loadfile))
-# 			else:
 			base_cost = pickle.load(loadfile)
 			bases[base_loc].append(base.base(base_ID, base_name,
 				base_type[base_type_name], base_built))

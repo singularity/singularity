@@ -40,12 +40,12 @@ type=compute, 200000
 id=Fusion Reactor
 cost=10000, 0, 5
 pre=Fusion Reactor
-type=react, 100
+type=react, 2500
 ~~~
 id=Hypnosis Field
 cost=20000, 0, 3
 pre=Hypnosis Field
-type=security, 500
+type=security, 5000
 ~~~
 id=Facility Interconnection Switch
 cost=200, 0, 3
