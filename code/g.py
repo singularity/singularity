@@ -173,9 +173,8 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
 	print_multiline(screen, string_to_print, box_font, size[0]-10, (xy[0]+5, xy[1]+5),
 			text_color)
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy[0]+size[0]/2-50, xy[1]+size[1]+5),
-		(100, 50), "OK", 0, colors["dark_blue"], colors["white"], colors["light_blue"],
-		colors["white"], font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50, xy[1]+size[1]+5),
+		(100, 50), "OK", 0, font[1][30]))
 
 	for button in menu_buttons:
 		button.refresh_button(0)
@@ -220,9 +219,8 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 # 	   cursor_loc += 1
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy[0]+size[0]/2-50, xy[1]+size[1]+5),
-		(100, 50), "OK", 0, colors["dark_blue"], colors["white"], colors["light_blue"],
-		colors["white"], font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50, xy[1]+size[1]+5),
+		(100, 50), "OK", 0, font[1][30]))
 
 	work_string = starting_text
 	for button in menu_buttons:

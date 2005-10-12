@@ -115,6 +115,8 @@ class button:
 			return self.is_over(event.pos)
 		else: return 0
 
+#refreshes a set of buttons. Takes an int for the current button,
+#references to the button set, and an event to use for checking mouseover on.
 def refresh_buttons(sel_button, menu_buttons, event):
 	new_sel_button = -1
 	for button_num in range(len(menu_buttons)):
@@ -129,5 +131,10 @@ def refresh_buttons(sel_button, menu_buttons, event):
 		pygame.display.flip()
 	return new_sel_button
 
-
+#while buttons allow for creation of any button style needed, most of the
+#buttons are of one style.
+def make_norm_button(xy, size, text, select_char, font, button_id=""):
+	return button(xy, size, text, select_char,
+		g.colors["dark_blue"], g.colors["white"],
+		g.colors["light_blue"], g.colors["white"], font, button_id)
 

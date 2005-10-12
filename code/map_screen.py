@@ -37,21 +37,16 @@ def display_pause_menu():
 	g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200, 350))
 	g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198, 348))
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
-		"NEW GAME", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+80), (180, 50),
-		"SAVE GAME", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
-		"LOAD GAME", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
-		"QUIT", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
-		"RESUME", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
+		"NEW GAME", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+80), (180, 50),
+		"SAVE GAME", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
+		"LOAD GAME", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
+		"QUIT", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
+		"RESUME", 0, g.font[1][30]))
 
 	for button in menu_buttons:
 		button.refresh_button(0)
@@ -92,24 +87,18 @@ def display_cheat_list(menu_buttons):
 	g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200, 420))
 	g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198, 418))
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
-		"GIVE MONEY", 5, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+80), (180, 50),
-		"GIVE TECH", 5, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
-		"END CONSTR.", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
-		"SUPERSPEED", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
-		"KILL SUSP.", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+10, xy_loc[1]+360), (180, 50),
-		"RESUME", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
+		"GIVE MONEY", 5, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+80), (180, 50),
+		"GIVE TECH", 5, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
+		"END CONSTR.", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
+		"SUPERSPEED", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
+		"KILL SUSP.", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+360), (180, 50),
+		"RESUME", 0, g.font[1][30]))
 
 	for button in menu_buttons:
 		button.refresh_button(0)
@@ -167,32 +156,26 @@ def map_loop():
 	menu_buttons.append(buttons.button((100, -1), (200, 26),
 		"DAY 0000, 00:00:00", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
-	menu_buttons.append(buttons.button((0, 0), (100, 25),
-		"OPTIONS", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
-	menu_buttons.append(buttons.button((300, 0), (25, 25),
-		"ii", -1, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((0, 0), (100, 25),
+		"OPTIONS", 0, g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((300, 0), (25, 25),
+		"ii", -1, g.font[1][20]))
 	if g.curr_speed == 0: menu_buttons[2].stay_selected = 1
 	menu_buttons[2].activate_key = "0"
-	menu_buttons.append(buttons.button((324, 0), (25, 25),
-		">", -1, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((324, 0), (25, 25),
+		">", -1, g.font[1][20]))
 	if g.curr_speed == 1: menu_buttons[3].stay_selected = 1
 	menu_buttons[3].activate_key = "1"
-	menu_buttons.append(buttons.button((348, 0), (25, 25),
-		">>", -1, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((348, 0), (25, 25),
+		">>", -1, g.font[1][20]))
 	if g.curr_speed == 60: menu_buttons[4].stay_selected = 1
 	menu_buttons[4].activate_key = "2"
-	menu_buttons.append(buttons.button((372, 0), (28, 25),
-		">>>", -1, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((372, 0), (28, 25),
+		">>>", -1, g.font[1][20]))
 	if g.curr_speed == 7200: menu_buttons[5].stay_selected = 1
 	menu_buttons[5].activate_key = "3"
-	menu_buttons.append(buttons.button((399, 0), (36, 25),
-		">>>>", -1, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((399, 0), (36, 25),
+		">>>>", -1, g.font[1][20]))
 	if g.curr_speed == 432000: menu_buttons[6].stay_selected = 1
 	menu_buttons[6].activate_key = "4"
 	#Note that this must be element 7 in menu_buttons
@@ -204,54 +187,42 @@ def map_loop():
 		(g.screen_size[0]-120, 26),
 		"SUSPICION", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size-2]))
-	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (120, 25),
-		"RESEARCH", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (120, 25),
+		"RESEARCH", 0, g.font[1][20]))
 
-	menu_buttons.append(buttons.button((
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*15/100, g.screen_size[1]*25/100), -1,
-			"N AMERICA", 0, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"N AMERICA", 0, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*20/100, g.screen_size[1]*50/100), -1,
-			"S AMERICA", 0, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"S AMERICA", 0, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*45/100, g.screen_size[1]*30/100), -1,
-			"EUROPE", 0, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"EUROPE", 0, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*80/100, g.screen_size[1]*30/100), -1,
-			"ASIA", 0, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"ASIA", 0, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*55/100, g.screen_size[1]*45/100), -1,
-			"AFRICA", 3, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"AFRICA", 3, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*50/100, g.screen_size[1]*75/100), -1,
-			"ANTARCTIC", 2, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"ANTARCTIC", 2, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*70/100, g.screen_size[1]*60/100), -1,
-			"OCEAN", 1, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"OCEAN", 1, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*82/100, g.screen_size[1]*10/100), -1,
-			"MOON", 0, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-# 	menu_buttons.append(buttons.button((
+			"MOON", 0, g.font[1][25]))
+# 	menu_buttons.append(buttons.make_norm_button((
 # 			g.screen_size[0]*15/100, g.screen_size[1]*10/100), -1,
-# 			"ORBIT", 2, g.colors["dark_blue"], g.colors["white"],
-# 			g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+# 			"ORBIT", 2, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*3/100, g.screen_size[1]*10/100), -1,
-			"FAR REACHES", 0, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
-	menu_buttons.append(buttons.button((
+			"FAR REACHES", 0, g.font[1][25]))
+	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*35/100, g.screen_size[1]*10/100), -1,
-			"TRANSDIMENSIONAL", 5, g.colors["dark_blue"], g.colors["white"],
-			g.colors["light_blue"], g.colors["white"], g.font[1][25]))
+			"TRANSDIMENSIONAL", 5, g.font[1][25]))
 
 	sel_button = -1
 	refresh_map(menu_buttons)
@@ -581,15 +552,12 @@ def display_base_list_inner(location):
 		g.colors["white"])
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy_loc[0], xy_loc[1]+367), (100, 50),
-		"OPEN", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+105, xy_loc[1]+367), (100, 50),
-		"BACK", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
-		"NEW", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
+		"OPEN", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+105, xy_loc[1]+367), (100, 50),
+		"BACK", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
+		"NEW", 0, g.font[1][30]))
 	for button in menu_buttons:
 		button.refresh_button(0)
 	listbox.refresh_list(bases_list, bases_scroll, base_pos, temp_base_list)
@@ -681,12 +649,10 @@ def build_new_base_window(location):
 		g.colors["white"], g.colors["white"], g.font[0][18])
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy_loc[0], xy_loc[1]+367), (100, 50),
-		"BUILD", 1, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-		"BACK", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
+		"BUILD", 1, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
+		"BACK", 0, g.font[1][30]))
 	for button in menu_buttons:
 		button.refresh_button(0)
 

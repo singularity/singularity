@@ -33,15 +33,12 @@ def display_main_menu():
 	g.screen.fill(g.colors["black"])
 	x_loc = g.screen_size[0]/2 - 100
 	menu_buttons = []
-	menu_buttons.append(buttons.button((x_loc, 150), (200, 50),
-		"NEW GAME", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((x_loc, 250), (200, 50),
-		"LOAD GAME", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((x_loc, 350), (200, 50),
-		"QUIT", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((x_loc, 150), (200, 50),
+		"NEW GAME", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((x_loc, 250), (200, 50),
+		"LOAD GAME", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((x_loc, 350), (200, 50),
+		"QUIT", 0, g.font[1][30]))
 	g.print_string(g.screen, "ENDGAME: SINGULARITY", g.font[1][40], -1,
 		(x_loc+100, 15), g.colors["dark_red"], 1)
 
@@ -105,12 +102,10 @@ def display_load_menu():
 		g.colors["white"])
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy_loc[0], xy_loc[1]+367), (100, 50),
-		"LOAD", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+118, xy_loc[1]+367),
-		(100, 50), "BACK", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
+		"LOAD", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+118, xy_loc[1]+367),
+		(100, 50), "BACK", 0, g.font[1][30]))
 	for button in menu_buttons:
 		button.refresh_button(0)
 

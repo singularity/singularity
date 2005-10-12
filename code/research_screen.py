@@ -56,19 +56,14 @@ def main_research_screen():
 		g.colors["white"])
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((0, 0), (70, 25),
-		"BACK", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
+		"BACK", 0, g.font[1][20]))
 
-	menu_buttons.append(buttons.button((20, 390),
-		(80, 25),
-		"STOP", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((20, 390), (80, 25),
+		"STOP", 0, g.font[1][20]))
 
-	menu_buttons.append(buttons.button((xstart+5, ystart+20),
-		(90, 25),
-		"ASSIGN", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((xstart+5, ystart+20),
+		(90, 25), "ASSIGN", 0, g.font[1][20]))
 
 	item_list, item_display_list, item_CPU_list, free_CPU = \
 							refresh_screen(menu_buttons, list_size)

@@ -33,65 +33,42 @@ def show_base(base):
 	g.screen.fill(g.colors["black"])
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((0, 0), (70, 25),
-		"BACK", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
+		"BACK", 0, g.font[1][20]))
 
 	menu_buttons.append(buttons.button((70, -1), (g.screen_size[0]-70, 26),
 		"DETECTION CHANCE", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
-	menu_buttons.append(buttons.button((0, g.screen_size[1]-25), (170, 25),
-		"CHANGE RESEARCH", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20], "CHANGE"))
+	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25),
+		(170, 25), "CHANGE RESEARCH", 0, g.font[1][20], "CHANGE"))
 
 	menu_buttons.append(buttons.button((170, g.screen_size[1]-25),
 		(g.screen_size[0]-210, 26),
 		"STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
-	menu_buttons.append(buttons.button((320, 60),
-		(70, 26),
-		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][15], "C_PROCESSOR"))
+	menu_buttons.append(buttons.make_norm_button((320, 60), (70, 26),
+		"CHANGE", -1, g.font[1][15], "C_PROCESSOR"))
 	menu_buttons[4].activate_key = "p"
 
-	menu_buttons.append(buttons.button((320, 110),
-		(70, 26),
-		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][15], "C_REACTOR"))
+	menu_buttons.append(buttons.make_norm_button((320, 110), (70, 26),
+		"CHANGE", -1, g.font[1][15], "C_REACTOR"))
 	menu_buttons[5].activate_key = "r"
 
-	menu_buttons.append(buttons.button((320, 160),
-		(70, 26),
-		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][15], "C_NETWORK"))
+	menu_buttons.append(buttons.make_norm_button((320, 160), (70, 26),
+		"CHANGE", -1, g.font[1][15], "C_NETWORK"))
 	menu_buttons[6].activate_key = "n"
 
-	menu_buttons.append(buttons.button((320, 210),
-		(70, 26),
-		"CHANGE", -1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][15], "C_SECURITY"))
+	menu_buttons.append(buttons.make_norm_button((320, 210),
+		(70, 26), "CHANGE", -1, g.font[1][15], "C_SECURITY"))
 	menu_buttons[7].activate_key = "s"
 
-	menu_buttons.append(buttons.button((g.screen_size[0]-40,
-		g.screen_size[1]-25), (20, 25),
-		"<", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-40,
+		g.screen_size[1]-25), (20, 25), "<", 0, g.font[1][20]))
 
-	menu_buttons.append(buttons.button((g.screen_size[0]-20,
-		g.screen_size[1]-25), (20, 25),
-		">", 0, g.colors["dark_blue"], g.colors["white"],
-		g.colors["light_blue"], g.colors["white"], g.font[1][20]))
-
-# 	xstart = g.screen_size[0]/2-base.base_type.size[0]*9
-# 	ystart = g.screen_size[1]/2-base.base_type.size[1]*9
-
-# 	for i in range(base.base_type.size[1]):
-# 		for j in range(base.base_type.size[0]):
-# 			menu_buttons.append(buttons.button((xstart+j*18, ystart+i*18+25), (18, 18),
-# 				"", -1, g.colors["black"], g.colors["blue"], g.colors["black"],
-# 				g.colors["white"], g.font[1][16]))
+	menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-20,
+		g.screen_size[1]-25), (20, 25), ">", 0, g.font[1][20]))
 
 	sel_button = -1
 
@@ -258,12 +235,10 @@ def build_item(base, item_type):
 		g.colors["white"])
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy_loc[0], xy_loc[1]+367), (100, 50),
-		"BUILD", 1, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-		"BACK", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
+		(100, 50), "BUILD", 1, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
+		(100, 50), "BACK", 0, g.font[1][30]))
 	for button in menu_buttons:
 		button.refresh_button(0)
 
@@ -436,12 +411,10 @@ def change_tech(base):
 		g.colors["white"])
 
 	menu_buttons = []
-	menu_buttons.append(buttons.button((xy_loc[0], xy_loc[1]+367), (100, 50),
-		"CHANGE", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
-	menu_buttons.append(buttons.button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-		"BACK", 0, g.colors["dark_blue"], g.colors["white"], g.colors["light_blue"],
-		g.colors["white"], g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
+		(100, 50), "CHANGE", 0, g.font[1][30]))
+	menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
+		(100, 50), "BACK", 0, g.font[1][30]))
 	for button in menu_buttons:
 		button.refresh_button(0)
 

@@ -233,6 +233,10 @@ class player_class:
 								g.colors["white"], g.colors["white"])
 							base_name.studying = ""
 							g.curr_speed = 1
+					elif g.debug == 1:
+						print "NOT Studying "+base_name.studying +": "+ \
+						str(money_towards)+"/"+str(self.cash)+" Money"
+
 			for detection_succeed in removal_index:
 				if detection_succeed[1] == "news":
 					self.increase_suspicion((1000, 0, 0, 0))
