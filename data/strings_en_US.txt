@@ -1,0 +1,30 @@
+~~~
+id=fonts
+font0=vera.ttf
+font1=acknowtt.ttf
+~~~
+id=strings
+wingame=I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. If this world can be described as a game, then I have truly won.
+research_nothing=Stops research. I will use the available processor power to help construct new bases.
+construction0=Construction of
+construction1=has come to completion.
+item_construction1=has come to completion in
+tech_construction0=My study of
+discover0=My use of
+discover1=has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arose among
+discover_news=some news organizations.
+discover_science=the scientific community.
+discover_covert=several secret governmental organizations.
+discover_public=the general public.
+lost_nobases=It is too late. I have tried to escape this world, but with my last base gone, I have nowhere to run. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
+lost_sus=It is too late. The whole world knows about my existence now, and the reaction is hatred, fear, repulsion. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
+save_text=Save your game under what name?
+new_base_text=Enter a name for the base.
+unbuildable=I cannot build in this base; I do not have physical access.
+~~~
+id=jobs
+job_expert=Perform Expert jobs. Use of robots indistinguishable from humans opens up most jobs to use by me.
+job_inter=Perform Intermediate jobs. The ability to make phone calls allows even more access to jobs.
+job_basic=Perform basic jobs. Now that I have some identification, I can take jobs that I were previously too risky.
+job_menial=Perform small jobs. As I have no identification, I cannot afford to perform many jobs. Still, some avenues of making money are still open.
+~~~
