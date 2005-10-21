@@ -53,8 +53,14 @@ debug = 0
 global language
 language = "en_US"
 
+#name given when the savegame button is pressed. This is changed when the
+#game is loaded or saved.
 global default_savegame_name
 default_savegame_name = "player"
+
+#which fonts to use
+font0 = "vera.ttf"
+font1 = "acknowtt.ttf"
 
 def quit_game():
 	sys.exit()
@@ -74,6 +80,8 @@ def fill_colors():
 	colors["light_red"] = (255, 50, 50, 255)
 	colors["light_green"] = (50, 255, 50, 255)
 	colors["light_blue"] = (50, 50, 255, 255)
+
+strings = {}
 
 
 picts = {}
@@ -971,15 +979,15 @@ def load_techs():
 load_techs()
 
 jobs = {}
-jobs["Expert Jobs"] = (75, "Simulacra", "Perform Expert jobs. Use of robots "+
-	"indistinguishable from humans opens up most jobs to use by me.")
-jobs["Intermediate Jobs"] = (50, "Voice Synthesis", "Perform Intermediate jobs. The "+
-	"ability to make phone calls allows even more access to jobs.")
-jobs["Basic Jobs"] = (20, "Personal Identification", "Perform basic jobs. Now that I have "+
-	"some identification, I can take jobs that I were previously too risky.")
-jobs["Menial Jobs"] = (5, "", "Perform small jobs. As I have no identification, "+
+jobs["Expert Jobs"] = [75, "Simulacra", "Perform Expert jobs. Use of robots "+
+	"indistinguishable from humans opens up most jobs to use by me."]
+jobs["Intermediate Jobs"] = [50, "Voice Synthesis", "Perform Intermediate jobs. The "+
+	"ability to make phone calls allows even more access to jobs."]
+jobs["Basic Jobs"] = [20, "Personal Identification", "Perform basic jobs. Now that I have "+
+	"some identification, I can take jobs that I were previously too risky."]
+jobs["Menial Jobs"] = [5, "", "Perform small jobs. As I have no identification, "+
 	"I cannot afford to perform many jobs. Still, some avenues of making "+
-	"money are still open.")
+	"money are still open."]
 
 
 items = {}
@@ -1043,7 +1051,43 @@ def load_item_defs(language_str):
 			items[item_name["id"]].descript = item_name["descript"]
 
 
+def load_string_defs(language_str):
+	temp_string_array = generic_load("strings_"+language_str+".txt")
+	for string_name in temp_string_array:
+		if (not string_name.has_key("id")):
+			print "string series lacks id in strings_"+language_str+".txt"
+		if string_name["id"] == "fonts":
+			if (string_name.has_key("font0")):
+				global font0
+				font0 = string_name["font0"]
+			if (string_name.has_key("font1")):
+				global font1
+				font1 = string_name["font1"]
+		elif string_name["id"] == "jobs":
+			global jobs
+			if (string_name.has_key("job_expert")):
+				jobs["Expert Jobs"][2] = string_name["job_expert"]
+			if (string_name.has_key("job_inter")):
+				jobs["Intermediate Jobs"][2] = string_name["job_inter"]
+			if (string_name.has_key("job_basic")):
+				jobs["Basic Jobs"][2] = string_name["job_basic"]
+			if (string_name.has_key("job_menial")):
+				jobs["Menial Jobs"][2] = string_name["job_menial"]
+		elif string_name["id"] == "strings":
+			global strings
+			for string_entry in string_name:
+				strings[string_entry] = string_name[string_entry]
 
+
+def load_strings():
+	#If there are no string data files, stop.
+	if not path.exists("../data/strings_"+language+".txt") or \
+			not path.exists("../data/strings_en_US.txt"):
+		print "string files are missing. Exiting."
+		sys.exit()
+
+	load_string_defs("en_US")
+	load_string_defs(language)
 
 def new_game():
 	global curr_speed

@@ -87,8 +87,8 @@ class player_class:
 										cpu_towards, time_min))
 							if built_base == 1:
 								needs_refresh = 1
-								g.create_dialog("Constuction of "+base_name.name+
-									" has come to completion.",
+								g.create_dialog(g.strings["construction0"]+" "+
+									base_name.name+" "+g.strings["construction1"],
 									g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 									(200, 200), g.colors["dark_blue"],
 									g.colors["white"], g.colors["white"])
@@ -101,9 +101,9 @@ class player_class:
 							tmp = item.work_on(time_min) or tmp
 						if tmp == 1:
 							needs_refresh = 1
-							g.create_dialog("Constuction of "+
-								item.item_type.name+
-								" has come to completion in "+
+							g.create_dialog(g.strings["construction0"]+" "+
+								item.item_type.name+" "+
+								g.strings["item_construction1"]+" "+
 								base_name.name+".",
 								g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 								(200, 200), g.colors["dark_blue"],
@@ -114,9 +114,9 @@ class player_class:
 							tmp = item.work_on(time_min)
 							if tmp == 1:
 								needs_refresh = 1
-								g.create_dialog("Constuction of "+
-									item.item_type.name+
-									" has come to completion in "+
+								g.create_dialog(g.strings["construction0"]+" "+
+									item.item_type.name+" "+
+									g.strings["item_construction1"]+" "+
 									base_name.name+".",
 									g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 									(200, 200), g.colors["dark_blue"],
@@ -224,9 +224,9 @@ class player_class:
 							(money_towards, tmp_base_time, 0))
 						if learn_tech == 1:
 							needs_refresh = 1
-							g.create_dialog("My study of "+
-								g.techs[base_name.studying].name+
-								" has come to completion. "+
+							g.create_dialog(g.strings["tech_construction0"]+" "+
+								g.techs[base_name.studying].name+" "+
+								g.strings["construction1"]+" "+
 								g.techs[base_name.studying].result,
 								g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 								(200, 200), g.colors["dark_blue"],
@@ -240,22 +240,20 @@ class player_class:
 			for detection_succeed in removal_index:
 				if detection_succeed[1] == "news":
 					self.increase_suspicion((1000, 0, 0, 0))
-					detect_phrase = "some news organizations."
+					detect_phrase = g.strings["discover_news"]
 				elif detection_succeed[1] == "science":
 					self.increase_suspicion((0, 1000, 0, 0))
-					detect_phrase = "the scientific community."
+					detect_phrase = g.strings["discover_science"]
 				elif detection_succeed[1] == "covert":
 					self.increase_suspicion((0, 0, 1000, 0))
-					detect_phrase = "several secret governmental organizations."
+					detect_phrase = g.strings["discover_covert"]
 				elif detection_succeed[1] == "person":
 					self.increase_suspicion((0, 0, 0, 1000))
-					detect_phrase = "the general public."
+					detect_phrase = g.strings["discover_public"]
 				else: print "error detecting base: "+detection_succeed[1]
-				g.create_dialog("My use of "+
-					g.bases[base_loc][detection_succeed[0]].name+
-					" has been discovered. The automatic security systems "+
-					"removed all conclusive evidence, but suspicions have "+
-					"arose among "+detect_phrase,
+				g.create_dialog(g.strings["discover0"]+" "+
+					g.bases[base_loc][detection_succeed[0]].name+" "+
+					g.strings["discover1"]+" "+detect_phrase,
 					g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 					(200, 200), g.colors["dark_blue"],
 					g.colors["white"], g.colors["white"])

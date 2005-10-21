@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 #file: singularity.py
 #Copyright (C) 2005 Evil Mr Henry and Phil Bordelon
 #This file is part of Endgame: Singularity.
@@ -68,6 +69,8 @@ if arg_modifier == "language":
 	print "-language option requires language to be specified."
 	sys.exit()
 
+g.load_strings()
+
 pygame.display.set_caption("Endgame: Singularity")
 
 #I can't use the standard image dictionary, as that requires the screen to
@@ -83,9 +86,9 @@ else:
 
 #Create the fonts:
 for i in range(8, 51):
-	g.font[0][i] = pygame.font.Font("../data/vera.ttf", i-7)
+	g.font[0][i] = pygame.font.Font("../data/"+g.font0, i-7)
 	g.font[0][i].set_bold(1)
-	g.font[1][i] = pygame.font.Font("../data/acknowtt.ttf", i)
+	g.font[1][i] = pygame.font.Font("../data/"+g.font1, i)
 
 #init data:
 g.load_pictures()

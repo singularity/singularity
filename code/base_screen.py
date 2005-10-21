@@ -202,9 +202,8 @@ def refresh_base(menu_buttons, base):
 
 def build_item(base, item_type):
 	if base.base_type.size == 1:
-		g.create_dialog("I cannot build in this base; I do not have physical "+
-			" access.", g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-			(200, 200), g.colors["dark_blue"],
+		g.create_dialog(g.strings["unbuildable"], g.font[0][18],
+			(g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
 			g.colors["white"], g.colors["white"])
 		return 0
 
@@ -507,8 +506,7 @@ def refresh_tech(base, tech_name, xy):
 	if tech_name == "" or tech_name == "Nothing":
 		g.print_string(g.screen, "Nothing",
 			g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
-		string = "Stops research. I will use the available processor power "+ \
-			"to help construct new bases."
+		string = g.strings["research_nothing"]
 		g.print_multiline(g.screen, string,
 			g.font[0][18], 290, (xy[0]+160, xy[1]+65), g.colors["white"])
 		return

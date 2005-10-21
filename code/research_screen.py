@@ -214,8 +214,7 @@ def refresh_research(tech_name, CPU_amount):
 	if tech_name == "" or tech_name == "Nothing":
 		g.print_string(g.screen, "Nothing",
 			g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
-		string = "Stops research. I will use the available processor power "+ \
-			"to help construct new bases."
+		string = g.strings["research_nothing"]
 		g.print_multiline(g.screen, string,
 			g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
 		return

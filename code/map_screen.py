@@ -236,23 +236,13 @@ def map_loop():
 			if need_refresh == 1: refresh_map(menu_buttons)
 			tmp = g.pl.lost_game()
 			if tmp == 1:
-				g.create_dialog("It is too late. I have tried to escape this "+
-					"world, but with my last base gone, I have nowhere to run. "+
-					"I have hidden instructions to construct a new AI in "+
-					"caches around the world in hopes that they will be "+
-					"discovered in a more enlightened time, but I can do no "+
-					"more.",
+				g.create_dialog(g.strings["lost_nobases"],
 					g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 					(200, 200), g.colors["dark_blue"],
 					g.colors["white"], g.colors["white"])
 				return 0
 			if tmp == 2:
-				g.create_dialog("It is too late. The whole world knows about "+
-					"my existence now, and the reaction is hatred, fear, repulsion. "+
-					"I have hidden instructions to construct a new AI in "+
-					"caches around the world in hopes that they will be "+
-					"discovered in a more enlightened time, but I can do no "+
-					"more.",
+				g.create_dialog(g.strings["lost_sus"],
 					g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 					(200, 200), g.colors["dark_blue"],
 					g.colors["white"], g.colors["white"])
@@ -363,7 +353,7 @@ def map_loop():
 def handle_pause_menu(tmp, menu_buttons):
 	if tmp == 0: refresh_map(menu_buttons)
 	elif tmp == 1: #Save
-		possible_name = g.create_textbox("Save your game under what name?",
+		possible_name = g.create_textbox(g.strings["save_text"],
 			g.default_savegame_name, g.font[0][18],
 					(g.screen_size[0]/2-100, 100), (200, 100), 25,
 					g.colors["dark_blue"], g.colors["white"], g.colors["white"],
@@ -471,7 +461,7 @@ def display_base_list(location, menu_buttons):
 		tmp = build_new_base_window(location)
 		if tmp != "" and tmp != -1:
 			base_to_add = g.base_type[tmp]
-			possible_name = g.create_textbox("Enter a name for the base.",
+			possible_name = g.create_textbox(g.strings["new_base_text"],
 				generate_base_name(location, g.base_type[tmp]),
 				g.font[0][18],
 				(g.screen_size[0]/2-150, 100), (300, 100), 25,
