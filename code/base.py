@@ -198,3 +198,15 @@ def allow_entry_to_loc(location):
 	else:
 		print "BUG: allow_entry_to_loc called with "+str(location)
 		return 0
+
+def destroy_base(location, index_num):
+	if not g.bases.has_key(location):
+		print "Bad location of "+str(location)+" given to destroy_base"
+		return False
+	if index_num < 0 or index_num >= len(g.bases[location]):
+		print "Bad index of "+str(index_num)+" given to destroy_base"
+		return False
+	g.bases[location].pop(index_num)
+	renumber_bases(g.bases[location])
+	return True
+

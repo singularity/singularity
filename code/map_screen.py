@@ -54,7 +54,8 @@ def display_pause_menu():
 
 	sel_button = -1
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(30)
+		g.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -106,7 +107,8 @@ def display_cheat_list(menu_buttons):
 
 	sel_button = -1
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(30)
+		g.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -230,6 +232,7 @@ def map_loop():
 	#I set this to 1000 to force an immediate refresh.
 	milli_clock = 1000
 	while 1:
+		pygame.time.wait(10)
 		milli_clock += g.clock.tick(60) * g.curr_speed
 		if milli_clock >= 1000:
 			need_refresh = g.pl.give_time(milli_clock/1000)
@@ -412,6 +415,7 @@ significant_numbers = [
 	'8',
 	'15',
 	'16',   # Four of the Lost numbers.  The other two are '23' and '42'.
+	'13',   # Lucky or unlucky?
 	'1947', # Roswell.
 	'2012', # Mayan calendar ending.
 	'2038', # End of UNIX 32-bit time.
@@ -498,6 +502,9 @@ def display_base_list(location, menu_buttons):
 			next_prev = 1
 			while next_prev != 0:
 				next_prev = base_screen.show_base(g.bases[location][tmp])
+				if next_prev == -2:
+					g.base.destroy_base(location, tmp)
+					break
 				tmp += next_prev
 				if tmp < 0: tmp = len(g.bases[location]) -1
 				if tmp >= len(g.bases[location]): tmp = 0
@@ -554,7 +561,8 @@ def display_base_list_inner(location):
 
 	sel_button = -1
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(30)
+		g.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -654,7 +662,8 @@ def build_new_base_window(location):
 
 	sel_button = -1
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(30)
+		g.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:

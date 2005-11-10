@@ -70,11 +70,15 @@ def show_base(base):
 	menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-20,
 		g.screen_size[1]-25), (20, 25), ">", 0, g.font[1][20]))
 
+	menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-90,
+		g.screen_size[1]-50), (90, 25), "DESTROY", 0, g.font[1][20]))
+
 	sel_button = -1
 
 	refresh_base(menu_buttons, base)
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(40)
+		g.clock.tick(20)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -112,6 +116,14 @@ def show_base(base):
 					elif button.button_id == ">":
 						g.play_click()
 						return 1
+					elif button.button_id == "DESTROY":
+						if g.create_yesno("Really destroy this base?",
+								g.font[0][16], (100, 100), (150, 100),
+								g.colors["blue"], g.colors["white"],
+								g.colors["white"]):
+							g.play_click()
+							return -2
+						else: refresh_base(menu_buttons, base)
 					elif button.xy[1] != -1 and button.xy[1] != g.screen_size[1]-25:
 						if button.xy[0] == event.pos[0] or \
 								button.xy[1] == event.pos[1]: continue
@@ -246,7 +258,8 @@ def build_item(base, item_type):
 
 	sel_button = -1
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(30)
+		g.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -423,7 +436,8 @@ def change_tech(base):
 
 	sel_button = -1
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(30)
+		g.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:

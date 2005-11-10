@@ -75,7 +75,8 @@ def main_research_screen():
 	listbox.refresh_list(item_listbox, item_scroll, list_pos, item_display_list)
 
 	while 1:
-		g.clock.tick(60)
+		pygame.time.wait(30)
+		g.clock.tick(30)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: g.quit_game()
 			elif event.type == pygame.KEYDOWN:
