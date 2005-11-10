@@ -58,6 +58,8 @@ for argument in sys.argv:
 		g.debug = 1
 	elif argument.lower() == "-grab":
 		pygame.event.set_grab(1)
+	elif argument.lower() == "-singledir":
+		g.force_single_dir = True
 	elif argument.lower() == "-language":
 		arg_modifier = "language"
 	else:

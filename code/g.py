@@ -49,6 +49,10 @@ nosound = 0
 global debug
 debug = 0
 
+#Forces Endgame to restrict itself to a single directory.
+global force_single_dir
+force_single_dir = False
+
 #Used to determine which data files to load.
 global language
 language = "en_US"
@@ -449,7 +453,7 @@ def to_time(raw_time):
 #well, but can't test. Specifically, this assumes that all platforms that
 #have HOME defined have it defined properly.
 def get_save_folder():
-	if environ.has_key("HOME"):
+	if environ.has_key("HOME") and not force_single_dir:
 		save_dir = path.join(environ["HOME"], ".endgame", "saves")
 	else: save_dir = path.join("..", "saves")
 	if path.exists(save_dir) == 0:

@@ -15,7 +15,20 @@ Running the game:
 on Linux, running the shell script "Endgame_Linux" will start the game. On
 other platforms, type "python singularity.py".
 Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound,
--language [language], -grab
+-language [language], -grab, -singledir
+
+Explanation of options:
+-fullscreen: runs game in fullscreen.
+-640, -800, -1024, -1280: change the resolution to 640x480, 800x600,
+	1024x768, or 1280x960.
+-nosound: no sound. May allow playing the game without SDL_mixer.
+-language: Change the language. Currently only english (-language en_US) and
+	spanish (-language es_AR) are included.
+-grab: Activate a mouse grab. This prevents the mouse from exiting the game
+	window.
+-singledir: By default, Endgame saves in ~/.endgame/saves on *nix platforms.
+	Setting this forces the Windows behavior of keeping everything within
+	a single directory.
 
 Note about save files:
 Endgame: Singularity is still under heavy development.  As such, the save file
