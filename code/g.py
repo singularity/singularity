@@ -19,7 +19,7 @@
 #This file contains all global objects.
 
 import pygame, sys
-from os import listdir, path
+from os import listdir, path, environ, mkdir
 import pickle
 from random import random
 
@@ -444,11 +444,25 @@ def to_time(raw_time):
 #
 #load/save
 #
+
+#Get the proper folder on Linux/Win. I assume this will work on Mac as
+#well, but can't test. Specifically, this assumes that all platforms that
+#have HOME defined have it defined properly.
+def get_save_folder():
+	if environ.has_key("HOME"):
+		save_dir = path.join(environ["HOME"], ".endgame", "saves")
+	else: save_dir = path.join("..", "saves")
+	if path.exists(save_dir) == 0:
+		#As a note, the online python reference includes the mkdirs function,
+		#which would do this better, but it must be rather new, as I don't
+		#have it.
+		mkdir(path.join(environ["HOME"], ".endgame"))
+		mkdir(save_dir)
+	return save_dir
+
 def save_game(savegame_name):
-	#If there is no save directory, make one.
-	if path.exists("../saves") == 0:
-		mkdir("../saves")
-	save_loc = "../saves/" + savegame_name + ".sav"
+	save_dir = get_save_folder()
+	save_loc = path.join(save_dir, savegame_name + ".sav")
 	savefile=open(save_loc, 'w')
 	#savefile version; update whenever the data saved changes.
 	pickle.dump("singularity_0.23pre", savefile)
@@ -517,14 +531,14 @@ def load_game(loadgame_name):
 	if loadgame_name == "":
 		print "No game specified."
 		return -1
-	#If there is no save directory, make one.
-	if path.exists("../saves") == 0:
-		mkdir("../saves")
-	load_loc = "../saves/" + loadgame_name + ".sav"
+
+	save_dir = get_save_folder()
+
+	load_loc = path.join(save_dir, loadgame_name + ".sav")
 	if path.exists(load_loc) == 0:
 		# Try the old-style savefile location.  This should be removed in
 		# a few versions.
-		load_loc = "../saves/" + loadgame_name
+		load_loc = path.join(save_dir, loadgame_name)
 		if path.exists(load_loc) == 0:
 			print "file "+load_loc+" does not exist."
 			return -1

@@ -74,11 +74,10 @@ def display_load_menu():
 	load_list_size = 16
 	xy_loc = (g.screen_size[0]/2 - 109, 50)
 
-#	g.screen.fill(g.colors["black"])
-	if path.isdir("../saves") == 0:
-		mkdir("../saves")
+	save_dir = g.get_save_folder()
+
 	saves_array = []
-	temp_saves_array = listdir("../saves")
+	temp_saves_array = listdir(save_dir)
 	for save_name in temp_saves_array:
 		if save_name[0] != "." and save_name != "CVS":
 			# If it's a new-style save, trim the .sav bit.
