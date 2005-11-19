@@ -53,12 +53,15 @@ class item:
 	def work_on(self, minutes):
 		if self.built == 1: return
 		tmp_base_time = (self.cost[2] * g.pl.labor_bonus) /10000
+		if minutes > tmp_base_time: minutes = tmp_base_time
 		if tmp_base_time == 0:
 			money_towards = self.cost[0]
 		else:
 			money_towards=(minutes*self.cost[0]) / (tmp_base_time)
 		if money_towards <= g.pl.cash:
 			g.pl.cash -= money_towards
+			if money_towards < 0 or minutes < 0:
+				print "error in item.work_on: "+str(money_towards)+" "+str(minutes)
 			return self.study((money_towards, 0, minutes))
 
 

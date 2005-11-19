@@ -63,7 +63,7 @@ def main_finance_screen():
 def refresh_screen(menu_buttons):
 	#Border
 	g.screen.fill(g.colors["black"])
-	#Item display
+
 	xstart = 80
 	ystart = 5
 	g.create_norm_box((xstart, ystart), (g.screen_size[0]-xstart*2,
@@ -91,10 +91,18 @@ def refresh_screen(menu_buttons):
 			if base_instance.built == 1:
 				maint += base_instance.base_type.mainten[0]
 				for item in base_instance.usage:
-							if item == 0: continue
-							if item.built == 1: continue
-							if item.cost[2] > 0:
-								item_constr += 24*60*item.cost[0]/item.cost[2]
+					if item == 0: continue
+					if item.built == 1: continue
+					if item.cost[2] > 0:
+						item_constr += (((23-g.pl.time_hour)*60+
+						(60-g.pl.time_min))*item.cost[0]/item.cost[2])
+				for item in base_instance.extra_items:
+					if item == 0: continue
+					if item.built == 1: continue
+					if item.cost[2] > 0:
+						item_constr += (((23-g.pl.time_hour)*60+
+						(60-g.pl.time_min))*item.cost[0]/item.cost[2])
+
 
 			else:
 				if base_instance.cost[2] > 0:
@@ -162,6 +170,12 @@ def refresh_screen(menu_buttons):
 			g.font[0][22], -1, (text_mid+150, 170), g.colors["white"], 2)
 
 	g.screen.fill(g.colors["white"], (text_mid-50, 190, 200, 1))
+
+	#equals
+
+	g.print_string(g.screen, "= Money at midnight:",
+			g.font[0][22], -1, (text_mid-5, 200), g.colors["white"], 2)
+
 	g.print_string(g.screen, g.add_commas(str(complete_sum)),
 			g.font[0][22], -1, (text_mid+150, 200), g.colors["white"], 2)
 
