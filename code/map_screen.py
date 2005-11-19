@@ -499,8 +499,10 @@ def display_base_list(location, menu_buttons):
 		if g.bases[location][tmp].built == 0:
 			string = "Under Construction. \\n Completion in "
 			string += g.to_time(g.bases[location][tmp].cost[2]) + ". \\n "
-			string += "Remaining cost: "+str(g.bases[location][tmp].cost[0])
-			string +=" money, and "+str(g.bases[location][tmp].cost[1])
+			string += "Remaining cost: "+g.add_commas(
+											str(g.bases[location][tmp].cost[0]))
+			string +=" money, and "+g.add_commas(
+											str(g.bases[location][tmp].cost[1]))
 			string +=" processor time."
 			g.create_dialog(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
 					(200, 200), g.colors["dark_blue"], g.colors["white"],

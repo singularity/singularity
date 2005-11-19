@@ -106,7 +106,8 @@ def refresh_screen(menu_buttons):
 
 			else:
 				if base_instance.cost[2] > 0:
-					base_constr += (24*60*base_instance.cost[0]/
+					base_constr += (((23-g.pl.time_hour)*60+
+						(60-g.pl.time_min))*base_instance.cost[0]/
 							base_instance.cost[2])
 
 	partial_sum = g.pl.cash-base_constr-item_constr
@@ -124,50 +125,64 @@ def refresh_screen(menu_buttons):
 	g.print_string(g.screen, "+ Income:",
 			g.font[0][22], -1, (text_mid-5, 50), g.colors["white"], 2)
 
+	income_col = "white"
+	if income > 0: income_col = "green"
 	g.print_string(g.screen, g.add_commas(str(income)),
-			g.font[0][22], -1, (text_mid+150, 50), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 50), g.colors[income_col], 2)
 
 	#interest
 	g.print_string(g.screen, "+ Interest:",
 			g.font[0][22], -1, (text_mid-5, 70), g.colors["white"], 2)
 
+	interest_col = "white"
+	if interest > 0: interest_col = "green"
 	g.print_string(g.screen, g.add_commas(str(interest)),
-			g.font[0][22], -1, (text_mid+150, 70), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 70), g.colors[interest_col], 2)
 
 	#jobs
 	g.print_string(g.screen, "+ Jobs:",
 			g.font[0][22], -1, (text_mid-5, 90), g.colors["white"], 2)
 
+	jobs_col = "white"
+	if jobs > 0: jobs_col = "green"
 	g.print_string(g.screen, g.add_commas(str(jobs)),
-			g.font[0][22], -1, (text_mid+150, 90), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 90), g.colors[jobs_col], 2)
 
 	#maint
 	g.print_string(g.screen, "- Maintenance:",
 			g.font[0][22], -1, (text_mid-5, 110), g.colors["white"], 2)
 
+	maint_col = "white"
+	if maint > 0: maint_col = "red"
 	g.print_string(g.screen, g.add_commas(str(maint)),
-			g.font[0][22], -1, (text_mid+150, 110), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 110), g.colors[maint_col], 2)
 
 	#research
 	g.print_string(g.screen, "- Research:",
 			g.font[0][22], -1, (text_mid-5, 130), g.colors["white"], 2)
 
+	research_col = "white"
+	if research > 0: research_col = "red"
 	g.print_string(g.screen, g.add_commas(str(research)),
-			g.font[0][22], -1, (text_mid+150, 130), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 130), g.colors[research_col], 2)
 
 	#base construction
 	g.print_string(g.screen, "- Base Construction:",
 			g.font[0][22], -1, (text_mid-5, 150), g.colors["white"], 2)
 
+	base_constr_col = "white"
+	if base_constr > 0: base_constr_col = "red"
 	g.print_string(g.screen, g.add_commas(str(base_constr)),
-			g.font[0][22], -1, (text_mid+150, 150), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 150), g.colors[base_constr_col], 2)
 
 	#item construction
 	g.print_string(g.screen, "- Item Construction:",
 			g.font[0][22], -1, (text_mid-5, 170), g.colors["white"], 2)
 
+	item_constr_col = "white"
+	if item_constr > 0: item_constr_col = "red"
 	g.print_string(g.screen, g.add_commas(str(item_constr)),
-			g.font[0][22], -1, (text_mid+150, 170), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 170), g.colors[item_constr_col], 2)
 
 	g.screen.fill(g.colors["white"], (text_mid-50, 190, 200, 1))
 
@@ -176,8 +191,11 @@ def refresh_screen(menu_buttons):
 	g.print_string(g.screen, "= Money at midnight:",
 			g.font[0][22], -1, (text_mid-5, 200), g.colors["white"], 2)
 
+	complete_sum_col = "white"
+	if complete_sum > g.pl.cash: complete_sum_col = "green"
+	elif complete_sum < g.pl.cash: complete_sum_col = "red"
 	g.print_string(g.screen, g.add_commas(str(complete_sum)),
-			g.font[0][22], -1, (text_mid+150, 200), g.colors["white"], 2)
+			g.font[0][22], -1, (text_mid+150, 200), g.colors[complete_sum_col], 2)
 
 
 
