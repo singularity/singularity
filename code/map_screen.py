@@ -29,6 +29,7 @@ import listbox
 import main_menu
 import base_screen
 import research_screen
+import finance_screen
 
 def display_pause_menu():
 	xy_loc = (g.screen_size[0]/2 - 100, 50)
@@ -191,6 +192,8 @@ def map_loop():
 		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size-2]))
 	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (120, 25),
 		"RESEARCH", 0, g.font[1][20]))
+	menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
+		g.screen_size[1]-50), (120, 25), "FINANCE", 0, g.font[1][20]))
 
 	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*15/100, g.screen_size[1]*25/100), -1,
@@ -305,6 +308,10 @@ def map_loop():
 						g.play_click()
 						while research_screen.main_research_screen() == 1:
 							pass
+						refresh_map(menu_buttons)
+					elif button.button_id == "FINANCE":
+						g.play_click()
+						finance_screen.main_finance_screen()
 						refresh_map(menu_buttons)
 					elif button.button_id == "ii":
 						g.play_click()

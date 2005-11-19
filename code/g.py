@@ -402,6 +402,11 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 			elif event.type == pygame.MOUSEMOTION:
 				sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
+#creates a box, as used throughout the game.
+def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
+	screen.fill(colors[outline_color], (xy[0], xy[1], size[0], size[1]))
+	screen.fill(colors[inner_color], (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
+
 
 #Takes a number (in string form) and adds commas to it to aid in human viewing.
 def add_commas(tmp_string):

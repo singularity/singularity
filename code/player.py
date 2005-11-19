@@ -96,7 +96,7 @@ class player_class:
  					else:
 						#Construction of items:
 						tmp = 0
- 						for item in base_name.usage:
+						for item in base_name.usage:
 							if item == 0: continue
 							tmp = item.work_on(time_min) or tmp
 						if tmp == 1:
