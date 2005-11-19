@@ -131,7 +131,7 @@ def refresh_screen(menu_buttons):
 			g.font[0][22], -1, (text_mid+150, 50), g.colors[income_col], 2)
 
 	#interest
-	g.print_string(g.screen, "+ Interest:",
+	g.print_string(g.screen, "+ Interest ("+g.to_percent(g.pl.interest_rate)+"):",
 			g.font[0][22], -1, (text_mid-5, 70), g.colors["white"], 2)
 
 	interest_col = "white"

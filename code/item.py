@@ -35,14 +35,16 @@ class item:
 	def __init__(self, item_type):
 		self.item_type = item_type
 		self.cost = (item_type.cost[0], item_type.cost[1],
-						item_type.cost[2]*24*60)
+						(item_type.cost[2]*24*60*g.pl.labor_bonus) /10000)
 		self.built = 0
 	def study(self, cost_towards):
 		self.cost = (self.cost[0]-cost_towards[0], self.cost[1]-cost_towards[1],
 				self.cost[2]-cost_towards[2])
 		if self.cost[0] <= 0: self.cost = (0, self.cost[1], self.cost[2])
 		if self.cost[1] <= 0: self.cost = (self.cost[0], 0, self.cost[2])
-		if self.cost[2] <= 0: self.cost = (self.cost[0], self.cost[1], 0)
+		#fix rounding errors from the labor bonus.
+		if (self.cost[2] * g.pl.labor_bonus) /10000 <= 0:
+			self.cost = (self.cost[0], self.cost[1], 0)
 		if self.cost == (0, 0, 0):
 			self.build()
 			return 1
