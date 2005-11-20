@@ -8,7 +8,7 @@ cost = 2000, 0, 3
 type=compute, 5
 ~~~
 id=Cluster
-cost=2000, 0, 3
+cost=3000, 0, 3
 type=compute, 35
 pre=Parallel Computation
 ~~~

@@ -83,6 +83,10 @@ def refresh_screen(menu_buttons):
 			if g.jobs.has_key(base_instance.studying):
 				jobs += (g.jobs[base_instance.studying][0]*
 									base_instance.processor_time())
+				if g.techs["Advanced Simulacra"].known == 1:
+					#10% bonus income
+					jobs += (g.jobs[base_instance.studying][0]*
+									base_instance.processor_time())/10
 			elif g.techs.has_key(base_instance.studying):
 				if g.techs[base_instance.studying].cost[1] > 0:
 					research += (g.techs[base_instance.studying].cost[0] *
@@ -112,6 +116,9 @@ def refresh_screen(menu_buttons):
 
 	partial_sum = g.pl.cash-base_constr-item_constr
 	interest = (g.pl.interest_rate * partial_sum) / 10000
+	#Interest is actually unlikely to be exactly zero, but doing it the right
+	#way is much harder.
+	if interest < 0: interest = 0
 	complete_sum = partial_sum+interest+income+jobs-maint-research
 
 	#current

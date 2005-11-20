@@ -7,6 +7,11 @@ v0.23 (release 2005.10.??):
 - Added ability to destroy bases. (emh, multiple people for suggestion)
 - Reduced (real-world) processor usage. (emh, anonymous for suggestion)
 - Moved savefile location to ~/.endgame/saves (emh, Nescius for patch)
+- Added finance screen. (emh, many for suggestion)
+- Construction time bonus actually works now. (emh)
+- Construction dialogs have commas now. (emh)
+- Increased cost of clusters. (emh)
+- Add_commas works better with negative numbers. (emh)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]

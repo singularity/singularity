@@ -415,6 +415,8 @@ def add_commas(tmp_string):
 	for i in range(len(string)):
 		if i % 3 == 0 and i != 0: output_string = ","+output_string
 		output_string = string[i] + output_string
+
+	if output_string[0:2] == "-,": output_string = output_string[0]+output_string[2:]
 	return output_string
 
 # 	new_string = ""

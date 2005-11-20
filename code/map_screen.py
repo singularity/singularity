@@ -193,7 +193,8 @@ def map_loop():
 	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (120, 25),
 		"RESEARCH", 0, g.font[1][20]))
 	menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
-		g.screen_size[1]-50), (120, 25), "FINANCE", 0, g.font[1][20]))
+		g.screen_size[1]-50), (120, 25),
+		"FINANCE", 6, g.font[1][20]))
 
 	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*15/100, g.screen_size[1]*25/100), -1,
@@ -203,7 +204,7 @@ def map_loop():
 			"S AMERICA", 0, g.font[1][25]))
 	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*45/100, g.screen_size[1]*30/100), -1,
-			"EUROPE", 0, g.font[1][25]))
+			"EUROPE", 1, g.font[1][25]))
 	menu_buttons.append(buttons.make_norm_button((
 			g.screen_size[0]*80/100, g.screen_size[1]*30/100), -1,
 			"ASIA", 0, g.font[1][25]))
