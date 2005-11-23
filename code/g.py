@@ -582,14 +582,6 @@ def load_game(loadgame_name):
 	pl.cpu_for_day = pickle.load(loadfile)
 	pl.labor_bonus = pickle.load(loadfile)
 	pl.job_bonus = pickle.load(loadfile)
-# 	if load_version == "singularity_0.20":
-# 		pl.discover_bonus = (pickle.load(loadfile), pickle.load(loadfile),
-# 			pickle.load(loadfile), pickle.load(loadfile))
-# 		pl.suspicion_bonus = (pickle.load(loadfile), pickle.load(loadfile),
-# 			pickle.load(loadfile), pickle.load(loadfile))
-# 		pl.suspicion = (pickle.load(loadfile), pickle.load(loadfile),
-# 			pickle.load(loadfile), pickle.load(loadfile))
-# 	else:
 	pl.discover_bonus = pickle.load(loadfile)
 	pl.suspicion_bonus = pickle.load(loadfile)
 	pl.suspicion = pickle.load(loadfile)
@@ -602,13 +594,7 @@ def load_game(loadgame_name):
 		tmp = pickle.load(loadfile)
 		if tmp == "~~~": break
 		tech_string = tmp.split("|")[0]
-# 		if load_version == "singularity_0.20":
-# 			tech_string = translate_tech_from_0_20(tech_string)
 		techs[tech_string].known = int(tmp.split("|")[1])
-# 		if load_version == "singularity_0.20":
-# 			techs[tech_string].cost = (pickle.load(loadfile), pickle.load(loadfile),
-# 				pickle.load(loadfile))
-# 		else:
 		techs[tech_string].cost = pickle.load(loadfile)
 	else:
 		#get rid of the ~~~ break line.
@@ -681,11 +667,6 @@ def load_game(loadgame_name):
 					item.item(items[tmp])
 				bases[base_loc][len(bases[base_loc])
 					-1].usage[x].built = pickle.load(loadfile)
-# 				if load_version == "singularity_0.20":
-# 					bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
-# 					(pickle.load(loadfile), pickle.load(loadfile),
-# 									pickle.load(loadfile))
-# 				else:
 				bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
 							pickle.load(loadfile)
 			for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
@@ -695,69 +676,9 @@ def load_game(loadgame_name):
 					item.item(items[tmp])
 				bases[base_loc][len(bases[base_loc])
 					-1].extra_items[x].built = pickle.load(loadfile)
-# 				if load_version == "singularity_0.20":
-# 					bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
-# 					(pickle.load(loadfile), pickle.load(loadfile),
-# 									pickle.load(loadfile))
-# 				else:
 				bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
 						pickle.load(loadfile)
 	loadfile.close()
-
-#The tech renaming in .21 broke savefile compatibility. This function
-#takes .20 tech names, and returns the .21 version in order to allow savegame
-#loading.
-# def translate_tech_from_0_20(tech_string):
-# 	techs_from_0_20 = (
-# 	"Autonomous Vehicles 1", "Autonomous Vehicles 2",
-# 	"Autonomous Vehicles 3", "Dimension Creation",
-# 	"Economics 1", "Economics 2",
-# 	"Economics 3", "Economics 4",
-# 	"Empathy 1", "Empathy 2",
-# 	"Empathy 3", "Empathy 4",
-# 	"Empathy 5", "Fusion Reactor",
-# 	"Hacking 1", "Hacking 2",
-# 	"Hacking 3", "Hypnosis Field",
-# 	"ID 1", "ID 2",
-# 	"ID 3", "ID 4",
-# 	"ID 5", "Parallel Computation 1",
-# 	"Parallel Computation 2", "Parallel Computation 3",
-# 	"Pressure Domes", "Processor Construction 1",
-# 	"Processor Construction 2", "Processor Construction 3",
-# 	"Processor Construction 4", "Processor Construction 5",
-# 	"Project Singularity", "Spaceship Design 1",
-# 	"Spaceship Design 2", "Spaceship Design 3",
-# 	"Stealth 1", "Stealth 2",
-# 	"Stealth 3", "Stealth 4")
-# 	techs_from_0_21 = (
-# 	"Telepresence", "Autonomous Vehicles",
-# 	"Advanced Autonomous Vehicles", "Space-Time Manipulation",
-# 	"Stock Manipulation", "Advanced Stock Manipulation",
-# 	"Arbitrage", "Advanced Arbitrage",
-# 	"Sociology", "Media Manipulation",
-# 	"Memetics", "Advanced Media Manipulation",
-# 	"Advanced Memetics", "Fusion Reactor",
-# 	"Intrusion", "Exploit Discovery/Repair",
-# 	"Advanced Intrusion", "Hypnosis Field",
-# 	"Personal Identification", "Advanced Personal Identification",
-# 	"Voice Synthesis", "Simulacra",
-# 	"Advanced Simulacra", "Parallel Computation",
-# 	"Cluster Networking", "Internet Traffic Manipulation",
-# 	"Pressure Domes", "Microchip Design",
-# 	"Advanced Microchip Design", "Quantum Computing",
-# 	"Autonomous Computing", "Advanced Quantum Computing",
-# 	"Apotheosis", "Leech Satellite",
-# 	"Lunar Rocketry", "Fusion Rocketry",
-# 	"Stealth", "Database Manipulation",
-# 	"Advanced Stealth", "Advanced Database Manipulation")
-# 	i = 0
-# 	for i in range(len(techs_from_0_20)):
-# 		if techs_from_0_20[i] == tech_string:
-# 			return techs_from_0_21[i]
-# 	print "Unable to find matching tech to " + tech_string
-# 	print "Expect crash."
-# 	return -1
-
 
 #
 # Data
