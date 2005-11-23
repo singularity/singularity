@@ -42,7 +42,7 @@ Playing the game:
 Use mouse control. Buttons have underlined letters to indicate shortcuts.
 Also, the following shortcut keys may prove useful:
 0, 1, 2, 3, 4 in map screen: change the speed. 0 is pause, 4 is fastest.
-Etc and Enter in various screens: leave or confirm a choice.
+ESC and Enter in various screens: leave or confirm a choice.
 P, R, N, S in base screen. Change the base items.
 	(Type the first letter of the component you want to change.)
 
