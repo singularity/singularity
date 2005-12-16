@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-v0.23 (release 2005.10.??):
+v0.23 (release 2005.12.??):
 - Centralized some of the button code. (emh)
 - Fixed bug that allowed access to uncompleted bases. (emh, Borg[MDQ] for report)
 - Tightened up the save/load functions to allow for better save compatability. (emh)
@@ -12,6 +12,8 @@ v0.23 (release 2005.10.??):
 - Construction dialogs have commas now. (emh)
 - Increased cost of clusters. (emh)
 - Add_commas works better with negative numbers. (emh)
+- Adjusted button positions for greater usability. (Phil)
+- Minor typo fixes and code cleanups. (Phil)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]

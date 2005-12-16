@@ -186,11 +186,11 @@ def map_loop():
 		"CASH", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
 	#Note that this must be element 8 in menu_buttons
-	menu_buttons.append(buttons.button((120, g.screen_size[1]-25),
-		(g.screen_size[0]-120, 26),
+	menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
+		(g.screen_size[0], 26),
 		"SUSPICION", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][tmp_font_size-2]))
-	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (120, 25),
+	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
 		"RESEARCH", 0, g.font[1][20]))
 	menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
 		g.screen_size[1]-50), (120, 25),

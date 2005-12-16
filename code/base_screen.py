@@ -40,11 +40,11 @@ def show_base(base):
 		"DETECTION CHANCE", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
-	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25),
+	menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50),
 		(170, 25), "CHANGE RESEARCH", 0, g.font[1][20], "CHANGE"))
 
-	menu_buttons.append(buttons.button((170, g.screen_size[1]-25),
-		(g.screen_size[0]-210, 26),
+	menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
+		(g.screen_size[0]-40, 26),
 		"STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
 		g.colors["black"], g.colors["white"], g.font[1][15]))
 
@@ -164,8 +164,8 @@ def refresh_base(menu_buttons, base):
 	menu_buttons[3].text = action_display_string + study_display_string
 	menu_buttons[3].remake_button()
 	#Item display
-	g.screen.fill(g.colors["white"], (xstart, ystart, 300, g.screen_size[1]-100))
-	g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 298, g.screen_size[1]-102))
+	g.screen.fill(g.colors["white"], (xstart, ystart, 300, g.screen_size[1]-150))
+	g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 298, g.screen_size[1]-152))
 
 	if base.usage[0] == 0: item_name = "None"
 	else: item_name = base.usage[0].item_type.name+" x "+str(base.has_item())
