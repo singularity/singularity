@@ -9,7 +9,7 @@ v0.23 (release 2005.12.??):
 - Moved savefile location to ~/.endgame/saves (emh, Nescius for patch)
 - Added finance screen. (emh, many for suggestion)
 - Construction time bonus actually works now. (emh)
-- Construction dialogs have commas now. (emh)
+- More numbers use commas now. (emh)
 - Increased cost of clusters. (emh)
 - Add_commas works better with negative numbers. (emh)
 - Adjusted button positions for greater usability. (Phil)

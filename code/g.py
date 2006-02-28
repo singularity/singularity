@@ -386,6 +386,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 				event.pos[0] < xy[0]+size[0]-6 and event.pos[1] < xy[1]+size[1]-6):
 					cursor_x = event.pos[0] - (xy[0]+6)
 					prev_x = 0
+					i=0
 					for i in range(1, len(work_string)):
 						if (box_font.size(work_string[:i])[0]+prev_x)/2 >= cursor_x:
 							cursor_loc=i-1
