@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-v0.23 (release 2005.12.??):
+v0.23 (release 2006.03.??):
 - Centralized some of the button code. (emh)
 - Fixed bug that allowed access to uncompleted bases. (emh, Borg[MDQ] for report)
 - Tightened up the save/load functions to allow for better save compatability. (emh)
@@ -14,6 +14,8 @@ v0.23 (release 2005.12.??):
 - Add_commas works better with negative numbers. (emh)
 - Adjusted button positions for greater usability. (Phil)
 - Minor typo fixes and code cleanups. (Phil)
+- Further reduction in processor usage using new Clock class. (Phil, Adam Bark
+  for patch)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]

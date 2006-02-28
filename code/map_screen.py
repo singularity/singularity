@@ -1,5 +1,5 @@
 #file: map_screen.py
-#Copyright (C) 2005 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify

@@ -69,6 +69,7 @@ Credits:
 Evil Mr Henry
 Phil Bordelon
 Borg[MDQ] (translation into Spanish)
+Adam Bark (better Clock class)
 
 Contributing:
 All suggestions, translations, code, etc. are welcomed, though it would be
@@ -85,7 +86,7 @@ are under that license, I'm not sure you could get away with a different
 license.)
 
 Code License:
-Copyright (C) 2005 Evil Mr Henry and Phil Bordelon
+Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -100,6 +101,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+Portions Copyright (C) 2005 Adam Bark.  See code/clock.py for details.
 
 Data License:
 The sounds, the text files, and the icons in the data subdirectory are under
