@@ -18,6 +18,7 @@
 
 #This file contains all global objects.
 
+import clock
 import pygame, sys
 from os import listdir, path, environ, mkdir
 import pickle
@@ -33,8 +34,11 @@ global screen_size
 screen_size = (800, 600)
 
 #Used to pass time in the main screen.
-global clock
-clock = pygame.time.Clock()
+global old_clock
+old_clock = pygame.time.Clock()
+
+global new_clock
+new_clock = clock.Clock()
 
 #Allows access to the cheat menu.
 global cheater
