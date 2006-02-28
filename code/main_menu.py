@@ -18,7 +18,7 @@
 
 #This file is used to display the main menu upon startup.
 
-from os import path, mkdir, listdir
+from os import path, listdir
 
 import pygame
 import g
