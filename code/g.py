@@ -199,8 +199,7 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
 
 	sel_button = -1
 	while 1:
-		pygame.time.wait(30)
-		clock.tick(30)
+		new_clock.tick(20)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -234,8 +233,7 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color, text_
 
 	sel_button = -1
 	while 1:
-		pygame.time.wait(30)
-		clock.tick(30)
+		new_clock.tick(20)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: quit_game()
 			elif event.type == pygame.KEYDOWN:
@@ -298,8 +296,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
 	}
 
 	while 1:
-		pygame.time.wait(30)
-		clock.tick(30)
+		new_clock.tick(20)
 		if key_down_dict[pygame.K_BACKSPACE] > 0:
 			key_down_dict[pygame.K_BACKSPACE] += 1
 			if key_down_dict[pygame.K_BACKSPACE] > repeat_timing_dict[pygame.K_BACKSPACE]:
