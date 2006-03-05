@@ -26,10 +26,10 @@ USER-VISIBLE CHANGES:
   screen. (Phil)
 - Display the name of the base at the top of the base screen. (Phil,
   Ticho for suggestion)
-- Reduce discovery chance to 0% after the game is won. (Phil, Szabo Roland for
+- Reduce discovery chance to 0% after the game is won. (Phil, Szabó Roland for
   suggestion)
 - Properly localize win screen. (Phil)
-- Right-click will exit from all menus. (emh)
+- Right-click will exit from all menus. (emh, mandos for suggestion)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
