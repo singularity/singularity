@@ -52,6 +52,23 @@ class tech:
 		self.known = 1
 
 		#give the effect of the tech
+
+		if self.tech_id == "Personal Identification":
+			for base_loc in g.bases:
+				for base_name in g.bases[base_loc]:
+					if base_name.studying == "Menial Jobs":
+						base_name.studying = "Basic Jobs"
+		if self.tech_id == "Voice Synthesis":
+			for base_loc in g.bases:
+				for base_name in g.bases[base_loc]:
+					if base_name.studying == "Basic Jobs":
+						base_name.studying = "Intermediate Jobs"
+		if self.tech_id == "Simulacra":
+			for base_loc in g.bases:
+				for base_name in g.bases[base_loc]:
+					if base_name.studying == "Intermediate Jobs":
+						base_name.studying = "Expert Jobs"
+
 		if self.tech_type == "interest":
 			g.pl.interest_rate += self.secondary_data
 		elif self.tech_type == "income":
