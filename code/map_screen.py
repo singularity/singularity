@@ -549,8 +549,8 @@ def display_base_list_inner(location):
     base_id_list = []
     for base in g.bases[location]:
         tmp_study = base.studying
-        if tmp_study == "": tmp_study = "Nothing"
-        if base.built != 1: tmp_study = "Building"
+        if tmp_study == "": tmp_study = g.strings["nothing"]
+        if base.built != 1: tmp_study = g.strings["building"]
         elif g.techs.has_key(tmp_study): tmp_study = g.techs[tmp_study].name
         temp_base_list.append(base.name+" ("+tmp_study+")")
         base_id_list.append(base.ID)
