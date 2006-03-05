@@ -26,6 +26,8 @@ USER-VISIBLE CHANGES:
   screen. (Phil)
 - Display the name of the base at the top of the base screen. (Phil,
   Ticho for suggestion)
+- Reduce discovery chance to 0% after the game is won. (Phil, Szabo Roland for
+  suggestion)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)

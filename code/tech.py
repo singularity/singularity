@@ -108,6 +108,7 @@ class tech:
                 g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                 (200, 200), g.colors["dark_blue"], g.colors["white"],
                 g.colors["white"])
+            g.pl.discover_bonus = (0, 0, 0, 0)
 
 
 
