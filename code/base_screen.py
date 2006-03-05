@@ -38,13 +38,13 @@ def show_base(base):
 
     menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
         (g.screen_size[0], 25), "DETECTION CHANCE", -1,
-        g.colors["black"], g.colors["black"], g.colors["black"],
+        g.colors["black"], g.colors["dark_blue"], g.colors["black"],
         g.colors["white"], g.font[1][15]))
 
-    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-75),
+    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50),
         (170, 25), "CHANGE RESEARCH", 0, g.font[1][20], "CHANGE"))
 
-    menu_buttons.append(buttons.button((0, g.screen_size[1]-50),
+    menu_buttons.append(buttons.button((0, 25),
         (g.screen_size[0], 25),
         "STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
         g.colors["black"], g.colors["white"], g.font[1][15]))
@@ -72,7 +72,11 @@ def show_base(base):
         0), (20, 25), ">", 0, g.font[1][20]))
 
     menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-90,
-        g.screen_size[1]-75), (90, 25), "DESTROY", 0, g.font[1][20]))
+        g.screen_size[1]-50), (90, 25), "DESTROY", 0, g.font[1][20]))
+
+    menu_buttons.append(buttons.button((70, -1), (g.screen_size[0]-145,
+        25), "BASE NAME", -1, g.colors["black"], g.colors["black"],
+        g.colors["black"], g.colors["white"], g.font[1][15]))
 
     sel_button = -1
 
@@ -138,6 +142,10 @@ def refresh_base(menu_buttons, base):
     xstart = 10
     ystart = 50
 
+    #base name display
+    menu_buttons[11].text = base.name
+    menu_buttons[11].remake_button()
+    
     #detection chance display
     d_chance = base.get_d_chance()
     menu_buttons[1].text = "[DETECTION CHANCE] NEWS: "+ \
