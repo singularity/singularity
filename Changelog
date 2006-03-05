@@ -29,6 +29,7 @@ USER-VISIBLE CHANGES:
 - Reduce discovery chance to 0% after the game is won. (Phil, Szabo Roland for
   suggestion)
 - Properly localize win screen. (Phil)
+- Right-click will exit from all menus. (emh)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
