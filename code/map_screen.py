@@ -238,7 +238,7 @@ def map_loop():
     #I set this to 1000 to force an immediate refresh.
     milli_clock = 1000
     while 1:
-        milli_clock += g.clock.tick(60) * g.curr_speed
+        milli_clock += g.clock.tick(30) * g.curr_speed
         if milli_clock >= 1000:
             need_refresh = g.pl.give_time(milli_clock/1000)
             if need_refresh == 1: refresh_map(menu_buttons)
