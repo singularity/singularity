@@ -21,6 +21,8 @@ lost_sus=Es demasiado tarde. Todo el mundo sabe de mi existencia, y la relación 
 save_text=¿Guardar tu juego bajo qué nombre?
 new_base_text=Ingresa el nombre para la base.
 unbuildable=No puedo construir en esta base, no tengo acceso físico.
+nothing=nada
+building=bajo construcción
 ~~~
 id=jobs
 job_expert=Realizar trabajos expertos. El uso de robots indistinguibles de los humanos me brinda más posibilidades de trabajos.
