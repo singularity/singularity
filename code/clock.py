@@ -41,7 +41,14 @@ class Clock:
 
     def _stop(self):
         try:
-            time.sleep(1.0/self.rate - (time.time() - self.t))
+
+            # There are problems if you try to sleep for a negative amount of
+            # time.  Windows interprets it as a really long time.  Strangeness
+            # ensues.  So we sleep iff sleep_time > 0 instead of relying on
+            # the math to be right.
+            sleep_time = 1.0/self.rate - (time.time() - self.t)
+            if sleep_time > 0:
+               time.sleep(sleep_time)
         except IOError:
             # This will catch exceptions raised if the actual framerate is less
             # than self.rate or if no rate was passed to tick.
