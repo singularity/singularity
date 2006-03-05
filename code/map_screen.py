@@ -506,9 +506,9 @@ def display_base_list(location, menu_buttons):
             string +=" money, and "+g.add_commas(
                                             str(g.bases[location][tmp].cost[1]))
             string +=" processor time."
-            if g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+            if not g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
-                    g.colors["white"], ("DESTROY", "OK")):
+                    g.colors["white"], ("OK", "DESTROY")):
                 if g.create_yesno("Destroy this base? This will waste "+
                         g.add_commas(str(g.bases[location][tmp].base_type.cost[0]-
                             g.bases[location][tmp].cost[0]))
