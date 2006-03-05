@@ -139,11 +139,11 @@ def refresh_base(menu_buttons, base):
 
     #detection chance display
     d_chance = base.get_d_chance()
-    menu_buttons[1].text = "DETECTION CHANCE: NEWS: "+ \
+    menu_buttons[1].text = "[DETECTION CHANCE] NEWS: "+ \
         g.to_percent(d_chance[0])+"  SCIENCE: "+ \
         g.to_percent(d_chance[1])+"  COVERT: "+ \
         g.to_percent(d_chance[2])+"  PUBLIC: "+ \
-        g.to_percent(d_chance[3])+"."
+        g.to_percent(d_chance[3])
     menu_buttons[1].remake_button()
 
     #research display
