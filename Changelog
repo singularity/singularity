@@ -39,6 +39,8 @@ OTHER CHANGES:
   the format is churning a lot less. (Phil)
 - Fix clock code to handle "didn't run fast enough" properly. (Phil, mandos
   for suggestion)
+- Fix clock code to actually return the time spent running; this allows us to
+  change all clock usage to the new, uses-almost-no-CPU clock code. (Phil)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]

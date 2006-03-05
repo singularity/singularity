@@ -34,8 +34,8 @@ class Clock:
         specified number per second.
         """
         self.rate = rate
-        retVal = int(round((time.time() - self.t) * 1000, 0))
         self._stop()
+        retVal = int((time.time() - self.t) * 1000)
         self.t = time.time()
         return retVal
 
