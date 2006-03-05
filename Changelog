@@ -32,6 +32,8 @@ USER-VISIBLE CHANGES:
 * Right-click will exit from all menus. (emh, mandos for suggestion)
 - Warn players when research selected on the Research screen will not use all
   available CPU. (Phil, mandos for suggestion)
+- Note bases that are under construction in the base list. (emh, Ticho for
+  suggestion)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
