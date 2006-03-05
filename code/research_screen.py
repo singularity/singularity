@@ -294,12 +294,16 @@ def assign_tech(free_CPU):
                 if base.allow_study(tmp_base.studying):
                     return_val = True
                     base.studying = tmp_base.studying
-                else:
+
+                # We want to warn the player that we didn't use all available
+                # CPU.  But if the base isn't built yet, that's a stupid
+                # warning.
+                elif base.built:
                    show_dangerous_dialog = True
 
     if show_dangerous_dialog:
         g.create_dialog(g.strings["dangerous_research"], g.font[0][18],
             (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
             g.colors["white"], g.colors["white"])
-                                                            
+
     return return_val
