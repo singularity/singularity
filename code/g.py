@@ -214,7 +214,7 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
 
 #create dialog with YES/NO buttons.
 def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
-              text_color, button_names=("YES", "NO")):
+              text_color, button_names=("YES", "NO"), reverse_context = False):
        screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
        screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
        print_multiline(screen, string_to_print, box_font, size[0]-10, (xy[0]+5, xy[1]+5),
@@ -236,26 +236,32 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
               button.refresh_button(0)
        pygame.display.flip()
 
+       cancel = False
+       accept = True
+       if reverse_context:
+          cancel = True
+          accept = False
+       
        sel_button = -1
        while 1:
               clock.tick(20)
               for event in pygame.event.get():
                      if event.type == pygame.QUIT: quit_game()
                      elif event.type == pygame.KEYDOWN:
-                            if event.key == pygame.K_ESCAPE: return False
-                            elif event.key == pygame.K_RETURN: return False
+                            if event.key == pygame.K_ESCAPE: return cancel
+                            elif event.key == pygame.K_RETURN: return cancel
                      elif event.type == pygame.MOUSEMOTION:
                             sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
                      elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                        return False
+                        return cancel
                      for button in menu_buttons:
                             if button.was_activated(event):
                                    if button.button_id == button_names[0]:
                                           play_click()
-                                          return True
+                                          return accept
                                    if button.button_id == button_names[1]:
                                           play_click()
-                                          return False
+                                          return cancel
 
 valid_input_characters = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
                           'n','o','p','q','r','s','t','u','v','w','x','y','z',
