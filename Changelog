@@ -16,6 +16,7 @@ v0.23 (release 2006.03.??):
 - Minor typo fixes and code cleanups. (Phil)
 - Further reduction in processor usage using new Clock class. (Phil, Adam Bark
   for patch)
+- Can destroy bases under construction. (emh, Tim Freeman for suggestion)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]
