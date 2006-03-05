@@ -202,14 +202,15 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
                             if event.key == pygame.K_ESCAPE: return
                             elif event.key == pygame.K_RETURN: return
                             elif event.key == pygame.K_o: return
-                     elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                            for button in menu_buttons:
-                                   if button.is_over(event.pos):
-                                          if button.text == "OK":
-                                                 play_click()
-                                                 return
+                     elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                        return
                      elif event.type == pygame.MOUSEMOTION:
                             sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+                     for button in menu_buttons:
+                            if button.was_activated(event):
+                                   if button.button_id == "OK":
+                                          play_click()
+                                          return True
 
 #create dialog with YES/NO buttons.
 def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
@@ -245,6 +246,8 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
                             elif event.key == pygame.K_RETURN: return False
                      elif event.type == pygame.MOUSEMOTION:
                             sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+                     elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                        return False
                      for button in menu_buttons:
                             if button.was_activated(event):
                                    if button.button_id == button_names[0]:
@@ -379,6 +382,8 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
                      elif event.type == pygame.KEYUP:
                             key_down_dict[event.key] = 0
                             repeat_timing_dict[event.key] = 5
+                     elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                        return ""
                      elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                             for button in menu_buttons:
                                    if button.is_over(event.pos):

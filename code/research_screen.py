@@ -112,6 +112,7 @@ def main_research_screen():
                         refresh_research(item_list[list_pos], item_CPU_list[list_pos])
                         listbox.refresh_list(item_listbox, item_scroll,
                                         list_pos, item_display_list)
+                if event.button == 3: return -1
                 if event.button == 4:
                     list_pos -= 1
                     if list_pos <= 0:

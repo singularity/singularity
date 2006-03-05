@@ -62,6 +62,8 @@ def display_pause_menu():
                 if event.key == pygame.K_ESCAPE: return 0
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                return 0
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "RESUME":
@@ -114,6 +116,8 @@ def display_cheat_list(menu_buttons):
                 if event.key == pygame.K_ESCAPE: return 0
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                return
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "RESUME":
@@ -606,6 +610,7 @@ def display_base_list_inner(location):
                         base_pos = (base_pos/base_list_size)*base_list_size + tmp
                         listbox.refresh_list(bases_list, bases_scroll,
                                         base_pos, temp_base_list)
+                if event.button == 3: return -1
                 if event.button == 4:
                     base_pos -= 1
                     if base_pos <= 0:
@@ -709,6 +714,7 @@ def build_new_base_window(location):
                         refresh_new_base(temp_base_list[base_pos], xy_loc)
                         listbox.refresh_list(bases_list, 0,
                                         base_pos, temp_base_display_list)
+                if event.button == 3: return -1
                 if event.button == 4:
                     base_pos -= 1
                     if base_pos <= 0:

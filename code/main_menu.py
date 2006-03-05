@@ -162,6 +162,8 @@ def display_load_menu():
                         listbox.refresh_list(saves_list, saves_scroll,
                                     saves_pos, saves_array)
 
+                if event.button == 3:
+                    return -1
                 if event.button == 4:
                     saves_pos -= 1
                     if saves_pos <= 0:

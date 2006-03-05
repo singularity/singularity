@@ -89,6 +89,9 @@ def show_base(base):
                 if event.key == pygame.K_ESCAPE: return 0
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                g.play_click()
+                return 0
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BACK":
@@ -145,7 +148,7 @@ def refresh_base(menu_buttons, base):
     #base name display
     menu_buttons[11].text = base.name
     menu_buttons[11].remake_button()
-    
+
     #detection chance display
     d_chance = base.get_d_chance()
     menu_buttons[1].text = "[DETECTION CHANCE] NEWS: "+ \
@@ -297,6 +300,7 @@ def build_item(base, item_type):
                         refresh_item(base, item_list[list_pos], xy_loc)
                         listbox.refresh_list(item_listbox, item_scroll,
                                         list_pos, item_display_list)
+                if event.button == 3: return -1
                 if event.button == 4:
                     list_pos -= 1
                     if list_pos <= 0:
@@ -476,6 +480,7 @@ def change_tech(base):
                         refresh_tech(base, item_list2[list_pos], xy_loc)
                         listbox.refresh_list(tech_list, tech_scroll,
                                         list_pos, item_list)
+                if event.button == 3: return -1
                 if event.button == 4:
                     list_pos -= 1
                     if list_pos <= 0:

@@ -50,6 +50,9 @@ def main_finance_screen():
 
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                g.play_click()
+                return -1
 
             for button in menu_buttons:
                 if button.was_activated(event):
