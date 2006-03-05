@@ -21,6 +21,7 @@ USER-VISIBLE CHANGES:
   discovered. (emh, Tim Freeman for noting problem)
 - Automatically bump machines working jobs to new job levels when they are
   researched. (emh, Phil for suggestion :)
+- Tweak Suspicion display for readability. (Phil)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
