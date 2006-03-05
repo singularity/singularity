@@ -18,7 +18,7 @@
 
 #This file contains all global objects.
 
-import clock
+import clock as sing_clock
 import pygame, sys
 from os import listdir, path, environ, mkdir
 import pickle
@@ -34,7 +34,7 @@ global screen_size
 screen_size = (800, 600)
 
 global clock
-clock = clock.Clock()
+clock = sing_clock.Clock()
 
 #Allows access to the cheat menu.
 global cheater
