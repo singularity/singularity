@@ -1,11 +1,10 @@
 Endgame: Singularity Changelog
 
 v0.23 (release 2006.03.??):
-- Centralized some of the button code. (emh)
+
+USER-VISIBLE CHANGES:
 - Fixed bug that allowed access to uncompleted bases. (emh, Borg[MDQ] for
   report)
-- Tightened up the save/load functions to allow for better save compatibility.
-  (emh)
 - Added ability to destroy bases. (emh, multiple people for suggestion)
 - Reduced (real-world) processor usage. (emh, anonymous for suggestion)
 - Moved savefile location to ~/.endgame/saves (emh, Nescius for patch)
@@ -13,17 +12,22 @@ v0.23 (release 2006.03.??):
 - Construction time bonus actually works now. (emh)
 - More numbers use commas now. (emh)
 - Increased cost of clusters. (emh)
-- Add_commas works better with negative numbers. (emh)
 - Adjusted button positions for greater usability. (Phil)
-- Minor typo fixes and code cleanups. (Phil)
+- Minor typo fixes and tightened grammar. (Phil)
 - Further reduction in processor usage using new Clock class. (Phil, Adam Bark
   for patch)
 - Can destroy bases under construction. (emh, Tim Freeman for suggestion)
 - Bases under construction are no longer protected indefinitely from being
   discovered. (emh, Tim Freeman for noting problem)
-- Tightened grammar. (Phil)
 - Automatically bump machines working jobs to new job levels when they are
   researched. (emh, Phil for suggestion :)
+
+OTHER CHANGES:
+- Centralized some of the button code. (emh)
+- Tightened up the save/load functions to allow for better save compatibility.
+  (emh)
+- Add_commas works better with negative numbers. (emh)
+- Minor code cleanups. (Phil)
 - Convert Evil Tabs in source to (4) spaces.  Code should be easier to read and
   edit now.  (emh)
 - Changed savefile signature string to be less release-version based, now that
