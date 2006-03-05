@@ -155,25 +155,25 @@ class player_class:
 			loc_in_array = -1
 			for base_name in g.bases[base_loc]:
 				loc_in_array += 1
-				if base_name.built == 1:
-					#Does base get detected?
-					#Give a grace period.
-					if self.time_day - base_name.built_date > 14:
-						tmp_d_chance = base_name.get_d_chance()
-						if g.debug == 1:
-							print "Chance of discovery for base %s: %s" % \
-								(base_name.name, repr (tmp_d_chance))
-						#Note that I'm filling removal_index from the front
-						#in order to make base removal easier.
-						if g.roll_percent(tmp_d_chance[0]) == 1:
-							removal_index.insert(0, (loc_in_array, "news"))
-						elif g.roll_percent(tmp_d_chance[1]) == 1:
-							removal_index.insert(0, (loc_in_array, "science"))
-						elif g.roll_percent(tmp_d_chance[2]) == 1:
-							removal_index.insert(0, (loc_in_array, "covert"))
-						elif g.roll_percent(tmp_d_chance[3]) == 1:
-							removal_index.insert(0, (loc_in_array, "person"))
+				#Does base get detected?
+				#Give a grace period.
+				if self.time_day - base_name.built_date > base_name.base_type.cost[2]*2:
+					tmp_d_chance = base_name.get_d_chance()
+					if g.debug == 1:
+						print "Chance of discovery for base %s: %s" % \
+							(base_name.name, repr (tmp_d_chance))
+					#Note that I'm filling removal_index from the front
+					#in order to make base removal easier.
+					if g.roll_percent(tmp_d_chance[0]) == 1:
+						removal_index.insert(0, (loc_in_array, "news"))
+					elif g.roll_percent(tmp_d_chance[1]) == 1:
+						removal_index.insert(0, (loc_in_array, "science"))
+					elif g.roll_percent(tmp_d_chance[2]) == 1:
+						removal_index.insert(0, (loc_in_array, "covert"))
+					elif g.roll_percent(tmp_d_chance[3]) == 1:
+						removal_index.insert(0, (loc_in_array, "person"))
 
+				if base_name.built == 1:
 					#maintenance
 					self.cash -= base_name.base_type.mainten[0]
 					if self.cash < 0: self.cash = 0
