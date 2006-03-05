@@ -35,7 +35,7 @@ class Clock:
         """
         self.rate = rate
         self._stop()
-        retVal = int((time.time() - self.t) * 1000)
+        retVal = int(round((time.time() - self.t) * 1000, 0))
         self.t = time.time()
         return retVal
 
