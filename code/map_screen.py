@@ -129,8 +129,8 @@ def display_cheat_list(menu_buttons):
                         for base_loc in g.bases:
                             for base_name in g.bases[base_loc]:
                                 if base_name.built == 0:
-                                    base_name.study((999999999, 999999999,
-                                            999999999))
+                                    base_name.study((9999999999999,
+                                        9999999999999, 9999999999999))
                         return
                     elif button.button_id == "GIVE TECH":
                         #create a temp base, in order to reuse the tech-changing code
