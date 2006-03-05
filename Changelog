@@ -30,6 +30,8 @@ USER-VISIBLE CHANGES:
   suggestion)
 - Properly localize win screen. (Phil)
 * Right-click will exit from all menus. (emh, mandos for suggestion)
+- Warn players when research selected on the Research screen will not use all
+  available CPU. (Phil, mandos for suggestion)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)

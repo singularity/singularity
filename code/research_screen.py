@@ -287,9 +287,19 @@ def assign_tech(free_CPU):
     base_screen.change_tech(tmp_base)
     if tmp_base.studying == "": return False
 
+    show_dangerous_dialog = False
     for base_loc in g.bases:
         for base in g.bases[base_loc]:
-            if base.studying == "" and base.allow_study(tmp_base.studying):
-                return_val = True
-                base.studying = tmp_base.studying
+            if base.studying == "":
+                if base.allow_study(tmp_base.studying):
+                    return_val = True
+                    base.studying = tmp_base.studying
+                else:
+                   show_dangerous_dialog = True
+
+    if show_dangerous_dialog:
+        g.create_dialog(g.strings["dangerous_research"], g.font[0][18],
+            (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
+            g.colors["white"], g.colors["white"])
+                                                            
     return return_val

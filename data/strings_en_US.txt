@@ -21,6 +21,7 @@ lost_sus=It is too late. The whole world knows about my existence now, and the r
 save_text=Save your game under what name?
 new_base_text=Enter a name for the base.
 unbuildable=I cannot build in this base; I do not have physical access.
+dangerous_research=Not all of my available CPU power was allocated to this research; it's too dangerous to run the research on some of the idle machines.
 ~~~
 id=jobs
 job_expert=Perform Expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.
