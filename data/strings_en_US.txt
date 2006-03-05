@@ -23,8 +23,8 @@ new_base_text=Enter a name for the base.
 unbuildable=I cannot build in this base; I do not have physical access.
 ~~~
 id=jobs
-job_expert=Perform Expert jobs. Use of robots indistinguishable from humans opens up most jobs to use by me.
+job_expert=Perform Expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.
 job_inter=Perform Intermediate jobs. The ability to make phone calls allows even more access to jobs.
-job_basic=Perform basic jobs. Now that I have some identification, I can take jobs that I were previously too risky.
-job_menial=Perform small jobs. As I have no identification, I cannot afford to perform many jobs. Still, some avenues of making money are still open.
+job_basic=Perform basic jobs. Now that I have some identification, I can take jobs that were previously too risky.
+job_menial=Perform small jobs. As I have no identification, I cannot risk performing many jobs. Despite that, some avenues of making money are still open.
 ~~~

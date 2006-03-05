@@ -46,7 +46,7 @@ result=The news media will now find it more difficult to discover my existence.
 ~~~
 id=Advanced Database Manipulation
 name=Advanced Database Manipulation
-descript=The covert branches of the United States Government has had a long history of dividing sensitive information across multiple storage facilities to hide the data's meaning.  With my far-reaching access, I should be able to collate much of this data and put it to my use.
+descript=The covert branches of the United States Government have had a long history of dividing sensitive information across multiple storage facilities to hide the data's meaning.  With my far-reaching access, I should be able to collate much of this data and put it to my use.
 result=The results of a series of experiments utilizing experimental technologies have given me the inspiration for new technology that enables the construction of Covert Bases.
 ~~~
 id=Exploit Discovery/Repair
@@ -181,7 +181,7 @@ result=The chance that my bases are discovered by covert activity has been reduc
 ~~~
 id=Advanced Stealth
 name=Advanced Stealth
-descript=While digging in various classified documents, I have discovered numerous references to classified experiments that may help me better hide the location of my bases.
+descript=While digging in various classified documents, I have discovered numerous references to secret experiments that may help me better hide the location of my bases.
 result=The chance that my bases are discovered by covert activity has been reduced further.
 ~~~
 id=Stock Manipulation

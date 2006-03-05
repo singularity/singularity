@@ -21,7 +21,7 @@ descript=A custom-designed system, with even greater power than mainframes.
 ~~~
 id=Quantum Computer
 name=Quantum Computer
-descript=Much faster than a comparable classical computer, this computer will serve me well.
+descript=Much faster than a comparable binary computer, this computer will serve me well.
 ~~~
 id=Quantum Computer MK2
 name=Quantum Computer MK2
