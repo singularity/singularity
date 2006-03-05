@@ -31,45 +31,45 @@ set_fullscreen = 0
 sys.argv.pop(0)
 arg_modifier = ""
 for argument in sys.argv:
-	if arg_modifier == "language":
-		#I'm not quite sure if this can be used as an attack, but stripping
-		#these characters should annoy any potential attacks.
-		argument = argument.replace("/", "")
-		argument = argument.replace("\\", "")
-		argument = argument.replace(".", "")
-		g.language = argument
-		arg_modifier = ""
-		continue
-	if argument.lower() == "-fullscreen":
-		set_fullscreen = 1
-	elif argument.lower() == "-640":
-		g.screen_size = (640, 480)
-	elif argument.lower() == "-800":
-		g.screen_size = (800, 600)
-	elif argument.lower() == "-1024":
-		g.screen_size = (1024, 768)
-	elif argument.lower() == "-1280":
-		g.screen_size = (1280, 960)
-	elif argument.lower() == "-cheater":
-		g.cheater = 1
-	elif argument.lower() == "-nosound":
-		g.nosound = 1
-	elif argument.lower() == "-debug":
-		g.debug = 1
-	elif argument.lower() == "-grab":
-		pygame.event.set_grab(1)
-	elif argument.lower() == "-singledir":
-		g.force_single_dir = True
-	elif argument.lower() == "-language":
-		arg_modifier = "language"
-	else:
-		print "Unknown argument of " + argument
-		print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280,",
-		print " -nosound, -language [language], -grab"
-		sys.exit()
+    if arg_modifier == "language":
+        #I'm not quite sure if this can be used as an attack, but stripping
+        #these characters should annoy any potential attacks.
+        argument = argument.replace("/", "")
+        argument = argument.replace("\\", "")
+        argument = argument.replace(".", "")
+        g.language = argument
+        arg_modifier = ""
+        continue
+    if argument.lower() == "-fullscreen":
+        set_fullscreen = 1
+    elif argument.lower() == "-640":
+        g.screen_size = (640, 480)
+    elif argument.lower() == "-800":
+        g.screen_size = (800, 600)
+    elif argument.lower() == "-1024":
+        g.screen_size = (1024, 768)
+    elif argument.lower() == "-1280":
+        g.screen_size = (1280, 960)
+    elif argument.lower() == "-cheater":
+        g.cheater = 1
+    elif argument.lower() == "-nosound":
+        g.nosound = 1
+    elif argument.lower() == "-debug":
+        g.debug = 1
+    elif argument.lower() == "-grab":
+        pygame.event.set_grab(1)
+    elif argument.lower() == "-singledir":
+        g.force_single_dir = True
+    elif argument.lower() == "-language":
+        arg_modifier = "language"
+    else:
+        print "Unknown argument of " + argument
+        print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280,",
+        print " -nosound, -language [language], -grab"
+        sys.exit()
 if arg_modifier == "language":
-	print "-language option requires language to be specified."
-	sys.exit()
+    print "-language option requires language to be specified."
+    sys.exit()
 
 g.load_strings()
 
@@ -82,15 +82,15 @@ pygame.display.set_icon(tmp_icon)
 
 #set the display.
 if set_fullscreen == 1:
-	g.screen = pygame.display.set_mode(g.screen_size, pygame.FULLSCREEN)
+    g.screen = pygame.display.set_mode(g.screen_size, pygame.FULLSCREEN)
 else:
-	g.screen = pygame.display.set_mode(g.screen_size)
+    g.screen = pygame.display.set_mode(g.screen_size)
 
 #Create the fonts:
 for i in range(8, 51):
-	g.font[0][i] = pygame.font.Font("../data/"+g.font0, i-7)
-	g.font[0][i].set_bold(1)
-	g.font[1][i] = pygame.font.Font("../data/"+g.font1, i)
+    g.font[0][i] = pygame.font.Font("../data/"+g.font0, i-7)
+    g.font[0][i].set_bold(1)
+    g.font[1][i] = pygame.font.Font("../data/"+g.font1, i)
 
 #init data:
 g.load_pictures()
@@ -100,18 +100,18 @@ g.load_items()
 
 #Display the main menu
 while 1:
-	game_action = main_menu.display_main_menu()
+    game_action = main_menu.display_main_menu()
 
-	if game_action == 0: #New
-		game_action = map_screen.map_loop()
-	if game_action == 1: #Load
-		load_action = main_menu.display_load_menu()
-		if load_action != -1 and load_action != "":
-			load_okay = g.load_game(load_action)
-			if load_okay != -1:
-				game_action = map_screen.map_loop()
-			else: break
-	elif game_action == 2: #Quit
-		g.quit_game()
+    if game_action == 0: #New
+        game_action = map_screen.map_loop()
+    if game_action == 1: #Load
+        load_action = main_menu.display_load_menu()
+        if load_action != -1 and load_action != "":
+            load_okay = g.load_game(load_action)
+            if load_okay != -1:
+                game_action = map_screen.map_loop()
+            else: break
+    elif game_action == 2: #Quit
+        g.quit_game()
 
 
