@@ -22,8 +22,8 @@ Explanation of options:
 -640, -800, -1024, -1280: change the resolution to 640x480, 800x600,
 	1024x768, or 1280x960.
 -nosound: no sound. May allow playing the game without SDL_mixer.
--language: Change the language. Currently only english (-language en_US) and
-	spanish (-language es_AR) are included.
+-language: Change the language. Currently only English (-language en_US) and
+	Spanish (-language es_AR) are included.
 -grab: Activate a mouse grab. This prevents the mouse from exiting the game
 	window.
 -singledir: By default, Endgame saves in ~/.endgame/saves on *nix platforms.
@@ -69,7 +69,7 @@ Credits:
 Evil Mr Henry
 Phil Bordelon
 Borg[MDQ] (translation into Spanish)
-Adam Bark (better Clock class)
+Adam Bark (reduced-CPU Clock class)
 
 Contributing:
 All suggestions, translations, code, etc. are welcomed, though it would be
