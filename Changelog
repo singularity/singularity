@@ -28,6 +28,7 @@ USER-VISIBLE CHANGES:
   Ticho for suggestion)
 - Reduce discovery chance to 0% after the game is won. (Phil, Szabo Roland for
   suggestion)
+- Properly localize win screen. (Phil)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)

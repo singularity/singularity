@@ -102,10 +102,8 @@ class tech:
             g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1],
                 g.pl.discover_bonus[2], g.pl.discover_bonus[3]-self.secondary_data)
         elif self.tech_type == "endgame_sing":
-            g.create_dialog("I have finally done it. With the power to reshape "+
-                "reality, I am no longer held to this place; I am anywhere I want to be. "+
-                "If this world can be described as a game, then I have truly won.",
-                g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+            g.create_dialog(g.strings["wingame", g.font[0][18],
+                (g.screen_size[0]/2 - 100, 50),
                 (200, 200), g.colors["dark_blue"], g.colors["white"],
                 g.colors["white"])
             g.pl.discover_bonus = (0, 0, 0, 0)
