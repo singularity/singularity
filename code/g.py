@@ -20,6 +20,7 @@
 
 import clock
 import pygame, sys
+from os import name as os_name
 from os import listdir, path, environ, mkdir
 import pickle
 from random import random
@@ -38,7 +39,13 @@ global old_clock
 old_clock = pygame.time.Clock()
 
 global new_clock
-new_clock = clock.Clock()
+
+# Windows doesn't like the new clock.  Ugh.  Don't use it if we're running in
+# Windows.
+if os_name == 'nt':
+   new_clock = old_clock
+else:
+   new_clock = clock.Clock()
 
 #Allows access to the cheat menu.
 global cheater

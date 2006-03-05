@@ -37,6 +37,7 @@ OTHER CHANGES:
   edit now.  (emh)
 - Changed savefile signature string to be less release-version based, now that
   the format is churning a lot less. (Phil)
+- Make new clock code run properly in Windows. (Phil)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]
