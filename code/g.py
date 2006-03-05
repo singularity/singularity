@@ -259,10 +259,10 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
                                           return False
 
 valid_input_characters = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
-                     'n','o','p','q','r','s','t','u','v','w','x','y','z',
-                     'A','B','C','D','E','F','G','H','I','J','K','L','M',
-                     'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-                     '0','1','2','3','4','5','6','7','8','9','.',' ')
+                          'n','o','p','q','r','s','t','u','v','w','x','y','z',
+                          'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                          'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+                          '0','1','2','3','4','5','6','7','8','9','.',' ')
 
 def create_textbox(descript_text, starting_text, box_font, xy, size,
               max_length, bg_color, out_color, text_color, text_bg_color):

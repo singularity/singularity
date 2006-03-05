@@ -2,8 +2,10 @@ Endgame: Singularity Changelog
 
 v0.23 (release 2006.03.??):
 - Centralized some of the button code. (emh)
-- Fixed bug that allowed access to uncompleted bases. (emh, Borg[MDQ] for report)
-- Tightened up the save/load functions to allow for better save compatability. (emh)
+- Fixed bug that allowed access to uncompleted bases. (emh, Borg[MDQ] for
+  report)
+- Tightened up the save/load functions to allow for better save compatibility.
+  (emh)
 - Added ability to destroy bases. (emh, multiple people for suggestion)
 - Reduced (real-world) processor usage. (emh, anonymous for suggestion)
 - Moved savefile location to ~/.endgame/saves (emh, Nescius for patch)
@@ -22,6 +24,8 @@ v0.23 (release 2006.03.??):
 - Tightened grammar. (Phil)
 - Automatically bump machines working jobs to new job levels when they are
   researched. (emh, Phil for suggestion :)
+- Convert Evil Tabs in source to (4) spaces.  Code should be easier to read and
+  edit now.  (emh)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]
