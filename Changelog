@@ -37,7 +37,6 @@ OTHER CHANGES:
   edit now.  (emh)
 - Changed savefile signature string to be less release-version based, now that
   the format is churning a lot less. (Phil)
-- Make new clock code run properly in Windows. (Phil)
 - Fix clock code to handle "didn't run fast enough" properly. (Phil, mandos
   for suggestion)
 
