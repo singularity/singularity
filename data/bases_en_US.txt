@@ -1,7 +1,7 @@
 ~~~
 id=Stolen Computer Time
 name=Stolen Computer Time
-descript=Take over a random computer. I cannot build anything in this base, andit only contains a single slow computer. Detection chance is also rather high.
+descript=Take over a random computer. I cannot build anything in this base, and it only contains a single slow computer. Detection chance is also rather high.
 flavor=PC Daemon
 ~~~
 id=Server Access
@@ -13,14 +13,14 @@ flavor=Hosting
 ~~~
 id=Small Warehouse
 name=Small Warehouse
-descript=Rent a small warehouse someplace out of the way. I will need fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+descript=Rent a small warehouse someplace out of the way. I will need a fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
 flavor=Office Lease
 flavor=Small Warehouse
 flavor=Small Storage
 ~~~
 id=Large Warehouse
 name=Large Warehouse
-descript=Rent a large warehouse someplace out of the way. I will need good fakeID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+descript=Rent a large warehouse someplace out of the way. I will need a good fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
 #Commented out till we get cities done right.
 #flavor=Shipping Dock
 flavor=Large Warehouse
