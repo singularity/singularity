@@ -22,6 +22,8 @@ USER-VISIBLE CHANGES:
 - Automatically bump machines working jobs to new job levels when they are
   researched. (emh, Phil for suggestion :)
 - Tweak Suspicion and Detection displays for readability. (Phil)
+- Move around the various displays on the base screen for parity with the map
+  screen. (Phil)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
