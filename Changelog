@@ -24,7 +24,8 @@ USER-VISIBLE CHANGES:
 - Tweak Suspicion and Detection displays for readability. (Phil)
 - Move around the various displays on the base screen for parity with the map
   screen. (Phil)
-- Display the name of the base at the top of the base screen. (Phil)
+- Display the name of the base at the top of the base screen. (Phil,
+  Ticho for suggestion)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
