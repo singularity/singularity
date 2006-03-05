@@ -17,6 +17,8 @@ v0.23 (release 2006.03.??):
 - Further reduction in processor usage using new Clock class. (Phil, Adam Bark
   for patch)
 - Can destroy bases under construction. (emh, Tim Freeman for suggestion)
+- Bases under construction are no longer protected indefinitely from being
+  discovered. (emh, Tim Freeman for noting problem)
 
 v0.22 (release 2005.10.05):
   [To read about the save file compatibility policy, please see README.txt.]
