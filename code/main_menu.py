@@ -49,7 +49,7 @@ def display_main_menu():
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -112,7 +112,7 @@ def display_load_menu():
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:

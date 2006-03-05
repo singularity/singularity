@@ -33,12 +33,8 @@ global screen
 global screen_size
 screen_size = (800, 600)
 
-#Used to pass time in the main screen.
-global old_clock
-old_clock = pygame.time.Clock()
-
-global new_clock
-new_clock = clock.Clock()
+global clock
+clock = clock.Clock()
 
 #Allows access to the cheat menu.
 global cheater
@@ -199,7 +195,7 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
 
        sel_button = -1
        while 1:
-              new_clock.tick(20)
+              clock.tick(20)
               for event in pygame.event.get():
                      if event.type == pygame.QUIT: quit_game()
                      elif event.type == pygame.KEYDOWN:
@@ -241,7 +237,7 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
 
        sel_button = -1
        while 1:
-              new_clock.tick(20)
+              clock.tick(20)
               for event in pygame.event.get():
                      if event.type == pygame.QUIT: quit_game()
                      elif event.type == pygame.KEYDOWN:
@@ -302,7 +298,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
        }
 
        while 1:
-              new_clock.tick(20)
+              clock.tick(20)
               if key_down_dict[pygame.K_BACKSPACE] > 0:
                      key_down_dict[pygame.K_BACKSPACE] += 1
                      if key_down_dict[pygame.K_BACKSPACE] > repeat_timing_dict[pygame.K_BACKSPACE]:

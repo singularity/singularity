@@ -41,7 +41,7 @@ def main_finance_screen():
     pygame.display.flip()
 
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:

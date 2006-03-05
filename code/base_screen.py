@@ -82,7 +82,7 @@ def show_base(base):
 
     refresh_base(menu_buttons, base)
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -266,7 +266,7 @@ def build_item(base, item_type):
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -444,7 +444,7 @@ def change_tech(base):
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:

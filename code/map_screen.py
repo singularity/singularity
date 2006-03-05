@@ -55,7 +55,7 @@ def display_pause_menu():
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -107,7 +107,7 @@ def display_cheat_list(menu_buttons):
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -234,8 +234,7 @@ def map_loop():
     #I set this to 1000 to force an immediate refresh.
     milli_clock = 1000
     while 1:
-        pygame.time.wait(10)
-        milli_clock += g.old_clock.tick(60) * g.curr_speed
+        milli_clock += g.clock.tick(60) * g.curr_speed
         if milli_clock >= 1000:
             need_refresh = g.pl.give_time(milli_clock/1000)
             if need_refresh == 1: refresh_map(menu_buttons)
@@ -580,7 +579,7 @@ def display_base_list_inner(location):
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -680,7 +679,7 @@ def build_new_base_window(location):
 
     sel_button = -1
     while 1:
-        g.new_clock.tick(20)
+        g.clock.tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
