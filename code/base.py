@@ -51,8 +51,6 @@ class base:
 		#Base suspicion is currently unused
 		self.suspicion = (0, 0, 0, 0)
 		self.usage = [0] * self.base_type.size
-# 		for i in range(self.base_type.size):
-# 			self.usage.append(0)
 		if self.base_type.base_id == "Stolen Computer Time":
 			self.usage[0] = g.item.item(g.items["PC"])
 			self.usage[0].build()

@@ -315,21 +315,3 @@ class player_class:
 				for item in base_name.extra_items:
 					if item != 0: result_cash -= item.cost[0]
 		return result_cash
-
-
-
-# 						money_towards = base_name.cost[0] / \
-# 							base_name.cost[2]
-# 						if money_towards <= self.cash:
-# 							self.cash -= money_towards
-# 							base_name.study((money_towards, 0,
-# 										self.time_day - store_last_day))
-
-# 							base_name.cost = (base_name.cost[0] - money_towards,
-# 								base_name.cost[1], base_name.cost[2])
-# 							self.cash -= money_towards
-# 						base_name.cost = (base_name.cost[0], base_name.cost[1],
-# 							base_name.cost[2] - ())
-
-
-
