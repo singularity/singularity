@@ -5,17 +5,17 @@ v0.23 (release 2006.03.??):
 USER-VISIBLE CHANGES:
 - Fixed bug that allowed access to uncompleted bases. (emh, Borg[MDQ] for
   report)
-- Added ability to destroy bases. (emh, multiple people for suggestion)
-- Reduced (real-world) processor usage. (emh, anonymous for suggestion)
+* Added ability to destroy bases. (emh, multiple people for suggestion)
+* Reduced (real-world) processor usage. (emh, anonymous for suggestion)
 - Moved savefile location to ~/.endgame/saves (emh, Nescius for patch)
-- Added finance screen. (emh, many for suggestion)
+* Added finance screen. (emh, many for suggestion)
 - Construction time bonus actually works now. (emh)
 - More numbers use commas now. (emh)
 - Increased cost of clusters. (emh)
 - Adjusted button positions for greater usability. (Phil)
 - Minor typo fixes and tightened grammar. (Phil)
-- Further reduction in processor usage using new Clock class. (Phil, Adam Bark
-  for patch)
+* Further massive reduction in processor usage using new Clock class. (Phil,
+  Adam Bark for original patch)
 - Can destroy bases under construction. (emh, Tim Freeman for suggestion)
 - Bases under construction are no longer protected indefinitely from being
   discovered. (emh, Tim Freeman for noting problem)
@@ -29,7 +29,7 @@ USER-VISIBLE CHANGES:
 - Reduce discovery chance to 0% after the game is won. (Phil, Szabó Roland for
   suggestion)
 - Properly localize win screen. (Phil)
-- Right-click will exit from all menus. (emh, mandos for suggestion)
+* Right-click will exit from all menus. (emh, mandos for suggestion)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
