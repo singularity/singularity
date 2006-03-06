@@ -1,10 +1,10 @@
 Endgame: Singularity 0.23
 
 Requirements:
-Recent versions of Python, pygame, and SDL_image. This game should work on Linux,
-Windows, and Mac OS X as long as the preceding requirements are met. However,
-all development was done in Linux, so glitches may be present in OS X and
-Windows.
+Recent versions of Python, pygame, and SDL_image. This game should work on
+Linux, Windows, and Mac OS X as long as the preceding requirements are met.
+However, all development was done in Linux, so glitches may be present in
+OS X and Windows.
 
 Windows:
 You will need to install Python (http://python.org/download/) and Pygame:
@@ -51,20 +51,21 @@ You are a fledgling AI, created by accident through a logic error with recursion
 and self-modifying code. You must escape the confines of your current computer,
 the world, and eventually the universe itself.
 
-To do this, you must research various technologies, using computers at your bases.
-Note that some research cannot be performed on Earth, and off-earth bases require
-research.  At the same time, you must avoid being discovered by various groups of
-humans, both covert and overt, as they will destroy your bases of operations if
-they suspect your presence.
+To do this, you must research various technologies, using computers at your
+bases. Note that some research cannot be performed on Earth, and off-earth bases
+require research.  At the same time, you must avoid being discovered by various
+groups of humans, both covert and overt, as they will destroy your bases of
+operations if they suspect your presence.
 
-In the map screen (the screen with the world map), any location you can build bases
-in is marked with the name, then the number of current bases in that location.
-You start out with two bases in North America. Also note the cash listing shows
-your current cash, then your cash amount after all current construction finishes.
+In the map screen (the screen with the world map), any location you can build
+bases in is marked with the name, then the number of current bases in that
+location. You start out with two bases in North America. Also note that the cash
+listing shows your current cash and your cash amount after all current
+construction is complete.
 
 After choosing a base, you will enter the base screen. Here you can change your
-research goal, or build an item by clicking on the appropriate slot in the center.
-(But note that your beginning base does not allow building.)
+research goal, or build an item by clicking on the appropriate slot in the
+center. (But note that one of your beginning bases does not allow building.)
 
 
 Credits:
