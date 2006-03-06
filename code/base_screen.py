@@ -125,7 +125,7 @@ def show_base(base):
                         return 1
                     elif button.button_id == "DESTROY":
                         if g.create_yesno("Really destroy this base?",
-                                g.font[0][16], (100, 100), (150, 100),
+                                g.font[0][18], (100, 100), (150, 100),
                                 g.colors["blue"], g.colors["white"],
                                 g.colors["white"]):
                             g.play_click()
