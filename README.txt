@@ -59,11 +59,12 @@ they suspect your presence.
 
 In the map screen (the screen with the world map), any location you can build bases
 in is marked with the name, then the number of current bases in that location.
-You start out with two bases in North America.
+You start out with two bases in North America. Also note the cash listing shows
+your current cash, then your cash amount after all current construction finishes.
 
-After choosing a base, enter the base screen. Here you can change your research
-goal, or build an item by clicking on the base map in the center. (But note that
-your beginning base does not allow building.)
+After choosing a base, you will enter the base screen. Here you can change your
+research goal, or build an item by clicking on the appropriate slot in the center.
+(But note that your beginning base does not allow building.)
 
 
 Credits:
