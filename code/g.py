@@ -214,7 +214,7 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color, text
 
 #create dialog with YES/NO buttons.
 def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
-              text_color, button_names=("YES", "NO"), reverse_context = False):
+              text_color, button_names=("YES", "NO"), reverse_key_context = False):
        screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
        screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
        print_multiline(screen, string_to_print, box_font, size[0]-10, (xy[0]+5, xy[1]+5),
@@ -236,11 +236,11 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
               button.refresh_button(0)
        pygame.display.flip()
 
-       cancel = False
-       accept = True
-       if reverse_context:
-          cancel = True
-          accept = False
+       cancel = key_cancel = False
+       accept = key_accept = True
+       if reverse_key_context:
+          key_cancel = True
+          key_accept = False
        
        sel_button = -1
        while 1:
@@ -248,12 +248,15 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
               for event in pygame.event.get():
                      if event.type == pygame.QUIT: quit_game()
                      elif event.type == pygame.KEYDOWN:
-                            if event.key == pygame.K_ESCAPE: return cancel
-                            elif event.key == pygame.K_RETURN: return cancel
+                            if event.key == pygame.K_ESCAPE: return key_cancel
+                            elif event.key == pygame.K_RETURN: return key_cancel
                      elif event.type == pygame.MOUSEMOTION:
                             sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
                      elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                        return cancel
+
+                        # Not really a key press, but it's not an explicit
+                        # button, hence key.
+                        return key_cancel
                      for button in menu_buttons:
                             if button.was_activated(event):
                                    if button.button_id == button_names[0]:
