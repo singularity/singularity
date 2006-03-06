@@ -103,15 +103,17 @@ class base:
             (temp_d_chance[3]*g.pl.discover_bonus[3])/10000)
 
         if self.extra_items[0] != 0:
-            temp_d_chance = ((temp_d_chance[0]*3)/4,
-                (temp_d_chance[1]*3)/4,
-                (temp_d_chance[2]*3)/4,
-                (temp_d_chance[3]*3)/4)
+            if self.extra_items[0].built == 1:
+                temp_d_chance = ((temp_d_chance[0]*3)/4,
+                    (temp_d_chance[1]*3)/4,
+                    (temp_d_chance[2]*3)/4,
+                    (temp_d_chance[3]*3)/4)
         if self.extra_items[2] != 0:
-            temp_d_chance = (temp_d_chance[0]/2,
-                temp_d_chance[1]/2,
-                temp_d_chance[2]/2,
-                temp_d_chance[3]/2)
+            if self.extra_items[2].built == 1:
+                temp_d_chance = (temp_d_chance[0]/2,
+                    temp_d_chance[1]/2,
+                    temp_d_chance[2]/2,
+                    temp_d_chance[3]/2)
         return temp_d_chance
     #Return the number of units the given base has of a computer.
     def has_item(self):
@@ -131,7 +133,8 @@ class base:
             if item.built == 0: continue
             comp_power += item.item_type.item_qual
         if self.extra_items[1] != 0:
-            compute_bonus = self.extra_items[1].item_type.item_qual
+            if self.extra_items[1].built == 1:
+                compute_bonus = self.extra_items[1].item_type.item_qual
         return (comp_power * (10000+compute_bonus))/10000
 
     #For the given tech, return 1 if the base can study it, or 0 otherwise.

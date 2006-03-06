@@ -36,6 +36,7 @@ USER-VISIBLE CHANGES:
   suggestion)
 - Display the right construction time for items when you have technologies
   that speed up construction. (emh)
+- Items will no longer give benefits while under construction. (emh)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
