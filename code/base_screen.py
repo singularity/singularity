@@ -131,7 +131,8 @@ def show_base(base):
                             g.play_click()
                             return -2
                         else: refresh_base(menu_buttons, base)
-                    elif button.xy[1] != -1 and button.xy[1] != 25:
+                    elif button.xy[1] != -1 and button.xy[1] != 25 and \
+                            button.xy[1] != g.screen_size[1]-25:
                         if button.xy[0] == event.pos[0] or \
                                 button.xy[1] == event.pos[1]: continue
                         g.play_click()
