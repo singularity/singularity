@@ -1,8 +1,17 @@
 Todo for 0.24:
-   - Fix listboxes to use PgUp/Home/etc.
-   - Make suspicion reduction quadratic, based on type:
+    - Fix listboxes to use PgUp/Home/etc.
+    - Make suspicion reduction quadratic, based on type:
       Public > Media > Science > Covert
-     (suggested by Ticho)
-   - Fix the constant "CPU complete" dialogs when low on money.
-   - Record more things (times that techs are complete, etc.)
-     for both "scores" and general statistics.
+      (suggested by Ticho)
+    - Fix the constant "CPU complete" dialogs when low on money.
+    - Record more things (times that techs are complete, etc.)
+      for both "scores" and general statistics:
+        # saves.
+        # Bases constructed (per type)
+        # Bases discovered (per type per news/science...)
+        # Bases destroyed (per type)
+        # Money earned (huge)
+        # Time to completion
+        # of upgrades for all bases
+        # per-tech time to completion (from day 0 to start, then time to completion)
+    - Give items per-area restrictions, then add more items.
