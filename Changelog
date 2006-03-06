@@ -34,6 +34,8 @@ USER-VISIBLE CHANGES:
   available CPU. (Phil, mandos for suggestion)
 - Note bases that are under construction in the base list. (emh, Ticho for
   suggestion)
+- Display the right construction time for items when you have technologies
+  that speed up construction. (emh)
 
 OTHER CHANGES:
 - Centralized some of the button code. (emh)
