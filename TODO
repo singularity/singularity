@@ -21,5 +21,4 @@ Todo for 0.24:
       for quadrillion for now. All displays use <=3 digits before and after the
       decimal, so we won't have any more problems with costs overflowing out of
       their space.
-
-
+    - Add 'ABOUT' to main menu, with info, version, etc.
