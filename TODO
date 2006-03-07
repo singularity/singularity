@@ -15,3 +15,11 @@ Todo for 0.24:
         # of upgrades for all bases
         # per-tech time to completion (from day 0 to start, then time to completion)
     - Give items per-area restrictions, then add more items.
+    - Better cash display. Internal tracking remains unchanged, but all displays
+      are of the form 123.450M or 321.123B. (Million, Billion, Trillion) Reality
+      bubbles are the most expensive object at 8 trillion, so there is no need
+      for quadrillion for now. All displays use <=3 digits before and after the
+      decimal, so we won't have any more problems with costs overflowing out of
+      their space.
+
+
