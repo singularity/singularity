@@ -65,7 +65,7 @@ for argument in sys.argv:
     else:
         print "Unknown argument of " + argument
         print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280,",
-        print " -nosound, -language [language], -grab"
+        print " -nosound, -language [language], -grab, -singledir"
         sys.exit()
 if arg_modifier == "language":
     print "-language option requires language to be specified."

@@ -241,7 +241,7 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
        if reverse_key_context:
           key_cancel = True
           key_accept = False
-       
+
        sel_button = -1
        while 1:
               clock.tick(20)
@@ -478,16 +478,17 @@ def to_time(raw_time):
 #well, but can't test. Specifically, this assumes that all platforms that
 #have HOME defined have it defined properly.
 def get_save_folder():
-       if environ.has_key("HOME") and not force_single_dir:
-              save_dir = path.join(environ["HOME"], ".endgame", "saves")
-       else: save_dir = path.join("..", "saves")
-       if path.exists(save_dir) == 0:
-              #As a note, the online python reference includes the mkdirs function,
-              #which would do this better, but it must be rather new, as I don't
-              #have it.
-              mkdir(path.join(environ["HOME"], ".endgame"))
-              mkdir(save_dir)
-       return save_dir
+    if environ.has_key("HOME") and not force_single_dir:
+        save_dir = path.join(environ["HOME"], ".endgame", "saves")
+    else: save_dir = path.join("..", "saves")
+    if path.exists(save_dir) == 0:
+        #As a note, the online python reference includes the mkdirs function,
+        #which would do this better, but it must be rather new, as I don't
+        #have it.
+        if environ.has_key("HOME") and not force_single_dir:
+            mkdir(path.join(environ["HOME"], ".endgame"))
+        mkdir(save_dir)
+    return save_dir
 
 def save_game(savegame_name):
        save_dir = get_save_folder()
