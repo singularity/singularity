@@ -1,12 +1,10 @@
 Endgame: Singularity Changelog
 
-v0.24 (released 2006.03.?):
+v0.23a (released 2006.03.08):
 
 USER-VISIBLE CHANGES:
 * Save/load works on Windows again. (emh, rspoerri for bug report)
 - Updated option help (emh)
-
-OTHER CHANGES:
 
 v0.23 (released 2006.03.06):
 
