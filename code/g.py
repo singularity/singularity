@@ -20,7 +20,7 @@
 
 import clock as sing_clock
 import pygame, sys
-from os import listdir, path, environ, mkdir
+from os import listdir, path, environ, makedirs
 import pickle
 from random import random
 
@@ -485,9 +485,9 @@ def get_save_folder():
         #As a note, the online python reference includes the mkdirs function,
         #which would do this better, but it must be rather new, as I don't
         #have it.
-        if environ.has_key("HOME") and not force_single_dir:
-            mkdir(path.join(environ["HOME"], ".endgame"))
-        mkdir(save_dir)
+        #if environ.has_key("HOME") and not force_single_dir:
+        #    mkdirs(path.join(environ["HOME"], ".endgame"))
+        makedirs(save_dir)
     return save_dir
 
 def save_game(savegame_name):
