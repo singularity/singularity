@@ -3,7 +3,8 @@ Endgame: Singularity Changelog
 v0.24 (released 2006.06.??):
 
 USER-VISIBLE CHANGES:
-- The Page Up, Page Down, Home, and End keys work in all listboxes.
+- The Page Up, Page Down, Home, and End keys work in all listboxes. (emh)
+- Modified money displays to keep them from overflowing. (Phil)
 
 v0.23a (released 2006.03.08):
 
