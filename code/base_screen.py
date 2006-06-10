@@ -275,24 +275,15 @@ def build_item(base, item_type):
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_DOWN:
-                    list_pos += 1
-                    if list_pos >= len(item_list):
-                        list_pos = len(item_list)-1
-                    refresh_item(base, item_list[list_pos], xy_loc)
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                elif event.key == pygame.K_UP:
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                    refresh_item(base, item_list[list_pos], xy_loc)
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
                     actual_build(base, item_list[list_pos], item_type)
                     return
+                else:
+                    list_pos, refresh = item_listbox.key_handler(event.key,
+                        list_pos, len(item_display_list))
+                    if refresh: listbox.refresh_list(item_listbox, item_scroll,
+                                        list_pos, item_display_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     tmp = item_listbox.is_over(event.pos)
@@ -454,25 +445,16 @@ def change_tech(base):
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_DOWN:
-                    list_pos += 1
-                    if list_pos >= len(item_list):
-                        list_pos = len(item_list)-1
-                    refresh_tech(base, item_list2[list_pos], xy_loc)
-                    listbox.refresh_list(tech_list, tech_scroll,
-                                        list_pos, item_list)
-                elif event.key == pygame.K_UP:
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                    refresh_tech(base, item_list2[list_pos], xy_loc)
-                    listbox.refresh_list(tech_list, tech_scroll,
-                                        list_pos, item_list)
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
                     base.studying = item_list2[list_pos]
                     if base.studying == "Nothing": base.studying = ""
                     return
+                else:
+                    list_pos, refresh = tech_list.key_handler(event.key,
+                        list_pos, len(item_list))
+                    if refresh: listbox.refresh_list(tech_list, tech_scroll,
+                                        list_pos, item_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     tmp = tech_list.is_over(event.pos)

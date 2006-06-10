@@ -588,21 +588,14 @@ def display_base_list_inner(location):
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_DOWN:
-                    base_pos += 1
-                    if base_pos >= len(temp_base_list):
-                        base_pos = len(temp_base_list)-1
-                    listbox.refresh_list(bases_list, bases_scroll,
-                                        base_pos, temp_base_list)
-                elif event.key == pygame.K_UP:
-                    base_pos -= 1
-                    if base_pos <= 0:
-                        base_pos = 0
-                    listbox.refresh_list(bases_list, bases_scroll,
-                                        base_pos, temp_base_list)
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
                     return base_id_list[base_pos]
+                else:
+                    base_pos, refresh = bases_list.key_handler(event.key,
+                        base_pos, len(temp_base_list))
+                    if refresh: listbox.refresh_list(bases_list, bases_scroll,
+                                        base_pos, temp_base_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     tmp = bases_list.is_over(event.pos)
