@@ -273,8 +273,8 @@ def map_loop():
             menu_buttons[0].remake_button()
             menu_buttons[0].refresh_button(0)
 
-            result_cash = str(g.pl.future_cash())
-            menu_buttons[7].text = "CASH: "+str(g.pl.cash)+" ("+result_cash+")"
+            result_cash = g.to_money(g.pl.future_cash())
+            menu_buttons[7].text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
             menu_buttons[7].remake_button()
             menu_buttons[7].refresh_button(0)
 
