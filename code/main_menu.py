@@ -117,21 +117,15 @@ def display_load_menu():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_DOWN:
-                    saves_pos += 1
-                    if saves_pos >= len(saves_array):
-                        saves_pos = len(saves_array)-1
-                    listbox.refresh_list(saves_list, saves_scroll,
-                                        saves_pos, saves_array)
-                elif event.key == pygame.K_UP:
-                    saves_pos -= 1
-                    if saves_pos <= 0:
-                        saves_pos = 0
-                    listbox.refresh_list(saves_list, saves_scroll,
-                                        saves_pos, saves_array)
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
                     return saves_array[saves_pos]
+                else:
+                    saves_pos, refresh = saves_list.key_handler(event.key,
+                        saves_pos, len(saves_array))
+                    if refresh: listbox.refresh_list(saves_list, saves_scroll,
+                                        saves_pos, saves_array)
+
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     tmp = saves_scroll.is_over(event.pos)

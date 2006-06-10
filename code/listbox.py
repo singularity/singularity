@@ -88,6 +88,31 @@ class listbox:
 
         return -1
 
+    def key_handler(self, keycode, cur_pos, array_length):
+        lastpos = cur_pos
+        refresh = False
+        if keycode == pygame.K_DOWN:
+            cur_pos += 1
+        elif keycode == pygame.K_UP:
+            cur_pos -= 1
+        elif keycode == pygame.K_HOME:
+            cur_pos = 0
+        elif keycode == pygame.K_END:
+            cur_pos = array_length-1
+        elif keycode == pygame.K_PAGEUP:
+            cur_pos -= self.viewable_items
+        elif keycode == pygame.K_PAGEDOWN:
+            cur_pos += self.viewable_items
+
+        if cur_pos >= array_length:
+            cur_pos = array_length-1
+        elif cur_pos <= 0:
+            cur_pos = 0
+
+        if lastpos != cur_pos: refresh = True
+        return cur_pos, refresh
+
+
 def refresh_list(listbox, scrollbar, list_pos, list_array):
     tmp=listbox.refresh_listbox(list_pos%listbox.viewable_items,
         list_array[(list_pos/listbox.viewable_items)*

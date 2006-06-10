@@ -80,20 +80,6 @@ def main_research_screen():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_DOWN:
-                    list_pos += 1
-                    if list_pos >= len(item_list):
-                        list_pos = len(item_list)-1
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                elif event.key == pygame.K_UP:
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
                     if kill_tech(item_list[list_pos]): return 1
@@ -101,6 +87,11 @@ def main_research_screen():
                                     refresh_screen(menu_buttons, list_size)
                     refresh_research(item_list[list_pos], item_CPU_list[list_pos])
                     listbox.refresh_list(item_listbox, item_scroll,
+                            list_pos, item_display_list)
+                else:
+                    list_pos, refresh = item_listbox.key_handler(event.key,
+                        list_pos, len(item_list))
+                    if refresh: listbox.refresh_list(item_listbox, item_scroll,
                             list_pos, item_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)

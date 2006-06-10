@@ -83,9 +83,9 @@ pygame.display.set_icon(tmp_icon)
 #set the display.
 if set_fullscreen == 1:
     g.screen = pygame.display.set_mode(g.screen_size, pygame.FULLSCREEN)
+    pygame.mouse.set_visible(False)
 else:
     g.screen = pygame.display.set_mode(g.screen_size)
-
 #Create the fonts:
 for i in range(8, 51):
     g.font[0][i] = pygame.font.Font("../data/"+g.font0, i-7)
