@@ -458,21 +458,22 @@ def to_percent(raw_percent, show_full=0):
 
 def to_money(amount):
     to_return = ''
-    if amount < 1000000:
+    abs_amount = abs(amount)
+    if abs_amount < 1000000:
         to_return = add_commas(str(amount))
     else:
-        if amount < 1000000000: # Millions.
+        if abs_amount < 1000000000: # Millions.
             divisor = 1000000
-            unit = 'M'
-        elif amount < 1000000000000: # Billions.
+            unit = 'mi'
+        elif abs_amount < 1000000000000: # Billions.
             divisor = 1000000000
-            unit = 'B'
-        elif amount < 1000000000000000: # Trillions.
+            unit = 'bi'
+        elif abs_amount < 1000000000000000: # Trillions.
             divisor = 1000000000000
-            unit = 'T'
+            unit = 'tr'
         else: # Hope we don't need past quadrillions!
             divisor = 1000000000000000
-            unit = 'Q'
+            unit = 'qu'
 
         to_return = "%3.3f" % (float(amount) / divisor)
         to_return += unit
