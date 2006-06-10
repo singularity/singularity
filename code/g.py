@@ -457,27 +457,27 @@ def to_percent(raw_percent, show_full=0):
 # to represent it if it's more than 999999.
 
 def to_money(amount):
-   to_return = ''
-   if amount < 1000000:
-      to_return = str (amount)
-   else:
-      if amount < 1000000000: # Millions.
-         divisor = 1000000
-         unit = 'M'
-      elif amount < 1000000000000: # Billions.
-         divisor = 1000000000
-         unit = 'B'
-      elif amount < 1000000000000000: # Trillions.
-         divisor = 1000000000000
-         unit = 'T'
-      else: # Hope we don't need past quadrillions!
-         divisor = 1000000000000000
-         unit = 'Q'
+    to_return = ''
+    if amount < 1000000:
+        to_return = add_commas(str(amount))
+    else:
+        if amount < 1000000000: # Millions.
+            divisor = 1000000
+            unit = 'M'
+        elif amount < 1000000000000: # Billions.
+            divisor = 1000000000
+            unit = 'B'
+        elif amount < 1000000000000000: # Trillions.
+            divisor = 1000000000000
+            unit = 'T'
+        else: # Hope we don't need past quadrillions!
+            divisor = 1000000000000000
+            unit = 'Q'
 
-      to_return = "%3.3f" % (float (amount) / divisor)
-      to_return += unit
+        to_return = "%3.3f" % (float(amount) / divisor)
+        to_return += unit
 
-   return to_return
+    return to_return
 
 #takes a percent in 0-10000 form, and rolls against it. Used to calculate
 #percentage chances.
