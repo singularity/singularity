@@ -379,7 +379,7 @@ def refresh_item(base, item_name, xy_loc):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
-    string = g.add_commas(str(g.items[item_name].cost[0]*base.base_type.size))+" Money"
+    string = g.to_money(g.items[item_name].cost[0]*base.base_type.size)+" Money"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
@@ -570,7 +570,7 @@ def refresh_tech(base, tech_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
-    string = g.add_commas(str(g.techs[tech_name].cost[0]))+" Money"
+    string = g.to_money(g.techs[tech_name].cost[0])+" Money"
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 

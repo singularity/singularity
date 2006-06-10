@@ -501,8 +501,7 @@ def display_base_list(location, menu_buttons):
         if g.bases[location][tmp].built == 0:
             string = "Under Construction. \\n Completion in "
             string += g.to_time(g.bases[location][tmp].cost[2]) + ". \\n "
-            string += "Remaining cost: "+g.add_commas(
-                                            str(g.bases[location][tmp].cost[0]))
+            string += "Remaining cost: "+g.to_money(g.bases[location][tmp].cost[0])
             string +=" money, and "+g.add_commas(
                                             str(g.bases[location][tmp].cost[1]))
             string +=" processor time."
@@ -510,8 +509,8 @@ def display_base_list(location, menu_buttons):
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
                     g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
                 if g.create_yesno("Destroy this base? This will waste "+
-                        g.add_commas(str(g.bases[location][tmp].base_type.cost[0]-
-                            g.bases[location][tmp].cost[0]))
+                        g.to_money(g.bases[location][tmp].base_type.cost[0]-
+                            g.bases[location][tmp].cost[0])
                         +" money, and "+
                         g.add_commas(str(g.bases[location][tmp].base_type.cost[1]-
                             g.bases[location][tmp].cost[1]))
@@ -754,7 +753,7 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
 
-    string = g.add_commas(str(g.base_type[base_name].cost[0]))+" Money"
+    string = g.to_money(g.base_type[base_name].cost[0])+" Money"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
@@ -771,7 +770,7 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][18], -1, (xy[0]+290, xy[1]+30), g.colors["white"])
 
-    string = g.add_commas(str(g.base_type[base_name].mainten[0])) + " Money"
+    string = g.to_money(g.base_type[base_name].mainten[0]) + " Money"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+50), g.colors["white"])
 

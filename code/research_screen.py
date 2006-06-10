@@ -219,13 +219,13 @@ def refresh_research(tech_name, CPU_amount):
         #TECH
         if g.techs["Advanced Simulacra"].known == 1:
             g.print_string(g.screen,
-                g.add_commas(str(int(
-                    (g.jobs[tech_name][0]*CPU_amount)*1.1)))+
+                g.to_money(int(
+                    (g.jobs[tech_name][0]*CPU_amount)*1.1))+
                     " Money per day.", g.font[0][22], -1, (xy[0]+5, xy[1]+35),
                     g.colors["white"])
         else:
             g.print_string(g.screen,
-                g.add_commas(str(g.jobs[tech_name][0]*CPU_amount))+
+                g.to_money(g.jobs[tech_name][0]*CPU_amount)+
                 " Money per day.",
                 g.font[0][22], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
         g.print_multiline(g.screen, g.jobs[tech_name][2],
@@ -241,7 +241,7 @@ def refresh_research(tech_name, CPU_amount):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
 
-    string = g.add_commas(str(g.techs[tech_name].cost[0]))+" Money"
+    string = g.to_money(g.techs[tech_name].cost[0])+" Money"
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+5, xy[1]+50), g.colors["white"])
 
