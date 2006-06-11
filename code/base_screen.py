@@ -28,7 +28,7 @@ import listbox
 #cost = (money, ptime, labor)
 #detection = (news, science, covert, person)
 
-def show_base(base):
+def show_base(base, location):
     #Border
     g.screen.fill(g.colors["black"])
 
@@ -103,19 +103,19 @@ def show_base(base):
                         refresh_base(menu_buttons, base)
                     elif button.button_id == "C_PROCESSOR":
                         g.play_click()
-                        build_item(base, "compute")
+                        build_item(base, "compute", location)
                         refresh_base(menu_buttons, base)
                     elif button.button_id == "C_REACTOR":
                         g.play_click()
-                        build_item(base, "react")
+                        build_item(base, "react", location)
                         refresh_base(menu_buttons, base)
                     elif button.button_id == "C_NETWORK":
                         g.play_click()
-                        build_item(base, "network")
+                        build_item(base, "network", location)
                         refresh_base(menu_buttons, base)
                     elif button.button_id == "C_SECURITY":
                         g.play_click()
-                        build_item(base, "security")
+                        build_item(base, "security", location)
                         refresh_base(menu_buttons, base)
                     elif button.button_id == "<":
                         g.play_click()
@@ -136,7 +136,7 @@ def show_base(base):
                         if button.xy[0] == event.pos[0] or \
                                 button.xy[1] == event.pos[1]: continue
                         g.play_click()
-                        build_item(base)
+                        build_item(base, location)
                         refresh_base(menu_buttons, base)
 
 def refresh_base(menu_buttons, base):
@@ -224,7 +224,7 @@ def refresh_base(menu_buttons, base):
     pygame.display.flip()
 
 
-def build_item(base, item_type):
+def build_item(base, item_type, location):
     if base.base_type.size == 1:
         g.create_dialog(g.strings["unbuildable"], g.font[0][18],
             (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
@@ -234,14 +234,24 @@ def build_item(base, item_type):
     list_size = 10
     item_list = []
     item_display_list = []
+    #for item_name in g.items:
+        #if g.items[item_name].item_type == item_type:
+            #if g.items[item_name].prereq == "":
+                #item_list.append(item_name)
+                #item_display_list.append(g.items[item_name].name)
+            #elif g.techs[g.items[item_name].prereq].known == 1:
+                #item_list.append(item_name)
+                #item_display_list.append(g.items[item_name].name)
     for item_name in g.items:
         if g.items[item_name].item_type == item_type:
-            if g.items[item_name].prereq == "":
-                item_list.append(item_name)
-                item_display_list.append(g.items[item_name].name)
-            elif g.techs[g.items[item_name].prereq].known == 1:
-                item_list.append(item_name)
-                item_display_list.append(g.items[item_name].name)
+            if g.items[item_name].prereq != "":
+                if g.techs[g.items[item_name].prereq].known != 1:
+                    continue
+            if g.items[item_name].buildable != "all":
+                if g.items[item_name].buildable == "pop":
+                    if location != "N AMERICA": continue
+            item_list.append(item_name)
+            item_display_list.append(g.items[item_name].name)
     xy_loc = (g.screen_size[0]/2 - 250, 50)
     while len(item_list) % list_size != 0 or len(item_list) == 0:
         item_list.append("")

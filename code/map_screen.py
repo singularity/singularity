@@ -522,7 +522,7 @@ def display_base_list(location, menu_buttons):
         else:
             next_prev = 1
             while next_prev != 0:
-                next_prev = base_screen.show_base(g.bases[location][tmp])
+                next_prev = base_screen.show_base(g.bases[location][tmp], location)
                 if next_prev == -2:
                     g.base.destroy_base(location, tmp)
                     break

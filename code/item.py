@@ -22,7 +22,8 @@ import pygame
 import g
 
 class item_class:
-    def __init__(self, name, descript, cost, prereq, item_type, item_qual):
+    def __init__(self, name, descript, cost, prereq, item_type, item_qual,
+            buildable):
         self.name = name
         self.item_id = name
         self.descript = descript
@@ -30,6 +31,7 @@ class item_class:
         self.prereq = prereq
         self.item_type = item_type
         self.item_qual = item_qual
+        self.buildable = buildable
 
 class item:
     def __init__(self, item_type):
@@ -65,8 +67,5 @@ class item:
             if money_towards < 0 or minutes < 0:
                 print "error in item.work_on: "+str(money_towards)+" "+str(minutes)
             return self.study((money_towards, 0, minutes))
-
-
-
 
 
