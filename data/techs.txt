@@ -29,7 +29,7 @@ type=discover_covert, 500
 id=Advanced Intrusion
 cost=500, 3000, 0
 pre=Exploit Discovery/Repair
-type=suspicion_covert, 1
+type=suspicion_covert, 50
 ~~~
 id=Space-Time Manipulation
 cost=9000000000, 20000000, 0
@@ -76,7 +76,7 @@ type=cost_labor_bonus, 1000
 id=Advanced Memetics
 cost=30000, 2000, 0
 pre=Advanced Media Manipulation
-type=suspicion_public, 1
+type=suspicion_public, 50
 ~~~
 id=Media Manipulation
 cost=750, 2500, 0
@@ -95,7 +95,7 @@ pre=Simulacra
 id=Memetics
 cost=2000, 3500, 0
 pre=Media Manipulation
-type=suspicion_public, 1
+type=suspicion_public, 50
 ~~~
 id=Fusion Rocketry
 cost=200000000, 1000000, 0

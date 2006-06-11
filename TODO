@@ -1,7 +1,4 @@
 Todo for 0.24:
-    - Make suspicion reduction quadratic, based on type:
-      Public > Media > Science > Covert
-      (suggested by Ticho)
     - Fix the constant "CPU complete" dialogs when low on money.
     - Record more things (times that techs are complete, etc.)
       for both "scores" and general statistics:

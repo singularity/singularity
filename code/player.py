@@ -34,7 +34,7 @@ class player_class:
         self.labor_bonus = 10000
         self.job_bonus = 10000
         self.discover_bonus = (10000, 10000, 10000, 10000)
-        self.suspicion_bonus = (1, 1, 1, 1)
+        self.suspicion_bonus = (150, 100, 50, 200)
         self.suspicion = (0, 0, 0, 0)
 
     def give_time(self, time_sec):
@@ -136,10 +136,23 @@ class player_class:
         self.cash += (self.interest_rate * self.cash) / 10000
         self.cash += self.income
         #suspicion bonuses
-        self.suspicion = (self.suspicion[0] - self.suspicion_bonus[0],
-                self.suspicion[1] - self.suspicion_bonus[1],
-                self.suspicion[2] - self.suspicion_bonus[2],
-                self.suspicion[3] - self.suspicion_bonus[3])
+
+        # Suspicion reduction is now quadratic.  You get a certain percentage
+        # reduction, or a base .01% reduction, whichever is better.
+
+        suspicion_down = []
+        for type in range(4):
+            quadratic_down = (self.suspicion[type] *
+             self.suspicion_bonus[type]) / 10000
+            if quadratic_down > 1:
+               suspicion_down.append(quadratic_down)
+            else:
+               suspicion_down.append(1)
+      
+        self.suspicion = (self.suspicion[0] - suspicion_down[0],
+                self.suspicion[1] - suspicion_down[1],
+                self.suspicion[2] - suspicion_down[2],
+                self.suspicion[3] - suspicion_down[3])
         if self.suspicion[0] <= 0: self.suspicion = (0, self.suspicion[1],
                 self.suspicion[2], self.suspicion[3])
         if self.suspicion[1] <= 0: self.suspicion = (self.suspicion[0], 0,
