@@ -10,5 +10,5 @@ Todo for 0.24:
         # Time to completion
         # of upgrades for all bases
         # per-tech time to completion (from day 0 to start, then time to completion)
-    - Give items per-area restrictions, then add more items.
+    - Add more items.
     - Add 'ABOUT' to main menu, with info, version, etc.

@@ -32,6 +32,13 @@ class item_class:
         self.item_type = item_type
         self.item_qual = item_qual
         self.buildable = buildable
+        if self.buildable == ["all"]:
+            self.buildable = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
+            "AFRICA", "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES",
+            "TRANSDIMENSIONAL"]
+        if self.buildable == ["pop"]:
+            self.buildable = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
+            "AFRICA"]
 
 class item:
     def __init__(self, item_type):

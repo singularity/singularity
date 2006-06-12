@@ -1064,19 +1064,21 @@ def load_items():
                             sys.exit()
                     temp_item_type = cost_array[0]
                     temp_item_second = int(cost_array[1])
-            if (not item_name.has_key("build")):
-                    print "item lacks buildable in items.txt"
+            if item_name.has_key("build"):
+                    build_array = item_name["build"].split(",")
+                    for i in range(len(build_array)):
+                        build_array[i] = build_array[i].strip()
 
             items[item_name["id"]]=item.item_class(item_name["id"], "",
                                 temp_item_cost, temp_item_pre,
                                 temp_item_type, temp_item_second,
-                                item_name["build"])
+                                build_array)
 
     #this is used by the research screen in order for the assign research
     #screen to have the right amount of CPU. It is a computer, unbuildable,
     #and with an adjustable amount of power.
     items["reseach_screen_tmp_item"]=item.item_class("reseach_screen_tmp_item",
-            "", (0, 0, 0), "unknown_tech", "compute", 0, "all")
+            "", (0, 0, 0), "unknown_tech", "compute", 0, ["all"])
 
     load_item_defs("en_US")
     load_item_defs(language)

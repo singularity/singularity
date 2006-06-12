@@ -247,9 +247,8 @@ def build_item(base, item_type, location):
             if g.items[item_name].prereq != "":
                 if g.techs[g.items[item_name].prereq].known != 1:
                     continue
-            if g.items[item_name].buildable != "all":
-                if g.items[item_name].buildable == "pop":
-                    if location != "N AMERICA": continue
+            try: g.items[item_name].buildable.index(location)
+            except ValueError: continue
             item_list.append(item_name)
             item_display_list.append(g.items[item_name].name)
     xy_loc = (g.screen_size[0]/2 - 250, 50)
