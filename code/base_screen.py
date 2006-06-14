@@ -291,8 +291,11 @@ def build_item(base, item_type, location):
                 else:
                     list_pos, refresh = item_listbox.key_handler(event.key,
                         list_pos, len(item_display_list))
-                    if refresh: listbox.refresh_list(item_listbox, item_scroll,
+                    if refresh:
+                        refresh_item(base, item_list[list_pos], xy_loc)
+                        listbox.refresh_list(item_listbox, item_scroll,
                                         list_pos, item_display_list)
+
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     tmp = item_listbox.is_over(event.pos)
@@ -330,6 +333,7 @@ def build_item(base, item_type, location):
             tmp = item_scroll.adjust_pos(event, list_pos, item_list)
             if tmp != list_pos:
                 list_pos = tmp
+                refresh_item(base, item_list[list_pos], xy_loc)
                 listbox.refresh_list(item_listbox, item_scroll, list_pos,
                     item_display_list)
 
@@ -462,7 +466,9 @@ def change_tech(base):
                 else:
                     list_pos, refresh = tech_list.key_handler(event.key,
                         list_pos, len(item_list))
-                    if refresh: listbox.refresh_list(tech_list, tech_scroll,
+                    if refresh:
+                        refresh_tech(base, item_list[list_pos], xy_loc)
+                        listbox.refresh_list(tech_list, tech_scroll,
                                         list_pos, item_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
@@ -502,6 +508,7 @@ def change_tech(base):
             tmp = tech_scroll.adjust_pos(event, list_pos, item_list)
             if tmp != list_pos:
                 list_pos = tmp
+                refresh_tech(base, item_list[list_pos], xy_loc)
                 listbox.refresh_list(tech_list, tech_scroll, list_pos,
                     item_list)
 

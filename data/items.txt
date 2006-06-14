@@ -57,6 +57,12 @@ pre=Hypnosis Field
 type=security, 5000
 build=pop
 ~~~
+id=Heatsink
+cost=15000, 0, 5
+pre=Autonomous Vehicles
+type=security, 5000
+build=ANTARCTIC, OCEAN, MOON
+~~~
 id=Facility Interconnection Switch
 cost=200, 0, 3
 pre=Cluster Networking

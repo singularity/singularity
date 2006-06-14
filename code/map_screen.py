@@ -682,23 +682,31 @@ def build_new_base_window(location):
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_DOWN:
-                    base_pos += 1
-                    if base_pos >= len(temp_base_list):
-                        base_pos = len(temp_base_list)-1
-                    refresh_new_base(temp_base_list[base_pos], xy_loc)
-                    listbox.refresh_list(bases_list, 0,
-                                        base_pos, temp_base_display_list)
-                elif event.key == pygame.K_UP:
-                    base_pos -= 1
-                    if base_pos <= 0:
-                        base_pos = 0
-                    refresh_new_base(temp_base_list[base_pos], xy_loc)
-                    listbox.refresh_list(bases_list, 0,
-                                        base_pos, temp_base_display_list)
+                #elif event.key == pygame.K_DOWN:
+                    #base_pos += 1
+                    #if base_pos >= len(temp_base_list):
+                        #base_pos = len(temp_base_list)-1
+                    #refresh_new_base(temp_base_list[base_pos], xy_loc)
+                    #listbox.refresh_list(bases_list, 0,
+                                        #base_pos, temp_base_display_list)
+                #elif event.key == pygame.K_UP:
+                    #base_pos -= 1
+                    #if base_pos <= 0:
+                        #base_pos = 0
+                    #refresh_new_base(temp_base_list[base_pos], xy_loc)
+                    #listbox.refresh_list(bases_list, 0,
+                                        #base_pos, temp_base_display_list)
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
                     return temp_base_list[base_pos]
+                else:
+                    base_pos, refresh = bases_list.key_handler(event.key,
+                        base_pos, len(temp_base_display_list))
+                    if refresh:
+                        refresh_new_base(temp_base_list[base_pos], xy_loc)
+                        listbox.refresh_list(bases_list, 0,
+                                        base_pos, temp_base_display_list)
+
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     tmp = bases_list.is_over(event.pos)

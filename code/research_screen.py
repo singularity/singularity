@@ -91,7 +91,9 @@ def main_research_screen():
                 else:
                     list_pos, refresh = item_listbox.key_handler(event.key,
                         list_pos, len(item_list))
-                    if refresh: listbox.refresh_list(item_listbox, item_scroll,
+                    if refresh:
+                        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
+                        listbox.refresh_list(item_listbox, item_scroll,
                             list_pos, item_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
@@ -141,6 +143,12 @@ def main_research_screen():
                         refresh_research(item_list[0], item_CPU_list[0])
                         listbox.refresh_list(item_listbox, item_scroll,
                                 list_pos, item_display_list)
+            tmp = item_scroll.adjust_pos(event, list_pos, item_display_list)
+            if tmp != list_pos:
+                list_pos = tmp
+                refresh_research(item_list[list_pos], item_CPU_list[list_pos])
+                listbox.refresh_list(item_listbox, item_scroll,
+                        list_pos, item_display_list)
 
 def refresh_screen(menu_buttons, list_size):
     #Border

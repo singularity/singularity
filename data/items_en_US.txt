@@ -39,6 +39,10 @@ id=Hypnosis Field
 name=Hypnosis Field
 descript=Makes any base containing it very difficult to detect.
 ~~~
+id=Heatsink
+name=Heatsink
+descript=By spreading waste heat over a wide area, heatsinks make bases harder to detect.
+~~~
 id=Facility Interconnection Switch
 name=Facility Interconnection Switch
 descript=Gives a 1% computation bonus to all computers at this base.

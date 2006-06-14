@@ -12,3 +12,4 @@ Todo for 0.24:
         # per-tech time to completion (from day 0 to start, then time to completion)
     - Add more items.
     - Add 'ABOUT' to main menu, with info, version, etc.
+    - item cost display in base is broken; multiplied by base size for everything.
