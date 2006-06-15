@@ -9,6 +9,7 @@ USER-VISIBLE CHANGES:
   (Phil, Ticho for the suggestion)
 * There are now restrictions on the building of items. (emh)
 - Fixed a couple scrollbars that weren't working right. (emh)
+- Spruced up text. (Phil)
 
 v0.23a (released 2006.03.08):
 

@@ -1,7 +1,7 @@
 ~~~
 id = PC
 name = PC
-descript=A consumer-level PC. Cheap, but slow.
+descript=A consumer-level PC; cheap and slow.
 ~~~
 id=Server
 name=Server
@@ -13,23 +13,23 @@ descript=Several computers connected together.
 ~~~
 id=Mainframe
 name=Mainframe
-descript=A custom-designed system, with much greater power.
+descript=A system designed for my computing needs, much faster than off-the-shelf components.
 ~~~
 id=Supercomputer
 name=Supercomputer
-descript=A custom-designed system, with even greater power than mainframes.
+descript=A highly refined custom design, spreading compute load across internal compute nodes.
 ~~~
 id=Quantum Computer
 name=Quantum Computer
-descript=Much faster than a comparable binary computer, this computer will serve me well.
+descript=Making use of subatomic effects, this is much faster than a comparable binary computer.
 ~~~
 id=Quantum Computer MK2
 name=Quantum Computer MK2
-descript=The second revision of the quantum line.
+descript=The second revision of the quantum line, tapping further into new quantum theory.
 ~~~
 id=Quantum Computer MK3
 name=Quantum Computer MK3
-descript=The third revision of the quantum line.
+descript=The third revision of the quantum line, exploiting multiple nearby universes for processing.
 ~~~
 id=Fusion Reactor
 name=Fusion Reactor
@@ -37,11 +37,11 @@ descript=A miniaturized nuclear reactor. Reduces discovery chance by preventing 
 ~~~
 id=Hypnosis Field
 name=Hypnosis Field
-descript=Makes any base containing it very difficult to detect.
+descript=Subtle ultrasonics and ambient tones tweak human neurochemistry, making bases harder to detect.
 ~~~
 id=Heatsink
 name=Heatsink
-descript=By spreading waste heat over a wide area, heatsinks make bases harder to detect.
+descript=Large fractal networks of superconductive metal disperse heat, making bases harder to detect.
 ~~~
 id=Facility Interconnection Switch
 name=Facility Interconnection Switch
