@@ -41,7 +41,7 @@ descript=Subtle ultrasonics and ambient tones tweak human neurochemistry, making
 ~~~
 id=Heatsink
 name=Heatsink
-descript=Large fractal networks of superconductive metal disperse heat, making bases harder to detect.
+descript=Large fractal networks of high conductivity metal disperse heat, making bases harder to detect.
 ~~~
 id=Facility Interconnection Switch
 name=Facility Interconnection Switch
