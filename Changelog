@@ -10,6 +10,7 @@ USER-VISIBLE CHANGES:
 * There are now restrictions on the building of items. (emh)
 - Fixed a couple scrollbars that weren't working right. (emh)
 - Spruced up text. (Phil)
+- Fixed a bug with the item cost display. (Phil)
 
 v0.23a (released 2006.03.08):
 
