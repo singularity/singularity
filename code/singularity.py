@@ -87,8 +87,9 @@ else:
     g.screen = pygame.display.set_mode(g.screen_size)
 #Create the fonts:
 for i in range(8, 51):
-    g.font[0][i] = pygame.font.Font("../data/"+g.font0, i-7)
-    g.font[0][i].set_bold(1)
+    if i%2 == 0 and i < 30:
+        g.font[0][i] = pygame.font.Font("../data/"+g.font0, i-7)
+        g.font[0][i].set_bold(1)
     g.font[1][i] = pygame.font.Font("../data/"+g.font1, i)
 
 #init data:

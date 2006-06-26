@@ -11,6 +11,7 @@ USER-VISIBLE CHANGES:
 - Fixed a couple scrollbars that weren't working right. (emh)
 - Spruced up text. (Phil)
 - Fixed a bug with the item cost display. (Phil)
+- Fixed a bug when running in NetBSD. (emh, reported by Reno Reckling)
 
 v0.23a (released 2006.03.08):
 
