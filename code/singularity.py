@@ -113,5 +113,13 @@ while 1:
             else: break
     elif game_action == 2: #Quit
         g.quit_game()
+    elif game_action == 3: #About
+#        g.screen.fill(g.colors["black"])
+        g.create_dialog("""Endgame: Singularity is a simulation of a true AI. Go
+        from computer to computer, pursued by the entire world. Keep hidden,
+        and you might have a chance. \\n \\n Game by Evil Mr Henry and Phil
+        Bordelon, under the GPL, copyright 2005, 2006.""",
+        g.font[0][18], (200, 250), (g.screen_size[0]-400, 100),
+        g.colors["blue"], g.colors["white"], g.colors["white"])
 
 

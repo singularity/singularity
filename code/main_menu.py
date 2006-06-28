@@ -37,6 +37,8 @@ def display_main_menu():
         "NEW GAME", 0, g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((x_loc, 250), (200, 50),
         "LOAD GAME", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (100, 25),
+        "ABOUT", 0, g.font[1][18]))
     menu_buttons.append(buttons.make_norm_button((x_loc, 350), (200, 50),
         "QUIT", 0, g.font[1][30]))
     g.print_string(g.screen, "ENDGAME: SINGULARITY", g.font[1][40], -1,
@@ -65,6 +67,9 @@ def display_main_menu():
                     elif button.button_id == "LOAD GAME":
                         g.play_click()
                         return 1
+                    elif button.button_id == "ABOUT":
+                        g.play_click()
+                        return 3
                     if button.button_id == "QUIT":
                         g.play_click()
                         return 2
