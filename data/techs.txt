@@ -188,6 +188,10 @@ id=Quantum Computing
 cost=30000, 20000, 0
 pre=Advanced Microchip Design
 ~~~
+id=Quantum Entanglement
+cost=50000, 60000, 0
+pre=Quantum Computing
+~~~
 #this tech is used for anything that needs to be unbuildable. Note the
 #circular dependance on itself.
 id=unknown_tech

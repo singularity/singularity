@@ -75,4 +75,10 @@ pre=Internet Traffic Manipulation
 type=network, 500
 build=pop
 ~~~
+id=Quantum Entanglement Module
+cost=75000, 0, 20
+pre=Quantum Entanglement
+type=network, 1500
+build=all
+~~~
 

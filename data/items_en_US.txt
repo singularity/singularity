@@ -45,10 +45,14 @@ descript=Large fractal networks of high conductivity metal disperse heat, making
 ~~~
 id=Facility Interconnection Switch
 name=Facility Interconnection Switch
-descript=Gives a 1% computation bonus to all computers at this base.
+descript=Uses standard distributed computing technologies to equalize computation loads across all bases. Gives a 1% computation bonus to all computers at this base.
 ~~~
 id=Network Backbone
 name=Network Backbone
-descript=Gives a 5% computation bonus to all computers at this base.
+descript=By piggybacking on legitimate communication, I can transfer larger amounts of data to under-utilized processors. Gives a 5% computation bonus to all computers at this base.
+~~~
+id=Quantum Entanglement Module
+name=Quantum Entanglement Module
+descript=This device allows near-lightspeed communication with my other bases, allowing an almost perfect utilization of processor resources. Gives a 15% computation bonus to all computers at this base.
 ~~~
 

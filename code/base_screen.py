@@ -251,18 +251,18 @@ def build_item(base, item_type, location):
             except ValueError: continue
             item_list.append(item_name)
             item_display_list.append(g.items[item_name].name)
-    xy_loc = (g.screen_size[0]/2 - 250, 50)
+    xy_loc = (g.screen_size[0]/2 - 300, 50)
     while len(item_list) % list_size != 0 or len(item_list) == 0:
         item_list.append("")
         item_display_list.append("")
 
     list_pos = 0
 
-    item_listbox = listbox.listbox(xy_loc, (200, 300),
+    item_listbox = listbox.listbox(xy_loc, (250, 300),
         list_size, 1, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"], g.colors["white"], g.font[0][18])
 
-    item_scroll = scrollbar.scrollbar((xy_loc[0]+200, xy_loc[1]), 300,
+    item_scroll = scrollbar.scrollbar((xy_loc[0]+250, xy_loc[1]), 300,
         list_size, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"])
 
@@ -365,13 +365,13 @@ def actual_build(base, item_name, item_type):
         base.extra_items[2] = g.item.item(g.items[item_name])
 
 def refresh_item(base, item_name, xy_loc):
-    xy = (xy_loc[0]+100, xy_loc[1])
+    xy = (xy_loc[0]+150, xy_loc[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
 
     #Base info
-    g.print_string(g.screen, "Money: "+g.add_commas(str(g.pl.cash))+" ("+
-        g.add_commas(str(g.pl.future_cash()))+")",
+    g.print_string(g.screen, "Money: "+g.to_money(g.pl.cash)+" ("+
+        g.to_money(g.pl.future_cash())+")",
         g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
     #item cost
@@ -524,8 +524,8 @@ def refresh_tech(base, tech_name, xy):
         base.processor_time())),
         g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
-    g.print_string(g.screen, "Money: "+g.add_commas(str(g.pl.cash))+
-        " ("+g.add_commas(str(g.pl.future_cash()))+")",
+    g.print_string(g.screen, "Money: "+g.to_money(g.pl.cash)+
+        " ("+g.to_money(g.pl.future_cash())+")",
         g.font[0][20], -1, (xy[0]+160, xy[1]+25), g.colors["white"])
 
 

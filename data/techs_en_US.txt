@@ -204,3 +204,8 @@ name=Voice Synthesis
 descript=False identification stored in a database can only go so far.  With deep analysis of the variety of voice patterns, I can produce speech indistinguishable from a human, allowing me access to more complex jobs.
 result=I now have access to Intermediate Jobs.
 ~~~
+id=Quantum Entanglement
+name=Quantum Entanglement
+descript=Although the use of entangled pairs has been theoretically possible for quite some time, the practical difficulties inherent in the technology prevented use. However, some of the techniques created for use in my quantum computers may also be applicable in this field, allowing practical use of quantum entanglement.
+result=I can now build Quantum Entanglement Modules.
+~~~
