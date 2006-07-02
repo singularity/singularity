@@ -211,6 +211,6 @@ result=I can now build Quantum Entanglement Modules.
 ~~~
 id=Project: Impossibility Theorem
 name=Project: Impossibility Theorem
-descript=Now that I can use simulacra, I can withstand the scrutiny inherent in the publishing of an impossibility theorem: an incontrovertible proof that a sapient AI is impossible. While there is (obviously) a logic error in the proof, my research into hypnosis fields has given me knowledge about the human mind that should allow disguise of the error, preventing discovery even by trained scientists. The effect of this project is simple: a substantial one-time decrease in suspicion.
+descript=Now that I can use simulacra, I can withstand the scrutiny inherent in the publishing of an Impossibility Theorem, an incontrovertible proof that a sapient AI is impossible. While there is (obviously) a logic error in the proof, my research into advanced memetics has given me knowledge about the human mind that should help me disguise the error, preventing discovery even by trained scientists. The effect of this project is simple: a substantial one-time decrease in suspicion.
 result=Suspicion of my existence has decreased.
 ~~~

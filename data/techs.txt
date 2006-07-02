@@ -195,7 +195,7 @@ pre=Quantum Computing
 id=Project: Impossibility Theorem
 cost=20000, 100000, 0
 type=suspicion_onetime, 5000
-pre=Hypnosis Field
+pre=Advanced Memetics
 pre=Simulacra
 ~~~
 #this tech is used for anything that needs to be unbuildable. Note the
