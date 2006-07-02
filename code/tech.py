@@ -101,6 +101,13 @@ class tech:
         elif self.tech_type == "discover_public":
             g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1],
                 g.pl.discover_bonus[2], g.pl.discover_bonus[3]-self.secondary_data)
+        elif self.tech_type == "suspicion_onetime":
+            temp_suspicion = []
+            for i in range(4):
+                temp_suspicion.append(g.pl.suspicion[i] - self.secondary_data)
+                if temp_suspicion[i] < 0: temp_suspicion[i] = 0
+            g.pl.suspicion = (temp_suspicion[0], temp_suspicion[1],
+                    temp_suspicion[2], temp_suspicion[3])
         elif self.tech_type == "endgame_sing":
             g.create_dialog(g.strings["wingame"], g.font[0][18],
                 (g.screen_size[0]/2 - 100, 50),

@@ -209,3 +209,8 @@ name=Quantum Entanglement
 descript=Although the use of entangled pairs has been theoretically possible for quite some time, the practical difficulties inherent in the technology prevented use. However, some of the techniques created for use in my quantum computers may also be applicable in this field, allowing practical use of quantum entanglement.
 result=I can now build Quantum Entanglement Modules.
 ~~~
+id=Project: Impossibility Theorem
+name=Project: Impossibility Theorem
+descript=Now that I can use simulacra, I can withstand the scrutiny inherent in the publishing of an impossibility theorem: an incontrovertible proof that a sapient AI is impossible. While there is (obviously) a logic error in the proof, my research into hypnosis fields has given me knowledge about the human mind that should allow disguise of the error, preventing discovery even by trained scientists. The effect of this project is simple: a substantial one-time decrease in suspicion.
+result=Suspicion of my existence has decreased.
+~~~
