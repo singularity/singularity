@@ -127,7 +127,7 @@ def display_knowledge_list():
     temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 150), button_array)
 
     if temp_return == -1: return
-    elif temp_return == 0: return 2 #Techs
+    elif temp_return == 0: display_inner_techs() #Techs
     elif temp_return == 1:  #Items
         display_itemtype_list()
     elif temp_return == 2: return
@@ -148,10 +148,138 @@ def display_itemtype_list():
     elif temp_return == 3: display_inner_items("security")
     elif temp_return == 4: return
 
+def display_inner_techs():
+    tech_list_size = 16
+    temp_tech_list = []
+    temp_tech_display_list = []
+    for tech_name in g.techs:
+        if g.techs[tech_name].prereq == "":
+            temp_tech_list.append(tech_name)
+            temp_tech_display_list.append(g.techs[tech_name].name)
+        else:
+            for prereq in g.techs[tech_name].prereq:
+                if g.techs[prereq].known != 1:
+                    break
+            else:
+                temp_tech_list.append(tech_name)
+                temp_tech_display_list.append(g.techs[tech_name].name)
+
+    xy_loc = (g.screen_size[0]/2 - 289, 50)
+    while len(temp_tech_list) % tech_list_size != 0 or len(temp_tech_list) == 0:
+        temp_tech_list.append("")
+        temp_tech_display_list.append("")
+
+    item_pos = 0
+    techs_list = listbox.listbox(xy_loc, (230, 350),
+        tech_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
+
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
+        "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+
+    #details screen
+    refresh_tech(temp_tech_list[item_pos], xy_loc)
+    listbox.refresh_list(techs_list, 0, item_pos, temp_tech_display_list)
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    return
+                else:
+                    item_pos, refresh = techs_list.key_handler(event.key,
+                        item_pos, len(temp_tech_display_list))
+                    if refresh:
+                        refresh_tech(temp_tech_list[item_pos], xy_loc)
+                        listbox.refresh_list(techs_list, 0,
+                                        item_pos, temp_tech_display_list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = techs_list.is_over(event.pos)
+                    if tmp != -1:
+                        item_pos = (item_pos/tech_list_size)*tech_list_size + tmp
+                        refresh_tech(temp_tech_list[item_pos], xy_loc)
+                        listbox.refresh_list(techs_list, 0,
+                                        item_pos, temp_tech_display_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    item_pos -= 1
+                    if item_pos <= 0:
+                        item_pos = 0
+                    refresh_tech(temp_tech_list[item_pos], xy_loc)
+                    listbox.refresh_list(techs_list, 0,
+                                        item_pos, temp_tech_display_list)
+                if event.button == 5:
+                    item_pos += 1
+                    if item_pos >= len(temp_tech_list):
+                        item_pos = len(temp_tech_list)-1
+                    refresh_tech(temp_tech_list[item_pos], xy_loc)
+                    listbox.refresh_list(techs_list, 0,
+                                        item_pos, temp_tech_display_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BACK":
+                        g.play_click()
+                        return
+
+def refresh_tech(tech_name, xy):
+    xy = (xy[0]+80, xy[1])
+    g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
+    g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
+    if tech_name == "": return
+    g.print_string(g.screen, g.techs[tech_name].name,
+            g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
+
+    #Building cost
+    if g.techs[tech_name].cost != (0, 0, 0):
+        string = "Research Cost:"
+        g.print_string(g.screen, string,
+                g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
+
+        string = g.to_money(g.techs[tech_name].cost[0])+" Money"
+        g.print_string(g.screen, string,
+                g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
+
+        string = g.add_commas(str(g.techs[tech_name].cost[1])) + " CPU"
+        g.print_string(g.screen, string,
+                g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
+    else:
+        g.print_string(g.screen, "Reseach complete.",
+                g.font[0][22], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
+
+    #Danger
+    if g.techs[tech_name].danger == 0:
+        string = "Study Anywhere."
+    elif g.techs[tech_name].danger == 1:
+        string = "Study underseas or farther."
+    elif g.techs[tech_name].danger == 2:
+        string = "Study off-planet."
+    elif g.techs[tech_name].danger == 3:
+        string = "Study far away from this planet."
+    elif g.techs[tech_name].danger == 2:
+        string = "Do not study in this dimension."
+    g.print_string(g.screen, string,
+            g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
+
+    if g.techs[tech_name].known:
+        g.print_multiline(g.screen, g.techs[tech_name].descript+" \\n \\n "+
+                g.techs[tech_name].result,
+                g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
+    else:
+        g.print_multiline(g.screen, g.techs[tech_name].descript,
+                g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
 
 def display_inner_items(item_type):
     item_list_size = 16
-
     temp_item_list = []
     temp_item_display_list = []
     for item_name in g.items:
@@ -162,13 +290,11 @@ def display_inner_items(item_type):
                 temp_item_display_list.append(g.items[item_name].name)
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
-
     while len(temp_item_list) % item_list_size != 0 or len(temp_item_list) == 0:
         temp_item_list.append("")
         temp_item_display_list.append("")
 
     item_pos = 0
-
     items_list = listbox.listbox(xy_loc, (230, 350),
         item_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"], g.colors["white"], g.font[0][18])
@@ -180,11 +306,8 @@ def display_inner_items(item_type):
         button.refresh_button(0)
 
     #details screen
-
     refresh_items(temp_item_list[item_pos], xy_loc)
-
     listbox.refresh_list(items_list, 0, item_pos, temp_item_display_list)
-
     sel_button = -1
     while 1:
         g.clock.tick(20)
@@ -202,7 +325,6 @@ def display_inner_items(item_type):
                         refresh_items(temp_item_list[item_pos], xy_loc)
                         listbox.refresh_list(items_list, 0,
                                         item_pos, temp_item_display_list)
-
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     tmp = items_list.is_over(event.pos)
@@ -266,7 +388,6 @@ def refresh_items(item_name, xy):
         string = "Detection chance reduction: "+g.to_percent(g.items[item_name].item_qual)
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
-
 
     g.print_multiline(g.screen, g.items[item_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
