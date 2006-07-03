@@ -148,7 +148,7 @@ class player_class:
                suspicion_down.append(quadratic_down)
             else:
                suspicion_down.append(1)
-      
+
         self.suspicion = (self.suspicion[0] - suspicion_down[0],
                 self.suspicion[1] - suspicion_down[1],
                 self.suspicion[2] - suspicion_down[2],
@@ -189,7 +189,11 @@ class player_class:
                 if base_name.built == 1:
                     #maintenance
                     self.cash -= base_name.base_type.mainten[0]
-                    if self.cash < 0: self.cash = 0
+                    if self.cash < 0:
+                        self.cash = 0
+                        #Chance of base destruction if unmaintained:
+                        if g.roll_percent(200) == 1:
+                            removal_index.insert(0, (loc_in_array, "maint"))
 
                     self.cpu_for_day -= base_name.base_type.mainten[1]
                     if self.cpu_for_day < 0: self.cpu_for_day = 0
@@ -263,13 +267,19 @@ class player_class:
                 elif detection_succeed[1] == "person":
                     self.increase_suspicion((0, 0, 0, 1000))
                     detect_phrase = g.strings["discover_public"]
+                elif detection_succeed[1] == "maint": pass
                 else: print "error detecting base: "+detection_succeed[1]
-                g.create_dialog(g.strings["discover0"]+" "+
-                    g.bases[base_loc][detection_succeed[0]].name+" "+
-                    g.strings["discover1"]+" "+detect_phrase,
-                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                    (200, 200), g.colors["dark_blue"],
-                    g.colors["white"], g.colors["white"])
+                if detection_succeed[1] == "maint":
+                    dialog_string = (g.strings["discover_maint0"]+" "+
+                        g.bases[base_loc][detection_succeed[0]].name+" "+
+                        g.strings["discover_maint1"])
+                else:
+                    dialog_string = (g.strings["discover0"]+" "+
+                        g.bases[base_loc][detection_succeed[0]].name+" "+
+                        g.strings["discover1"]+" "+detect_phrase)
+                g.create_dialog(dialog_string, g.font[0][18],
+                    (g.screen_size[0]/2 - 100, 50), (200, 200),
+                    g.colors["dark_blue"], g.colors["white"], g.colors["white"])
                 g.curr_speed = 1
                 g.bases[base_loc].pop(detection_succeed[0])
                 needs_refresh = 1
