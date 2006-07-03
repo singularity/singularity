@@ -13,6 +13,7 @@ USER-VISIBLE CHANGES:
 - Fixed a bug with the item cost display. (Phil)
 - Fixed a bug when running in NetBSD. (emh, reported by Reno Reckling)
 * More items/techs. (emh)
+* Bases can now be lost due to disrepair. (emh)
 
 v0.23a (released 2006.03.08):
 
