@@ -1,3 +1,4 @@
+#Spanish translation by Borg[MDQ]
 ~~~
 id=fonts
 font0=vera.ttf

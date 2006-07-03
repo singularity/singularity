@@ -31,23 +31,17 @@ import base_screen
 import research_screen
 import finance_screen
 
-def display_pause_menu():
-    xy_loc = (g.screen_size[0]/2 - 100, 50)
-
+def display_generic_menu(xy_loc, titlelist):
     #Border
-    g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200, 350))
-    g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198, 348))
+    g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200,
+            len(titlelist)*70))
+    g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198,
+            len(titlelist)*70-2))
     menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
-        "NEW GAME", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+80), (180, 50),
-        "SAVE GAME", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
-        "LOAD GAME", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
-        "QUIT", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
-        "RESUME", 0, g.font[1][30]))
+    for i in range(len(titlelist)):
+        menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10,
+            xy_loc[1]+10+i*70), (180, 50), titlelist[i][0], titlelist[i][1],
+            g.font[1][30]))
 
     for button in menu_buttons:
         button.refresh_button(0)
@@ -59,99 +53,71 @@ def display_pause_menu():
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return 0
+                if event.key == pygame.K_ESCAPE: return -1
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                return 0
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "RESUME":
-                        g.play_click()
-                        return 0
-                    if button.button_id == "SAVE GAME":
-                        g.play_click()
-                        return 1
-                    if button.button_id == "NEW GAME":
-                        g.play_click()
-                        return 2
-                    elif button.button_id == "LOAD GAME":
-                        g.play_click()
-                        return 3
-                    if button.button_id == "QUIT":
-                        g.play_click()
-                        return 4
+                return -1
+            for buttonnum in range(len(menu_buttons)):
+                if menu_buttons[buttonnum].was_activated(event):
+                    g.play_click()
+                    return buttonnum
+
+def display_pause_menu():
+    button_array= []
+    button_array.append(["NEW GAME", 0])
+    button_array.append(["SAVE GAME", 0])
+    button_array.append(["LOAD GAME", 0])
+    button_array.append(["QUIT", 0])
+    button_array.append(["RESUME", 0])
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
+
+    if temp_return == -1: return 0
+    elif temp_return == 0: return 2 #New
+    elif temp_return == 1: return 1 #Save
+    elif temp_return == 2: return 3 #Load
+    elif temp_return == 3: return 4 #Quit
+    elif temp_return == 4: return 0
 
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return
-    xy_loc = (g.screen_size[0]/2 - 100, 50)
+    button_array= []
+    button_array.append(["GIVE MONEY", 5])
+    button_array.append(["GIVE TECH", 5])
+    button_array.append(["END CONSTR.", 0])
+    button_array.append(["SUPERSPEED", 0])
+    button_array.append(["KILL SUSP.", 0])
+    button_array.append(["RESUME", 0])
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
-    #Border
-    g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200, 420))
-    g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198, 418))
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+10), (180, 50),
-        "GIVE MONEY", 5, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+80), (180, 50),
-        "GIVE TECH", 5, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+150), (180, 50),
-        "END CONSTR.", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+220), (180, 50),
-        "SUPERSPEED", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+290), (180, 50),
-        "KILL SUSP.", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10, xy_loc[1]+360), (180, 50),
-        "RESUME", 0, g.font[1][30]))
-
-    for button in menu_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
-
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return 0
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                return
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "RESUME":
-                        return
-                    elif button.button_id == "SUPERSPEED":
-                        g.curr_speed = 864000
-                        return
-                    elif button.button_id == "END CONSTR.":
-                        for base_loc in g.bases:
-                            for base_name in g.bases[base_loc]:
-                                if base_name.built == 0:
-                                    base_name.study((9999999999999,
-                                        9999999999999, 9999999999999))
-                        return
-                    elif button.button_id == "GIVE TECH":
-                        #create a temp base, in order to reuse the tech-changing code
-                        tmp_base = g.base.base(1, "tmp_base",
-                        g.base_type["Reality Bubble"], 1)
-                        base_screen.change_tech(tmp_base)
-                        if g.techs.has_key(tmp_base.studying):
-                            g.techs[tmp_base.studying].gain_tech()
-                        return
-                    elif button.button_id == "GIVE MONEY":
-                        cash_amount = g.create_textbox("How much cash?",
-                        "", g.font[0][18],
-                        (g.screen_size[0]/2-100, 100), (200, 100), 25,
-                        g.colors["dark_blue"], g.colors["white"],
-                        g.colors["white"], g.colors["light_blue"])
-                        if cash_amount.isdigit() == False: return
-                        g.pl.cash += int(cash_amount)
-                        return
-                    elif button.button_id == "KILL SUSP.":
-                        g.pl.suspicion = (0, 0, 0, 0)
-                        return
+    if temp_return == -1: return
+    elif temp_return == 0:  #Cash
+        cash_amount = g.create_textbox("How much cash?", "", g.font[0][18],
+        (g.screen_size[0]/2-100, 100), (200, 100), 25, g.colors["dark_blue"],
+        g.colors["white"], g.colors["white"], g.colors["light_blue"])
+        if cash_amount.isdigit() == False: return
+        g.pl.cash += int(cash_amount)
+        return
+    elif temp_return == 1:  #Tech
+        #create a temp base, in order to reuse the tech-changing code
+        tmp_base = g.base.base(1, "tmp_base", g.base_type["Reality Bubble"], 1)
+        base_screen.change_tech(tmp_base)
+        if g.techs.has_key(tmp_base.studying):
+            g.techs[tmp_base.studying].gain_tech()
+        return
+    elif temp_return == 2:  #Build all
+        for base_loc in g.bases:
+            for base_name in g.bases[base_loc]:
+                if base_name.built == 0:
+                    base_name.study((9999999999999, 9999999999999, 9999999999999))
+        return
+    elif temp_return == 3:  #Superspeed
+        g.curr_speed = 864000
+        return
+    elif temp_return == 4:  #Kill susp.
+        g.pl.suspicion = (0, 0, 0, 0)
+        return
+    elif temp_return == 5: return
 
 def map_loop():
     menu_buttons = []
