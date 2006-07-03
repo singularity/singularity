@@ -14,6 +14,7 @@ USER-VISIBLE CHANGES:
 - Fixed a bug when running in NetBSD. (emh, reported by Reno Reckling)
 * More items/techs. (emh)
 * Bases can now be lost due to disrepair. (emh)
+* Added ability to examine items and techs. (emh)
 
 v0.23a (released 2006.03.08):
 

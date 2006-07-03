@@ -173,6 +173,9 @@ def display_inner_techs():
     techs_list = listbox.listbox(xy_loc, (230, 350),
         tech_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"], g.colors["white"], g.font[0][18])
+    techs_scroll = scrollbar.scrollbar((xy_loc[0]+230, xy_loc[1]), 350,
+        tech_list_size, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"])
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
@@ -182,7 +185,7 @@ def display_inner_techs():
 
     #details screen
     refresh_tech(temp_tech_list[item_pos], xy_loc)
-    listbox.refresh_list(techs_list, 0, item_pos, temp_tech_display_list)
+    listbox.refresh_list(techs_list, techs_scroll, item_pos, temp_tech_display_list)
     sel_button = -1
     while 1:
         g.clock.tick(20)
@@ -198,7 +201,7 @@ def display_inner_techs():
                         item_pos, len(temp_tech_display_list))
                     if refresh:
                         refresh_tech(temp_tech_list[item_pos], xy_loc)
-                        listbox.refresh_list(techs_list, 0,
+                        listbox.refresh_list(techs_list, techs_scroll,
                                         item_pos, temp_tech_display_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
@@ -206,7 +209,7 @@ def display_inner_techs():
                     if tmp != -1:
                         item_pos = (item_pos/tech_list_size)*tech_list_size + tmp
                         refresh_tech(temp_tech_list[item_pos], xy_loc)
-                        listbox.refresh_list(techs_list, 0,
+                        listbox.refresh_list(techs_list, techs_scroll,
                                         item_pos, temp_tech_display_list)
                 if event.button == 3: return -1
                 if event.button == 4:
@@ -214,14 +217,14 @@ def display_inner_techs():
                     if item_pos <= 0:
                         item_pos = 0
                     refresh_tech(temp_tech_list[item_pos], xy_loc)
-                    listbox.refresh_list(techs_list, 0,
+                    listbox.refresh_list(techs_list, techs_scroll,
                                         item_pos, temp_tech_display_list)
                 if event.button == 5:
                     item_pos += 1
                     if item_pos >= len(temp_tech_list):
                         item_pos = len(temp_tech_list)-1
                     refresh_tech(temp_tech_list[item_pos], xy_loc)
-                    listbox.refresh_list(techs_list, 0,
+                    listbox.refresh_list(techs_list, techs_scroll,
                                         item_pos, temp_tech_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
@@ -230,9 +233,14 @@ def display_inner_techs():
                     if button.button_id == "BACK":
                         g.play_click()
                         return
+            tmp = techs_scroll.adjust_pos(event, item_pos, temp_tech_list)
+            if tmp != item_pos:
+                item_pos = tmp
+                listbox.refresh_list(techs_list, techs_scroll,
+                                        item_pos, temp_tech_list)
 
 def refresh_tech(tech_name, xy):
-    xy = (xy[0]+80, xy[1])
+    xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
     if tech_name == "": return
@@ -265,7 +273,7 @@ def refresh_tech(tech_name, xy):
         string = "Study off-planet."
     elif g.techs[tech_name].danger == 3:
         string = "Study far away from this planet."
-    elif g.techs[tech_name].danger == 2:
+    elif g.techs[tech_name].danger == 4:
         string = "Do not study in this dimension."
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
@@ -730,13 +738,6 @@ def display_base_list(location, menu_buttons):
                 refresh_map(menu_buttons)
                 return
             base_to_add.count += 1
-#			while got_valid_name == 0:
-# 				g.screen.fill(g.colors["white"], (250, 200, 350, 175))
-# 				g.screen.fill(g.colors["light_blue"], (251, 201, 348, 173))
-# 			        g.screen.fill(g.colors["white"], (300, 250, 250, 25))
-# 				g.screen.fill(g.colors["dark_blue"], (301, 251, 248, 23))
-# 				g.print_multiline(g.screen, "Enter a name for the base.", g.font[0][18],
-# 					200, (305, 255), g.colors["white"])
 
             g.bases[location].append(g.base.base(len(g.bases[location]),
                 tmp, g.base_type[tmp], 0))
