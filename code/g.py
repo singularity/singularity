@@ -86,7 +86,7 @@ def fill_colors():
     colors["light_blue"] = (50, 50, 255, 255)
 
 strings = {}
-
+help_strings = {}
 
 picts = {}
 #Load all pictures from the data directory.
@@ -1120,6 +1120,12 @@ def load_string_defs(language_str):
                     global strings
                     for string_entry in string_name:
                             strings[string_entry] = string_name[string_entry]
+            elif string_name["id"] == "help":
+                    global help_strings
+                    for string_entry in string_name:
+                        if string_entry=="id": continue
+                        help_strings[string_entry] = \
+                                string_name[string_entry].split("|", 1)
 
 
 def load_strings():

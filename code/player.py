@@ -192,11 +192,15 @@ class player_class:
                     if self.cash < 0:
                         self.cash = 0
                         #Chance of base destruction if unmaintained:
-                        if g.roll_percent(200) == 1:
+                        if g.roll_percent(150) == 1:
                             removal_index.insert(0, (loc_in_array, "maint"))
 
                     self.cpu_for_day -= base_name.base_type.mainten[1]
-                    if self.cpu_for_day < 0: self.cpu_for_day = 0
+                    if self.cpu_for_day < 0:
+                        self.cpu_for_day = 0
+                        #Chance of base destruction if unmaintained:
+                        if g.roll_percent(150) == 1:
+                            removal_index.insert(0, (loc_in_array, "maint"))
 
 
                     #study

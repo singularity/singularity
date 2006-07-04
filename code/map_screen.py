@@ -123,6 +123,7 @@ def display_knowledge_list():
     button_array= []
     button_array.append(["TECHS", 0])
     button_array.append(["ITEMS", 0])
+    button_array.append(["CONCEPTS", 0])
     button_array.append(["RESUME", 0])
     temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 150), button_array)
 
@@ -130,7 +131,9 @@ def display_knowledge_list():
     elif temp_return == 0: display_inner_techs() #Techs
     elif temp_return == 1:  #Items
         display_itemtype_list()
-    elif temp_return == 2: return
+    elif temp_return == 2:
+        display_concept_list()
+    elif temp_return == 3: return
 
 def display_itemtype_list():
     button_array= []
@@ -399,6 +402,92 @@ def refresh_items(item_name, xy):
 
     g.print_multiline(g.screen, g.items[item_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
+
+def display_concept_list():
+    item_list_size = 16
+    temp_item_list = []
+    temp_item_display_list = []
+
+    for item_name in g.help_strings:
+        temp_item_list.append(item_name)
+        temp_item_display_list.append(g.help_strings[item_name][0])
+
+    xy_loc = (g.screen_size[0]/2 - 289, 50)
+    while len(temp_item_list) % item_list_size != 0 or len(temp_item_list) == 0:
+        temp_item_list.append("")
+        temp_item_display_list.append("")
+
+    item_pos = 0
+    items_list = listbox.listbox(xy_loc, (230, 350),
+        item_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
+
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
+        "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+
+    #details screen
+    refresh_concept(temp_item_list[item_pos], xy_loc)
+    listbox.refresh_list(items_list, 0, item_pos, temp_item_display_list)
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    return
+                else:
+                    item_pos, refresh = items_list.key_handler(event.key,
+                        item_pos, len(temp_item_display_list))
+                    if refresh:
+                        refresh_concept(temp_item_list[item_pos], xy_loc)
+                        listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = items_list.is_over(event.pos)
+                    if tmp != -1:
+                        item_pos = (item_pos/item_list_size)*item_list_size + tmp
+                        refresh_concept(temp_item_list[item_pos], xy_loc)
+                        listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    item_pos -= 1
+                    if item_pos <= 0:
+                        item_pos = 0
+                    refresh_concept(temp_item_list[item_pos], xy_loc)
+                    listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+                if event.button == 5:
+                    item_pos += 1
+                    if item_pos >= len(temp_item_list):
+                        item_pos = len(temp_item_list)-1
+                    refresh_concept(temp_item_list[item_pos], xy_loc)
+                    listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BACK":
+                        g.play_click()
+                        return
+
+def refresh_concept(concept_name, xy):
+    xy = (xy[0]+80, xy[1])
+    g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
+    g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
+    if concept_name == "": return
+    g.print_string(g.screen, g.help_strings[concept_name][0],
+            g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
+    g.print_multiline(g.screen, g.help_strings[concept_name][1],
+            g.font[0][18], 290, (xy[0]+160, xy[1]+30), g.colors["white"])
 
 def map_loop():
     menu_buttons = []
