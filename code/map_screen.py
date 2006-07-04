@@ -273,7 +273,7 @@ def refresh_tech(tech_name, xy):
 
     #Danger
     if g.techs[tech_name].danger == 0:
-        string = "Study Anywhere."
+        string = "Study anywhere."
     elif g.techs[tech_name].danger == 1:
         string = "Study underseas or farther."
     elif g.techs[tech_name].danger == 2:
