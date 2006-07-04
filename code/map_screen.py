@@ -125,7 +125,7 @@ def display_knowledge_list():
     button_array.append(["ITEMS", 0])
     button_array.append(["CONCEPTS", 0])
     button_array.append(["RESUME", 0])
-    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 150), button_array)
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
 
     if temp_return == -1: return
     elif temp_return == 0: display_inner_techs() #Techs
@@ -142,7 +142,7 @@ def display_itemtype_list():
     button_array.append(["NETWORK", 0])
     button_array.append(["SECURITY", 0])
     button_array.append(["RESUME", 1])
-    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
 
     if temp_return == -1: return
     elif temp_return == 0: display_inner_items("compute")
