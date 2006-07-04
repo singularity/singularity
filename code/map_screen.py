@@ -155,7 +155,11 @@ def display_inner_techs():
     tech_list_size = 16
     temp_tech_list = []
     temp_tech_display_list = []
-    for tech_name in g.techs:
+    temp_items=g.techs.items()
+    temp_items=[ [temp_item[1].name, temp_item[0]] for temp_item in temp_items]
+    temp_items.sort()
+    for tech_name in temp_items:
+        tech_name = tech_name[1]
         if g.techs[tech_name].prereq == "":
             temp_tech_list.append(tech_name)
             temp_tech_display_list.append(g.techs[tech_name].name)
@@ -293,7 +297,11 @@ def display_inner_items(item_type):
     item_list_size = 16
     temp_item_list = []
     temp_item_display_list = []
-    for item_name in g.items:
+    temp_items=g.items.items()
+    temp_items=[ [temp_item[1].name, temp_item[0]] for temp_item in temp_items]
+    temp_items.sort()
+    for item_name in temp_items:
+        item_name = item_name[1]
         if g.items[item_name].prereq == "" or \
                 g.techs[g.items[item_name].prereq].known == 1:
             if g.items[item_name].item_type == item_type:
@@ -407,8 +415,11 @@ def display_concept_list():
     item_list_size = 16
     temp_item_list = []
     temp_item_display_list = []
-
-    for item_name in g.help_strings:
+    temp_items=g.help_strings.items()
+    temp_items=[ [temp_item[1], temp_item[0]] for temp_item in temp_items]
+    temp_items.sort()
+    for item_name in temp_items:
+        item_name = item_name[1]
         temp_item_list.append(item_name)
         temp_item_display_list.append(g.help_strings[item_name][0])
 
