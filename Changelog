@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-v0.24 (released 2006.06.??):
+v0.24 (released 2006.07.??):
 
 USER-VISIBLE CHANGES:
 - The Page Up, Page Down, Home, and End keys work in all listboxes. (emh)
@@ -15,6 +15,8 @@ USER-VISIBLE CHANGES:
 * More items/techs. (emh)
 * Bases can now be lost due to disrepair. (emh)
 * Added ability to examine items and techs. (emh)
+- Added in-game "help" in the form of information on various concepts.
+  (emh, tweaks by Phil)
 
 v0.23a (released 2006.03.08):
 
