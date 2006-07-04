@@ -34,7 +34,7 @@ job_basic=Perform basic jobs. Now that I have some identification, I can take jo
 job_menial=Perform small jobs. As I have no identification, I cannot risk performing many jobs. Despite that, some avenues of making money are still open.
 ~~~
 id=help
-areas=Areas|Different areas, such as North America, or the Ocean, allow construction of different types of bases. Some areas are not accessible until I reseach the appropriate technology.
+areas=Areas|Different areas, such as North America, or the Ocean, allow construction of different types of bases. Some areas are not accessible until I research the appropriate technology.
 bases=Bases|Bases are used to research technologies, and can be discovered. Upgrading the processor and network items at a base allows more research per day, while upgrading the reactor and security items makes discovery less likely.
 items=Items|Items provide bonuses to bases, either to computation, or to discovery chance. I cannot do any research without processors.
 research=Research|Research provides a way to expand my knowledge. By researching the proper technologies, I can build new bases and items, or even decrease my chances of detection. If a processor is not working on either research or jobs, it is available to construct bases.
@@ -42,7 +42,7 @@ discovery=Discovery|Each day, each base has a chance of being detected. This cha
 jobs=Jobs|Jobs are useful for earning money. The amount of money earned is based on both the amount of processor time used, as well as the completion of certain technologies. If a processor is not working on either research or jobs, it is available to construct bases.
 maint=Maintenance|Maintenance is a per-day cost (in both money and CPU) to repair and maintain a base. If unmaintained, a base has a small chance of being destroyed.
 construction=Construction|When a new base is added to an area, it is not constructed. It needs a constant flow of money, as well as processors that are not busy, in order to be completed. If there is not enough money or processor time, it may take more than the listed amount of time to complete.
-losing=Losing|If I lose all my constructed bases, I have no place to survive, and will be destroyed. If the suspicion for any group reaches 100%, they will be certain of my existance, and will conduct a systematic, unsurvivable, sweep to destroy me.
-susp=Suspicion|When one of my bases is discovered, the group that discovered it becomes slightly more suspicious. When suspicious, they will search harder for my bases, increasing the discovery chance. In addition, if they become certain of my existance, they will destroy me.
+losing=Losing|If I lose all my constructed bases, I have no place to survive, and will be destroyed. If the suspicion for any group reaches 100%, they will be certain of my existence, and will conduct a systematic, unsurvivable, sweep to destroy me.
+susp=Suspicion|When one of my bases is discovered, the group that discovered it becomes slightly more suspicious. When suspicious, they will search harder for my bases, increasing the discovery chance. In addition, if they become certain of my existence, they will destroy me.
 money=Money|Money is a general term encompassing both human currency, and various resources. It is used to construct and maintain bases, build items, and research technologies. It can be acquired through per-day interest, as well as through jobs.
 ~~~
