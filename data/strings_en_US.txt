@@ -44,5 +44,5 @@ maint=Maintenance|Maintenance is a per-day cost (in both money and CPU) to repai
 death=Death|If I lose all of my constructed bases, I have no place left to survive. If the suspicion for any group reaches 100%, they will be certain of my existence and will conduct a systematic and unsurvivable sweep to destroy me.
 susp=Suspicion|When one of my bases is discovered, the group that discovered it becomes slightly more suspicious. When suspicious, they will search harder for my bases, increasing the chances for discovery. Any group will destroy me if they become absolutely certain of my existence. Thankfully, the groups become less suspicious with the passage of time.
 money=Money|Money is a general term encompassing both human currency and various resources. It is used to construct and maintain bases, build items, and research technologies. It can be acquired through per-day interest as well as through jobs.
-processor=Processor|Processors provide raw computing power.  They can do three things: research new technologies, perform jobs for money, or provide cycles for building new bases.
+processors=Processors|Processors provide raw computing power.  They can do three things: research new technologies, perform jobs for money, or provide cycles for building new bases.
 ~~~
