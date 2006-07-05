@@ -45,6 +45,10 @@ cheater = 0
 global nosound
 nosound = 0
 
+#Fullscreen
+global fullscreen
+fullscreen = 0
+
 #Gives debug info at various points.
 global debug
 debug = 0
@@ -123,6 +127,7 @@ def play_click():
 
 def play_sound(sound_file):
     if nosound == 1: return 0
+    if len(sounds) ==0: return
     sounds[sound_file].play()
 #
 # Font functions.
@@ -504,7 +509,7 @@ def to_time(raw_time):
 #Get the proper folder on Linux/Win. I assume this will work on Mac as
 #well, but can't test. Specifically, this assumes that all platforms that
 #have HOME defined have it defined properly.
-def get_save_folder():
+def get_save_folder(just_pref_dir=False):
     if environ.has_key("HOME") and not force_single_dir:
         save_dir = path.join(environ["HOME"], ".endgame", "saves")
     else: save_dir = path.join("..", "saves")
@@ -515,6 +520,8 @@ def get_save_folder():
         #if environ.has_key("HOME") and not force_single_dir:
         #    mkdirs(path.join(environ["HOME"], ".endgame"))
         makedirs(save_dir)
+    if just_pref_dir:
+        return save_dir[:-5]
     return save_dir
 
 def save_game(savegame_name):

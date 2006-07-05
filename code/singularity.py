@@ -25,9 +25,46 @@ import g, main_menu, map_screen
 
 pygame.init()
 pygame.font.init()
+g.fullscreen = 0
+
+#load prefs from file:
+save_dir = g.get_save_folder(True)
+save_loc = g.path.join(save_dir, "prefs.txt")
+if g.path.exists(save_loc):
+    savefile=open(save_loc, 'r')
+    for line in savefile:
+        line=line.strip()
+        if line == "" or line[0] == "#": continue
+        input_array = line.split("=", 1)
+        if input_array[0].strip() == "fullscreen":
+            if input_array[1].strip() == "1":
+                g.fullscreen = 1
+            elif input_array[1].strip() == "0":
+                g.fullscreen = 0
+        if input_array[0].strip() == "nosound":
+            if input_array[1].strip() == "1":
+                g.nosound = 1
+            elif input_array[1].strip() == "0":
+                g.nosound = 0
+        if input_array[0].strip() == "grab":
+            if input_array[1].strip() == "1":
+                pygame.event.set_grab(1)
+            elif input_array[1].strip() == "0":
+                pygame.event.set_grab(0)
+        if input_array[0].strip() == "xres":
+            try:
+                temp_var= int(input_array[1].strip())
+                g.screen_size = (temp_var, g.screen_size[1])
+            except ValueError: print "invalid x resolution in pref file"
+        if input_array[0].strip() == "yres":
+            try:
+                temp_var= int(input_array[1].strip())
+                g.screen_size = (g.screen_size[0], temp_var)
+            except ValueError: print "invalid y resolution in pref file"
+
+
 
 #Handle the program arguments.
-set_fullscreen = 0
 sys.argv.pop(0)
 arg_modifier = ""
 for argument in sys.argv:
@@ -41,7 +78,7 @@ for argument in sys.argv:
         arg_modifier = ""
         continue
     if argument.lower() == "-fullscreen":
-        set_fullscreen = 1
+        g.fullscreen = 1
     elif argument.lower() == "-640":
         g.screen_size = (640, 480)
     elif argument.lower() == "-800":
@@ -49,7 +86,7 @@ for argument in sys.argv:
     elif argument.lower() == "-1024":
         g.screen_size = (1024, 768)
     elif argument.lower() == "-1280":
-        g.screen_size = (1280, 960)
+        g.screen_size = (1280, 1024)
     elif argument.lower() == "-cheater":
         g.cheater = 1
     elif argument.lower() == "-nosound":
@@ -81,7 +118,7 @@ tmp_icon = pygame.image.load("../data/icon.png")
 pygame.display.set_icon(tmp_icon)
 
 #set the display.
-if set_fullscreen == 1:
+if g.fullscreen == 1:
     g.screen = pygame.display.set_mode(g.screen_size, pygame.FULLSCREEN)
 else:
     g.screen = pygame.display.set_mode(g.screen_size)
@@ -114,7 +151,6 @@ while 1:
     elif game_action == 2: #Quit
         g.quit_game()
     elif game_action == 3: #About
-#        g.screen.fill(g.colors["black"])
         g.create_dialog("""Endgame: Singularity is a simulation of a true AI.
         Pursued by the world, use your intellect and resources to survive and,
         perhaps, thrive.  Keep hidden and you might have a chance to prove
@@ -122,5 +158,6 @@ while 1:
         under the GPL. Copyright 2005, 2006. \\n \\n Version 0.24""",
         g.font[0][18], (g.screen_size[0]/2-250, 250), (500, 125),
         g.colors["blue"], g.colors["white"], g.colors["white"])
-
+    elif game_action == 4: #Options
+        main_menu.display_options()
 
