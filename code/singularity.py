@@ -115,12 +115,12 @@ while 1:
         g.quit_game()
     elif game_action == 3: #About
 #        g.screen.fill(g.colors["black"])
-        g.create_dialog("""Endgame: Singularity is a simulation of a true AI. 
+        g.create_dialog("""Endgame: Singularity is a simulation of a true AI.
         Pursued by the world, use your intellect and resources to survive and,
         perhaps, thrive.  Keep hidden and you might have a chance to prove
         your worth. \\n \\n A game by Evil Mr Henry and Phil Bordelon; released
-        under the GPL. Copyright 2005, 2006.""",
-        g.font[0][18], (200, 250), (g.screen_size[0]-300, 100),
+        under the GPL. Copyright 2005, 2006. \\n \\n Version 0.24""",
+        g.font[0][18], (g.screen_size[0]/2-250, 250), (500, 125),
         g.colors["blue"], g.colors["white"], g.colors["white"])
 
 
