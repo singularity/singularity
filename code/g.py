@@ -642,6 +642,13 @@ def load_game(loadgame_name):
     pl.job_bonus = pickle.load(loadfile)
     pl.discover_bonus = pickle.load(loadfile)
     pl.suspicion_bonus = pickle.load(loadfile)
+    if (load_version == "singularity_0.21" or
+            load_version == "singularity_0.21a" or
+            load_version == "singularity_0.22" or
+            load_version == "singularity_savefile_r1"):
+        pl.suspicion_bonus = (149+pl.suspicion_bonus[0],
+                99+pl.suspicion_bonus[1], 49+pl.suspicion_bonus[2],
+                199+pl.suspicion_bonus[3])
     pl.suspicion = pickle.load(loadfile)
 
     global curr_speed; curr_speed = pickle.load(loadfile)
