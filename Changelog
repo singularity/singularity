@@ -17,6 +17,7 @@ USER-VISIBLE CHANGES:
 * Added ability to examine items and techs. (emh)
 - Added in-game "help" in the form of information on various concepts.
   (emh, tweaks by Phil)
+* Added preference system. (emh)
 
 v0.23a (released 2006.03.08):
 
