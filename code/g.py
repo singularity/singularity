@@ -656,6 +656,12 @@ def load_game(loadgame_name):
     load_techs()
     for tech_name in techs:
             if tech_name == "unknown_tech" and load_version == "singularity_0.21a": continue
+            if ((tech_name == "Project: Impossibility Theorem" or
+                tech_name == "Quantum Entanglement") and (
+                load_version == "singularity_0.21" or
+                load_version == "singularity_0.21a" or
+                load_version == "singularity_0.22" or
+                load_version == "singularity_savefile_r1")): continue
             tmp = pickle.load(loadfile)
             if tmp == "~~~": break
             tech_string = tmp.split("|")[0]
