@@ -283,7 +283,7 @@ class player_class:
                         g.strings["discover1"]+" "+detect_phrase)
                 g.create_dialog(dialog_string, g.font[0][18],
                     (g.screen_size[0]/2 - 100, 50), (200, 200),
-                    g.colors["dark_blue"], g.colors["white"], g.colors["white"])
+                    g.colors["dark_blue"], g.colors["white"], g.colors["red"])
                 g.curr_speed = 1
                 g.bases[base_loc].pop(detection_succeed[0])
                 needs_refresh = 1

@@ -779,6 +779,7 @@ significant_numbers = [
     '15',
     '16',   # Four of the Lost numbers.  The other two are '23' and '42'.
     '13',   # Lucky or unlucky?
+    '1414', # Square root of 2
     '1947', # Roswell.
     '2012', # Mayan calendar ending.
     '2038', # End of UNIX 32-bit time.
@@ -787,7 +788,8 @@ significant_numbers = [
     '2029', # Predicted date of AI passing a Turing Test by Kurzweil.
     '3141', # ... if you don't know what this is, you should go away.
     '1618', # Golden ratio.
-    '2718'  # e
+    '2718', # e
+    '29979' # Speed of light in a vacuum. (m/s, first 5 digits.)
 ]
 
 ## Generates a name for a base, given a particular location.
