@@ -205,7 +205,7 @@ def display_inner_techs():
                     return
                 else:
                     item_pos, refresh = techs_list.key_handler(event.key,
-                        item_pos, len(temp_tech_display_list))
+                        item_pos, temp_tech_display_list)
                     if refresh:
                         refresh_tech(temp_tech_list[item_pos], xy_loc)
                         listbox.refresh_list(techs_list, techs_scroll,
@@ -339,7 +339,7 @@ def display_inner_items(item_type):
                     return
                 else:
                     item_pos, refresh = items_list.key_handler(event.key,
-                        item_pos, len(temp_item_display_list))
+                        item_pos, temp_item_display_list)
                     if refresh:
                         refresh_items(temp_item_list[item_pos], xy_loc)
                         listbox.refresh_list(items_list, 0,
@@ -454,7 +454,7 @@ def display_concept_list():
                     return
                 else:
                     item_pos, refresh = items_list.key_handler(event.key,
-                        item_pos, len(temp_item_display_list))
+                        item_pos, temp_item_display_list)
                     if refresh:
                         refresh_concept(temp_item_list[item_pos], xy_loc)
                         listbox.refresh_list(items_list, 0,
@@ -942,7 +942,7 @@ def display_base_list_inner(location):
                     return base_id_list[base_pos]
                 else:
                     base_pos, refresh = bases_list.key_handler(event.key,
-                        base_pos, len(temp_base_list))
+                        base_pos, temp_base_list)
                     if refresh: listbox.refresh_list(bases_list, bases_scroll,
                                         base_pos, temp_base_list)
             elif event.type == pygame.MOUSEBUTTONUP:
@@ -1036,7 +1036,7 @@ def build_new_base_window(location):
                     return temp_base_list[base_pos]
                 else:
                     base_pos, refresh = bases_list.key_handler(event.key,
-                        base_pos, len(temp_base_display_list))
+                        base_pos, temp_base_display_list)
                     if refresh:
                         refresh_new_base(temp_base_list[base_pos], xy_loc)
                         listbox.refresh_list(bases_list, 0,

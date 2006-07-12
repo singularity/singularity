@@ -88,7 +88,8 @@ class listbox:
 
         return -1
 
-    def key_handler(self, keycode, cur_pos, array_length):
+    def key_handler(self, keycode, cur_pos, input_array):
+        array_length = len(input_array)
         lastpos = cur_pos
         refresh = False
         if keycode == pygame.K_DOWN:
@@ -108,6 +109,12 @@ class listbox:
             cur_pos = array_length-1
         elif cur_pos <= 0:
             cur_pos = 0
+
+        if input_array[cur_pos] == "" and (keycode == pygame.K_PAGEDOWN or
+                keycode == pygame.K_END):
+            for i in range(cur_pos,-1,-1):
+                cur_pos = i
+                if input_array[i] != "": break
 
         if lastpos != cur_pos: refresh = True
         return cur_pos, refresh

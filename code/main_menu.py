@@ -132,7 +132,7 @@ def display_load_menu():
                     return saves_array[saves_pos]
                 else:
                     saves_pos, refresh = saves_list.key_handler(event.key,
-                        saves_pos, len(saves_array))
+                        saves_pos, saves_array)
                     if refresh: listbox.refresh_list(saves_list, saves_scroll,
                                         saves_pos, saves_array)
 

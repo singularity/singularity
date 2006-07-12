@@ -290,7 +290,7 @@ def build_item(base, item_type, location):
                     return
                 else:
                     list_pos, refresh = item_listbox.key_handler(event.key,
-                        list_pos, len(item_display_list))
+                        list_pos, item_display_list)
                     if refresh:
                         refresh_item(base, item_list[list_pos], xy_loc)
                         listbox.refresh_list(item_listbox, item_scroll,
@@ -465,7 +465,7 @@ def change_tech(base):
                     return
                 else:
                     list_pos, refresh = tech_list.key_handler(event.key,
-                        list_pos, len(item_list))
+                        list_pos, item_list)
                     if refresh:
                         refresh_tech(base, item_list[list_pos], xy_loc)
                         listbox.refresh_list(tech_list, tech_scroll,

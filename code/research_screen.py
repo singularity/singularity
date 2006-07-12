@@ -90,7 +90,7 @@ def main_research_screen():
                             list_pos, item_display_list)
                 else:
                     list_pos, refresh = item_listbox.key_handler(event.key,
-                        list_pos, len(item_list))
+                        list_pos, item_list)
                     if refresh:
                         refresh_research(item_list[list_pos], item_CPU_list[list_pos])
                         listbox.refresh_list(item_listbox, item_scroll,
