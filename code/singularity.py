@@ -114,7 +114,7 @@ pygame.display.set_caption("Endgame: Singularity")
 
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.
-tmp_icon = pygame.image.load("../data/icon.png")
+tmp_icon = pygame.image.load(g.data_loc+"icon.png")
 pygame.display.set_icon(tmp_icon)
 
 #set the display.
@@ -125,9 +125,9 @@ else:
 #Create the fonts:
 for i in range(8, 51):
     if i%2 == 0 and i < 30:
-        g.font[0][i] = pygame.font.Font("../data/"+g.font0, i-7)
+        g.font[0][i] = pygame.font.Font(g.data_loc+g.font0, i-7)
         g.font[0][i].set_bold(1)
-    g.font[1][i] = pygame.font.Font("../data/"+g.font1, i)
+    g.font[1][i] = pygame.font.Font(g.data_loc+g.font1, i)
 
 #init data:
 g.load_pictures()

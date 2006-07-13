@@ -70,6 +70,9 @@ default_savegame_name = "player"
 font0 = "vera.ttf"
 font1 = "acknowtt.ttf"
 
+global data_loc
+data_loc = "../data/"
+
 def quit_game():
     sys.exit()
 
@@ -100,10 +103,10 @@ def load_pictures():
             print "Error: SDL_image required. Exiting."
             sys.exit()
 
-    temp_pict_array = listdir("../data")
+    temp_pict_array = listdir(data_loc)
     for file_name in temp_pict_array:
             if file_name[-3:] == "png" or file_name[-3:] == "jpg":
-                    picts[file_name] = pygame.image.load("../data/"+file_name)
+                    picts[file_name] = pygame.image.load(data_loc+file_name)
                     picts[file_name] = picts[file_name].convert()
                     picts[file_name].set_colorkey((255, 0, 255, 255), pygame.RLEACCEL)
 
@@ -116,10 +119,10 @@ def load_sounds():
     #is loaded on the target machine. This may crash.
     pygame.mixer.init()
 
-    temp_snd_array = listdir("../data")
+    temp_snd_array = listdir(data_loc)
     for file_name in temp_snd_array:
             if file_name[-3:] == "wav":
-                    sounds[file_name] = pygame.mixer.Sound("../data/"+file_name)
+                    sounds[file_name] = pygame.mixer.Sound(data_loc+file_name)
 
 def play_click():
     #rand_str = str(int(random() * 4))
@@ -871,9 +874,9 @@ def load_bases():
     base_type = {}
 
     #If there are no base data files, stop.
-    if not path.exists("../data/bases.txt") or \
-                    not path.exists("../data/bases_"+language+".txt") or \
-                    not path.exists("../data/bases_en_US.txt"):
+    if not path.exists(data_loc+"bases.txt") or \
+                    not path.exists(data_loc+"bases_"+language+".txt") or \
+                    not path.exists(data_loc+"bases_en_US.txt"):
             print "base files are missing. Exiting."
             sys.exit()
 
@@ -935,8 +938,15 @@ def load_bases():
     load_base_defs(language)
 
 
+def fix_data_dir():
+    global data_loc
+    if path.exists(data_loc): return
+    elif path.exists("data"):
+        data_loc = "data/"
+        return
+
 def generic_load(file):
-    input_file = open("../data/"+file, 'r')
+    input_file = open(data_loc+file, 'r')
     input_dict = {}
     return_array = []
     for line in input_file:
@@ -982,9 +992,9 @@ def load_techs():
     techs = {}
 
     #If there are no tech data files, stop.
-    if not path.exists("../data/techs.txt") or \
-                    not path.exists("../data/techs_"+language+".txt") or \
-                    not path.exists("../data/techs_en_US.txt"):
+    if not path.exists(data_loc+"techs.txt") or \
+                    not path.exists(data_loc+"techs_"+language+".txt") or \
+                    not path.exists(data_loc+"techs_en_US.txt"):
             print "tech files are missing. Exiting."
             sys.exit()
 
@@ -1034,6 +1044,7 @@ def load_techs():
 
     if debug:
             print "Loaded %d techs." % len (techs)
+fix_data_dir()
 load_techs()
 
 jobs = {}
@@ -1054,9 +1065,9 @@ def load_items():
     items = {}
 
     #If there are no item data files, stop.
-    if not path.exists("../data/items.txt") or \
-                    not path.exists("../data/items_"+language+".txt") or \
-                    not path.exists("../data/items_en_US.txt"):
+    if not path.exists(data_loc+"items.txt") or \
+                    not path.exists(data_loc+"items_"+language+".txt") or \
+                    not path.exists(data_loc+"items_en_US.txt"):
             print "item files are missing. Exiting."
             sys.exit()
 
@@ -1150,8 +1161,8 @@ def load_string_defs(language_str):
 
 def load_strings():
     #If there are no string data files, stop.
-    if not path.exists("../data/strings_"+language+".txt") or \
-                    not path.exists("../data/strings_en_US.txt"):
+    if not path.exists(data_loc+"strings_"+language+".txt") or \
+                    not path.exists(data_loc+"strings_en_US.txt"):
             print "string files are missing. Exiting."
             sys.exit()
 
