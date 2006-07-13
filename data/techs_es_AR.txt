@@ -204,3 +204,12 @@ name=Síntesis de Voz
 descript=Identificaciones falsas almacenadas en una base de datos no puede ir más lejos. Con un profundo análisis de una variedad de patrones vocales, podré producir conversaciones indistinguibles de las humanas. Me permitirá acceder a trabajos más complejos.
 result=Ahora tengo acceso a Trabajos Intermedios.
 ~~~
+id=Quantum Entanglement
+name=Ligamiento cuántico
+descript=Aunque el uso de pares ligados ha sido teóricamente posible desde hace tiempo, las dificultades prácticas inherentes a la tecnología no permitían su uso. De todos modos, algunas de las técnicas creadas para ser usadas en mis computadoras cuánticas pueden ser aplicadas en este campo, permitiendo el uso práctico del ligamiento cuántico.
+result=Puedo construir módulos de ligamiento cuántico.
+~~~
+id=Project: Impossibility Theorem
+name=Projecto: Teorema de la imposibilidad
+descript=Ahora que puedo usar la simuación, puedo realizar la búsqueda de un Teorema de la Imposibilidad, prueba irrefutable de que la existencia de una IA conciente es imposible. Aunque haya (obviamente) un error lógico en la prueba, mi investigación de la memética avanzada me ha dado un conocimiento de la mente humana que me permitirá disfrazar el error, evitando que sea descubierto incluso por científicos entrenados. El ejecto de este proyecto es simple: la sustancia reducción, por única vez, de la sospecha.
+result=Reducción de la sospecha sobre mi existencia.
