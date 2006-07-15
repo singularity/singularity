@@ -9,7 +9,7 @@ OS X and Windows.
 Windows:
 You will need to install Python (http://python.org/download/) and Pygame:
 (http://www.pygame.org/download.shtml). Once these are installed, double-click
-on singularity.py to start the game.
+on singularity.py to start the game. Alternatively, use the Windows compile.
 
 Running the game:
 on Linux, running the shell script "Endgame_Linux" will start the game. On
