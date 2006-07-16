@@ -6,6 +6,7 @@ USER-VISIBLE CHANGES:
 
 OTHER CHANGES:
 - Deleted some extraneous images and optimized some others. (Phil)
+- Cleaned up formatting in g.py. (emh)
 
 v0.24 (released 2006.07.13):
 
