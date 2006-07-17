@@ -99,10 +99,6 @@ picts = {}
 #Load all pictures from the data directory.
 def load_pictures():
     global picts
-    if pygame.image.get_extended() == 0:
-        print "Error: SDL_image required. Exiting."
-        sys.exit()
-
     temp_pict_array = listdir(data_loc)
     for file_name in temp_pict_array:
         if file_name[-3:] == "png" or file_name[-3:] == "jpg":

@@ -114,6 +114,9 @@ pygame.display.set_caption("Endgame: Singularity")
 
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.
+if pygame.image.get_extended() == 0:
+    print "Error: SDL_image required. Exiting."
+    sys.exit()
 tmp_icon = pygame.image.load(g.data_loc+"icon.png")
 pygame.display.set_icon(tmp_icon)
 
