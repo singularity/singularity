@@ -61,6 +61,12 @@ if g.path.exists(save_loc):
                 temp_var= int(input_array[1].strip())
                 g.screen_size = (g.screen_size[0], temp_var)
             except ValueError: print "invalid y resolution in pref file"
+        if input_array[0].strip() == "lang":
+            temp_var= input_array[1].strip()
+            if g.path.exists(g.data_loc+"strings_"+temp_var+".txt"):
+                g.language = temp_var
+            else:
+                print "invalid language in pref file"
 
 
 
