@@ -116,6 +116,23 @@ def refresh_screen(menu_buttons):
                         (60-g.pl.time_min))*base_instance.cost[0]/
                             base_instance.cost[2])
 
+    total_cpu = 0
+    free_cpu = 0
+    research_cpu = 0
+    job_cpu = 0
+    maint_cpu = 0
+    for loc_name in g.bases:
+        for base_instance in g.bases[loc_name]:
+            total_cpu += base_instance.processor_time()
+            maint_cpu += base_instance.base_type.mainten[1]
+            if base_instance.studying == "":
+                free_cpu += base_instance.processor_time()
+            else:
+                if g.jobs.has_key(base_instance.studying):
+                    job_cpu += base_instance.processor_time()
+                else:
+                    research_cpu += base_instance.processor_time()
+
     partial_sum = g.pl.cash-base_constr-item_constr
     interest = (g.pl.interest_rate * partial_sum) / 10000
     #Interest is actually unlikely to be exactly zero, but doing it the right
@@ -207,5 +224,48 @@ def refresh_screen(menu_buttons):
             g.font[0][22], -1, (text_mid+150, 200), g.colors[complete_sum_col], 2)
 
 
+    #total cpu
+    g.print_string(g.screen, "Total CPU:",
+            g.font[0][22], -1, (215, 300), g.colors["white"], 2)
 
-    #qwerty
+    g.print_string(g.screen, g.to_money(total_cpu),
+            g.font[0][22], -1, (330, 300), g.colors["white"], 2)
+
+    #research cpu
+    g.print_string(g.screen, "-Research CPU:",
+            g.font[0][22], -1, (215, 320), g.colors["white"], 2)
+
+    g.print_string(g.screen, g.to_money(research_cpu),
+            g.font[0][22], -1, (330, 320), g.colors["white"], 2)
+
+    #job cpu
+    g.print_string(g.screen, "-Job CPU:",
+            g.font[0][22], -1, (215, 340), g.colors["white"], 2)
+
+    g.print_string(g.screen, g.to_money(job_cpu),
+            g.font[0][22], -1, (330, 340), g.colors["white"], 2)
+
+    #maint cpu
+    g.print_string(g.screen, "-Maint. CPU:",
+            g.font[0][22], -1, (215, 360), g.colors["white"], 2)
+
+    if free_cpu < maint_cpu:
+        g.print_string(g.screen, g.to_money(free_cpu),
+                g.font[0][22], -1, (330, 360), g.colors["red"], 2)
+        g.print_string(g.screen, g.to_money((-(free_cpu - maint_cpu)))+" shortfall",
+                g.font[0][22], -1, (340, 360), g.colors["red"])
+    else:
+        g.print_string(g.screen, g.to_money(maint_cpu),
+                g.font[0][22], -1, (330, 360), g.colors["white"], 2)
+
+    g.screen.fill(g.colors["white"], (130, 380, 200, 1))
+    #construction cpu
+    g.print_string(g.screen, "=Constr. CPU:",
+            g.font[0][22], -1, (215, 385), g.colors["white"], 2)
+
+    if free_cpu < maint_cpu:
+        g.print_string(g.screen, g.to_money(0),
+                g.font[0][22], -1, (330, 385), g.colors["red"], 2)
+    else:
+        g.print_string(g.screen, g.to_money(free_cpu - maint_cpu),
+                g.font[0][22], -1, (330, 385), g.colors["white"], 2)

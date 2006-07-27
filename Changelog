@@ -6,6 +6,7 @@ USER-VISIBLE CHANGES:
 * There is now a py2exe version available for Windows, which does not
   require installation of any other software. (emh)
 - Default language changeable via option screen. (emh)
+- Finance screen shows CPU usage now. (emh, multiple people for suggestion)
 
 OTHER CHANGES:
 - Deleted some extraneous images and optimized some others. (Phil)
