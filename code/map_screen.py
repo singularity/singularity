@@ -68,6 +68,7 @@ def display_pause_menu():
     button_array.append(["NEW GAME", 0])
     button_array.append(["SAVE GAME", 0])
     button_array.append(["LOAD GAME", 0])
+    button_array.append(["OPTIONS", 0])
     button_array.append(["QUIT", 0])
     button_array.append(["RESUME", 0])
     temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
@@ -76,8 +77,9 @@ def display_pause_menu():
     elif temp_return == 0: return 2 #New
     elif temp_return == 1: return 1 #Save
     elif temp_return == 2: return 3 #Load
-    elif temp_return == 3: return 4 #Quit
-    elif temp_return == 4: return 0
+    elif temp_return == 3: return 5 #Options
+    elif temp_return == 4: return 4 #Quit
+    elif temp_return == 5: return 0
 
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return
@@ -500,11 +502,9 @@ def refresh_concept(concept_name, xy):
     g.print_multiline(g.screen, g.help_strings[concept_name][1],
             g.font[0][18], 290, (xy[0]+160, xy[1]+30), g.colors["white"])
 
-def map_loop():
+def create_buttons(tmp_font_size):
     menu_buttons = []
     #Note that this must be element 0 in menu_buttons
-    tmp_font_size = 20
-    if g.screen_size[0] == 640: tmp_font_size = 16
     menu_buttons.append(buttons.button((100, -1), (200, 26),
         "DAY 0000, 00:00:00", -1, g.colors["black"], g.colors["dark_blue"],
         g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
@@ -531,9 +531,12 @@ def map_loop():
     if g.curr_speed == 432000: menu_buttons[6].stay_selected = 1
     menu_buttons[6].activate_key = "4"
     #Note that this must be element 7 in menu_buttons
+    tmpsize = tmp_font_size
+    if g.screen_size[0] == 640:
+        tmpsize = tmp_font_size -2
     menu_buttons.append(buttons.button((435, -1), (g.screen_size[0]-435, 26),
         "CASH", -1, g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
+        g.colors["black"], g.colors["white"], g.font[1][tmpsize]))
     #Note that this must be element 8 in menu_buttons
     menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
         (g.screen_size[0], 26),
@@ -572,15 +575,21 @@ def map_loop():
     menu_buttons.append(buttons.make_norm_button((
             g.screen_size[0]*82/100, g.screen_size[1]*10/100), -1,
             "MOON", 0, g.font[1][25]))
-# 	menu_buttons.append(buttons.make_norm_button((
-# 			g.screen_size[0]*15/100, g.screen_size[1]*10/100), -1,
-# 			"ORBIT", 2, g.font[1][25]))
+#   menu_buttons.append(buttons.make_norm_button((
+#           g.screen_size[0]*15/100, g.screen_size[1]*10/100), -1,
+#           "ORBIT", 2, g.font[1][25]))
     menu_buttons.append(buttons.make_norm_button((
             g.screen_size[0]*3/100, g.screen_size[1]*10/100), -1,
             "FAR REACHES", 0, g.font[1][25]))
     menu_buttons.append(buttons.make_norm_button((
             g.screen_size[0]*35/100, g.screen_size[1]*10/100), -1,
             "TRANSDIMENSIONAL", 5, g.font[1][25]))
+    return menu_buttons
+
+def map_loop():
+    tmp_font_size = 20
+    if g.screen_size[0] == 640: tmp_font_size = 16
+    menu_buttons = create_buttons(tmp_font_size)
 
     sel_button = -1
     refresh_map(menu_buttons)
@@ -642,7 +651,10 @@ def map_loop():
                 if event.key == pygame.K_ESCAPE:
                     tmp = display_pause_menu()
                     tmp = handle_pause_menu(tmp, menu_buttons)
-                    if tmp != -1: return tmp
+                    if tmp == 0: return tmp
+                    if tmp == 1:
+                        menu_buttons = create_buttons(tmp_font_size)
+                        refresh_map(menu_buttons)
                 elif event.key == pygame.K_BACKQUOTE:
                     display_cheat_list(menu_buttons)
                     refresh_map(menu_buttons)
@@ -655,7 +667,10 @@ def map_loop():
                         g.play_click()
                         tmp = display_pause_menu()
                         tmp = handle_pause_menu(tmp, menu_buttons)
-                        if tmp != -1: return tmp
+                        if tmp == 0: return tmp
+                        if tmp == 1:
+                            menu_buttons = create_buttons(tmp_font_size)
+                            refresh_map(menu_buttons)
                     elif button.button_id == "RESEARCH":
                         g.play_click()
                         while research_screen.main_research_screen() == 1:
@@ -740,6 +755,9 @@ def handle_pause_menu(tmp, menu_buttons):
 #			refresh_map(menu_buttons)
             return 0
     elif tmp == 4: g.quit_game()
+    elif tmp == 5:
+        main_menu.display_options()
+        return 1
     return -1
 
 def refresh_map(menu_buttons):

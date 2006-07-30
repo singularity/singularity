@@ -7,6 +7,7 @@ USER-VISIBLE CHANGES:
   require installation of any other software. (emh)
 - Default language changeable via option screen. (emh)
 - Finance screen shows CPU usage now. (emh, multiple people for suggestion)
+- Options screen can be accessed after game start. (emh)
 
 OTHER CHANGES:
 - Deleted some extraneous images and optimized some others. (Phil)
