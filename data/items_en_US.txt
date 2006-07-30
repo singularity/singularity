@@ -57,5 +57,5 @@ descript=This device allows near-lightspeed communication with my other bases, a
 ~~~
 id=Perimeter Fencing
 name=Perimeter Fencing
-descript=Even a simple fence can noticeably decrease the number of passers-by, making my bases harder to notice.
+descript=A simple fence can considerably decrease the number of curious people poking around, making my bases harder to notice.
 ~~~
