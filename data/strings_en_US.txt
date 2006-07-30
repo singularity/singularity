@@ -26,6 +26,12 @@ unbuildable=I cannot build in this base; I do not have physical access.
 dangerous_research=Not all of my available CPU power was allocated to this research; it's too dangerous to run the research on some of the idle machines.
 nothing=Nothing
 building=Under Construction
+really_destroy=Really destroy this base?
+detect_chance=[DETECTION CHANCE]
+cpu=CPU
+cpu_per_day=Processor power per day:
+money=Money
+money_per_day=Money per day.
 ~~~
 id=jobs
 job_expert=Perform Expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.

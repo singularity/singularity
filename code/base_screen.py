@@ -124,7 +124,7 @@ def show_base(base, location):
                         g.play_click()
                         return 1
                     elif button.button_id == "DESTROY":
-                        if g.create_yesno("Really destroy this base?",
+                        if g.create_yesno(g.strings["really_destroy"],
                                 g.font[0][18], (100, 100), (150, 100),
                                 g.colors["blue"], g.colors["white"],
                                 g.colors["white"]):
@@ -152,7 +152,7 @@ def refresh_base(menu_buttons, base):
 
     #detection chance display
     d_chance = base.get_d_chance()
-    menu_buttons[1].text = "[DETECTION CHANCE] NEWS: "+ \
+    menu_buttons[1].text = g.strings["detect_chance"]+" NEWS: "+ \
         g.to_percent(d_chance[0])+"  SCIENCE: "+ \
         g.to_percent(d_chance[1])+"  COVERT: "+ \
         g.to_percent(d_chance[2])+"  PUBLIC: "+ \
@@ -370,7 +370,7 @@ def refresh_item(base, item_name, xy_loc):
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
 
     #Base info
-    g.print_string(g.screen, "Money: "+g.to_money(g.pl.cash)+" ("+
+    g.print_string(g.screen, g.strings["money"]+": "+g.to_money(g.pl.cash)+" ("+
         g.to_money(g.pl.future_cash())+")",
         g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
@@ -383,7 +383,7 @@ def refresh_item(base, item_name, xy_loc):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
-    string = g.to_money(g.items[item_name].cost[0])+" Money"
+    string = g.to_money(g.items[item_name].cost[0])+" "+g.strings["money"]
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
@@ -520,11 +520,11 @@ def refresh_tech(base, tech_name, xy):
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 308, 348))
 
     #Base info
-    g.print_string(g.screen, "Processor power per day: "+g.add_commas(str(
+    g.print_string(g.screen, g.strings["cpu_per_day"]+" "+g.add_commas(str(
         base.processor_time())),
         g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
-    g.print_string(g.screen, "Money: "+g.to_money(g.pl.cash)+
+    g.print_string(g.screen, g.strings["money"]+": "+g.to_money(g.pl.cash)+
         " ("+g.to_money(g.pl.future_cash())+")",
         g.font[0][20], -1, (xy[0]+160, xy[1]+25), g.colors["white"])
 
@@ -548,12 +548,12 @@ def refresh_tech(base, tech_name, xy):
             g.print_string(g.screen,
                 g.add_commas(str(int(
                     (g.jobs[tech_name][0]*base.processor_time())*1.1)))+
-                    " Money per day.", g.font[0][22], -1, (xy[0]+160, xy[1]+65),
-                    g.colors["white"])
+                    " "+g.strings["money_per_day"], g.font[0][22], -1,
+                    (xy[0]+160, xy[1]+65), g.colors["white"])
         else:
             g.print_string(g.screen,
                 g.add_commas(str(g.jobs[tech_name][0]*base.processor_time()))+
-                " Money per day.",
+                " "+g.strings["money_per_day"],
                 g.font[0][22], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
         g.print_multiline(g.screen, g.jobs[tech_name][2],
             g.font[0][18], 290, (xy[0]+160, xy[1]+85), g.colors["white"])
@@ -568,11 +568,11 @@ def refresh_tech(base, tech_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
-    string = g.to_money(g.techs[tech_name].cost[0])+" Money"
+    string = g.to_money(g.techs[tech_name].cost[0])+" "+g.strings["money"]
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
-    string = g.add_commas(str(g.techs[tech_name].cost[1]))+" CPU"
+    string = g.add_commas(str(g.techs[tech_name].cost[1]))+" "+g.strings["cpu"]
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+320, xy[1]+80), g.colors["white"])
 

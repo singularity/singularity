@@ -197,6 +197,7 @@ def display_load_menu():
                     saves_array)
 
 def display_options():
+    prev_lang = g.language
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
         "BACK", 0, g.font[1][20]))
@@ -254,8 +255,12 @@ def display_options():
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return
-                elif event.key == pygame.K_q: return
+                if event.key == pygame.K_ESCAPE:
+                    set_language_properly(prev_lang)
+                    return
+                elif event.key == pygame.K_q:
+                    set_language_properly(prev_lang)
+                    return
                 else:
                     lang_pos, refresh = lang_list.key_handler(event.key,
                         lang_pos, lang_array)
@@ -302,6 +307,7 @@ def display_options():
                             g.language = lang_array[lang_pos]
 
                 if event.button == 3:
+                    set_language_properly(prev_lang)
                     return -1
                 if event.button == 4:
                     lang_pos -= 1
@@ -324,6 +330,7 @@ def display_options():
                 if button.was_activated(event):
                     if button.button_id == "BACK":
                         g.play_click()
+                        set_language_properly(prev_lang)
                         return 0
                     if button.button_id == "SAVE TO DISK":
                         g.play_click()
@@ -331,6 +338,7 @@ def display_options():
                             save_options()
                         else:
                             save_options(lang_array[lang_pos])
+                            set_language_properly(prev_lang)
                         return 0
                     elif button.button_id == "fullscreen":
                         if g.fullscreen == 1: g.fullscreen = 0
@@ -390,6 +398,13 @@ def set_res():
         g.screen = pygame.display.set_mode(g.screen_size)
 
 
+
+def set_language_properly(prev_lang):
+    if g.language == prev_lang: return
+    g.load_base_defs(g.language)
+    g.load_tech_defs(g.language)
+    g.load_item_defs(g.language)
+    g.load_string_defs(g.language)
 
 def save_options(lang=""):
     save_dir = g.get_save_folder(True)
