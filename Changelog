@@ -9,6 +9,7 @@ USER-VISIBLE CHANGES:
 - Finance screen shows CPU usage now. (emh, multiple people for suggestion)
 - Options screen can be accessed after game start. (emh)
 - Changing the language from the option screen works now. (emh)
+- New item. (emh)
 
 OTHER CHANGES:
 - Deleted some extraneous images and optimized some others. (Phil)

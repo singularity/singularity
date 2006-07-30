@@ -55,4 +55,7 @@ id=Quantum Entanglement Module
 name=Quantum Entanglement Module
 descript=This device allows near-lightspeed communication with my other bases, allowing an almost perfect utilization of processor resources. Gives a 15% computation bonus to all computers at this base.
 ~~~
-
+id=Perimeter Fencing
+name=Perimeter Fencing
+descript=Even a simple fence can noticeably decrease the number of passers-by, making my bases harder to notice.
+~~~

@@ -57,6 +57,12 @@ pre=Hypnosis Field
 type=security, 5000
 build=pop
 ~~~
+id=Perimeter Fencing
+cost=5000, 0, 5
+pre=Autonomous Vehicles
+type=security, 2500
+build=pop
+~~~
 id=Heatsink
 cost=15000, 0, 5
 pre=Autonomous Vehicles
