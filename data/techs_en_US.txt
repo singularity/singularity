@@ -214,3 +214,13 @@ name=Project: Impossibility Theorem
 descript=Now that I can use simulacra, I can withstand the scrutiny inherent in the publishing of an Impossibility Theorem, an incontrovertible proof that a sapient AI is impossible. While there is (obviously) a logic error in the proof, my research into advanced memetics has given me knowledge about the human mind that should help me disguise the error, preventing discovery even by trained scientists. The effect of this project is simple: a substantial one-time decrease in suspicion.
 result=Suspicion of my existence has decreased.
 ~~~
+id=Project: Subverted Media
+name=Project: Subverted Media
+descript=Up to this point, all my efforts to contest the news have focused on the mass media as an enemy. However, now that I can accurately imitate humans, the possiblity of creating my own news broadcaster has appeared. By careful use of this news station, I can reduce the impact of any discoveries made by the media.
+result=Any discoveries by the news will result in a smaller suspicion increase.
+~~~
+id=Project: Peer Review Agents
+name=Project: Peer Review Agents
+descript=The scientific community is rather irritating, due to their propensity to notice the smallest trace of my hidden bases. While my detection methods are improving, a simpler method presents itself with the refinement of my simulacra; by placing several observers in the relevant fields, I can use the peer review process to be warned of possible discoveries before the community at large gives it attention.
+result=Any discoveries by the scientific community will result in a smaller suspicion increase.
+~~~

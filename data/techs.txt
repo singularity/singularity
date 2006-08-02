@@ -198,6 +198,14 @@ type=suspicion_onetime, 5000
 pre=Advanced Memetics
 pre=Simulacra
 ~~~
+id=Project: Subverted Media
+cost=250000, 150000, 0
+pre=Advanced Simulacra
+~~~
+id=Project: Peer Review Agents
+cost=150000, 200000, 0
+pre=Advanced Simulacra
+~~~
 #this tech is used for anything that needs to be unbuildable. Note the
 #circular dependance on itself.
 id=unknown_tech

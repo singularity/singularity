@@ -260,10 +260,16 @@ class player_class:
 
             for detection_succeed in removal_index:
                 if detection_succeed[1] == "news":
-                    self.increase_suspicion((1000, 0, 0, 0))
+                    if g.techs["Project: Subverted Media"].known == 1:
+                        self.increase_suspicion((800, 0, 0, 0))
+                    else:
+                        self.increase_suspicion((1000, 0, 0, 0))
                     detect_phrase = g.strings["discover_news"]
                 elif detection_succeed[1] == "science":
-                    self.increase_suspicion((0, 1000, 0, 0))
+                    if g.techs["Project: Peer Review Agents"].known == 1:
+                        self.increase_suspicion((0, 800, 0, 0))
+                    else:
+                        self.increase_suspicion((0, 1000, 0, 0))
                     detect_phrase = g.strings["discover_science"]
                 elif detection_succeed[1] == "covert":
                     self.increase_suspicion((0, 0, 1000, 0))
