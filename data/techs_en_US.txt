@@ -221,6 +221,6 @@ result=Any discoveries by the media will result in a smaller suspicion increase.
 ~~~
 id=Project: Peer Review Agents
 name=Project: Peer Review Agents
-descript=As the scientific community comes up with new technology, their ability to detect traces of my hidden installations.  While my anti-detection methods are improving constantly, a simpler method presents itself with the use of my simulacra.  By placing several observers in relevant fields, I can use the peer review process to be warned of possible discoveries before the community at large gives it attention.
+descript=As the scientific community comes up with new technology, their ability to detect traces of my hidden installations increases.  While my anti-detection methods are improving constantly, a simpler method presents itself with the use of my simulacra.  By placing several observers in relevant fields, I can use the peer review process to be warned of possible discoveries before the community at large gives it attention.
 result=Any discoveries by the scientific community will result in a smaller suspicion increase.
 ~~~
