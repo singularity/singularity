@@ -284,9 +284,9 @@ class player_class:
                         g.bases[base_loc][detection_succeed[0]].name+" "+
                         g.strings["discover_maint1"])
                 else:
-                    dialog_string = (g.strings["discover0"]+" "+
-                        g.bases[base_loc][detection_succeed[0]].name+" "+
-                        g.strings["discover1"]+" "+detect_phrase)
+                    dialog_string = g.strings["discover0"]+" "
+                    dialog_string +=g.bases[base_loc][detection_succeed[0]].name
+                    dialog_string +=" "+g.strings["discover1"]+" "+detect_phrase
                 g.create_dialog(dialog_string, g.font[0][18],
                     (g.screen_size[0]/2 - 100, 50), (200, 200),
                     g.colors["dark_blue"], g.colors["white"], g.colors["red"])
