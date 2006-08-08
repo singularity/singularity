@@ -1168,7 +1168,7 @@ def new_game():
     global curr_speed
     curr_speed = 1
     global pl
-    pl = player.player_class(9000000)
+    pl = player.player_class(1000)
     global bases
     bases = {}
     bases["N AMERICA"] = []
@@ -1185,15 +1185,9 @@ def new_game():
     load_techs()
     for tech in techs:
         techs[tech].known = 0
-# 	if cheater == 1:
-# 		for tech in techs:
-# 			techs[tech].known = 1
     for base_name in base_type:
         base_type[base_name].count = 0
     #Starting base
     bases["N AMERICA"].append(base.base(0, "University Computer",
                             base_type["Stolen Computer Time"], 1))
     base_type["Stolen Computer Time"].count += 1
-    bases["N AMERICA"].append(base.base(1, "Small Secluded Warehouse",
-                            base_type["Small Warehouse"], 1))
-    base_type["Small Warehouse"].count += 1

@@ -32,6 +32,7 @@ cpu=CPU
 cpu_per_day=Processor power per day:
 money=Money
 money_per_day=Money per day.
+grace_warning=Upon inspection of some captured log files, I believe a small group of people have noticed some of my recent activities. While they believe the actions to have been done by a human organization, they are investigating. I must be careful from now on.
 ~~~
 id=jobs
 job_expert=Perform Expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.

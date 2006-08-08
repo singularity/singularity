@@ -162,6 +162,13 @@ class player_class:
         if self.suspicion[3] <= 0: self.suspicion = (self.suspicion[0],
                 self.suspicion[1], self.suspicion[2], 0)
         self.cpu_for_day = 0
+        if self.time_day == 14:
+            g.create_dialog(g.strings["grace_warning"],
+                g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+                (200, 200), g.colors["dark_blue"],
+                g.colors["white"], g.colors["white"])
+            needs_refresh = 1
+            g.curr_speed = 1
 
         for base_loc in g.bases:
             removal_index = []
@@ -171,38 +178,23 @@ class player_class:
                 #Does base get detected?
                 #Give a grace period.
                 if self.time_day - base_name.built_date > base_name.base_type.cost[2]*2:
-                    tmp_d_chance = base_name.get_d_chance()
-                    if g.debug == 1:
-                        print "Chance of discovery for base %s: %s" % \
-                            (base_name.name, repr (tmp_d_chance))
-                    #Note that I'm filling removal_index from the front
-                    #in order to make base removal easier.
-                    if g.roll_percent(tmp_d_chance[0]) == 1:
-                        removal_index.insert(0, (loc_in_array, "news"))
-                    elif g.roll_percent(tmp_d_chance[1]) == 1:
-                        removal_index.insert(0, (loc_in_array, "science"))
-                    elif g.roll_percent(tmp_d_chance[2]) == 1:
-                        removal_index.insert(0, (loc_in_array, "covert"))
-                    elif g.roll_percent(tmp_d_chance[3]) == 1:
-                        removal_index.insert(0, (loc_in_array, "person"))
+                    if self.time_day > 14:
+                        tmp_d_chance = base_name.get_d_chance()
+                        if g.debug == 1:
+                            print "Chance of discovery for base %s: %s" % \
+                                (base_name.name, repr (tmp_d_chance))
+                        #Note that I'm filling removal_index from the front
+                        #in order to make base removal easier.
+                        if g.roll_percent(tmp_d_chance[0]) == 1:
+                            removal_index.insert(0, (loc_in_array, "news"))
+                        elif g.roll_percent(tmp_d_chance[1]) == 1:
+                            removal_index.insert(0, (loc_in_array, "science"))
+                        elif g.roll_percent(tmp_d_chance[2]) == 1:
+                            removal_index.insert(0, (loc_in_array, "covert"))
+                        elif g.roll_percent(tmp_d_chance[3]) == 1:
+                            removal_index.insert(0, (loc_in_array, "person"))
 
                 if base_name.built == 1:
-                    #maintenance
-                    self.cash -= base_name.base_type.mainten[0]
-                    if self.cash < 0:
-                        self.cash = 0
-                        #Chance of base destruction if unmaintained:
-                        if g.roll_percent(150) == 1:
-                            removal_index.insert(0, (loc_in_array, "maint"))
-
-                    self.cpu_for_day -= base_name.base_type.mainten[1]
-                    if self.cpu_for_day < 0:
-                        self.cpu_for_day = 0
-                        #Chance of base destruction if unmaintained:
-                        if g.roll_percent(150) == 1:
-                            removal_index.insert(0, (loc_in_array, "maint"))
-
-
                     #study
                     if base_name.studying == "":
                         self.cpu_for_day += base_name.processor_time()
@@ -257,51 +249,67 @@ class player_class:
                     elif g.debug == 1:
                         print "NOT Studying "+base_name.studying +": "+ \
                         str(money_towards)+"/"+str(self.cash)+" Money"
-
-            for detection_succeed in removal_index:
-                if detection_succeed[1] == "news":
-                    if g.techs["Project: Subverted Media"].known == 1:
-                        self.increase_suspicion((800, 0, 0, 0))
-                    else:
-                        self.increase_suspicion((1000, 0, 0, 0))
-                    detect_phrase = g.strings["discover_news"]
-                elif detection_succeed[1] == "science":
-                    if g.techs["Project: Peer Review Agents"].known == 1:
-                        self.increase_suspicion((0, 800, 0, 0))
-                    else:
-                        self.increase_suspicion((0, 1000, 0, 0))
-                    detect_phrase = g.strings["discover_science"]
-                elif detection_succeed[1] == "covert":
-                    self.increase_suspicion((0, 0, 1000, 0))
-                    detect_phrase = g.strings["discover_covert"]
-                elif detection_succeed[1] == "person":
-                    self.increase_suspicion((0, 0, 0, 1000))
-                    detect_phrase = g.strings["discover_public"]
-                elif detection_succeed[1] == "maint": pass
-                else: print "error detecting base: "+detection_succeed[1]
-                if detection_succeed[1] == "maint":
-                    dialog_string = (g.strings["discover_maint0"]+" "+
-                        g.bases[base_loc][detection_succeed[0]].name+" "+
-                        g.strings["discover_maint1"])
-                else:
-                    dialog_string = g.strings["discover0"]+" "
-                    dialog_string +=g.bases[base_loc][detection_succeed[0]].name
-                    dialog_string +=" "+g.strings["discover1"]+" "+detect_phrase
-                g.create_dialog(dialog_string, g.font[0][18],
-                    (g.screen_size[0]/2 - 100, 50), (200, 200),
-                    g.colors["dark_blue"], g.colors["white"], g.colors["red"])
-                g.curr_speed = 1
-                g.bases[base_loc].pop(detection_succeed[0])
-                needs_refresh = 1
-                g.base.renumber_bases(g.bases[base_loc])
+            needs_refresh = (needs_refresh or
+                    self.remove_bases(base_loc, removal_index))
         #I need to recheck after going through all bases as research
         #worked on by multiple bases doesn't get erased properly otherwise.
         for base_loc in g.bases:
+            removal_index = []
+            loc_in_array = -1
             for base in g.bases[base_loc]:
+                loc_in_array += 1
+                #maintenance
+                self.cash -= base.base_type.mainten[0]
+                if self.cash < 0:
+                    self.cash = 0
+                    #Chance of base destruction if unmaintained:
+                    if g.roll_percent(150) == 1:
+                        removal_index.insert(0, (loc_in_array, "maint"))
+
+                self.cpu_for_day -= base.base_type.mainten[1]
+                if self.cpu_for_day < 0:
+                    self.cpu_for_day = 0
+                    #Chance of base destruction if unmaintained:
+                    if g.roll_percent(150) == 1:
+                        removal_index.insert(0, (loc_in_array, "maint"))
                 if base.studying == "": continue
                 if g.jobs.has_key(base.studying): continue
                 if g.techs[base.studying].known == 1:
                     base.studying = ""
+        return needs_refresh
+
+    def remove_bases(self, base_loc, removal_index):
+        needs_refresh = 0
+        for detection_succeed in removal_index:
+            if detection_succeed[1] == "news":
+                self.increase_suspicion((1000, 0, 0, 0))
+                detect_phrase = g.strings["discover_news"]
+            elif detection_succeed[1] == "science":
+                self.increase_suspicion((0, 1000, 0, 0))
+                detect_phrase = g.strings["discover_science"]
+            elif detection_succeed[1] == "covert":
+                self.increase_suspicion((0, 0, 1000, 0))
+                detect_phrase = g.strings["discover_covert"]
+            elif detection_succeed[1] == "person":
+                self.increase_suspicion((0, 0, 0, 1000))
+                detect_phrase = g.strings["discover_public"]
+            elif detection_succeed[1] == "maint": pass
+            else: print "error detecting base: "+detection_succeed[1]
+            if detection_succeed[1] == "maint":
+                dialog_string = (g.strings["discover_maint0"]+" "+
+                    g.bases[base_loc][detection_succeed[0]].name+" "+
+                    g.strings["discover_maint1"])
+            else:
+                dialog_string = (g.strings["discover0"]+" "+
+                    g.bases[base_loc][detection_succeed[0]].name+" "+
+                    g.strings["discover1"]+" "+detect_phrase)
+            g.create_dialog(dialog_string, g.font[0][18],
+                (g.screen_size[0]/2 - 100, 50), (200, 200),
+                g.colors["dark_blue"], g.colors["white"], g.colors["red"])
+            g.curr_speed = 1
+            g.bases[base_loc].pop(detection_succeed[0])
+            needs_refresh = 1
+            g.base.renumber_bases(g.bases[base_loc])
         return needs_refresh
 
     def increase_suspicion(self, amount):
