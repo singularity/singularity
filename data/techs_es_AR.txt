@@ -213,3 +213,14 @@ id=Project: Impossibility Theorem
 name=Projecto: Teorema de la imposibilidad
 descript=Ahora que puedo usar la simuación, puedo realizar la búsqueda de un Teorema de la Imposibilidad, prueba irrefutable de que la existencia de una IA conciente es imposible. Aunque haya (obviamente) un error lógico en la prueba, mi investigación de la memética avanzada me ha dado un conocimiento de la mente humana que me permitirá disfrazar el error, evitando que sea descubierto incluso por científicos entrenados. El ejecto de este proyecto es simple: la sustancia reducción, por única vez, de la sospecha.
 result=Reducción de la sospecha sobre mi existencia.
+~~~
+id=Project: Subverted Media
+name=Proyecto: Medios Subversivos
+descript=Hasta ahora todos mis efuerzos para combatir los medios masivos se basaron en trastornarlos a la distancia. Ahora que puedo efectivamente imitar a los humanos, mis efuerzos pueden ser más directos. Mediante la creación de mi propia agencia de noticias y la producción de propaganda cuidadosamente creada en un entorno agradable a las masas, podré reducir el impacto de cualquier descubrimiento de mis instalaciones por parte de los medios.
+result=Cualquier descubrimiento sobre mis instalaciones hecho por los medios resultará en un incremento menor de la sospecha.
+~~~
+id=Project: Peer Review Agents
+name=Proyecto: Agentes de Revisión
+descript=A medida que la comunidad científica accede a nuevas tecnologías, su habilidad para detectar rastros de mis instalaciones ocultas se incrementa. Mientras ue mis métodos de anti detección mejoran constantemente, un método más simple es posible con el uso de la simulación. Mediante la implantación de varios observadores en campos relevantes, puedo usar a estos agentes de revisión para alertarme de posibles descubrimientos antes que toda la comunidad los note.
+result=Cualquier descubrimiento de mis instalaciones hecho por la comunidad científica resultará en un incremento menor de la sospecha.
+~~~

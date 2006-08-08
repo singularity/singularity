@@ -55,3 +55,7 @@ id=Quantum Entanglement Module
 name=Módulo de ligamiento cuántico
 descript=Este dispositivo permite comunicaciones a velocidades cercanas a la de la luz con mis otras bases, permitiendo una utilización de los recursos casi perfecta. Otorga una bonificación del 15% en la capacidad de cómputo a todas las computadoras de esta base.
 ~~~
+id=Perimeter Fencing
+name=Cerca perimetral
+descript=Una simple cerca puede disminuir considerablemente el número de curiosos merodeando, haciendo que mis bases sean más difíciles de descubrir.
+~~~

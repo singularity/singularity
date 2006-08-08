@@ -27,6 +27,12 @@ unbuildable=No puedo construir en esta base, no tengo acceso físico.
 dangerous_research=No se dispuso todo mi poder de procesamiento disponible para esta investigación, es demasiado riesgoso conducirla en alguna de mis máquinas disponibles.
 nothing=nada
 building=bajo construcción
+really_destroy=¿Destruir esta base?
+detect_chance=[POSIBILIDAD DE DETECCION]
+cpu=CPU
+cpu_per_day=Procesamiento por día:
+money=Dinero
+money_per_day=Dinero por día.
 ~~~
 id=jobs
 job_expert=Realizar trabajos expertos. El uso de robots indistinguibles de los humanos me brinda más posibilidades de trabajos.

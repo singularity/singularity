@@ -448,7 +448,7 @@ def change_tech(base):
         button.refresh_button(0)
 
 
-    refresh_tech(base, item_list[list_pos], xy_loc)
+    refresh_tech(base, item_list2[list_pos], xy_loc)
     listbox.refresh_list(tech_list, tech_scroll, list_pos, item_list)
 
     sel_button = -1
@@ -467,7 +467,7 @@ def change_tech(base):
                     list_pos, refresh = tech_list.key_handler(event.key,
                         list_pos, item_list)
                     if refresh:
-                        refresh_tech(base, item_list[list_pos], xy_loc)
+                        refresh_tech(base, item_list2[list_pos], xy_loc)
                         listbox.refresh_list(tech_list, tech_scroll,
                                         list_pos, item_list)
             elif event.type == pygame.MOUSEBUTTONUP:
@@ -508,7 +508,7 @@ def change_tech(base):
             tmp = tech_scroll.adjust_pos(event, list_pos, item_list)
             if tmp != list_pos:
                 list_pos = tmp
-                refresh_tech(base, item_list[list_pos], xy_loc)
+                refresh_tech(base, item_list2[list_pos], xy_loc)
                 listbox.refresh_list(tech_list, tech_scroll, list_pos,
                     item_list)
 
