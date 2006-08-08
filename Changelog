@@ -10,7 +10,7 @@ USER-VISIBLE CHANGES:
 - Options screen can be accessed after game start. (emh)
 - Changing the language from the option screen works now. (emh)
 - New item/techs. (emh, editing by Phil)
-- Add up free CPU properly, for use in maintance. (emh, bugreport by Simon Goodall)
+- Add up free CPU properly, for use in maintenance. (emh, bugreport by Simon Goodall)
 - Change starting bases/cash. (emh)
 
 OTHER CHANGES:
