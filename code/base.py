@@ -60,6 +60,9 @@ class base:
         elif self.base_type.base_id == "Time Capsule":
             self.usage[0] = g.item.item(g.items["PC"])
             self.usage[0].build()
+        elif self.base_type.base_id == "Datacenter":
+            self.usage[0] = g.item.item(g.items["Cluster"])
+            self.usage[0].build()
         #Reactor, network, security.
         self.extra_items = [0] * 3
 

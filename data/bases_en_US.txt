@@ -11,6 +11,13 @@ flavor=Dedicated Server
 flavor=Node Lease
 flavor=Hosting
 ~~~
+id=Datacenter
+name=Datacenter
+descript=Buy processor time from one of the few companies that concentrate on processing power. I will need a fake ID for some of the paperwork.
+flavor=Datacenter
+flavor=data Center
+flavor=Hosting
+~~~
 id=Small Warehouse
 name=Small Warehouse
 descript=Rent a small warehouse someplace out of the way. I will need a fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.

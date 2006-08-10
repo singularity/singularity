@@ -23,6 +23,18 @@ cost=100, 0, 0
 pre=
 maint=5, 0, 0
 ~~~
+id=Datacenter
+size=1
+allowed=N AMERICA
+allowed=S AMERICA
+allowed=EUROPE
+allowed=ASIA
+allowed=AFRICA
+d_chance=50, 0, 125, 100
+cost=3000, 0, 1
+pre=Personal Identification
+maint=25, 0, 0
+~~~
 id=Small Warehouse
 size=25
 allowed=N AMERICA

@@ -162,7 +162,7 @@ class player_class:
         if self.suspicion[3] <= 0: self.suspicion = (self.suspicion[0],
                 self.suspicion[1], self.suspicion[2], 0)
         self.cpu_for_day = 0
-        if self.time_day == 14:
+        if self.time_day == 23:
             g.create_dialog(g.strings["grace_warning"],
                 g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                 (200, 200), g.colors["dark_blue"],
@@ -178,7 +178,7 @@ class player_class:
                 #Does base get detected?
                 #Give a grace period.
                 if self.time_day - base_name.built_date > base_name.base_type.cost[2]*2:
-                    if self.time_day > 14:
+                    if self.time_day > 23:
                         tmp_d_chance = base_name.get_d_chance()
                         if g.debug == 1:
                             print "Chance of discovery for base %s: %s" % \
