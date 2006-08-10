@@ -384,15 +384,26 @@ def refresh_item(base, item_name, xy_loc):
             g.font[0][16], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
     string = g.to_money(g.items[item_name].cost[0])+" "+g.strings["money"]
+    if g.items[item_name].item_type == "compute":
+        string += " x"+str(base.base_type.size)+"="
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
-    string = g.add_commas(str((g.items[item_name].cost[2]*g.pl.labor_bonus)/10000))+" Days"
+    string = g.add_commas(
+        str((g.items[item_name].cost[2]*g.pl.labor_bonus)/10000))+" Days"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
 
+    if g.items[item_name].item_type == "compute":
+        string = g.to_money(g.items[item_name].cost[0]*base.base_type.size)+" "
+        string +=g.strings["money"]
+        g.print_string(g.screen, string,
+                g.font[0][16], -1, (xy[0]+160, xy[1]+100), g.colors["white"])
+
+    x_start = 100
+    if g.items[item_name].item_type == "compute": x_start = 120
     g.print_multiline(g.screen, g.items[item_name].descript,
-            g.font[0][18], 290, (xy[0]+160, xy[1]+100), g.colors["white"])
+            g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
 
 
 def change_tech(base):

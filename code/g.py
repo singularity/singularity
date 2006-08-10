@@ -511,7 +511,13 @@ def to_time(raw_time):
 def get_save_folder(just_pref_dir=False):
     if environ.has_key("HOME") and not force_single_dir:
         save_dir = path.join(environ["HOME"], ".endgame", "saves")
-    else: save_dir = path.join("..", "saves")
+    else:
+        if data_loc == "../data/":
+            save_dir = path.join("..", "saves")
+        elif data_loc == "data/":
+            save_dir = "saves"
+        else:
+            print "data_loc="+data_loc+" breaks get_save_folder"
     if path.exists(save_dir) == 0:
         #As a note, the online python reference includes the mkdirs function,
         #which would do this better, but it must be rather new, as I don't

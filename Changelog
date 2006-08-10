@@ -12,6 +12,8 @@ USER-VISIBLE CHANGES:
 - New item/techs. (emh, editing by Phil)
 - Add up free CPU properly, for use in maintenance. (emh, bugreport by Simon Goodall)
 - Change starting bases/cash. (emh)
+- Save directory will be created in the right place now. (emh)
+- True cost of constructing CPU items is now displayed. (emh)
 
 OTHER CHANGES:
 - Deleted some extraneous images and optimized some others. (Phil)
