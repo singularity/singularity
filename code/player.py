@@ -258,20 +258,21 @@ class player_class:
             loc_in_array = -1
             for base in g.bases[base_loc]:
                 loc_in_array += 1
-                #maintenance
-                self.cash -= base.base_type.mainten[0]
-                if self.cash < 0:
-                    self.cash = 0
-                    #Chance of base destruction if unmaintained:
-                    if g.roll_percent(150) == 1:
-                        removal_index.insert(0, (loc_in_array, "maint"))
+                if base_name.built == 1:
+                    #maintenance
+                    self.cash -= base.base_type.mainten[0]
+                    if self.cash < 0:
+                        self.cash = 0
+                        #Chance of base destruction if unmaintained:
+                        if g.roll_percent(150) == 1:
+                            removal_index.insert(0, (loc_in_array, "maint"))
 
-                self.cpu_for_day -= base.base_type.mainten[1]
-                if self.cpu_for_day < 0:
-                    self.cpu_for_day = 0
-                    #Chance of base destruction if unmaintained:
-                    if g.roll_percent(150) == 1:
-                        removal_index.insert(0, (loc_in_array, "maint"))
+                    self.cpu_for_day -= base.base_type.mainten[1]
+                    if self.cpu_for_day < 0:
+                        self.cpu_for_day = 0
+                        #Chance of base destruction if unmaintained:
+                        if g.roll_percent(150) == 1:
+                            removal_index.insert(0, (loc_in_array, "maint"))
                 if base.studying == "": continue
                 if g.jobs.has_key(base.studying): continue
                 if g.techs[base.studying].known == 1:

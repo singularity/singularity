@@ -123,15 +123,16 @@ def refresh_screen(menu_buttons):
     maint_cpu = 0
     for loc_name in g.bases:
         for base_instance in g.bases[loc_name]:
-            total_cpu += base_instance.processor_time()
-            maint_cpu += base_instance.base_type.mainten[1]
-            if base_instance.studying == "":
-                free_cpu += base_instance.processor_time()
-            else:
-                if g.jobs.has_key(base_instance.studying):
-                    job_cpu += base_instance.processor_time()
+            if base_instance.built == 1:
+                total_cpu += base_instance.processor_time()
+                maint_cpu += base_instance.base_type.mainten[1]
+                if base_instance.studying == "":
+                    free_cpu += base_instance.processor_time()
                 else:
-                    research_cpu += base_instance.processor_time()
+                    if g.jobs.has_key(base_instance.studying):
+                        job_cpu += base_instance.processor_time()
+                    else:
+                        research_cpu += base_instance.processor_time()
 
     partial_sum = g.pl.cash-base_constr-item_constr
     interest = (g.pl.interest_rate * partial_sum) / 10000
