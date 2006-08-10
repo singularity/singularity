@@ -14,6 +14,7 @@ USER-VISIBLE CHANGES:
 - Change starting bases/cash. (emh)
 - Save directory will be created in the right place now. (emh)
 - True cost of constructing CPU items is now displayed. (emh)
+- Future cost of techs displayed properly when multiple bases are working. (emh)
 
 OTHER CHANGES:
 - Deleted some extraneous images and optimized some others. (Phil)

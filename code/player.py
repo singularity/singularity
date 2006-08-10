@@ -346,11 +346,14 @@ class player_class:
     #current projects in construction.
     def future_cash(self):
         result_cash = self.cash
+        tmp_techs = {}
         for base_loc in g.bases:
             for base_name in g.bases[base_loc]:
                 result_cash -= base_name.cost[0]
                 if g.techs.has_key(base_name.studying):
-                    result_cash -= g.techs[base_name.studying].cost[0]
+                    if not tmp_techs.has_key(base_name.studying):
+                        result_cash -= g.techs[base_name.studying].cost[0]
+                        tmp_techs[base_name.studying] = 1
                 for item in base_name.usage:
                     if item != 0: result_cash -= item.cost[0]
                 for item in base_name.extra_items:
