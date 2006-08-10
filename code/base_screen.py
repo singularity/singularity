@@ -557,13 +557,13 @@ def refresh_tech(base, tech_name, xy):
         #TECH
         if g.techs["Advanced Simulacra"].known == 1:
             g.print_string(g.screen,
-                g.add_commas(str(int(
-                    (g.jobs[tech_name][0]*base.processor_time())*1.1)))+
+                g.to_money(int(
+                    (g.jobs[tech_name][0]*base.processor_time())*1.1))+
                     " "+g.strings["money_per_day"], g.font[0][22], -1,
                     (xy[0]+160, xy[1]+65), g.colors["white"])
         else:
             g.print_string(g.screen,
-                g.add_commas(str(g.jobs[tech_name][0]*base.processor_time()))+
+                g.to_money(g.jobs[tech_name][0]*base.processor_time())+
                 " "+g.strings["money_per_day"],
                 g.font[0][22], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
         g.print_multiline(g.screen, g.jobs[tech_name][2],
