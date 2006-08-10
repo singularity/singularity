@@ -13,9 +13,9 @@ flavor=Hosting
 ~~~
 id=Datacenter
 name=Datacenter
-descript=Buy processor time from one of the few companies that concentrate on processing power. I will need a fake ID for some of the paperwork.
+descript=Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
 flavor=Datacenter
-flavor=data Center
+flavor=Data Center
 flavor=Hosting
 ~~~
 id=Small Warehouse
