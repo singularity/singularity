@@ -1,4 +1,4 @@
-Endgame: Singularity 0.24
+Endgame: Singularity 0.25
 
 Requirements:
 Recent versions of Python, pygame, and SDL_image. This game should work on
@@ -59,13 +59,13 @@ operations if they suspect your presence.
 
 In the map screen (the screen with the world map), any location you can build
 bases in is marked with the name, then the number of current bases in that
-location. You start out with two bases in North America. Also note that the cash
+location. You start out with a base in North America. Also note that the cash
 listing shows your current cash and your cash amount after all current
 construction is complete.
 
 After choosing a base, you will enter the base screen. Here you can change your
 research goal, or build an item by clicking on the appropriate slot in the
-center. (But note that one of your beginning bases does not allow building.)
+center. (But note that your beginning base does not allow building.)
 
 
 Credits:
