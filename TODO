@@ -12,3 +12,4 @@ Todo for 0.26:
         # per-tech time to completion (from day 0 to start, then time to completion)
     - Add more items.
     - Get more items translatable.
+    - Try out pygame.key.set_repeat()
