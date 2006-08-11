@@ -11,6 +11,13 @@ flavor=Servidor Dedicado
 flavor=Alquiler de Nodo
 flavor=Hosting
 ~~~
+id=Datacenter
+name=Centro de cómputos
+descript=Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
+flavor=Centro de cómputos
+flavor=Centro de datos
+flavor=Hosting
+~~~
 id=Small Warehouse
 name=Almacén Pequeño
 descript=Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
