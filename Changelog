@@ -4,6 +4,8 @@ v0.26 (released 2006.0?.??):
 
 USER-VISIBLE CHANGES:
 - Added CPU indicator to the main screen. (emh, John DiMarco for suggestion)
+- Research screen will now automatically prune bases. (emh, John DiMarco
+  for suggestion)
 
 v0.25 (released 2006.08.10):
 

@@ -287,12 +287,14 @@ def assign_tech(free_CPU):
     if tmp_base.studying == "": return False
 
     show_dangerous_dialog = False
+    total_cpu = 0
     for base_loc in g.bases:
         for base in g.bases[base_loc]:
             if base.studying == "":
                 if base.allow_study(tmp_base.studying):
                     return_val = True
                     base.studying = tmp_base.studying
+                    total_cpu += base.processor_time()
 
                 # We want to warn the player that we didn't use all available
                 # CPU.  But if the base isn't built yet, that's a stupid
@@ -304,5 +306,21 @@ def assign_tech(free_CPU):
         g.create_dialog(g.strings["dangerous_research"], g.font[0][18],
             (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
             g.colors["white"], g.colors["white"])
+
+
+    #If the tech can be completed in only one day, remove unneeded bases.
+    if g.techs.has_key(tmp_base.studying):
+        if total_cpu > g.techs[tmp_base.studying].cost[1]:
+            while 1:
+                removed_base = False
+                for base_loc in g.bases:
+                    for base in g.bases[base_loc]:
+                        if base.studying == tmp_base.studying:
+                            if (total_cpu - base.processor_time() >
+                                        g.techs[tmp_base.studying].cost[1]):
+                                total_cpu -= base.processor_time()
+                                base.studying = ""
+                                removed_base = True
+                if removed_base == False: break
 
     return return_val
