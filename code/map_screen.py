@@ -542,6 +542,10 @@ def create_buttons(tmp_font_size):
         (g.screen_size[0], 26),
         "SUSPICION", -1, g.colors["black"], g.colors["dark_blue"],
         g.colors["black"], g.colors["white"], g.font[1][tmp_font_size-2]))
+    #Note that this must be element 9 in menu_buttons
+    menu_buttons.append(buttons.button((435, 24), (g.screen_size[0]-435, 26),
+        "CPU", -1, g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][tmpsize]))
     menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
         "RESEARCH", 0, g.font[1][20]))
     menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
@@ -644,6 +648,16 @@ def map_loop():
                 g.to_percent(g.pl.suspicion[3], 1))
             menu_buttons[8].remake_button()
             menu_buttons[8].refresh_button(0)
+
+            total_cpu, free_cpu, unused, unused, maint_cpu = \
+                    finance_screen.cpu_numbers()
+            if free_cpu < maint_cpu:
+                menu_buttons[9].text_color = g.colors["red"]
+            else:
+                menu_buttons[9].text_color = g.colors["white"]
+            menu_buttons[9].text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(free_cpu)+")"
+            menu_buttons[9].remake_button()
+            menu_buttons[9].refresh_button(0)
         pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.QUIT: g.quit_game()
@@ -725,6 +739,7 @@ def map_loop():
                         button.stay_selected = 1
                         button.refresh_button(1)
                     elif button.button_id == "SUSPICION": pass
+                    elif button.button_id == "CPU": pass
                     elif button.xy[1] != -1: #ignore the timer
                         g.play_click()
                         display_base_list(button.button_id, menu_buttons)
