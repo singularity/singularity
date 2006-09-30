@@ -22,7 +22,6 @@ if not test_dir in sys.path:
 if not code_dir in sys.path:
     sys.path.insert(1, code_dir)
 
-
 def suite(module_name):
     """ Create the test suite for named module """
     from sys import modules
@@ -45,7 +44,6 @@ def unittest_main(argv=None):
 
     return exitcode
 
-
 def make_params_iterator(default_params_dict):
     """ Make a function for generating test parameters """
 
@@ -58,7 +56,6 @@ def make_params_iterator(default_params_dict):
 
     return iterate_params
 
-
 class Test_Exception(unittest.TestCase):
     """ Test cases for exception classes """
 

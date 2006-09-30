@@ -18,7 +18,6 @@ import scaffold
 
 import base
 
-
 class Test_BaseType(unittest.TestCase):
     """ Test cases for BaseType class """
 
@@ -162,7 +161,6 @@ class Test_BaseType(unittest.TestCase):
                 )
                 raise e
 
-
 class Stub_BaseType(object):
     """ Stub class for BaseType """
 
@@ -315,12 +313,10 @@ class Test_Base(unittest.TestCase):
         self.failUnless(result)
         self.failUnlessEqual((0, 0, 0), instance.cost)
 
-
 def suite():
     """ Get the test suite for this module """
     return scaffold.suite(__name__)
 
-
 __main__ = scaffold.unittest_main
 
 if __name__ == '__main__':

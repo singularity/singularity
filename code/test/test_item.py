@@ -18,7 +18,6 @@ import scaffold
 
 import item
 
-
 class Test_ItemClass(unittest.TestCase):
     """ Test cases for ItemClass class """
 
@@ -148,7 +147,6 @@ class Test_ItemClass(unittest.TestCase):
                 )
                 raise e
 
-
 class Stub_ItemClass(object):
     """ Stub class for ItemClass """
 
@@ -267,12 +265,10 @@ class Test_Item(unittest.TestCase):
         self.failUnless(result)
         self.failUnlessEqual((0, 0, 0), instance.cost)
 
-
 def suite():
     """ Get the test suite for this module """
     return scaffold.suite(__name__)
 
-
 __main__ = scaffold.unittest_main
 
 if __name__ == '__main__':

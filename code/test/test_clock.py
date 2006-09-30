@@ -20,7 +20,6 @@ import scaffold
 
 import clock
 
-
 class Test_Clock(unittest.TestCase):
     """ Test cases for Clock class """
 
@@ -59,7 +58,6 @@ class Test_Clock(unittest.TestCase):
                 )
                 raise e
 
-
 class Test_TimeDelta(unittest.TestCase):
     """ Test cases for TimeDelta class """
 
@@ -173,7 +171,6 @@ class Test_TimeDelta(unittest.TestCase):
                     value, getattr(instance, value_name)
                 )
 
-
 class Test_GameClock(unittest.TestCase):
     """ Test cases for GameClock class """
 
@@ -311,12 +308,10 @@ class Test_GameClock(unittest.TestCase):
             seconds = params['components']['seconds']
             self.failUnlessEqual(seconds, instance.seconds)
 
-
 def suite():
     """ Get the test suite for this module """
     return scaffold.suite(__name__)
 
-
 __main__ = scaffold.unittest_main
 
 if __name__ == '__main__':

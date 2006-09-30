@@ -18,7 +18,6 @@ import os
 
 import scaffold
 
-
 def get_python_modules(file_list, file_suffix = '.py'):
     """ Return a list of module names from a filename list """
     python_modules = [m[:m.rfind(file_suffix)] for m in file_list
@@ -31,7 +30,6 @@ def get_test_modules(module_list, module_prefix = 'test_'):
         if m.startswith(module_prefix)]
     return test_modules
 
-
 def suite():
     """ Create the test suite for this module """
     loader = unittest.TestLoader()
@@ -41,7 +39,6 @@ def suite():
 
     return suite
 
-
 def __main__(argv=None):
     """ Mainline function for this module """
     from sys import argv as sys_argv

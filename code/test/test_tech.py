@@ -18,7 +18,6 @@ import scaffold
 
 import tech
 
-
 class Test_Tech(unittest.TestCase):
     """ Test cases for Tech class """
 
@@ -202,12 +201,10 @@ class Test_Tech(unittest.TestCase):
             instance.gain_tech()
             self.failUnless(instance.known)
 
-
 def suite():
     """ Get the test suite for this module """
     return scaffold.suite(__name__)
 
-
 __main__ = scaffold.unittest_main
 
 if __name__ == '__main__':

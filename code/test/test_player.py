@@ -21,7 +21,6 @@ import scaffold
 import player
 import clock
 
-
 class Test_Player(unittest.TestCase):
     """ Test cases for Player class """
 
@@ -114,12 +113,10 @@ class Test_Player(unittest.TestCase):
                 )
                 self.failUnlessEqual(time_add, time_diff)
 
-
 def suite():
     """ Get the test suite for this module """
     return scaffold.suite(__name__)
 
-
 __main__ = scaffold.unittest_main
 
 if __name__ == '__main__':
