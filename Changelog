@@ -7,6 +7,7 @@ USER-VISIBLE CHANGES:
 - Research screen will now automatically prune bases. (emh, John DiMarco
   for suggestion)
 - Made unicode characters work better. (biro.daniel for patch)
+- Fixed slight flicker when toggling options. (emh)
 
 v0.25 (released 2006.08.10):
 

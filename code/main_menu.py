@@ -368,7 +368,7 @@ def display_options():
                         g.play_click()
                         g.screen_size = (1280, 1024)
                         set_res()
-                    click_button(menu_buttons, button)
+                    click_button(menu_buttons, button, False)
                     listbox.refresh_list(lang_list, lang_scroll,
                                 lang_pos, lang_array)
                     if lang_array[lang_pos] != "":
@@ -381,12 +381,13 @@ def display_options():
                 if lang_array[lang_pos] != "":
                     g.language = lang_array[lang_pos]
 
-def click_button(menu_buttons, button):
+def click_button(menu_buttons, button, flip=True):
     refresh_options(menu_buttons)
     for button2 in menu_buttons:
         button2.refresh_button(0)
     button.refresh_button(1)
-    pygame.display.flip()
+    if flip:
+        pygame.display.flip()
 
 def set_res():
     #By the way, there is a toggle_fullscreen() function, but the pygame help
