@@ -959,8 +959,6 @@ def generic_load(file):
                 return_array.append(input_dict)
             input_dict = {}
             continue
-        command = line.split("=", 1)[0].strip().lower()
-        command_text= line.split("=", 1)[1].strip()
         command = unicode(line.split("=", 1)[0].strip().lower(),"UTF-8")
         command_text= unicode(line.split("=", 1)[1].strip(), "UTF-8")
         #handle arrays
