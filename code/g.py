@@ -128,6 +128,24 @@ def play_sound(sound_file):
     if nosound == 1: return 0
     if len(sounds) ==0: return
     sounds[sound_file].play()
+
+global delay_time
+delay_time = 0
+def play_music():
+    if nosound == 1: return 0
+    temp_ls = listdir("../music")
+    temp_ls_len = len(temp_ls)
+    if temp_ls_len == 0: return
+    if pygame.mixer.music.get_busy(): return
+    global delay_time
+    if delay_time == 0:
+        delay_time = pygame.time.get_ticks() + int(random()*10000)+2000
+    else:
+        if delay_time > pygame.time.get_ticks(): return
+        delay_time = 0
+        pygame.mixer.music.load("../music/"+temp_ls[int(random()*temp_ls_len)])
+        pygame.mixer.music.play()
+
 #
 # Font functions.
 #

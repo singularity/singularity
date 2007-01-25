@@ -603,6 +603,7 @@ def map_loop():
     while 1:
         milli_clock += g.clock.tick(30) * g.curr_speed
         if milli_clock >= 1000:
+            g.play_music()
             need_refresh = g.pl.give_time(milli_clock/1000)
             if need_refresh == 1: refresh_map(menu_buttons)
             tmp = g.pl.lost_game()

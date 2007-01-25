@@ -9,6 +9,8 @@ USER-VISIBLE CHANGES:
 - Made unicode characters work better. (biro.daniel for patch)
 - Fixed slight flicker when toggling options. (emh)
 - Added difficulty selection. (emh, many people for suggestion)
+- Added simple background music playing ability. (emh, Matthew Robinson for
+  initial patch.)
 
 v0.25 (released 2006.08.10):
 
