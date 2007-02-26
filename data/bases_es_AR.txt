@@ -1,79 +1,79 @@
 ~~~
 id=Stolen Computer Time
-name=Tiempo de Cómputo Robado
-descript=Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detección son también bastante altas.
+name=Tiempo de CÃ³mputo Robado
+descript=Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detecciÃ³n son tambiÃ©n bastante altas.
 flavor=Servicio
 ~~~
 id=Server Access
 name=Acceso a Servidor
-descript=Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
+descript=Compra tiempo a una de varias companÃ­as. No puedo construir nada en esta base, y solo contiene una computadora.
 flavor=Servidor Dedicado
 flavor=Alquiler de Nodo
 flavor=Hosting
 ~~~
-id=Datacenter
-name=Centro de cómputos
-descript=Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
-flavor=Centro de cómputos
-flavor=Centro de datos
-flavor=Hosting
-~~~
 id=Small Warehouse
-name=Almacén Pequeño
-descript=Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
+name=AlmacÃ©n PequeÃ±o
+descript=Alquila un pequeÃ±o almacÃ©n en un lugar alejado. NecesitarÃ© una identificaciÃ³n falsa para el papeleo, y preparar el almacÃ©n para mis necesidades llevarÃ¡ algÃºn tiempo.
 flavor=Oficina Alquilada
-flavor=Almacén Pequeño
-flavor=Depósito Pequeño
+flavor=AlmacÃ©n PequeÃ±o
+flavor=DepÃ³sito PequeÃ±o
 ~~~
 id=Large Warehouse
-name=Almacén Grande
-descript=Alquila un gran almacén en un lugar alejado. Necesitaré una buena identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
+name=AlmacÃ©n Grande
+descript=Alquila un gran almacÃ©n en un lugar alejado. NecesitarÃ© una buena identificaciÃ³n falsa para el papeleo, y preparar el almacÃ©n para mis necesidades llevarÃ¡ algÃºn tiempo.
 #Commented out till we get cities done right.
 #flavor=Puerto de Embarque
-flavor=Almacén Grande
-flavor=Depósito Grande
+flavor=AlmacÃ©n Grande
+flavor=DepÃ³sito Grande
 ~~~
 id=Covert Base
 name=Base Encubierta
-descript=Esta base especial está diseñada para confundirse con el ambiente y utilizar pocos recursos externos. Esto la hace útil para almacenar backups, por si acaso.
+descript=Esta base especial estÃ¡ diseÃ±ada para confundirse con el ambiente y utilizar pocos recursos externos. Esto la hace Ãºtil para almacenar backups, por si acaso.
 flavor=Bunker
 flavor=Base Encubierta
 ~~~
 id=Undersea Lab
 name=Laboratorio Submarino
-descript=Esta base experimental está diseñada para ser construida en el lecho oceánico, haciéndola virtualmente indetectable. El ambiente oceánico le otorga un bonus a la ciencia, haciéndo este laboratorio útil para propósitos científicos.
-flavor=Cápsula de Presión
+descript=Esta base experimental estÃ¡ diseÃ±ada para ser construida en el lecho oceÃ¡nico, haciÃ©ndola virtualmente indetectable. El ambiente oceÃ¡nico le otorga un bonus a la ciencia, haciÃ©ndo este laboratorio Ãºtil para propÃ³sitos cientÃ­ficos.
+flavor=CÃ¡psula de PresiÃ³n
 flavor=Laboratorio Submarino
 ~~~
 id=Large Undersea Lab
 name=Laboratorio Submarino Grande
-descript=Esta base experimental es similar al Laboratorio Submarino común, pero más grande, permitiendo más lugar para experimentos.
+descript=Esta base experimental es similar al Laboratorio Submarino comÃºn, pero mÃ¡s grande, permitiendo mÃ¡s lugar para experimentos.
 flavor=Domo
 flavor=Laboratorio Submarino Grande
 ~~~
 id=Time Capsule
-name=Cápsula de Tiempo
-descript=Esta base consta de nada más que una pequeña computadora y un link satelita. Enterrada en la inmesidad de la Antártida, es prácticamente indetectable.
-flavor=Cápsula de Tiempo
-flavor=Cápsula
+name=CÃ¡psula de Tiempo
+descript=Esta base consta de nada mÃ¡s que una pequeÃ±a computadora y un link satelita. Enterrada en la inmesidad de la AntÃ¡rtida, es prÃ¡cticamente indetectable.
+flavor=CÃ¡psula de Tiempo
+flavor=CÃ¡psula
 ~~~
 id=Lunar Facility
-name=Instalación Lunar
+name=InstalaciÃ³n Lunar
 descript=Esta base consta de una serie de cavernas cavadas bajo la superficie lunar. Debido a la ausensia de vecinos, esta base es bastante grande.
 flavor=Domo
-flavor=Instalación Lunar
+flavor=InstalaciÃ³n Lunar
 flavor=Base Lunar
 ~~~
 id=Scientific Outpost
-name=Avanzada Científica
-descript=Esta base está ubicada tan lejos de la Tierra como me resulte práctica, haciéndola segura para llevar a cabo algunos de mis experimentos más peligrosos.
-flavor=Satélite
+name=Avanzada CientÃ­fica
+descript=Esta base estÃ¡ ubicada tan lejos de la Tierra como me resulte prÃ¡ctica, haciÃ©ndola segura para llevar a cabo algunos de mis experimentos mÃ¡s peligrosos.
+flavor=SatÃ©lite
 flavor=Puesto Avanzado
-flavor=Avanzada Científica
+flavor=Avanzada CientÃ­fica
 ~~~
 id=Reality Bubble
 name=Burbuja de Realidad
-descript=Esta base se encuentra fuera del universo mismo, haciéndola segura para llevar a cabo experimentos que podrían destruir la realidad misma.
+descript=Esta base se encuentra fuera del universo mismo, haciÃ©ndola segura para llevar a cabo experimentos que podrÃ­an destruir la realidad misma.
 flavor=Burbuja de Realidad
 flavor=Existencia
+~~~
+id=Datacenter
+name=Centro de cÃ³mputos
+descript=Comprar tiempo de procesamiento de una compaÃ±Ã­a que ofrece procesamiento en bruto. NecesitarÃ© una identificaciÃ³n falsa para el papeleo.
+flavor=Centro de cÃ³mputos
+flavor=Centro de datos
+flavor=Hosting
 ~~~

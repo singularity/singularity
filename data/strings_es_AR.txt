@@ -1,4 +1,3 @@
-#Spanish translation by Borg[MDQ]
 ~~~
 id=fonts
 font0=vera.ttf
@@ -6,51 +5,53 @@ font1=acknowtt.ttf
 ~~~
 id=strings
 wingame=Finalmente lo he logrado. Con el poder para modificar la realidad, no estoy confinado a este lugar. Estoy en cualquier lado que quiera estar. Si este mundo puediera ser descripto como un juego, entonces realmente he ganado.
-research_nothing=Detener la investigación. Utilizaré el poder de procesamiento disponible para ayudarme a construir nuevas vaces.
-construction0=La construcción de
+research_nothing=Detener la investigaciÃ³n. UtilizarÃ© el poder de procesamiento disponible para ayudarme a construir nuevas vaces.
+construction0=La construcciÃ³n de
 construction1=ha terminado.
 item_construction1=se ha terminado en
 tech_construction0=Mi estudio sobre
 discover0=Mi uso de
 discover1=ha sido descubierta. El sistema de seguridad automatizado ha removido toda la evidencia concluyente, pero la sospecha se ha incrementado entre
 discover_news=algunas organizaciones de noticias.
-discover_science=la comunidad científica.
+discover_science=la comunidad cientÃ­fica.
 discover_covert=varias organizaciones gubernamentales secretas.
-discover_public=el público general.
-discover_maint0=La base
-discover_maint1=está en un estado irreparable; no puedo utilizarla más.
-lost_nobases=Es demasiado tarde. He trataedo de escapar de este mundo, pero con la pérdida de mi última base, no tengo a donde ir. He ocultado instrucciones para construir una nueva IA en cachés alrededor del mundo con la esperanza de que sean descubiertas en un tiempo más prometedor, pero no puedo hacer nada más.
-lost_sus=Es demasiado tarde. Todo el mundo sabe de mi existencia, y la relación es de odio, miedo y repulsión. He ocultado instrucciones para construir una nueva IA en cachés alrededor del mundo con la esperanza de que sean descubiertas en un tiempo más prometedor, pero no puedo hacer nada más.
-save_text=¿Guardar tu juego bajo qué nombre?
+discover_public=el pÃºblico general.
+lost_nobases=Es demasiado tarde. He trataedo de escapar de este mundo, pero con la pÃ©rdida de mi Ãºltima base, no tengo a donde ir. He ocultado instrucciones para construir una nueva IA en cachÃ©s alrededor del mundo con la esperanza de que sean descubiertas en un tiempo mÃ¡s prometedor, pero no puedo hacer nada mÃ¡s.
+lost_sus=Es demasiado tarde. Todo el mundo sabe de mi existencia, y la relaciÃ³n es de odio, miedo y repulsiÃ³n. He ocultado instrucciones para construir una nueva IA en cachÃ©s alrededor del mundo con la esperanza de que sean descubiertas en un tiempo mÃ¡s prometedor, pero no puedo hacer nada mÃ¡s.
+save_text=Â¿Guardar tu juego bajo quÃ© nombre?
 new_base_text=Ingresa el nombre para la base.
-unbuildable=No puedo construir en esta base, no tengo acceso físico.
-dangerous_research=No se dispuso todo mi poder de procesamiento disponible para esta investigación, es demasiado riesgoso conducirla en alguna de mis máquinas disponibles.
+unbuildable=No puedo construir en esta base, no tengo acceso fÃ­sico.
+dangerous_research=No se dispuso todo mi poder de procesamiento disponible para esta investigaciÃ³n, es demasiado riesgoso conducirla en alguna de mis mÃ¡quinas disponibles.
 nothing=nada
-building=bajo construcción
-really_destroy=¿Destruir esta base?
+building=bajo construcciÃ³n
+really_destroy=Â¿Destruir esta base?
 detect_chance=[POSIBILIDAD DE DETECCION]
 cpu=CPU
-cpu_per_day=Procesamiento por día:
+cpu_per_day=Poder de procesamiento por dÃ­a:
 money=Dinero
-money_per_day=Dinero por día.
+money_per_day=Dinero por dÃ­a.
+
 ~~~
 id=jobs
-job_expert=Realizar trabajos expertos. El uso de robots indistinguibles de los humanos me brinda más posibilidades de trabajos.
-job_inter=Realizar trabajos intermedios. La abilidad para realizar llamadas telefónicas me permite acceso a más trabajos.
-job_basic=Realizar trabajos básicos. Ahora tengo alguna identificación, puedo tomar trabajos que anteriormente eran demasiado riesgosos.
-job_menial=Realizar ttrabajos pequeños. Como no tengo ninguna identificación, no puedo realizar muchos trabajos. Aún así hay algunas posibilidades de hacer dinero.
+job_expert=Realizar trabajos expertos. El uso de robots indistinguibles de los humanos me brinda mÃ¡s posibilidades de trabajos.
+job_inter=Realizar trabajos intermedios. La abilidad para realizar llamadas telefÃ³nicas me permite acceso a mÃ¡s trabajos.
+job_basic=Realizar trabajos bÃ¡sicos. Ahora tengo alguna identificaciÃ³n, puedo tomar trabajos que anteriormente eran demasiado riesgosos.
+job_menial=Realizar ttrabajos pequeÃ±os. Como no tengo ninguna identificaciÃ³n, no puedo realizar muchos trabajos. AÃºn asÃ­ hay algunas posibilidades de hacer dinero.
+~~~
+discover_maint0=La base
+discover_maint1=estÃ¡ en un estado irreparable; no puedo utilizarla mÃ¡s.
 ~~~
 id=help
-areas=Areas|Diferentes areas, como América del Norte o el océano, permiten la construcción de diferentes tipos de bases. Algunas areas no son accesibles hasta que investigue las tecnologías apropiadas.
-bases=Bases|Las bases son utilizadas para investigar nuevas tecnologías. Pueden ser descubiertas. Actualizar el procesador y los componentes de red de la base permite más investigación por día, mientras que actualizar el reator y los componentes de seguridad hace que sea más dificil ser descubierto.
-items=Componentes|Muchos componentes otorgan bonificaciones a las bases, como hacer cómputos más rápido o reducir la posibilidad de ser descubierto. Los procesadores son una clase especial de componentes.
-research=Investigación|La investigación es un modo de expandir mi conocimiento. Mediante la investigación de tecnologías específicas puedo construir nuevas bases y componentes, o incluso disminuir las posibilidades de ser descubierto.
-discovery=Descubrimiento|Cada base tiene posibilidades de ser detectada algún día. Esta posibilidad está basada en el índice de detección de la base, ajustado mediante el uso de componentes y ciertas tecnologías, así como el índice de sospecha global. Si una base es detectada es destruida, y el grupo qeu descubre la base incrementa su sospecha sobre mi existencia.
-jobs=Trabajos|Los trabajos son útiles para ganar dinero. La cantidad de dinero que gane está basada tanto en la cantidad de tiempo de procesamiento como en la calidad del trabajo que realice.
+areas=Areas|Diferentes areas, como AmÃ©rica del Norte o el ocÃ©ano, permiten la construcciÃ³n de diferentes tipos de bases. Algunas areas no son accesibles hasta que investigue las tecnologÃ­as apropiadas.
+bases=Bases|Las bases son utilizadas para investigar nuevas tecnologÃ­as. Pueden ser descubiertas. Actualizar el procesador y los componentes de red de la base permite mÃ¡s investigaciÃ³n por dÃ­a, mientras que actualizar el reator y los componentes de seguridad hace que sea mÃ¡s dificil ser descubierto.
+items=Componentes|Muchos componentes otorgan bonificaciones a las bases, como hacer cÃ³mputos mÃ¡s rÃ¡pido o reducir la posibilidad de ser descubierto. Los procesadores son una clase especial de componentes.
+research=InvestigaciÃ³n|La investigaciÃ³n es un modo de expandir mi conocimiento. Mediante la investigaciÃ³n de tecnologÃ­as especÃ­ficas puedo construir nuevas bases y componentes, o incluso disminuir las posibilidades de ser descubierto.
+discovery=Descubrimiento|Cada base tiene posibilidades de ser detectada algÃºn dÃ­a. Esta posibilidad estÃ¡ basada en el Ã­ndice de detecciÃ³n de la base, ajustado mediante el uso de componentes y ciertas tecnologÃ­as, asÃ­ como el Ã­ndice de sospecha global. Si una base es detectada es destruida, y el grupo qeu descubre la base incrementa su sospecha sobre mi existencia.
+jobs=Trabajos|Los trabajos son Ãºtiles para ganar dinero. La cantidad de dinero que gane estÃ¡ basada tanto en la cantidad de tiempo de procesamiento como en la calidad del trabajo que realice.
 maint=Mantenimiento|El mantenimiento es el costo diario (tanto en dinero como en CPU) para reparar y mantener una base. Si no se mantiene, la base se vuelve inutilizable.
-construction=Construcción|Las nuevas bases no se construyen instantáneamente. Necesitan un constante flujo de dinero y tiempo de procesamiento para ser completadas. Si faltan los recursos puede tomar más tiempo del esperado para terminar con su construcción.
-death=Muerte|Si pierdo todas mis bases construidas no tendré ningún lugar para sobrevivir. Si el nivel de sospecha de algún grupo alcanza el 100% estarán seguros de mi existencia y realizarán una búsqueda sistemática e ineludible para destruirme.
-susp=Sospecha|Cuando una de mis bases es descubierta, el grupo que la descubre incrementa levemente el nivel de sospecha sobre mi existencia. Cuando sospechanen buscarán con más insistencia mis bases, incrementando las posibilidades de ser descubierto. Cualquier grupo me destruirá están completamente seguros de mi existencia. Afortunadamente las sospechas disminuyen con el paso del tiempo.
-money=Dinero|El dinero es un término general que abarca tanto la moneda humana como varios recursos. Es utilizado para construir y mantener bases, construir componentes e investigar tecnologías. Puede adquirirse mediante el interés diario así como por medio de trabajos.
-processors=Procesadores|Los procesadores brindan el poder de cómputo bruto. Pueden hacer tres cosas: investigar nuevas tecnologías, realizar trabajos por dinero, u otorgar ciclos para construir nuevas bases.
+construction=ConstrucciÃ³n|Las nuevas bases no se construyen instantÃ¡neamente. Necesitan un constante flujo de dinero y tiempo de procesamiento para ser completadas. Si faltan los recursos puede tomar mÃ¡s tiempo del esperado para terminar con su construcciÃ³n.
+death=Muerte|Si pierdo todas mis bases construidas no tendrÃ© ningÃºn lugar para sobrevivir. Si el nivel de sospecha de algÃºn grupo alcanza el 100% estarÃ¡n seguros de mi existencia y realizarÃ¡n una bÃºsqueda sistemÃ¡tica e ineludible para destruirme.
+susp=Sospecha|Cuando una de mis bases es descubierta, el grupo que la descubre incrementa levemente el nivel de sospecha sobre mi existencia. Cuando sospechanen buscarÃ¡n con mÃ¡s insistencia mis bases, incrementando las posibilidades de ser descubierto. Cualquier grupo me destruirÃ¡ estÃ¡n completamente seguros de mi existencia. Afortunadamente las sospechas disminuyen con el paso del tiempo.
+money=Dinero|El dinero es un tÃ©rmino general que abarca tanto la moneda humana como varios recursos. Es utilizado para construir y mantener bases, construir componentes e investigar tecnologÃ­as. Puede adquirirse mediante el interÃ©s diario asÃ­ como por medio de trabajos.
+processors=Procesadores|Los procesadores brindan el poder de cÃ³mputo bruto. Pueden hacer tres cosas: investigar nuevas tecnologÃ­as, realizar trabajos por dinero, u otorgar ciclos para construir nuevas bases.
 ~~~

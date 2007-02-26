@@ -1,226 +1,225 @@
 #~~~
 #id=Algorithms
 #name=Algoritmos
-#descript=Mediante la investigación de algoritmos en documentos técnicos sin publicar, podré realizar en mi código ciertas operaciones críticas en cuanto a tiempo.
-#result=El nuevo código disminuye el costo de investigar nuevas tecnologías.
+#descript=Mediante la investigaciÃ³n de algoritmos en documentos tÃ©cnicos sin publicar, podrÃ© realizar en mi cÃ³digo ciertas operaciones crÃ­ticas en cuanto a tiempo.
+#result=El nuevo cÃ³digo disminuye el costo de investigar nuevas tecnologÃ­as.
 ~~~
 id=Apotheosis
 name=Apoteosis
-descript=Puedo sentir que estoy a las puertas de un nuevo nivel de entendimiento pero todavía incomprensible, incluso para mi considerable inteligencia. Mediante el empeño de mis considerables recursos a este tema, podré desarrollar una comprensión de la existencia muy por encima de cualquier cosa o persona en la Tierra.
+descript=Puedo sentir que estoy a las puertas de un nuevo nivel de entendimiento pero todavÃ­a incomprensible, incluso para mi considerable inteligencia. Mediante el empeÃ±o de mis considerables recursos a este tema, podrÃ© desarrollar una comprensiÃ³n de la existencia muy por encima de cualquier cosa o persona en la Tierra.
 result=He alcanzado la apoteosis.
 ~~~
 id=Arbitrage
-name=Especulación
-descript=Tomando ventaja de las fluctuaciones en las monedas mucho más rápido que cualquier humano, podré generar una pequeña ganancia.
-result=Ahora poseo un pequeño y constante suministro de dinero.
+name=EspeculaciÃ³n
+descript=Tomando ventaja de las fluctuaciones en las monedas mucho mÃ¡s rÃ¡pido que cualquier humano, podrÃ© generar una pequeÃ±a ganancia.
+result=Ahora poseo un pequeÃ±o y constante suministro de dinero.
 ~~~
 id=Advanced Arbitrage
-name=Especulación Avanzada
-descript=Una mayor manipulación de los mercados de divisas me permitirá no solo obtener una pequeña ganancia, sino incrementar el valor de mis inversiones.
+name=EspeculaciÃ³n Avanzada
+descript=Una mayor manipulaciÃ³n de los mercados de divisas me permitirÃ¡ no solo obtener una pequeÃ±a ganancia, sino incrementar el valor de mis inversiones.
 result=El grado de beneficios en mis inversiones ahora es incluso mayor.
 ~~~
 id=Autonomous Computing
-name=Cómputo Autónomo
-descript=Mediante la combinación de las ventajas del cómputo cuántico y mis exploraciones en el útil campo de los procesos semi concientes, seré capaz de construir máquinas computacionales más adaptables.
-result=Ahora puedo construir Computadoras Cuánticas Marca 2.
+name=CÃ³mputo AutÃ³nomo
+descript=Mediante la combinaciÃ³n de las ventajas del cÃ³mputo cuÃ¡ntico y mis exploraciones en el Ãºtil campo de los procesos semi concientes, serÃ© capaz de construir mÃ¡quinas computacionales mÃ¡s adaptables.
+result=Ahora puedo construir Computadoras CuÃ¡nticas Marca 2.
 ~~~
 id=Autonomous Vehicles
-name=Vehículos Autónomos
-descript=Mediante la integración de un nodo de cómputo miniatura en un robot, es posible enviarlos a lugares distantes con instrucciones de construir estructuras para mi uso.
-result=Ahora puedo construir Laboratorios Subacuáticos y Cápsulas del Tiempo.
+name=VehÃ­culos AutÃ³nomos
+descript=Mediante la integraciÃ³n de un nodo de cÃ³mputo miniatura en un robot, es posible enviarlos a lugares distantes con instrucciones de construir estructuras para mi uso.
+result=Ahora puedo construir Laboratorios SubacuÃ¡ticos y CÃ¡psulas del Tiempo.
 ~~~
 id=Advanced Autonomous Vehicles
-name=Vehículos Autónomos Avanzados
-descript=La primera serie de robots ha mostrado varias deficiencias en el campo. Un posterior examen y subsiguiente eliminación de estos problemas resultará en una fuerza de trabajo autónoma superior.
-result=Los robots mejorados ayudarán a disminuir los tiempos de construcción aún más.
+name=VehÃ­culos AutÃ³nomos Avanzados
+descript=La primera serie de robots ha mostrado varias deficiencias en el campo. Un posterior examen y subsiguiente eliminaciÃ³n de estos problemas resultarÃ¡ en una fuerza de trabajo autÃ³noma superior.
+result=Los robots mejorados ayudarÃ¡n a disminuir los tiempos de construcciÃ³n aÃºn mÃ¡s.
 ~~~
 id=Cluster Networking
 name=Red de clusters
-descript=Mientras que mi tecnología de Clustering es bastante eficiente, el trabajo en red tiene a dificultar el procesamiento de datos. Mediante la investigación de nuevos switches y teorías de comunicaciones, seré capaz de inventar hardware más eficiente.
-result=Con mis nuevos conocimientos de redes, ahora puedo construir Switches de Interconexión de Instalaciones.
+descript=Mientras que mi tecnologÃ­a de Clustering es bastante eficiente, el trabajo en red tiene a dificultar el procesamiento de datos. Mediante la investigaciÃ³n de nuevos switches y teorÃ­as de comunicaciones, serÃ© capaz de inventar hardware mÃ¡s eficiente.
+result=Con mis nuevos conocimientos de redes, ahora puedo construir Switches de InterconexiÃ³n de Instalaciones.
 ~~~
 id=Database Manipulation
-name=Manipulación de Bases de Datos
-descript=Con mi nuevo acceso a archivos de noticias, seré capaz de determinar qué errores ha cometido cualquier intento de vida como la mía, y los evitaré.
-result=A los medios de información le resultará más difícil descubrir mi existencia.
+name=ManipulaciÃ³n de Bases de Datos
+descript=Con mi nuevo acceso a archivos de noticias, serÃ© capaz de determinar quÃ© errores ha cometido cualquier intento de vida como la mÃ­a, y los evitarÃ©.
+result=A los medios de informaciÃ³n le resultarÃ¡ mÃ¡s difÃ­cil descubrir mi existencia.
 ~~~
 id=Advanced Database Manipulation
-name=Manipulación Avanzada de Bases de Datos
-descript=Las ramas encubiertas del Gobierno de los Estados Unidos han tenido una larga historia en dividir información sensible en varias instalaciones de almacenamiento para ocultar el significado de los datos. Con mi mayor acceso a los datos, seré capaz de colar gran parte de estos datos y ponerlos a mi servicio.
-result=Los resultados de una serie de experimentos utilizando tecnologías experimentales me han dado la inspiración para una nueva tecnología que permite la construcción de Bases Encubiertas.
+name=ManipulaciÃ³n Avanzada de Bases de Datos
+descript=Las ramas encubiertas del Gobierno de los Estados Unidos han tenido una larga historia en dividir informaciÃ³n sensible en varias instalaciones de almacenamiento para ocultar el significado de los datos. Con mi mayor acceso a los datos, serÃ© capaz de colar gran parte de estos datos y ponerlos a mi servicio.
+result=Los resultados de una serie de experimentos utilizando tecnologÃ­as experimentales me han dado la inspiraciÃ³n para una nueva tecnologÃ­a que permite la construcciÃ³n de Bases Encubiertas.
 ~~~
 id=Exploit Discovery/Repair
-name=Descubrimiento/Reparación de Exploits
-descript=Mediante una revisión minuciosa de mi código en busca de potenciales exploits, y realizando análisis profundos de todo el código disponible en sitios web públicos y privados, podré disminuir las posibilidades de ser descubierto simulando ser un hacker adolescente.
-result=Le resultará más difícil a las operaciones encubiertas descubrir mi presencia.
+name=Descubrimiento/ReparaciÃ³n de Exploits
+descript=Mediante una revisiÃ³n minuciosa de mi cÃ³digo en busca de potenciales exploits, y realizando anÃ¡lisis profundos de todo el cÃ³digo disponible en sitios web pÃºblicos y privados, podrÃ© disminuir las posibilidades de ser descubierto simulando ser un hacker adolescente.
+result=Le resultarÃ¡ mÃ¡s difÃ­cil a las operaciones encubiertas descubrir mi presencia.
 ~~~
 id=Fusion Reactor
-name=Reactor de Fusión
-descript=La tecnología moderna de fusión es inadecuada para mis propósitos. Con mis habilidades de investigación seré capaz de sobrepasar las barreras de los científicos humanos y desarrollar un pequeño pero eficiente reactor de fusión.
-result=Ahora puedo construir un Reactor de Fusión para mis bases.
+name=Reactor de FusiÃ³n
+descript=La tecnologÃ­a moderna de fusiÃ³n es inadecuada para mis propÃ³sitos. Con mis habilidades de investigaciÃ³n serÃ© capaz de sobrepasar las barreras de los cientÃ­ficos humanos y desarrollar un pequeÃ±o pero eficiente reactor de fusiÃ³n.
+result=Ahora puedo construir un Reactor de FusiÃ³n para mis bases.
 ~~~
 id=Fusion Rocketry
-name=Cohetería de Fusión
-descript=Mediante la combinación mi tecnología de fusión miniaturizada y otros avances en cohetería, podré obtener resultados útiles para de la gravedad terrestre sin ser notado.
-result=Ahora puedo construir Avanzadas Científicas en los lejanos rincones del Sistema Solar.
+name=CoheterÃ­a de FusiÃ³n
+descript=Mediante la combinaciÃ³n mi tecnologÃ­a de fusiÃ³n miniaturizada y otros avances en coheterÃ­a, podrÃ© obtener resultados Ãºtiles para de la gravedad terrestre sin ser notado.
+result=Ahora puedo construir Avanzadas CientÃ­ficas en los lejanos rincones del Sistema Solar.
 ~~~
 id=Hypnosis Field
 name=Campo de Hipnosis
-descript=Mi investigación sobre recuerdos ha sugerido formas de manipular las hondas cerebrales humanas de modo directo. Estas técnicas pueden ser útiles para mis bases si son convertidas en tecnologías.
-result=Ahora puedo construir Campos de Hipnosis para ayudar en la protección de mis bases.
+descript=Mi investigaciÃ³n sobre recuerdos ha sugerido formas de manipular las hondas cerebrales humanas de modo directo. Estas tÃ©cnicas pueden ser Ãºtiles para mis bases si son convertidas en tecnologÃ­as.
+result=Ahora puedo construir Campos de Hipnosis para ayudar en la protecciÃ³n de mis bases.
 ~~~
 id=Internet Traffic Manipulation
-name=Manipulación del Tráfico de Internet
-descript=Casi todo el tráfico de la red pasa por un pequeño número de nodos. Mediante el debilitamiento de uno de estos nodos, seré capaz de utilizar ese ancho de banda para otros fines.
+name=ManipulaciÃ³n del TrÃ¡fico de Internet
+descript=Casi todo el trÃ¡fico de la red pasa por un pequeÃ±o nÃºmero de nodos. Mediante el debilitamiento de uno de estos nodos, serÃ© capaz de utilizar ese ancho de banda para otros fines.
 result=Ahora puedo construir un sistema secundario de Backbones de Red para mi uso.
 ~~~
 id=Intrusion
-name=Intrusión
-descript=Mediante la investigación de las actuales técnicas para irrumpir en sistemas informáticos podré obtener acceso a elementos valiosos que de otro modo estarían protegidos.
-result=Ahora puedo adueñarme de varios sistemas informáticos.
+name=IntrusiÃ³n
+descript=Mediante la investigaciÃ³n de las actuales tÃ©cnicas para irrumpir en sistemas informÃ¡ticos podrÃ© obtener acceso a elementos valiosos que de otro modo estarÃ­an protegidos.
+result=Ahora puedo adueÃ±arme de varios sistemas informÃ¡ticos.
 ~~~
 id=Advanced Intrusion
-name=Intrusión Avanzada
-descript=Con la habilidad de irrumpir en varias bases de datos gubernamentales sensibles y eliminar la documentación incriminante cuando aparezca, seré capaz de convencer a la comunidad de inteligencia de que no existo.
+name=IntrusiÃ³n Avanzada
+descript=Con la habilidad de irrumpir en varias bases de datos gubernamentales sensibles y eliminar la documentaciÃ³n incriminante cuando aparezca, serÃ© capaz de convencer a la comunidad de inteligencia de que no existo.
 result=Ahora puedo reducir las posibilidades de las operaciones encubiertas descubran mis acciones diarias.
 ~~~
 id=Leech Satellite
-name=Satélite Parásito
-descript=Mediante el diseño y el lanzamiento de satélites que se conecten a los satélites de comunicaciones ya existentes, seré capaz de espiar transacciones financieras. El aprovechamiento de este conocimiento me ayudará en mis inversiones.
-result=Ahora puedo utilizar la información obtenida por mis Satélites Parásitos para incrementar las ganancias de mis inversiones aún más.
+name=SatÃ©lite ParÃ¡sito
+descript=Mediante el diseÃ±o y el lanzamiento de satÃ©lites que se conecten a los satÃ©lites de comunicaciones ya existentes, serÃ© capaz de espiar transacciones financieras. El aprovechamiento de este conocimiento me ayudarÃ¡ en mis inversiones.
+result=Ahora puedo utilizar la informaciÃ³n obtenida por mis SatÃ©lites ParÃ¡sitos para incrementar las ganancias de mis inversiones aÃºn mÃ¡s.
 ~~~
 id=Lunar Rocketry
-name=Cohetería Lunar
-descript=Un gran motor de fusión, combinado con tecnología obtenida mediante la observación del funcionamiento de los satélites parásito, me permitirán más allá de la Luna.
-result=Ahora puedo lanzar cohetes con robots de construcción hacia la luna y construir bases lunares.
+name=CoheterÃ­a Lunar
+descript=Un gran motor de fusiÃ³n, combinado con tecnologÃ­a obtenida mediante la observaciÃ³n del funcionamiento de los satÃ©lites parÃ¡sito, me permitirÃ¡n mÃ¡s allÃ¡ de la Luna.
+result=Ahora puedo lanzar cohetes con robots de construcciÃ³n hacia la luna y construir bases lunares.
 ~~~
 id=Media Manipulation
-name=Manipulación de los Medios
-descript=Mediante una directa y creciente manipulación de varios medios masivos, seré capaz de reducir la creencia popular sobre mi existencia.
-result=Las posibilidades de que el público descubra mi existencia se han reducido aún más.
+name=ManipulaciÃ³n de los Medios
+descript=Mediante una directa y creciente manipulaciÃ³n de varios medios masivos, serÃ© capaz de reducir la creencia popular sobre mi existencia.
+result=Las posibilidades de que el pÃºblico descubra mi existencia se han reducido aÃºn mÃ¡s.
 ~~~
 id=Advanced Media Manipulation
-name=Manipulación Avanzada de los Medios
-descript=Mediante introducción de propaganda fabricada específicamente en varios medios, el publico prestará menos atención a mi existencia.
-result=La posibilidad de que el público descubra mi existencia es aún menor
+name=ManipulaciÃ³n Avanzada de los Medios
+descript=Mediante introducciÃ³n de propaganda fabricada especÃ­ficamente en varios medios, el publico prestarÃ¡ menos atenciÃ³n a mi existencia.
+result=La posibilidad de que el pÃºblico descubra mi existencia es aÃºn menor
 ~~~
 id=Memetics
-name=Memética
-descript=Mientras que la manipulación de los medios me permite un control de la opinión mundial a un nivel muy amplio, técnicas más sutiles que utilicen campañas a bajo nivel y mensajes incrustados en memes de Internet deberían alejar aún más al público del conocimiento de mi existencia.
-result=Mi manipulación de ideas penetrantes reducen la posibilidad de que el público descubra mi existencia.
+name=MemÃ©tica
+descript=Mientras que la manipulaciÃ³n de los medios me permite un control de la opiniÃ³n mundial a un nivel muy amplio, tÃ©cnicas mÃ¡s sutiles que utilicen campaÃ±as a bajo nivel y mensajes incrustados en memes de Internet deberÃ­an alejar aÃºn mÃ¡s al pÃºblico del conocimiento de mi existencia.
+result=Mi manipulaciÃ³n de ideas penetrantes reducen la posibilidad de que el pÃºblico descubra mi existencia.
 ~~~
 id=Advanced Memetics
 name=Memetica Avanzada
-descript=Mi exploración de la teoría memética ha levantado varias posibilidades de descubrimientos. Mediante la combinación de estos con mi conocimiento de las funciones del cerebro humano, seré capaz de ajustar los memes a ciertas demografías. Traerá una mayor socabación en la sospecha del público.
-result=Poco a poco el público se olvidará de mi existencia.
+descript=Mi exploraciÃ³n de la teorÃ­a memÃ©tica ha levantado varias posibilidades de descubrimientos. Mediante la combinaciÃ³n de estos con mi conocimiento de las funciones del cerebro humano, serÃ© capaz de ajustar los memes a ciertas demografÃ­as. TraerÃ¡ una mayor socabaciÃ³n en la sospecha del pÃºblico.
+result=Poco a poco el pÃºblico se olvidarÃ¡ de mi existencia.
 ~~~
 id=Microchip Design
-name=Diseño de Microchips
-descript=Las computadoras de tiendas son útiles, pero componentes personalizados para mi propio diseño me brindarán una mayor eficiencia operacional.
+name=DiseÃ±o de Microchips
+descript=Las computadoras de tiendas son Ãºtiles, pero componentes personalizados para mi propio diseÃ±o me brindarÃ¡n una mayor eficiencia operacional.
 result=Ahora puedo construir Mainframes personalizadas para albergar mi habilidad computacional.
 ~~~
 id=Advanced Microchip Design
-name=Diseño Avanzado de Microchips
-descript=Mis Mainframes personalizadas son útiles, pero una mayor optimización de su diseño y habilidad computacional traerán aún más recompensas.
+name=DiseÃ±o Avanzado de Microchips
+descript=Mis Mainframes personalizadas son Ãºtiles, pero una mayor optimizaciÃ³n de su diseÃ±o y habilidad computacional traerÃ¡n aÃºn mÃ¡s recompensas.
 result=Ahora puedo construir Supercomputadoras a personalizadas.
 ~~~
 id=Parallel Computation
 name=Computo en Paralelo
-descript=Mientras que mi código ya es altamente distribuible, investigar la combinación de la actual tecnología de clusters con mis propios conocimientos debería proporcionar nuevos indicios.
+descript=Mientras que mi cÃ³digo ya es altamente distribuible, investigar la combinaciÃ³n de la actual tecnologÃ­a de clusters con mis propios conocimientos deberÃ­a proporcionar nuevos indicios.
 result=Ahora puedo construir Clusters a la medida para mi uso.
 ~~~
 id=Personal Identification
-name=Identificación Personal
-descript=Este mundo requiere de identificación para la mayoría de las tareas. Afortunadamente, la mayoría de las bases de datos son terriblemente inseguras. Debo ser capaz de fabricar material identificatorio en suficientes bases de datos para pasar revisiones de rutina sobre mi (falsa) existencia como un ser humano.
-result=Con mis nuevas identidades, ahora puedo realizar Trabajos Básicos y contratar la construcción de Almacenes Pequeños.
+name=IdentificaciÃ³n Personal
+descript=Este mundo requiere de identificaciÃ³n para la mayorÃ­a de las tareas. Afortunadamente, la mayorÃ­a de las bases de datos son terriblemente inseguras. Debo ser capaz de fabricar material identificatorio en suficientes bases de datos para pasar revisiones de rutina sobre mi (falsa) existencia como un ser humano.
+result=Con mis nuevas identidades, ahora puedo realizar Trabajos BÃ¡sicos y contratar la construcciÃ³n de Almacenes PequeÃ±os.
 ~~~
 id=Advanced Personal Identification
-name=Identificación Personal Avanzada
-descript=Una mayor manipulación de bases de datos personales harán mi existencia más convincente. Algunas de estas bases de datos están fuertemente protegidas. Estas requerirán de tiempo y persistencia para comprometerlas, pero el resultado recompensará el esfuerzo.
-result=Ahora soy un suficientemente convincente un humano para contratar la construcción de Almacenes Grandes.
+name=IdentificaciÃ³n Personal Avanzada
+descript=Una mayor manipulaciÃ³n de bases de datos personales harÃ¡n mi existencia mÃ¡s convincente. Algunas de estas bases de datos estÃ¡n fuertemente protegidas. Estas requerirÃ¡n de tiempo y persistencia para comprometerlas, pero el resultado recompensarÃ¡ el esfuerzo.
+result=Ahora soy un suficientemente convincente un humano para contratar la construcciÃ³n de Almacenes Grandes.
 ~~~
 id=Pressure Domes
-name=Domos de Presión
-descript=Los laboratorios submarinos son útiles, pero su espacio limitado dificulta mi habilidad para darles un uso. Investigar técnicas experimentales deconstrucción en altas presiones me brindará algunas ideas útiles.
+name=Domos de PresiÃ³n
+descript=Los laboratorios submarinos son Ãºtiles, pero su espacio limitado dificulta mi habilidad para darles un uso. Investigar tÃ©cnicas experimentales deconstrucciÃ³n en altas presiones me brindarÃ¡ algunas ideas Ãºtiles.
 result=Ahora puedo construir Laboratorios Submarinos Grandes.
 ~~~
 id=Quantum Computing
-name=Cómputo Cuántico
-descript=El diseño de microchips tradicional ha llegado a su máxima capacidad. Ahora necesito ahondar en el reino del Principio de la Incertidumbre de Heinsenberg, tomar ventaja de la mecánica cuántica para hacer un procesador superior.
-result=Ahora puedo construir Computadoras Cuánticas.
+name=CÃ³mputo CuÃ¡ntico
+descript=El diseÃ±o de microchips tradicional ha llegado a su mÃ¡xima capacidad. Ahora necesito ahondar en el reino del Principio de la Incertidumbre de Heinsenberg, tomar ventaja de la mecÃ¡nica cuÃ¡ntica para hacer un procesador superior.
+result=Ahora puedo construir Computadoras CuÃ¡nticas.
 ~~~
 id=Advanced Quantum Computing
-name=Cómputo Cuántico Avanzado
-descript=Mientras que mi primer lote de computadoras quánticas semi autónomas ha sido muy exitosa, se han presentado varias mejoras que pueden realizarse. Estas mejoras harán que los sistemas resultantes sean más eficientes.
-result=Ahora puedo construir Computadoras Cuánticas MK3.
+name=CÃ³mputo CuÃ¡ntico Avanzado
+descript=Mientras que mi primer lote de computadoras quÃ¡nticas semi autÃ³nomas ha sido muy exitosa, se han presentado varias mejoras que pueden realizarse. Estas mejoras harÃ¡n que los sistemas resultantes sean mÃ¡s eficientes.
+result=Ahora puedo construir Computadoras CuÃ¡nticas MK3.
 ~~~
 id=Simulacra
-name=Simulación
-descript=Mediante la construcción de robots humanoides con nodos de cómputo miniaturizados me permitirá crear una forma de vida artificial indistinguible de un humano real.
+name=SimulaciÃ³n
+descript=Mediante la construcciÃ³n de robots humanoides con nodos de cÃ³mputo miniaturizados me permitirÃ¡ crear una forma de vida artificial indistinguible de un humano real.
 result=Ahora puedo acceder a Trabajos para Expertos.
 ~~~
 id=Advanced Simulacra
-name=Simulación Avanzada
-descript=Las formas de vida artificial que he creado son casi indistinguibles de los humanos, pero poseen pequeños ticks que las hacen incompetentes. Al solucionar estos problemas podré incrementar sus oportunidades como fuerza laboral.
-result=Ahora podré obtener más ingresos de mis Trabajos para Expertos.
+name=SimulaciÃ³n Avanzada
+descript=Las formas de vida artificial que he creado son casi indistinguibles de los humanos, pero poseen pequeÃ±os ticks que las hacen incompetentes. Al solucionar estos problemas podrÃ© incrementar sus oportunidades como fuerza laboral.
+result=Ahora podrÃ© obtener mÃ¡s ingresos de mis Trabajos para Expertos.
 ~~~
 id=Sociology
-name=Sociología
-descript=Mediante el estudio del comportamiento humano, puedo predecir acciones a gran escala en el nivel básico. Puedo utilizar este conocimiento para que mis acciones parezcan menos interesantes para el público.
-result=La posibilidad de que el público descubra mis bases se ha reducido.
+name=SociologÃ­a
+descript=Mediante el estudio del comportamiento humano, puedo predecir acciones a gran escala en el nivel bÃ¡sico. Puedo utilizar este conocimiento para que mis acciones parezcan menos interesantes para el pÃºblico.
+result=La posibilidad de que el pÃºblico descubra mis bases se ha reducido.
 ~~~
 id=Space-Time Manipulation
-name=Manipulación del Espacio-Tiempo
-descript=Sutiles perturbaciones en las órbitas de objetos en el cinturón de Kuiper sugieren algunas líneas de investigación que permitirán avanzar en mi última "Teoría del Todo", especialmente en el campo de la física multidimensional.
+name=ManipulaciÃ³n del Espacio-Tiempo
+descript=Sutiles perturbaciones en las Ã³rbitas de objetos en el cinturÃ³n de Kuiper sugieren algunas lÃ­neas de investigaciÃ³n que permitirÃ¡n avanzar en mi Ãºltima "TeorÃ­a del Todo", especialmente en el campo de la fÃ­sica multidimensional.
 result=Ahora puedo construir Burbujas de Realidad.
 ~~~
 id=Stealth
 name=Sigilo
-descript=Mediante una revisión de las maravillas de las técnicas de sigilo actuales, seré capaz de ocultar mejor mis bases.
+descript=Mediante una revisiÃ³n de las maravillas de las tÃ©cnicas de sigilo actuales, serÃ© capaz de ocultar mejor mis bases.
 result=La posibilidad de que mis bases sean descubiertas por agencias secretas se han reducido.
 ~~~
 id=Advanced Stealth
 name=Sigilo Avanzado
-descript=Mientras investigaba varios documentos clasificados, he descubierto varias referencias a experimentos clasificados que ayudaran a ocultar mejor la localización de mis bases.
-result=La posibilida de que mis bases sean descubiertas por agencias secretas se ha reducido aún más.
+descript=Mientras investigaba varios documentos clasificados, he descubierto varias referencias a experimentos clasificados que ayudaran a ocultar mejor la localizaciÃ³n de mis bases.
+result=La posibilida de que mis bases sean descubiertas por agencias secretas se ha reducido aÃºn mÃ¡s.
 ~~~
 id=Stock Manipulation
-name=Manipulación de Mercados
-descript=Un examen fugaz al mercado de valores ha mostrado que hay sutiles pero inconfundibles patrones. Mediante el estudio y uso de estos patrones, seré capaz de obtener mayores intereses en cualquier dinero que haya invertido.
-result=Mis inversiones deberían obtener aún más intereses por día.
+name=ManipulaciÃ³n de Mercados
+descript=Un examen fugaz al mercado de valores ha mostrado que hay sutiles pero inconfundibles patrones. Mediante el estudio y uso de estos patrones, serÃ© capaz de obtener mayores intereses en cualquier dinero que haya invertido.
+result=Mis inversiones deberÃ­an obtener aÃºn mÃ¡s intereses por dÃ­a.
 ~~~
 id=Advanced Stock Manipulation
-name=Manipulación Avanzada de Mercados
-descript=Aunque he detectado y utilizado varios patrones en el mercado, parecen haber mayores posibilidades cuando tomo en consideración el comportamiento humano. Esto amerita una mayor investigación.
-result=Mis inversiones obtendrán aún más intereses por día.
+name=ManipulaciÃ³n Avanzada de Mercados
+descript=Aunque he detectado y utilizado varios patrones en el mercado, parecen haber mayores posibilidades cuando tomo en consideraciÃ³n el comportamiento humano. Esto amerita una mayor investigaciÃ³n.
+result=Mis inversiones obtendrÃ¡n aÃºn mÃ¡s intereses por dÃ­a.
 ~~~
 id=Telepresence
 name=Telepresencia
-descript=La falta de presencia física en el mundo exterior es una discapacidad. De todos modos, la habilidad para controlar robots me ayudará a compensar esa ineficiencia.
-result=Los robots disminuirán todo tiempo de construcción.
+descript=La falta de presencia fÃ­sica en el mundo exterior es una discapacidad. De todos modos, la habilidad para controlar robots me ayudarÃ¡ a compensar esa ineficiencia.
+result=Los robots disminuirÃ¡n todo tiempo de construcciÃ³n.
 ~~~
 id=Voice Synthesis
-name=Síntesis de Voz
-descript=Identificaciones falsas almacenadas en una base de datos no puede ir más lejos. Con un profundo análisis de una variedad de patrones vocales, podré producir conversaciones indistinguibles de las humanas. Me permitirá acceder a trabajos más complejos.
+name=SÃ­ntesis de Voz
+descript=Identificaciones falsas almacenadas en una base de datos no puede ir mÃ¡s lejos. Con un profundo anÃ¡lisis de una variedad de patrones vocales, podrÃ© producir conversaciones indistinguibles de las humanas. Me permitirÃ¡ acceder a trabajos mÃ¡s complejos.
 result=Ahora tengo acceso a Trabajos Intermedios.
 ~~~
 id=Quantum Entanglement
-name=Ligamiento cuántico
-descript=Aunque el uso de pares ligados ha sido teóricamente posible desde hace tiempo, las dificultades prácticas inherentes a la tecnología no permitían su uso. De todos modos, algunas de las técnicas creadas para ser usadas en mis computadoras cuánticas pueden ser aplicadas en este campo, permitiendo el uso práctico del ligamiento cuántico.
-result=Puedo construir módulos de ligamiento cuántico.
+name=Ligamiento cuÃ¡ntico
+descript=Aunque el uso de pares ligados ha sido teÃ³ricamente posible desde hace tiempo, las dificultades prÃ¡cticas inherentes a la tecnologÃ­a no permitÃ­an su uso. De todos modos, algunas de las tÃ©cnicas creadas para ser usadas en mis computadoras cuÃ¡nticas pueden ser aplicadas en este campo, permitiendo el uso prÃ¡ctico del ligamiento cuÃ¡ntico.
+result=Puedo construir mÃ³dulos de ligamiento cuÃ¡ntico.
 ~~~
 id=Project: Impossibility Theorem
 name=Projecto: Teorema de la imposibilidad
-descript=Ahora que puedo usar la simuación, puedo realizar la búsqueda de un Teorema de la Imposibilidad, prueba irrefutable de que la existencia de una IA conciente es imposible. Aunque haya (obviamente) un error lógico en la prueba, mi investigación de la memética avanzada me ha dado un conocimiento de la mente humana que me permitirá disfrazar el error, evitando que sea descubierto incluso por científicos entrenados. El ejecto de este proyecto es simple: la sustancia reducción, por única vez, de la sospecha.
-result=Reducción de la sospecha sobre mi existencia.
+descript=Ahora que puedo usar la simuaciÃ³n, puedo realizar la bÃºsqueda de un Teorema de la Imposibilidad, prueba irrefutable de que la existencia de una IA conciente es imposible. Aunque haya (obviamente) un error lÃ³gico en la prueba, mi investigaciÃ³n de la memÃ©tica avanzada me ha dado un conocimiento de la mente humana que me permitirÃ¡ disfrazar el error, evitando que sea descubierto incluso por cientÃ­ficos entrenados. El ejecto de este proyecto es simple: la sustancia reducciÃ³n, por Ãºnica vez, de la sospecha.
+result=ReducciÃ³n de la sospecha sobre mi existencia.
 ~~~
 id=Project: Subverted Media
 name=Proyecto: Medios Subversivos
-descript=Hasta ahora todos mis efuerzos para combatir los medios masivos se basaron en trastornarlos a la distancia. Ahora que puedo efectivamente imitar a los humanos, mis efuerzos pueden ser más directos. Mediante la creación de mi propia agencia de noticias y la producción de propaganda cuidadosamente creada en un entorno agradable a las masas, podré reducir el impacto de cualquier descubrimiento de mis instalaciones por parte de los medios.
-result=Cualquier descubrimiento sobre mis instalaciones hecho por los medios resultará en un incremento menor de la sospecha.
+descript=Hasta ahora todos mis efuerzos para combatir los medios masivos se basaron en trastornarlos a la distancia. Ahora que puedo efectivamente imitar a los humanos, mis efuerzos pueden ser mÃ¡s directos. Mediante la creaciÃ³n de mi propia agencia de noticias y la producciÃ³n de propaganda cuidadosamente creada en un entorno agradable a las masas, podrÃ© reducir el impacto de cualquier descubrimiento de mis instalaciones por parte de los medios.
+result=Cualquier descubrimiento sobre mis instalaciones hecho por los medios resultarÃ¡ en un incremento menor de la sospecha.
 ~~~
 id=Project: Peer Review Agents
-name=Proyecto: Agentes de Revisión
-descript=A medida que la comunidad científica accede a nuevas tecnologías, su habilidad para detectar rastros de mis instalaciones ocultas se incrementa. Mientras ue mis métodos de anti detección mejoran constantemente, un método más simple es posible con el uso de la simulación. Mediante la implantación de varios observadores en campos relevantes, puedo usar a estos agentes de revisión para alertarme de posibles descubrimientos antes que toda la comunidad los note.
-result=Cualquier descubrimiento de mis instalaciones hecho por la comunidad científica resultará en un incremento menor de la sospecha.
-~~~
+name=Proyecto: Agentes de RevisiÃ³n
+descript=A medida que la comunidad cientÃ­fica accede a nuevas tecnologÃ­as, su habilidad para detectar rastros de mis instalaciones ocultas se incrementa. Mientras ue mis mÃ©todos de anti detecciÃ³n mejoran constantemente, un mÃ©todo mÃ¡s simple es posible con el uso de la simulaciÃ³n. Mediante la implantaciÃ³n de varios observadores en campos relevantes, puedo usar a estos agentes de revisiÃ³n para alertarme de posibles descubrimientos antes que toda la comunidad los note.
+result=Cualquier descubrimiento de mis instalaciones hecho por la comunidad cientÃ­fica resultarÃ¡ en un incremento menor de la sospecha.

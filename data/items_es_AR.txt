@@ -1,7 +1,7 @@
 ~~~
 id = PC
 name = PC
-descript=Una computadora com˙n. Barata pero lenta.
+descript=Una computadora com√∫n. Barata pero lenta.
 ~~~
 id=Server
 name=Servidor
@@ -13,49 +13,48 @@ descript=Varias computadoras conectadas juntas.
 ~~~
 id=Mainframe
 name=Mainframe
-descript=Una sistema diseÒado a medida, m·s r·pida que las computadoras de las tiendas.
+descript=Una sistema dise√±ado a medida, m√°s r√°pida que las computadoras de las tiendas.
 ~~~
 id=Supercomputer
 name=Supercomputadora
-descript=Un diseÒado a medida altamente refinado, reparte la carga de cÛmputo entre varios nodos internos.
+descript=Un dise√±ado a medida altamente refinado, reparte la carga de c√≥mputo entre varios nodos internos.
 ~~~
 id=Quantum Computer
-name=Computadora Cu·ntica
-descript=Haciendo uso de efectos subatÛmicos, esta es m·s r·pida que una equivalente binaria.
+name=Computadora Cu√°ntica
+descript=Haciendo uso de efectos subat√≥micos, esta es m√°s r√°pida que una equivalente binaria.
 ~~~
 id=Quantum Computer MK2
-name=Computadora Cu·ntica MK2
-descript=La segunda versiÛn de Computadora Cu·ntica, va m·s all· en la teorÌa cu·ntica.
+name=Computadora Cu√°ntica MK2
+descript=La segunda versi√≥n de Computadora Cu√°ntica, va m√°s all√° en la teor√≠a cu√°ntica.
 ~~~
 id=Quantum Computer MK3
-name=Computadora Cu·ntica MK3
-descript=La tersera versiÛn de Computadora Cu·ntica, utiliza varios universos paralelos para procesamiento.
+name=Computadora Cu√°ntica MK3
+descript=La tersera versi√≥n de Computadora Cu√°ntica, utiliza varios universos paralelos para procesamiento.
 ~~~
 id=Fusion Reactor
-name=Reactor de FusiÛn
-descript=Un reactor nuclear miniaturizado. Reduce las posibilidades de ser descubierto evitando el exceso de consumo elÈctrico.
+name=Reactor de Fusi√≥n
+descript=Un reactor nuclear miniaturizado. Reduce las posibilidades de ser descubierto evitando el exceso de consumo el√©ctrico.
 ~~~
 id=Hypnosis Field
 name=Campo de Hipnosis
-descript=Sutiles ultrasonidos y sonidos ambientales modifican la neuroquÌmica humana, haciendo que las bases sean m·s difÌciles de detectar.
+descript=Sutiles ultrasonidos y sonidos ambientales modifican la neuroqu√≠mica humana, haciendo que las bases sean m√°s dif√≠ciles de detectar.
 ~~~
 id=Heatsink
 name=Heatsink
-descript=Grandes redes fractales de metal altamente conductivo dispersan el calor, haciendo que las bases sean m·s difÌciles de detectar.
+descript=Grandes redes fractales de metal altamente conductivo dispersan el calor, haciendo que las bases sean m√°s dif√≠ciles de detectar.
 ~~~
 id=Facility Interconnection Switch
-name=Switch de InterconexiÛn de Emplazamientos
-descript=Usa tecnologÌas de cÛmputo distribuido para equilibrar las cargas computacionales entre las bases. Otorga una bonificaciÛn del 1% en la capacidad de cÛmputo a todas las computadoras de esta base.
+name=Switch de Interconexi√≥n de Emplazamientos
+descript=Usa tecnolog√≠as de c√≥mputo distribuido para equilibrar las cargas computacionales entre las bases. Otorga una bonificaci√≥n del 1% en la capacidad de c√≥mputo a todas las computadoras de esta base.
 ~~~
 id=Network Backbone
 name=Backbone de Red
-descript=IndroduciÈndome en comunicaciones legÌtimas puedo transferir grandes cantidades de datos a procesadores subutilizados. Otorga una bonificaciÛn del 5% en la capacidad de cÛmputo a todas las computadoras de esta base.
+descript=Indroduci√©ndome en comunicaciones leg√≠timas puedo transferir grandes cantidades de datos a procesadores subutilizados. Otorga una bonificaci√≥n del 5% en la capacidad de c√≥mputo a todas las computadoras de esta base.
 ~~~
 id=Quantum Entanglement Module
-name=MÛdulo de ligamiento cu·ntico
-descript=Este dispositivo permite comunicaciones a velocidades cercanas a la de la luz con mis otras bases, permitiendo una utilizaciÛn de los recursos casi perfecta. Otorga una bonificaciÛn del 15% en la capacidad de cÛmputo a todas las computadoras de esta base.
+name=M√≥dulo de ligamiento cu√°ntico
+descript=Este dispositivo permite comunicaciones a velocidades cercanas a la de la luz con mis otras bases, permitiendo una utilizaci√≥n de los recursos casi perfecta. Otorga una bonificaci√≥n del 15% en la capacidad de c√≥mputo a todas las computadoras de esta base.
 ~~~
 id=Perimeter Fencing
 name=Cerca perimetral
-descript=Una simple cerca puede disminuir considerablemente el n˙mero de curiosos merodeando, haciendo que mis bases sean m·s difÌciles de descubrir.
-~~~
+descript=Una simple cerca puede disminuir considerablemente el n√∫mero de curiosos merodeando, haciendo que mis bases sean m√°s dif√≠ciles de descubrir.
