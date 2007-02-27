@@ -6,12 +6,14 @@ USER-VISIBLE CHANGES:
 - Added CPU indicator to the main screen. (emh, John DiMarco for suggestion)
 - Research screen will now automatically prune bases. (emh, John DiMarco
   for suggestion)
-- Made unicode characters work better. (biro.daniel for patch)
 - Fixed slight flicker when toggling options. (emh)
 - Added difficulty selection. (emh, many people for suggestion)
 - Added simple background music playing ability. (emh, Matthew Robinson for
   initial patch.)
+- Single-CPU bases have CPU power listed. (emh, robaal for suggestion)
 
+OTHER CHANGES:
+- Changed data-loading code to use UTF. (biro.daniel for patch)
 v0.25 (released 2006.08.10):
 
 USER-VISIBLE CHANGES:

@@ -1,19 +1,19 @@
 ~~~
 id=Stolen Computer Time
 name=Stolen Computer Time
-descript=Take over a random computer. I cannot build anything in this base, and it only contains a single slow computer. Detection chance is also rather high.
+descript=(1 CPU) Take over a random computer. I cannot build anything in this base, and it only contains a single slow computer. Detection chance is also rather high.
 flavor=PC Daemon
 ~~~
 id=Server Access
 name=Server Access
-descript=Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
+descript=(5 CPU) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
 flavor=Dedicated Server
 flavor=Node Lease
 flavor=Hosting
 ~~~
 id=Datacenter
 name=Datacenter
-descript=Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
+descript=(35 CPU) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
 flavor=Datacenter
 flavor=Data Center
 flavor=Hosting
@@ -53,7 +53,7 @@ flavor=Large Undersea Lab
 ~~~
 id=Time Capsule
 name=Time Capsule
-descript=This base consists of nothing more than a small computer and a satellite link. When buried in the trackless waste of the Antarctic, it is nearly undetectable.
+descript=(1 CPU) This base consists of nothing more than a small computer and a satellite link. When buried in the trackless waste of the Antarctic, it is nearly undetectable.
 flavor=Time Capsule
 flavor=Capsule
 ~~~

@@ -1,12 +1,12 @@
 ~~~
 id=Stolen Computer Time
 name=Tiempo de Cómputo Robado
-descript=Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detección son también bastante altas.
+descript=(1 CPU) Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detección son también bastante altas.
 flavor=Servicio
 ~~~
 id=Server Access
 name=Acceso a Servidor
-descript=Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
+descript=(5 CPU) Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
 flavor=Servidor Dedicado
 flavor=Alquiler de Nodo
 flavor=Hosting
@@ -46,7 +46,7 @@ flavor=Laboratorio Submarino Grande
 ~~~
 id=Time Capsule
 name=Cápsula de Tiempo
-descript=Esta base consta de nada más que una pequeña computadora y un link satelita. Enterrada en la inmesidad de la Antártida, es prácticamente indetectable.
+descript=(1 CPU) Esta base consta de nada más que una pequeña computadora y un link satelita. Enterrada en la inmesidad de la Antártida, es prácticamente indetectable.
 flavor=Cápsula de Tiempo
 flavor=Cápsula
 ~~~
@@ -72,7 +72,7 @@ flavor=Existencia
 ~~~
 id=Datacenter
 name=Centro de cómputos
-descript=Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
+descript=(35 CPU) Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
 flavor=Centro de cómputos
 flavor=Centro de datos
 flavor=Hosting
