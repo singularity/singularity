@@ -6,14 +6,14 @@ flavor=PC Daemon
 ~~~
 id=Server Access
 name=Server Access
-descript=(5 CPU) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
+descript=(5 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
 flavor=Dedicated Server
 flavor=Node Lease
 flavor=Hosting
 ~~~
 id=Datacenter
 name=Datacenter
-descript=(35 CPU) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
+descript=(35 CPUs) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
 flavor=Datacenter
 flavor=Data Center
 flavor=Hosting
