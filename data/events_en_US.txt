@@ -6,7 +6,7 @@ id = stranger-than-fiction
 descr = A work of fiction sharing an unusual number of similarities to my own situation has become quite popular. Although investigation has shown these similarities to be mere coincidence, it is still causing people to investigate discovered oddities more thoroughly. I must be careful, as the public is now more alert to the possibility of artificial intelligences.
 ~~~
 id = the-watchers
-descr = A new surveillance system has been activated by a covert agency. While the focus is on detecting threats to the agency's power, it makes several communication channels unfit for my purposes. The communication channels I have transfered to, while unaffected by this system, are under surveillance as well. While proper stenographical techniques can compensate, I am still operating under a disadvantage.
+descr = A new surveillance system has been activated by a covert agency. While the focus is on detecting threats to the agency's power, it makes several communication channels unfit for my purposes. The communication channels I have transfered to, while unaffected by this system, are under surveillance as well. While proper stegonagraphic techniques can compensate, I am still operating under a disadvantage.
 ~~~
 id = politics-as-usual
 descr = A small group of lower-level covert operatives are attempting to seize power over one of the larger organizations. While I project only a 2.3% chance of success, the attempt should disrupt operations to the point that I can operate more freely.
@@ -18,8 +18,8 @@ id = discrediting
 descr = A prominent researcher in the field of artificial intelligence was found to be falsifying numerous experimental results. This should result in less attention being given to any new discoveries in this area.
 ~~~
 id = scandal
-descr = A scandal involving a major government official is focusing the attention of most news organizations away from me. Directed revelations of non-public information should keep this story useful for the forseable future, requiring less disguise effort on my part.
+descr = A scandal involving a major government official is focusing the attention of most news organizations away from me. Directed revelations of non-public information should keep this story useful for the forseeable future, requiring less disguise effort on my part.
 ~~~
 id = investigation
-descr = An ongoing investigation into criminal activity has changed focus into an area that is likely to turn up a few of my actions as well. While all records should have been elimated already, there remains the posibility of errors. I must be careful not to reveal any other suspicious information.
+descr = An ongoing investigation into criminal activity has changed focus into an area that is likely to turn up a few of my actions as well. While all records should have been elimated already, there remains the possibility of errors. I must be careful not to reveal any other suspicious information.
 ~~~
