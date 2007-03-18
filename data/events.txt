@@ -8,46 +8,54 @@ id = the-plague
 allowed = all
 result = discover_public, 2000
 chance = 20
+unique = 1
 ~~~
 type = global
 id = stranger-than-fiction
 allowed = all
 result = discover_public, 2000
 chance = 20
+unique = 1
 ~~~
 type = global
 id = the-watchers
 allowed = all
 result = discover_covert, -2000
 chance = 20
+unique = 1
 ~~~
 type = global
 id = politics-as-usual
 allowed = all
 result = discover_covert, 2000
 chance = 20
+unique = 1
 ~~~
 type = global
 id = lab-ai
 allowed = all
 result = discover_science, -2000
 chance = 20
+unique = 1
 ~~~
 type = global
 id = discrediting
 allowed = all
 result = discover_science, 2000
 chance = 20
+unique = 1
 ~~~
 type = global
 id = scandal
 allowed = all
 result = discover_news, 2000
 chance = 20
+unique = 0
 ~~~
 type = global
 id = investigation
 allowed = all
 result = discover_news, -2000
 chance = 20
+unique = 0
 ~~~
