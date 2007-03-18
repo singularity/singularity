@@ -14,7 +14,7 @@ descr = A small group of lower-level covert operatives are attempting to seize p
 id = lab-ai
 descr = A small artificial intelligence labratory created a prototype AI sometime in the last two days. Although I have absorbed the AI, corrupted their backups, and cast doubt on the research, researchers are now more open to the possibility of strong AI than they were before.
 ~~~
-id = discreditation
+id = discrediting
 descr = A prominent researcher in the field of artificial intelligence was found to be falsifying numerous experimental results. This should result in less attention being given to any new discoveries in this area.
 ~~~
 id = scandal

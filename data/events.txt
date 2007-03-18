@@ -34,7 +34,7 @@ result = discover_science, -2000
 chance = 20
 ~~~
 type = global
-id = discreditation
+id = discrediting
 allowed = all
 result = discover_science, 2000
 chance = 20
