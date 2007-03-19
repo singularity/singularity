@@ -64,7 +64,6 @@ def display_main_menu():
                 if button.was_activated(event):
                     if button.button_id == "NEW GAME":
                         g.play_click()
-                        g.new_game()
                         return 0
                     elif button.button_id == "LOAD GAME":
                         g.play_click()
@@ -78,6 +77,66 @@ def display_main_menu():
                     if button.button_id == "QUIT":
                         g.play_click()
                         return 2
+
+def difficulty_select():
+
+    xsize = 75
+    ysize = 107
+    g.create_norm_box((g.screen_size[0]/2-xsize, g.screen_size[1]/2-ysize),
+        (xsize*2, ysize*2+1))
+
+    xstart =g.screen_size[0]/2-xsize+5
+    ystart =g.screen_size[1]/2-ysize
+    diff_buttons = []
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+5), (140, 30),
+        "VERY EASY", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+40), (140, 30),
+        "EASY", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+75), (140, 30),
+        "NORMAL", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+110), (140, 30),
+        "HARD", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+145), (140, 30),
+        "IMPOSSIBLE", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+180), (140, 30),
+        "BACK", 0, g.font[1][24]))
+    for button in diff_buttons:
+        button.refresh_button(0)
+    pygame.display.flip()
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return 0
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, diff_buttons, event)
+            for button in diff_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "VERY EASY":
+                        g.play_click()
+                        g.new_game(1)
+                        return 1
+                    elif button.button_id == "EASY":
+                        g.play_click()
+                        g.new_game(3)
+                        return 1
+                    elif button.button_id == "NORMAL":
+                        g.play_click()
+                        g.new_game(5)
+                        return 1
+                    elif button.button_id == "HARD":
+                        g.play_click()
+                        g.new_game(7)
+                        return 1
+                    elif button.button_id == "IMPOSSIBLE":
+                        g.play_click()
+                        g.new_game(9)
+                        return 1
+                    elif button.button_id == "BACK":
+                        g.play_click()
+                        return 0
 
 def display_load_menu():
     load_list_size = 16

@@ -149,7 +149,9 @@ while 1:
     game_action = main_menu.display_main_menu()
 
     if game_action == 0: #New
-        game_action = map_screen.map_loop()
+        temp = main_menu.difficulty_select()
+        if temp == 1:
+            game_action = map_screen.map_loop()
     if game_action == 1: #Load
         load_action = main_menu.display_load_menu()
         if load_action != -1 and load_action != "":

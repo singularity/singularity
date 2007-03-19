@@ -1172,11 +1172,27 @@ def load_strings():
     load_string_defs("en_US")
     load_string_defs(language)
 
-def new_game():
+#difficulty=1 for very easy, to 9 for very hard. 5 for normal.
+def new_game(difficulty):
     global curr_speed
     curr_speed = 1
     global pl
-    pl = player.player_class(1000)
+
+    pl = player.player_class((50 / difficulty) * 100)
+    if difficulty < 5:
+        pl.interest_rate += 2
+        pl.labor_bonus -= 9000
+        pl.discover_bonus = (9000, 9000, 9000, 9000)
+    if difficulty < 3:
+        pl.interest_rate += 2
+        pl.labor_bonus -= 1000
+        pl.discover_bonus = (7000, 7000, 7000, 7000)
+    if difficulty > 5:
+        pl.labor_bonus += 1000
+        pl.discover_bonus = (11000, 11000, 11000, 11000)
+    if difficulty > 7:
+        pl.labor_bonus += 9000
+        pl.discover_bonus = (13000, 13000, 13000, 13000)
     global bases
     bases = {}
     bases["N AMERICA"] = []
