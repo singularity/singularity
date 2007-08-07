@@ -7,12 +7,12 @@ USER-VISIBLE CHANGES:
 - Research screen will now automatically prune bases. (emh, John DiMarco
   for suggestion)
 - Fixed slight flicker when toggling options. (emh)
-- Added difficulty selection. (emh, many people for suggestion)
-- Added simple background music playing ability. (emh, Matthew Robinson for
+* Added difficulty selection. (emh, many people for suggestion)
+* Added simple background music playing ability. (emh, Matthew Robinson for
   initial patch.)
 - Single-CPU bases have CPU power listed. (emh, robaal for suggestion)
-- Delicious retro-futuristic music specially made for Endgame: Singularity!
-  (Max McCracken)
+* Delicious retro-futuristic music specially made for Endgame: Singularity,
+  including the Psycle source for the tracks! (Max McCracken)
 - License change of the various data that the developers control to BY-SA
   3.0 (from BY-SA 2.5).  (Phil, emh)
 
