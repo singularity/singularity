@@ -143,6 +143,7 @@ g.load_pictures()
 g.fill_colors()
 g.load_sounds()
 g.load_items()
+g.load_music()
 
 #Display the main menu
 while 1:

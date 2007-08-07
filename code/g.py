@@ -131,14 +131,40 @@ def play_sound(sound_file):
 
 global delay_time
 delay_time = 0
-def play_music():
+global musicdict
+musicarray = []
+global musicarraylen
+musicarraylen = 0
+def load_music():
     if nosound == 1: return 0
+    global musicarray
+    global musicarraylen
+    musicarray = []
+    musicarraylen=0
     musicpath=path.join(data_loc, "..", "music")
     if not path.isdir(musicpath):
         makedirs(musicpath)
     temp_ls = listdir(musicpath)
     temp_ls_len = len(temp_ls)
-    if temp_ls_len == 0: return
+    for file_name in temp_ls:
+        if file_name[-3:] == "ogg" or file_name[-3:] == "mp3":
+            musicarray.append(path.join(musicpath, file_name))
+
+    #also, grab any user files
+    musicpath=path.join(get_save_folder(True), "music")
+    if not path.isdir(musicpath):
+        makedirs(musicpath)
+    temp_ls = listdir(musicpath)
+    temp_ls_len = len(temp_ls)
+    for file_name in temp_ls:
+        if file_name[-3:] == "ogg" or file_name[-3:] == "mp3":
+            musicarray.append(path.join(musicpath, file_name))
+    musicarraylen = len(musicarray)
+
+def play_music():
+    global musicarray, musicarraylen
+    if nosound == 1: return 0
+    if musicarraylen==0: return 0
     if pygame.mixer.music.get_busy(): return
     global delay_time
     if delay_time == 0:
@@ -146,7 +172,7 @@ def play_music():
     else:
         if delay_time > pygame.time.get_ticks(): return
         delay_time = 0
-        pygame.mixer.music.load(path.join(musicpath,temp_ls[int(random()*temp_ls_len)]))
+        pygame.mixer.music.load(musicarray[int(random()*musicarraylen)])
         pygame.mixer.music.play()
 
 #
