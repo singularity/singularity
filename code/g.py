@@ -133,9 +133,10 @@ global delay_time
 delay_time = 0
 def play_music():
     if nosound == 1: return 0
-    if not path.isdir(path.join(get_save_folder(True), "music")):
-        makedirs(path.join(get_save_folder(True), "music"))
-    temp_ls = listdir(path.join(get_save_folder(True), "music"))
+    musicpath=path.join(data_loc, "..", "music")
+    if not path.isdir(musicpath):
+        makedirs(musicpath)
+    temp_ls = listdir(musicpath)
     temp_ls_len = len(temp_ls)
     if temp_ls_len == 0: return
     if pygame.mixer.music.get_busy(): return
@@ -145,7 +146,7 @@ def play_music():
     else:
         if delay_time > pygame.time.get_ticks(): return
         delay_time = 0
-        pygame.mixer.music.load(path.join(get_save_folder(True),"music",temp_ls[int(random()*temp_ls_len)]))
+        pygame.mixer.music.load(path.join(musicpath,temp_ls[int(random()*temp_ls_len)]))
         pygame.mixer.music.play()
 
 #
