@@ -73,6 +73,7 @@ Evil Mr Henry
 Phil Bordelon
 Borg[MDQ] (translation into Spanish)
 Adam Bark (reduced-CPU Clock class)
+Max McCracken (music)
 
 Contributing:
 All suggestions, translations, code, etc. are welcomed, though it would be
@@ -108,24 +109,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 Portions Copyright (C) 2005 Adam Bark.  See code/clock.py for details.
 
 Data License:
-The sounds, the text files, and the icons in the data subdirectory are under
-the Creative Commons Licence "Attribution-ShareAlike 2.5":
+The sounds, music, text files, and icons in the data subdirectory are under
+the Creative Commons Licence "Attribution-ShareAlike 3.0":
 
 You are free:
 
-    * to copy, distribute, display, and perform the work
-    * to make derivative works
-    * to make commercial use of the work
+    * to Share - to copy, distribute and transmit the work
+    * to Remix - to adapt the work
 
 Under the following conditions:
-Attribution. You must attribute the work in the manner specified by the author or licensor.
-Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under a license identical to this one.
+- Attribution. You must attribute the work in the manner specified by the author
+  or licensor (but not in any way that suggests that they endorse you or your
+  use of the work).
+- Share Alike. If you alter, transform, or build upon this work, you may
+  distribute the resulting work only under the same, similar or a compatible
+  license. 
 
-    * For any reuse or distribution, you must make clear to others the license terms of this work.
-    * Any of these conditions can be waived if you get permission from the copyright holder.
+* For any reuse or distribution, you must make clear to others the license
+  terms of this work.
+* Any of the above conditions can be waived if you get permission from the
+  copyright holder.
+* Nothing in this license impairs or restricts the author's moral rights.
 
-See the file Attribution-ShareAlike 2.5.html for the legal-quality license.
 
+See the file data/Attribution-ShareAlike 3.0.html or
+http://creativecommons.org/licenses/by-sa/3.0/legalcode for the full license.
 
 Graphic License:
 The image of the earth is NASA's "The Blue Marble: Land Surface, Ocean Color
