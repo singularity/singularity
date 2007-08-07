@@ -11,6 +11,10 @@ USER-VISIBLE CHANGES:
 - Added simple background music playing ability. (emh, Matthew Robinson for
   initial patch.)
 - Single-CPU bases have CPU power listed. (emh, robaal for suggestion)
+- Delicious retro-futuristic music specially made for Endgame: Singularity!
+  (Max McCracken)
+- License change of the various data that the developers control to BY-SA
+  3.0 (from BY-SA 2.5).  (Phil, emh)
 
 OTHER CHANGES:
 - Changed data-loading code to use UTF. (biro.daniel for patch)
