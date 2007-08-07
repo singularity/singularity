@@ -67,6 +67,25 @@ After choosing a base, you will enter the base screen. Here you can change your
 research goal, or build an item by clicking on the appropriate slot in the
 center. (But note that your beginning base does not allow building.)
 
+Music:
+
+Endgame: Singularity looks in two places for music tracks to play:
+
+* A music/ directory directly inside of the Endgame: Singularity install
+  directory, and
+* A music/ directory inside of the save directory (~/endgame in Linux, the
+  install directory for Windows).
+
+Tracks placed in these directories will be played randomly as part of the
+soundtrack.  The Official Sound Track can be downloaded from the Endgame:
+Singularity website:
+
+   http://emhsoft.com/singularity/
+
+Note that only Ogg Vorbis and MP3 files are supported, and that Pygame's
+support for MP3 is not as strong as its support for Ogg Vorbis.  This may
+cause in-game crashes; if you are experiencing problems with the game,
+first remove any MP3s you may have added to the soundtrack.
 
 Credits:
 Evil Mr Henry

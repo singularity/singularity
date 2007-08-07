@@ -1,6 +1,11 @@
 Endgame: Singularity Changelog
 
 v0.26 (released 2007.0?.??):
+  [Note that the official Endgame: Singularity soundtrack is released
+   separately from the game. It can be found at the official website:
+      http://emhsoft.com/singularity/
+   In addition, user-added tracks are also supported.  See the README
+   for details.]
 
 USER-VISIBLE CHANGES:
 - Added CPU indicator to the main screen. (emh, John DiMarco for suggestion)
