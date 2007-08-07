@@ -1,4 +1,4 @@
-Todo for 0.26:
+Todo for 0.27:
     - Fix the constant "CPU complete" dialogs when low on money.
     - Record more things (times that techs are complete, etc.)
       for both "scores" and general statistics:
