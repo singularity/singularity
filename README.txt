@@ -180,10 +180,22 @@ The boxy font used is "Acknowledge", by Brian Kent, modified in order to have th
 numbers fixed-width.
 http://www.aenigmafonts.com/fonts/fontsa.html
 
-Terms of use:
-Feel free to use any of my fonts. All of my Fonts are Freeware and you can use
-them any way you want to (Personal use, Commercial use, or whatever).
+Terms of use (quoted from an eMail from Brian Kent):
 
+Hi,
+
+  Feel free to use the font any way you want to.
+
+--
+From
+Brian Kent
+aefonts@frontiernet.net
+ÆNIGMA GAMES & FONTS
+http://www.aenigmafonts.com/
+
+Note that this is /not/ the license available on his website; Brian has given
+us directly 'free to use for any purpose' licensing on this font file.  Thanks
+so much, Brian!
 
 The other font used is Bitstream Vera Sans:
 

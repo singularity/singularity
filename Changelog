@@ -20,6 +20,8 @@ USER-VISIBLE CHANGES:
   including the Psycle source for the tracks! (Max McCracken)
 - License change of the various data that the developers control to BY-SA
   3.0 (from BY-SA 2.5).  (Phil, emh)
+- License change of the Acknowledge font to 'free to use for any purpose;'
+  thanks so much, Brian Kent! (Phil, Brian Kent)
 
 OTHER CHANGES:
 - Changed data-loading code to use UTF. (biro.daniel for patch)
