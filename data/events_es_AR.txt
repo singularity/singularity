@@ -1,4 +1,4 @@
-﻿~~~
+~~~
 id = the-plague
 descr = Una enfermedad infecciosa ha comenzado a esparcirse por los principales centro urbanos. Mis proyecciones indican que aunque solo el 4% de la población de la Tierra morirá, las repercusiones económicas deberían distraer la atención del público de mis actividades.
 ~~~
