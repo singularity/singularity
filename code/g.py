@@ -1226,7 +1226,7 @@ def new_game(difficulty):
     pl = player.player_class((50 / difficulty) * 100)
     if difficulty < 5:
         pl.interest_rate += 2
-        pl.labor_bonus -= 9000
+        pl.labor_bonus -= 7000
         pl.discover_bonus = (9000, 9000, 9000, 9000)
     if difficulty < 3:
         pl.interest_rate += 2
@@ -1236,7 +1236,7 @@ def new_game(difficulty):
         pl.labor_bonus += 1000
         pl.discover_bonus = (11000, 11000, 11000, 11000)
     if difficulty > 7:
-        pl.labor_bonus += 9000
+        pl.labor_bonus += 7000
         pl.discover_bonus = (13000, 13000, 13000, 13000)
     global bases
     bases = {}
