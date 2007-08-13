@@ -4,7 +4,7 @@ import py2exe
 
 setup(console=["singularity.py"],
       name="Endgame Singularity",
-	version="0.26",
+	version="0.26a",
 	description="A simulation of a true AI",
 	author="Evil Mr Henry",
 	author_email="evilmrhenry@emhsoft.com",
