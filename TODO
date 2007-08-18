@@ -17,3 +17,4 @@ Todo for 0.27:
     - Building CPUs should tell you how much CPU you get from it.
     - Building bases should tell you the real discovery rates, not the defaults.
     - Actually use the events we added.
+    - Give idle bases a discovery bonus.
