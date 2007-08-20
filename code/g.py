@@ -882,7 +882,7 @@ city_list["OCEAN"]  = (("Atlantic", True),
 city_list["MOON"] = (("Oceanis Procellarum", True),
     ("Mare Frigoris", True),
     ("Mare Imbrium", True),
-    ("Vallis Schrodinger", False),
+    ("Vallis Schroedinger", False),
     ("Copernicus Crater", False),
     ("Vallis Planck", False))
 
@@ -894,7 +894,7 @@ city_list["FAR REACHES"] = (("Aries", True),
     ("Virgo", True),
     ("Libra", True),
     ("Scorpio", True),
-    ("Saggitarius", True),
+    ("Sagittarius", True),
     ("Capricorn", True),
     ("Aquarius", True),
     ("Pisces", True))
