@@ -838,8 +838,8 @@ def generate_base_name(location, base_type):
                 " " + random.choice(base_type.flavor) + " " \
                 + random.choice(significant_numbers)
             duplicate = 0
-            for base in g.bases[location]:
-                if base.name == name:
+            for check_base in g.bases[location]:
+                if check_base.name == name:
                     duplicate = 1
             if duplicate == 1:
                 attempts += 1
@@ -929,13 +929,13 @@ def display_base_list_inner(location):
 
     temp_base_list = []
     base_id_list = []
-    for base in g.bases[location]:
-        tmp_study = base.studying
+    for this_base in g.bases[location]:
+        tmp_study = this_base.studying
         if tmp_study == "": tmp_study = g.strings["nothing"]
-        if base.built != 1: tmp_study = g.strings["building"]
+        if this_base.built != 1: tmp_study = g.strings["building"]
         elif g.techs.has_key(tmp_study): tmp_study = g.techs[tmp_study].name
-        temp_base_list.append(base.name+" ("+tmp_study+")")
-        base_id_list.append(base.ID)
+        temp_base_list.append(this_base.name+" ("+tmp_study+")")
+        base_id_list.append(this_base.ID)
 
     xy_loc = (g.screen_size[0]/2 - 259, 50)
 
