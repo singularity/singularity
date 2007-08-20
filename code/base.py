@@ -84,40 +84,37 @@ class base:
             #self.built_date = g.pl.time_day
             return 1
         return 0
+
     #Get detection chance for the base, applying bonuses as needed.
     def get_d_chance(self):
-        temp_d_chance = self.base_type.d_chance
-        #Factor in both per-base suspicion adjustments and player
-        #suspicion adjustments.
-        temp_d_chance = ((temp_d_chance[0]*(10000+g.pl.suspicion[0])/10000),
-            (temp_d_chance[1]*(10000+g.pl.suspicion[1])/10000),
-            (temp_d_chance[2]*(10000+g.pl.suspicion[2])/10000),
-            (temp_d_chance[3]*(10000+g.pl.suspicion[3])/10000))
 
-        temp_d_chance = ((temp_d_chance[0]*(10000+self.suspicion[0])/10000),
-            (temp_d_chance[1]*(10000+self.suspicion[1])/10000),
-            (temp_d_chance[2]*(10000+self.suspicion[2])/10000),
-            (temp_d_chance[3]*(10000+self.suspicion[3])/10000))
+        # Get the base chance from the universal function.
+        to_return = calc_base_discovery_chance(self.base_type.base_id)
 
-        #Factor in technology-based discovery bonus.
-        temp_d_chance = ((temp_d_chance[0]*g.pl.discover_bonus[0])/10000,
-            (temp_d_chance[1]*g.pl.discover_bonus[1])/10000,
-            (temp_d_chance[2]*g.pl.discover_bonus[2])/10000,
-            (temp_d_chance[3]*g.pl.discover_bonus[3])/10000)
+        # Factor in the suspicion adjustments for this particular base ...
+        to_return = ((to_return[0]*(10000+self.suspicion[0])/10000),
+            (to_return[1]*(10000+self.suspicion[1])/10000),
+            (to_return[2]*(10000+self.suspicion[2])/10000),
+            (to_return[3]*(10000+self.suspicion[3])/10000))
 
+        # ... any reactors built ... 
         if self.extra_items[0] != 0:
             if self.extra_items[0].built == 1:
-                temp_d_chance = ((temp_d_chance[0]*3)/4,
-                    (temp_d_chance[1]*3)/4,
-                    (temp_d_chance[2]*3)/4,
-                    (temp_d_chance[3]*3)/4)
+                to_return = ((to_return[0]*3)/4,
+                    (to_return[1]*3)/4,
+                    (to_return[2]*3)/4,
+                    (to_return[3]*3)/4)
+
+        # ... and any security systems built.
         if self.extra_items[2] != 0:
             if self.extra_items[2].built == 1:
-                temp_d_chance = (temp_d_chance[0]/2,
-                    temp_d_chance[1]/2,
-                    temp_d_chance[2]/2,
-                    temp_d_chance[3]/2)
-        return temp_d_chance
+                to_return = (to_return[0]/2,
+                    to_return[1]/2,
+                    to_return[2]/2,
+                    to_return[3]/2)
+
+        return to_return
+
     #Return the number of units the given base has of a computer.
     def has_item(self):
         num_items = 0
@@ -169,6 +166,27 @@ class base:
                 if region == "TRANSDIMENSIONAL":
                     return 1
             return 0
+
+#calc_base_discovery_chance: A globally-accessible function that can calculate
+#basic discovery chances given a particular class of base.
+def calc_base_discovery_chance(base_type_name):
+
+    # Get the default settings for this base type.
+    to_return = g.base_type[base_type_name].d_chance
+
+    # Adjust by the current suspicion levels ...
+    to_return = ((to_return[0]*(10000+g.pl.suspicion[0])/10000),
+        (to_return[1]*(10000+g.pl.suspicion[1])/10000),
+        (to_return[2]*(10000+g.pl.suspicion[2])/10000),
+        (to_return[3]*(10000+g.pl.suspicion[3])/10000))
+
+    # ... and further adjust based on technology.
+    to_return = ((to_return[0]*g.pl.discover_bonus[0])/10000,
+        (to_return[1]*g.pl.discover_bonus[1])/10000,
+        (to_return[2]*g.pl.discover_bonus[2])/10000,
+        (to_return[3]*g.pl.discover_bonus[3])/10000)
+
+    return to_return
 
 #When a base is removed, call to renumber the remaining bases properly.
 def renumber_bases(base_array):
