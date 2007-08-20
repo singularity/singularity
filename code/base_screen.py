@@ -589,12 +589,3 @@ def refresh_tech(base, tech_name, xy):
 
     g.print_multiline(g.screen, g.techs[tech_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+100), g.colors["white"])
-
-
-
-
-
-
-
-
-

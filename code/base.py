@@ -213,4 +213,3 @@ def destroy_base(location, index_num):
     g.bases[location].pop(index_num)
     renumber_bases(g.bases[location])
     return True
-

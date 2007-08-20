@@ -74,5 +74,3 @@ class item:
             if money_towards < 0 or minutes < 0:
                 print "error in item.work_on: "+str(money_towards)+" "+str(minutes)
             return self.study((money_towards, 0, minutes))
-
-

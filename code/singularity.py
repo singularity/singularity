@@ -172,4 +172,3 @@ while 1:
         g.colors["blue"], g.colors["white"], g.colors["white"])
     elif game_action == 4: #Options
         main_menu.display_options()
-

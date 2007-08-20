@@ -137,4 +137,3 @@ def make_norm_button(xy, size, text, select_char, font, button_id=""):
     return button(xy, size, text, select_char,
         g.colors["dark_blue"], g.colors["white"],
         g.colors["light_blue"], g.colors["white"], font, button_id)
-

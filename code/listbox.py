@@ -131,4 +131,3 @@ def refresh_list(listbox, scrollbar, list_pos, list_array):
         scrollbar.refresh_scroll(list_pos,
         ((len(list_array)/listbox.viewable_items)+1)*listbox.viewable_items-1)
     pygame.display.flip()
-

@@ -517,4 +517,3 @@ def refresh_options(menu_buttons):
     #Language
     g.print_string(g.screen, "Language:",
             g.font[0][22], -1, (xstart+20, ystart+200), g.colors["white"])
-

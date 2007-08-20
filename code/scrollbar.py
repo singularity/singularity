@@ -103,6 +103,3 @@ class scrollbar:
             if list_pos >= len(item_list) - 1:
                 list_pos = len(item_list) - 1
         return list_pos
-
-
-

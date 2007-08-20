@@ -1177,10 +1177,3 @@ def refresh_new_base(base_name, xy):
 
     g.print_multiline(g.screen, g.base_type[base_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+190), g.colors["white"])
-
-
-
-
-
-
-
