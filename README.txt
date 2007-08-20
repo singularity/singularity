@@ -96,8 +96,8 @@ Max McCracken (music)
 
 Contributing:
 All suggestions, translations, code, etc. are welcomed, though it would be
-wise to tell us before starting work on any large projects. Contact
-evilmrhenry@emhsoft.com for more details.
+wise to tell us before starting work on any large projects.  Join and/or
+send mail to endgame-singularity@googlegroups.com for more details.
 
 Contributing translations:
 To add a new translation, make copies of all *_en_US files in the data
