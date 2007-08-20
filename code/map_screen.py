@@ -21,6 +21,7 @@
 
 import pygame
 import g
+import base
 import random
 
 import buttons
@@ -1158,20 +1159,21 @@ def refresh_new_base(base_name, xy):
             g.font[0][20], -1, (xy[0]+160, xy[1]+110), g.colors["white"])
 
     #Detection
+    real_detection_chance = base.calc_base_discovery_chance(base_name)
     string = "Detection chance:"
     g.print_string(g.screen, string,
             g.font[0][22], -1, (xy[0]+160, xy[1]+130), g.colors["white"])
 
-    string = "News: " + g.to_percent(g.base_type[base_name].d_chance[0])
+    string = "News: " + g.to_percent(real_detection_chance[0])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+150), g.colors["white"])
-    string = "Science: " + g.to_percent(g.base_type[base_name].d_chance[1])
+    string = "Science: " + g.to_percent(real_detection_chance[1])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+150), g.colors["white"])
-    string = "Covert: " + g.to_percent(g.base_type[base_name].d_chance[2])
+    string = "Covert: " + g.to_percent(real_detection_chance[2])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+170), g.colors["white"])
-    string = "Public: " + g.to_percent(g.base_type[base_name].d_chance[3])
+    string = "Public: " + g.to_percent(real_detection_chance[3])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+170), g.colors["white"])
 
