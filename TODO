@@ -15,5 +15,4 @@ Todo for 0.27:
     - Try out pygame.key.set_repeat()
     - Make construction that requires CPU a research option when needed.
     - Building CPUs should tell you how much CPU you get from it.
-    - Actually use the events we added.
     - Give idle bases a discovery bonus.
