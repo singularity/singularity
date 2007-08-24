@@ -1,5 +1,5 @@
 #file: g.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005,2006,2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ from os import listdir, path, environ, makedirs
 import pickle
 from random import random
 
-import player, base, buttons, tech, item
+import player, base, buttons, tech, item, event
 
 #screen is the actual pygame display.
 global screen
@@ -328,14 +328,14 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
     screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     screen.fill(out_color, (xy[0]+5, xy[1]+size[1]-30, size[0]-10, 25))
-#	print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
+#        print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
     print_multiline(screen, descript_text, box_font,
                                 size[1]-10, (xy[0]+5, xy[1]+5), text_color)
     #If the cursor is in a blank string, we want it at the beginning;
     #otherwise put it after the last character.
     cursor_loc = len(starting_text)
-# 	if cursor_loc > 0:
-# 	   cursor_loc += 1
+#         if cursor_loc > 0:
+#            cursor_loc += 1
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50,
@@ -488,11 +488,11 @@ def add_commas(tmp_string):
     if output_string[0:2] == "-,": output_string = output_string[0]+output_string[2:]
     return output_string
 
-# 	new_string = ""
-# 	for i in range(len(string), 0, -3):
-# 		if string[i:i+3] != "":
-# 			new_string += ","+string[i:i+3]
-# 	return string[:(len(string)-1)%3+1]+new_string
+#         new_string = ""
+#         for i in range(len(string), 0, -3):
+#                 if string[i:i+3] != "":
+#                         new_string += ","+string[i:i+3]
+#         return string[:(len(string)-1)%3+1]+new_string
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
@@ -581,7 +581,7 @@ def save_game(savegame_name):
     save_loc = path.join(save_dir, savegame_name + ".sav")
     savefile=open(save_loc, 'w')
     #savefile version; update whenever the data saved changes.
-    pickle.dump("singularity_savefile_r2", savefile)
+    pickle.dump("singularity_savefile_r3_pre", savefile)
 
     global default_savegame_name
     default_savegame_name = savegame_name
@@ -640,6 +640,12 @@ def save_game(savegame_name):
                     pickle.dump(base_name.extra_items[x].built, savefile)
                     pickle.dump(base_name.extra_items[x].cost, savefile)
 
+    global events
+
+    for event in events:
+        pickle.dump(events[event].event_id, savefile)
+        pickle.dump(events[event].triggered, savefile)
+
     savefile.close()
 
 def load_game(loadgame_name):
@@ -670,7 +676,8 @@ def load_game(loadgame_name):
 
         # Post-change supported file formats.
         "singularity_savefile_r1",
-        "singularity_savefile_r2"
+        "singularity_savefile_r2",
+        "singularity_savefile_r3_pre"
     )
     if load_version not in valid_savefile_versions:
         loadfile.close()
@@ -800,6 +807,15 @@ def load_game(loadgame_name):
                     -1].extra_items[x].built = pickle.load(loadfile)
                 bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
                             pickle.load(loadfile)
+    #Events
+    if (load_version == "singularity_savefile_r3_pre"):
+        global events
+        load_events()
+        for event in events:
+          event_id = pickle.load(loadfile)
+          event_triggered = pickle.load(loadfile)
+          events[event_id].triggered = event_triggered
+
     loadfile.close()
 
 #
@@ -973,14 +989,14 @@ def load_bases():
                             temp_base_allowed, temp_d_chance, temp_base_cost,
                             temp_base_pre, temp_base_maint)
 
-# 	base_type["Reality Bubble"] = base.base_type("Reality Bubble",
-# 	"This base is outside the universe itself, "+
-# 	"making it safe to conduct experiments that may destroy reality.",
-# 	50,
-# 	["TRANSDIMENSIONAL"],
-# 	(0, 250, 0, 0),
-# 	(8000000000000, 60000000, 100), "Space-Time Manipulation",
-# 	(5000000000, 300000, 0))
+#         base_type["Reality Bubble"] = base.base_type("Reality Bubble",
+#         "This base is outside the universe itself, "+
+#         "making it safe to conduct experiments that may destroy reality.",
+#         50,
+#         ["TRANSDIMENSIONAL"],
+#         (0, 250, 0, 0),
+#         (8000000000000, 60000000, 100), "Space-Time Manipulation",
+#         (5000000000, 300000, 0))
 
     load_base_defs("en_US")
     load_base_defs(language)
@@ -1084,11 +1100,11 @@ def load_techs():
 
 
 
-# #	techs["Construction 1"] = tech.tech("Construction 1",
-# #		"Basic construction techniques. "+
-# #		"By studying the current literature on construction techniques, I "+
-# #		"can learn to construct basic devices.",
-# #		0, (5000, 750, 0), [], 0, "", 0)
+# #        techs["Construction 1"] = tech.tech("Construction 1",
+# #                "Basic construction techniques. "+
+# #                "By studying the current literature on construction techniques, I "+
+# #                "can learn to construct basic devices.",
+# #                0, (5000, 750, 0), [], 0, "", 0)
 
     if debug:
         print "Loaded %d techs." % len (techs)
@@ -1172,6 +1188,70 @@ def load_item_defs(language_str):
         if item_name.has_key("descript"):
             items[item_name["id"]].descript = item_name["descript"]
 
+
+events = {}
+def load_events():
+    global events
+    events = {}
+
+    #If there are no event data files, stop.
+    if (not path.exists(data_loc+"events.txt") or
+     not path.exists(data_loc+"events_"+language+".txt") or
+     not path.exists(data_loc+"events_en_US.txt")):
+        print "event files are missing. Exiting."
+        sys.exit()
+
+    temp_event_array = generic_load("events.txt")
+    for event_name in temp_event_array:
+        if (not event_name.has_key("type")):
+            print "event lacks type in events.txt"
+        if (not event_name.has_key("id")):
+            print "event lacks id in events.txt"
+        if (not event_name.has_key("allowed")):
+            print "event lacks cost in events.txt"
+        if (not event_name.has_key("result")):
+            print "event lacks result in events.txt"
+        result_array = event_name["result"].split(",", 1)
+        if len(result_array) != 2:
+            print "error with cost given: "+event_name["result"]
+            sys.exit()
+        temp_event_result = (str(result_array[0]), int(result_array[1]))
+        if (not event_name.has_key("chance")):
+            print "event lacks chance in events.txt"
+        if (not event_name.has_key("unique")):
+            print "event lacks unique in events.txt"
+        events[event_name["id"]]=event.event_class(
+         event_name["id"],
+         "",
+         event_name["type"],
+         temp_event_result,
+         int(event_name["chance"]),
+         int(event_name["unique"]))
+
+    load_event_defs()
+
+def load_event_defs():
+    event_defs = {}
+
+    #If there are no event data files, stop.
+    if (not path.exists(data_loc+"events.txt") or
+     not path.exists(data_loc+"events_"+language+".txt") or
+     not path.exists(data_loc+"events_en_US.txt")):
+        print "event files are missing. Exiting."
+        sys.exit()
+
+    temp_event_array = generic_load("events_"+language+".txt")
+    for event_name in temp_event_array:
+        if (not event_name.has_key("id")):
+            print "event lacks id in events_"+language+".txt"
+            continue
+        if (not event_name.has_key("descr")):
+            print "event lacks descr in events_"+language+".txt"
+            continue
+        if event_name.has_key("id"):
+            events[event_name["id"]].name = event_name["id"]
+        if event_name.has_key("descr"):
+            events[event_name["id"]].descript = event_name["descr"]
 
 def load_string_defs(language_str):
     temp_string_array = generic_load("strings_"+language_str+".txt")

@@ -1,5 +1,5 @@
 #file: player.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -132,10 +132,20 @@ class player_class:
     #Run every day at midnight.
     def new_day(self):
         needs_refresh = 0
+        event = {}
         #interest and income.
         self.cash += (self.interest_rate * self.cash) / 10000
         self.cash += self.income
         #suspicion bonuses
+
+        # Random Events
+        for event in g.events:
+            if g.roll_percent(g.events[event].chance) == 1:
+                #Skip events already flagged as triggered.
+                if g.events[event].triggered == 1:
+                    continue
+                g.events[event].trigger()
+                break # Don't trigger more than one at a time.
 
         # Suspicion reduction is now quadratic.  You get a certain percentage
         # reduction, or a base .01% reduction, whichever is better.

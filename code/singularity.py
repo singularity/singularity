@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #file: singularity.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -115,6 +115,7 @@ if arg_modifier == "language":
     sys.exit()
 
 g.load_strings()
+g.load_events()
 
 pygame.display.set_caption("Endgame: Singularity")
 

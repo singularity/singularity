@@ -6,6 +6,8 @@ USER-VISIBLE CHANGES:
 - Display the actual discovery percentage when preparing to build a base.
   (Brian, Phil)
 - Minor text cleanups. (Phil)
+* Support events that can happen throughout the course of the game, changing
+  things in interesting ways.  (Brian, Phil)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
