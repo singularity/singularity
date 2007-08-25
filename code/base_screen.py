@@ -397,11 +397,17 @@ def refresh_item(this_base, item_name, xy_loc):
     if g.items[item_name].item_type == "compute":
         string = g.to_money(g.items[item_name].cost[0]*this_base.base_type.size)+" "
         string +=g.strings["money"]
+
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+100), g.colors["white"])
 
-    x_start = 100
-    if g.items[item_name].item_type == "compute": x_start = 120
+        # Add CPU amount here...
+        string = "Total CPU available: " + g.add_commas(str(g.items[item_name].item_qual*this_base.base_type.size))
+        g.print_string(g.screen, string,
+            g.font[0][16], -1, (xy[0]+160, xy[1]+120), g.colors["white"])
+
+    x_start = 120
+    if g.items[item_name].item_type == "compute": x_start = 140
     g.print_multiline(g.screen, g.items[item_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
 

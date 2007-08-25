@@ -10,6 +10,8 @@ USER-VISIBLE CHANGES:
   things in interesting ways. (Brian, Phil)
 * A number of new items and technologies to ease gameplay. (Brian, tweaks
   by Phil and emh)
+- Building new machines informs you how much CPU capacity you will receive
+  from the new systems. (Brian, Phil for suggestion)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
