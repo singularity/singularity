@@ -31,9 +31,9 @@ allowed=EUROPE
 allowed=ASIA
 allowed=AFRICA
 d_chance=50, 0, 125, 100
-cost=3000, 0, 1
+cost=1500, 0, 1
 pre=Personal Identification
-maint=25, 0, 0
+maint=50, 0, 0
 ~~~
 id=Small Warehouse
 size=25
