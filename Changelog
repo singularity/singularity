@@ -7,7 +7,9 @@ USER-VISIBLE CHANGES:
   (Brian, Phil)
 - Minor text cleanups. (Phil)
 * Support events that can happen throughout the course of the game, changing
-  things in interesting ways.  (Brian, Phil)
+  things in interesting ways. (Brian, Phil)
+* A number of new items and technologies to ease gameplay. (Brian, tweaks
+  by Phil and emh)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
