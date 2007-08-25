@@ -212,3 +212,7 @@ id=unknown_tech
 cost=1000000000, 10000000000, 0
 pre=unknown_tech
 ~~~
+id=Solar Collectors
+cost=5000000, 250000, 0
+pre=Simulacra
+~~~

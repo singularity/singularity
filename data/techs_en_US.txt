@@ -224,3 +224,7 @@ name=Project: Peer Review Agents
 descript=As the scientific community comes up with new technology, their ability to detect traces of my hidden installations increases.  While my anti-detection methods are improving constantly, a simpler method presents itself with the use of my simulacra.  By placing several observers in relevant fields, I can use the peer review process to be warned of possible discoveries before the community at large gives it attention.
 result=Any discoveries by the scientific community will result in a smaller suspicion increase.
 ~~~
+id=Solar Collectors
+name=Solar Collectors
+descript=Despite my growing need for energy, most city power grids can handle the loads.  Humans, however, tend towards suspicion when they detect my growing drain on the power grid. By installing solar collectors at my bases, the off-the-grid power supplied will reduce my load on the commodity electricity market, reducing the chance that others will discover my presence.
+~~~

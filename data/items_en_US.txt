@@ -3,6 +3,10 @@ id = PC
 name = PC
 descript=A consumer-level PC; cheap and slow.
 ~~~
+id = Gaming PC
+name = Gaming PC
+descript=A high-end consumer-level PC; faster than average.
+~~~
 id=Server
 name=Server
 descript=A professional-level computer.
@@ -31,6 +35,14 @@ id=Quantum Computer MK3
 name=Quantum Computer MK3
 descript=The third revision of the quantum line, exploiting multiple nearby universes for processing.
 ~~~
+id=Diesel Generator
+name=Diesel Generator
+descript=Diesel generators are cheap and noisy, but they can help reduce some suspicious power drains.
+~~~
+id=Solar Collector
+name=Solar Collector
+descript=An array of focused photovoltaic phased arrays coupled with simple automotive batteries provides power and reduces suspicion arising from prolonged power drains.
+~~~
 id=Fusion Reactor
 name=Fusion Reactor
 descript=A miniaturized nuclear reactor. Reduces discovery chance by preventing suspicious power drains.
@@ -43,9 +55,17 @@ id=Heatsink
 name=Heatsink
 descript=Large fractal networks of high conductivity metal disperse heat, making bases harder to detect.
 ~~~
+id=Ground Source Heatsink
+name=Ground Source Heatsink
+descript=Large fractal networks of high conductivity metal. This model uses heat pipes to link to colder subsurface locations, dispersing heat evenly underground to further disguise bases.
+~~~
 id=Facility Interconnection Switch
 name=Facility Interconnection Switch
 descript=Uses standard distributed computing technologies to equalize computation loads across all bases. Gives a 1% computation bonus to all computers at this base.
+~~~
+id=High Speed Internet Access
+name=High Speed Internet Access
+descript=A consumer-grade high speed connection to the Internet. Gives a 2% computation bonus to all computers at this base.
 ~~~
 id=Network Backbone
 name=Network Backbone
@@ -58,4 +78,8 @@ descript=This device allows near-lightspeed communication with my other bases, a
 id=Perimeter Fencing
 name=Perimeter Fencing
 descript=A simple fence can considerably decrease the number of curious people poking around, making my bases harder to notice.
+~~~
+id=Armed Guards
+name=Armed Guards
+descript=Armed guards can aid in keeping suspicious individuals away from secure locations.  However, the very presence of the guards may itself invite greater suspicion.
 ~~~

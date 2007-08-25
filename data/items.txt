@@ -4,9 +4,14 @@ cost = 500, 0, 1
 type=compute, 1
 build=all
 ~~~
+id= Gaming PC
+cost = 1000, 0, 3
+type=compute, 5
+build=all
+~~~
 id=Server
 cost = 2000, 0, 3
-type=compute, 5
+type=compute, 10
 build=all
 ~~~
 id=Cluster
@@ -45,22 +50,40 @@ pre=Advanced Quantum Computing
 type=compute, 200000
 build=all
 ~~~
+id=Diesel Generator
+cost=500, 0, 5
+type=react, 250
+build=all
+~~~
+id=Solar Collector
+cost=5000, 0, 5
+pre=Solar Collector
+type=react, 1000
+build=all
+~~~
 id=Fusion Reactor
 cost=10000, 0, 5
 pre=Fusion Reactor
 type=react, 2500
 build=all
 ~~~
-id=Hypnosis Field
-cost=20000, 0, 3
-pre=Hypnosis Field
-type=security, 5000
-build=pop
-~~~
 id=Perimeter Fencing
 cost=5000, 0, 5
 pre=Autonomous Vehicles
 type=security, 2500
+build=pop
+~~~
+id=Armed Guards
+cost=10000, 0, 5
+pre=Simulacra
+type=security, 4000
+build=pop
+maint=300, 0, 0
+~~~
+id=Hypnosis Field
+cost=20000, 0, 3
+pre=Hypnosis Field
+type=security, 5000
 build=pop
 ~~~
 id=Heatsink
@@ -69,11 +92,22 @@ pre=Autonomous Vehicles
 type=security, 5000
 build=ANTARCTIC, OCEAN, MOON
 ~~~
+id=Ground Source Heatsink
+cost=50000, 0, 20
+pre=Autonomous Vehicles
+type=security, 7500
+build=ANTARCTIC, OCEAN, MOON
+~~~
 id=Facility Interconnection Switch
 cost=200, 0, 3
 pre=Cluster Networking
 type=network, 100
 build=all
+~~~
+id=High Speed Internet Access
+cost=10000, 0, 1
+type=network, 200
+build=pop
 ~~~
 id=Network Backbone
 cost=50000, 0, 15
