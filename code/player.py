@@ -145,6 +145,7 @@ class player_class:
                 if g.events[event].triggered == 1:
                     continue
                 g.events[event].trigger()
+                needs_refresh = 1
                 break # Don't trigger more than one at a time.
 
         # Suspicion reduction is now quadratic.  You get a certain percentage
