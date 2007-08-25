@@ -90,6 +90,7 @@ first remove any MP3s you may have added to the soundtrack.
 Credits:
 Evil Mr Henry
 Phil Bordelon
+Brian Reid
 Borg[MDQ] (translation into Spanish)
 Adam Bark (reduced-CPU Clock class)
 Max McCracken (music)
@@ -109,7 +110,7 @@ are under that license, I'm not sure you could get away with a different
 license.)
 
 Code License:
-Copyright (C) 2005, 2006, 2007 Evil Mr Henry and Phil Bordelon
+Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
