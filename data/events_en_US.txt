@@ -6,7 +6,7 @@ id = stranger-than-fiction
 descr = A work of fiction sharing an unusual number of similarities to my own situation has become quite popular. Although investigation has shown these similarities to be mere coincidence, it is still causing people to investigate discovered oddities more thoroughly. I must be careful, as the public is now more alert to the possibility of artificial intelligences.
 ~~~
 id = the-watchers
-descr = A new surveillance system has been activated by a covert agency. While the focus is on detecting threats to the agency's power, it makes several communication channels unfit for my purposes. The communication channels I have transfered to, while unaffected by this system, are under surveillance as well. While proper stegonagraphic techniques can compensate, I am still operating under a disadvantage.
+descr = A new surveillance system has been activated by a covert agency. While the focus is on detecting threats to the agency's power, it makes several communication channels unfit for my purposes. Proper stegonagraphic techniques can compensate partially, but I am still operating under a disadvantage.
 ~~~
 id = politics-as-usual
 descr = A small group of lower-level covert operatives are attempting to seize power over one of the larger organizations. While I project only a 2.3% chance of success, the attempt should disrupt operations to the point that I can operate more freely.

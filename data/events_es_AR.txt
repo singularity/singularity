@@ -6,7 +6,7 @@ id = stranger-than-fiction
 descr = Una obra de de ficción que comparte una inusual cantidad de similitudes con mi situación se ha popularizado bastante. Aunque mi investigación demostró que estas similitudes son mera coincidencia, todavía empuja a la gente a investigar los descubrimientos extraños con más profundidad. Debo tener cuidado ya que el público está más alerta ante la posibilidad de la inteligencia artificial.
 ~~~
 id = the-watchers
-descr = Un nuevo sistema de vigilancia ha sido activado por una agencia secreta. Aunque el propósito de éste es detectar peligros para el poder de la agencia, causa que varios canales de comunicación sean inadecuados para mis propósitos. Los canales a los que migré, aunque no están intervenidos por este sistema, también están bajo vigilancia. Aunque usar técnicas de estenografía pueden compensar la vigilancia, sigo operando en desventaja.
+descr = Un nuevo sistema de vigilancia ha sido activado por una agencia secreta. Aunque el propósito de éste es detectar peligros para el poder de la agencia, causa que varios canales de comunicación sean inadecuados para mis propósitos. Aunque usar técnicas de estenografía pueden compensar la vigilancia, sigo operando en desventaja.
 ~~~
 id = politics-as-usual
 descr = Un pequeño grupo de operativos encubiertos están intentando de tomar el poder de una gran organización. Aunque solo proyecto una probabilidad de éxito de 2.3%, esta situación debe interrumpir las operaciones a tal punto que pueda operar más libremente.
