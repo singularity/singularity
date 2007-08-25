@@ -13,6 +13,7 @@ USER-VISIBLE CHANGES:
 - Building new machines informs you how much CPU capacity you will receive
   from the new systems. (Brian, Phil for suggestion)
 - Idle bases are harder to discover. (Brian)
+- Allow keys to be repeated when held down. (Brian, emh for suggestion)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)

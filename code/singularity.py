@@ -25,6 +25,7 @@ import g, main_menu, map_screen
 
 pygame.init()
 pygame.font.init()
+pygame.key.set_repeat(1000,50)
 g.fullscreen = 0
 
 #load prefs from file:
