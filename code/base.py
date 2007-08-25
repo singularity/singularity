@@ -105,7 +105,7 @@ class base:
                     (to_return[2]*3)/4,
                     (to_return[3]*3)/4)
 
-        # ... and any security systems built.
+        # ... and any security systems built ...
         if self.extra_items[2] != 0:
             if self.extra_items[2].built == 1:
                 to_return = (to_return[0]/2,
@@ -113,6 +113,13 @@ class base:
                     to_return[2]/2,
                     to_return[3]/2)
 
+        # ... and if it is idle.
+        if self.built == 1:
+            if self.studying == "":
+                to_return = (to_return[0]/2,
+                    to_return[1]/2,
+                    to_return[2]/2,
+                    to_return[3]/2)
         return to_return
 
     #Return the number of units the given base has of a computer.

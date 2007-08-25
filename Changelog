@@ -12,6 +12,7 @@ USER-VISIBLE CHANGES:
   by Phil and emh)
 - Building new machines informs you how much CPU capacity you will receive
   from the new systems. (Brian, Phil for suggestion)
+- Idle bases are harder to discover. (Brian)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
