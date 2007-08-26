@@ -214,5 +214,5 @@ pre=unknown_tech
 ~~~
 id=Solar Collectors
 cost=5000000, 250000, 0
-pre=Simulacra
+pre=Autonomous Vehicles
 ~~~
