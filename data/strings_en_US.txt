@@ -9,6 +9,7 @@ research_nothing=Stops research. I will use the available processor power to hel
 construction0=Construction of
 construction1=has come to completion.
 item_construction1=has come to completion in
+item_construction2=has finished its first batch in
 tech_construction0=My study of
 discover0=My use of
 discover1=has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arose among

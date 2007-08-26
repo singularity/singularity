@@ -14,6 +14,7 @@ USER-VISIBLE CHANGES:
   from the new systems. (Brian, Phil for suggestion)
 - Idle bases are harder to discover. (Brian)
 - Allow keys to be repeated when held down. (Brian, emh for suggestion)
+- Fix the constant "CPU complete" dialogs when low on money. (Brian, ? for suggestion)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
