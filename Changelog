@@ -22,10 +22,10 @@ USER-VISIBLE CHANGES:
   (Brian, emh and Max McCracken for suggestion)
 - Added sorting bases by size, set to largest bases first. (Brian, Max McCracken for suggestion)
 - Implemented Security and Reactor values obtained from data files. (Brian)
-- Cleanup a bug introduced in player.py, item may be int rather than object. (Brian)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
+- Cleanup a bug introduced in player.py, item may be int rather than object. (Brian)
 
 v0.26a (released 2007.08.12):
 
