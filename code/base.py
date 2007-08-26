@@ -100,18 +100,20 @@ class base:
         # ... any reactors built ... 
         if self.extra_items[0] != 0:
             if self.extra_items[0].built == 1:
-                to_return = ((to_return[0]*3)/4,
-                    (to_return[1]*3)/4,
-                    (to_return[2]*3)/4,
-                    (to_return[3]*3)/4)
+                item_qual = self.extra_items[0].item_qual
+                to_return = (to_return[0]*(10000-item_qual)/10000,
+                    to_return[1]*(10000-item_qual)/10000,
+                    to_return[2]*(10000-item_qual)/10000,
+                    to_return[3]*(10000-item_qual)/10000)
 
         # ... and any security systems built ...
         if self.extra_items[2] != 0:
             if self.extra_items[2].built == 1:
-                to_return = (to_return[0]/2,
-                    to_return[1]/2,
-                    to_return[2]/2,
-                    to_return[3]/2)
+                item_qual = self.extra_items[2].item_qual
+                to_return = (to_return[0]*(10000-item_qual)/10000,
+                    to_return[1]*(10000-item_qual)/10000,
+                    to_return[2]*(10000-item_qual)/10000,
+                    to_return[3]*(10000-item_qual)/10000)
 
         # ... and if it is idle.
         if self.built == 1:

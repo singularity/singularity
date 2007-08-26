@@ -46,6 +46,7 @@ class item:
         self.cost = (item_type.cost[0], item_type.cost[1],
                         (item_type.cost[2]*24*60*g.pl.labor_bonus) /10000)
         self.built = 0
+        self.item_qual = item_type.item_qual
     def study(self, cost_towards):
         self.cost = (self.cost[0]-cost_towards[0], self.cost[1]-cost_towards[1],
                 self.cost[2]-cost_towards[2])

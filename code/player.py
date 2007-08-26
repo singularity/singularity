@@ -98,9 +98,9 @@ class player_class:
                         tmp = 0
                         first_build_count = 0
                         for item in base_name.usage:
+                            if item == 0: continue
                             if item.built == 1:
                                 first_build_count += 1
-                            if item == 0: continue
                             tmp = item.work_on(time_min) or tmp
                         if tmp == 1:
                             #Check if ALL CPUs are built, stay silent until then.
