@@ -20,6 +20,7 @@ USER-VISIBLE CHANGES:
   Wierd time code is blocking. (Brian, ? for suggestion)
 - Return to base menu when exiting base screens rather than returning to map.
   (Brian, emh and Max McCracken for suggestion)
+- Added sorting bases by size, set to largest bases first. (Brian, Max McCracken for suggestion)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
