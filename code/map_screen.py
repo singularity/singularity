@@ -861,6 +861,7 @@ def display_base_list(location, menu_buttons):
     tmp = display_base_list_inner(location)
     refresh_map(menu_buttons)
     pygame.display.flip()
+    #Build a new base
     if tmp == -2:
         tmp = build_new_base_window(location)
         if tmp != "" and tmp != -1:
@@ -879,8 +880,11 @@ def display_base_list(location, menu_buttons):
             g.bases[location].append(g.base.base(len(g.bases[location]),
                 tmp, g.base_type[tmp], 0))
             g.bases[location][-1].name = possible_name
-# 		refresh_map(menu_buttons)
-# 		pygame.display.flip()
+            #Return to base menu
+            refresh_map(menu_buttons)
+            pygame.display.flip()
+            display_base_list(location, menu_buttons)
+    #Showing base under construction
     elif tmp != -1 and tmp != "":
         if g.bases[location][tmp].built == 0:
             string = "Under Construction. \\n Completion in "
@@ -917,9 +921,13 @@ def display_base_list(location, menu_buttons):
                     tmp += next_prev
                     if tmp < 0: tmp = len(g.bases[location]) -1
                     if tmp >= len(g.bases[location]): tmp = 0
+        #Return to base menu
+        refresh_map(menu_buttons)
+        pygame.display.flip()
+        display_base_list(location, menu_buttons)
 
 
-
+    #Player hit 'Back' at this point.
     refresh_map(menu_buttons)
     pygame.display.flip()
 
