@@ -271,7 +271,7 @@ def refresh_tech(tech_name, xy):
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
     else:
-        g.print_string(g.screen, "Reseach complete.",
+        g.print_string(g.screen, "Research complete.",
                 g.font[0][22], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
 
     #Danger
