@@ -57,7 +57,7 @@ build=all
 ~~~
 id=Solar Collector
 cost=5000, 0, 5
-pre=Solar Collector
+pre=Solar Collectors
 type=react, 1000
 build=all
 ~~~
