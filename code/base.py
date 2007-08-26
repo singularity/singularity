@@ -148,6 +148,7 @@ class base:
     def allow_study(self, tech_name):
         if self.built != 1: return 0
         if g.jobs.has_key(tech_name): return 1
+        if tech_name == "Construction": return 1
         if g.techs[tech_name].danger == 0: return 1
         if g.techs[tech_name].danger == 1:
             for region in self.base_type.regions:

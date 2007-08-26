@@ -11,6 +11,6 @@ Todo for 0.27:
         # per-tech time to completion (from day 0 to start, then time to completion)
     - Add more items.
     - Get more items translatable.
-    - Make construction that requires CPU a research option when needed.
+    - Make construction that requires CPU a research option when needed. Complete implementation.
     - Convert CPU usage into pools instead of per-base settings.
     - Fix reactors and security to actually use the values given in items.txt.

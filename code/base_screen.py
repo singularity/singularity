@@ -160,7 +160,7 @@ def refresh_base(menu_buttons, this_base):
     menu_buttons[1].remake_button()
 
     #research display
-    if this_base.studying != "":
+    if this_base.studying != "" and this_base.studying != "Construction":
         if g.jobs.has_key(this_base.studying) == 0:
             if g.techs[this_base.studying].known == 1: this_base.studying = ""
 
@@ -169,6 +169,8 @@ def refresh_base(menu_buttons, this_base):
     study_display_string = this_base.studying
     if study_display_string == "":
         study_display_string = "NOTHING"
+    elif study_display_string == "Construction":
+        study_display_string = "CONSTRUCTION"
     elif g.jobs.has_key(study_display_string):
         action_display_string = "WORKING: "
     elif g.techs.has_key(study_display_string):
@@ -419,6 +421,8 @@ def change_tech(this_base):
     item_list2 = []
     item_list.append("Nothing")
     item_list2.append("Nothing")
+    item_list.append("Construction")
+    item_list2.append("Construction")
     #TECH
     if g.techs["Simulacra"].known == 1:
         item_list.append("Expert Jobs")
@@ -555,6 +559,14 @@ def refresh_tech(this_base, tech_name, xy):
             g.font[0][18], 290, (xy[0]+160, xy[1]+65), g.colors["white"])
         return
 
+    #Construction
+    if tech_name == "" or tech_name == "Construction":
+        g.print_string(g.screen, "Construction",
+            g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
+        string = g.strings["research_construction"]
+        g.print_multiline(g.screen, string,
+            g.font[0][18], 290, (xy[0]+160, xy[1]+65), g.colors["white"])
+        return
 
     #Jobs
     if g.jobs.has_key (tech_name):

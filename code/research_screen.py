@@ -172,6 +172,15 @@ def refresh_screen(menu_buttons, list_size):
             if base_instance.built != 1: continue
             if base_instance.studying == "":
                 free_CPU += base_instance.processor_time()
+            elif base_instance.studying == "Construction":
+                for i in range(len(item_list)):
+                    if item_list[i] == base_instance.studying:
+                        item_CPU_list[i] += base_instance.processor_time()
+                        break
+                else:
+                    item_list.append(base_instance.studying)
+                    item_CPU_list.append(base_instance.processor_time())
+                    item_display_list.append(base_instance.studying)
             elif g.jobs.has_key(base_instance.studying):
                 #Right now, jobs cannot be renamed using translations.
                 for i in range(len(item_list)):
@@ -219,6 +228,14 @@ def refresh_research(tech_name, CPU_amount):
             g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
         return
 
+    #Construction
+    if tech_name == "Construction":
+        g.print_string(g.screen, "Construction",
+            g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
+        string = g.strings["research_construction"]
+        g.print_multiline(g.screen, string,
+            g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
+        return
 
     #Jobs
     if g.jobs.has_key (tech_name):
