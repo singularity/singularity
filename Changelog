@@ -22,6 +22,7 @@ USER-VISIBLE CHANGES:
   (Brian, emh and Max McCracken for suggestion)
 - Added sorting bases by size, set to largest bases first. (Brian, Max McCracken for suggestion)
 - Implemented Security and Reactor values obtained from data files. (Brian)
+- Implemented "Destroy" feature from base list (Brian, Max McCracken and emh for suggestion)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)

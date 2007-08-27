@@ -972,6 +972,8 @@ def display_base_list_inner(location):
         "BACK", 0, g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
         "NEW", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+315, xy_loc[1]+367), (120, 50),
+        "DESTROY", 0, g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
     listbox.refresh_list(bases_list, bases_scroll, base_pos, temp_base_list)
@@ -1021,6 +1023,46 @@ def display_base_list_inner(location):
                     elif button.button_id == "NEW":
                         g.play_click()
                         return -2
+                    elif button.button_id == "DESTROY":
+                        g.play_click()
+                        if g.bases[location][base_pos].built == 0:
+                            string = "Under Construction. \\n Completion in "
+                            string += g.to_time(g.bases[location][base_pos].cost[2]) + ". \\n "
+                            string += "Remaining cost: "+g.to_money(g.bases[location][base_pos].cost[0])
+                            string +=" money, and "+g.add_commas(
+                                            str(g.bases[location][base_pos].cost[1]))
+                            string +=" processor time."
+                            if not g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+                                (200, 200), g.colors["dark_blue"], g.colors["white"],
+                                g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
+                                if g.create_yesno("Destroy this base? This will waste "+
+                                    g.to_money(g.bases[location][base_pos].base_type.cost[0]-
+                                    g.bases[location][base_pos].cost[0])
+                                    +" money, and "+
+                                    g.add_commas(str(g.bases[location][base_pos].base_type.cost[1]-
+                                    g.bases[location][base_pos].cost[1]))
+                                    +" processor time.", g.font[0][18],
+                                    (g.screen_size[0]/2 - 100, 50),
+                                    (200, 200), g.colors["dark_blue"], g.colors["white"],
+                                    g.colors["white"]):
+                                    g.base.destroy_base(location, base_pos)
+                        elif g.create_yesno("Destroy this base?", g.font[0][18],
+                                    (g.screen_size[0]/2 - 100, 50),
+                                    (200, 200), g.colors["dark_blue"], g.colors["white"],
+                                    g.colors["white"]):
+                                    g.base.destroy_base(location, base_pos)
+                        #Return to base menu
+                        #For some reason all of the menu buttons must be recreated, otherwise they disappear into the ether... -Brian
+                        tmp_font_size = 20
+                        if g.screen_size[0] == 640: tmp_font_size = 16
+                        menu_buttons = create_buttons(tmp_font_size)
+
+                        sel_button = -1
+                        refresh_map(menu_buttons)
+                        pygame.display.flip()
+                        display_base_list(location, menu_buttons)
+
+                        return -1
                     if button.button_id == "BACK":
                         g.play_click()
                         return -1
