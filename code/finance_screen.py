@@ -117,13 +117,13 @@ def refresh_screen(menu_buttons):
             if base_instance.built == 1:
                 maint += base_instance.base_type.mainten[0]
                 for item in base_instance.usage:
-                    if item == 0: continue
+                    if not item: continue
                     if item.built == 1: continue
                     if item.cost[2] > 0:
                         item_constr += (((23-g.pl.time_hour)*60+
                         (60-g.pl.time_min))*item.cost[0]/item.cost[2])
                 for item in base_instance.extra_items:
-                    if item == 0: continue
+                    if not item: continue
                     if item.built == 1: continue
                     if item.cost[2] > 0:
                         item_constr += (((23-g.pl.time_hour)*60+

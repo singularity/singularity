@@ -40,6 +40,13 @@ class item_class:
             self.buildable = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
             "AFRICA"]
 
+    def __cmp__(self, other):
+
+        # For sorting items, we sort by cost; Python's cmp() is smart enough
+        # to handle this properly for tuples.  The first element is price in
+        # cash, which is the one we care about the most.
+        return cmp(self.cost, other.cost)
+
 class item:
     def __init__(self, item_type):
         self.item_type = item_type
@@ -47,6 +54,7 @@ class item:
                         (item_type.cost[2]*24*60*g.pl.labor_bonus) /10000)
         self.built = 0
         self.item_qual = item_type.item_qual
+
     def study(self, cost_towards):
         self.cost = (self.cost[0]-cost_towards[0], self.cost[1]-cost_towards[1],
                 self.cost[2]-cost_towards[2])

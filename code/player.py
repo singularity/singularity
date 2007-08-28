@@ -98,7 +98,7 @@ class player_class:
                         tmp = 0
                         first_build_count = 0
                         for item in base_name.usage:
-                            if item == 0: continue
+                            if not item: continue
                             if item.built == 1:
                                 first_build_count += 1
                             tmp = item.work_on(time_min) or tmp
@@ -133,7 +133,7 @@ class player_class:
                                     g.colors["white"], g.colors["white"])
                                 g.curr_speed = 1
                         for item in base_name.extra_items:
-                            if item == 0: continue
+                            if not item: continue
                             tmp = item.work_on(time_min)
                             if tmp == 1:
                                 needs_refresh = 1
@@ -390,7 +390,7 @@ class player_class:
                         result_cash -= g.techs[base_name.studying].cost[0]
                         tmp_techs[base_name.studying] = 1
                 for item in base_name.usage:
-                    if item != 0: result_cash -= item.cost[0]
+                    if item: result_cash -= item.cost[0]
                 for item in base_name.extra_items:
-                    if item != 0: result_cash -= item.cost[0]
+                    if item: result_cash -= item.cost[0]
         return result_cash

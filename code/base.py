@@ -98,7 +98,7 @@ class base:
             (to_return[3]*(10000+self.suspicion[3])/10000))
 
         # ... any reactors built ... 
-        if self.extra_items[0] != 0:
+        if self.extra_items[0]:
             if self.extra_items[0].built == 1:
                 item_qual = self.extra_items[0].item_qual
                 to_return = (to_return[0]*(10000-item_qual)/10000,
@@ -107,7 +107,7 @@ class base:
                     to_return[3]*(10000-item_qual)/10000)
 
         # ... and any security systems built ...
-        if self.extra_items[2] != 0:
+        if self.extra_items[2]:
             if self.extra_items[2].built == 1:
                 item_qual = self.extra_items[2].item_qual
                 to_return = (to_return[0]*(10000-item_qual)/10000,
@@ -128,7 +128,7 @@ class base:
     def has_item(self):
         num_items = 0
         for item in self.usage:
-            if item == 0: continue
+            if not item: continue
             if item.built == 0: continue
             num_items += 1
         return num_items
@@ -138,10 +138,10 @@ class base:
         comp_power = 0
         compute_bonus = 0
         for item in self.usage:
-            if item == 0: continue
+            if not item: continue
             if item.built == 0: continue
             comp_power += item.item_type.item_qual
-        if self.extra_items[1] != 0:
+        if self.extra_items[1]:
             if self.extra_items[1].built == 1:
                 compute_bonus = self.extra_items[1].item_type.item_qual
         return (comp_power * (10000+compute_bonus))/10000
