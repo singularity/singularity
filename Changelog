@@ -23,6 +23,8 @@ USER-VISIBLE CHANGES:
 - Added sorting bases by size, set to largest bases first. (Brian, Max McCracken for suggestion)
 - Implemented Security and Reactor values obtained from data files. (Brian)
 - Implemented "Destroy" feature from base list (Brian, Max McCracken and emh for suggestion)
+- When building, items are sorted by their cost to make picking the best one
+  easier. (Phil, Gustav Bertram for suggestion)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)

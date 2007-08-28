@@ -234,16 +234,19 @@ def build_item(this_base, item_type, location):
         return 0
 
     list_size = 10
-    item_list = []
+
+    # The object list will hold all of the actual item types buildable.
+    item_object_list = []
+
+    # The ID list holds the 'IDs' of each item, used to refer back to the
+    # source objects.
+    item_id_list = []
+
+    # The display list holds the display names for each object, potentially
+    # localised into the native language.
     item_display_list = []
-    #for item_name in g.items:
-        #if g.items[item_name].item_type == item_type:
-            #if g.items[item_name].prereq == "":
-                #item_list.append(item_name)
-                #item_display_list.append(g.items[item_name].name)
-            #elif g.techs[g.items[item_name].prereq].known == 1:
-                #item_list.append(item_name)
-                #item_display_list.append(g.items[item_name].name)
+
+    # First we determine the list of items that can actually be built here ...
     for item_name in g.items:
         if g.items[item_name].item_type == item_type:
             if g.items[item_name].prereq != "":
@@ -251,16 +254,26 @@ def build_item(this_base, item_type, location):
                     continue
             try: g.items[item_name].buildable.index(location)
             except ValueError: continue
-            item_list.append(item_name)
-            item_display_list.append(g.items[item_name].name)
+            item_object_list.append(g.items[item_name])
+
+    # ... then we sort that list.  Items sort by cost comparison.  We want to
+    # display the most expensive objects at the top, as they are typically
+    # what a person wants to build.
+    item_object_list.sort()
+    item_object_list.reverse()
+
+    # Finally we build the id_list and display_list from the sorted objects.
+    item_id_list = [x.item_id for x in item_object_list]
+    item_display_list = [x.name for x in item_object_list]
+
     xy_loc = (g.screen_size[0]/2 - 300, 50)
-    while len(item_list) % list_size != 0 or len(item_list) == 0:
-        item_list.append("")
+    while len(item_id_list) % list_size != 0 or len(item_id_list) == 0:
+        item_id_list.append("")
         item_display_list.append("")
 
     list_pos = 0
 
-    item_listbox = listbox.listbox(xy_loc, (250, 300),
+    item_id_listbox = listbox.listbox(xy_loc, (250, 300),
         list_size, 1, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"], g.colors["white"], g.font[0][18])
 
@@ -276,8 +289,8 @@ def build_item(this_base, item_type, location):
     for button in menu_buttons:
         button.refresh_button(0)
 
-    refresh_item(this_base, item_list[list_pos], xy_loc)
-    listbox.refresh_list(item_listbox, item_scroll, list_pos, item_display_list)
+    refresh_item(this_base, item_id_list[list_pos], xy_loc)
+    listbox.refresh_list(item_id_listbox, item_scroll, list_pos, item_display_list)
 
     sel_button = -1
     while 1:
@@ -288,38 +301,38 @@ def build_item(this_base, item_type, location):
                 if event.key == pygame.K_ESCAPE: return -1
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
-                    actual_build(this_base, item_list[list_pos], item_type)
+                    actual_build(this_base, item_id_list[list_pos], item_type)
                     return
                 else:
-                    list_pos, refresh = item_listbox.key_handler(event.key,
+                    list_pos, refresh = item_id_listbox.key_handler(event.key,
                         list_pos, item_display_list)
                     if refresh:
-                        refresh_item(this_base, item_list[list_pos], xy_loc)
-                        listbox.refresh_list(item_listbox, item_scroll,
+                        refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                        listbox.refresh_list(item_id_listbox, item_scroll,
                                         list_pos, item_display_list)
 
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = item_listbox.is_over(event.pos)
+                    tmp = item_id_listbox.is_over(event.pos)
                     if tmp != -1:
                         list_pos = (list_pos / list_size)*list_size + tmp
-                        refresh_item(this_base, item_list[list_pos], xy_loc)
-                        listbox.refresh_list(item_listbox, item_scroll,
+                        refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                        listbox.refresh_list(item_id_listbox, item_scroll,
                                         list_pos, item_display_list)
                 if event.button == 3: return -1
                 if event.button == 4:
                     list_pos -= 1
                     if list_pos <= 0:
                         list_pos = 0
-                    refresh_item(this_base, item_list[list_pos], xy_loc)
-                    listbox.refresh_list(item_listbox, item_scroll,
+                    refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                    listbox.refresh_list(item_id_listbox, item_scroll,
                                         list_pos, item_display_list)
                 if event.button == 5:
                     list_pos += 1
-                    if list_pos >= len(item_list):
-                        list_pos = len(item_list)-1
-                    refresh_item(this_base, item_list[list_pos], xy_loc)
-                    listbox.refresh_list(item_listbox, item_scroll,
+                    if list_pos >= len(item_id_list):
+                        list_pos = len(item_id_list)-1
+                    refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                    listbox.refresh_list(item_id_listbox, item_scroll,
                                         list_pos, item_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
@@ -327,16 +340,16 @@ def build_item(this_base, item_type, location):
                 if button.was_activated(event):
                     if button.button_id == "BUILD":
                         g.play_click()
-                        actual_build(this_base, item_list[list_pos], item_type)
+                        actual_build(this_base, item_id_list[list_pos], item_type)
                         return
                     if button.button_id == "BACK":
                         g.play_click()
                         return -1
-            tmp = item_scroll.adjust_pos(event, list_pos, item_list)
+            tmp = item_scroll.adjust_pos(event, list_pos, item_id_list)
             if tmp != list_pos:
                 list_pos = tmp
-                refresh_item(this_base, item_list[list_pos], xy_loc)
-                listbox.refresh_list(item_listbox, item_scroll, list_pos,
+                refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                listbox.refresh_list(item_id_listbox, item_scroll, list_pos,
                     item_display_list)
 
 
