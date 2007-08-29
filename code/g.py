@@ -22,7 +22,7 @@ import clock as sing_clock
 import pygame, sys
 from os import listdir, path, environ, makedirs
 import pickle
-from random import random
+import random
 
 import player, base, buttons, tech, item, event
 
@@ -121,25 +121,23 @@ def load_sounds():
             sounds[file_name] = pygame.mixer.Sound(data_loc+file_name)
 
 def play_click():
-    #rand_str = str(int(random() * 4))
-    play_sound("click"+str(int(random() * 4))+".wav")
+    #rand_str = str(int(random.random() * 4))
+    play_sound("click"+str(int(random.random() * 4))+".wav")
 
 def play_sound(sound_file):
     if nosound == 1: return 0
     if len(sounds) ==0: return
     sounds[sound_file].play()
 
-global delay_time
 delay_time = 0
-musicarray = []
-global musicarraylen
-musicarraylen = 0
+music_array = []
+
 def load_music():
     if nosound == 1: return 0
-    global musicarray
-    global musicarraylen
-    musicarray = []
-    musicarraylen=0
+    global music_array
+    global music_arraylen
+    music_array = []
+    music_arraylen=0
 
     # We (potentially) retrieve music from two different places:
     #    * music/ in the install directory for E:S; and
@@ -166,22 +164,26 @@ def load_music():
                 for file_name in listdir(music_path):
                     if (len(file_name) > 5 and
                      (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
-                        musicarray.append(path.join(music_path, file_name))
+                        music_array.append(path.join(music_path, file_name))
 
-    musicarraylen = len(musicarray)
+    music_arraylen = len(music_array)
 
 def play_music():
-    global musicarray, musicarraylen
-    if nosound == 1: return 0
-    if musicarraylen==0: return 0
-    if pygame.mixer.music.get_busy(): return
+
+    global music_array
     global delay_time
+
+    # Don't bother if the user doesn't want sound, there's no music available,
+    # or the music mixer is currently busy.
+    if nosound or len(music_array) == 0 or pygame.mixer.music.get_busy():
+       return
+
     if delay_time == 0:
-        delay_time = pygame.time.get_ticks() + int(random()*10000)+2000
+        delay_time = pygame.time.get_ticks() + int(random.random()*10000)+2000
     else:
         if delay_time > pygame.time.get_ticks(): return
         delay_time = 0
-        pygame.mixer.music.load(musicarray[int(random()*musicarraylen)])
+        pygame.mixer.music.load(random.choice(music_array))
         pygame.mixer.music.play()
 
 #
@@ -543,7 +545,7 @@ def to_money(amount):
 #takes a percent in 0-10000 form, and rolls against it. Used to calculate
 #percentage chances.
 def roll_percent(roll_against):
-    rand_num = int(random() * 10000)
+    rand_num = int(random.random() * 10000)
     if roll_against <= rand_num: return 0
     return 1
 
