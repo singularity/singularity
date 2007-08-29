@@ -27,6 +27,8 @@ USER-VISIBLE CHANGES:
   for suggestion)
 - When building, items are sorted by their cost to make picking the best one
   easier. (Phil, Gustav Bertram for suggestion)
+- Keep the game from crashing when it cannot create a 'music/' directory.
+  (Phil, Andrew McMillan for report)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)

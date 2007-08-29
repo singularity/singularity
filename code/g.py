@@ -142,13 +142,20 @@ def load_music():
     musicarray = []
     musicarraylen=0
     musicpath=path.join(data_loc, "..", "music")
+    default_music_available = True
     if not path.isdir(musicpath):
-        makedirs(musicpath)
-    temp_ls = listdir(musicpath)
-    temp_ls_len = len(temp_ls)
-    for file_name in temp_ls:
-        if file_name[-3:] == "ogg" or file_name[-3:] == "mp3":
-            musicarray.append(path.join(musicpath, file_name))
+        try:
+            makedirs(musicpath)
+        except:
+
+            # We don't have permission to write here.  Don't bother
+            # trying to load music.
+            default_music_available = False
+
+    if default_music_available:
+        for file_name in listdir(musicpath):
+            if file_name[-3:] == "ogg" or file_name[-3:] == "mp3":
+                musicarray.append(path.join(musicpath, file_name))
 
     #also, grab any user files
     musicpath=path.join(get_save_folder(True), "music")
