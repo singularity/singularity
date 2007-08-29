@@ -34,6 +34,8 @@ OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
 - Cleanup a bug introduced in player.py, item may be int rather than object.
   (Brian)
+- The music loading code is less fragile now; it shouldn't break on too-short
+  file names. (Phil)
 
 v0.26a (released 2007.08.12):
 

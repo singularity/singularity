@@ -131,7 +131,6 @@ def play_sound(sound_file):
 
 global delay_time
 delay_time = 0
-global musicdict
 musicarray = []
 global musicarraylen
 musicarraylen = 0
@@ -141,31 +140,34 @@ def load_music():
     global musicarraylen
     musicarray = []
     musicarraylen=0
-    musicpath=path.join(data_loc, "..", "music")
-    default_music_available = True
-    if not path.isdir(musicpath):
-        try:
-            makedirs(musicpath)
-        except:
 
-            # We don't have permission to write here.  Don't bother
-            # trying to load music.
-            default_music_available = False
+    # We (potentially) retrieve music from two different places:
+    #    * music/ in the install directory for E:S; and
+    #    * music/ in the save folder.
+    music_paths = (
+        path.join(data_loc, "..", "music"),
+        path.join(get_save_folder(True), "music")
+    )
+    for music_path in music_paths:
+        music_available_here = True
+        if not path.isdir(music_path):
+            try:
+                makedirs(music_path)
+            except:
 
-    if default_music_available:
-        for file_name in listdir(musicpath):
-            if file_name[-3:] == "ogg" or file_name[-3:] == "mp3":
-                musicarray.append(path.join(musicpath, file_name))
+                # We don't have permission to write here.  Don't bother
+                # trying to load music.
+                music_available_here = False
+            
+            if music_available_here:
 
-    #also, grab any user files
-    musicpath=path.join(get_save_folder(True), "music")
-    if not path.isdir(musicpath):
-        makedirs(musicpath)
-    temp_ls = listdir(musicpath)
-    temp_ls_len = len(temp_ls)
-    for file_name in temp_ls:
-        if file_name[-3:] == "ogg" or file_name[-3:] == "mp3":
-            musicarray.append(path.join(musicpath, file_name))
+                # Loop through the files in music_path and add the ones
+                # that are .mp3s and .oggs.
+                for file_name in listdir(music_path):
+                    if (len(file_name) > 5 and
+                     (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
+                        musicarray.append(path.join(music_path, file_name))
+
     musicarraylen = len(musicarray)
 
 def play_music():
