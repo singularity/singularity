@@ -1366,7 +1366,7 @@ directory.
             # "right" size.  Yes, this is a hack.
             font[0][i] = pygame.font.Font(font0_file, i - 7)
             font[0][i].set_bold(1)
-    font[1][i] = pygame.font.Font(font1_file, i)
+        font[1][i] = pygame.font.Font(font1_file, i)
 
 #difficulty=1 for very easy, to 9 for very hard. 5 for normal.
 def new_game(difficulty):
