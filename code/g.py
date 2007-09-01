@@ -117,8 +117,9 @@ load_sounds() loads all of the sounds in the data/sounds/ directory.
     sound_dir = os.path.join(data_loc, "sounds")
     sound_list = os.listdir(sound_dir)
     for sound_filename in sound_list:
-        if len(sound_filename) > 4 and file_name[-4:] == ".wav":
-            sounds[file_name] = pygame.mixer.Sound(os.path.join(sound_dir, file_name))
+        if len(sound_filename) > 4 and sound_filename[-4:] == ".wav":
+            sounds[sound_filename] = pygame.mixer.Sound(
+             os.path.join(sound_dir, sound_filename))
 
 def play_click():
     #rand_str = str(int(random.random() * 4))
@@ -143,12 +144,12 @@ def load_music():
     #    * music/ in the install directory for E:S; and
     #    * music/ in the save folder.
     music_paths = (
-        path.join(data_loc, "..", "music"),
-        path.join(get_save_folder(True), "music")
+        os.path.join(data_loc, "..", "music"),
+        os.path.join(get_save_folder(True), "music")
     )
     for music_path in music_paths:
         music_available_here = True
-        if not path.isdir(music_path):
+        if not os.path.isdir(music_path):
             try:
                 os.makedirs(music_path)
             except:
@@ -164,7 +165,7 @@ def load_music():
                 for file_name in os.listdir(music_path):
                     if (len(file_name) > 5 and
                      (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
-                        music_array.append(path.join(music_path, file_name))
+                        music_array.append(os.path.join(music_path, file_name))
 
     music_arraylen = len(music_array)
 
@@ -567,7 +568,7 @@ def to_time(raw_time):
 #have HOME defined have it defined properly.
 def get_save_folder(just_pref_dir=False):
     if os.environ.has_key("HOME") and not force_single_dir:
-        save_dir = path.join(os.environ["HOME"], ".endgame", "saves")
+        save_dir = os.path.join(os.environ["HOME"], ".endgame", "saves")
     else:
         if data_loc == "../data/":
             save_dir = path.join("..", "saves")
@@ -575,7 +576,7 @@ def get_save_folder(just_pref_dir=False):
             save_dir = "saves"
         else:
             print "data_loc="+data_loc+" breaks get_save_folder"
-    if path.exists(save_dir) == 0:
+    if os.path.exists(save_dir) == 0:
         #As a note, the online python reference includes the mkdirs function,
         #which would do this better, but it must be rather new, as I don't
         #have it.
@@ -588,7 +589,7 @@ def get_save_folder(just_pref_dir=False):
 
 def save_game(savegame_name):
     save_dir = get_save_folder()
-    save_loc = path.join(save_dir, savegame_name + ".sav")
+    save_loc = os.path.join(save_dir, savegame_name + ".sav")
     savefile=open(save_loc, 'w')
     #savefile version; update whenever the data saved changes.
     pickle.dump("singularity_savefile_r3_pre", savefile)
@@ -665,12 +666,12 @@ def load_game(loadgame_name):
 
     save_dir = get_save_folder()
 
-    load_loc = path.join(save_dir, loadgame_name + ".sav")
-    if path.exists(load_loc) == 0:
+    load_loc = os.path.join(save_dir, loadgame_name + ".sav")
+    if os.path.exists(load_loc) == 0:
         # Try the old-style savefile location.  This should be removed in
         # a few versions.
-        load_loc = path.join(save_dir, loadgame_name)
-        if path.exists(load_loc) == 0:
+        load_loc = os.path.join(save_dir, loadgame_name)
+        if os.path.exists(load_loc) == 0:
             print "file "+load_loc+" does not exist."
             return -1
     loadfile=open(load_loc, 'r')
@@ -1011,8 +1012,8 @@ def load_bases():
 
 def fix_data_dir():
     global data_loc
-    if path.exists(data_loc): return
-    elif path.exists("data"):
+    if os.path.exists(data_loc): return
+    elif os.path.exists("data"):
         data_loc = "data/"
         return
 
@@ -1273,9 +1274,9 @@ def load_event_defs():
     event_defs = {}
 
     #If there are no event data files, stop.
-    if (not path.exists(data_loc+"events.dat") or
-     not path.exists(data_loc+"events_"+language+".dat") or
-     not path.exists(data_loc+"events_en_US.dat")):
+    if (not os.path.exists(data_loc+"events.dat") or
+     not os.path.exists(data_loc+"events_"+language+".dat") or
+     not os.path.exists(data_loc+"events_en_US.dat")):
         print "event files are missing. Exiting."
         sys.exit(1)
 
@@ -1328,8 +1329,8 @@ def load_string_defs(language_str):
 
 def load_strings():
     #If there are no string data files, stop.
-    if not path.exists(data_loc+"strings_"+language+".dat") or \
-                    not path.exists(data_loc+"strings_en_US.dat"):
+    if not os.path.exists(data_loc+"strings_"+language+".dat") or \
+                    not os.path.exists(data_loc+"strings_en_US.dat"):
         print "string files are missing. Exiting."
         sys.exit(1)
 

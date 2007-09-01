@@ -22,6 +22,7 @@
 import ConfigParser
 import pygame, sys
 import g, main_menu, map_screen
+import os.path
 
 
 pygame.init()
@@ -31,8 +32,8 @@ g.fullscreen = 0
 
 #load prefs from file:
 save_dir = g.get_save_folder(True)
-save_loc = g.path.join(save_dir, "prefs.dat")
-if g.path.exists(save_loc):
+save_loc = os.path.join(save_dir, "prefs.dat")
+if os.path.exists(save_loc):
 
     prefs = ConfigParser.SafeConfigParser()
     savefile = open(save_loc, "r")
@@ -72,7 +73,7 @@ if g.path.exists(save_loc):
 
         try:
             desired_language = prefs.get("Preferences", "lang")
-            if g.path.exists(g.data_loc + "strings_" + desired_language + ".dat"):
+            if os.path.exists(g.data_loc + "strings_" + desired_language + ".dat"):
                 g.language = desired_language
         except:
             sys.stderr.write("Cannot find language files for language '%s'.\n" % desired_language)
