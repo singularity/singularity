@@ -58,7 +58,7 @@ language = "en_US"
 
 #name given when the savegame button is pressed. This is changed when the
 #game is loaded or saved.
-default_savegame_name = "player"
+default_savegame_name = "Default Save"
 
 #which fonts to use
 font0 = "vera.ttf"
