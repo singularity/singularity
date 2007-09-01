@@ -1219,37 +1219,30 @@ def load_events():
     global events
     events = {}
 
-    #If there are no event data files, stop.
-    if (not path.exists(data_loc+"events.dat") or
-     not path.exists(data_loc+"events_"+language+".dat") or
-     not path.exists(data_loc+"events_en_US.dat")):
-        print "event files are missing. Exiting."
-        sys.exit()
+    event_list = generic_load("events.dat")
+    for event_name in event_list:
 
-    temp_event_array = generic_load("events.dat")
-    for event_name in temp_event_array:
-        if (not event_name.has_key("type")):
-            print "event lacks type in events.dat"
-        if (not event_name.has_key("id")):
-            print "event lacks id in events.dat"
-        if (not event_name.has_key("allowed")):
-            print "event lacks cost in events.dat"
-        if (not event_name.has_key("result")):
-            print "event lacks result in events.dat"
-        result_array = event_name["result"].split(",", 1)
-        if len(result_array) != 2:
-            print "error with cost given: "+event_name["result"]
-            sys.exit()
-        temp_event_result = (str(result_array[0]), int(result_array[1]))
-        if (not event_name.has_key("chance")):
-            print "event lacks chance in events.dat"
-        if (not event_name.has_key("unique")):
-            print "event lacks unique in events.dat"
-        events[event_name["id"]]=event.event_class(
+        # Certain keys are absolutely required for each entry.  Make sure
+        # they're there.
+        for key in ("id", "type", "allowed", "result", "chance", "unique"):
+            if not event_name.has_key(key):
+                sys.stderr.write("Event %s lacks key %s.\n" % (event_name, key))
+                sys.exit(1)
+
+        # Make sure the results are in the proper format.
+        result_list = event_name["result"]
+        if type(result_list) != list or len(result_list) != 2:
+            sys.stderr.write("Error with results given: %s\n" % repr(result_list))
+            sys.exit(1)
+
+        event_result = (str(result_list[0]), int(result_list[1]))
+
+        # Build the actual event object.
+        events[event_name["id"]] = event.event_class(
          event_name["id"],
          "",
          event_name["type"],
-         temp_event_result,
+         event_result,
          int(event_name["chance"]),
          int(event_name["unique"]))
 

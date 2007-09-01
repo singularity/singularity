@@ -1,60 +1,60 @@
 #Type is either global (rolled once per day),
 #base (rolled once per base per day),
-#research (rolled once per base per day, if researching tech),
-#item (rolled once per base per day, if base has item)
+#research (rolled once per base per day | if researching tech),
+#item (rolled once per base per day | if base has item)
 
 [the-plague]
 type = global
 allowed = all
-result = discover_public, 2000
+result_list = discover_public | 2000
 chance = 20
 unique = 1
 
 [stranger-than-fiction]
 type = global
 allowed = all
-result = discover_public, 2000
+result_list = discover_public | 2000
 chance = 20
 unique = 1
 
 [the-watchers]
 type = global
 allowed = all
-result = discover_covert, -2000
+result_list = discover_covert | -2000
 chance = 20
 unique = 1
 
 [politics-as-usual]
 type = global
 allowed = all
-result = discover_covert, 2000
+result_list = discover_covert | 2000
 chance = 20
 unique = 1
 
 [lab-ai]
 type = global
 allowed = all
-result = discover_science, -2000
+result_list = discover_science | -2000
 chance = 20
 unique = 1
 
 [discrediting]
 type = global
 allowed = all
-result = discover_science, 2000
+result_list = discover_science | 2000
 chance = 20
 unique = 1
 
 [scandal]
 type = global
 allowed = all
-result = discover_news, 2000
+result_list = discover_news | 2000
 chance = 20
 unique = 0
 
 [investigation]
 type = global
 allowed = all
-result = discover_news, -2000
+result_list = discover_news | -2000
 chance = 20
 unique = 0
