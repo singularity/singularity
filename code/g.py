@@ -125,8 +125,8 @@ def play_click():
     play_sound("click"+str(int(random.random() * 4))+".wav")
 
 def play_sound(sound_file):
-    if nosound == 1: return 0
-    if len(sounds) ==0: return
+    if nosound or len(sounds) == 0:
+        return 0
     sounds[sound_file].play()
 
 delay_time = 0
