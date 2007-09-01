@@ -150,7 +150,7 @@ g.load_music()
 #Display the main menu
 while 1:
     game_action = main_menu.display_main_menu()
-
+    
     if game_action == 0: #New
         temp = main_menu.difficulty_select()
         if temp == 1:

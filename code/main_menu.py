@@ -23,60 +23,123 @@ from os import path, listdir
 import pygame
 import g
 
-
+from pgu import gui
 import buttons
 import scrollbar
 import listbox
 
+mmChoice = -1
+# Init PGU
+app = gui.App()
+app.connect(gui.QUIT, app.quit, None)
+
+class MainMenuGui(gui.Table):
+    def __init__(self,**params):
+        gui.Table.__init__(self,**params)
+        fg = (255,255,255)
+
+        self.tr()
+        button = gui.Button("New Game", color=fg)
+        self.add(button,0,0)
+        button.connect(gui.CLICK, mmgui_new_game, None)
+
+        self.tr()
+        button = gui.Button("Load Game", color=fg)
+        self.add(button,0,1)
+        button.connect(gui.CLICK, mmgui_load_game, None)
+
+        self.tr()
+        button = gui.Button("Options", color=fg)
+        self.add(button,0,2)
+        button.connect(gui.CLICK, mmgui_options, None)
+
+        self.tr()
+        button = gui.Button("Quit", color=fg)
+        self.add(button,0,3)
+        button.connect(gui.CLICK, mmgui_quit, None)
+
+        self.tr()
+        button = gui.Button("About", color=fg)
+        self.add(button,0,4)
+        button.connect(gui.CLICK, mmgui_about, None)
+
+
+def mmgui_new_game(arg):
+    global mmChoice
+    mmChoice = 0
+    app.quit()
+def mmgui_load_game(arg):
+    global mmChoice
+    mmChoice = 1
+    app.quit()
+def mmgui_options(arg):
+    global mmChoice
+    mmChoice = 4
+    app.quit()
+def mmgui_quit(arg):
+    global mmChoice
+    mmChoice = 2
+    app.quit()
+def mmgui_about(arg):
+    global mmChoice
+    mmChoice = 3
+    app.quit()
+
 #Displays the main menu. Returns 0 (new game), 1 (load game), or 2 (quit).
 def display_main_menu():
+    global mmChoice
+
     g.screen.fill(g.colors["black"])
     x_loc = g.screen_size[0]/2 - 100
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((x_loc, 120), (200, 50),
-        "NEW GAME", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((x_loc, 220), (200, 50),
-        "LOAD GAME", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((x_loc, 320), (200, 50),
-        "OPTIONS", 0, g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (100, 25),
-        "ABOUT", 0, g.font[1][18]))
-    menu_buttons.append(buttons.make_norm_button((x_loc, 420), (200, 50),
-        "QUIT", 0, g.font[1][30]))
-    g.print_string(g.screen, "ENDGAME: SINGULARITY", g.font[1][40], -1,
-        (x_loc+100, 15), g.colors["dark_red"], 1)
 
-    for button in menu_buttons:
-        button.refresh_button(0)
+    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
+
+    fg = (255,255,255)
+
+    titlefont = pygame.font.Font(g.data_loc+g.font0, 32)
+    label = gui.Label("ENDGAME:SINGULARITY", color=(125,0,0), font=titlefont)
+    container.add(label,x_loc-100,0)
+
+    button = gui.Button("New Game", color=fg)
+    container.add(button,x_loc,120)
+    button.connect(gui.CLICK, mmgui_new_game, None)
+
+    button = gui.Button("Load Game", color=fg)
+    container.add(button,x_loc,220)
+    button.connect(gui.CLICK, mmgui_load_game, None)
+
+    button = gui.Button("Options", color=fg)
+    container.add(button,x_loc,320)
+    button.connect(gui.CLICK, mmgui_options, None)
+
+    button = gui.Button("Quit", color=fg)
+    container.add(button,x_loc,420)
+    button.connect(gui.CLICK, mmgui_quit, None)
+
+    button = gui.Button("About", color=fg)
+    container.add(button,0,g.screen_size[1]-40)
+    button.connect(gui.CLICK, mmgui_about, None)
+
+
+    #Run the pgu using the container. Kill on exiting this dialog group in the button handlers.
+    #Likely this will need to be replaced to keep the keyboard handling.
+    app.run(container)
+
+    if mmChoice != -1:
+        g.play_click()
+        return mmChoice
 
     pygame.display.flip()
 
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return 2
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "NEW GAME":
-                        g.play_click()
-                        return 0
-                    elif button.button_id == "LOAD GAME":
-                        g.play_click()
-                        return 1
-                    elif button.button_id == "OPTIONS":
-                        g.play_click()
-                        return 4
-                    elif button.button_id == "ABOUT":
-                        g.play_click()
-                        return 3
-                    if button.button_id == "QUIT":
-                        g.play_click()
-                        return 2
+#    sel_button = -1
+#    while 1:
+#        g.clock.tick(20)
+#        for event in pygame.event.get():
+#            if event.type == pygame.QUIT: g.quit_game()
+#            elif event.type == pygame.KEYDOWN:
+#                if event.key == pygame.K_ESCAPE: return 2
+#            elif event.type == pygame.MOUSEMOTION:
+#                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
 def difficulty_select():
 

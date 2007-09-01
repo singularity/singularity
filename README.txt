@@ -94,6 +94,7 @@ Brian Reid
 Borg[MDQ] (translation into Spanish)
 Adam Bark (reduced-CPU Clock class)
 Max McCracken (music)
+Phil Hassey (PGU GUI Library)
 
 Contributing:
 All suggestions, translations, code, etc. are welcomed, though it would be

@@ -14,3 +14,5 @@ Todo for 0.27:
     - Make construction that requires CPU a research option when needed. Complete implementation.
     - Convert CPU usage into pools instead of per-base settings.
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
+    - Complete PGU GUI migration
+
