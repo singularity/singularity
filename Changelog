@@ -29,9 +29,12 @@ USER-VISIBLE CHANGES:
   easier. (Phil, Gustav Bertram for suggestion)
 - Keep the game from crashing when it cannot create a 'music/' directory.
   (Phil, Andrew McMillan for report)
-- Added checks to avoid key error crashes related to unfinished Construction code. (Brian)
-- Added check to avoid crash when hitting 'Destroy' button in an empty base list. (Brian)
-- Migrated GUI handling to pgu, main_screen is the only ported so far. (Brian)
+- Added checks to avoid key error crashes related to unfinished Construction
+  code. (Brian)
+- Added check to avoid crash when hitting 'Destroy' button in an empty base
+  list. (Brian)
+- Migrated GUI handling to pgu, main_screen is the only ported so far.
+  (Brian)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
