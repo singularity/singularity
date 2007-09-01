@@ -34,56 +34,9 @@ mmChoice = -1
 app = gui.App()
 app.connect(gui.QUIT, app.quit, None)
 
-class MainMenuGui(gui.Table):
-    def __init__(self,**params):
-        gui.Table.__init__(self,**params)
-        fg = (255,255,255)
-
-        self.tr()
-        button = gui.Button("New Game", color=fg)
-        self.add(button,0,0)
-        button.connect(gui.CLICK, mmgui_new_game, None)
-
-        self.tr()
-        button = gui.Button("Load Game", color=fg)
-        self.add(button,0,1)
-        button.connect(gui.CLICK, mmgui_load_game, None)
-
-        self.tr()
-        button = gui.Button("Options", color=fg)
-        self.add(button,0,2)
-        button.connect(gui.CLICK, mmgui_options, None)
-
-        self.tr()
-        button = gui.Button("Quit", color=fg)
-        self.add(button,0,3)
-        button.connect(gui.CLICK, mmgui_quit, None)
-
-        self.tr()
-        button = gui.Button("About", color=fg)
-        self.add(button,0,4)
-        button.connect(gui.CLICK, mmgui_about, None)
-
-
-def mmgui_new_game(arg):
+def mmgui_func(arg):
     global mmChoice
-    mmChoice = 0
-    app.quit()
-def mmgui_load_game(arg):
-    global mmChoice
-    mmChoice = 1
-    app.quit()
-def mmgui_options(arg):
-    global mmChoice
-    mmChoice = 4
-    app.quit()
-def mmgui_quit(arg):
-    global mmChoice
-    mmChoice = 2
-    app.quit()
-def mmgui_about(arg):
-    global mmChoice
-    mmChoice = 3
+    mmChoice = arg
     app.quit()
 
 #Displays the main menu. Returns 0 (new game), 1 (load game), or 2 (quit).
@@ -103,23 +56,23 @@ def display_main_menu():
 
     button = gui.Button("New Game", color=fg)
     container.add(button,x_loc,120)
-    button.connect(gui.CLICK, mmgui_new_game, None)
+    button.connect(gui.CLICK, mmgui_func, 0)
 
     button = gui.Button("Load Game", color=fg)
     container.add(button,x_loc,220)
-    button.connect(gui.CLICK, mmgui_load_game, None)
+    button.connect(gui.CLICK, mmgui_func, 1)
 
     button = gui.Button("Options", color=fg)
     container.add(button,x_loc,320)
-    button.connect(gui.CLICK, mmgui_options, None)
+    button.connect(gui.CLICK, mmgui_func, 4)
 
     button = gui.Button("Quit", color=fg)
     container.add(button,x_loc,420)
-    button.connect(gui.CLICK, mmgui_quit, None)
+    button.connect(gui.CLICK, mmgui_func, 2)
 
     button = gui.Button("About", color=fg)
     container.add(button,0,g.screen_size[1]-40)
-    button.connect(gui.CLICK, mmgui_about, None)
+    button.connect(gui.CLICK, mmgui_func, 3)
 
 
     #Run the pgu using the container. Kill on exiting this dialog group in the button handlers.
@@ -132,6 +85,7 @@ def display_main_menu():
 
     pygame.display.flip()
 
+# FIXME: Re-Implement keyboard handling. Original code is here.
 #    sel_button = -1
 #    while 1:
 #        g.clock.tick(20)
@@ -142,66 +96,73 @@ def display_main_menu():
 #            elif event.type == pygame.MOUSEMOTION:
 #                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
-def difficulty_select():
+global mmdiff_result
 
-    xsize = 75
-    ysize = 107
+def mmdiff_func(arg):
+    global mmdiff_result
+    mmdiff_result = arg
+    g.play_click()
+    app.quit()
+
+def difficulty_select():
+    global mmdiff_result
+    xsize = 100
+    ysize = 125
     g.create_norm_box((g.screen_size[0]/2-xsize, g.screen_size[1]/2-ysize),
         (xsize*2, ysize*2+1))
 
     xstart =g.screen_size[0]/2-xsize+5
-    ystart =g.screen_size[1]/2-ysize
-    diff_buttons = []
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+5), (140, 30),
-        "VERY EASY", 0, g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+40), (140, 30),
-        "EASY", 0, g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+75), (140, 30),
-        "NORMAL", 0, g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+110), (140, 30),
-        "HARD", 0, g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+145), (140, 30),
-        "IMPOSSIBLE", 0, g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+180), (140, 30),
-        "BACK", 0, g.font[1][24]))
-    for button in diff_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return 0
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, diff_buttons, event)
-            for button in diff_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "VERY EASY":
-                        g.play_click()
-                        g.new_game(1)
-                        return 1
-                    elif button.button_id == "EASY":
-                        g.play_click()
-                        g.new_game(3)
-                        return 1
-                    elif button.button_id == "NORMAL":
-                        g.play_click()
-                        g.new_game(5)
-                        return 1
-                    elif button.button_id == "HARD":
-                        g.play_click()
-                        g.new_game(7)
-                        return 1
-                    elif button.button_id == "IMPOSSIBLE":
-                        g.play_click()
-                        g.new_game(9)
-                        return 1
-                    elif button.button_id == "BACK":
-                        g.play_click()
-                        return 0
+    ystart =g.screen_size[1]/2-ysize+5
+    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
+    table = gui.Table()
+    container.add(table,xstart,ystart)
 
+    fg = (255,255,255)
+
+    button = gui.Button("VERY EASY", color=fg)
+    table.add(button,xstart,ystart)
+    button.connect(gui.CLICK, mmdiff_func, 1)
+
+    button = gui.Button("EASY", color=fg)
+    table.add(button,xstart,ystart+40)
+    button.connect(gui.CLICK, mmdiff_func, 3)
+
+    button = gui.Button("NORMAL", color=fg)
+    table.add(button,xstart,ystart+80)
+    button.connect(gui.CLICK, mmdiff_func, 5)
+
+    button = gui.Button("HARD", color=fg)
+    table.add(button,xstart,ystart+120)
+    button.connect(gui.CLICK, mmdiff_func, 7)
+
+    button = gui.Button("IMPOSSIBLE", color=fg)
+    table.add(button,xstart,ystart+160)
+    button.connect(gui.CLICK, mmdiff_func, 9)
+
+    button = gui.Button("BACK", color=fg)
+    table.add(button,xstart,ystart+200)
+    button.connect(gui.CLICK, mmdiff_func, 0)
+
+    app.run(container)
+
+    if mmdiff_result != 0:
+        g.new_game(mmdiff_result)
+        return 1
+    else:
+        return 0
+
+    pygame.display.flip()
+
+    #sel_button = -1
+    #while 1:
+        #g.clock.tick(20)
+        #for event in pygame.event.get():
+            #if event.type == pygame.QUIT: g.quit_game()
+            #elif event.type == pygame.KEYDOWN:
+                #if event.key == pygame.K_ESCAPE: return 0
+            #elif event.type == pygame.MOUSEMOTION:
+                #sel_button = buttons.refresh_buttons(sel_button, diff_buttons, event)
+ 
 def display_load_menu():
     load_list_size = 16
     xy_loc = (g.screen_size[0]/2 - 109, 50)

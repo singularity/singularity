@@ -37,6 +37,7 @@ USER-VISIBLE CHANGES:
   (Brian)
 - Preferences have moved to 'prefs.dat', and now follow the standard Python
   ConfigParser format. (Phil)
+- Added difficulty choice dialog handled by pgu. (Brian)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
