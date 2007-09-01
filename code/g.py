@@ -1131,7 +1131,7 @@ def load_techs():
             type_list = tech_name["type"]
             if type(type_list) != list or len(type_list) != 2:
                 sys.stderr.write("Error with type given: %s\n" % repr(type_list))
-                sys.exit()
+                sys.exit(1)
             tech_type = type_list[0]
             tech_second = int(type_list[1])
         else:
@@ -1202,7 +1202,7 @@ def load_items():
             type_list = item_name["type"]
             if type(type_list) != list or len(type_list) != 2:
                 sys.stderr.write("Error with type given: %s\n" % repr(type_list))
-                sys.exit()
+                sys.exit(1)
             item_type = type_list[0]
             item_second = int(type_list[1])
         else:
@@ -1280,7 +1280,7 @@ def load_event_defs():
      not path.exists(data_loc+"events_"+language+".dat") or
      not path.exists(data_loc+"events_en_US.dat")):
         print "event files are missing. Exiting."
-        sys.exit()
+        sys.exit(1)
 
     temp_event_array = generic_load("events_"+language+".dat")
     for event_name in temp_event_array:
@@ -1334,7 +1334,7 @@ def load_strings():
     if not path.exists(data_loc+"strings_"+language+".dat") or \
                     not path.exists(data_loc+"strings_en_US.dat"):
         print "string files are missing. Exiting."
-        sys.exit()
+        sys.exit(1)
 
     load_string_defs("en_US")
     load_string_defs(language)

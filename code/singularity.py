@@ -116,10 +116,10 @@ for argument in sys.argv:
         print "Unknown argument of " + argument
         print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280,",
         print " -nosound, -language [language], -grab, -singledir"
-        sys.exit()
+        sys.exit(1)
 if arg_modifier == "language":
     print "-language option requires language to be specified."
-    sys.exit()
+    sys.exit(1)
 
 g.load_strings()
 g.load_events()
@@ -130,7 +130,7 @@ pygame.display.set_caption("Endgame: Singularity")
 #be created.
 if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
-    sys.exit()
+    sys.exit(1)
 tmp_icon = pygame.image.load(g.data_loc+"icon.png")
 pygame.display.set_icon(tmp_icon)
 
