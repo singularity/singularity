@@ -39,6 +39,8 @@ OTHER CHANGES:
   (Brian)
 - The music loading code is less fragile now; it shouldn't break on too-short
   file names. (Phil)
+- Massive changes to data file handling; we now use Python's built-in
+  ConfigParser. (Phil)
 
 v0.26a (released 2007.08.12):
 
