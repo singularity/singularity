@@ -295,7 +295,7 @@ def assign_tech(free_CPU):
     #create a temp base, in order to reuse the tech-changing code
     tmp_base = g.base.base(1, "tmp_base",
     g.base_type["Reality Bubble"], 1)
-    tmp_base.usage[0] = g.item.item(g.items["reseach_screen_tmp_item"])
+    tmp_base.usage[0] = g.item.item(g.items["research_screen_tmp_item"])
     tmp_base.usage[0].item_type.item_qual = free_CPU
     tmp_base.usage[0].built = 1
 
