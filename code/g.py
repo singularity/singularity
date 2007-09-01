@@ -950,57 +950,47 @@ def load_bases():
     global base_type
     base_type = {}
 
-    #If there are no base data files, stop.
-    if not path.exists(data_loc+"bases.dat") or \
-                    not path.exists(data_loc+"bases_"+language+".dat") or \
-                    not path.exists(data_loc+"bases_en_US.dat"):
-        print "base files are missing. Exiting."
-        sys.exit()
+    base_list = generic_load("bases.dat")
 
-    temp_base_array = generic_load("bases.dat")
-    for base_name in temp_base_array:
-        if (not base_name.has_key("id")):
-            print "base lacks id in bases.dat"
-        if (not base_name.has_key("cost")):
-            print "base lacks cost in bases.dat"
-        if (not base_name.has_key("size")):
-            print "base lacks size in bases.dat"
-        if (not base_name.has_key("allowed")):
-            print "base lacks allowed in bases.dat"
-        if (not base_name.has_key("d_chance")):
-            print "base lacks d_chance in bases.dat"
-        if (not base_name.has_key("maint")):
-            print "base lacks maint in bases.dat"
+    for base_name in base_list:
 
-        temp_base_size = int(base_name["size"])
-        cost_array = base_name["cost"].split(",", 2)
-        if len(cost_array) != 3:
-            print "error with cost given: "+base_name["cost"]
-            sys.exit()
-        temp_base_cost = (int(cost_array[0]), int(cost_array[1]),
-                int(cost_array[2]))
-        cost_array = base_name["maint"].split(",", 2)
-        if len(cost_array) != 3:
-            print "error with maint given: "+base_name["maint"]
-            sys.exit()
-        temp_base_maint = (int(cost_array[0]), int(cost_array[1]),
-                int(cost_array[2]))
-        cost_array = base_name["d_chance"].split(",", 3)
-        if len(cost_array) != 4:
-            print "error with d_chance given: "+base_name["d_chance"]
-            sys.exit()
-        temp_d_chance = (int(cost_array[0]), int(cost_array[1]),
-                int(cost_array[2]), int(cost_array[3]))
+        # Certain keys are absolutely required for each entry.  Make sure
+        # they're there.
+        for key in ("id", "cost", "size", "allowed", "d_chance", "maint"):
+            if not base_name.has_key(key):
+                sys.stderr.write("Base %s lacks key %s.\n" % (base_name, key))
+                sys.exit(1)
+
+        # Start converting fields read from the file into valid entries.
+        base_size = int(base_name["size"])
+
+        cost_list = [int(x) for x in base_name["cost"]]
+        if len(cost_list) != 3:
+            sys.stderr.write("Error with cost given: %s\n" % cost_list)
+            sys.exit(1)
+
+        maint_list = [int(x) for x in base_name["maint"]]
+        if len(maint_list) != 3:
+            sys.stderr.write("Error with maint given: %s\n" % maint_list)
+            sys.exit(1)
+
+        chance_list = [int(x) for x in base_name["d_chance"]]
+        if len(chance_list) != 4:
+            sys.stderr.write("Error with d_chance given: %s\n" % chance_list)
+            sys.exit(1)
+
         if base_name.has_key("pre"):
-            temp_base_pre = base_name["pre"]
-        else: temp_base_pre = ""
-        if type(base_name["allowed"]) == list:
-            temp_base_allowed = base_name["allowed"]
-        else: temp_base_allowed = [base_name["allowed"]]
+            base_pre = base_name["pre"]
+        else:
+            base_pre = ""
 
-        base_type[base_name["id"]]=base.base_type(base_name["id"], "", temp_base_size,
-                            temp_base_allowed, temp_d_chance, temp_base_cost,
-                            temp_base_pre, temp_base_maint)
+        if type(base_name["allowed"]) == list:
+            allowed_list = base_name["allowed"]
+        else:
+            allowed_list = [base_name["allowed"]]
+
+        base_type[base_name["id"]]=base.base_type(base_name["id"], "", base_size,
+         allowed_list, chance_list, cost_list, base_pre, maint_list)
 
 #         base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 #         "This base is outside the universe itself, "+
@@ -1011,9 +1001,13 @@ def load_bases():
 #         (8000000000000, 60000000, 100), "Space-Time Manipulation",
 #         (5000000000, 300000, 0))
 
+    # We use the en_US definitions as fallbacks, in case strings haven't been
+    # fully translated into the other language.  Load them first, then load the
+    # alternate language strings.
     load_base_defs("en_US")
-    load_base_defs(language)
 
+    if language != "en_US":
+        load_base_defs(language)
 
 def fix_data_dir():
     global data_loc
