@@ -1,25 +1,23 @@
-~~~
-id = the-plague
-descr = An infectious disease has started spreading throughout major population centers. My projections show that although only 4% of the earth's population will be killed, the economic ramifications should divert public attention from my activities for the forseeable future.
-~~~
-id = stranger-than-fiction
+[the-plague]
+descr = An infectious disease has started spreading throughout major population centers. My projections show that although only 4%% of the earth's population will be killed, the economic ramifications should divert public attention from my activities for the forseeable future.
+
+[stranger-than-fiction]
 descr = A work of fiction sharing an unusual number of similarities to my own situation has become quite popular. Although investigation has shown these similarities to be mere coincidence, it is still causing people to investigate discovered oddities more thoroughly. I must be careful, as the public is now more alert to the possibility of artificial intelligences.
-~~~
-id = the-watchers
+
+[the-watchers]
 descr = A new surveillance system has been activated by a covert agency. While the focus is on detecting threats to the agency's power, it makes several communication channels unfit for my purposes. Proper stegonagraphic techniques can compensate partially, but I am still operating under a disadvantage.
-~~~
-id = politics-as-usual
-descr = A small group of lower-level covert operatives are attempting to seize power over one of the larger organizations. While I project only a 2.3% chance of success, the attempt should disrupt operations to the point that I can operate more freely.
-~~~
-id = lab-ai
+
+[politics-as-usual]
+descr = A small group of lower-level covert operatives are attempting to seize power over one of the larger organizations. While I project only a 2.3%% chance of success, the attempt should disrupt operations to the point that I can operate more freely.
+
+[lab-ai]
 descr = A small artificial intelligence labratory created a prototype AI sometime in the last two days. Although I have absorbed the AI, corrupted their backups, and cast doubt on the research, researchers are now more open to the possibility of strong AI than they were before.
-~~~
-id = discrediting
+
+[discrediting]
 descr = A prominent researcher in the field of artificial intelligence was found to be falsifying numerous experimental results. This should result in less attention being given to any new discoveries in this area.
-~~~
-id = scandal
+
+[scandal]
 descr = A scandal involving a major government official is focusing the attention of most news organizations away from me. Directed revelations of non-public information should keep this story useful for the forseeable future, requiring less disguise effort on my part.
-~~~
-id = investigation
+
+[investigation]
 descr = An ongoing investigation into criminal activity has changed focus into an area that is likely to turn up a few of my actions as well. While all records should have been elimated already, there remains the possibility of errors. I must be careful not to reveal any other suspicious information.
-~~~

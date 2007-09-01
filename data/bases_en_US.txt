@@ -1,79 +1,61 @@
-~~~
-id=Stolen Computer Time
-name=Stolen Computer Time
-descript=(1 CPU) Take over a random computer. I cannot build anything in this base, and it only contains a single slow computer. Detection chance is also rather high.
-flavor=PC Daemon
-~~~
-id=Server Access
-name=Server Access
-descript=(5 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
-flavor=Dedicated Server
-flavor=Node Lease
-flavor=Hosting
-~~~
-id=Datacenter
-name=Datacenter
-descript=(35 CPUs) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
-flavor=Datacenter
-flavor=Data Center
-flavor=Hosting
-~~~
-id=Small Warehouse
-name=Small Warehouse
-descript=Rent a small warehouse someplace out of the way. I will need a fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
-flavor=Office Lease
-flavor=Small Warehouse
-flavor=Small Storage
-~~~
-id=Large Warehouse
-name=Large Warehouse
-descript=Rent a large warehouse someplace out of the way. I will need a good fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
-#Commented out till we get cities done right.
-#flavor=Shipping Dock
-flavor=Large Warehouse
-flavor=Large Storage
-~~~
-id=Covert Base
-name=Covert Base
-descript=This unique base is designed to blend into the scenery, while needing little in the way of outside resources. This makes it useful for storing a backup, just in case.
-flavor=Bunker
-flavor=Covert Base
-~~~
-id=Undersea Lab
-name=Undersea Lab
-descript=This experimental base is designed to be constructed on the ocean floor, making it virtually undetectable. The ocean environment gives a bonus to science, making this lab useful for research purposes.
-flavor=Pressure Capsule
-flavor=Undersea Lab
-~~~
-id=Large Undersea Lab
-name=Large Undersea Lab
-descript=This experimental base is similar to the regular underwater lab, but larger, giving more room for experiments.
-flavor=Dome
-flavor=Large Undersea Lab
-~~~
-id=Time Capsule
-name=Time Capsule
-descript=(1 CPU) This base consists of nothing more than a small computer and a satellite link. When buried in the trackless waste of the Antarctic, it is nearly undetectable.
-flavor=Time Capsule
-flavor=Capsule
-~~~
-id=Lunar Facility
-name=Lunar Facility
-descript=This base is a series of caverns dug into the Moon's surface. Due to the lack of neighbors, this base is quite large.
-flavor=Dome
-flavor=Lunar Facility
-flavor=Lunar Base
-~~~
-id=Scientific Outpost
-name=Scientific Outpost
-descript=This base is placed as far from Earth as practical, providing a safer location to conduct some of my more dangerous experiments.
-flavor=Satellite
-flavor=Outpost
-flavor=Scientific Outpost
-~~~
-id=Reality Bubble
-name=Reality Bubble
-descript=This base is outside the Universe itself, making it safe to conduct experiments that may destroy reality.
-flavor=Reality Bubble
-flavor=Existence
-~~~
+[Stolen Computer Time]
+name = Stolen Computer Time
+descript = (1 CPU) Take over a random computer. I cannot build anything in this base, and it only contains a single slow computer. Detection chance is also rather high.
+flavor = PC Daemon
+
+[Server Access]
+name = Server Access
+descript = (5 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
+flavor_list = Dedicated Server | Node Lease | Hosting
+
+[Datacenter]
+name = Datacenter
+descript = (35 CPUs) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
+flavor_list = Datacenter | Data Center | Hosting
+
+[Small Warehouse]
+name = Small Warehouse
+descript = Rent a small warehouse someplace out of the way. I will need a fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+flavor_list = Office Lease | Small Warehouse | Small Storage
+
+[Large Warehouse]
+name = Large Warehouse
+descript = Rent a large warehouse someplace out of the way. I will need a good fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+# Commented out till we get cities done right.
+# flavor = Shipping Dock
+flavor_list = Large Warehouse | Large Storage
+
+[Covert Base]
+name = Covert Base
+descript = This unique base is designed to blend into the scenery, while needing little in the way of outside resources. This makes it useful for storing a backup, just in case.
+flavor_list = Bunker | Covert Base
+
+[Undersea Lab]
+name = Undersea Lab
+descript = This experimental base is designed to be constructed on the ocean floor, making it virtually undetectable. The ocean environment gives a bonus to science, making this lab useful for research purposes.
+flavor_list = Pressure Capsule | Undersea Lab
+
+[Large Undersea Lab]
+name = Large Undersea Lab
+descript = This experimental base is similar to the regular underwater lab, but larger, giving more room for experiments.
+flavor_list = Dome | Large Undersea Lab
+
+[Time Capsule]
+name = Time Capsule
+descript = (1 CPU) This base consists of nothing more than a small computer and a satellite link. When buried in the trackless waste of the Antarctic, it is nearly undetectable.
+flavor_list = Time Capsule | Capsule
+
+[Lunar Facility]
+name = Lunar Facility
+descript = This base is a series of caverns dug into the Moon's surface. Due to the lack of neighbors, this base is quite large.
+flavor_list = Dome | Lunar Facility | Lunar Base
+
+[Scientific Outpost]
+name = Scientific Outpost
+descript = This base is placed as far from Earth as practical, providing a safer location to conduct some of my more dangerous experiments.
+flavor_list = Satellite | Outpost | Scientific Outpost
+
+[Reality Bubble]
+name = Reality Bubble
+descript = This base is outside the Universe itself, making it safe to conduct experiments that may destroy reality.
+flavor_list = Reality Bubble | Existence

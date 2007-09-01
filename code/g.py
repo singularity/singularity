@@ -19,10 +19,12 @@
 #This file contains all global objects.
 
 import clock as sing_clock
+import ConfigParser
 import pygame, sys
 from os import listdir, path, environ, makedirs
 import pickle
 import random
+import sys
 
 import player, base, buttons, tech, item, event
 
@@ -1021,29 +1023,47 @@ def fix_data_dir():
         return
 
 def generic_load(file):
-    input_file = open(data_loc+file, 'r')
-    input_dict = {}
-    return_array = []
-    for line in input_file:
-        line=line.strip()
-        if line == "" or line[0] == "#": continue
-        #new object
-        if line.strip() == "~~~":
-            if input_dict.has_key("id"):
-                return_array.append(input_dict)
-            input_dict = {}
-            continue
-        command = unicode(line.split("=", 1)[0].strip().lower(),"UTF-8")
-        command_text= unicode(line.split("=", 1)[1].strip(), "UTF-8")
-        #handle arrays
-        if input_dict.has_key(command):
-            if type(input_dict[command]) != list:
-                input_dict[command] = [input_dict[command]]
-            input_dict[command].append(command_text)
-        else: input_dict[command]=command_text
-    input_file.close()
-    return return_array
+    """
+generic_load() loads a data file.  Data files are all in Python-standard
+ConfigParser format.  The 'id' of any object is the section of that object.
+Fields that need to be lists are postpended with _list; this is stripped
+from the actual name, and the internal entries are broken up by the pipe
+("|") character.
+"""
 
+    config = ConfigParser.SafeConfigParser()
+    filename = data_loc + file
+    try:
+        config.readfp(open(filename, "r"))
+    except Exception, reason:
+        sys.stderr.write("Cannot open %s for reading! (%s)\n" % (filename, reason))
+        sys.exit(1)
+
+    return_list = []
+
+    # Get the list of items (IDs) in the file and loop through them.
+    for item_id in config.sections():
+        item_dict = {}
+        item_dict["id"] = item_id
+
+        # Get the list of settings for this particular item.
+        for option in config.options(item_id):
+
+            # If this is a list ...
+            if len(option) > 6 and option[-5:] == "_list":
+
+                # Break it into elements separated by |.
+                item_dict[option[:-5]] = [x.strip() for x in
+                 config.get(item_id, option).split("|")]
+            else:
+          
+                # Otherwise, just grab the data.
+                item_dict[option] = config.get(item_id, option).strip()
+
+        # Add this to the list of all objects we are returning.
+        return_list.append(item_dict)
+
+    return return_list
 
 #Techs.
 

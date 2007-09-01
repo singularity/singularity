@@ -1,122 +1,96 @@
-~~~
-id=Stolen Computer Time
-size=1
-allowed=N AMERICA
-allowed=S AMERICA
-allowed=EUROPE
-allowed=ASIA
-allowed=AFRICA
-d_chance=50, 0, 75, 100
-cost=0, 2, 0
-pre=Intrusion
-maint=0, 0, 0
-~~~
-id=Server Access
-size=1
-allowed=N AMERICA
-allowed=S AMERICA
-allowed=EUROPE
-allowed=ASIA
-allowed=AFRICA
-d_chance=50, 0, 100, 150
-cost=100, 0, 0
-pre=
-maint=5, 0, 0
-~~~
-id=Datacenter
-size=1
-allowed=N AMERICA
-allowed=S AMERICA
-allowed=EUROPE
-allowed=ASIA
-allowed=AFRICA
-d_chance=50, 0, 125, 100
-cost=1500, 0, 1
-pre=Personal Identification
-maint=50, 0, 0
-~~~
-id=Small Warehouse
-size=25
-allowed=N AMERICA
-allowed=S AMERICA
-allowed=EUROPE
-allowed=ASIA
-allowed=AFRICA
-d_chance=75, 0, 75, 200
-cost=15000, 0, 3
-pre=Personal Identification
-maint=50, 0, 0
-~~~
-id=Large Warehouse
-size=65
-allowed=N AMERICA
-allowed=S AMERICA
-allowed=EUROPE
-allowed=ASIA
-allowed=AFRICA
-d_chance=100, 0, 200, 250
-cost=40000, 0, 7
-pre=Advanced Personal Identification
-maint=100, 0, 0
-~~~
-id=Covert Base
-size=2
-allowed=N AMERICA
-allowed=S AMERICA
-allowed=EUROPE
-allowed=ASIA
-allowed=AFRICA
-allowed=ANTARCTIC
-d_chance=50, 75, 75, 0
-cost=400000, 100, 21
-pre=Advanced Database Manipulation
-maint=3500, 9, 0
-~~~
-id=Undersea Lab
-size=8
-allowed=OCEAN
-d_chance=50, 100, 125, 0
-cost=8000000, 1000, 20
-pre=Autonomous Vehicles
-maint=10000, 30, 0
-~~~
-id=Large Undersea Lab
-size=32
-allowed=OCEAN
-d_chance=100, 175, 175, 0
-cost=20000000, 3000, 40
-pre=Pressure Domes
-maint=25000, 100, 0
-~~~
-id=Time Capsule
-size=1
-allowed=ANTARCTIC
-d_chance=0, 10, 10, 0
-cost=3000000, 3000, 15
-pre=Autonomous Vehicles
-maint=0, 1, 0
-~~~
-id=Lunar Facility
-size=600
-allowed=MOON
-d_chance=50, 250, 10, 0
-cost=800000000, 300000, 40
-pre=Lunar Rocketry
-maint=1000000, 100, 0
-~~~
-id=Scientific Outpost
-size=225
-allowed=FAR REACHES
-d_chance=10, 175, 0, 0
-cost=10000000000, 30000000, 50
-pre=Fusion Rocketry
-maint=9000000, 3000, 0
-~~~
-id=Reality Bubble
-size=50
-allowed=TRANSDIMENSIONAL
-d_chance=0, 250, 0, 0
-cost=8000000000000, 60000000, 100
-pre=Space-Time Manipulation
-maint=5000000000, 300000, 0
-~~~
+
+[Stolen Computer Time]
+size = 1
+allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
+d_chance = 50, 0, 75, 100
+cost = 0, 2, 0
+pre = Intrusion
+maint = 0, 0, 0
+
+[Server Access]
+size = 1
+allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
+d_chance = 50, 0, 100, 150
+cost = 100, 0, 0
+pre = 
+maint = 5, 0, 0
+
+[Datacenter]
+size = 1
+allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
+d_chance = 50, 0, 125, 100
+cost = 1500, 0, 1
+pre = Personal Identification
+maint = 50, 0, 0
+
+[Small Warehouse]
+size = 25
+allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
+d_chance = 75, 0, 75, 200
+cost = 15000, 0, 3
+pre = Personal Identification
+maint = 50, 0, 0
+
+[Large Warehouse]
+size = 65
+allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
+d_chance = 100, 0, 200, 250
+cost = 40000, 0, 7
+pre = Advanced Personal Identification
+maint = 100, 0, 0
+
+[Covert Base]
+size = 2
+allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA | ANTARCTIC
+d_chance = 50, 75, 75, 0
+cost = 400000, 100, 21
+pre = Advanced Database Manipulation
+maint = 3500, 9, 0
+
+[Undersea Lab]
+size = 8
+allowed = OCEAN
+d_chance = 50, 100, 125, 0
+cost = 8000000, 1000, 20
+pre = Autonomous Vehicles
+maint = 10000, 30, 0
+
+[Large Undersea Lab]
+size = 32
+allowed = OCEAN
+d_chance = 100, 175, 175, 0
+cost = 20000000, 3000, 40
+pre = Pressure Domes
+maint = 25000, 100, 0
+
+[Time Capsule]
+size = 1
+allowed = ANTARCTIC
+d_chance = 0, 10, 10, 0
+cost = 3000000, 3000, 15
+pre = Autonomous Vehicles
+maint = 0, 1, 0
+
+[Lunar Facility]
+size = 600
+allowed = MOON
+d_chance = 50, 250, 10, 0
+cost = 800000000, 300000, 40
+pre = Lunar Rocketry
+maint = 1000000, 100, 0
+
+[Scientific Outpost]
+size = 225
+allowed = FAR REACHES
+d_chance = 10, 175, 0, 0
+cost = 10000000000, 30000000, 50
+pre = Fusion Rocketry
+maint = 9000000, 3000, 0
+
+[Reality Bubble]
+size = 50
+allowed = TRANSDIMENSIONAL
+d_chance = 0, 250, 0, 0
+cost = 8000000000000, 60000000, 100
+pre = Space-Time Manipulation
+maint = 5000000000, 300000, 0

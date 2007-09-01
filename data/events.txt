@@ -2,60 +2,59 @@
 #base (rolled once per base per day),
 #research (rolled once per base per day, if researching tech),
 #item (rolled once per base per day, if base has item)
-~~~
+
+[the-plague]
 type = global
-id = the-plague
 allowed = all
 result = discover_public, 2000
 chance = 20
 unique = 1
-~~~
+
+[stranger-than-fiction]
 type = global
-id = stranger-than-fiction
 allowed = all
 result = discover_public, 2000
 chance = 20
 unique = 1
-~~~
+
+[the-watchers]
 type = global
-id = the-watchers
 allowed = all
 result = discover_covert, -2000
 chance = 20
 unique = 1
-~~~
+
+[politics-as-usual]
 type = global
-id = politics-as-usual
 allowed = all
 result = discover_covert, 2000
 chance = 20
 unique = 1
-~~~
+
+[lab-ai]
 type = global
-id = lab-ai
 allowed = all
 result = discover_science, -2000
 chance = 20
 unique = 1
-~~~
+
+[discrediting]
 type = global
-id = discrediting
 allowed = all
 result = discover_science, 2000
 chance = 20
 unique = 1
-~~~
+
+[scandal]
 type = global
-id = scandal
 allowed = all
 result = discover_news, 2000
 chance = 20
 unique = 0
-~~~
+
+[investigation]
 type = global
-id = investigation
 allowed = all
 result = discover_news, -2000
 chance = 20
 unique = 0
-~~~

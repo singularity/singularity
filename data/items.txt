@@ -1,124 +1,121 @@
-~~~
-id = PC
+[PC]
 cost = 500, 0, 1
-type=compute, 1
-build=all
-~~~
-id= Gaming PC
-cost = 1000, 0, 3
-type=compute, 5
-build=all
-~~~
-id=Server
-cost = 2000, 0, 3
-type=compute, 10
-build=all
-~~~
-id=Cluster
-cost=3000, 0, 3
-type=compute, 35
-pre=Parallel Computation
-build=all
-~~~
-id=Mainframe
-cost=30000, 0, 8
-type=compute, 120
-pre=Microchip Design
-build=all
-~~~
-id=Supercomputer
-cost=60000, 0, 9
-pre=Advanced Microchip Design
-type=compute, 350
-build=all
-~~~
-id=Quantum Computer
-cost=100000, 0, 10
-type=compute, 1500
-pre=Quantum Computing
-build=all
-~~~
-id=Quantum Computer MK2
-cost=120000, 0, 10
-pre=Autonomous Computing
-type=compute, 10000
-build=all
-~~~
-id=Quantum Computer MK3
-cost=150000, 0, 10
-pre=Advanced Quantum Computing
-type=compute, 200000
-build=all
-~~~
-id=Diesel Generator
-cost=500, 0, 5
-type=react, 250
-build=all
-~~~
-id=Solar Collector
-cost=5000, 0, 5
-pre=Solar Collectors
-type=react, 1000
-build=all
-~~~
-id=Fusion Reactor
-cost=10000, 0, 5
-pre=Fusion Reactor
-type=react, 2500
-build=all
-~~~
-id=Perimeter Fencing
-cost=5000, 0, 5
-pre=Autonomous Vehicles
-type=security, 2500
-build=pop
-~~~
-id=Armed Guards
-cost=10000, 0, 5
-pre=Simulacra
-type=security, 4000
-build=pop
-maint=300, 0, 0
-~~~
-id=Hypnosis Field
-cost=20000, 0, 3
-pre=Hypnosis Field
-type=security, 5000
-build=pop
-~~~
-id=Heatsink
-cost=15000, 0, 5
-pre=Autonomous Vehicles
-type=security, 5000
-build=ANTARCTIC, OCEAN, MOON
-~~~
-id=Ground Source Heatsink
-cost=50000, 0, 20
-pre=Autonomous Vehicles
-type=security, 7500
-build=ANTARCTIC, OCEAN, MOON
-~~~
-id=Facility Interconnection Switch
-cost=200, 0, 3
-pre=Cluster Networking
-type=network, 100
-build=all
-~~~
-id=High Speed Internet Access
-cost=10000, 0, 1
-type=network, 200
-build=pop
-~~~
-id=Network Backbone
-cost=50000, 0, 15
-pre=Internet Traffic Manipulation
-type=network, 500
-build=pop
-~~~
-id=Quantum Entanglement Module
-cost=75000, 0, 20
-pre=Quantum Entanglement
-type=network, 1500
-build=all
-~~~
+type = compute, 1
+build = all
 
+[Gaming PC]
+cost = 1000, 0, 3
+type = compute, 5
+build = all
+
+[Server]
+cost = 2000, 0, 3
+type = compute, 10
+build = all
+
+[Cluster]
+cost = 3000, 0, 3
+type = compute, 35
+pre = Parallel Computation
+build = all
+
+[Mainframe]
+cost = 30000, 0, 8
+type = compute, 120
+pre = Microchip Design
+build = all
+
+[Supercomputer]
+cost = 60000, 0, 9
+pre = Advanced Microchip Design
+type = compute, 350
+build = all
+
+[Quantum Computer]
+cost = 100000, 0, 10
+type = compute, 1500
+pre = Quantum Computing
+build = all
+
+[Quantum Computer MK2]
+cost = 120000, 0, 10
+pre = Autonomous Computing
+type = compute, 10000
+build = all
+
+[Quantum Computer MK3]
+cost = 150000, 0, 10
+pre = Advanced Quantum Computing
+type = compute, 200000
+build = all
+
+[Diesel Generator]
+cost = 500, 0, 5
+type = react, 250
+build = all
+
+[Solar Collector]
+cost = 5000, 0, 5
+pre = Solar Collectors
+type = react, 1000
+build = all
+
+[Fusion Reactor]
+cost = 10000, 0, 5
+pre = Fusion Reactor
+type = react, 2500
+build = all
+
+[Perimeter Fencing]
+cost = 5000, 0, 5
+pre = Autonomous Vehicles
+type = security, 2500
+build = pop
+
+[Armed Guards]
+cost = 10000, 0, 5
+pre = Simulacra
+type = security, 4000
+build = pop
+maint = 300, 0, 0
+
+[Hypnosis Field]
+cost = 20000, 0, 3
+pre = Hypnosis Field
+type = security, 5000
+build = pop
+
+[Heatsink]
+cost = 15000, 0, 5
+pre = Autonomous Vehicles
+type = security, 5000
+build = ANTARCTIC, OCEAN, MOON
+
+[Ground Source Heatsink]
+cost = 50000, 0, 20
+pre = Autonomous Vehicles
+type = security, 7500
+build = ANTARCTIC, OCEAN, MOON
+
+[Facility Interconnection Switch]
+cost = 200, 0, 3
+pre = Cluster Networking
+type = network, 100
+build = all
+
+[High Speed Internet Access]
+cost = 10000, 0, 1
+type = network, 200
+build = pop
+
+[Network Backbone]
+cost = 50000, 0, 15
+pre = Internet Traffic Manipulation
+type = network, 500
+build = pop
+
+[Quantum Entanglement Module]
+cost = 75000, 0, 20
+pre = Quantum Entanglement
+type = network, 1500
+build = all
