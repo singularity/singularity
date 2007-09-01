@@ -1155,46 +1155,48 @@ def load_items():
     global items
     items = {}
 
-    #If there are no item data files, stop.
-    if not path.exists(data_loc+"items.dat") or \
-                    not path.exists(data_loc+"items_"+language+".dat") or \
-                    not path.exists(data_loc+"items_en_US.dat"):
-        print "item files are missing. Exiting."
-        sys.exit()
+    item_list = generic_load("items.dat")
+    for item_name in item_list:
 
-    temp_item_array = generic_load("items.dat")
-    for item_name in temp_item_array:
-        if (not item_name.has_key("id")):
-            print "item lacks id in items.dat"
-        if (not item_name.has_key("cost")):
-            print "item lacks cost in items.dat"
-        cost_array = item_name["cost"].split(",", 2)
-        if len(cost_array) != 3:
-            print "error with cost given: "+item_name["cost"]
-            sys.exit()
-        temp_item_cost = (int(cost_array[0]), int(cost_array[1]),
-            int(cost_array[2]))
+        # Certain keys are absolutely required for each entry.  Make sure
+        # they're there.
+        for key in ("id", "cost"):
+            if not item_name.has_key(key):
+                sys.stderr.write("Item %s lacks key %s.\n" % (item_name, key))
+                sys.exit(1)
+
+        cost_list = item_name["cost"]
+        if type(cost_list) != list or len(cost_list) != 3:
+            sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
+            sys.exit(1)
+        
+        item_cost = [int(x) for x in cost_list]
+
+        # Get prerequisites, if any.
         if item_name.has_key("pre"):
-            temp_item_pre = item_name["pre"]
-        else: temp_item_pre = ""
-        temp_item_type = ""
-        temp_item_second = 0
-        if item_name.has_key("type"):
-            cost_array = item_name["type"].split(",", 1)
-            if len(cost_array) != 2:
-                print "error with type given: "+item_name["type"]
-                sys.exit()
-            temp_item_type = cost_array[0]
-            temp_item_second = int(cost_array[1])
-        if item_name.has_key("build"):
-            build_array = item_name["build"].split(",")
-            for i in range(len(build_array)):
-                build_array[i] = build_array[i].strip()
+            item_pre = item_name["pre"]
+        else:
+            item_pre = ""
 
-        items[item_name["id"]]=item.item_class(item_name["id"], "",
-                            temp_item_cost, temp_item_pre,
-                            temp_item_type, temp_item_second,
-                            build_array)
+        if item_name.has_key("type"):
+            
+            type_list = item_name["type"]
+            if type(type_list) != list or len(type_list) != 2:
+                sys.stderr.write("Error with type given: %s\n" % repr(type_list))
+                sys.exit()
+            item_type = type_list[0]
+            item_second = int(type_list[1])
+        else:
+            item_type = ""
+            item_second = 0
+
+        if item_name.has_key("build"):
+            build_array = item_name["build"]
+        else:
+            build_array = []
+
+        items[item_name["id"]]=item.item_class( item_name["id"], "",
+         item_cost, item_pre, item_type, item_second, build_array)
 
     #this is used by the research screen in order for the assign research
     #screen to have the right amount of CPU. It is a computer, unbuildable,
@@ -1202,8 +1204,11 @@ def load_items():
     items["reseach_screen_tmp_item"]=item.item_class("reseach_screen_tmp_item",
             "", (0, 0, 0), "unknown_tech", "compute", 0, ["all"])
 
+    # We use the en_US translations of item definitions as the default,
+    # then overwrite those with any available entries in the native language.
     load_item_defs("en_US")
-    load_item_defs(language)
+    if language != "en_US":
+        load_item_defs(language)
 
 def load_item_defs(language_str):
     temp_item_array = generic_load("items_"+language_str+".dat")
