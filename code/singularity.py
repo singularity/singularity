@@ -132,8 +132,6 @@ pygame.display.set_caption("Endgame: Singularity")
 if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
-tmp_icon = pygame.image.load(g.data_loc+"icon.png")
-pygame.display.set_icon(tmp_icon)
 
 #set the display.
 if g.fullscreen == 1:
@@ -148,7 +146,11 @@ for i in range(8, 51):
     g.font[1][i] = pygame.font.Font(g.data_loc+g.font1, i)
 
 #init data:
-g.load_pictures()
+g.load_images()
+
+# Set the application icon.
+pygame.display.set_icon(g.images["icon.png"])
+
 g.fill_colors()
 g.load_sounds()
 g.load_items()

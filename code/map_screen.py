@@ -779,7 +779,7 @@ def handle_pause_menu(tmp, menu_buttons):
 
 def refresh_map(menu_buttons):
     g.screen.fill(g.colors["black"])
-    g.screen.blit(pygame.transform.scale(g.picts["earth.jpg"],
+    g.screen.blit(pygame.transform.scale(g.images["earth.jpg"],
                 (g.screen_size[0], g.screen_size[0]/2)),
                 (0, g.screen_size[1]/2-g.screen_size[0]/4))
     for button in menu_buttons:

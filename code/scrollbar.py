@@ -50,9 +50,9 @@ class scrollbar:
 
 
         #create arrows
-        self.scroll_surface.blit(g.picts["arrow.png"], (1, 1))
+        self.scroll_surface.blit(g.images["arrow.png"], (1, 1))
         self.scroll_surface.blit(pygame.transform.flip(
-                                g.picts["arrow.png"], 0, 1), (1, self.size[1]-17))
+                                g.images["arrow.png"], 0, 1), (1, self.size[1]-17))
 
         self.refresh_scroll(0, 100)
     def refresh_scroll(self, start_item, total_items):
