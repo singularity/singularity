@@ -35,6 +35,8 @@ USER-VISIBLE CHANGES:
   list. (Brian)
 - Migrated GUI handling to pgu, main_screen is the only ported so far.
   (Brian)
+- Preferences have moved to 'prefs.dat', and now follow the standard Python
+  ConfigParser format. (Phil)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)

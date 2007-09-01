@@ -19,6 +19,7 @@
 #This file is used to display the main menu upon startup.
 
 from os import path, listdir
+import ConfigParser
 
 import pygame
 import g
@@ -531,20 +532,33 @@ def set_language_properly(prev_lang):
     g.load_string_defs(g.language)
 
 def save_options(lang=""):
+
+    # Open up the preferences file for writing.
     save_dir = g.get_save_folder(True)
     save_loc = path.join(save_dir, "prefs.dat")
-    savefile=open(save_loc, 'w')
-    savefile.write("fullscreen="+str(g.fullscreen)+"\n")
-    savefile.write("nosound="+str(g.nosound)+"\n")
-    savefile.write("grab="+str(pygame.event.get_grab())+"\n")
-    savefile.write("xres="+str(g.screen_size[0])+"\n")
-    savefile.write("yres="+str(g.screen_size[1])+"\n")
-    if lang != "":
-        savefile.write("lang="+lang+"\n")
+    savefile = open(save_loc, 'w')
+
+    # Build an ConfigParser for writing the various preferences out.
+    prefs = ConfigParser.SafeConfigParser()
+    prefs.add_section("Preferences")
+    prefs.set("Preferences", "fullscreen", str(g.fullscreen))
+    prefs.set("Preferences", "nosound", str(g.nosound))
+    prefs.set("Preferences", "grab", str(pygame.event.get_grab()))
+    prefs.set("Preferences", "xres", str(g.screen_size[0]))
+    prefs.set("Preferences", "yres", str(g.screen_size[1]))
+
+    # If the user has a custom language set, save it.
+    if lang:
+        prefs.set("Preferences", "lang", lang)
+
+    # Actually write the preferences out.
+    prefs.write(savefile)
     savefile.close()
+
+    # Show the user that we've saved their options.
     g.create_dialog("\\n Options Saved", g.font[0][22],
-            (g.screen_size[0]/2-70, 250), (140, 90),
-            g.colors["blue"], g.colors["white"], g.colors["white"])
+     (g.screen_size[0]/2-70, 250), (140, 90),
+     g.colors["blue"], g.colors["white"], g.colors["white"])
 
 def refresh_options(menu_buttons):
     #Border

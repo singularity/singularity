@@ -19,6 +19,7 @@
 
 #This file is the starting file for the game. Run it to start the game.
 
+import ConfigParser
 import pygame, sys
 import g, main_menu, map_screen
 
@@ -32,45 +33,50 @@ g.fullscreen = 0
 save_dir = g.get_save_folder(True)
 save_loc = g.path.join(save_dir, "prefs.dat")
 if g.path.exists(save_loc):
-    savefile=open(save_loc, 'r')
-    for line in savefile:
-        line=line.strip()
-        if line == "" or line[0] == "#": continue
-        input_array = line.split("=", 1)
-        if input_array[0].strip() == "fullscreen":
-            if input_array[1].strip() == "1":
-                g.fullscreen = 1
-            elif input_array[1].strip() == "0":
-                g.fullscreen = 0
-        if input_array[0].strip() == "nosound":
-            if input_array[1].strip() == "1":
-                g.nosound = 1
-            elif input_array[1].strip() == "0":
-                g.nosound = 0
-        if input_array[0].strip() == "grab":
-            if input_array[1].strip() == "1":
-                pygame.event.set_grab(1)
-            elif input_array[1].strip() == "0":
-                pygame.event.set_grab(0)
-        if input_array[0].strip() == "xres":
-            try:
-                temp_var= int(input_array[1].strip())
-                g.screen_size = (temp_var, g.screen_size[1])
-            except ValueError: print "invalid x resolution in pref file"
-        if input_array[0].strip() == "yres":
-            try:
-                temp_var= int(input_array[1].strip())
-                g.screen_size = (g.screen_size[0], temp_var)
-            except ValueError: print "invalid y resolution in pref file"
-        if input_array[0].strip() == "lang":
-            temp_var= input_array[1].strip()
-            if g.path.exists(g.data_loc+"strings_"+temp_var+".dat"):
-                g.language = temp_var
-            else:
-                print "invalid language in pref file"
 
+    prefs = ConfigParser.SafeConfigParser()
+    savefile = open(save_loc, "r")
+    try:
+        prefs.readfp(savefile)
+    except Exception, reason:
+        sys.stderr.write("Cannot load preferences file %s! (%s)\n" % (save_loc, reason))
+        sys.exit(1)
 
+    if prefs.has_section("Preferences"):
+        try:
+            g.fullscreen = prefs.getboolean("Preferences", "fullscreen")
+        except:
+            sys.stderr.write("Invalid 'fullscreen' setting in preferences.\n")
 
+        try:
+            g.nosound = prefs.getboolean("Preferences", "nosound")
+        except:
+            sys.stderr.write("Invalid 'nosound' setting in preferences.\n")
+
+        try:
+            pygame.event.set_grab(prefs.getint("Preferences", "grab"))
+        except:
+            sys.stderr.write("Invalid 'grab' setting in preferences.\n")
+
+        try:
+            g.screen_size = (prefs.getint("Preferences", "xres"),
+             g.screen_size[1])
+        except:
+            sys.stderr.write("Invalid 'xres' resolution in preferences.\n")
+
+        try:
+            g.screen_size = (g.screen_size[0],
+             prefs.getint("Preferences", "yres"))
+        except:
+            sys.stderr.write("Invalid 'yres' resolution in preferences.\n")
+
+        try:
+            desired_language = prefs.get("Preferences", "lang")
+            if g.path.exists(g.data_loc + "strings_" + desired_language + ".dat"):
+                g.language = desired_language
+        except:
+            sys.stderr.write("Cannot find language files for language '%s'.\n" % desired_language)
+    
 #Handle the program arguments.
 sys.argv.pop(0)
 arg_modifier = ""
