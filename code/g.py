@@ -966,17 +966,17 @@ def load_bases():
 
         cost_list = [int(x) for x in base_name["cost"]]
         if len(cost_list) != 3:
-            sys.stderr.write("Error with cost given: %s\n" % cost_list)
+            sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
             sys.exit(1)
 
         maint_list = [int(x) for x in base_name["maint"]]
         if len(maint_list) != 3:
-            sys.stderr.write("Error with maint given: %s\n" % maint_list)
+            sys.stderr.write("Error with maint given: %s\n" % repr(maint_list))
             sys.exit(1)
 
         chance_list = [int(x) for x in base_name["d_chance"]]
         if len(chance_list) != 4:
-            sys.stderr.write("Error with d_chance given: %s\n" % chance_list)
+            sys.stderr.write("Error with d_chance given: %s\n" % repr(chance_list))
             sys.exit(1)
 
         if base_name.has_key("pre"):
@@ -984,6 +984,8 @@ def load_bases():
         else:
             base_pre = ""
 
+        # Make sure that the allowed "list" is actually a list and not a solo
+        # item.
         if type(base_name["allowed"]) == list:
             allowed_list = base_name["allowed"]
         else:
