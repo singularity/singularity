@@ -138,12 +138,6 @@ if g.fullscreen == 1:
     g.screen = pygame.display.set_mode(g.screen_size, pygame.FULLSCREEN)
 else:
     g.screen = pygame.display.set_mode(g.screen_size)
-#Create the fonts:
-for i in range(8, 51):
-    if i%2 == 0 and i < 30:
-        g.font[0][i] = pygame.font.Font(g.data_loc+g.font0, i-7)
-        g.font[0][i].set_bold(1)
-    g.font[1][i] = pygame.font.Font(g.data_loc+g.font1, i)
 
 #init data:
 g.load_images()
@@ -155,6 +149,7 @@ g.fill_colors()
 g.load_sounds()
 g.load_items()
 g.load_music()
+g.load_fonts()
 
 #Display the main menu
 while 1:

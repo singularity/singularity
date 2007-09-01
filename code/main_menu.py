@@ -50,7 +50,7 @@ def display_main_menu():
 
     fg = (255,255,255)
 
-    titlefont = pygame.font.Font(g.data_loc+g.font0, 32)
+    titlefont = g.font[0][32]
     label = gui.Label("ENDGAME:SINGULARITY", color=(125,0,0), font=titlefont)
     container.add(label,x_loc-100,0)
 
