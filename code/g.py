@@ -931,10 +931,10 @@ city_list["FAR REACHES"] = (("Aries", True),
 city_list["TRANSDIMENSIONAL"] = (("", True), ("", True))
 
 def load_base_defs(language_str):
-    temp_base_array = generic_load("bases_"+language_str+".txt")
+    temp_base_array = generic_load("bases_"+language_str+".dat")
     for base in temp_base_array:
         if (not base.has_key("id")):
-            print "base lacks id in bases_"+language_str+".txt"
+            print "base lacks id in bases_"+language_str+".dat"
         if base.has_key("name"):
             base_type[base["id"]].base_name = base["name"]
         if base.has_key("descript"):
@@ -951,26 +951,26 @@ def load_bases():
     base_type = {}
 
     #If there are no base data files, stop.
-    if not path.exists(data_loc+"bases.txt") or \
-                    not path.exists(data_loc+"bases_"+language+".txt") or \
-                    not path.exists(data_loc+"bases_en_US.txt"):
+    if not path.exists(data_loc+"bases.dat") or \
+                    not path.exists(data_loc+"bases_"+language+".dat") or \
+                    not path.exists(data_loc+"bases_en_US.dat"):
         print "base files are missing. Exiting."
         sys.exit()
 
-    temp_base_array = generic_load("bases.txt")
+    temp_base_array = generic_load("bases.dat")
     for base_name in temp_base_array:
         if (not base_name.has_key("id")):
-            print "base lacks id in bases.txt"
+            print "base lacks id in bases.dat"
         if (not base_name.has_key("cost")):
-            print "base lacks cost in bases.txt"
+            print "base lacks cost in bases.dat"
         if (not base_name.has_key("size")):
-            print "base lacks size in bases.txt"
+            print "base lacks size in bases.dat"
         if (not base_name.has_key("allowed")):
-            print "base lacks allowed in bases.txt"
+            print "base lacks allowed in bases.dat"
         if (not base_name.has_key("d_chance")):
-            print "base lacks d_chance in bases.txt"
+            print "base lacks d_chance in bases.dat"
         if (not base_name.has_key("maint")):
-            print "base lacks maint in bases.txt"
+            print "base lacks maint in bases.dat"
 
         temp_base_size = int(base_name["size"])
         cost_array = base_name["cost"].split(",", 2)
@@ -1070,10 +1070,10 @@ from the actual name, and the internal entries are broken up by the pipe
 techs = {}
 
 def load_tech_defs(language_str):
-    temp_tech_array = generic_load("techs_"+language_str+".txt")
+    temp_tech_array = generic_load("techs_"+language_str+".dat")
     for tech in temp_tech_array:
         if (not tech.has_key("id")):
-            print "tech lacks id in techs_"+language_str+".txt"
+            print "tech lacks id in techs_"+language_str+".dat"
         if tech.has_key("name"):
             techs[tech["id"]].name = tech["name"]
         if tech.has_key("descript"):
@@ -1087,18 +1087,18 @@ def load_techs():
     techs = {}
 
     #If there are no tech data files, stop.
-    if not path.exists(data_loc+"techs.txt") or \
-                    not path.exists(data_loc+"techs_"+language+".txt") or \
-                    not path.exists(data_loc+"techs_en_US.txt"):
+    if not path.exists(data_loc+"techs.dat") or \
+                    not path.exists(data_loc+"techs_"+language+".dat") or \
+                    not path.exists(data_loc+"techs_en_US.dat"):
         print "tech files are missing. Exiting."
         sys.exit()
 
-    temp_tech_array = generic_load("techs.txt")
+    temp_tech_array = generic_load("techs.dat")
     for tech_name in temp_tech_array:
         if (not tech_name.has_key("id")):
-            print "tech lacks id in techs.txt"
+            print "tech lacks id in techs.dat"
         if (not tech_name.has_key("cost")):
-            print "tech lacks cost in techs.txt"
+            print "tech lacks cost in techs.dat"
         cost_array = tech_name["cost"].split(",", 2)
         if len(cost_array) != 3:
             print "error with cost given: "+tech_name["cost"]
@@ -1160,18 +1160,18 @@ def load_items():
     items = {}
 
     #If there are no item data files, stop.
-    if not path.exists(data_loc+"items.txt") or \
-                    not path.exists(data_loc+"items_"+language+".txt") or \
-                    not path.exists(data_loc+"items_en_US.txt"):
+    if not path.exists(data_loc+"items.dat") or \
+                    not path.exists(data_loc+"items_"+language+".dat") or \
+                    not path.exists(data_loc+"items_en_US.dat"):
         print "item files are missing. Exiting."
         sys.exit()
 
-    temp_item_array = generic_load("items.txt")
+    temp_item_array = generic_load("items.dat")
     for item_name in temp_item_array:
         if (not item_name.has_key("id")):
-            print "item lacks id in items.txt"
+            print "item lacks id in items.dat"
         if (not item_name.has_key("cost")):
-            print "item lacks cost in items.txt"
+            print "item lacks cost in items.dat"
         cost_array = item_name["cost"].split(",", 2)
         if len(cost_array) != 3:
             print "error with cost given: "+item_name["cost"]
@@ -1210,10 +1210,10 @@ def load_items():
     load_item_defs(language)
 
 def load_item_defs(language_str):
-    temp_item_array = generic_load("items_"+language_str+".txt")
+    temp_item_array = generic_load("items_"+language_str+".dat")
     for item_name in temp_item_array:
         if (not item_name.has_key("id")):
-            print "item lacks id in items_"+language_str+".txt"
+            print "item lacks id in items_"+language_str+".dat"
         if item_name.has_key("name"):
             items[item_name["id"]].name = item_name["name"]
         if item_name.has_key("descript"):
@@ -1226,31 +1226,31 @@ def load_events():
     events = {}
 
     #If there are no event data files, stop.
-    if (not path.exists(data_loc+"events.txt") or
-     not path.exists(data_loc+"events_"+language+".txt") or
-     not path.exists(data_loc+"events_en_US.txt")):
+    if (not path.exists(data_loc+"events.dat") or
+     not path.exists(data_loc+"events_"+language+".dat") or
+     not path.exists(data_loc+"events_en_US.dat")):
         print "event files are missing. Exiting."
         sys.exit()
 
-    temp_event_array = generic_load("events.txt")
+    temp_event_array = generic_load("events.dat")
     for event_name in temp_event_array:
         if (not event_name.has_key("type")):
-            print "event lacks type in events.txt"
+            print "event lacks type in events.dat"
         if (not event_name.has_key("id")):
-            print "event lacks id in events.txt"
+            print "event lacks id in events.dat"
         if (not event_name.has_key("allowed")):
-            print "event lacks cost in events.txt"
+            print "event lacks cost in events.dat"
         if (not event_name.has_key("result")):
-            print "event lacks result in events.txt"
+            print "event lacks result in events.dat"
         result_array = event_name["result"].split(",", 1)
         if len(result_array) != 2:
             print "error with cost given: "+event_name["result"]
             sys.exit()
         temp_event_result = (str(result_array[0]), int(result_array[1]))
         if (not event_name.has_key("chance")):
-            print "event lacks chance in events.txt"
+            print "event lacks chance in events.dat"
         if (not event_name.has_key("unique")):
-            print "event lacks unique in events.txt"
+            print "event lacks unique in events.dat"
         events[event_name["id"]]=event.event_class(
          event_name["id"],
          "",
@@ -1265,19 +1265,19 @@ def load_event_defs():
     event_defs = {}
 
     #If there are no event data files, stop.
-    if (not path.exists(data_loc+"events.txt") or
-     not path.exists(data_loc+"events_"+language+".txt") or
-     not path.exists(data_loc+"events_en_US.txt")):
+    if (not path.exists(data_loc+"events.dat") or
+     not path.exists(data_loc+"events_"+language+".dat") or
+     not path.exists(data_loc+"events_en_US.dat")):
         print "event files are missing. Exiting."
         sys.exit()
 
-    temp_event_array = generic_load("events_"+language+".txt")
+    temp_event_array = generic_load("events_"+language+".dat")
     for event_name in temp_event_array:
         if (not event_name.has_key("id")):
-            print "event lacks id in events_"+language+".txt"
+            print "event lacks id in events_"+language+".dat"
             continue
         if (not event_name.has_key("descr")):
-            print "event lacks descr in events_"+language+".txt"
+            print "event lacks descr in events_"+language+".dat"
             continue
         if event_name.has_key("id"):
             events[event_name["id"]].name = event_name["id"]
@@ -1285,10 +1285,10 @@ def load_event_defs():
             events[event_name["id"]].descript = event_name["descr"]
 
 def load_string_defs(language_str):
-    temp_string_array = generic_load("strings_"+language_str+".txt")
+    temp_string_array = generic_load("strings_"+language_str+".dat")
     for string_name in temp_string_array:
         if (not string_name.has_key("id")):
-            print "string series lacks id in strings_"+language_str+".txt"
+            print "string series lacks id in strings_"+language_str+".dat"
         if string_name["id"] == "fonts":
             if (string_name.has_key("font0")):
                 global font0
@@ -1320,8 +1320,8 @@ def load_string_defs(language_str):
 
 def load_strings():
     #If there are no string data files, stop.
-    if not path.exists(data_loc+"strings_"+language+".txt") or \
-                    not path.exists(data_loc+"strings_en_US.txt"):
+    if not path.exists(data_loc+"strings_"+language+".dat") or \
+                    not path.exists(data_loc+"strings_en_US.dat"):
         print "string files are missing. Exiting."
         sys.exit()
 

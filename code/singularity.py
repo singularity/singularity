@@ -30,7 +30,7 @@ g.fullscreen = 0
 
 #load prefs from file:
 save_dir = g.get_save_folder(True)
-save_loc = g.path.join(save_dir, "prefs.txt")
+save_loc = g.path.join(save_dir, "prefs.dat")
 if g.path.exists(save_loc):
     savefile=open(save_loc, 'r')
     for line in savefile:
@@ -64,7 +64,7 @@ if g.path.exists(save_loc):
             except ValueError: print "invalid y resolution in pref file"
         if input_array[0].strip() == "lang":
             temp_var= input_array[1].strip()
-            if g.path.exists(g.data_loc+"strings_"+temp_var+".txt"):
+            if g.path.exists(g.data_loc+"strings_"+temp_var+".dat"):
                 g.language = temp_var
             else:
                 print "invalid language in pref file"

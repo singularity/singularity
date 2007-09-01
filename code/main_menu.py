@@ -532,7 +532,7 @@ def set_language_properly(prev_lang):
 
 def save_options(lang=""):
     save_dir = g.get_save_folder(True)
-    save_loc = path.join(save_dir, "prefs.txt")
+    save_loc = path.join(save_dir, "prefs.dat")
     savefile=open(save_loc, 'w')
     savefile.write("fullscreen="+str(g.fullscreen)+"\n")
     savefile.write("nosound="+str(g.nosound)+"\n")
