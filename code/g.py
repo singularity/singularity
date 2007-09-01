@@ -21,7 +21,8 @@
 import clock as sing_clock
 import ConfigParser
 import pygame, sys
-from os import listdir, path, environ, makedirs
+import os
+import os.path
 import pickle
 import random
 import sys
@@ -91,7 +92,7 @@ picts = {}
 #Load all pictures from the data directory.
 def load_pictures():
     global picts
-    temp_pict_array = listdir(data_loc)
+    temp_pict_array = os.listdir(data_loc)
     for file_name in temp_pict_array:
         if file_name[-3:] == "png" or file_name[-3:] == "jpg":
             picts[file_name] = pygame.image.load(data_loc+file_name)
@@ -99,18 +100,25 @@ def load_pictures():
             picts[file_name].set_colorkey((255, 0, 255, 255), pygame.RLEACCEL)
 
 sounds = {}
-#Load all sounds from the data directory.
 def load_sounds():
-    global sounds
-    if nosound == 1: return 0
-    #Looking at the pygame docs, I don't see any way to determine if SDL_mixer
-    #is loaded on the target machine. This may crash.
-    pygame.mixer.init()
+    """
+load_sounds() loads all of the sounds in the data/sounds/ directory.
+"""
 
-    temp_snd_array = listdir(data_loc)
-    for file_name in temp_snd_array:
-        if file_name[-3:] == "wav":
-            sounds[file_name] = pygame.mixer.Sound(data_loc+file_name)
+    global sounds
+    if nosound: return 0
+
+    try:
+        pygame.mixer.init()
+    except:
+        sys.stderr.write("WARNING: Could not start the mixer, even though sound is requested!\n")
+        sys.exit(1)
+
+    sound_dir = os.path.join(data_loc, "sounds")
+    sound_list = os.listdir(sound_dir)
+    for sound_filename in sound_list:
+        if len(sound_filename) > 4 and file_name[-4:] == ".wav":
+            sounds[file_name] = pygame.mixer.Sound(os.path.join(sound_dir, file_name))
 
 def play_click():
     #rand_str = str(int(random.random() * 4))
@@ -142,7 +150,7 @@ def load_music():
         music_available_here = True
         if not path.isdir(music_path):
             try:
-                makedirs(music_path)
+                os.makedirs(music_path)
             except:
 
                 # We don't have permission to write here.  Don't bother
@@ -153,7 +161,7 @@ def load_music():
 
                 # Loop through the files in music_path and add the ones
                 # that are .mp3s and .oggs.
-                for file_name in listdir(music_path):
+                for file_name in os.listdir(music_path):
                     if (len(file_name) > 5 and
                      (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
                         music_array.append(path.join(music_path, file_name))
@@ -558,8 +566,8 @@ def to_time(raw_time):
 #well, but can't test. Specifically, this assumes that all platforms that
 #have HOME defined have it defined properly.
 def get_save_folder(just_pref_dir=False):
-    if environ.has_key("HOME") and not force_single_dir:
-        save_dir = path.join(environ["HOME"], ".endgame", "saves")
+    if os.environ.has_key("HOME") and not force_single_dir:
+        save_dir = path.join(os.environ["HOME"], ".endgame", "saves")
     else:
         if data_loc == "../data/":
             save_dir = path.join("..", "saves")
@@ -571,9 +579,9 @@ def get_save_folder(just_pref_dir=False):
         #As a note, the online python reference includes the mkdirs function,
         #which would do this better, but it must be rather new, as I don't
         #have it.
-        #if environ.has_key("HOME") and not force_single_dir:
-        #    mkdirs(path.join(environ["HOME"], ".endgame"))
-        makedirs(save_dir)
+        #if os.environ.has_key("HOME") and not force_single_dir:
+        #    mkdirs(path.join(os.environ["HOME"], ".endgame"))
+        os.makedirs(save_dir)
     if just_pref_dir:
         return save_dir[:-5]
     return save_dir

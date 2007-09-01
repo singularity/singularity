@@ -38,6 +38,8 @@ USER-VISIBLE CHANGES:
 - Preferences have moved to 'prefs.dat', and now follow the standard Python
   ConfigParser format. (Phil)
 - Added difficulty choice dialog handled by pgu. (Brian)
+- Increased robustness across the board; E:S should be harder to crash.
+  (Phil)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
