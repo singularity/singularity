@@ -15,4 +15,4 @@ Todo for 0.27:
     - Convert CPU usage into pools instead of per-base settings.
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
     - Complete PGU GUI migration
-
+    - Make translations easier to do.  (Phil has good ideas on how to do this.)
