@@ -233,7 +233,9 @@ class player_class:
                     if base_name.studying == "":
                         self.cpu_for_day += base_name.processor_time()
                         continue
-
+                    if base_name.studying == "Construction":
+                        pass #FIXME: Finish Construction Research
+                        continue
                     #jobs:
                     if g.jobs.has_key(base_name.studying):
                         self.cash += (g.jobs[base_name.studying][0]*
@@ -247,6 +249,7 @@ class player_class:
                         continue
                     #tech aready known. This should occur when multiple
                     #bases are studying the same tech.
+                    print g.techs
                     if g.techs[base_name.studying].known == 1:
                         base_name.studying = ""
                         self.cpu_for_day += base_name.processor_time()
@@ -308,6 +311,7 @@ class player_class:
                         if g.roll_percent(150) == 1:
                             removal_index.insert(0, (loc_in_array, "maint"))
                 if base.studying == "": continue
+                if base.studying == "Construction": continue #FIXME: Finish
                 if g.jobs.has_key(base.studying): continue
                 if g.techs[base.studying].known == 1:
                     base.studying = ""
