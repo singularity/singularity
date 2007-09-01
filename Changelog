@@ -47,6 +47,8 @@ OTHER CHANGES:
   file names. (Phil)
 - Massive changes to data file handling; we now use Python's built-in
   ConfigParser. (Phil)
+- Further changes to the data file formats, for consistency and ease of
+  code/data maintenance.  (Phil)
 
 v0.26a (released 2007.08.12):
 
