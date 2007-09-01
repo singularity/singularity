@@ -32,47 +32,37 @@ import player, base, buttons, tech, item, event
 global screen
 
 #size of the screen. This can be set via command-line option.
-global screen_size
 screen_size = (800, 600)
 
-global clock
 clock = sing_clock.Clock()
 
 #Allows access to the cheat menu.
-global cheater
 cheater = 0
 
 #Kills the sound. Should allow usage of the game without SDL_mixer,
 # but is untested.
-global nosound
 nosound = 0
 
 #Fullscreen
-global fullscreen
 fullscreen = 0
 
 #Gives debug info at various points.
-global debug
 debug = 0
 
 #Forces Endgame to restrict itself to a single directory.
-global force_single_dir
 force_single_dir = False
 
 #Used to determine which data files to load.
-global language
 language = "en_US"
 
 #name given when the savegame button is pressed. This is changed when the
 #game is loaded or saved.
-global default_savegame_name
 default_savegame_name = "player"
 
 #which fonts to use
 font0 = "vera.ttf"
 font1 = "acknowtt.ttf"
 
-global data_loc
 data_loc = "../data/"
 
 def quit_game():
@@ -193,7 +183,6 @@ def play_music():
 #
 
 #Normal and Acknowledge fonts.
-global fonts
 font = []
 font.append([0] * 51)
 font.append([0] * 51)
