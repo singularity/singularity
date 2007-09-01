@@ -956,10 +956,8 @@ def load_bases():
 
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
-        for key in ("id", "cost", "size", "allowed", "d_chance", "maint"):
-            if not base_name.has_key(key):
-                sys.stderr.write("Base %s lacks key %s.\n" % (base_name, key))
-                sys.exit(1)
+        check_required_fields(base_name,
+         ("id", "cost", "size", "allowed", "d_chance", "maint"), "Base")
 
         # Start converting fields read from the file into valid entries.
         base_size = int(base_name["size"])
@@ -1061,6 +1059,19 @@ from the actual name, and the internal entries are broken up by the pipe
 
     return return_list
 
+def check_required_fields(dict, fields, name = "Unknown type"):
+    """
+check_required_fields() will check for the existence of every field in
+the list 'fields' in the dictionary 'dict'.  If any do not exist, it
+will print an error message and abort.  Part of that error message is
+the type of object it is processing; this should be passed in via 'name'.
+"""
+
+    for field in fields:
+       if field not in dict:
+          sys.stderr.write("%s %s lacks key %s.\n" % (name, repr(dict), field))
+          sys.exit(1)
+
 #Techs.
 
 techs = {}
@@ -1160,11 +1171,9 @@ def load_items():
 
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
-        for key in ("id", "cost"):
-            if not item_name.has_key(key):
-                sys.stderr.write("Item %s lacks key %s.\n" % (item_name, key))
-                sys.exit(1)
+        check_required_fields(item_name, ("id", "cost"), "Item")
 
+        # Make sure the cost is in a valid format.
         cost_list = item_name["cost"]
         if type(cost_list) != list or len(cost_list) != 3:
             sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
@@ -1231,10 +1240,8 @@ def load_events():
 
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
-        for key in ("id", "type", "allowed", "result", "chance", "unique"):
-            if not event_name.has_key(key):
-                sys.stderr.write("Event %s lacks key %s.\n" % (event_name, key))
-                sys.exit(1)
+        check_required_fields(event_name,
+         ("id", "type", "allowed", "result", "chance", "unique"), "Event")
 
         # Make sure the results are in the proper format.
         result_list = event_name["result"]
