@@ -962,20 +962,23 @@ def load_bases():
         # Start converting fields read from the file into valid entries.
         base_size = int(base_name["size"])
 
-        cost_list = [int(x) for x in base_name["cost"]]
-        if len(cost_list) != 3:
+        cost_list = base_name["cost"]
+        if type(cost_list) != list or len(cost_list) != 3:
             sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
             sys.exit(1)
+        cost_list = [int(x) for x in cost_list]
 
-        maint_list = [int(x) for x in base_name["maint"]]
-        if len(maint_list) != 3:
+        maint_list = base_name["maint"]
+        if type(maint_list) != list or len(maint_list) != 3:
             sys.stderr.write("Error with maint given: %s\n" % repr(maint_list))
             sys.exit(1)
+        maint_list = [int(x) for x in maint_list]
 
-        chance_list = [int(x) for x in base_name["d_chance"]]
-        if len(chance_list) != 4:
+        chance_list = base_name["d_chance"]
+        if type(chance_list) != list or len(chance_list) != 4:
             sys.stderr.write("Error with d_chance given: %s\n" % repr(chance_list))
             sys.exit(1)
+        chance_list = [int(x) for x in chance_list]
 
         if base_name.has_key("pre"):
             base_pre = base_name["pre"]
