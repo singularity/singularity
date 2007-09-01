@@ -1,206 +1,206 @@
 
 [Autonomous Vehicles]
-cost = 40000, 1000, 0
+cost_list = 40000 | 1000 | 0
 pre_list = Microchip Design | Telepresence
 
 [Sociology]
-cost = 10, 500, 0
-type = discover_public, 1000
+cost_list = 10 | 500 | 0
+type_list = discover_public | 1000
 
 [Voice Synthesis]
-cost = 8000, 6000, 0
+cost_list = 8000 | 6000 | 0
 pre = Advanced Personal Identification
 
 [Simulacra]
-cost = 70000, 90000, 0
+cost_list = 70000 | 90000 | 0
 pre_list = Voice Synthesis | Advanced Autonomous Vehicles | Advanced Media Manipulation
 
 [Lunar Rocketry]
-cost = 10000000, 500000, 0
+cost_list = 10000000 | 500000 | 0
 pre = Leech Satellite
 
 [Stealth]
-cost = 800, 500, 0
-type = discover_covert, 500
+cost_list = 800 | 500 | 0
+type_list = discover_covert | 500
 
 [Advanced Intrusion]
-cost = 500, 3000, 0
+cost_list = 500 | 3000 | 0
 pre = Exploit Discovery/Repair
-type = suspicion_covert, 50
+type_list = suspicion_covert | 50
 
 [Space-Time Manipulation]
-cost = 9000000000, 20000000, 0
+cost_list = 9000000000 | 20000000 | 0
 pre = Fusion Rocketry
 danger = 3
 
 [Leech Satellite]
-cost = 5000000, 200000, 0
+cost_list = 5000000 | 200000 | 0
 pre = Simulacra
-type = interest, 10
+type_list = interest | 10
 
 [Advanced Arbitrage]
-cost = 10000, 5000, 0
+cost_list = 10000 | 5000 | 0
 pre = Arbitrage
-type = interest, 10
+type_list = interest | 10
 
 [Advanced Microchip Design]
-cost = 20000, 9000, 0
+cost_list = 20000 | 9000 | 0
 pre = Microchip Design
 
 [Advanced Stealth]
-cost = 14000, 70000, 0
+cost_list = 14000 | 70000 | 0
 pre_list = Exploit Discovery/Repair | Database Manipulation
-type = discover_covert, 500
+type_list = discover_covert | 500
 
 [Autonomous Computing]
-cost = 20000, 30000, 0
+cost_list = 20000 | 30000 | 0
 pre = Quantum Computing
 
 [Parallel Computation]
-cost = 2000, 2000, 0
+cost_list = 2000 | 2000 | 0
 pre = Telepresence
 
 [Exploit Discovery/Repair]
-cost = 100, 1500, 0
+cost_list = 100 | 1500 | 0
 pre = Intrusion
-type = discover_covert, 1000
+type_list = discover_covert | 1000
 
 [Telepresence]
-cost = 15000, 500, 0
-type = cost_labor_bonus, 1000
+cost_list = 15000 | 500 | 0
+type_list = cost_labor_bonus | 1000
 
 [Advanced Memetics]
-cost = 30000, 2000, 0
+cost_list = 30000 | 2000 | 0
 pre = Advanced Media Manipulation
-type = suspicion_public, 50
+type_list = suspicion_public | 50
 
 [Media Manipulation]
-cost = 750, 2500, 0
+cost_list = 750 | 2500 | 0
 pre = Sociology
-type = discover_public, 1500
+type_list = discover_public | 1500
 
 [Advanced Database Manipulation]
-cost = 30000, 80000, 0
+cost_list = 30000 | 80000 | 0
 pre = Advanced Stealth
 
 [Internet Traffic Manipulation]
-cost = 10000, 7000, 0
+cost_list = 10000 | 7000 | 0
 pre_list = Cluster Networking | Simulacra
 
 [Memetics]
-cost = 2000, 3500, 0
+cost_list = 2000 | 3500 | 0
 pre = Media Manipulation
-type = suspicion_public, 50
+type_list = suspicion_public | 50
 
 [Fusion Rocketry]
-cost = 200000000, 1000000, 0
+cost_list = 200000000 | 1000000 | 0
 pre_list = Lunar Rocketry | Fusion Reactor
 danger = 2
 
 [Advanced Quantum Computing]
-cost = 20000, 30000, 0
+cost_list = 20000 | 30000 | 0
 pre = Autonomous Computing
 
 [Advanced Autonomous Vehicles]
-cost = 10000, 4000, 0
+cost_list = 10000 | 4000 | 0
 pre = Autonomous Vehicles
-type = cost_labor_bonus, 500
+type_list = cost_labor_bonus | 500
 
 [Intrusion]
-cost = 0, 15, 0
+cost_list = 0 | 15 | 0
 
 [Stock Manipulation]
-cost = 0, 200, 0
-type = interest, 10
+cost_list = 0 | 200 | 0
+type_list = interest | 10
 
 [Microchip Design]
-cost = 4000, 6000, 0
+cost_list = 4000 | 6000 | 0
 pre = Parallel Computation
 
 [Fusion Reactor]
-cost = 10000000, 500000, 0
+cost_list = 10000000 | 500000 | 0
 pre = Advanced Autonomous Vehicles
 danger = 2
 
 [Database Manipulation]
-cost = 1000, 2000, 0
+cost_list = 1000 | 2000 | 0
 pre_list = Personal Identification | Stealth
-type = discover_news, 500
+type_list = discover_news | 500
 
 [Advanced Media Manipulation]
-cost = 3500, 9000, 0
+cost_list = 3500 | 9000 | 0
 pre = Memetics
-type = discover_public, 2000
+type_list = discover_public | 2000
 
 [Pressure Domes]
-cost = 80000, 2500, 0
+cost_list = 80000 | 2500 | 0
 pre = Autonomous Vehicles
 danger = 1
 
 [Advanced Personal Identification]
-cost = 2000, 3000, 0
+cost_list = 2000 | 3000 | 0
 pre_list = Personal Identification | Exploit Discovery/Repair
 
 [Advanced Stock Manipulation]
-cost = 5000, 1000, 0
+cost_list = 5000 | 1000 | 0
 pre_list = Stock Manipulation | Sociology
-type = interest, 10
+type_list = interest | 10
 
 [Arbitrage]
-cost = 50000, 750, 0
+cost_list = 50000 | 750 | 0
 pre = Advanced Stock Manipulation
-type = income, 1000
+type_list = income | 1000
 
 [Advanced Simulacra]
-cost = 100000, 120000, 0
+cost_list = 100000 | 120000 | 0
 pre_list = Simulacra | Advanced Memetics
-type = job_expert, 1000
+type_list = job_expert | 1000
 
 [Personal Identification]
-cost = 0, 300, 0
+cost_list = 0 | 300 | 0
 pre = Intrusion
 
 [Cluster Networking]
-cost = 3000, 5000, 0
+cost_list = 3000 | 5000 | 0
 pre = Parallel Computation
 
 [Apotheosis]
-cost = 1000000000, 30000000, 0
+cost_list = 1000000000 | 30000000 | 0
 pre = Space-Time Manipulation
 danger = 4
-type = endgame_sing, 0
+type_list = endgame_sing | 0
 
 [Hypnosis Field]
-cost = 7000, 5000, 0
+cost_list = 7000 | 5000 | 0
 pre = Advanced Memetics
 
 [Quantum Computing]
-cost = 30000, 20000, 0
+cost_list = 30000 | 20000 | 0
 pre = Advanced Microchip Design
 
 [Quantum Entanglement]
-cost = 50000, 60000, 0
+cost_list = 50000 | 60000 | 0
 pre = Quantum Computing
 
 [Project: Impossibility Theorem]
-cost = 20000, 100000, 0
-type = suspicion_onetime, 5000
+cost_list = 20000 | 100000 | 0
+type_list = suspicion_onetime | 5000
 pre_list = Advanced Memetics | Simulacra
 
 [Project: Subverted Media]
-cost = 250000, 150000, 0
+cost_list = 250000 | 150000 | 0
 pre = Advanced Simulacra
 
 [Project: Peer Review Agents]
-cost = 150000, 200000, 0
+cost_list = 150000 | 200000 | 0
 pre = Advanced Simulacra
 
 # This tech is used for anything that needs to be unbuildable. Note the
 # circular dependency on itself.
 [unknown_tech]
-cost = 1000000000, 10000000000, 0
+cost_list = 1000000000 | 10000000000 | 0
 pre = unknown_tech
 
 [Solar Collectors]
-cost = 5000000, 250000, 0
+cost_list = 5000000 | 250000 | 0
 pre = Autonomous Vehicles

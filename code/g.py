@@ -1096,50 +1096,57 @@ def load_techs():
     global techs
     techs = {}
 
-    #If there are no tech data files, stop.
-    if not path.exists(data_loc+"techs.dat") or \
-                    not path.exists(data_loc+"techs_"+language+".dat") or \
-                    not path.exists(data_loc+"techs_en_US.dat"):
-        print "tech files are missing. Exiting."
-        sys.exit()
+    tech_list = generic_load("techs.dat")
 
-    temp_tech_array = generic_load("techs.dat")
-    for tech_name in temp_tech_array:
-        if (not tech_name.has_key("id")):
-            print "tech lacks id in techs.dat"
-        if (not tech_name.has_key("cost")):
-            print "tech lacks cost in techs.dat"
-        cost_array = tech_name["cost"].split(",", 2)
-        if len(cost_array) != 3:
-            print "error with cost given: "+tech_name["cost"]
-            sys.exit()
-        temp_tech_cost = (int(cost_array[0]), int(cost_array[1]),
-            int(cost_array[2]))
+    for tech_name in tech_list:
+
+        # Certain keys are absolutely required for each entry.  Make sure
+        # they're there.
+        check_required_fields(tech_name, ("id", "cost"), "Tech")
+
+        # Get the costs.
+        cost_list = tech_name["cost"]
+        if type(cost_list) != list or len(cost_list) != 3:
+            sys.stderr.write("Error with cost given: %s" % repr(cost_list))
+            sys.exit(1)
+
+        tech_cost = [int(x) for x in cost_list]
+
+        # Make sure prerequisites, if any, are lists.
         if tech_name.has_key("pre"):
             if type(tech_name["pre"]) == list:
-                temp_tech_pre = tech_name["pre"]
-            else: temp_tech_pre = [tech_name["pre"]]
-        else: temp_tech_pre = []
-        temp_tech_danger = 0
-        if tech_name.has_key("danger"): temp_tech_danger = int(tech_name["danger"])
-        temp_tech_type = ""
-        temp_tech_second = 0
+                tech_pre = tech_name["pre"]
+            else:
+                tech_pre = [tech_name["pre"]]
+        else:
+            tech_pre = []
+
+        if tech_name.has_key("danger"):
+            tech_danger = int(tech_name["danger"])
+        else:
+            tech_danger = 0
+
         if tech_name.has_key("type"):
-            cost_array = tech_name["type"].split(",", 1)
-            if len(cost_array) != 2:
-                print "error with type given: "+tech_name["type"]
+
+            type_list = tech_name["type"]
+            if type(type_list) != list or len(type_list) != 2:
+                sys.stderr.write("Error with type given: %s\n" % repr(type_list))
                 sys.exit()
-            temp_tech_type = cost_array[0]
-            temp_tech_second = int(cost_array[1])
+            tech_type = type_list[0]
+            tech_second = int(type_list[1])
+        else:
+            tech_type = ""
+            tech_second = 0
 
         techs[tech_name["id"]]=tech.tech(tech_name["id"], "", 0,
-                            temp_tech_cost, temp_tech_pre, temp_tech_danger,
-                            temp_tech_type, temp_tech_second)
+         tech_cost, tech_pre, tech_danger, tech_type, tech_second)
+
+    # As with others, we load the en_US language definitions as a safe
+    # default, then overwrite them with the selected language.
 
     load_tech_defs("en_US")
-    load_tech_defs(language)
-
-
+    if language != "en_US":
+        load_tech_defs(language)
 
 # #        techs["Construction 1"] = tech.tech("Construction 1",
 # #                "Basic construction techniques. "+
