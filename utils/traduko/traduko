@@ -23,8 +23,12 @@
 
 import ConfigParser
 import optparse
+import sys
 
-def buildOptionParser():
+# A list of all available modes.
+MODE_LIST = ["update", "verify", "package"]
+
+def build_option_parser():
     """
 buildOptionParser() builds an 'optparse' object to handle traduko's myriad
 arguments and options.  Unfortunately, optparse isn't really made for modal
@@ -32,6 +36,7 @@ applications like traduko, so we'll have to abuse the code a bit.  But it
 should be good enough.
 """
 
+# Fear the usage string!
     usage = """
     %prog MODE [options] trans_lang
 
@@ -89,9 +94,29 @@ asterisks at the beginning and end.
 
     return parser
 
+def error_and_out(message):
+    """
+error_and_out() prints a mildly helpful error message and bails.
+"""
+
+    sys.stderr.write("ERROR: %s\n" % message)
+    sys.stderr.write("       Please run again with --help to see proper usage.\n")
+    sys.exit(1)
+
 if "__main__" == __name__:
 
-    option_parser = buildOptionParser()
+    option_parser = build_option_parser()
 
     (options, args) = option_parser.parse_args()
-    print repr (options), repr(args)
+
+    # Boring error-checking time!
+    if len(args) != 2:
+        error_and_out("traduko requires at least two arguments.")
+
+    mode, trans_lang = args
+
+    if mode not in MODE_LIST:
+        error_and_out("%s is not a valid mode." % mode)
+
+    if options.source or options.restart and mode != "update":
+        error_and_out("Cannot use --source or --restart unless in 'update' mode.")
