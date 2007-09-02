@@ -30,6 +30,17 @@ import sys
 # A list of all available modes.
 MODE_LIST = ["update", "verify", "package"]
 
+# A list of things that can be translated.  Tracked are whether or
+# not they have a standalone file that defines certain things and the
+# prefix of the filename. 
+TRANSLATION_LIST = [
+    {"prefix": "bases", "standalone": True},
+    {"prefix": "events", "standalone": True},
+    {"prefix": "items", "standalone": True},
+    {"prefix": "strings", "standalone": False},
+    {"prefix": "techs", "standalone": False},
+]
+
 def build_option_parser():
     """
 buildOptionParser() builds an 'optparse' object to handle traduko's myriad
@@ -49,7 +60,7 @@ to properly run.
 
 For each option, the modes in which it works are listed in brackets at the
 end of the help text.  All options take the --directory option, which states
-which directory the translation files are in.
+which directory the translation files are in, as well as the --verbose option.
 
 MODES
 
@@ -88,6 +99,9 @@ asterisks at the beginning and end.
 
     parser = optparse.OptionParser(usage = usage)
 
+    parser.add_option("-v", "--verbose", dest="verbose", default=False,
+     action="store_true", help="Be talkative [all]")
+
     parser.add_option("-d", "--directory", dest="directory", default=".",
      help="Use language files out of directory DIR (default %default) [all]",
      metavar="DIR")
@@ -114,15 +128,125 @@ error_and_out() prints a mildly helpful error message and bails.
     sys.stderr.write("       Please run again with --help to see proper usage.\n")
     sys.exit(1)
 
-def update(trans_lang, trans_path, source, restart):
+def verbout(message):
+    """
+verbout() is a shortcut for sys.stderr.write("V: " + message + "\n").
+"""
+
+    sys.stderr.write("V: " + message + "\n")
+
+def update(trans_lang, trans_path, source, restart, verbose):
     """
 update() is an implementation of the 'update' option.
 
 TODO: Describe better.
 """
-    sys.stdout.write("TODO: Implement update.\n")
 
-def verify(trans_lang, trans_path):
+    # First things first: For each file, we need to pull in the strings from
+    # the en_US version, and then overwrite them with the source (if set).  In
+    # addition, if there's already a translation started, we don't want to
+    # overwrite those options either.
+    for trans_file_dict in TRANSLATION_LIST:
+
+        prefix = trans_file_dict["prefix"]
+
+        # Get all the filenames.
+        dest_filename = prefix + "_" + trans_lang + ".dat"
+        en_US_filename = prefix + "_en_US.dat"
+        if source:
+            source_filename = prefix + "_" + source + ".dat"
+
+        dest_parser = ConfigParser.SafeConfigParser()
+        dest_filepath = os.path.join(trans_path, dest_filename)
+
+        # If we're not restarting, try to preload the translation with what's
+        # already there.  This may fail, which is fine; that should just mean
+        # it's a brand-new translation.
+        if not restart:
+            try:
+
+                # We're pedantic about the opening and closing, /just in case/
+                # Python wants to hold onto the file object longer than we
+                # want, since we have to write to it later.
+
+                if verbose:
+                    verbout("Trying to preload %s." % dest_filepath)
+                    
+                fp = open(dest_filepath, "r")
+                dest_parser.readfp(fp)
+                fp.close()
+            except:
+
+                # Okay, couldn't read the new translation file.  That's to be
+                # expected.
+                if verbose:
+                    verbout("Preload attempt failed.")
+
+        # Now that we've got our parser object, we need to start preloading
+        # data.  We want to load the 'source' language first, as it's a
+        # better source than the en_US fallback.
+        read_list = []
+        if source:
+            read_list.append({
+             "filename": source_filename, "signal": "***", "required": False})
+
+        # Add the en_US fallback at the end.
+        read_list.append({
+         "filename": en_US_filename, "signal": "!!!", "required": True})
+
+        for read_elem in read_list:
+
+            # This seems ridiculous, but when you come back to code five years
+            # later and forgot to document your formats, you'll thank yourself
+            # for being this pedantic.
+            filename = read_elem["filename"]
+            signal = read_elem["signal"]
+            required = read_elem["required"]
+
+            # Read the data from this translation file.
+            source_parser = ConfigParser.SafeConfigParser()
+            source_filepath = os.path.join(trans_path, filename)
+            try:
+                if verbose:
+                    verbout("Loading translation from %s." % source_filepath)
+                source_parser.readfp(open(source_filepath))
+            except:
+                if required:
+                    error_and_out("Incomplete required translation.  Cannot proceed.")
+                elif verbose:
+                    verbout("Failed to find translation data.")
+
+            for section in source_parser.sections():
+                
+                # Add this section if the new translation doesn't have it.
+                if not dest_parser.has_section(section):
+                    if verbose:
+                        verbout("Adding section %s." % section)
+                    dest_parser.add_section(section)
+
+                for option in source_parser.options(section):
+                    if not dest_parser.has_option(section, option):
+
+                        # New data!  Splice it into the new translation.
+                        value = signal + source_parser.get(section, option) + signal
+
+                        # Unfortunately, OptionParser isn't smart enough to
+                        # reduplicate percent signs, so we have to do it by
+                        # hand.  Meh.
+                        value = value.replace("%", "%%")
+                        if verbose:
+                            verbout("Adding option %s with value %s." % (option, value))
+
+                        dest_parser.set(section, option, value)
+
+        # We have a "complete" file.  Write it out.
+        if verbose:
+            verbout("Writing out translation file %s." % dest_filepath)
+        fp = open(dest_filepath, "w")
+        dest_parser.write(fp)
+        fp.close()
+
+def verify(trans_lang, trans_path, verbose):
     """
 verify() is an implementation of the 'verify' option.
 
@@ -130,7 +254,7 @@ TODO: Describe better.
 """
     sys.stdout.write("TODO: Implement verify.\n")
 
-def package(trans_lang, trans_path, filename):
+def package(trans_lang, trans_path, filename, verbose):
     """
 package() is an implementation of the 'package' option.
 
@@ -154,13 +278,13 @@ if "__main__" == __name__:
     if mode not in MODE_LIST:
         error_and_out("%s is not a valid mode." % mode)
 
-    if options.source or options.restart and mode != "update":
+    if (options.source or options.restart) and mode != "update":
         error_and_out("Cannot use --source or --restart unless in 'update' mode.")
 
-    trans_path=os.path.join(os.getcwd(), options.directory)
+    trans_path=os.path.abspath(os.path.join(os.getcwd(), options.directory))
     if mode == "update":
-        update(trans_lang, trans_path, options.source, options.restart)
+        update(trans_lang, trans_path, options.source, options.restart, options.verbose)
     elif mode == "verify":
-        verify(trans_lang, trans_path)
+        verify(trans_lang, trans_path, options.verbose)
     elif mode == "package":
-        package(trans_lang, trans_path, options.filename)
+        package(trans_lang, trans_path, options.filename, options.verbose)
