@@ -1310,39 +1310,61 @@ def load_event_defs():
         if event_name.has_key("descr"):
             events[event_name["id"]].descript = event_name["descr"]
 
-def load_string_defs(language_str):
-    temp_string_array = generic_load("strings_"+language_str+".dat")
-    for string_name in temp_string_array:
-        if (not string_name.has_key("id")):
-            print "string series lacks id in strings_"+language_str+".dat"
-        if string_name["id"] == "fonts":
-            if (string_name.has_key("font0")):
-                global font0
-                font0 = string_name["font0"]
-            if (string_name.has_key("font1")):
-                global font1
-                font1 = string_name["font1"]
-        elif string_name["id"] == "jobs":
-            global jobs
-            if (string_name.has_key("job_expert")):
-                jobs["Expert Jobs"][2] = string_name["job_expert"]
-            if (string_name.has_key("job_inter")):
-                jobs["Intermediate Jobs"][2] = string_name["job_inter"]
-            if (string_name.has_key("job_basic")):
-                jobs["Basic Jobs"][2] = string_name["job_basic"]
-            if (string_name.has_key("job_menial")):
-                jobs["Menial Jobs"][2] = string_name["job_menial"]
-        elif string_name["id"] == "strings":
-            global strings
-            for string_entry in string_name:
-                strings[string_entry] = string_name[string_entry]
-        elif string_name["id"] == "help":
-            global help_strings
-            for string_entry in string_name:
-                if string_entry=="id": continue
-                help_strings[string_entry] = \
-                        string_name[string_entry].split("|", 1)
+def load_string_defs(lang):
 
+    string_list = generic_load("strings_" + lang + ".dat")
+    for string_section in string_list:
+        if string_section["id"] == "fonts":
+
+            # Load up font0 and font1.
+            if (string_section.has_key("font0")):
+                global font0
+                font0 = string_section["font0"]
+            elif (string_section.has_key("font1")):
+                global font1
+                font1 = string_section["font1"]
+            else:
+                sys.stderr.write("Unexpected font entry in strings file.\n")
+                sys.exit(1)
+
+        elif string_section["id"] == "jobs":
+
+            # Load the four extant jobs.
+            global jobs
+            if (string_section.has_key("job_expert")):
+                jobs["Expert Jobs"][2] = string_section["job_expert"]
+            elif (string_section.has_key("job_inter")):
+                jobs["Intermediate Jobs"][2] = string_section["job_inter"]
+            elif (string_section.has_key("job_basic")):
+                jobs["Basic Jobs"][2] = string_section["job_basic"]
+            elif (string_section.has_key("job_menial")):
+                jobs["Menial Jobs"][2] = string_section["job_menial"]
+            else:
+                sys.stderr.write("Unexpected job entry in strings file.\n")
+
+        elif string_section["id"] == "strings":
+
+            # Load the 'standard' strings.
+            global strings
+            for string_entry in string_section:
+                strings[string_entry] = string_section[string_entry]
+
+        elif string_section["id"] == "help":
+
+            # Load the help lists.
+            global help_strings
+            help_keys = [x for x in string_section if x != "id"]
+            for help_key in help_keys:
+                help_entry = string_section[help_key]
+                if type(help_entry) != list or len(help_entry) != 2:
+                    sys.stderr.write("Invalid help entry %s." % repr(help_entry))
+                    sys.exit(1)
+
+                help_strings[help_key] = string_section[help_key]
+
+        else:
+            sys.stderr.write("Invalid string section %s." % string_section["id"])
+            sys.exit(1)
 
 def load_strings():
     #If there are no string data files, stop.
