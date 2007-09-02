@@ -23,6 +23,8 @@
 
 import ConfigParser
 import optparse
+import os
+import os.path
 import sys
 
 # A list of all available modes.
@@ -46,7 +48,8 @@ of different modes, and each mode takes a set of options or other arguments
 to properly run.
 
 For each option, the modes in which it works are listed in brackets at the
-end of the help text.
+end of the help text.  All options take the --directory option, which states
+which directory the translation files are in.
 
 MODES
 
@@ -69,10 +72,11 @@ This will do a verification pass on the language, informing you of which
 strings still need to be translated, don't exist in the current language
 file, and so on.
 
-   package trans_lang
+   package [--file PACKFILE] trans_lang
 
 This will generate a nice .tar.gz file to send to the Endgame: Singularity
-developers with your translation.
+developers with your translation.  The --file parameter allows you to pick
+the filename of the output file.
 
 TRANSLATION FILES
 
@@ -84,6 +88,10 @@ asterisks at the beginning and end.
 
     parser = optparse.OptionParser(usage = usage)
 
+    parser.add_option("-d", "--directory", dest="directory", default=".",
+     help="Use language files out of directory DIR (default %default) [all]",
+     metavar="DIR")
+
     parser.add_option("-s", "--source", dest="source", default=None,
      help="Use language LANG as the source for the translation [update]",
      metavar="LANG")
@@ -91,6 +99,9 @@ asterisks at the beginning and end.
     parser.add_option("--restart", dest="restart", default=False,
      action="store_true",
      help="Restart a language translation entirely (DANGEROUS!) [update]",)
+
+    parser.add_option("-f", "--filename", dest="filename", default=None,
+     help="Write package to file FILE instead of trans_lang.tar.gz")
 
     return parser
 
@@ -102,6 +113,31 @@ error_and_out() prints a mildly helpful error message and bails.
     sys.stderr.write("ERROR: %s\n" % message)
     sys.stderr.write("       Please run again with --help to see proper usage.\n")
     sys.exit(1)
+
+def update(trans_lang, trans_path, source, restart):
+    """
+update() is an implementation of the 'update' option.
+
+TODO: Describe better.
+"""
+    sys.stdout.write("TODO: Implement update.\n")
+
+def verify(trans_lang, trans_path):
+    """
+verify() is an implementation of the 'verify' option.
+
+TODO: Describe better.
+"""
+    sys.stdout.write("TODO: Implement verify.\n")
+
+def package(trans_lang, trans_path, filename):
+    """
+package() is an implementation of the 'package' option.
+
+TODO: Describe better.
+"""
+
+    sys.stdout.write("TODO: Implement package.\n")
 
 if "__main__" == __name__:
 
@@ -120,3 +156,11 @@ if "__main__" == __name__:
 
     if options.source or options.restart and mode != "update":
         error_and_out("Cannot use --source or --restart unless in 'update' mode.")
+
+    trans_path=os.path.join(os.getcwd(), options.directory)
+    if mode == "update":
+        update(trans_lang, trans_path, options.source, options.restart)
+    elif mode == "verify":
+        verify(trans_lang, trans_path)
+    elif mode == "package":
+        package(trans_lang, trans_path, options.filename)
