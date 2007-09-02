@@ -1059,12 +1059,13 @@ from the actual name, and the internal entries are broken up by the pipe
             if len(option) > 6 and option[-5:] == "_list":
 
                 # Break it into elements separated by |.
-                item_dict[option[:-5]] = [x.strip() for x in
+                item_dict[option[:-5]] = [unicode(x.strip(), "UTF-8") for x in
                  config.get(item_id, option).split("|")]
             else:
           
                 # Otherwise, just grab the data.
-                item_dict[option] = config.get(item_id, option).strip()
+                item_dict[option] = unicode(config.get(item_id, option).strip(),
+                 "UTF-8")
 
         # Add this to the list of all objects we are returning.
         return_list.append(item_dict)
