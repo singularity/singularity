@@ -1219,12 +1219,18 @@ def load_items():
             item_second = 0
 
         if item_name.has_key("build"):
-            build_array = item_name["build"]
+            build_list = item_name["build"]
+
+            # It may be a single item and not an actual list.  If so, make it
+            # a list.
+            if type(build_list) != list:
+                build_list = [build_list]
+
         else:
-            build_array = []
+            build_list = []
 
         items[item_name["id"]]=item.item_class( item_name["id"], "",
-         item_cost, item_pre, item_type, item_second, build_array)
+         item_cost, item_pre, item_type, item_second, build_list)
 
     #this is used by the research screen in order for the assign research
     #screen to have the right amount of CPU. It is a computer, unbuildable,
