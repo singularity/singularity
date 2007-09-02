@@ -931,17 +931,14 @@ def display_base_list(location, menu_buttons):
     refresh_map(menu_buttons)
     pygame.display.flip()
 
+
 #Display the list of bases.
 def display_base_list_inner(location):
     base_list_size = 15
 
     temp_base_list = []
     base_id_list = []
-    #Trivial sort of bases according to size, largest first.
-    sorted_bases_list = g.bases[location]
-    sorted_bases_list.sort(lambda x, y: cmp(x.base_type.size, y.base_type.size))
-    sorted_bases_list.reverse()
-    for this_base in sorted_bases_list:
+    for this_base in g.bases[location]:
         tmp_study = this_base.studying
         if tmp_study == "": tmp_study = g.strings["nothing"]
         if this_base.built != 1: tmp_study = g.strings["building"]

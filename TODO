@@ -16,3 +16,4 @@ Todo for 0.27:
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
     - Complete PGU GUI migration
     - Make translations easier to do.  (Phil has good ideas on how to do this.)
+    - Sort bases by size. (emh for suggestion)
