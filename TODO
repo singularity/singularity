@@ -19,3 +19,7 @@ Todo for 0.27:
     - Sort bases by size. (emh for suggestion)
     - Make 'Impossible' more impossible--perhaps get rid of the quadratic
       reductions?
+    - Make discoveries in a particular location up the chance for a while of
+      discoveries of other bases in said location.  (Durandal7 for suggestion.)
+    - In general, differentiate locations (especially the starting continents)
+      more.
