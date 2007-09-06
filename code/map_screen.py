@@ -1024,7 +1024,6 @@ def display_base_list_inner(location):
                         g.play_click()
                         if len(g.bases[location]) == 0:
                             return -1
-                        print g.bases
                         if g.bases[location][base_pos].built == 0:
                             string = "Under Construction. \\n Completion in "
                             string += g.to_time(g.bases[location][base_pos].cost[2]) + ". \\n "

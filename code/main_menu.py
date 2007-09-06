@@ -50,9 +50,9 @@ def display_main_menu():
 
     fg = (255,255,255)
 
-    titlefont = g.font[0][32]
+    titlefont = g.font[1][32]
     label = gui.Label("ENDGAME:SINGULARITY", color=(125,0,0), font=titlefont)
-    container.add(label,x_loc-100,0)
+    container.add(label,x_loc-50,0)
 
     button = gui.Button("New Game", color=fg)
     container.add(button,x_loc,120)
