@@ -169,14 +169,14 @@ def load_music():
                 # trying to load music.
                 music_available_here = False
             
-            if music_available_here:
+        if music_available_here:
 
-                # Loop through the files in music_path and add the ones
-                # that are .mp3s and .oggs.
-                for file_name in os.listdir(music_path):
-                    if (len(file_name) > 5 and
-                     (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
-                        music_array.append(os.path.join(music_path, file_name))
+            # Loop through the files in music_path and add the ones
+            # that are .mp3s and .oggs.
+            for file_name in os.listdir(music_path):
+                if (len(file_name) > 5 and
+                 (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
+                    music_array.append(os.path.join(music_path, file_name))
 
     music_arraylen = len(music_array)
 

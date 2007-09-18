@@ -39,6 +39,7 @@ USER-VISIBLE CHANGES:
 - Increased robustness across the board; E:S should be harder to crash.
   (Phil)
 - Various strings shortened to fit dialogs. (Phil, Joey Hess for suggestion).
+- Fixed bug that kept music from playing. (Phil, Brian Warner for suggestion).
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
