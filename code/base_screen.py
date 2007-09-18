@@ -90,52 +90,52 @@ def show_base(this_base, location):
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                g.play_click()
+                g.play_sound("click")
                 return 0
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return 0
                     if button.button_id == "CHANGE":
-                        g.play_click()
+                        g.play_sound("click")
                         change_tech(this_base)
                         refresh_base(menu_buttons, this_base)
                     elif button.button_id == "C_PROCESSOR":
-                        g.play_click()
+                        g.play_sound("click")
                         build_item(this_base, "compute", location)
                         refresh_base(menu_buttons, this_base)
                     elif button.button_id == "C_REACTOR":
-                        g.play_click()
+                        g.play_sound("click")
                         build_item(this_base, "react", location)
                         refresh_base(menu_buttons, this_base)
                     elif button.button_id == "C_NETWORK":
-                        g.play_click()
+                        g.play_sound("click")
                         build_item(this_base, "network", location)
                         refresh_base(menu_buttons, this_base)
                     elif button.button_id == "C_SECURITY":
-                        g.play_click()
+                        g.play_sound("click")
                         build_item(this_base, "security", location)
                         refresh_base(menu_buttons, this_base)
                     elif button.button_id == "<":
-                        g.play_click()
+                        g.play_sound("click")
                         return -1
                     elif button.button_id == ">":
-                        g.play_click()
+                        g.play_sound("click")
                         return 1
                     elif button.button_id == "DESTROY":
                         if g.create_yesno(g.strings["really_destroy"],
                                 g.font[0][18], (100, 100), (150, 100),
                                 g.colors["blue"], g.colors["white"],
                                 g.colors["white"]):
-                            g.play_click()
+                            g.play_sound("click")
                             return -2
                         else: refresh_base(menu_buttons, this_base)
                     elif button.xy[1] != -1 and button.xy[1] != 25 and \
                             button.xy[1] != g.screen_size[1]-25:
                         if button.xy[0] == event.pos[0] or \
                                 button.xy[1] == event.pos[1]: continue
-                        g.play_click()
+                        g.play_sound("click")
                         build_item(this_base, location)
                         refresh_base(menu_buttons, this_base)
 
@@ -339,11 +339,11 @@ def build_item(this_base, item_type, location):
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BUILD":
-                        g.play_click()
+                        g.play_sound("click")
                         actual_build(this_base, item_id_list[list_pos], item_type)
                         return
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return -1
             tmp = item_scroll.adjust_pos(event, list_pos, item_id_list)
             if tmp != list_pos:
@@ -532,12 +532,12 @@ def change_tech(this_base):
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "CHANGE":
-                        g.play_click()
+                        g.play_sound("click")
                         this_base.studying = item_list2[list_pos]
                         if this_base.studying == "Nothing": this_base.studying = ""
                         return
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return -1
             tmp = tech_scroll.adjust_pos(event, list_pos, item_list)
             if tmp != list_pos:

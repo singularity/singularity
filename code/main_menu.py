@@ -80,7 +80,7 @@ def display_main_menu():
     app.run(container)
 
     if mmChoice != -1:
-        g.play_click()
+        g.play_sound("click")
         return mmChoice
 
     pygame.display.flip()
@@ -101,7 +101,7 @@ global mmdiff_result
 def mmdiff_func(arg):
     global mmdiff_result
     mmdiff_result = arg
-    g.play_click()
+    g.play_sound("click")
     app.quit()
 
 def difficulty_select():
@@ -269,10 +269,10 @@ def display_load_menu():
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "LOAD":
-                        g.play_click()
+                        g.play_sound("click")
                         return saves_array[saves_pos]
                     elif button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return -1
             tmp = saves_scroll.adjust_pos(event, saves_pos, saves_array)
             if tmp != saves_pos:
@@ -413,11 +413,11 @@ def display_options():
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         set_language_properly(prev_lang)
                         return 0
                     if button.button_id == "SAVE TO DISK":
-                        g.play_click()
+                        g.play_sound("click")
                         if lang_pos >= len(lang_array):
                             save_options()
                         else:
@@ -427,29 +427,29 @@ def display_options():
                     elif button.button_id == "fullscreen":
                         if g.fullscreen == 1: g.fullscreen = 0
                         else: g.fullscreen = 1
-                        g.play_click()
+                        g.play_sound("click")
                         set_res()
                     elif button.button_id == "sound":
                         if g.nosound == 1: g.nosound = 0
                         else: g.nosound = 1
-                        g.play_click()
+                        g.play_sound("click")
                     elif button.button_id == "grab":
-                        g.play_click()
+                        g.play_sound("click")
                         pygame.event.set_grab(not pygame.event.get_grab())
                     elif button.button_id == "640":
-                        g.play_click()
+                        g.play_sound("click")
                         g.screen_size = (640, 480)
                         set_res()
                     elif button.button_id == "800":
-                        g.play_click()
+                        g.play_sound("click")
                         g.screen_size = (800, 600)
                         set_res()
                     elif button.button_id == "1024":
-                        g.play_click()
+                        g.play_sound("click")
                         g.screen_size = (1024, 768)
                         set_res()
                     elif button.button_id == "1280":
-                        g.play_click()
+                        g.play_sound("click")
                         g.screen_size = (1280, 1024)
                         set_res()
                     click_button(menu_buttons, button, False)

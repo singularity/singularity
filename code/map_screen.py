@@ -61,7 +61,7 @@ def display_generic_menu(xy_loc, titlelist):
                 return -1
             for buttonnum in range(len(menu_buttons)):
                 if menu_buttons[buttonnum].was_activated(event):
-                    g.play_click()
+                    g.play_sound("click")
                     return buttonnum
 
 def display_pause_menu():
@@ -241,7 +241,7 @@ def display_inner_techs():
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return
             tmp = techs_scroll.adjust_pos(event, item_pos, temp_tech_list)
             if tmp != item_pos:
@@ -375,7 +375,7 @@ def display_inner_items(item_type):
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return
 
 def refresh_items(item_name, xy):
@@ -490,7 +490,7 @@ def display_concept_list():
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return
 
 def refresh_concept(concept_name, xy):
@@ -680,7 +680,7 @@ def map_loop():
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "OPTIONS":
-                        g.play_click()
+                        g.play_sound("click")
                         tmp = display_pause_menu()
                         tmp = handle_pause_menu(tmp, menu_buttons)
                         if tmp == 0: return tmp
@@ -688,20 +688,20 @@ def map_loop():
                             menu_buttons = create_buttons(tmp_font_size)
                             refresh_map(menu_buttons)
                     elif button.button_id == "RESEARCH":
-                        g.play_click()
+                        g.play_sound("click")
                         while research_screen.main_research_screen() == 1:
                             pass
                         refresh_map(menu_buttons)
                     elif button.button_id == "FINANCE":
-                        g.play_click()
+                        g.play_sound("click")
                         finance_screen.main_finance_screen()
                         refresh_map(menu_buttons)
                     elif button.button_id == "KNOWLEDGE":
-                        g.play_click()
+                        g.play_sound("click")
                         display_knowledge_list()
                         refresh_map(menu_buttons)
                     elif button.button_id == "ii":
-                        g.play_click()
+                        g.play_sound("click")
                         g.curr_speed = 0
                         for button2 in menu_buttons:
                             button2.stay_selected = 0
@@ -709,7 +709,7 @@ def map_loop():
                         button.stay_selected = 1
                         button.refresh_button(1)
                     elif button.button_id == ">":
-                        g.play_click()
+                        g.play_sound("click")
                         g.curr_speed = 1
                         for button2 in menu_buttons:
                             button2.stay_selected = 0
@@ -717,7 +717,7 @@ def map_loop():
                         button.stay_selected = 1
                         button.refresh_button(1)
                     elif button.button_id == ">>":
-                        g.play_click()
+                        g.play_sound("click")
                         g.curr_speed = 60
                         for button2 in menu_buttons:
                             button2.stay_selected = 0
@@ -725,7 +725,7 @@ def map_loop():
                         button.stay_selected = 1
                         button.refresh_button(1)
                     elif button.button_id == ">>>":
-                        g.play_click()
+                        g.play_sound("click")
                         g.curr_speed = 7200
                         for button2 in menu_buttons:
                             button2.stay_selected = 0
@@ -733,7 +733,7 @@ def map_loop():
                         button.stay_selected = 1
                         button.refresh_button(1)
                     elif button.button_id == ">>>>":
-                        g.play_click()
+                        g.play_sound("click")
                         g.curr_speed = 432000
                         for button2 in menu_buttons:
                             button2.stay_selected = 0
@@ -743,7 +743,7 @@ def map_loop():
                     elif button.button_id == "SUSPICION": pass
                     elif button.button_id == "CPU": pass
                     elif button.xy[1] != -1: #ignore the timer
-                        g.play_click()
+                        g.play_sound("click")
                         display_base_list(button.button_id, menu_buttons)
                     pygame.display.flip()
 
@@ -1015,13 +1015,13 @@ def display_base_list_inner(location):
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "OPEN":
-                        g.play_click()
+                        g.play_sound("click")
                         return base_id_list[base_pos]
                     elif button.button_id == "NEW":
-                        g.play_click()
+                        g.play_sound("click")
                         return -2
                     elif button.button_id == "DESTROY":
-                        g.play_click()
+                        g.play_sound("click")
                         if len(g.bases[location]) == 0:
                             return -1
                         if g.bases[location][base_pos].built == 0:
@@ -1063,7 +1063,7 @@ def display_base_list_inner(location):
 
                         return -1
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return -1
             tmp = bases_scroll.adjust_pos(event, base_pos, temp_base_list)
             if tmp != base_pos:
@@ -1157,10 +1157,10 @@ def build_new_base_window(location):
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BUILD":
-                        g.play_click()
+                        g.play_sound("click")
                         return temp_base_list[base_pos]
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return -1
 
 def refresh_new_base(base_name, xy):

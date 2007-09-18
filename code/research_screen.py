@@ -123,10 +123,10 @@ def main_research_screen():
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BACK":
-                        g.play_click()
+                        g.play_sound("click")
                         return 0
                     if button.button_id == "STOP":
-                        g.play_click()
+                        g.play_sound("click")
                         #returning 1 causes the caller to refresh the list of
                         #techs
                         if kill_tech(item_list[list_pos]): return 1
@@ -136,7 +136,7 @@ def main_research_screen():
                         listbox.refresh_list(item_listbox, item_scroll,
                                 list_pos, item_display_list)
                     if button.button_id == "ASSIGN":
-                        g.play_click()
+                        g.play_sound("click")
                         if assign_tech(free_CPU): return 1
                         item_list, item_display_list, item_CPU_list, free_CPU = \
                                 refresh_screen(menu_buttons, list_size)

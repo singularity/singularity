@@ -113,11 +113,14 @@ load_images() loads all of the images in the data/images/ directory.
 sounds = {}
 def load_sounds():
     """
-load_sounds() loads all of the sounds in the data/sounds/ directory.
+load_sounds() loads all of the sounds in the data/sounds/ directory,
+define in sounds/sounds.dat.
 """
 
     global sounds
-    if nosound: return 0
+
+    if nosound:
+       return
 
     try:
         pygame.mixer.init()
@@ -126,20 +129,56 @@ load_sounds() loads all of the sounds in the data/sounds/ directory.
         sys.exit(1)
 
     sound_dir = os.path.join(data_loc, "sounds")
-    sound_list = os.listdir(sound_dir)
-    for sound_filename in sound_list:
-        if len(sound_filename) > 4 and sound_filename[-4:] == ".wav":
-            sounds[sound_filename] = pygame.mixer.Sound(
-             os.path.join(sound_dir, sound_filename))
+    sound_class_list = generic_load(os.path.join(sound_dir, "sounds.dat"))
+    for sound_class in sound_class_list:
 
-def play_click():
-    #rand_str = str(int(random.random() * 4))
-    play_sound("click"+str(int(random.random() * 4))+".wav")
+        # Make sure the sound class has the filename defined.
+        check_required_fields(sound_class, ("filename",), "Sound")
 
-def play_sound(sound_file):
-    if nosound or len(sounds) == 0:
-        return 0
-    sounds[sound_file].play()
+        # Load each sound in the list, inserting it into the sounds dictionary.
+        if type(sound_class["filename"]) != list:
+            filenames = [sound_class["filename"]]
+        else:
+            filenames = sound_class["filename"]
+
+        for filename in filenames:
+            real_filename = os.path.join(sound_dir, filename)
+
+            # Check to make sure it's a real file; bail if not.
+            if not os.path.isfile(real_filename):
+                sys.stderr.write("ERROR: Cannot load nonexistent soundfile %s!\n" % real_filename)
+                sys.exit(1)
+            else:
+
+                # Load it via the mixer ...
+                sound = pygame.mixer.Sound(real_filename)
+
+                # And shove it into the sounds dictionary.
+                if not sounds.has_key(sound_class["id"]):
+                    sounds[sound_class["id"]] = []
+                sounds[sound_class["id"]].append({
+                    "filename": real_filename,
+                    "sound": sound})
+
+def play_sound(sound_class):
+    """
+play_sound() plays a sound from a particular class.
+"""
+
+    if nosound:
+        return
+
+    # Don't crash if someone requests the wrong sound class, but print a
+    # warning.
+    if sound_class not in sounds:
+        sys.stderr.write("WARNING: Requesting a sound of unavailable class %s!" % sound_class)
+        return
+
+    # Play a random choice of sounds from the sound class.
+    random_sound = random.choice(sounds[sound_class])
+    if debug:
+       sys.stderr.write("D: Playing sound %s.\n" % random_sound["filename"])
+    random_sound["sound"].play()
 
 delay_time = 0
 music_array = []
