@@ -145,31 +145,25 @@ delay_time = 0
 music_array = []
 
 def load_music():
-    if nosound == 1: return 0
-    global music_array
-    global music_arraylen
-    music_array = []
-    music_arraylen=0
+    """
+load_music() loads music for the game.  It looks in multiple locations:
 
-    # We (potentially) retrieve music from two different places:
-    #    * music/ in the install directory for E:S; and
-    #    * music/ in the save folder.
+* music/ in the install directory for E:S; and
+* music/ in the save folder.
+"""
+
+    if nosound:
+       return
+    global music_array
+    music_array = []
+
+    # Build the set of paths we'll check for music.
     music_paths = (
         os.path.join(data_loc, "..", "music"),
         os.path.join(get_save_folder(True), "music")
     )
     for music_path in music_paths:
-        music_available_here = True
-        if not os.path.isdir(music_path):
-            try:
-                os.makedirs(music_path)
-            except:
-
-                # We don't have permission to write here.  Don't bother
-                # trying to load music.
-                music_available_here = False
-            
-        if music_available_here:
+        if os.path.isdir(music_path):
 
             # Loop through the files in music_path and add the ones
             # that are .mp3s and .oggs.
@@ -177,9 +171,18 @@ def load_music():
                 if (len(file_name) > 5 and
                  (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
                     music_array.append(os.path.join(music_path, file_name))
+        else:
 
-    music_arraylen = len(music_array)
+            # If the music directory doesn't exist, we definitely
+            # won't find any music there.  We try to create the directory,
+            # though, to give a hint to the player that music can go there.
+            try:
+                os.makedirs(music_path)
+            except:
 
+                # We don't have permission to write here.  That's fine.
+                pass
+            
 def play_music():
 
     global music_array
