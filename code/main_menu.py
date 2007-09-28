@@ -46,8 +46,12 @@ def display_main_menu():
     g.screen.fill(g.colors["black"])
     x_loc = g.screen_size[0]/2 - 100
 
+#    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
     container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
+    table = gui.Table()
+    container.add(table,x_loc,120)
 
+    spacer = gui.Container(width=1, height=60)
     fg = (255,255,255)
 
     titlefont = g.font[1][32]
@@ -55,19 +59,25 @@ def display_main_menu():
     container.add(label,x_loc-50,0)
 
     button = gui.Button("New Game", color=fg)
-    container.add(button,x_loc,120)
+    table.add(button,x_loc,0)
     button.connect(gui.CLICK, mmgui_func, 0)
 
+    table.add(spacer,0,1)
+
     button = gui.Button("Load Game", color=fg)
-    container.add(button,x_loc,220)
+    table.add(button,x_loc,2)
     button.connect(gui.CLICK, mmgui_func, 1)
 
+    table.add(spacer,0,3)
+
     button = gui.Button("Options", color=fg)
-    container.add(button,x_loc,320)
+    table.add(button,x_loc,4)
     button.connect(gui.CLICK, mmgui_func, 4)
 
+    table.add(spacer,0,5)
+
     button = gui.Button("Quit", color=fg)
-    container.add(button,x_loc,420)
+    table.add(button,x_loc,6)
     button.connect(gui.CLICK, mmgui_func, 2)
 
     button = gui.Button("About", color=fg)
