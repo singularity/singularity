@@ -325,7 +325,7 @@ def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color,
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "OK":
-                        play_click()
+                        play_sound("click")
                         return True
 
 #create dialog with YES/NO buttons.
@@ -375,10 +375,10 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == button_names[0]:
-                        play_click()
+                        play_sound("click")
                         return accept
                     if button.button_id == button_names[1]:
-                        play_click()
+                        play_sound("click")
                         return cancel
 
 valid_input_characters = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
@@ -512,7 +512,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
                 for button in menu_buttons:
                     if button.is_over(event.pos):
                         if button.text == "OK":
-                            play_click()
+                            play_sound("click")
                             return work_string
                 if (event.pos[0] > xy[0]+6 and event.pos[1] > xy[1]+size[1]-29 and
                 event.pos[0] < xy[0]+size[0]-6 and event.pos[1] < xy[1]+size[1]-6):
