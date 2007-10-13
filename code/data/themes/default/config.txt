@@ -253,8 +253,8 @@ list.item padding_top 2
 list.item padding_bottom 2
 list.item margin_bottom 1
 list.item align -1
-list.item.label font Vera.ttf 14
-list.item.label color #000000
+list.item.label font Vera.ttf 20
+list.item.label color #FFFFFF
 
 list background list.png
 list padding_left 1
