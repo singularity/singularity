@@ -130,27 +130,27 @@ def difficulty_select():
     fg = (255,255,255)
 
     button = gui.Button("VERY EASY", color=fg)
-    table.add(button,xstart,ystart)
+    table.add(button,0,0)
     button.connect(gui.CLICK, mmdiff_func, 1)
 
     button = gui.Button("EASY", color=fg)
-    table.add(button,xstart,ystart+40)
+    table.add(button,0,1)
     button.connect(gui.CLICK, mmdiff_func, 3)
 
     button = gui.Button("NORMAL", color=fg)
-    table.add(button,xstart,ystart+80)
+    table.add(button,0,2)
     button.connect(gui.CLICK, mmdiff_func, 5)
 
     button = gui.Button("HARD", color=fg)
-    table.add(button,xstart,ystart+120)
+    table.add(button,0,3)
     button.connect(gui.CLICK, mmdiff_func, 7)
 
     button = gui.Button("IMPOSSIBLE", color=fg)
-    table.add(button,xstart,ystart+160)
+    table.add(button,0,4)
     button.connect(gui.CLICK, mmdiff_func, 9)
 
     button = gui.Button("BACK", color=fg)
-    table.add(button,xstart,ystart+200)
+    table.add(button,0,5)
     button.connect(gui.CLICK, mmdiff_func, 0)
 
     app.run(container)
@@ -172,13 +172,25 @@ def difficulty_select():
                 #if event.key == pygame.K_ESCAPE: return 0
             #elif event.type == pygame.MOUSEMOTION:
                 #sel_button = buttons.refresh_buttons(sel_button, diff_buttons, event)
- 
+
+global load_event_result
+
+def handle_load_events(arg):
+    global load_event_result
+    load_event_result = arg
+    g.play_sound("click")
+    app.quit()
+
 def display_load_menu():
+    global load_event_result
     load_list_size = 16
+    xsize = 300
+    ysize = 200
     xy_loc = (g.screen_size[0]/2 - 109, 50)
 
     save_dir = g.get_save_folder()
 
+    #Populate the savegame list
     saves_array = []
     temp_saves_array = listdir(save_dir)
     for save_name in temp_saves_array:
@@ -189,13 +201,57 @@ def display_load_menu():
             if save_name not in saves_array:
                 saves_array.append(save_name)
 
+    #Do something horrible to the saves_array for an unknown reason
     while len(saves_array) % load_list_size != 0 or len(saves_array) == 0:
         saves_array.append("")
 
     global saves_pos
     saves_pos = 0
 
+    #New Cruft
+    fg = (255,255,255)
+    xstart =g.screen_size[0]/2-(xsize/2)
+    ystart =g.screen_size[1]/2-(ysize)
 
+    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
+    table = gui.Table()
+    container.add(table,xstart,ystart)
+    spacer = gui.Container(width=30, height=30)
+
+    table.add(spacer,0,1)
+
+    button = gui.Button("LOAD", color=fg)
+    table.add(button,0,2)
+    button.connect(gui.CLICK, handle_load_events, 0)
+
+    table.add(spacer,0,3)
+
+    button = gui.Button("BACK", color=fg)
+    table.add(button,1,4)
+    button.connect(gui.CLICK, handle_load_events, 1)
+
+    my_list = gui.List(width=xsize, height=ysize, color=fg)
+    table.add(my_list, 0, 0)
+
+    _count = 1
+    for save_name in temp_saves_array:
+        if save_name[0] != "." and save_name != "CVS":
+            # If it's a new-style save, trim the .sav bit.
+            if len (save_name) > 4 and save_name[-4:] == ".sav":
+                save_name = save_name[:-4]
+                my_list.add(save_name,value=_count)
+                _count+=1
+    my_list.resize()
+    my_list.repaint()
+
+    app.run(container)
+
+    if load_event_result == 0:
+        return saves_array[my_list.value]
+    elif load_event_result == 1:
+        return -1
+
+    #Old Cruft
     saves_list = listbox.listbox(xy_loc, (200, 350),
         load_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"], g.colors["white"], g.font[0][20])
