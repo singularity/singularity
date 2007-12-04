@@ -118,6 +118,7 @@ define in sounds/sounds.dat.
 """
 
     global sounds
+    global nosound
 
     if nosound:
        return
@@ -126,7 +127,8 @@ define in sounds/sounds.dat.
         pygame.mixer.init()
     except:
         sys.stderr.write("WARNING: Could not start the mixer, even though sound is requested!\n")
-        sys.exit(1)
+        nosound = 1
+        return
 
     sound_dir = os.path.join(data_loc, "sounds")
     sound_class_list = generic_load(os.path.join(sound_dir, "sounds.dat"))
