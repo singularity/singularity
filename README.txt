@@ -102,13 +102,11 @@ wise to tell us before starting work on any large projects.  Join and/or
 send mail to endgame-singularity@googlegroups.com for more details.
 
 Contributing translations:
-To add a new translation, make copies of all *_en_US files in the data
-subdirectory, renaming the copies to *_name_of_language. For each file,
-translate all strings except id to the new language, and test with the
--language name_of_language option. It is expected to use the CC
-Attribution-ShareAlike license. (Since the files you are translating
-are under that license, I'm not sure you could get away with a different
-license.)
+To add a new translation, please use the 'traduko' utility in utils/traduko.
+Its --help should walk you through its usage; if you have any questions,
+contact us at endgame-singularity-dev@googlegroups.com.  Note that the
+resulting file will be licensed under the CC-BY-SA 3.0 license, described
+below.
 
 Code License:
 Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
