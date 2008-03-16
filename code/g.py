@@ -626,7 +626,7 @@ def get_save_folder(just_pref_dir=False):
         save_dir = os.path.join(os.environ["HOME"], ".endgame", "saves")
     else:
         if data_loc == "../data/":
-            save_dir = path.join("..", "saves")
+            save_dir = os.path.join("..", "saves")
         elif data_loc == "data/":
             save_dir = "saves"
         else:
