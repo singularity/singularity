@@ -114,7 +114,7 @@ sounds = {}
 def load_sounds():
     """
 load_sounds() loads all of the sounds in the data/sounds/ directory,
-define in sounds/sounds.dat.
+defined in sounds/sounds.dat.
 """
 
     global sounds
@@ -131,7 +131,7 @@ define in sounds/sounds.dat.
         return
 
     sound_dir = os.path.join(data_loc, "sounds")
-    sound_class_list = generic_load(os.path.join(sound_dir, "sounds.dat"))
+    sound_class_list = generic_load(os.path.join("sounds", "sounds.dat"))
     for sound_class in sound_class_list:
 
         # Make sure the sound class has the filename defined.
@@ -1082,7 +1082,7 @@ from the actual name, and the internal entries are broken up by the pipe
 """
 
     config = ConfigParser.SafeConfigParser()
-    filename = data_loc + file
+    filename = os.path.join(data_loc, file)
     try:
         config.readfp(open(filename, "r"))
     except Exception, reason:
