@@ -17,7 +17,7 @@ USER-VISIBLE CHANGES:
 - Fix the constant "CPU complete" dialogs when low on money. (Brian, numerous
   people for suggestion)
 - Added research item for construction. Still needs actual implementation.
-  Wierd time code is blocking. (Brian, ? for suggestion)
+  Weird time code is blocking. (Brian, ? for suggestion)
 - Return to base menu when exiting base screens rather than returning to map.
   (Brian, emh and Max McCracken for suggestion)
 - Implemented Security and Reactor values obtained from data files. (Brian)
@@ -31,8 +31,6 @@ USER-VISIBLE CHANGES:
   code. (Brian)
 - Added check to avoid crash when hitting 'Destroy' button in an empty base
   list. (Brian)
-- Migrated GUI handling to pgu, main_screen is the only ported so far.
-  (Brian)
 - Preferences have moved to 'prefs.dat', and now follow the standard Python
   ConfigParser format. (Phil)
 - Added difficulty choice dialog handled by pgu. (Brian)
