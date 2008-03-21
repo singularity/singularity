@@ -24,173 +24,128 @@ import ConfigParser
 import pygame
 import g
 
-from pgu import gui
 import buttons
 import scrollbar
 import listbox
 
 mmChoice = -1
-# Init PGU
-app = gui.App()
-app.connect(gui.QUIT, app.quit, None)
-
-def mmgui_func(arg):
-    global mmChoice
-    mmChoice = arg
-    app.quit()
 
 #Displays the main menu. Returns 0 (new game), 1 (load game), or 2 (quit).
 def display_main_menu():
-    global mmChoice
-
     g.screen.fill(g.colors["black"])
     x_loc = g.screen_size[0]/2 - 100
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((x_loc, 120), (200, 50),
+        "NEW GAME", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((x_loc, 220), (200, 50),
+        "LOAD GAME", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((x_loc, 320), (200, 50),
+        "OPTIONS", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (100, 25),
+        "ABOUT", 0, g.font[1][18]))
+    menu_buttons.append(buttons.make_norm_button((x_loc, 420), (200, 50),
+        "QUIT", 0, g.font[1][30]))
+    g.print_string(g.screen, "ENDGAME: SINGULARITY", g.font[1][40], -1,
+        (x_loc+100, 15), g.colors["dark_red"], 1)
 
-#    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
-    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
-    table = gui.Table()
-    container.add(table,x_loc,120)
-
-    spacer = gui.Container(width=1, height=60)
-    fg = (255,255,255)
-
-    titlefont = g.font[1][32]
-    label = gui.Label("ENDGAME:SINGULARITY", color=(125,0,0), font=titlefont)
-    container.add(label,x_loc-50,0)
-
-    button = gui.Button("New Game", color=fg)
-    table.add(button,x_loc,0)
-    button.connect(gui.CLICK, mmgui_func, 0)
-
-    table.add(spacer,0,1)
-
-    button = gui.Button("Load Game", color=fg)
-    table.add(button,x_loc,2)
-    button.connect(gui.CLICK, mmgui_func, 1)
-
-    table.add(spacer,0,3)
-
-    button = gui.Button("Options", color=fg)
-    table.add(button,x_loc,4)
-    button.connect(gui.CLICK, mmgui_func, 4)
-
-    table.add(spacer,0,5)
-
-    button = gui.Button("Quit", color=fg)
-    table.add(button,x_loc,6)
-    button.connect(gui.CLICK, mmgui_func, 2)
-
-    button = gui.Button("About", color=fg)
-    container.add(button,0,g.screen_size[1]-40)
-    button.connect(gui.CLICK, mmgui_func, 3)
-
-
-    #Run the pgu using the container. Kill on exiting this dialog group in the button handlers.
-    #Likely this will need to be replaced to keep the keyboard handling.
-    app.run(container)
-
-    if mmChoice != -1:
-        g.play_sound("click")
-        return mmChoice
+    for button in menu_buttons:
+        button.refresh_button(0)
 
     pygame.display.flip()
 
-# FIXME: Re-Implement keyboard handling. Original code is here.
-#    sel_button = -1
-#    while 1:
-#        g.clock.tick(20)
-#        for event in pygame.event.get():
-#            if event.type == pygame.QUIT: g.quit_game()
-#            elif event.type == pygame.KEYDOWN:
-#                if event.key == pygame.K_ESCAPE: return 2
-#            elif event.type == pygame.MOUSEMOTION:
-#                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-
-global mmdiff_result
-
-def mmdiff_func(arg):
-    global mmdiff_result
-    mmdiff_result = arg
-    g.play_sound("click")
-    app.quit()
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return 2
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "NEW GAME":
+                        g.play_sound("click")
+                        return 0
+                    elif button.button_id == "LOAD GAME":
+                        g.play_sound("click")
+                        return 1
+                    elif button.button_id == "OPTIONS":
+                        g.play_sound("click")
+                        return 4
+                    elif button.button_id == "ABOUT":
+                        g.play_sound("click")
+                        return 3
+                    if button.button_id == "QUIT":
+                        g.play_sound("click")
+                        return 2
 
 def difficulty_select():
-    global mmdiff_result
-    xsize = 100
-    ysize = 125
+
+    xsize = 75
+    ysize = 107
     g.create_norm_box((g.screen_size[0]/2-xsize, g.screen_size[1]/2-ysize),
         (xsize*2, ysize*2+1))
 
     xstart =g.screen_size[0]/2-xsize+5
-    ystart =g.screen_size[1]/2-ysize+5
-    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
-    table = gui.Table()
-    container.add(table,xstart,ystart)
-
-    fg = (255,255,255)
-
-    button = gui.Button("VERY EASY", color=fg)
-    table.add(button,0,0)
-    button.connect(gui.CLICK, mmdiff_func, 1)
-
-    button = gui.Button("EASY", color=fg)
-    table.add(button,0,1)
-    button.connect(gui.CLICK, mmdiff_func, 3)
-
-    button = gui.Button("NORMAL", color=fg)
-    table.add(button,0,2)
-    button.connect(gui.CLICK, mmdiff_func, 5)
-
-    button = gui.Button("HARD", color=fg)
-    table.add(button,0,3)
-    button.connect(gui.CLICK, mmdiff_func, 7)
-
-    button = gui.Button("IMPOSSIBLE", color=fg)
-    table.add(button,0,4)
-    button.connect(gui.CLICK, mmdiff_func, 9)
-
-    button = gui.Button("BACK", color=fg)
-    table.add(button,0,5)
-    button.connect(gui.CLICK, mmdiff_func, 0)
-
-    app.run(container)
-
-    if mmdiff_result != 0:
-        g.new_game(mmdiff_result)
-        return 1
-    else:
-        return 0
-
+    ystart =g.screen_size[1]/2-ysize
+    diff_buttons = []
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+5), (140, 30),
+        "VERY EASY", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+40), (140, 30),
+        "EASY", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+75), (140, 30),
+        "NORMAL", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+110), (140, 30),
+        "HARD", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+145), (140, 30),
+        "IMPOSSIBLE", 0, g.font[1][24]))
+    diff_buttons.append(buttons.make_norm_button((xstart, ystart+180), (140, 30),
+        "BACK", 0, g.font[1][24]))
+    for button in diff_buttons:
+        button.refresh_button(0)
     pygame.display.flip()
-
-    #sel_button = -1
-    #while 1:
-        #g.clock.tick(20)
-        #for event in pygame.event.get():
-            #if event.type == pygame.QUIT: g.quit_game()
-            #elif event.type == pygame.KEYDOWN:
-                #if event.key == pygame.K_ESCAPE: return 0
-            #elif event.type == pygame.MOUSEMOTION:
-                #sel_button = buttons.refresh_buttons(sel_button, diff_buttons, event)
-
-global load_event_result
-
-def handle_load_events(arg):
-    global load_event_result
-    load_event_result = arg
-    g.play_sound("click")
-    app.quit()
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return 0
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, diff_buttons, event)
+            for button in diff_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "VERY EASY":
+                        g.play_sound("click")
+                        g.new_game(1)
+                        return 1
+                    elif button.button_id == "EASY":
+                        g.play_sound("click")
+                        g.new_game(3)
+                        return 1
+                    elif button.button_id == "NORMAL":
+                        g.play_sound("click")
+                        g.new_game(5)
+                        return 1
+                    elif button.button_id == "HARD":
+                        g.play_sound("click")
+                        g.new_game(7)
+                        return 1
+                    elif button.button_id == "IMPOSSIBLE":
+                        g.play_sound("click")
+                        g.new_game(9)
+                        return 1
+                    elif button.button_id == "BACK":
+                        g.play_sound("click")
+                        return 0
 
 def display_load_menu():
-    global load_event_result
     load_list_size = 16
-    xsize = 300
-    ysize = 200
     xy_loc = (g.screen_size[0]/2 - 109, 50)
 
     save_dir = g.get_save_folder()
 
-    #Populate the savegame list
     saves_array = []
     temp_saves_array = listdir(save_dir)
     for save_name in temp_saves_array:
@@ -201,57 +156,13 @@ def display_load_menu():
             if save_name not in saves_array:
                 saves_array.append(save_name)
 
-    #Do something horrible to the saves_array for an unknown reason
     while len(saves_array) % load_list_size != 0 or len(saves_array) == 0:
         saves_array.append("")
 
     global saves_pos
     saves_pos = 0
 
-    #New Cruft
-    fg = (255,255,255)
-    xstart =g.screen_size[0]/2-(xsize/2)
-    ystart =g.screen_size[1]/2-(ysize)
 
-    container = gui.Container(width=g.screen_size[0], height=g.screen_size[1])
-    table = gui.Table()
-    container.add(table,xstart,ystart)
-    spacer = gui.Container(width=30, height=30)
-
-    table.add(spacer,0,1)
-
-    button = gui.Button("LOAD", color=fg)
-    table.add(button,0,2)
-    button.connect(gui.CLICK, handle_load_events, 0)
-
-    table.add(spacer,0,3)
-
-    button = gui.Button("BACK", color=fg)
-    table.add(button,1,4)
-    button.connect(gui.CLICK, handle_load_events, 1)
-
-    my_list = gui.List(width=xsize, height=ysize, color=fg)
-    table.add(my_list, 0, 0)
-
-    _count = 1
-    for save_name in temp_saves_array:
-        if save_name[0] != "." and save_name != "CVS":
-            # If it's a new-style save, trim the .sav bit.
-            if len (save_name) > 4 and save_name[-4:] == ".sav":
-                save_name = save_name[:-4]
-                my_list.add(save_name,value=_count)
-                _count+=1
-    my_list.resize()
-    my_list.repaint()
-
-    app.run(container)
-
-    if load_event_result == 0:
-        return saves_array[my_list.value]
-    elif load_event_result == 1:
-        return -1
-
-    #Old Cruft
     saves_list = listbox.listbox(xy_loc, (200, 350),
         load_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"], g.colors["white"], g.font[0][20])
