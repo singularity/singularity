@@ -28,8 +28,6 @@ import buttons
 import scrollbar
 import listbox
 
-mmChoice = -1
-
 #Displays the main menu. Returns 0 (new game), 1 (load game), or 2 (quit).
 def display_main_menu():
     g.screen.fill(g.colors["black"])
@@ -476,7 +474,7 @@ def save_options(lang=""):
     save_loc = path.join(save_dir, "prefs.dat")
     savefile = open(save_loc, 'w')
 
-    # Build an ConfigParser for writing the various preferences out.
+    # Build a ConfigParser for writing the various preferences out.
     prefs = ConfigParser.SafeConfigParser()
     prefs.add_section("Preferences")
     prefs.set("Preferences", "fullscreen", str(g.fullscreen))
