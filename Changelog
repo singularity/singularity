@@ -40,6 +40,7 @@ USER-VISIBLE CHANGES:
 - Fixed bug that kept music from playing. (Phil, Brian Warner for suggestion)
 - Keep running if the mixer can't load. (Phil, Rafal Czlonka for bug report)
 - Fix up the handling of music paths. (Phil)
+- Added support for win and losegame music. (emh)
 * Three new tracks, 'Deprecation', 'Awakening,' and 'Inevitable,' including
   the Psycle source! (Max McCracken)
 

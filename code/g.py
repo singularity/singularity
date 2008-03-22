@@ -235,10 +235,14 @@ def play_music(musicdir="music"):
 
     # Don't bother if the user doesn't want sound, there's no music available,
     # or the music mixer is currently busy.
-    if nosound or len(music_dict) == 0 or pygame.mixer.music.get_busy():
-       return
+    if nosound or len(music_dict) == 0: return
     if len(music_dict[musicdir]) == 0: return
+    if pygame.mixer.music.get_busy() and musicdir == "music": return
 
+    if musicdir != "music":
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(random.choice(music_dict[musicdir]))
+        pygame.mixer.music.play()
     if delay_time == 0:
         delay_time = pygame.time.get_ticks() + int(random.random()*10000)+2000
     else:

@@ -77,7 +77,7 @@ if os.path.exists(save_loc):
                 g.language = desired_language
         except:
             sys.stderr.write("Cannot find language files for language '%s'.\n" % desired_language)
-    
+
 #Handle the program arguments.
 sys.argv.pop(0)
 arg_modifier = ""
@@ -154,17 +154,19 @@ g.load_fonts()
 #Display the main menu
 while 1:
     game_action = main_menu.display_main_menu()
-    
+
     if game_action == 0: #New
         temp = main_menu.difficulty_select()
         if temp == 1:
             game_action = map_screen.map_loop()
+            pygame.mixer.music.stop()
     if game_action == 1: #Load
         load_action = main_menu.display_load_menu()
         if load_action != -1 and load_action != "":
             load_okay = g.load_game(load_action)
             if load_okay != -1:
                 game_action = map_screen.map_loop()
+                pygame.mixer.music.stop()
             else: break
     elif game_action == 2: #Quit
         g.quit_game()

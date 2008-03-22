@@ -109,6 +109,7 @@ class tech:
             g.pl.suspicion = (temp_suspicion[0], temp_suspicion[1],
                     temp_suspicion[2], temp_suspicion[3])
         elif self.tech_type == "endgame_sing":
+            g.play_music("win")
             g.create_dialog(g.strings["wingame"], g.font[0][18],
                 (g.screen_size[0]/2 - 100, 50),
                 (200, 200), g.colors["dark_blue"], g.colors["white"],

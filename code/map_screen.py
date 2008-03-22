@@ -609,12 +609,14 @@ def map_loop():
             if need_refresh == 1: refresh_map(menu_buttons)
             tmp = g.pl.lost_game()
             if tmp == 1:
+                g.play_music("lose")
                 g.create_dialog(g.strings["lost_nobases"],
                     g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"],
                     g.colors["white"], g.colors["white"])
                 return 0
             if tmp == 2:
+                g.play_music("lose")
                 g.create_dialog(g.strings["lost_sus"],
                     g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"],
