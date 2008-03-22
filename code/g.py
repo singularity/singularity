@@ -236,6 +236,7 @@ def play_music(musicdir="music"):
     # Don't bother if the user doesn't want sound, there's no music available,
     # or the music mixer is currently busy.
     if nosound or len(music_dict) == 0: return
+    if not music_dict.has_key(musicdir): return
     if len(music_dict[musicdir]) == 0: return
     if pygame.mixer.music.get_busy() and musicdir == "music": return
 
