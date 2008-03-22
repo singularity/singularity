@@ -11,9 +11,15 @@ You will need to install Python (http://python.org/download/) and Pygame:
 (http://www.pygame.org/download.shtml). Once these are installed, double-click
 on singularity.py to start the game. Alternatively, use the Windows compile.
 
+Mac:
+Macintosh is completely unsupported, but it should work. You will need to
+install python and pygame first. Some fonts are incorrect, but the game itself
+should work properly.
+
 Running the game:
 on Linux, running the shell script "Endgame_Linux" will start the game. On
-other platforms, type "python singularity.py".
+other platforms, type "python singularity.py". If using the Windows compile,
+just run the .exe.
 Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound,
 -language [language], -grab, -singledir
 
@@ -29,6 +35,7 @@ Explanation of options:
 -singledir: By default, Endgame saves in ~/.endgame/saves on *nix platforms.
 	Setting this forces the Windows behavior of keeping everything within
 	a single directory.
+Most of these options are also changable in the options screen in-game.
 
 Note about save files:
 Endgame: Singularity is still under heavy development.  As such, the save file
@@ -142,7 +149,7 @@ Under the following conditions:
   use of the work).
 - Share Alike. If you alter, transform, or build upon this work, you may
   distribute the resulting work only under the same, similar or a compatible
-  license. 
+  license.
 
 * For any reuse or distribution, you must make clear to others the license
   terms of this work.

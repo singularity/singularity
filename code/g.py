@@ -173,7 +173,7 @@ play_sound() plays a sound from a particular class.
     # Don't crash if someone requests the wrong sound class, but print a
     # warning.
     if sound_class not in sounds:
-        sys.stderr.write("WARNING: Requesting a sound of unavailable class %s!" % sound_class)
+        sys.stderr.write("WARNING: Requesting a sound of unavailable class %s!\n" % sound_class)
         return
 
     # Play a random choice of sounds from the sound class.
@@ -183,7 +183,7 @@ play_sound() plays a sound from a particular class.
     random_sound["sound"].play()
 
 delay_time = 0
-music_array = []
+music_dict = {}
 
 def load_music():
     """
@@ -195,8 +195,8 @@ load_music() loads music for the game.  It looks in multiple locations:
 
     if nosound:
        return
-    global music_array
-    music_array = []
+    global music_dict
+    music_dict = {}
 
     # Build the set of paths we'll check for music.
     music_paths = (
@@ -208,38 +208,43 @@ load_music() loads music for the game.  It looks in multiple locations:
 
             # Loop through the files in music_path and add the ones
             # that are .mp3s and .oggs.
-            for file_name in os.listdir(music_path):
-                if (len(file_name) > 5 and
-                 (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
-                    music_array.append(os.path.join(music_path, file_name))
-        else:
+            for root, dirs, files in os.walk(music_path):
+                (head, tail) = os.path.split(root)
+                if (tail.lower() != ".svn"):
+                    if not music_dict.has_key(tail):
+                        music_dict[tail]=[]
+                    for file_name in files:
+                        if (len(file_name) > 5 and
+                        (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
+                            music_dict[tail].append(os.path.join(head, tail, file_name))
 
+        else:
             # If the music directory doesn't exist, we definitely
             # won't find any music there.  We try to create the directory,
             # though, to give a hint to the player that music can go there.
             try:
                 os.makedirs(music_path)
             except:
-
                 # We don't have permission to write here.  That's fine.
                 pass
-            
-def play_music():
 
-    global music_array
+def play_music(musicdir="music"):
+
+    global music_dict
     global delay_time
 
     # Don't bother if the user doesn't want sound, there's no music available,
     # or the music mixer is currently busy.
-    if nosound or len(music_array) == 0 or pygame.mixer.music.get_busy():
+    if nosound or len(music_dict) == 0 or pygame.mixer.music.get_busy():
        return
+    if len(music_dict[musicdir]) == 0: return
 
     if delay_time == 0:
         delay_time = pygame.time.get_ticks() + int(random.random()*10000)+2000
     else:
         if delay_time > pygame.time.get_ticks(): return
         delay_time = 0
-        pygame.mixer.music.load(random.choice(music_array))
+        pygame.mixer.music.load(random.choice(music_dict[musicdir]))
         pygame.mixer.music.play()
 
 #
@@ -1106,7 +1111,7 @@ from the actual name, and the internal entries are broken up by the pipe
                 item_dict[option[:-5]] = [unicode(x.strip(), "UTF-8") for x in
                  config.get(item_id, option).split("|")]
             else:
-          
+
                 # Otherwise, just grab the data.
                 item_dict[option] = unicode(config.get(item_id, option).strip(),
                  "UTF-8")
@@ -1242,7 +1247,7 @@ def load_items():
         if type(cost_list) != list or len(cost_list) != 3:
             sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
             sys.exit(1)
-        
+
         item_cost = [int(x) for x in cost_list]
 
         # Get prerequisites, if any.
@@ -1252,7 +1257,7 @@ def load_items():
             item_pre = ""
 
         if item_name.has_key("type"):
-            
+
             type_list = item_name["type"]
             if type(type_list) != list or len(type_list) != 2:
                 sys.stderr.write("Error with type given: %s\n" % repr(type_list))
