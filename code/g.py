@@ -161,6 +161,9 @@ defined in sounds/sounds.dat.
                 sounds[sound_class["id"]].append({
                     "filename": real_filename,
                     "sound": sound})
+                if debug:
+                    sys.stderr.write("D: Loaded soundfile %s\n"
+                            % real_filename)
 
 def play_sound(sound_class):
     """
@@ -217,6 +220,9 @@ load_music() loads music for the game.  It looks in multiple locations:
                         if (len(file_name) > 5 and
                         (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
                             music_dict[tail].append(os.path.join(head, tail, file_name))
+                            if debug:
+                                sys.stderr.write("D: Loaded musicfile %s\n"
+                                        % music_dict[tail][-1])
 
         else:
             # If the music directory doesn't exist, we definitely
