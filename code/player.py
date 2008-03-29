@@ -104,8 +104,10 @@ class player_class:
                             tmp = item.work_on(time_min) or tmp
                         if tmp == 1:
                             #Check if ALL CPUs are built, stay silent until then.
-                            #Using build count and first_build count to check against CPUs at start of day and end of day.
-                            #If the total goes from 0 to any amount over 0, it will trigger a new dialog, completed first batch.
+                            #Using build count and first_build count to check
+                            #against CPUs at start of day and end of day.
+                            #If the total goes from 0 to any amount over 0,
+                            #it will trigger a new dialog, completed first batch.
                             build_complete = 1
                             build_count = 0
                             for item_index in base_name.usage:
@@ -113,16 +115,7 @@ class player_class:
                                     build_complete = 0
                                     continue
                                 build_count += 1
-                            if first_build_count == 0 and build_count > 0:
-                                needs_refresh = 1
-                                g.create_dialog(g.strings["construction0"]+" "+
-                                    item.item_type.name+" "+
-                                    g.strings["item_construction2"]+" "+
-                                    base_name.name+".",
-                                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                                    (200, 200), g.colors["dark_blue"],
-                                    g.colors["white"], g.colors["white"])
-                            elif build_complete == 1:
+                            if build_complete == 1:
                                 needs_refresh = 1
                                 g.create_dialog(g.strings["construction0"]+" "+
                                     item.item_type.name+" "+
@@ -132,6 +125,15 @@ class player_class:
                                     (200, 200), g.colors["dark_blue"],
                                     g.colors["white"], g.colors["white"])
                                 g.curr_speed = 1
+                            elif first_build_count == 0 and build_count > 0:
+                                needs_refresh = 1
+                                g.create_dialog(g.strings["construction0"]+" "+
+                                    item.item_type.name+" "+
+                                    g.strings["item_construction2"]+" "+
+                                    base_name.name+".",
+                                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+                                    (200, 200), g.colors["dark_blue"],
+                                    g.colors["white"], g.colors["white"])
                         for item in base_name.extra_items:
                             if not item: continue
                             tmp = item.work_on(time_min)
