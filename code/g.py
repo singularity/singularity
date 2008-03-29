@@ -406,7 +406,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
     screen.fill(out_color, (xy[0]+5, xy[1]+size[1]-30, size[0]-10, 25))
 #        print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
     print_multiline(screen, descript_text, box_font,
-                                size[1]-10, (xy[0]+5, xy[1]+5), text_color)
+                                size[0]-10, (xy[0]+5, xy[1]+5), text_color)
     #If the cursor is in a blank string, we want it at the beginning;
     #otherwise put it after the last character.
     cursor_loc = len(starting_text)

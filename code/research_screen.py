@@ -333,7 +333,7 @@ def assign_tech(free_CPU):
                 for base_loc in g.bases:
                     for base in g.bases[base_loc]:
                         if base.studying == tmp_base.studying:
-                            if (total_cpu - base.processor_time() >
+                            if (total_cpu - base.processor_time() >=
                                         g.techs[tmp_base.studying].cost[1]):
                                 total_cpu -= base.processor_time()
                                 base.studying = ""

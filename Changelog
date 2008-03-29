@@ -43,6 +43,9 @@ USER-VISIBLE CHANGES:
 - Added support for win and losegame music. (emh)
 * Three new tracks, 'Deprecation', 'Awakening,' and 'Inevitable,' including
   the Psycle source! (Max McCracken)
+- Research screen will no longer assign an extra base to research. (emh,
+  blog... for report)
+- When naming base, text will take up the entire box. (emh, blog... for report)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)
