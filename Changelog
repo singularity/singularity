@@ -46,6 +46,8 @@ USER-VISIBLE CHANGES:
 - Research screen will no longer assign an extra base to research. (emh,
   blog... for report)
 - When naming base, text will take up the entire box. (emh, blog... for report)
+- Fixed a potential crash with display_base_list self-recursing. (Phil,
+  Josh Triplett for report)
 
 OTHER CHANGES:
 - Code cleanups and reformatting. (Phil)

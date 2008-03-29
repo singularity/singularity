@@ -746,7 +746,13 @@ def map_loop():
                     elif button.button_id == "CPU": pass
                     elif button.xy[1] != -1: #ignore the timer
                         g.play_sound("click")
-                        display_base_list(button.button_id, menu_buttons)
+
+                        # We want to keep redisplaying the base_list until the
+                        # user is done mucking around with bases.
+                        done_base = False
+                        while not done_base:
+                           done_base = display_base_list(button.button_id,
+                                                         menu_buttons)
                     pygame.display.flip()
 
 
@@ -858,11 +864,19 @@ def generate_base_name(location, base_type):
     return name
 
 def display_base_list(location, menu_buttons):
-    if g.base.allow_entry_to_loc(location) == 0: return
+    """
+    display_base_list() displays the list of bases at a given location.  This
+    is where players can add new bases, destroy old ones, and inspect the ones
+    they have.
+
+    It should return a Boolean representing whether or not the user is done
+    with mucking around with bases at this location.
+"""
+
+    if g.base.allow_entry_to_loc(location) == 0: return True
 
     tmp = display_base_list_inner(location)
     refresh_map(menu_buttons)
-    pygame.display.flip()
     #Build a new base
     if tmp == -2:
         tmp = build_new_base_window(location)
@@ -876,16 +890,17 @@ def display_base_list(location, menu_buttons):
                 g.colors["light_blue"])
             if possible_name == "":
                 refresh_map(menu_buttons)
-                return
+                return True
             base_to_add.count += 1
 
             g.bases[location].append(g.base.base(len(g.bases[location]),
                 tmp, g.base_type[tmp], 0))
             g.bases[location][-1].name = possible_name
-            #Return to base menu
+
+            # Now that the base is built, redraw the base list.
             refresh_map(menu_buttons)
-            pygame.display.flip()
-            display_base_list(location, menu_buttons)
+            return False
+
     #Showing base under construction
     elif tmp != -1 and tmp != "":
         if g.bases[location][tmp].built == 0:
@@ -923,15 +938,14 @@ def display_base_list(location, menu_buttons):
                     tmp += next_prev
                     if tmp < 0: tmp = len(g.bases[location]) -1
                     if tmp >= len(g.bases[location]): tmp = 0
-        #Return to base menu
+
+        # After looking at a base, redraw the base list.
         refresh_map(menu_buttons)
-        pygame.display.flip()
-        display_base_list(location, menu_buttons)
+        return False
 
-
-    #Player hit 'Back' at this point.
+    # The player hit 'Back' at this point; we're done with the base list.
     refresh_map(menu_buttons)
-    pygame.display.flip()
+    return True
 
 
 #Display the list of bases.
