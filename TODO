@@ -14,7 +14,6 @@ TODO:
     - Make construction that requires CPU a research option when needed. Complete implementation.
     - Convert CPU usage into pools instead of per-base settings.
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
-    - Complete PGU GUI migration
     - Make translations easier to do.  (Phil has good ideas on how to do this.)
     - Sort bases by size. (emh for suggestion)
     - Make 'Impossible' more impossible--perhaps get rid of the quadratic
@@ -23,3 +22,7 @@ TODO:
       discoveries of other bases in said location.  (Durandal7 for suggestion.)
     - In general, differentiate locations (especially the starting continents)
       more.
+    - Make it so that it's not always day 22 when you can get discovered; make
+      it the less of [some amount of money collected | some amount of time
+      passed | some number of bases built | some amount of CPU spent
+      researching].
