@@ -58,6 +58,7 @@ OTHER CHANGES:
 - Further changes to the data file formats, for consistency and ease of
   code/data maintenance.  (Phil)
 - Switched sounds to using data files, for smoother future expansion. (Phil)
+- Fixed strings loading. (Phil)
 
 v0.26a (released 2007.08.12):
 

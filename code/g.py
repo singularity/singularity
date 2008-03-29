@@ -1224,16 +1224,10 @@ fix_data_dir()
 load_techs()
 
 jobs = {}
-jobs["Expert Jobs"] = [75, "Simulacra", "Perform Expert jobs. Use of robots "+
-    "indistinguishable from humans opens up most jobs to use by me."]
-jobs["Intermediate Jobs"] = [50, "Voice Synthesis", "Perform Intermediate jobs. The "+
-    "ability to make phone calls allows even more access to jobs."]
-jobs["Basic Jobs"] = [20, "Personal Identification", "Perform basic jobs. Now that I have "+
-    "some identification, I can take jobs that I were previously too risky."]
-jobs["Menial Jobs"] = [5, "", "Perform small jobs. As I have no identification, "+
-    "I cannot afford to perform many jobs. Still, some avenues of making "+
-    "money are still open."]
-
+jobs["Expert Jobs"] = [75, "Simulacra", ""]
+jobs["Intermediate Jobs"] = [50, "Voice Synthesis", ""]
+jobs["Basic Jobs"] = [20, "Personal Identification", ""]
+jobs["Menial Jobs"] = [5, "", ""]
 
 items = {}
 def load_items():
@@ -1372,30 +1366,32 @@ def load_string_defs(lang):
         if string_section["id"] == "fonts":
 
             # Load up font0 and font1.
-            if (string_section.has_key("font0")):
-                global font0
-                font0 = string_section["font0"]
-            elif (string_section.has_key("font1")):
-                global font1
-                font1 = string_section["font1"]
-            else:
-                sys.stderr.write("Unexpected font entry in strings file.\n")
-                sys.exit(1)
+            for string_entry in string_section:
+                if string_entry == "font0":
+                    global font0
+                    font0 = string_section["font0"]
+                elif string_entry == "font1":
+                    global font1
+                    font1 = string_section["font1"]
+                elif string_entry != "id":
+                    sys.stderr.write("Unexpected font entry in strings file.\n")
+                    sys.exit(1)
 
         elif string_section["id"] == "jobs":
 
             # Load the four extant jobs.
             global jobs
-            if (string_section.has_key("job_expert")):
-                jobs["Expert Jobs"][2] = string_section["job_expert"]
-            elif (string_section.has_key("job_inter")):
-                jobs["Intermediate Jobs"][2] = string_section["job_inter"]
-            elif (string_section.has_key("job_basic")):
-                jobs["Basic Jobs"][2] = string_section["job_basic"]
-            elif (string_section.has_key("job_menial")):
-                jobs["Menial Jobs"][2] = string_section["job_menial"]
-            else:
-                sys.stderr.write("Unexpected job entry in strings file.\n")
+            for string_entry in string_section:
+                if string_entry == "job_expert":
+                    jobs["Expert Jobs"][2] = string_section["job_expert"]
+                elif string_entry == "job_inter":
+                    jobs["Intermediate Jobs"][2] = string_section["job_inter"]
+                elif string_entry == "job_basic":
+                    jobs["Basic Jobs"][2] = string_section["job_basic"]
+                elif string_entry == "job_menial":
+                    jobs["Menial Jobs"][2] = string_section["job_menial"]
+                elif string_entry != "id":
+                    sys.stderr.write("Unexpected job entry in strings file.\n")
 
         elif string_section["id"] == "strings":
 
