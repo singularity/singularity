@@ -27,4 +27,4 @@ TODO:
       passed | some number of bases built | some amount of CPU spent
       researching].
     - Arbitrary resolution, including non 4:3 scales.
-    - Consistant use of stderr and print.
+    - Consistent use of stderr and print.
