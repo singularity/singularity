@@ -13,7 +13,7 @@ unique = 1
 [stranger-than-fiction]
 type = global
 allowed = all
-result_list = discover_public | 2000
+result_list = discover_public | -2000
 chance = 20
 unique = 1
 
