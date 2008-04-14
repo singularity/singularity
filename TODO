@@ -28,3 +28,5 @@ TODO:
       researching].
     - Arbitrary resolution, including non 4:3 scales.
     - Consistent use of stderr and print.
+    - Make effects of construction class techs more obvious.
+    - Add intro.
