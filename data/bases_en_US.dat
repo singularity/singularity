@@ -5,7 +5,7 @@ flavor = PC Daemon
 
 [Server Access]
 name = Server Access
-descript = (5 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
+descript = (10 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
 flavor_list = Dedicated Server | Node Lease | Hosting
 
 [Datacenter]
