@@ -5,7 +5,7 @@ flavor = Servicio
 
 [Server Access]
 name = Acceso a Servidor
-descript = (5 CPU) Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
+descript = (10 CPU) Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
 flavor_list = Servidor Dedicado | Alquiler de Nodo | Hosting
 
 [Small Warehouse]
