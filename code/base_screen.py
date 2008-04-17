@@ -434,8 +434,8 @@ def change_tech(this_base):
     item_list2 = []
     item_list.append("Nothing")
     item_list2.append("Nothing")
-    item_list.append("Construction")
-    item_list2.append("Construction")
+    #item_list.append("Construction")
+    #item_list2.append("Construction")
     #TECH
     if g.techs["Simulacra"].known == 1:
         item_list.append("Expert Jobs")
