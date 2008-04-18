@@ -663,7 +663,7 @@ def save_game(savegame_name):
     save_loc = os.path.join(save_dir, savegame_name + ".sav")
     savefile=open(save_loc, 'w')
     #savefile version; update whenever the data saved changes.
-    pickle.dump("singularity_savefile_r3_pre", savefile)
+    pickle.dump("singularity_savefile_r3", savefile)
 
     global default_savegame_name
     default_savegame_name = savegame_name
@@ -759,7 +759,7 @@ def load_game(loadgame_name):
         # Post-change supported file formats.
         "singularity_savefile_r1",
         "singularity_savefile_r2",
-        "singularity_savefile_r3_pre"
+        "singularity_savefile_r3"
     )
     if load_version not in valid_savefile_versions:
         loadfile.close()
@@ -890,7 +890,7 @@ def load_game(loadgame_name):
                 bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
                             pickle.load(loadfile)
     #Events
-    if (load_version == "singularity_savefile_r3_pre"):
+    if (load_version == "singularity_savefile_r3"):
         global events
         load_events()
         for event in events:
