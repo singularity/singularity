@@ -91,7 +91,11 @@ for argument in sys.argv:
         g.language = argument
         arg_modifier = ""
         continue
-    if argument.lower() == "-fullscreen":
+    if argument.lower().startswith("-psn_"):
+        # OSX passses this when starting the py2app .app.
+        # Keep it from giving an "unknown arg" warning.
+        continue
+    elif argument.lower() == "-fullscreen":
         g.fullscreen = 1
     elif argument.lower() == "-640":
         g.screen_size = (640, 480)
