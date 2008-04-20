@@ -1,7 +1,7 @@
 # setup.py
 from distutils.core import setup
 
-versionnum="0.27"
+versionnum="0.28_pre"
 py2exeinstalled=False
 py2appinstalled=False
 try:
