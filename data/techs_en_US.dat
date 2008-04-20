@@ -132,7 +132,7 @@ result = I can now construct computing Clusters tailored for my use.
 [Personal Identification]
 name = Personal Identification
 descript = This world requires identification for most tasks.  Fortunately, most databases are woefully insecure.  I should be able to construct identifying material in enough databases to pass routine checks on my (faked) existence as a human being.
-result = With my newfound identities, I can now work Basic Jobs and contract the construction of Small Warehouses.
+result = With my newfound identities, I can now work Basic Jobs, contract the construction of Small Warehouses, and rent space in Datacenters.
 
 [Advanced Personal Identification]
 name = Advanced Personal Identification
