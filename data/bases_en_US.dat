@@ -11,7 +11,7 @@ flavor_list = Dedicated Server | Node Lease | Hosting
 [Datacenter]
 name = Datacenter
 descript = (35 CPUs) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
-flavor_list = Datacenter | Data Center | Hosting
+flavor_list = Datacenter | Data Center | Premium Hosting
 
 [Small Warehouse]
 name = Small Warehouse
