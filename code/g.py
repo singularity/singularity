@@ -587,6 +587,18 @@ def roll_percent(roll_against):
     rand_num = random.randint(1,10000)
     return roll_against > rand_num
 
+# Rolls against a chance per day (in 0-1 form), correctly adjusting for multiple
+# intervals in seconds.
+#
+# Works perfectly if the event can only happen once, and well enough if it
+# repeats but is rare.
+def roll_chance(chance_per_day, seconds = seconds_per_day):
+    portion_of_day = seconds / float(seconds_per_day)
+    inv_chance_per_day = 1 - chance_per_day
+    inv_chance = (inv_chance_per_day) ** portion_of_day
+    chance = 1 - inv_chance
+    return random.random() < chance
+
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time/60 > 48:
