@@ -211,8 +211,9 @@ class player_class(object):
             return True
 
         # Have we built a lot of bases?
-        if len([base for base_loc in g.bases.values() for base in base_loc 
-                if base.done
+        if len([base for base_loc in g.locations.values() 
+                     for base in base_loc.bases
+                     if base.done
                 ]) > 10:
             return False
 
@@ -222,7 +223,8 @@ class player_class(object):
 
         # Have we built any complicated bases?
         # (currently Datacenter or above)
-        if len([base for base_loc in g.bases.values() for base in base_loc
+        if len([base for base_loc in g.locations.values() 
+                     for base in base_loc.bases
                      if base.done
                      if len(base.cpus) > 1 or base.processor_time() > 20
                 ]) > 0:

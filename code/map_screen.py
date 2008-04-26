@@ -599,13 +599,13 @@ def display_base_list(location, menu_buttons):
                         g.colors["white"]):
                     base.destroy()
         else:
-            next_prev = 1
+            direction = True
             while direction:
                 direction = base_screen.show_base(base, location)
                 if direction == -2:
                     base.destroy()
                     break
-                else:
+                elif direction:
                     base = base.next_base(direction)
 
         return False

@@ -30,6 +30,7 @@ class Location(buyable.Buyable_Class):
         self.y, self.x = position
         self.safety = safety
         self.cities = []
+        self.hotkey = ""
 
         self.bases = []
 

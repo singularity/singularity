@@ -99,8 +99,8 @@ def refresh_screen(menu_buttons, list_size):
     item_display_list = []
     free_CPU = 0
 
-    for loc_name in g.bases:
-        for base_instance in g.bases[loc_name]:
+    for loc in g.locations.values():
+        for base_instance in loc.bases:
             if not base_instance.done: continue
             if base_instance.studying == "":
                 free_CPU += base_instance.processor_time()
@@ -215,30 +215,31 @@ def refresh_research(tech_name, CPU_amount):
 def kill_tech(tech_name):
     return_val = False
     if tech_name == "": return return_val
-    for base_loc in g.bases:
-        for base in g.bases[base_loc]:
+    for base_loc in g.locations.values():
+        for base in base_loc.bases:
             if base.studying == tech_name:
                 return_val = True
                 base.studying = ""
     return return_val
 
+fake_base = None
 def assign_tech(free_CPU):
     return_val = False
-    #create a fake base, in order to reuse the tech-changing code
-    fake_base = g.base.Base(1, "fake_base",
-    g.base_type["Reality Bubble"], 1)
-    fake_base.cpus[0] = g.item.Item(g.items["research_screen_fake_cpu"])
+    #use a fake base, in order to reuse the tech-changing code
+    global fake_base
+    if not fake_base:
+        fake_base = g.base.Base("fake_base", g.base_type["Fake"], True)
+        fake_base.cpus[0] = g.item.Item(g.items["research_screen_fake_cpu"])
+        fake_base.cpus[0].finish()
     fake_base.cpus[0].type.item_qual = free_CPU
-    fake_base.cpus[0].finish()
-
 
     base_screen.change_tech(fake_base)
     if fake_base.studying == "": return False
 
     show_dangerous_dialog = False
     total_cpu = 0
-    for base_loc in g.bases:
-        for base in g.bases[base_loc]:
+    for base_loc in g.locations.values():
+        for base in base_loc.bases:
             if base.studying == "":
                 if base.allow_study(fake_base.studying):
                     return_val = True
@@ -261,8 +262,8 @@ def assign_tech(free_CPU):
             removed_base = True
             while removed_base:
                 removed_base = False
-                for base_loc in g.bases:
-                    for base in g.bases[base_loc]:
+                for base_loc in g.locations.values():
+                    for base in base_loc.bases:
                         if base.studying == fake_base.studying:
                             if (total_cpu - base.processor_time() >=
                                         g.techs[fake_base.studying].cost_left[1]):

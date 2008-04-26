@@ -84,8 +84,8 @@ def refresh_screen(menu_buttons):
 
     mins_left = g.pl.mins_to_next_day()
 
-    for loc_name in g.bases:
-        for base_instance in g.bases[loc_name]:
+    for loc in g.locations.values():
+        for base_instance in loc.bases:
             if g.jobs.has_key(base_instance.studying):
                 jobs += (g.jobs[base_instance.studying][0]*
                                     base_instance.processor_time())

@@ -45,3 +45,8 @@ pre = Fusion Rocketry
 position_list = 35 | 85
 safety = 4
 pre = Space-Time Manipulation
+
+[NOWHERE]
+position_list = -100 | -100
+safety = 100
+pre = unknown_tech
