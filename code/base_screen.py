@@ -447,7 +447,7 @@ def change_tech(this_base):
         item_list2.append("Menial Jobs")
     for tech_name in g.techs:
         if not g.techs[tech_name].done and this_base.allow_study(tech_name):
-            for tech_pre in g.techs[tech_name].prereq:
+            for tech_pre in g.techs[tech_name].prerequisites:
                 if not g.techs[tech_pre].done:
                     break
             else:
@@ -550,8 +550,8 @@ def refresh_tech(this_base, tech_name, xy):
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 308, 348))
 
     #Base info
-    g.print_string(g.screen, g.strings["cpu_per_day"]+" "+g.add_commas(str(
-        this_base.processor_time())),
+    g.print_string(g.screen, g.strings["cpu_per_day"]+" "+g.add_commas(
+        this_base.processor_time()),
         g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
     g.print_string(g.screen, g.strings["money"]+": "+g.to_money(g.pl.cash)+
@@ -606,13 +606,13 @@ def refresh_tech(this_base, tech_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
-    string = g.to_money(g.techs[tech_name].cost[0])+" "+g.strings["money"]
+    string = g.to_money(g.techs[tech_name].cost_left[0])+" "+g.strings["money"]
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
-    string = g.add_commas(str(g.techs[tech_name].cost[1]))+" "+g.strings["cpu"]
+    string = g.add_commas(g.techs[tech_name].cost_left[1])+" "+g.strings["cpu"]
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+320, xy[1]+80), g.colors["white"])
 
-    g.print_multiline(g.screen, g.techs[tech_name].descript,
+    g.print_multiline(g.screen, g.techs[tech_name].description,
             g.font[0][18], 290, (xy[0]+160, xy[1]+100), g.colors["white"])

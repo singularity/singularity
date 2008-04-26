@@ -116,7 +116,7 @@ class Base(buyable.Buyable):
             return True
         else:
             for region in self.type.regions:
-                if g.safety_level[region] >= danger_level:
+                if g.locations[region].safety >= g.techs[tech_name].danger:
                     return True
             return False
 

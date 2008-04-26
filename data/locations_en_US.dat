@@ -20,7 +20,7 @@ cities_list = Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | 
 
 [AFRICA]
 name = AFRICA
-hotkey = R
+hotkey = I
 cities_list = Johannesburg | Accra | Cairo | Tangier 
 
 [ANTARCTIC]

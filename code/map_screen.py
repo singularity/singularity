@@ -66,12 +66,12 @@ def display_generic_menu(xy_loc, titlelist):
 
 def display_pause_menu():
     button_array= []
-    button_array.append(["NEW GAME", 0])
-    button_array.append(["SAVE GAME", 0])
-    button_array.append(["LOAD GAME", 0])
-    button_array.append(["OPTIONS", 0])
-    button_array.append(["QUIT", 0])
-    button_array.append(["RESUME", 0])
+    button_array.append(["NEW GAME", "N"])
+    button_array.append(["SAVE GAME", "S"])
+    button_array.append(["LOAD GAME", "L"])
+    button_array.append(["OPTIONS", "O"])
+    button_array.append(["QUIT", "Q"])
+    button_array.append(["RESUME", "R"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
     if selection == -1: return 0
@@ -85,12 +85,12 @@ def display_pause_menu():
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return
     button_array= []
-    button_array.append(["GIVE MONEY", 5])
-    button_array.append(["GIVE TECH", 5])
-    button_array.append(["END CONSTR.", 0])
-    button_array.append(["SUPERSPEED", 0])
-    button_array.append(["KILL SUSP.", 0])
-    button_array.append(["RESUME", 0])
+    button_array.append(["GIVE MONEY", "M"])
+    button_array.append(["GIVE TECH", "T"])
+    button_array.append(["END CONSTR.", "E"])
+    button_array.append(["SUPERSPEED", "S"])
+    button_array.append(["KILL SUSP.", "K"])
+    button_array.append(["RESUME", "R"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
     if selection == -1: return

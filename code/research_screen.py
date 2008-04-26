@@ -57,13 +57,13 @@ def main_research_screen():
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", 0, g.font[1][20]))
+        "BACK", "B", g.font[1][20]))
 
     menu_buttons.append(buttons.make_norm_button((20, 390), (80, 25),
-        "STOP", 0, g.font[1][20]))
+        "STOP", "S", g.font[1][20]))
 
     menu_buttons.append(buttons.make_norm_button((xstart+5, ystart+20),
-        (90, 25), "ASSIGN", 0, g.font[1][20]))
+        (90, 25), "ASSIGN", "A", g.font[1][20]))
 
     item_list, item_display_list, item_CPU_list, free_CPU = \
                             refresh_screen(menu_buttons, list_size)
@@ -266,18 +266,18 @@ def refresh_research(tech_name, CPU_amount):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
 
-    string = g.to_money(g.techs[tech_name].cost[0])+" Money"
+    string = g.to_money(g.techs[tech_name].cost_left[0])+" Money"
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+5, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(str(g.techs[tech_name].cost[1]))+" CPU"
+    string = g.add_commas(g.techs[tech_name].cost_left[1])+" CPU"
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+165, xy[1]+50), g.colors["white"])
 
     g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
             g.font[0][20], -1, (xy[0]+105, xy[1]+70), g.colors["white"])
 
-    g.print_multiline(g.screen, g.techs[tech_name].descript,
+    g.print_multiline(g.screen, g.techs[tech_name].description,
             g.font[0][18], 290, (xy[0]+5, xy[1]+90), g.colors["white"])
 
 def kill_tech(tech_name):
@@ -293,11 +293,11 @@ def kill_tech(tech_name):
 def assign_tech(free_CPU):
     return_val = False
     #create a fake base, in order to reuse the tech-changing code
-    fake_base = g.base.base(1, "fake_base",
+    fake_base = g.base.Base(1, "fake_base",
     g.base_type["Reality Bubble"], 1)
-    fake_base.usage[0] = g.item.item(g.items["research_screen_tmp_item"])
-    fake_base.usage[0].item_type.item_qual = free_CPU
-    fake_base.usage[0].built = 1
+    fake_base.cpus[0] = g.item.Item(g.items["research_screen_tmp_item"])
+    fake_base.cpus[0].type.item_qual = free_CPU
+    fake_base.cpus[0].finish()
 
 
     base_screen.change_tech(fake_base)
@@ -325,14 +325,14 @@ def assign_tech(free_CPU):
 
     #If the tech can be completed in only one day, remove unneeded bases.
     if g.techs.has_key(fake_base.studying):
-        if total_cpu > g.techs[fake_base.studying].cost[1]:
+        if total_cpu > g.techs[fake_base.studying].cost_left[1]:
             while 1:
                 removed_base = False
                 for base_loc in g.bases:
                     for base in g.bases[base_loc]:
                         if base.studying == fake_base.studying:
                             if (total_cpu - base.processor_time() >=
-                                        g.techs[fake_base.studying].cost[1]):
+                                        g.techs[fake_base.studying].cost_left[1]):
                                 total_cpu -= base.processor_time()
                                 base.studying = ""
                                 removed_base = True
