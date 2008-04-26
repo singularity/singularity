@@ -87,22 +87,25 @@ class Buyable(object):
         self.cost_left = array([0,0,0])
         self.done = True
 
+    cost_paid = property(lambda self: self.total_cost - self.cost_left)
+
     def get_wanted(self, resource, limiting, available_limiting):
         # Gets the highest amount of additional resource possible, such that:
         #   resource_spent/resource_total <= limiting_spent/limiting_total
         # i.e. % resource complete <= % limiting complete.
 
-        # How much has been spent?
-        cost_paid = self.total_cost - self.cost_left
-
         limit_max = self.total_cost[limiting]
+        limit_paid = self.cost_paid[limiting]
         limit_left = self.cost_left[limiting]
-        limit = (limit_max - limit_left) + available_limiting
+
+        if limit_left <= available_limiting:
+            return self.cost_left[resource]
+
+        limit = limit_paid + available_limiting
 
         total_wanted = (self.total_cost[resource] * limit) // limit_max
 
-        return total_wanted - cost_paid[resource]
-
+        return total_wanted - self.cost_paid[resource]
 
     def work_on(self, cash_available = None, cpu_available = None, time = 0):
         if self.done:
@@ -125,16 +128,13 @@ class Buyable(object):
         cash_wanted = self.cost_left[cash]
         cpu_wanted = self.cost_left[cpu]
 
-        # Labor limits cash and CPU spent.
-        if labor_left > 0:
-            cpu_wanted = self.get_wanted(cpu, labor, time)
-            cash_wanted = self.get_wanted(cash, labor, time)
-
-        # CPU limits cash spent.
+        # Labor limits CPU spent.
+        cpu_wanted = self.get_wanted(cpu, labor, time)
         cpu_work = min(cpu_wanted, cpu_available)
-        if cpu_wanted > 0:
-            cash_wanted = self.get_wanted(cash, cpu, cpu_work)
 
+        # Labor and CPU limit cash spent.
+        cash_wanted = min( self.get_wanted(cash, labor, time),
+                           self.get_wanted(cash, cpu, cpu_work) ) 
         cash_flow = min(cash_wanted, cash_available)
 
         g.pl.cpu_for_day -= cpu_work

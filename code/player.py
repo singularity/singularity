@@ -112,7 +112,7 @@ class player_class(object):
                 for base in g.bases[base_loc]:
                     #Construction of new bases:
                     if not base.done:
-                        built_base = base.work_on(mins_passed)
+                        built_base = base.work_on(time=mins_passed)
                         if built_base:
                             text = g.strings["construction"] % \
                                 {"base": base.name}
@@ -127,7 +127,7 @@ class player_class(object):
                                 pass
                             elif item.done:
                                 already_built += 1
-                            elif item.work_on(time_min): 
+                            elif item.work_on(time=mins_passed): 
                                 just_built += 1
                         if just_built > 0:
                             total_built = already_built + just_built
@@ -153,7 +153,7 @@ class player_class(object):
                         for item in base.extra_items:
                             if not item:
                                 pass
-                            elif item.work_on(time_min):
+                            elif item.work_on(time=mins_passed):
                                 text = g.strings["item_construction_single"] % \
                                        {"item": item.type.name,
                                         "base": base.name}
