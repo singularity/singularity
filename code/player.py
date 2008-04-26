@@ -22,6 +22,7 @@ import pygame
 import g
 
 class group(object):
+    discover_suspicion = 1000
     def __init__(self, name, suspicion = 0, suspicion_decay = 100, 
                  discover_bonus = 10000):
         self.name = name
@@ -45,7 +46,7 @@ class group(object):
         self.discover_bonus = max(self.discover_bonus + change, 0)
 
     def discovered_a_base(self):
-        self.alter_suspicion(1000)
+        self.alter_suspicion(self.discover_suspicion)
 
 class player_class(object):
     def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0):

@@ -1456,17 +1456,21 @@ def new_game(difficulty):
         pl.interest_rate = 3
         pl.labor_bonus = 3000
         discover_bonus = 9000
-    # Default.
-    #elif difficulty == 5:
+    elif difficulty == 5:
+        pass
+    #    Defaults.
     #    pl.interest_rate = 1
     #    pl.labor_bonus = 10000
     #    discover_bonus = 10000
-    elif difficulty > 5:
+    #    player.group.discover_suspicion = 1000
+    elif difficulty < 8:
         pl.labor_bonus = 11000
         discover_bonus = 11000
-    elif difficulty > 7:
+        player.group.discover_suspicion = 1500
+    else:
         pl.labor_bonus = 18000
         discover_bonus = 13000
+        player.group.discover_suspicion = 2000
 
     if difficulty != 5:
         for group in pl.groups.values():
