@@ -75,6 +75,7 @@ if os.path.exists(save_loc):
             desired_language = prefs.get("Preferences", "lang")
             if os.path.exists(g.data_loc + "strings_" + desired_language + ".dat"):
                 g.language = desired_language
+                g.set_locale()
         except:
             sys.stderr.write("Cannot find language files for language '%s'.\n" % desired_language)
 
@@ -89,6 +90,7 @@ for argument in sys.argv:
         argument = argument.replace("\\", "")
         argument = argument.replace(".", "")
         g.language = argument
+        g.set_locale()
         arg_modifier = ""
         continue
     if argument.lower().startswith("-psn_"):

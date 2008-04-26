@@ -27,10 +27,9 @@ import pickle
 import random
 import sys
 
-# Use locale to add commas, so that appropriate substitutions are made where
-# needed.
+# Use locale to add commas and decimal points, so that appropriate substitutions
+# are made where needed.
 import locale
-locale.setlocale(locale.LC_ALL)
 
 import player, base, buttons, tech, item, event, location
 
@@ -60,6 +59,20 @@ force_single_dir = False
 
 #Used to determine which data files to load.
 language = "en_US"
+
+# Try a few locale settings.  First the selected language, then the user's 
+# default, then their default without specifying an encoding, then en_US.
+#
+# If all of that fails, we hope locale magically does the right thing.
+def set_locale():
+    for attempt in [language, "", locale.getdefaultlocale()[0], "en_US"]:
+        try:
+            locale.setlocale(locale.LC_ALL, attempt)
+            break
+        except locale.Error:
+            continue
+
+set_locale()
 
 #name given when the savegame button is pressed. This is changed when the
 #game is loaded or saved.
@@ -587,9 +600,9 @@ def add_commas(number):
 #This converts that format to a human-readable one.
 def to_percent(raw_percent, show_full=0):
     if raw_percent % 100 != 0 or show_full == 1:
-        return "%.2f%%" % (raw_percent / 100.)
+        return locale.format("%.2f%%", raw_percent / 100.)
     else:
-        return "%d%%" % (raw_percent / 100)
+        return locale.format("%d%%", raw_percent // 100)
 
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.

@@ -461,6 +461,7 @@ def set_res():
 
 def set_language_properly(prev_lang):
     if g.language == prev_lang: return
+    g.set_locale()
     g.load_bases()
     g.load_base_defs(g.language)
     g.load_location_defs(g.language)
