@@ -1466,20 +1466,30 @@ def new_game(difficulty):
     global pl
 
     pl = player.player_class((50 / difficulty) * 100)
-    if difficulty < 5:
-        pl.interest_rate += 2
-        pl.labor_bonus -= 7000
-        pl.discover_bonus = (9000, 9000, 9000, 9000)
     if difficulty < 3:
-        pl.interest_rate += 2
-        pl.labor_bonus -= 1000
-        pl.discover_bonus = (7000, 7000, 7000, 7000)
-    if difficulty > 5:
-        pl.labor_bonus += 1000
-        pl.discover_bonus = (11000, 11000, 11000, 11000)
-    if difficulty > 7:
-        pl.labor_bonus += 7000
-        pl.discover_bonus = (13000, 13000, 13000, 13000)
+        pl.interest_rate = 5
+        pl.labor_bonus = 2000
+        discover_bonus = 7000
+    elif difficulty < 5:
+        pl.interest_rate = 3
+        pl.labor_bonus = 3000
+        discover_bonus = 9000
+    # Default.
+    #elif difficulty == 5:
+    #    pl.interest_rate = 1
+    #    pl.labor_bonus = 10000
+    #    discover_bonus = 10000
+    elif difficulty > 5:
+        pl.labor_bonus = 11000
+        discover_bonus = 11000
+    elif difficulty > 7:
+        pl.labor_bonus = 18000
+        discover_bonus = 13000
+
+    if difficulty != 5:
+        for group in pl.groups.values():
+            group.discover_bonus = discover_bonus
+
     global bases
     bases = {}
     bases["N AMERICA"] = []
