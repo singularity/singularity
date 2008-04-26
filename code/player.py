@@ -211,8 +211,9 @@ class player_class(object):
             return True
 
         # Have we built a lot of bases?
-        if len(base for base_loc in g.bases for base in base_loc if base.done
-               ) > 10:
+        if len([base for base_loc in g.bases.values() for base in base_loc 
+                if base.done
+                ]) > 10:
             return False
 
         # Normal is happy.
@@ -221,10 +222,10 @@ class player_class(object):
 
         # Have we built any complicated bases?
         # (currently Datacenter or above)
-        if len(base for base_loc in g.bases for base in base_loc
-                    if base.done
-                    if len(g.cpus) > 1 or base.processor_time() > 20
-               ) > 0:
+        if len([base for base_loc in g.bases.values() for base in base_loc
+                     if base.done
+                     if len(base.cpus) > 1 or base.processor_time() > 20
+                ]) > 0:
             return False
 
         # I'd put something in for Impossible, but they're already incapable of

@@ -41,7 +41,7 @@ class Base(buyable.Buyable):
         super(Base, self).__init__(type)
         self.id = id
         self.name = name
-        self.built_date = g.pl.time_day
+        self.started_at = g.pl.raw_min
         self.studying = ""
 
         #Base suspicion is currently unused
@@ -132,7 +132,7 @@ class Base(buyable.Buyable):
          if self.grace_over:
              return False
 
-         age = g.pl.time_day - self.built_date
+         age = g.pl.raw_min - self.started_at
          grace_time = (self.total_cost[labor] * g.pl.grace_multiplier) / 100
          if age > grace_time:
              self.grace_over = True
