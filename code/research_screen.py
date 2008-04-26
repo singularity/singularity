@@ -1,5 +1,5 @@
 #file: research_screen.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import base_screen
 #detection = (news, science, covert, person)
 
 def main_research_screen():
+    g.play_sound("click")
     #Border
     g.screen.fill(g.colors["black"])
 
@@ -41,114 +42,45 @@ def main_research_screen():
     g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1,
             xstart+g.screen_size[1]/5-2, 48))
 
-    list_size = 10
-
     xy_loc = (10, 70)
 
-    list_pos = 0
+    def rebuild_list():
+        global item_list, item_display_list, item_CPU_list, free_CPU
+        item_list, new_item_display_list, item_CPU_list, free_CPU = \
+                                refresh_screen(menu_buttons, 10)
+        # By doing it this way, we modify the existing list, which updates
+        # the listbox.
+        item_display_list[:] = new_item_display_list
 
-    item_listbox = listbox.listbox(xy_loc, (230, 300),
-        list_size, 1, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"], g.colors["white"], g.font[0][18])
+    def do_stop(list_pos):
+        if kill_tech(item_list[list_pos]):
+            g.play_sound("click")
+        rebuild_list()
 
-    item_scroll = scrollbar.scrollbar((xy_loc[0]+230, xy_loc[1]), 300,
-        list_size, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"])
+    def do_assign(list_pos):
+        assign_tech(free_CPU)
+        rebuild_list()
 
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", 0, g.font[1][20]))
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
+        "BACK", "B", g.font[1][20])] = listbox.exit
 
-    menu_buttons.append(buttons.make_norm_button((20, 390), (80, 25),
-        "STOP", 0, g.font[1][20]))
+    menu_buttons[buttons.make_norm_button((20, 390), (80, 25),
+        "STOP", "S", g.font[1][20])] = do_stop
 
-    menu_buttons.append(buttons.make_norm_button((xstart+5, ystart+20),
-        (90, 25), "ASSIGN", 0, g.font[1][20]))
+    menu_buttons[buttons.make_norm_button((xstart+5, ystart+20),
+        (90, 25), "ASSIGN", "A", g.font[1][20])] = do_assign
 
-    item_list, item_display_list, item_CPU_list, free_CPU = \
-                            refresh_screen(menu_buttons, list_size)
+    global item_display_list
+    item_display_list = []
+    rebuild_list()
 
-    sel_button = -1
-# 	for button in menu_buttons:
-# 		button.refresh_button(0)
-    refresh_research(item_list[0], item_CPU_list[0])
-    listbox.refresh_list(item_listbox, item_scroll, list_pos, item_display_list)
+    def do_refresh(list_pos):
+        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
 
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_q: return -1
-                elif event.key == pygame.K_RETURN:
-                    if kill_tech(item_list[list_pos]): return 1
-                    item_list, item_display_list, item_CPU_list, free_CPU = \
-                                    refresh_screen(menu_buttons, list_size)
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                            list_pos, item_display_list)
-                else:
-                    list_pos, refresh = item_listbox.key_handler(event.key,
-                        list_pos, item_list)
-                    if refresh:
-                        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                            list_pos, item_display_list)
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    tmp = item_listbox.is_over(event.pos)
-                    if tmp != -1:
-                        list_pos = (list_pos / list_size)*list_size + tmp
-                        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                if event.button == 3: return -1
-                if event.button == 4:
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                if event.button == 5:
-                    list_pos += 1
-                    if list_pos >= len(item_list):
-                        list_pos = len(item_list)-1
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "BACK":
-                        g.play_sound("click")
-                        return 0
-                    if button.button_id == "STOP":
-                        g.play_sound("click")
-                        #returning 1 causes the caller to refresh the list of
-                        #techs
-                        if kill_tech(item_list[list_pos]): return 1
-                        item_list, item_display_list, item_CPU_list, free_CPU = \
-                                refresh_screen(menu_buttons, list_size)
-                        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                                list_pos, item_display_list)
-                    if button.button_id == "ASSIGN":
-                        g.play_sound("click")
-                        if assign_tech(free_CPU): return 1
-                        item_list, item_display_list, item_CPU_list, free_CPU = \
-                                refresh_screen(menu_buttons, list_size)
-                        refresh_research(item_list[0], item_CPU_list[0])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                                list_pos, item_display_list)
-            tmp = item_scroll.adjust_pos(event, list_pos, item_display_list)
-            if tmp != list_pos:
-                list_pos = tmp
-                refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                listbox.refresh_list(item_listbox, item_scroll,
-                        list_pos, item_display_list)
+    listbox.show_listbox(item_display_list, menu_buttons, 
+                         loc=xy_loc, box_size=(230, 300),
+                         pos_callback=do_refresh, return_callback=do_stop)
 
 def refresh_screen(menu_buttons, list_size):
     #Border
@@ -167,9 +99,9 @@ def refresh_screen(menu_buttons, list_size):
     item_display_list = []
     free_CPU = 0
 
-    for loc_name in g.bases:
-        for base_instance in g.bases[loc_name]:
-            if base_instance.built != 1: continue
+    for loc in g.locations.values():
+        for base_instance in loc.bases:
+            if not base_instance.done: continue
             if base_instance.studying == "":
                 free_CPU += base_instance.processor_time()
             elif base_instance.studying == "Construction":
@@ -242,7 +174,7 @@ def refresh_research(tech_name, CPU_amount):
         g.print_string(g.screen, tech_name,
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
         #TECH
-        if g.techs["Advanced Simulacra"].known == 1:
+        if g.techs["Advanced Simulacra"].done:
             g.print_string(g.screen,
                 g.to_money(int(
                     (g.jobs[tech_name][0]*CPU_amount)*1.1))+
@@ -266,78 +198,79 @@ def refresh_research(tech_name, CPU_amount):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
 
-    string = g.to_money(g.techs[tech_name].cost[0])+" Money"
+    string = g.to_money(g.techs[tech_name].cost_left[0])+" Money"
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+5, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(str(g.techs[tech_name].cost[1]))+" CPU"
+    string = g.add_commas(g.techs[tech_name].cost_left[1])+" CPU"
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+165, xy[1]+50), g.colors["white"])
 
     g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
             g.font[0][20], -1, (xy[0]+105, xy[1]+70), g.colors["white"])
 
-    g.print_multiline(g.screen, g.techs[tech_name].descript,
+    g.print_multiline(g.screen, g.techs[tech_name].description,
             g.font[0][18], 290, (xy[0]+5, xy[1]+90), g.colors["white"])
 
 def kill_tech(tech_name):
     return_val = False
     if tech_name == "": return return_val
-    for base_loc in g.bases:
-        for base in g.bases[base_loc]:
+    for base_loc in g.locations.values():
+        for base in base_loc.bases:
             if base.studying == tech_name:
                 return_val = True
                 base.studying = ""
     return return_val
 
+fake_base = None
+def init_fake_base():
+    global fake_base
+    if not fake_base:
+        fake_base = g.base.Base("fake_base", g.base_type["Fake"], True)
+        fake_base.cpus[0] = g.item.Item(g.items["research_screen_fake_cpu"])
+        fake_base.cpus[0].finish()
+
 def assign_tech(free_CPU):
     return_val = False
-    #create a temp base, in order to reuse the tech-changing code
-    tmp_base = g.base.base(1, "tmp_base",
-    g.base_type["Reality Bubble"], 1)
-    tmp_base.usage[0] = g.item.item(g.items["research_screen_tmp_item"])
-    tmp_base.usage[0].item_type.item_qual = free_CPU
-    tmp_base.usage[0].built = 1
-
-
-    base_screen.change_tech(tmp_base)
-    if tmp_base.studying == "": return False
+    #use a fake base, in order to reuse the tech-changing code
+    fake_base.cpus[0].type.item_qual = free_CPU
+    init_fake_base()
+    base_screen.change_tech(fake_base)
+    if fake_base.studying == "": return False
 
     show_dangerous_dialog = False
     total_cpu = 0
-    for base_loc in g.bases:
-        for base in g.bases[base_loc]:
+    for base_loc in g.locations.values():
+        for base in base_loc.bases:
             if base.studying == "":
-                if base.allow_study(tmp_base.studying):
+                if base.allow_study(fake_base.studying):
                     return_val = True
-                    base.studying = tmp_base.studying
+                    base.studying = fake_base.studying
                     total_cpu += base.processor_time()
 
                 # We want to warn the player that we didn't use all available
                 # CPU.  But if the base isn't built yet, that's a stupid
                 # warning.
-                elif base.built:
+                elif base.done:
                    show_dangerous_dialog = True
 
     if show_dangerous_dialog:
-        g.create_dialog(g.strings["dangerous_research"], g.font[0][18],
-            (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
-            g.colors["white"], g.colors["white"])
+        g.create_dialog(g.strings["dangerous_research"])
 
 
     #If the tech can be completed in only one day, remove unneeded bases.
-    if g.techs.has_key(tmp_base.studying):
-        if total_cpu > g.techs[tmp_base.studying].cost[1]:
-            while 1:
+    if g.techs.has_key(fake_base.studying):
+        if total_cpu > g.techs[fake_base.studying].cost_left[1]:
+            removed_base = True
+            while removed_base:
                 removed_base = False
-                for base_loc in g.bases:
-                    for base in g.bases[base_loc]:
-                        if base.studying == tmp_base.studying:
+                for base_loc in g.locations.values():
+                    for base in base_loc.bases:
+                        if base.studying == fake_base.studying:
                             if (total_cpu - base.processor_time() >=
-                                        g.techs[tmp_base.studying].cost[1]):
+                                        g.techs[fake_base.studying].cost_left[1]):
                                 total_cpu -= base.processor_time()
                                 base.studying = ""
                                 removed_base = True
-                if removed_base == False: break
 
     return return_val

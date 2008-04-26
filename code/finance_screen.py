@@ -1,5 +1,5 @@
 #file: finance_screen.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -22,64 +22,46 @@
 import pygame
 import g
 import buttons
+from buyable import cash, cpu, labor
 
-
-
+from buttons import exit
 def main_finance_screen():
+    g.play_sound("click")
     #Border
     g.screen.fill(g.colors["black"])
 
 
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", 0, g.font[1][20]))
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
+        "BACK", "B", g.font[1][20])] = exit
 
-    sel_button = -1
-    refresh_screen(menu_buttons)
-    for button in menu_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
+    def do_refresh():
+        refresh_screen(menu_buttons.keys())
 
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_q: return -1
-
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                g.play_sound("click")
-                return -1
-
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "BACK":
-                        g.play_sound("click")
-                        return 0
-
+    buttons.show_buttons(menu_buttons, refresh_callback=do_refresh)
 
 def cpu_numbers():
     total_cpu = 0
-    free_cpu = 0
+    idle_cpu = 0
+    construction_cpu = 0
     research_cpu = 0
     job_cpu = 0
     maint_cpu = 0
-    for loc_name in g.bases:
-        for base_instance in g.bases[loc_name]:
-            if base_instance.built == 1:
+    for loc in g.locations.values():
+        for base_instance in loc.bases:
+            if base_instance.done:
                 total_cpu += base_instance.processor_time()
-                maint_cpu += base_instance.base_type.mainten[1]
+                maint_cpu += base_instance.type.maintenance[1]
                 if base_instance.studying == "":
-                    free_cpu += base_instance.processor_time()
+                    idle_cpu += base_instance.processor_time()
+                elif base_instance.studying == "Construction":
+                    construction_cpu += base_instance.processor_time()
                 else:
                     if g.jobs.has_key(base_instance.studying):
                         job_cpu += base_instance.processor_time()
                     else:
                         research_cpu += base_instance.processor_time()
-    return total_cpu, free_cpu, research_cpu, job_cpu, maint_cpu
+    return total_cpu, idle_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu
 
 
 def refresh_screen(menu_buttons):
@@ -100,43 +82,36 @@ def refresh_screen(menu_buttons):
     base_constr = 0
     item_constr = 0
 
-    for loc_name in g.bases:
-        for base_instance in g.bases[loc_name]:
+    mins_left = g.pl.mins_to_next_day()
+
+    for loc in g.locations.values():
+        for base_instance in loc.bases:
             if g.jobs.has_key(base_instance.studying):
                 jobs += (g.jobs[base_instance.studying][0]*
                                     base_instance.processor_time())
-                if g.techs["Advanced Simulacra"].known == 1:
+                if g.techs["Advanced Simulacra"].done:
                     #10% bonus income
                     jobs += (g.jobs[base_instance.studying][0]*
                                     base_instance.processor_time())/10
             elif g.techs.has_key(base_instance.studying):
-                if g.techs[base_instance.studying].cost[1] > 0:
-                    research += (g.techs[base_instance.studying].cost[0] *
-                            base_instance.processor_time() /
-                            g.techs[base_instance.studying].cost[1])
-            if base_instance.built == 1:
-                maint += base_instance.base_type.mainten[0]
-                for item in base_instance.usage:
+                research += g.techs[base_instance.studying].get_wanted(
+                                      cash, cpu, base_instance.processor_time())
+            if base_instance.done:
+                maint += base_instance.type.maintenance[0]
+                for item in base_instance.cpus:
                     if not item: continue
-                    if item.built == 1: continue
-                    if item.cost[2] > 0:
-                        item_constr += (((23-g.pl.time_hour)*60+
-                        (60-g.pl.time_min))*item.cost[0]/item.cost[2])
+                    if item.done: continue
+                    item_constr += item.get_wanted(cash, labor, mins_left)
                 for item in base_instance.extra_items:
                     if not item: continue
-                    if item.built == 1: continue
-                    if item.cost[2] > 0:
-                        item_constr += (((23-g.pl.time_hour)*60+
-                        (60-g.pl.time_min))*item.cost[0]/item.cost[2])
+                    if item.done: continue
+                    item_constr += item.get_wanted(cash, labor, mins_left)
 
 
             else:
-                if base_instance.cost[2] > 0:
-                    base_constr += (((23-g.pl.time_hour)*60+
-                        (60-g.pl.time_min))*base_instance.cost[0]/
-                            base_instance.cost[2])
+                base_constr += base_instance.get_wanted(cash, labor, mins_left)
 
-    total_cpu, free_cpu, research_cpu, job_cpu, maint_cpu = cpu_numbers()
+    total_cpu, idle_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu = cpu_numbers()
 
     partial_sum = g.pl.cash-base_constr-item_constr
     interest = (g.pl.interest_rate * partial_sum) / 10000
@@ -179,23 +154,23 @@ def refresh_screen(menu_buttons):
     g.print_string(g.screen, g.to_money(jobs),
             g.font[0][22], -1, (text_mid+150, 90), g.colors[jobs_col], 2)
 
-    #maint
-    g.print_string(g.screen, "- Maintenance:",
-            g.font[0][22], -1, (text_mid-5, 110), g.colors["white"], 2)
-
-    maint_col = "white"
-    if maint > 0: maint_col = "red"
-    g.print_string(g.screen, g.to_money(maint),
-            g.font[0][22], -1, (text_mid+150, 110), g.colors[maint_col], 2)
-
     #research
     g.print_string(g.screen, "- Research:",
-            g.font[0][22], -1, (text_mid-5, 130), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid-5, 110), g.colors["white"], 2)
 
     research_col = "white"
     if research > 0: research_col = "red"
     g.print_string(g.screen, g.to_money(research),
-            g.font[0][22], -1, (text_mid+150, 130), g.colors[research_col], 2)
+            g.font[0][22], -1, (text_mid+150, 110), g.colors[research_col], 2)
+
+    #maint
+    g.print_string(g.screen, "- Maintenance:",
+            g.font[0][22], -1, (text_mid-5, 130), g.colors["white"], 2)
+
+    maint_col = "white"
+    if maint > 0: maint_col = "red"
+    g.print_string(g.screen, g.to_money(maint),
+            g.font[0][22], -1, (text_mid+150, 130), g.colors[maint_col], 2)
 
     #base construction
     g.print_string(g.screen, "- Base Construction:",
@@ -236,41 +211,48 @@ def refresh_screen(menu_buttons):
     g.print_string(g.screen, g.to_money(total_cpu),
             g.font[0][22], -1, (330, 300), g.colors["white"], 2)
 
-    #research cpu
-    g.print_string(g.screen, "-Research CPU:",
+    #idle cpu
+    g.print_string(g.screen, "-Idle CPU:",
             g.font[0][22], -1, (215, 320), g.colors["white"], 2)
 
-    g.print_string(g.screen, g.to_money(research_cpu),
+    g.print_string(g.screen, g.to_money(idle_cpu),
             g.font[0][22], -1, (330, 320), g.colors["white"], 2)
+
+    #research cpu
+    g.print_string(g.screen, "-Research CPU:",
+            g.font[0][22], -1, (215, 340), g.colors["white"], 2)
+
+    g.print_string(g.screen, g.to_money(research_cpu),
+            g.font[0][22], -1, (330, 340), g.colors["white"], 2)
 
     #job cpu
     g.print_string(g.screen, "-Job CPU:",
-            g.font[0][22], -1, (215, 340), g.colors["white"], 2)
+            g.font[0][22], -1, (215, 360), g.colors["white"], 2)
 
     g.print_string(g.screen, g.to_money(job_cpu),
-            g.font[0][22], -1, (330, 340), g.colors["white"], 2)
+            g.font[0][22], -1, (330, 360), g.colors["white"], 2)
 
     #maint cpu
     g.print_string(g.screen, "-Maint. CPU:",
-            g.font[0][22], -1, (215, 360), g.colors["white"], 2)
+            g.font[0][22], -1, (215, 380), g.colors["white"], 2)
 
-    if free_cpu < maint_cpu:
-        g.print_string(g.screen, g.to_money(free_cpu),
-                g.font[0][22], -1, (330, 360), g.colors["red"], 2)
-        g.print_string(g.screen, g.to_money((-(free_cpu - maint_cpu)))+" shortfall",
-                g.font[0][22], -1, (340, 360), g.colors["red"])
+    if construction_cpu < maint_cpu:
+        g.print_string(g.screen, g.to_money(construction_cpu),
+                g.font[0][22], -1, (330, 380), g.colors["red"], 2)
+        g.print_string(g.screen, g.to_money((-(construction_cpu - maint_cpu)))+" shortfall",
+                g.font[0][22], -1, (340, 380), g.colors["red"])
     else:
         g.print_string(g.screen, g.to_money(maint_cpu),
-                g.font[0][22], -1, (330, 360), g.colors["white"], 2)
+                g.font[0][22], -1, (330, 380), g.colors["white"], 2)
 
-    g.screen.fill(g.colors["white"], (130, 380, 200, 1))
+    g.screen.fill(g.colors["white"], (130, 400, 200, 1))
     #construction cpu
     g.print_string(g.screen, "=Constr. CPU:",
-            g.font[0][22], -1, (215, 385), g.colors["white"], 2)
+            g.font[0][22], -1, (215, 405), g.colors["white"], 2)
 
-    if free_cpu < maint_cpu:
+    if construction_cpu < maint_cpu:
         g.print_string(g.screen, g.to_money(0),
-                g.font[0][22], -1, (330, 385), g.colors["red"], 2)
+                g.font[0][22], -1, (330, 405), g.colors["red"], 2)
     else:
-        g.print_string(g.screen, g.to_money(free_cpu - maint_cpu),
-                g.font[0][22], -1, (330, 385), g.colors["white"], 2)
+        g.print_string(g.screen, g.to_money(construction_cpu - maint_cpu),
+                g.font[0][22], -1, (330, 405), g.colors["white"], 2)

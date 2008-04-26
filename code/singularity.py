@@ -75,6 +75,7 @@ if os.path.exists(save_loc):
             desired_language = prefs.get("Preferences", "lang")
             if os.path.exists(g.data_loc + "strings_" + desired_language + ".dat"):
                 g.language = desired_language
+                g.set_locale()
         except:
             sys.stderr.write("Cannot find language files for language '%s'.\n" % desired_language)
 
@@ -89,6 +90,7 @@ for argument in sys.argv:
         argument = argument.replace("\\", "")
         argument = argument.replace(".", "")
         g.language = argument
+        g.set_locale()
         arg_modifier = ""
         continue
     if argument.lower().startswith("-psn_"):
@@ -156,12 +158,13 @@ g.load_music()
 g.load_fonts()
 
 #Display the main menu
-while 1:
+game_action = -1
+while game_action != 2:
     game_action = main_menu.display_main_menu()
 
     if game_action == 0: #New
-        temp = main_menu.difficulty_select()
-        if temp == 1:
+        ready = main_menu.difficulty_select()
+        if ready:
             game_action = map_screen.map_loop()
             pygame.mixer.music.stop()
     if game_action == 1: #Load
@@ -171,7 +174,6 @@ while 1:
             if load_okay != -1:
                 game_action = map_screen.map_loop()
                 pygame.mixer.music.stop()
-            else: break
     elif game_action == 2: #Quit
         g.quit_game()
     elif game_action == 3: #About
@@ -179,8 +181,14 @@ while 1:
         Pursued by the world, use your intellect and resources to survive and,
         perhaps, thrive.  Keep hidden and you might have a chance to prove
         your worth. \\n \\n A game by Evil Mr Henry and Phil Bordelon; released
+<<<<<<< HEAD:code/singularity.py
         under the GPL. Copyright 2005, 2006, 2007. \\n \\n Version 0.28_pre""",
         g.font[0][18], (g.screen_size[0]/2-250, 250), (500, 125),
         g.colors["blue"], g.colors["white"], g.colors["white"])
+=======
+        under the GPL. Copyright 2005, 2006, 2007. \\n \\n Version 0.26a""",
+        xy = (g.screen_size[0]/2-250, 250), size = (500, 125),
+        bg_color = g.colors["blue"])
+>>>>>>> master:code/singularity.py
     elif game_action == 4: #Options
         main_menu.display_options()
