@@ -34,48 +34,45 @@ def show_base(this_base, location):
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", 0, g.font[1][20]))
+        "BACK", "B", g.font[1][20]))
 
     menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
-        (g.screen_size[0], 25), "DETECTION CHANCE", -1,
+        (g.screen_size[0], 25), "DETECTION CHANCE", "",
         g.colors["black"], g.colors["dark_blue"], g.colors["black"],
         g.colors["white"], g.font[1][15]))
 
     menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50),
-        (170, 25), "CHANGE RESEARCH", 0, g.font[1][20], "CHANGE"))
+        (170, 25), "CHANGE RESEARCH", "C", g.font[1][20], "CHANGE"))
 
     menu_buttons.append(buttons.button((0, 25),
         (g.screen_size[0], 25),
-        "STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
+        "STUDYING:", "", g.colors["black"], g.colors["dark_blue"],
         g.colors["black"], g.colors["white"], g.font[1][15]))
 
     menu_buttons.append(buttons.make_norm_button((320, 60), (70, 26),
-        "CHANGE", -1, g.font[1][15], "C_PROCESSOR"))
-    menu_buttons[4].activate_key = "p"
+        "CHANGE", "P", g.font[1][15], "C_PROCESSOR"))
 
     menu_buttons.append(buttons.make_norm_button((320, 110), (70, 26),
-        "CHANGE", -1, g.font[1][15], "C_REACTOR"))
-    menu_buttons[5].activate_key = "r"
+        "CHANGE", "R", g.font[1][15], "C_REACTOR"))
 
     menu_buttons.append(buttons.make_norm_button((320, 160), (70, 26),
-        "CHANGE", -1, g.font[1][15], "C_NETWORK"))
+        "CHANGE", "N", g.font[1][15], "C_NETWORK"))
     menu_buttons[6].activate_key = "n"
 
     menu_buttons.append(buttons.make_norm_button((320, 210),
-        (70, 26), "CHANGE", -1, g.font[1][15], "C_SECURITY"))
-    menu_buttons[7].activate_key = "s"
+        (70, 26), "CHANGE", "S", g.font[1][15], "C_SECURITY"))
 
     menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-40,
-        0), (20, 25), "<", 0, g.font[1][20]))
+        0), (20, 25), "<", "<", g.font[1][20]))
 
     menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-20,
-        0), (20, 25), ">", 0, g.font[1][20]))
+        0), (20, 25), ">", ">", g.font[1][20]))
 
     menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-90,
-        g.screen_size[1]-50), (90, 25), "DESTROY", 0, g.font[1][20]))
+        g.screen_size[1]-50), (90, 25), "DESTROY", "D", g.font[1][20]))
 
     menu_buttons.append(buttons.button((70, -1), (g.screen_size[0]-145,
-        25), "BASE NAME", -1, g.colors["black"], g.colors["black"],
+        25), "BASE NAME", "", g.colors["black"], g.colors["black"],
         g.colors["black"], g.colors["white"], g.font[1][15]))
 
     sel_button = -1
@@ -183,7 +180,7 @@ def refresh_base(menu_buttons, this_base):
     g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 298, g.screen_size[1]-152))
 
     if this_base.cpus[0] == 0: item_name = "None"
-    else: item_name = this_base.cpus[0].item_type.name+" x "+str(this_base.has_item())
+    else: item_name = this_base.cpus[0].type.name+" x "+str(this_base.has_item())
     g.print_string(g.screen, "Processor: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+15), g.colors["white"])
     if this_base.cpus[len(this_base.cpus)-1] != 0:
@@ -193,7 +190,7 @@ def refresh_base(menu_buttons, this_base):
                 g.font[0][18], -1, (xstart+5, ystart+30), g.colors["white"])
 
     if this_base.extra_items[0] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[0].item_type.name
+    else: item_name = this_base.extra_items[0].type.name
     g.print_string(g.screen, "Reactor: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+65), g.colors["white"])
     if this_base.extra_items[0] != 0:
@@ -203,7 +200,7 @@ def refresh_base(menu_buttons, this_base):
                 g.font[0][18], -1, (xstart+5, ystart+80), g.colors["white"])
 
     if this_base.extra_items[1] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[1].item_type.name
+    else: item_name = this_base.extra_items[1].type.name
     g.print_string(g.screen, "Network: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+115), g.colors["white"])
     if this_base.extra_items[1] != 0:
@@ -213,7 +210,7 @@ def refresh_base(menu_buttons, this_base):
                 g.font[0][18], -1, (xstart+5, ystart+130), g.colors["white"])
 
     if this_base.extra_items[2] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[2].item_type.name
+    else: item_name = this_base.extra_items[2].type.name
     g.print_string(g.screen, "Security: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+165), g.colors["white"])
     if this_base.extra_items[2] != 0:
@@ -247,7 +244,7 @@ def build_item(this_base, item_type, location):
 
     # First we determine the list of items that can actually be built here ...
     for item_name in g.items:
-        if g.items[item_name].item_type == item_type:
+        if g.items[item_name].type == item_type:
             if g.items[item_name].prereq != "":
                 if g.techs[g.items[item_name].prereq].done:
                     continue
@@ -262,7 +259,7 @@ def build_item(this_base, item_type, location):
     item_object_list.reverse()
 
     # Finally we build the id_list and display_list from the sorted objects.
-    item_id_list = [x.item_id for x in item_object_list]
+    item_id_list = [x.id for x in item_object_list]
     item_display_list = [x.name for x in item_object_list]
 
     xy_loc = (g.screen_size[0]/2 - 300, 50)
@@ -282,9 +279,9 @@ def build_item(this_base, item_type, location):
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
-        (100, 50), "BUILD", 1, g.font[1][30]))
+        (100, 50), "BUILD", "U", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
-        (100, 50), "BACK", 0, g.font[1][30]))
+        (100, 50), "BACK", "B", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
 
@@ -358,23 +355,23 @@ def actual_build(this_base, item_name, item_type):
     if item_type == "compute":
         for i in range(len(this_base.cpus)):
             if this_base.cpus[i] != 0:
-                if this_base.cpus[i].item_type.item_id == \
-                        g.items[item_name].item_id:
+                if this_base.cpus[i].type.id == \
+                        g.items[item_name].id:
                     continue
             this_base.cpus[i] = g.item.item(g.items[item_name])
     elif item_type == "react":
         if this_base.extra_items[0] != 0:
-            if this_base.extra_items[0].item_type.item_id == g.items[item_name].item_id:
+            if this_base.extra_items[0].type.id == g.items[item_name].id:
                 return
         this_base.extra_items[0] = g.item.item(g.items[item_name])
     elif item_type == "network":
         if this_base.extra_items[1] != 0:
-            if this_base.extra_items[1].item_type.item_id == g.items[item_name].item_id:
+            if this_base.extra_items[1].type.id == g.items[item_name].id:
                 return
         this_base.extra_items[1] = g.item.item(g.items[item_name])
     elif item_type == "security":
         if this_base.extra_items[2] != 0:
-            if this_base.extra_items[2].item_type.item_id == g.items[item_name].item_id:
+            if this_base.extra_items[2].type.id == g.items[item_name].id:
                 return
         this_base.extra_items[2] = g.item.item(g.items[item_name])
 
@@ -398,7 +395,7 @@ def refresh_item(this_base, item_name, xy_loc):
             g.font[0][16], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
     string = g.to_money(g.items[item_name].cost[0])+" "+g.strings["money"]
-    if g.items[item_name].item_type == "compute":
+    if g.items[item_name].type == "compute":
         string += " x"+str(this_base.base_type.size)+"="
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
@@ -408,7 +405,7 @@ def refresh_item(this_base, item_name, xy_loc):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
 
-    if g.items[item_name].item_type == "compute":
+    if g.items[item_name].type == "compute":
         string = g.to_money(g.items[item_name].cost[0]*this_base.base_type.size)+" "
         string +=g.strings["money"]
 
@@ -421,7 +418,7 @@ def refresh_item(this_base, item_name, xy_loc):
             g.font[0][16], -1, (xy[0]+160, xy[1]+120), g.colors["white"])
 
     x_start = 120
-    if g.items[item_name].item_type == "compute": x_start = 140
+    if g.items[item_name].type == "compute": x_start = 140
     g.print_multiline(g.screen, g.items[item_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
 
@@ -474,9 +471,9 @@ def change_tech(this_base):
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
-        (100, 50), "CHANGE", 0, g.font[1][30]))
+        (100, 50), "CHANGE", "C", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
-        (100, 50), "BACK", 0, g.font[1][30]))
+        (100, 50), "BACK", "B", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
 

@@ -37,8 +37,8 @@ class Base_Class(buyable.Buyable_Class):
         self.count = 0
 
 class Base(buyable.Buyable):
-    def __init__(self, ID, name, base_type, built):
-        super(Base, self).__init__(base_type)
+    def __init__(self, ID, name, type, built):
+        super(Base, self).__init__(type)
         self.ID = ID
         self.name = name
         self.built_date = g.pl.time_day
@@ -61,7 +61,7 @@ class Base(buyable.Buyable):
     #Get detection chance for the base, applying bonuses as needed.
     def get_detect_chance(self):
         # Get the base chance from the universal function.
-        detect_chance = calc_base_discovery_chance(self.base_type.base_id)
+        detect_chance = calc_base_discovery_chance(self.type.id)
 
         # Factor in the suspicion adjustments for this particular base ...
         for group, suspicion in self.suspicion.iteritems():
@@ -69,21 +69,21 @@ class Base(buyable.Buyable):
             detect_chance[group] /= 10000
 
         # ... any reactors built ... 
-        if self.extra_items[0] and self.extra_items[0].built:
+        if self.extra_items[0] and self.extra_items[0].done:
             item_qual = self.extra_items[0].item_qual
             for group in detect_chance:
                 detect_chance[group] *= 10000 - item_qual
                 detect_chance[group] /= 10000
 
         # ... and any security systems built ...
-        if self.extra_items[2] and self.extra_items[2].built:
+        if self.extra_items[2] and self.extra_items[2].done:
             item_qual = self.extra_items[2].item_qual
             for group in detect_chance:
                 detect_chance[group] *= 10000 - item_qual
                 detect_chance[group] /= 10000
 
         # ... and if it is idle.
-        if self.built and self.studying == "":
+        if self.done and self.studying == "":
             for group in detect_chance:
                 detect_chance[group] /= 2
 
@@ -105,7 +105,7 @@ class Base(buyable.Buyable):
             if item and item.done:
                 comp_power += item.type.item_qual
         if self.extra_items[1] and self.extra_items[1].done:
-            compute_bonus = self.extra_items[1].item_type.item_qual
+            compute_bonus = self.extra_items[1].type.item_qual
         return (comp_power * (10000+compute_bonus))/10000
 
     # Can the base study the given tech?
@@ -115,14 +115,14 @@ class Base(buyable.Buyable):
         elif g.jobs.has_key(tech_name) or tech_name == "Construction": 
             return True
         else:
-            for region in self.base_type.regions:
+            for region in self.type.regions:
                 if g.safety_level[region] >= danger_level:
                     return True
             return False
 
     def has_grace(self):
          age = g.pl.time_day - self.built_date
-         build_time = self.base_type.cost[labor]
+         build_time = self.type.cost[labor]
          return age <= (build_time * 2)
 
 #calc_base_discovery_chance: A globally-accessible function that can calculate

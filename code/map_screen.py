@@ -559,7 +559,7 @@ def create_buttons(font_size):
     for location in g.locations.values():
         menu_buttons.append(buttons.make_norm_button((
             g.screen_size[0] * location.y // 100,
-            g.screen_size[0] * location.x // 100), -1,
+            g.screen_size[1] * location.x // 100), -1,
             location.name, location.hotkey, g.font[1][25]))
 
     return menu_buttons
@@ -713,8 +713,8 @@ def map_loop():
                         # user is done mucking around with bases.
                         done_base = False
                         while not done_base:
-                           done_base = display_base_list(g.locations(
-                                                             button.button_id),
+                           done_base = display_base_list(g.locations[
+                                                             button.button_id],
                                                          menu_buttons)
                     pygame.display.flip()
 
@@ -867,7 +867,7 @@ def display_base_list(location, menu_buttons):
 
     #Showing base under construction
     elif selection != -1 and selection != "":
-        if g.bases[location][selection].built == 0:
+        if not g.bases[location][selection].done:
             string = "Under Construction. \\n Completion in "
             string += g.to_time(g.bases[location][selection].cost[2]) + ". \\n "
             string += "Remaining cost: "+g.to_money(g.bases[location][selection].cost[0])
@@ -898,7 +898,7 @@ def display_base_list(location, menu_buttons):
                 selection += next_prev
                 if selection < 0: selection = len(g.bases[location]) -1
                 if selection >= len(g.bases[location]): selection = 0
-                while g.bases[location][selection].built != 1:
+                while not g.bases[location][selection].done:
                     selection += next_prev
                     if selection < 0: selection = len(g.bases[location]) -1
                     if selection >= len(g.bases[location]): selection = 0
@@ -919,7 +919,7 @@ def display_base_list_inner(location):
     base_display_list = []
     base_id_list = []
     for this_base in g.bases[location]:
-        studying = this_base.studyinging
+        studying = this_base.studying
         if not this_base.done:
             studying = g.strings["building"]
         elif studying == "":
@@ -947,13 +947,13 @@ def display_base_list_inner(location):
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
-        "OPEN", 0, g.font[1][30]))
+        "OPEN", "O", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+105, xy_loc[1]+367), (100, 50),
-        "BACK", 0, g.font[1][30]))
+        "BACK", "B", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
-        "NEW", 0, g.font[1][30]))
+        "NEW", "N", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+315, xy_loc[1]+367), (120, 50),
-        "DESTROY", 0, g.font[1][30]))
+        "DESTROY", "D", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
     listbox.refresh_list(bases_list, bases_scroll, base_pos, base_display_list)
@@ -1062,8 +1062,8 @@ def build_new_base_window(location):
     base_display_list = []
     for base_name in g.base_type:
         for region in g.base_type[base_name].regions:
-            if g.base_type[base_name].prereq == "" or \
-                    g.techs[g.base_type[base_name].prereq].done:
+            if g.base_type[base_name].prerequisites == "" or \
+                    g.techs[g.base_type[base_name].prerequisites].done:
                 if region == location:
                     base_list.append(base_name)
                     base_display_list.append(g.base_type[base_name].base_name)
@@ -1082,9 +1082,9 @@ def build_new_base_window(location):
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
-        "BUILD", 1, g.font[1][30]))
+        "BUILD", "U", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-        "BACK", 0, g.font[1][30]))
+        "BACK", "B", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
 
