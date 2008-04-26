@@ -665,7 +665,7 @@ savefile_translation = {
     # Post-change supported file formats.
     "singularity_savefile_r1": 1,
     "singularity_savefile_r2": 2,
-    "singularity_savefile_r3_pre": 2.91,
+    "singularity_savefile_r3": 3,
     "singularity_savefile_r4_pre": 3.91,
     #"singularity_savefile_r4_pre2": 3.92,
     "singularity_savefile_r4_pre3": 3.93,
