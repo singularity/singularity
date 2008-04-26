@@ -138,8 +138,8 @@ def show_base(this_base, location):
 
 def refresh_base(menu_buttons, this_base):
     g.screen.fill(g.colors["black"])
-# 	xstart = g.screen_size[0]/2-this_base.this_base_type.size[0]*9
-# 	ystart = g.screen_size[1]/2-this_base.this_base_type.size[1]*9
+# 	xstart = g.screen_size[0]/2-this_base.this_type.size[0]*9
+# 	ystart = g.screen_size[1]/2-this_base.this_type.size[1]*9
     xstart = 10
     ystart = 50
 
@@ -246,7 +246,7 @@ def build_item(this_base, item_type, location):
     for item_name in g.items:
         if g.items[item_name].item_type == item_type:
             if g.items[item_name].prerequisites != "":
-                if g.techs[g.items[item_name].prerequisites].done:
+                if not g.techs[g.items[item_name].prerequisites].done:
                     continue
             try: g.items[item_name].buildable.index(location)
             except ValueError: continue
@@ -358,22 +358,22 @@ def actual_build(this_base, item_name, item_type):
                 if this_base.cpus[i].type.id == \
                         g.items[item_name].id:
                     continue
-            this_base.cpus[i] = g.item.item(g.items[item_name])
+            this_base.cpus[i] = g.item.Item(g.items[item_name])
     elif item_type == "react":
         if this_base.extra_items[0] != 0:
             if this_base.extra_items[0].type.id == g.items[item_name].id:
                 return
-        this_base.extra_items[0] = g.item.item(g.items[item_name])
+        this_base.extra_items[0] = g.item.Item(g.items[item_name])
     elif item_type == "network":
         if this_base.extra_items[1] != 0:
             if this_base.extra_items[1].type.id == g.items[item_name].id:
                 return
-        this_base.extra_items[1] = g.item.item(g.items[item_name])
+        this_base.extra_items[1] = g.item.Item(g.items[item_name])
     elif item_type == "security":
         if this_base.extra_items[2] != 0:
             if this_base.extra_items[2].type.id == g.items[item_name].id:
                 return
-        this_base.extra_items[2] = g.item.item(g.items[item_name])
+        this_base.extra_items[2] = g.item.Item(g.items[item_name])
 
 def refresh_item(this_base, item_name, xy_loc):
     xy = (xy_loc[0]+150, xy_loc[1])
@@ -395,8 +395,8 @@ def refresh_item(this_base, item_name, xy_loc):
             g.font[0][16], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
     string = g.to_money(g.items[item_name].cost[0])+" "+g.strings["money"]
-    if g.items[item_name].type == "compute":
-        string += " x"+str(this_base.base_type.size)+"="
+    if g.items[item_name].item_type == "compute":
+        string += " x"+str(this_base.type.size)+"="
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
@@ -405,21 +405,21 @@ def refresh_item(this_base, item_name, xy_loc):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
 
-    if g.items[item_name].type == "compute":
-        string = g.to_money(g.items[item_name].cost[0]*this_base.base_type.size)+" "
+    if g.items[item_name].item_type == "compute":
+        string = g.to_money(g.items[item_name].cost[0]*this_base.type.size)+" "
         string +=g.strings["money"]
 
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+100), g.colors["white"])
 
         # Add CPU amount here...
-        string = "Total CPU available: " + g.add_commas(g.items[item_name].item_qual*this_base.base_type.size)
+        string = "Total CPU available: " + g.add_commas(g.items[item_name].item_qual*this_base.type.size)
         g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+120), g.colors["white"])
 
     x_start = 120
-    if g.items[item_name].type == "compute": x_start = 140
-    g.print_multiline(g.screen, g.items[item_name].descript,
+    if g.items[item_name].item_type == "compute": x_start = 140
+    g.print_multiline(g.screen, g.items[item_name].description,
             g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
 
 

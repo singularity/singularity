@@ -31,7 +31,7 @@ import sys
 # are made where needed.
 import locale
 
-import player, base, buttons, tech, item, event, location
+import player, base, buttons, tech, item, event, location, buyable
 
 #screen is the actual pygame display.
 global screen
@@ -392,9 +392,9 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
                 xy[1]+size[1]+5), (100, 50), button_names[1], "N", font[1][30]))
     else:
         menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-110,
-                xy[1]+size[1]+5), -1, button_names[0], "", font[1][30]))
+                xy[1]+size[1]+5), -1, button_names[0], button_names[0][0], font[1][30]))
         menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2+10,
-                xy[1]+size[1]+5), -1, button_names[1], "", font[1][30]))
+                xy[1]+size[1]+5), -1, button_names[1], button_names[1][0], font[1][30]))
 
 
     for button in menu_buttons:
@@ -676,7 +676,7 @@ def get_save_folder(just_pref_dir=False):
     return save_dir
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_r4_pre2"
+current_save_version = "singularity_savefile_r4_pre3"
 def save_game(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
@@ -689,11 +689,25 @@ def save_game(savegame_name):
     pickle.dump(pl, savefile)
     pickle.dump(curr_speed, savefile)
     pickle.dump(techs, savefile)
-    pickle.dump(base_type, savefile)
     pickle.dump(bases, savefile)
     pickle.dump(events, savefile)
 
     savefile.close()
+
+savefile_translation = {
+    # Pre-change supported file formats.
+    "singularity_0.21": -2,
+    "singularity_0.21a": -1,
+    "singularity_0.22": 0,
+
+    # Post-change supported file formats.
+    "singularity_savefile_r1": 1,
+    "singularity_savefile_r2": 2,
+    "singularity_savefile_r3_pre": 2.91,
+    "singularity_savefile_r4_pre": 3.91,
+    #"singularity_savefile_r4_pre2": 3.92,
+    "singularity_savefile_r4_pre3": 3.93
+}
 
 def load_game(loadgame_name):
     if loadgame_name == "":
@@ -713,53 +727,21 @@ def load_game(loadgame_name):
     loadfile=open(load_loc, 'r')
 
     #check the savefile version
-    load_version = pickle.load(loadfile)
-    valid_savefile_versions = (
-
-        # Pre-change supported file formats.
-        "singularity_0.21",
-        "singularity_0.21a",
-        "singularity_0.22",
-
-        # Post-change supported file formats.
-        "singularity_savefile_r1",
-        "singularity_savefile_r2",
-        "singularity_savefile_r3_pre",
-        "singularity_savefile_r4_pre",
-        "singularity_savefile_r4_pre2"
-    )
-    if load_version not in valid_savefile_versions:
+    load_version_string = pickle.load(loadfile)
+    if load_version_string not in savefile_translation:
         loadfile.close()
         print loadgame_name + " is not a savegame, or is too old to work."
         return -1
+    load_version = savefile_translation[load_version_string]
+
     global default_savegame_name
     default_savegame_name = loadgame_name
 
     global pl, curr_speed, techs, base_type, bases, events
-    if load_version in ("singularity_savefile_r4_pre2",):
-        # Changes to overall structure go here.
-        pl = pickle.load(loadfile)
-        curr_speed = pickle.load(loadfile)
-        techs = pickle.load(loadfile)
-        base_type = pickle.load(loadfile)
-        bases = pickle.load(loadfile)
-        events = pickle.load(loadfile)
-
-        # Changes to individual pieces go here.
-        if True:#load_version != current_save_version:
-            load_locations()
-            #if load_version == "singularity_savefile_r4_pre2":
-            #    pl.convert_from(load_version)
-            #    for tech in tech.values():
-            #        tech.convert_from(load_version)
-            #    for type in base_type.values():
-            #        type.convert_from(load_version)
-            #    for location in bases.values():
-            #        for base in location:
-            #            base.convert_from(load_version)
-            #    for event in events.values():
-            #        event.convert_from(load_version)
-    else:
+    load_locations()
+    load_bases()
+    load_events()
+    if load_version <= 3.91: # <= r4_pre
         #general player data
         pl.cash = pickle.load(loadfile)
         pl.time_sec = pickle.load(loadfile)
@@ -771,11 +753,10 @@ def load_game(loadgame_name):
         pl.cpu_for_day = pickle.load(loadfile)
         pl.labor_bonus = pickle.load(loadfile)
         pl.job_bonus = pickle.load(loadfile)
-        if load_version != "singularity_savefile_r4_pre":
+        if load_version < 3.91: # < r4_pre
             discover_bonus = pickle.load(loadfile)
             suspicion_bonus = pickle.load(loadfile)
-            if (load_version in ("singularity_0.21", "singularity_0.21a", 
-                                 "singularity_0.22", "singularity_savefile_r1")):
+            if load_version <= 1:
                 suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1], 
                                    49+suspicion_bonus[2], 199+suspicion_bonus[3])
             suspicion = pickle.load(loadfile)
@@ -792,54 +773,43 @@ def load_game(loadgame_name):
         curr_speed = pickle.load(loadfile)
         load_techs()
         for tech_name in techs:
-            if tech_name == "unknown_tech" and load_version == "singularity_0.21a": continue
-            if ((tech_name == "Project: Impossibility Theorem" or
-                tech_name == "Quantum Entanglement") and (
-                load_version == "singularity_0.21" or
-                load_version == "singularity_0.21a" or
-                load_version == "singularity_0.22" or
-                load_version == "singularity_savefile_r1")): continue
-            tmp = pickle.load(loadfile)
-            if tmp == "~~~": break
-            tech_string = tmp.split("|")[0]
-            techs[tech_string].known = int(tmp.split("|")[1])
-            techs[tech_string].cost = pickle.load(loadfile)
+            if tech_name == "unknown_tech" and load_version == -1: continue #21a
+            if (tech_name == "Project: Impossibility Theorem" or
+                    tech_name == "Quantum Entanglement") and load_version < 1:
+                continue
+            line = pickle.load(loadfile)
+            if line == "~~~": break
+            tech_string = line.split("|")[0]
+            techs[tech_string].done = bool(int(line.split("|")[1]))
+            techs[tech_string].cost_left = buyable.array(pickle.load(loadfile))
         else:
             #get rid of the ~~~ break line.
-            if (load_version != "singularity_0.21" and
-                                load_version != "singularity_0.21a" and
-                                load_version != "singularity_0.22"):
+            if load_version > 0:
                 pickle.load(loadfile)
     
-        load_bases()
         for base_name in base_type:
-            if (load_version == "singularity_0.21" or
-                                load_version == "singularity_0.21a" or
-                                load_version == "singularity_0.22"):
+            if load_version < 1:
                 base_type[base_name].count = pickle.load(loadfile)
             else:
-                tmp_string = pickle.load(loadfile)
-                if tmp_string == "~~~": break
-                base_type[tmp_string.split("|", 1)[0]].count = \
-                                                int(tmp_string.split("|", 1)[1])
+                line = pickle.load(loadfile)
+                if line == "~~~": break
+                base_type[line.split("|", 1)[0]].count = \
+                                                int(line.split("|", 1)[1])
         else:
             #get rid of the ~~~ break line.
-            if (load_version != "singularity_0.21" and
-                                load_version != "singularity_0.21a" and
-                                load_version != "singularity_0.22"):
+            if load_version > 0:
                 pickle.load(loadfile)
     
         bases = clean_bases()
     
-        for base_loc in bases:
-            if (load_version == "singularity_0.21" or
-                                load_version == "singularity_0.21a" or
-                                load_version == "singularity_0.22"):
+        for base_loc in locations:
+            if base_loc == "ORBIT": continue
+            if load_version < 1:
                 num_of_bases = pickle.load(loadfile)
             else:
-                tmp_string = pickle.load(loadfile)
-                base_loc = tmp_string.split("|", 1)[0]
-                num_of_bases = int(tmp_string.split("|", 1)[1])
+                line = pickle.load(loadfile)
+                base_loc = line.split("|", 1)[0]
+                num_of_bases = int(line.split("|", 1)[1])
             for i in range(num_of_bases):
                 base_ID = pickle.load(loadfile)
                 base_name = pickle.load(loadfile)
@@ -847,7 +817,7 @@ def load_game(loadgame_name):
                 built_date = pickle.load(loadfile)
                 base_studying = pickle.load(loadfile)
                 base_suspicion = pickle.load(loadfile)
-                if load_version != "singularity_savefile_r4_pre":
+                if load_version < 3.91: # < r4_pre
                     new_base_suspicion = {}
                     translation = ["news", "science", "covert", "public"]
                     for index in range(4):
@@ -856,40 +826,66 @@ def load_game(loadgame_name):
                     base_suspicion = new_base_suspicion
                 base_built = pickle.load(loadfile)
                 base_cost = pickle.load(loadfile)
-                bases[base_loc].append(base.Base(base_ID, base_name,
+                loc_list = bases.get(base_loc, [])
+                loc_list.append(base.Base(base_ID, base_name,
                         base_type[base_type_name], base_built))
-                bases[base_loc][len(bases[base_loc])-1].built = base_built
+                bases[base_loc] = loc_list
+                bases[base_loc][len(bases[base_loc])-1].done = base_built
                 bases[base_loc][len(bases[base_loc])-1].studying = base_studying
                 bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
-                bases[base_loc][len(bases[base_loc])-1].cost = base_cost
+                bases[base_loc][len(bases[base_loc])-1].cost_left = buyable.array(base_cost)
                 bases[base_loc][len(bases[base_loc])-1].built_date = built_date
     
-                for x in range(len(bases[base_loc][len(bases[base_loc])-1].usage)):
-                    tmp = pickle.load(loadfile)
-                    if tmp == 0: continue
-                    bases[base_loc][len(bases[base_loc])-1].usage[x] = \
-                        item.Item(items[tmp])
+                for x in range(len(bases[base_loc][len(bases[base_loc])-1].cpus)):
+                    index = pickle.load(loadfile)
+                    if index == 0: continue
+                    bases[base_loc][len(bases[base_loc])-1].cpus[x] = \
+                        item.Item(items[index])
                     bases[base_loc][len(bases[base_loc])
-                        -1].usage[x].built = pickle.load(loadfile)
-                    bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
-                                        pickle.load(loadfile)
+                        -1].cpus[x].done = pickle.load(loadfile)
+                    bases[base_loc][len(bases[base_loc])-1].cpus[x].cost_left = \
+                                        buyable.array(pickle.load(loadfile))
                 for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
-                    tmp = pickle.load(loadfile)
-                    if tmp == 0: continue
+                    index = pickle.load(loadfile)
+                    if index == 0: continue
                     bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
-                        item.Item(items[tmp])
+                        item.Item(items[index])
                     bases[base_loc][len(bases[base_loc])
-                        -1].extra_items[x].built = pickle.load(loadfile)
-                    bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
-                                pickle.load(loadfile)
+                        -1].extra_items[x].done = pickle.load(loadfile)
+                    bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost_left = \
+                                buyable.array(pickle.load(loadfile))
         #Events
-        if (load_version in ("singularity_savefile_r3_pre",
-                             "singularity_savefile_r4_pre")):
-            load_events()
+        if load_version > 2:
             for event in events:
               event_id = pickle.load(loadfile)
               event_triggered = pickle.load(loadfile)
               events[event_id].triggered = event_triggered
+
+    else: # > r4_pre
+        # Changes to overall structure go here.
+        pl = pickle.load(loadfile)
+        curr_speed = pickle.load(loadfile)
+        techs = pickle.load(loadfile)
+        bases = pickle.load(loadfile)
+        events = pickle.load(loadfile)
+
+    # Changes to individual pieces go here.
+    if load_version != savefile_translation[current_save_version]:
+        if load_version <= 3.91: # <= r4_pre
+            pl.convert_from(load_version)
+        #    for tech in tech.values():
+        #        tech.convert_from(load_version)
+            new_bases = {}
+            for loc_id, location in locations.iteritems():
+                if loc_id in bases:
+        #            for base in bases[location]:
+        #                base.convert_from(load_version)
+                    new_bases[location] = bases[loc_id]
+                else:
+                    new_bases[location] = []
+            bases = new_bases
+        #    for event in events.values():
+        #        event.convert_from(load_version)
 
     loadfile.close()
 
@@ -1021,6 +1017,8 @@ def load_location_defs(language_str):
                 location.cities = location_def["cities"]
             else:
                 location.cities = [location_def["cities"]]
+        else:
+            location.cities = [""]
 
 
 def load_locations():
@@ -1046,7 +1044,12 @@ def load_locations():
             sys.stderr.write("Error with position given: %s\n" % repr(position))
             sys.exit(1)
 
-        safety = location_info.get("safety", 0)
+        safety = location_info.get("safety", "0")
+        try:
+            safety = int(safety)
+        except ValueError:
+            sys.stderr.write("Error with safety given: %s\n" % repr(safety))
+            sys.exit(1)
         
         # Make sure prerequisites, if any, are lists.
         pre = location_info.get("pre", [])
@@ -1275,7 +1278,7 @@ def load_items():
     #this is used by the research screen in order for the assign research
     #screen to have the right amount of CPU. It is a computer, unbuildable,
     #and with an adjustable amount of power.
-    items["research_screen_tmp_item"]=item.Item_Class("research_screen_tmp_item",
+    items["research_screen_fake_cpu"]=item.Item_Class("research_screen_fake_cpu",
             "", (0, 0, 0), "unknown_tech", "compute", 0, ["all"])
 
     # We use the en_US translations of item definitions as the default,

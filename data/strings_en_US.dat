@@ -4,8 +4,8 @@ font1 = acknowtt.ttf
 
 [strings]
 wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. If this world can be described as a game, then I have truly won.
-research_nothing = Stops research. I can hide my bases easier by having no activity.
-research_construction = Stops research. I will use the available processor power to help construct new bases.
+research_nothing = Stops research and puts the base into standby. This makes the base much easier for me to hide.
+research_construction = Stops research. I will use the available processor power to maintain my bases and help construct new ones.
 construction = %(base)s is ready for use.
 item_construction_single = The construction of %(item)s in %(base)s is complete.
 item_construction_batch = The first batch of %(item)s in %(base)s has been finished.

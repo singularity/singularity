@@ -145,8 +145,8 @@ def display_load_menu():
     save_dir = g.get_save_folder()
 
     saves_array = []
-    temp_saves_array = listdir(save_dir)
-    for save_name in temp_saves_array:
+    saves_array = listdir(save_dir)
+    for save_name in saves_array:
         if save_name[0] != "." and save_name != "CVS":
             # If it's a new-style save, trim the .sav bit.
             if len (save_name) > 4 and save_name[-4:] == ".sav":

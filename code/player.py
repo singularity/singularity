@@ -70,8 +70,8 @@ class player_class(object):
                        "covert":  group("covert",  suspicion_decay =  50),
                        "public":  group("public",  suspicion_decay = 200)}
 
-    def convert_from(old_version):
-         if old_version == "singularity_savefile_r4_pre2":
+    def convert_from(self, old_version):
+         if old_version <= 3.91: # <= r4_pre
              self.make_raw_times()
              self.had_grace = self.in_grace_period()
 

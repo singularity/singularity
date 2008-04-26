@@ -307,7 +307,7 @@ def display_inner_items(item_type):
     for item_name in items:
         item_name = item_name[1]
         if g.items[item_name].prerequisites == "" or \
-                g.techs[g.items[item_name].prerequisites]:
+                g.techs[g.items[item_name].prerequisites].done:
             if g.items[item_name].item_type == item_type:
                 item_list.append(item_name)
                 item_display_list.append(g.items[item_name].name)
@@ -878,9 +878,9 @@ def display_base_list(location, menu_buttons):
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
                     g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
                 if g.create_yesno("Destroy this base? This will waste "+
-                        g.to_money(g.bases[location][selection].base_type.cost_paid[0])
+                        g.to_money(g.bases[location][selection].cost_paid[0])
                         +" money, and "+
-                        g.add_commas(g.bases[location][selection].base_type.cost_paid[1])
+                        g.add_commas(g.bases[location][selection].cost_paid[1])
                         +" processor time.", g.font[0][18],
                         (g.screen_size[0]/2 - 100, 50),
                         (200, 200), g.colors["dark_blue"], g.colors["white"],
@@ -925,7 +925,7 @@ def display_base_list_inner(location):
         elif g.techs.has_key(studying):
             studying = g.techs[studying].name
         base_display_list.append(this_base.name+" ("+studying+")")
-        base_id_list.append(this_base.ID)
+        base_id_list.append(this_base.id)
 
     xy_loc = (g.screen_size[0]/2 - 259, 50)
 
@@ -1016,9 +1016,9 @@ def display_base_list_inner(location):
                                 (200, 200), g.colors["dark_blue"], g.colors["white"],
                                 g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
                                 if g.create_yesno("Destroy this base? This will waste "+
-                                    g.to_money(g.bases[location][base_pos].base_type.cost_paid[0])
+                                    g.to_money(g.bases[location][base_pos].cost_paid[0])
                                     +" money, and "+
-                                    g.add_commas(g.bases[location][base_pos].base_type.cost_paid[1])
+                                    g.add_commas(g.bases[location][base_pos].cost_paid[1])
                                     +" processor time.", g.font[0][18],
                                     (g.screen_size[0]/2 - 100, 50),
                                     (200, 200), g.colors["dark_blue"], g.colors["white"],

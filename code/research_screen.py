@@ -295,7 +295,7 @@ def assign_tech(free_CPU):
     #create a fake base, in order to reuse the tech-changing code
     fake_base = g.base.Base(1, "fake_base",
     g.base_type["Reality Bubble"], 1)
-    fake_base.cpus[0] = g.item.Item(g.items["research_screen_tmp_item"])
+    fake_base.cpus[0] = g.item.Item(g.items["research_screen_fake_cpu"])
     fake_base.cpus[0].type.item_qual = free_CPU
     fake_base.cpus[0].finish()
 

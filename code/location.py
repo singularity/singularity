@@ -40,4 +40,7 @@ class Location(object):
         return hash(self.id)
 
     def __cmp__(self, other):
-        return cmp(self.id, other.id)
+        if type(other) in (str, unicode):
+            return cmp(self.id, other)
+        else:
+            return cmp(self.id, other.id)

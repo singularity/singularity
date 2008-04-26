@@ -37,9 +37,9 @@ class Base_Class(buyable.Buyable_Class):
         self.count = 0
 
 class Base(buyable.Buyable):
-    def __init__(self, ID, name, type, built):
+    def __init__(self, id, name, type, built):
         super(Base, self).__init__(type)
-        self.ID = ID
+        self.id = id
         self.name = name
         self.built_date = g.pl.time_day
         self.studying = ""
@@ -149,7 +149,7 @@ def calc_base_discovery_chance(base_type_name):
 #When a base is removed, call to renumber the remaining bases properly.
 def renumber_bases(base_array):
     for i in range(len(base_array)):
-        base_array[i].ID = i
+        base_array[i].id = i
 
 def destroy_base(location, index_num):
     if not g.bases.has_key(location):

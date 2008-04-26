@@ -176,23 +176,23 @@ def refresh_screen(menu_buttons):
     g.print_string(g.screen, g.to_money(jobs),
             g.font[0][22], -1, (text_mid+150, 90), g.colors[jobs_col], 2)
 
-    #maint
-    g.print_string(g.screen, "- Maintenance:",
-            g.font[0][22], -1, (text_mid-5, 110), g.colors["white"], 2)
-
-    maint_col = "white"
-    if maint > 0: maint_col = "red"
-    g.print_string(g.screen, g.to_money(maint),
-            g.font[0][22], -1, (text_mid+150, 110), g.colors[maint_col], 2)
-
     #research
     g.print_string(g.screen, "- Research:",
-            g.font[0][22], -1, (text_mid-5, 130), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid-5, 110), g.colors["white"], 2)
 
     research_col = "white"
     if research > 0: research_col = "red"
     g.print_string(g.screen, g.to_money(research),
-            g.font[0][22], -1, (text_mid+150, 130), g.colors[research_col], 2)
+            g.font[0][22], -1, (text_mid+150, 110), g.colors[research_col], 2)
+
+    #maint
+    g.print_string(g.screen, "- Maintenance:",
+            g.font[0][22], -1, (text_mid-5, 130), g.colors["white"], 2)
+
+    maint_col = "white"
+    if maint > 0: maint_col = "red"
+    g.print_string(g.screen, g.to_money(maint),
+            g.font[0][22], -1, (text_mid+150, 130), g.colors[maint_col], 2)
 
     #base construction
     g.print_string(g.screen, "- Base Construction:",
