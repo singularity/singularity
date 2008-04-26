@@ -560,7 +560,7 @@ def create_buttons(font_size):
         menu_buttons.append(buttons.make_norm_button((
             g.screen_size[0] * location.y // 100,
             g.screen_size[1] * location.x // 100), -1,
-            location.name, location.hotkey, g.font[1][25]))
+            location.id, location.hotkey, g.font[1][25]))
 
     return menu_buttons
 
@@ -755,15 +755,15 @@ def refresh_map(menu_buttons):
                 (0, g.screen_size[1]/2-g.screen_size[0]/4))
     for button in menu_buttons:
         button.stay_selected = 0
-        if g.bases.has_key(button.button_id):
+        if g.locations.has_key(button.button_id):
             #determine if building in a location is possible. If so, show the
             #button.
             if g.locations[button.button_id].open():
                 button.visible = 1
             else: button.visible = 0
 
-            button.text = button.button_id + " ("
-            button.text += str(len(g.bases[button.button_id]))+")"
+            button.text = g.locations[button.button_id].name + " ("
+            button.text += str(len(g.bases[g.locations[button.button_id]]))+")"
             button.remake_button()
         elif ((button.button_id == "ii" and g.curr_speed == 0) or
                 (button.button_id == ">" and g.curr_speed == 1) or
