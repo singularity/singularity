@@ -23,7 +23,8 @@ import g
 
 class button:
     def __init__(self, xy, size, text, activate_key, bg_color, out_color,
-                                sel_color, text_color, font, button_id=""):
+                                sel_color, text_color, font, button_id="",
+                                force_underline = None):
         self.xy = xy
         self.size = size
         self.text = text
@@ -33,7 +34,9 @@ class button:
         self.sel_color = sel_color
         self.text_color = text_color
         self.activate_key = activate_key
-        if activate_key and activate_key in text:
+        if force_underline != None:
+            self.underline_char = force_underline
+        elif activate_key and activate_key in text:
             self.underline_char = text.index(activate_key)
         else:
             self.underline_char = -1
@@ -134,7 +137,70 @@ def refresh_buttons(sel_button, menu_buttons, event):
 
 #while buttons allow for creation of any button style needed, most of the
 #buttons are of one style.
-def make_norm_button(xy, size, text, select_char, font, button_id=""):
+def make_norm_button(xy, size, text, select_char, font, button_id="", 
+                     force_underline=None):
     return button(xy, size, text, select_char,
         g.colors["dark_blue"], g.colors["white"],
-        g.colors["light_blue"], g.colors["white"], font, button_id)
+        g.colors["light_blue"], g.colors["white"], font, button_id, 
+        force_underline)
+
+always = lambda return_this: lambda *args, **kwargs: return_this
+void = always(None)
+exit = always(-1)
+no_args = always( () )
+
+# Used to return from within a sub[-sub...]-function
+class Return(Exception): pass 
+def show_buttons(buttons, key_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void):
+    try:
+        _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback)
+    except Return, e:
+        return e.args[0]
+
+# Combined with the right try/except, maybe_return simulates a return only if
+# the item to return isn't None.
+def maybe_return(retval):
+    if retval != None:
+        g.play_sound("click")
+        raise Return, retval
+
+def _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback):
+    def check_buttons():
+        for button in buttons.keys():
+            if button.was_activated(event):
+                maybe_return( buttons[button](*button_args()) )
+                maybe_return( button_callback(button) )
+
+    def do_refresh():
+        refresh_callback()
+        for button in buttons.keys():
+            button.refresh_button(False)
+
+    do_refresh()
+    pygame.display.flip()
+
+    sel_button = -1
+    retval = None
+    while True:
+        need_refresh = False
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            need_refresh = True
+            if event.type == pygame.QUIT:
+                g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                maybe_return( key_callback(event.key) )
+                maybe_return( check_buttons() )
+                if event.key in (pygame.K_ESCAPE, pygame.K_RETURN, pygame.K_q):
+                    maybe_return(-1) # Will return -1.
+            elif event.type == pygame.MOUSEBUTTONUP:
+                maybe_return( click_callback(event) )
+                maybe_return( check_buttons() )
+                if event.button == 3:
+                    maybe_return(-1) # Will return -1.
+            elif event.type == pygame.MOUSEMOTION:
+                need_refresh = False
+                sel_button = refresh_buttons(sel_button, buttons.keys(), event)
+        if need_refresh:
+            do_refresh()
+            pygame.display.flip()

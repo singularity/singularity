@@ -21,7 +21,7 @@
 import pygame
 import g
 import scrollbar
-import buttons as buttons_module
+from buttons import void, exit, always, Return, maybe_return, show_buttons
 
 class listbox:
     def __init__(self, xy, size, viewable_items, lines_per_item, bg_color,
@@ -138,92 +138,82 @@ def resize_list(list, list_size = 10):
     padding_needed = (-len(list) % list_size) or list_size
     list += [""] * padding_needed
 
-void = lambda *args, **kwargs: None
-exit = lambda *args, **kwargs: -1
-def show_listbox(list, buttons, pos_callback = void, return_callback = void, loc = None, box_size = (250,300), list_size = 10, lines_per_item = 1, bg_color = None, sel_color = None, out_color = None, font_color = None, font = None, list_pos = 0, button_callback = void):
-    if loc == None:
-        loc = (g.screen_size[0]/2 - 300, 50)
-    if bg_color == None:
-        bg_color = g.colors["dark_blue"]
-    if sel_color == None:
-        sel_color = g.colors["blue"]
-    if out_color == None:
-        out_color = g.colors["white"]
-    if font_color == None:
-        font_color = g.colors["white"]
-    if font == None:
-        font = g.font[0][18]
+def sane_index(index, max_value, min_value = 0):
+    """Return the closest int i to index such that min <= i < max."""
+    return min(max_value, max(min_value, int(index + .5)))
 
-    resize_list(list, list_size)
+def show_listbox(*args, **kwargs):
+    # Set defaults.
+    options = { 
+                 "list_pos": 0, 
+                 "list_size": 10, 
+                 "lines_per_item": 1, 
 
-    box = listbox(loc, box_size, list_size, lines_per_item, bg_color, sel_color, out_color, font_color, font)
-    scroll = scrollbar.scrollbar((loc[0]+box_size[0], loc[1]), box_size[1], list_size, bg_color, sel_color, out_color)
+                 "loc": (g.screen_size[0]/2 - 300, 50),
+                 "box_size": (250,300), 
 
-    for button in buttons.keys():
-        button.refresh_button(0)
+                 "bg_color": g.colors["dark_blue"], 
+                 "sel_color": g.colors["blue"], 
+                 "out_color": g.colors["white"], 
+                 "font_color": g.colors["white"], 
 
-    sel_button = -1
+                 "font": g.font[0][18],
 
-    pos_callback(list_pos)
-    refresh_list(box, scroll, list_pos, list)
+                 "pos_callback": void, 
+                 "return_callback": void, 
+                 "button_callback": void
+               }
 
-    while True:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: 
-                    g.play_sound("click")
-                    return -1
-                elif event.key == pygame.K_q: 
-                    g.play_sound("click")
-                    return -1
-                elif event.key == pygame.K_RETURN:
-                    g.play_sound("click")
-                    retval = return_callback(list_pos)
-                    if retval != None:
-                        return retval
-                    pos_callback(list_pos)
-                    refresh_list(box, scroll, list_pos, list)
-                else:
-                    list_pos, refresh = box.key_handler(event.key,
-                        list_pos, list)
-                    if refresh:
-                        pos_callback(list_pos)
-                        refresh_list(box, scroll, list_pos, list)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    selection = box.is_over(event.pos)
-                    if selection != -1:
-                        list_pos = (list_pos / list_size)*list_size + selection
-                        pos_callback(list_pos)
-                        refresh_list(box, scroll, list_pos, list)
-                if event.button == 3: return -1
-                if event.button == 4:  # Mouse wheel scroll down
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                        pos_callback(list_pos)
-                        refresh_list(box, scroll, list_pos, list)
-                if event.button == 5:  # Mouse wheel scroll up
-                    list_pos += 1
-                    if list_pos >= len(list):
-                        list_pos = len(list)-1
-                        pos_callback(list_pos)
-                        refresh_list(box, scroll, list_pos, list)
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons_module.refresh_buttons(sel_button, buttons.keys(), event)
-            for button in buttons.keys():
-                if button.was_activated(event):
-                    g.play_sound("click")
-                    retval = buttons[button](list_pos)
-                    if retval != None:
-                        return retval
-                    button_callback(button)
-                    pos_callback(list_pos)
-                    refresh_list(box, scroll, list_pos, list)
-            new_pos = scroll.adjust_pos(event, list_pos, list)
-            if new_pos != list_pos:
-                list_pos = new_pos
-                pos_callback(list_pos)
-                refresh_list(box, scroll, list_pos, list)
+    # Use any arguments given.
+    options.update(kwargs)
+
+    # Pass it on to _show_listbox, using the Return exception from the buttosn
+    # module.
+    try:
+        _show_listbox(*args, **options)
+    except Return, e:
+        return e.args[0]
+
+# Lets us access a dict d by creating an object a such that:
+# a.some_property == d["some_property"]
+# a.some_property = 0  ->  d["some_property"] = foo
+class Args(object):
+    def __init__(self, dict):
+        self.__dict__ = dict
+
+def _show_listbox(list, buttons, **kwargs):
+    kw = Args(kwargs)
+    resize_list(list, kw.list_size)
+
+    box = listbox(kw.loc, kw.box_size, kw.list_size, kw.lines_per_item, kw.bg_color, kw.sel_color, kw.out_color, kw.font_color, kw.font)
+    scroll = scrollbar.scrollbar((kw.loc[0]+kw.box_size[0], kw.loc[1]), kw.box_size[1], kw.list_size, kw.bg_color, kw.sel_color, kw.out_color)
+
+    def handle_key(key):
+        if key == pygame.K_RETURN:
+            maybe_return( kw.return_callback(kw.list_pos) )
+
+        kw.list_pos, refresh = box.key_handler(key, kw.list_pos, list)
+
+    # Happily, using kw.list_pos instead of a local variable list_pos means that
+    # we can safely assign to it from within a subfuction.
+    def handle_click(event):
+        if event.button == 1:
+            selection = box.is_over(event.pos)
+            if selection != -1:
+                kw.list_pos += selection - (kw.list_pos % kw.list_size)
+                kw.pos_callback(kw.list_pos)
+        elif event.button == 4:  # Mouse wheel scroll down
+            kw.list_pos -= 1
+        elif event.button == 5:  # Mouse wheel scroll up
+            kw.list_pos += 1
+
+        kw.list_pos = sane_index(kw.list_pos, len(list))
+
+    def give_list_pos():
+        return (kw.list_pos,)
+
+    def do_refresh():
+        kw.pos_callback(kw.list_pos)
+        refresh_list(box, scroll, kw.list_pos, list)
+
+    raise Return, show_buttons(buttons, handle_key, handle_click, kw.button_callback, give_list_pos, do_refresh)

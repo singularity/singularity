@@ -85,15 +85,16 @@ class Buyable(object):
         self.description = type.description
         self.prerequisites = type.prerequisites
 
-        # Note that this is a method.
-        self.available = type.available
-
         self.total_cost = array(type.cost)
         self.total_cost[labor] *= g.minutes_per_day * g.pl.labor_bonus
         self.total_cost[labor] /= 10000
         self.cost_left = array(self.total_cost)
 
         self.done = False
+
+    # Note that this is a method, handled by a property to avoid confusing
+    # pickle.
+    available = property(lambda self: self.type.available)
 
     def _work_on(self, cost_towards):
         self.cost_left -= array(cost_towards)

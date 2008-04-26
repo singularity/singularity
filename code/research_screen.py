@@ -76,7 +76,10 @@ def main_research_screen():
     def do_refresh(list_pos):
         refresh_research(item_list[list_pos], item_CPU_list[list_pos])
 
-    return listbox.show_listbox(item_display_list, menu_buttons, do_refresh, do_stop, xy_loc, (230,300))
+    return listbox.show_listbox(item_display_list, menu_buttons, 
+                                loc=xy_loc, box_size=(230, 300),
+                                pos_callback=do_refresh, 
+                                return_callback=do_stop)
 
 def refresh_screen(menu_buttons, list_size):
     #Border

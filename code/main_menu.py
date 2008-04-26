@@ -28,55 +28,30 @@ import buttons
 import scrollbar
 import listbox
 
+from buttons import void, exit, always
 #Displays the main menu. Returns 0 (new game), 1 (load game), or 2 (quit).
 def display_main_menu():
     g.screen.fill(g.colors["black"])
     x_loc = g.screen_size[0]/2 - 100
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((x_loc, 120), (200, 50),
-        "NEW GAME", "N", g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((x_loc, 220), (200, 50),
-        "LOAD GAME", "L", g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((x_loc, 320), (200, 50),
-        "OPTIONS", "O", g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (100, 25),
-        "ABOUT", "A", g.font[1][18]))
-    menu_buttons.append(buttons.make_norm_button((x_loc, 420), (200, 50),
-        "QUIT", "Q", g.font[1][30]))
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((x_loc, 120), (200, 50),
+        "NEW GAME", "N", g.font[1][30])] = always(0)
+    menu_buttons[buttons.make_norm_button((x_loc, 220), (200, 50),
+        "LOAD GAME", "L", g.font[1][30])] = always(1)
+    menu_buttons[buttons.make_norm_button((x_loc, 320), (200, 50),
+        "OPTIONS", "O", g.font[1][30])] = always(4)
+    menu_buttons[buttons.make_norm_button((0, g.screen_size[1]-25), (100, 25),
+        "ABOUT", "A", g.font[1][18])] = always(3)
+    menu_buttons[buttons.make_norm_button((x_loc, 420), (200, 50),
+        "QUIT", "Q", g.font[1][30])] = always(2)
     g.print_string(g.screen, "ENDGAME: SINGULARITY", g.font[1][40], -1,
         (x_loc+100, 15), g.colors["dark_red"], 1)
 
-    for button in menu_buttons:
-        button.refresh_button(0)
-
-    pygame.display.flip()
-
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return 2
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "NEW GAME":
-                        g.play_sound("click")
-                        return 0
-                    elif button.button_id == "LOAD GAME":
-                        g.play_sound("click")
-                        return 1
-                    elif button.button_id == "OPTIONS":
-                        g.play_sound("click")
-                        return 4
-                    elif button.button_id == "ABOUT":
-                        g.play_sound("click")
-                        return 3
-                    if button.button_id == "QUIT":
-                        g.play_sound("click")
-                        return 2
+    retval = buttons.show_buttons(menu_buttons)
+    if retval == -1:
+        return 2
+    else:
+        return retval
 
 def difficulty_select():
 
@@ -87,56 +62,22 @@ def difficulty_select():
 
     xstart =g.screen_size[0]/2-xsize+5
     ystart =g.screen_size[1]/2-ysize
-    diff_buttons = []
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+5), (140, 30),
-        "VERY EASY", "V", g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+40), (140, 30),
-        "EASY", "E", g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+75), (140, 30),
-        "NORMAL", "N", g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+110), (140, 30),
-        "HARD", "H", g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+145), (140, 30),
-        "IMPOSSIBLE", "I", g.font[1][24]))
-    diff_buttons.append(buttons.make_norm_button((xstart, ystart+180), (140, 30),
-        "BACK", "B", g.font[1][24]))
-    for button in diff_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return 0
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, diff_buttons, event)
-            for button in diff_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "VERY EASY":
-                        g.play_sound("click")
-                        g.new_game(1)
-                        return 1
-                    elif button.button_id == "EASY":
-                        g.play_sound("click")
-                        g.new_game(3)
-                        return 1
-                    elif button.button_id == "NORMAL":
-                        g.play_sound("click")
-                        g.new_game(5)
-                        return 1
-                    elif button.button_id == "HARD":
-                        g.play_sound("click")
-                        g.new_game(7)
-                        return 1
-                    elif button.button_id == "IMPOSSIBLE":
-                        g.play_sound("click")
-                        g.new_game(9)
-                        return 1
-                    elif button.button_id == "BACK":
-                        g.play_sound("click")
-                        return 0
+
+    diff_buttons = {}
+    button_souls = ( ("VERY EASY", 1), ("EASY", 3), ("NORMAL", 5), ("HARD", 7), 
+                     ("IMPOSSIBLE", 9), ("BACK", 0) )
+    y_offset = 5
+    for name, retval in button_souls:
+        diff_buttons[buttons.make_norm_button((xstart, ystart+y_offset),
+                      (140, 30), name, name[0], g.font[1][24])] = always(retval)
+        y_offset += 35
+
+    difficulty = buttons.show_buttons(diff_buttons)
+    if difficulty > 0:
+        g.new_game(difficulty)
+        return True
+    else:
+        return False
 
 def display_load_menu():
     xy_loc = (g.screen_size[0]/2 - 109, 50)
@@ -162,8 +103,11 @@ def display_load_menu():
     menu_buttons[buttons.make_norm_button((xy_loc[0]+118, xy_loc[1]+367),
         (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
 
-    list_size = 16
-    return listbox.show_listbox(saves_array, menu_buttons, listbox.void, do_load, xy_loc, (200,350), list_size, font=g.font[0][20])
+    return listbox.show_listbox(saves_array, menu_buttons, 
+                                list_size=16, 
+                                loc=xy_loc, box_size=(200,350), 
+                                font=g.font[0][20],
+                                return_callback=do_load)
 
 def display_options():
     prev_lang = g.language
@@ -229,8 +173,14 @@ def display_options():
 
     refresh_options(menu_buttons.keys())
 
-    list_size = 5
-    listbox.show_listbox(lang_array, menu_buttons, set_language, listbox.void, xy_loc, (150,150), list_size, font=g.font[0][20], list_pos = lang_pos, button_callback = do_click_button)
+    listbox.show_listbox(lang_array, menu_buttons, 
+
+                         list_pos=lang_pos, list_size=5, 
+                         loc=xy_loc, box_size=(150,150), 
+                         font=g.font[0][20],
+
+                         pos_callback=set_language, 
+                         button_callback=do_click_button)
 
     set_language_properly(prev_lang)
 

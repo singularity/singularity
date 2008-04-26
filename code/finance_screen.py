@@ -24,43 +24,20 @@ import g
 import buttons
 from buyable import cash, cpu, labor
 
-
-
+from buttons import exit
 def main_finance_screen():
     #Border
     g.screen.fill(g.colors["black"])
 
 
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", "B", g.font[1][20]))
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
+        "BACK", "B", g.font[1][20])] = exit
 
-    sel_button = -1
-    refresh_screen(menu_buttons)
-    for button in menu_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
+    def do_refresh():
+        refresh_screen(menu_buttons.keys())
 
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_q: return -1
-
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                g.play_sound("click")
-                return -1
-
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "BACK":
-                        g.play_sound("click")
-                        return 0
-
+    buttons.show_buttons(menu_buttons, refresh_callback=do_refresh)
 
 def cpu_numbers():
     total_cpu = 0

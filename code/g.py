@@ -32,6 +32,7 @@ import sys
 import locale
 
 import player, base, buttons, tech, item, event, location, buyable
+from buttons import always, void, exit
 
 #screen is the actual pygame display.
 global screen
@@ -350,32 +351,11 @@ def create_dialog(string_to_print, box_font = None, xy = None, size = (200,200),
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     print_multiline(screen, string_to_print, box_font, size[0]-10,
             (xy[0]+5, xy[1]+5), text_color)
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50,
-            xy[1]+size[1]+5), (100, 50), "OK", "O", font[1][30]))
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-50,
+            xy[1]+size[1]+5), (100, 50), "OK", "O", font[1][30])] = always(True)
 
-    for button in menu_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
-
-    sel_button = -1
-    while 1:
-        clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return
-                elif event.key == pygame.K_RETURN: return
-                elif event.key == pygame.K_o: return
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                return
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "OK":
-                        play_sound("click")
-                        return True
+    buttons.show_buttons(menu_buttons)
 
 #create dialog with YES/NO buttons.
 def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
@@ -384,51 +364,32 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     print_multiline(screen, string_to_print, box_font, size[0]-10,
                 (xy[0]+5, xy[1]+5), text_color)
-    menu_buttons = []
+    menu_buttons = {}
     if button_names == ("YES", "NO"):
-        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-110,
-                xy[1]+size[1]+5), (100, 50), button_names[0], "Y", font[1][30]))
-        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2+10,
-                xy[1]+size[1]+5), (100, 50), button_names[1], "N", font[1][30]))
+        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-110,
+                xy[1]+size[1]+5), (100, 50), button_names[0], "Y", font[1][30])] = always(True)
+        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2+10,
+                xy[1]+size[1]+5), (100, 50), button_names[1], "N", font[1][30])] = always(False)
     else:
-        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-110,
-                xy[1]+size[1]+5), -1, button_names[0], button_names[0][0], font[1][30]))
-        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2+10,
-                xy[1]+size[1]+5), -1, button_names[1], button_names[1][0], font[1][30]))
+        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-110,
+                xy[1]+size[1]+5), -1, button_names[0], button_names[0][0], font[1][30])] = always(True)
+        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2+10,
+                xy[1]+size[1]+5), -1, button_names[1], button_names[1][0], font[1][30])] = always(False)
 
 
     for button in menu_buttons:
         button.refresh_button(0)
     pygame.display.flip()
 
-    cancel = key_cancel = False
-    accept = key_accept = True
+    default = False
     if reverse_key_context:
-        key_cancel = True
-        key_accept = False
+        default = True
 
-    sel_button = -1
-    while 1:
-        clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return key_cancel
-                elif event.key == pygame.K_RETURN: return key_cancel
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                # Not really a key press, but it's not an explicit
-                # button, hence key.
-                return key_cancel
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == button_names[0]:
-                        play_sound("click")
-                        return accept
-                    if button.button_id == button_names[1]:
-                        play_sound("click")
-                        return cancel
+    retval = buttons.show_buttons(menu_buttons)
+    if retval == -1:
+        return default
+    else:
+        return retval
 
 valid_input_characters = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
                         'n','o','p','q','r','s','t','u','v','w','x','y','z',

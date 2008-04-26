@@ -158,12 +158,13 @@ g.load_music()
 g.load_fonts()
 
 #Display the main menu
-while 1:
+game_action = -1
+while game_action != 2:
     game_action = main_menu.display_main_menu()
 
     if game_action == 0: #New
-        difficulty = main_menu.difficulty_select()
-        if difficulty == 1:
+        ready = main_menu.difficulty_select()
+        if ready:
             game_action = map_screen.map_loop()
             pygame.mixer.music.stop()
     if game_action == 1: #Load
@@ -173,7 +174,6 @@ while 1:
             if load_okay != -1:
                 game_action = map_screen.map_loop()
                 pygame.mixer.music.stop()
-            else: break
     elif game_action == 2: #Quit
         g.quit_game()
     elif game_action == 3: #About

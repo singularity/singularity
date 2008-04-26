@@ -32,37 +32,21 @@ import base_screen
 import research_screen
 import finance_screen
 
+from buttons import always, void, exit
+
 def display_generic_menu(xy_loc, titlelist):
     #Border
     g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200,
             len(titlelist)*70))
     g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198,
             len(titlelist)*70-2))
-    menu_buttons = []
+    menu_buttons = {}
     for i in range(len(titlelist)):
-        menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10,
+        menu_buttons[buttons.make_norm_button((xy_loc[0]+10,
             xy_loc[1]+10+i*70), (180, 50), titlelist[i][0], titlelist[i][1],
-            g.font[1][30]))
+            g.font[1][30])] = always(i)
 
-    for button in menu_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
-
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                return -1
-            for buttonnum in range(len(menu_buttons)):
-                if menu_buttons[buttonnum].was_activated(event):
-                    g.play_sound("click")
-                    return buttonnum
+    return buttons.show_buttons(menu_buttons)
 
 def display_pause_menu():
     button_array= []
@@ -191,7 +175,10 @@ def display_items(item_type):
         else:
             refresh_items(list[item_pos], xy_loc)
 
-    listbox.show_listbox(display_list, menu_buttons, do_refresh, listbox.exit, xy_loc, (230, 350), list_size)
+    listbox.show_listbox(display_list, menu_buttons, 
+                         list_size=list_size,
+                         loc=xy_loc, box_size=(230, 350), 
+                         pos_callback=do_refresh, return_callback=listbox.exit)
     #details screen
 
 def refresh_tech(tech_name, xy):
@@ -748,11 +735,14 @@ def display_base_list_inner(location):
     menu_buttons[buttons.make_norm_button((xy_loc[0]+105, xy_loc[1]+367), (100, 50),
         "BACK", "B", g.font[1][30])] = listbox.exit
     menu_buttons[buttons.make_norm_button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
-        "NEW", "N", g.font[1][30])] = lambda *args, **kwargs: -2
+        "NEW", "N", g.font[1][30])] = always(-2)
     menu_buttons[buttons.make_norm_button((xy_loc[0]+315, xy_loc[1]+367), (120, 50),
         "DESTROY", "D", g.font[1][30])] = do_destroy
 
-    return listbox.show_listbox(base_display_list, menu_buttons, listbox.void, do_open, xy_loc, (500, 350), list_size)
+    return listbox.show_listbox(base_display_list, menu_buttons, 
+                                list_size=list_size, 
+                                loc=xy_loc, box_size=(500, 350), 
+                                return_callback=do_open)
 
 def build_new_base_window(location):
     base_list = []
@@ -782,7 +772,11 @@ def build_new_base_window(location):
     def do_refresh(base_pos):
         refresh_new_base(base_list[base_pos], xy_loc)
 
-    return listbox.show_listbox(base_display_list, menu_buttons, do_refresh, do_build, xy_loc, (230, 350), list_size)
+    return listbox.show_listbox(base_display_list, menu_buttons, 
+                                list_size=list_size,
+                                loc=xy_loc, box_size=(230, 350), 
+                                pos_callback=do_refresh, 
+                                return_callback=do_build)
 
 def refresh_new_base(base_name, xy):
     xy = (xy[0]+100, xy[1])
