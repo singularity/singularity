@@ -157,9 +157,16 @@ void = always(None)
 exit = always(-1)
 no_args = always( () )
 
+def simple_key_handler(exit_code):
+    def key_handler(event):
+        if event.key in (pygame.K_ESCAPE, pygame.K_RETURN, pygame.K_q):
+            return exit_code
+    return key_handler
+default_key_handler = simple_key_handler(-1)
+
 # Used to return from within a sub[-sub...]-function
 class Return(Exception): pass 
-def show_buttons(buttons, key_callback = void, keyup_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void, tick_callback = void):
+def show_buttons(buttons, key_callback = default_key_handler, keyup_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void, tick_callback = void):
     try:
         _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback)
     except Return, e:
@@ -190,21 +197,19 @@ def _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_
     sel_button = -1
     while True:
         event_refresh = False
-        need_refresh = tick_callback(g.clock.tick(20))
+        need_refresh = tick_callback(g.clock.tick(30))
         for event in pygame.event.get():
             event_refresh = True
             if event.type == pygame.QUIT:
                 g.quit_game()
             elif event.type == pygame.KEYDOWN:
-                maybe_return( key_callback(event) )
                 maybe_return( check_buttons() )
-                if event.key in (pygame.K_ESCAPE, pygame.K_RETURN, pygame.K_q):
-                    maybe_return(-1) # Will return -1.
+                maybe_return( key_callback(event) )
             elif event.type == pygame.KEYUP:
                 maybe_return( keyup_callback(event) )
             elif event.type == pygame.MOUSEBUTTONUP:
-                maybe_return( click_callback(event) )
                 maybe_return( check_buttons() )
+                maybe_return( click_callback(event) )
                 if event.button == 3:
                     maybe_return(-1) # Will return -1.
             elif event.type == pygame.MOUSEMOTION:

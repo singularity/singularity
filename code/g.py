@@ -377,19 +377,12 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
                 xy[1]+size[1]+5), -1, button_names[1], button_names[1][0], font[1][30])] = always(False)
 
 
-    for button in menu_buttons:
-        button.refresh_button(0)
-    pygame.display.flip()
-
     default = False
     if reverse_key_context:
         default = True
 
-    retval = buttons.show_buttons(menu_buttons)
-    if retval == -1:
-        return default
-    else:
-        return retval
+    return buttons.show_buttons(menu_buttons, 
+                               key_callback=buttons.simple_key_handler(default))
 
 valid_input_characters = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
                         'n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -489,7 +482,9 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
         key = event.key
         global cursor_loc, work_string
         if key == pygame.K_RETURN:
-            return True
+            return work_string
+        if key == pygame.K_ESCAPE:
+            return ""
 
         if event.unicode in valid_input_characters:
             if cursor_loc < max_length:
@@ -527,15 +522,11 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
                 else:
                     cursor_loc=len(work_string)
 
-    result = buttons.show_buttons(menu_buttons, click_callback=on_click,
+    return buttons.show_buttons(menu_buttons, click_callback=on_click,
                                   tick_callback=on_tick, 
                                   key_callback=on_key_down,
                                   keyup_callback=on_key_up,
                                   refresh_callback=do_refresh)
-    if result == True:
-        return work_string
-    else:
-        return ""
 
 #creates a box, as used throughout the game.
 def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):

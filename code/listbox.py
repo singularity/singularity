@@ -161,7 +161,9 @@ def show_listbox(*args, **kwargs):
 
                  "pos_callback": void, 
                  "return_callback": void, 
-                 "button_callback": void
+                 "button_callback": void,
+
+                 "escape_exit_code": -1
                }
 
     # Use any arguments given.
@@ -192,6 +194,8 @@ def _show_listbox(list, buttons, **kwargs):
         key = event.key
         if key == pygame.K_RETURN:
             maybe_return( kw.return_callback(kw.list_pos) )
+        elif key in (pygame.K_ESCAPE, pygame.K_q):
+            maybe_return( kw.escape_exit_code )
 
         kw.list_pos, refresh = box.key_handler(key, kw.list_pos, list)
 

@@ -32,7 +32,7 @@ import base_screen
 import research_screen
 import finance_screen
 
-from buttons import always, void, exit
+from buttons import always, void, exit, Return
 
 def display_generic_menu(xy_loc, titlelist):
     #Border
@@ -387,11 +387,11 @@ def map_loop():
             if lost == 1:
                 g.play_music("lose")
                 g.create_dialog(g.strings["lost_nobases"])
-                return 0
+                raise Return, 0
             if lost == 2:
                 g.play_music("lose")
                 g.create_dialog(g.strings["lost_sus"])
-                return 0
+                raise Return, 0
             milli_clock %= 1000
 
             time_string = "DAY %04d, %02d:%02d:%02d" % \
@@ -550,27 +550,30 @@ def display_base_list(location, menu_buttons):
     refresh_map(menu_buttons)
     #Build a new base
     if selection == -2:
-        selection = build_new_base_window(location)
-        if selection != "" and selection != -1:
-            base_to_add = g.base_type[selection]
-            possible_name = g.create_textbox(g.strings["new_base_text"],
-                generate_base_name(location, g.base_type[selection]),
-                g.font[0][18],
-                (g.screen_size[0]/2-150, 100), (300, 100), 25,
-                g.colors["dark_blue"], g.colors["white"], g.colors["white"],
-                g.colors["light_blue"])
-            if possible_name == "":
+        dont_exit = True
+        while dont_exit:
+            dont_exit = False
+            selection = build_new_base_window(location)
+            if selection != "" and selection != -1:
+                base_to_add = g.base_type[selection]
+                possible_name = g.create_textbox(g.strings["new_base_text"],
+                    generate_base_name(location, g.base_type[selection]),
+                    g.font[0][18],
+                    (g.screen_size[0]/2-150, 100), (300, 100), 25,
+                    g.colors["dark_blue"], g.colors["white"], g.colors["white"],
+                    g.colors["light_blue"])
+                if possible_name == "":
+                    dont_exit = True
+                    continue
+                base_to_add.count += 1
+
+                g.bases[location].append(g.base.Base(len(g.bases[location]),
+                    selection, g.base_type[selection], 0))
+                g.bases[location][-1].name = possible_name
+
+                # Now that the base is built, redraw the base list.
                 refresh_map(menu_buttons)
                 return False
-            base_to_add.count += 1
-
-            g.bases[location].append(g.base.Base(len(g.bases[location]),
-                selection, g.base_type[selection], 0))
-            g.bases[location][-1].name = possible_name
-
-            # Now that the base is built, redraw the base list.
-            refresh_map(menu_buttons)
-            return False
         refresh_map(menu_buttons)
         return False
 

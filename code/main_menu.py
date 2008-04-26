@@ -47,11 +47,11 @@ def display_main_menu():
     g.print_string(g.screen, "ENDGAME: SINGULARITY", g.font[1][40], -1,
         (x_loc+100, 15), g.colors["dark_red"], 1)
 
-    retval = buttons.show_buttons(menu_buttons)
-    if retval == -1:
-        return 2
-    else:
-        return retval
+    def on_key(event):
+        if event.key == pygame.K_ESCAPE:
+            return 2
+
+    return buttons.show_buttons(menu_buttons, key_callback=on_key)
 
 def difficulty_select():
 

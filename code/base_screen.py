@@ -40,7 +40,7 @@ def show_base(this_base, location):
             build_item(this_base, item_type, location)
         return do_build_item
 
-    prev_base = always(-2)  # Incremented to -1.
+    prev_base = always(-1)
     next_base = always(1)
 
     def do_destroy():
@@ -48,11 +48,11 @@ def show_base(this_base, location):
         if g.create_yesno(g.strings["really_destroy"], g.font[0][18], 
                 (100, 100), (150, 100), g.colors["blue"], g.colors["white"],
                 g.colors["white"]):
-            return -3
+            return -2
 
     menu_buttons = {}
     menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", "B", g.font[1][20])] = exit
+        "BACK", "B", g.font[1][20])] = always(0)
 
     detect_button = buttons.button((0, g.screen_size[1]-25),
         (g.screen_size[0], 25), "DETECTION CHANCE", "",
@@ -100,14 +100,8 @@ def show_base(this_base, location):
     def do_refresh():
         refresh_base(name_button, detect_button, study_button, this_base)
 
-    retval = buttons.show_buttons(menu_buttons, refresh_callback=do_refresh)
-
-    # show_buttons uses -1, which indicates "previous base" here, to exit the
-    # dialog.  0 is our exit code, so we increment anything < 0.
-    if retval < 0:
-        return retval + 1
-    else:
-        return retval
+    return buttons.show_buttons(menu_buttons, refresh_callback=do_refresh,
+                                key_callback=buttons.simple_key_handler(0))
 
 def refresh_base(name_button, detect_button, study_button, this_base):
     g.screen.fill(g.colors["black"])
