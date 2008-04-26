@@ -140,7 +140,9 @@ def resize_list(list, list_size = 10):
 
 def sane_index(index, max_value, min_value = 0):
     """Return the closest int i to index such that min <= i < max."""
-    return min(max_value, max(min_value, int(index + .5)))
+    if max_value <= min_value + 1:
+        return min_value
+    return min(max_value - 1, max(min_value, int(index + .5)))
 
 def show_listbox(*args, **kwargs):
     # Set defaults.
@@ -204,6 +206,8 @@ def _show_listbox(list, buttons, **kwargs):
     def handle_click(event):
         if event.button == 1:
             selection = box.is_over(event.pos)
+            if selection == -1:
+                selection = scroll.adjust_pos(event, kw.list_pos, list)
             if selection != -1:
                 kw.list_pos += selection - (kw.list_pos % kw.list_size)
                 kw.pos_callback(kw.list_pos)
