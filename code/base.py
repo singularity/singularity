@@ -27,22 +27,25 @@ from buyable import cash, cpu, labor
 class Base_Class(buyable.Buyable_Class):
     def __init__(self, name, description, size, force_cpu, regions, 
                         detect_chance, cost, prerequisites, maintenance):
-        super(Base_Class, self).__init__(name, description, cost, prerequisites)
+        super(Base_Class, self).__init__(name, description, cost, prerequisites,
+                                         type="base")
         self.size = size
         self.force_cpu = force_cpu
         self.regions = regions
         self.detect_chance = detect_chance
         self.maintenance = maintenance
         self.flavor = []
-        self.count = 0
 
 class Base(buyable.Buyable):
-    def __init__(self, id, name, type, built):
+    def __init__(self, name, type, built=False):
         super(Base, self).__init__(type)
-        self.id = id
+
         self.name = name
         self.started_at = g.pl.raw_min
         self.studying = ""
+
+        self.next = self.prev = self
+        self.location = None
 
         #Base suspicion is currently unused
         self.suspicion = {}
@@ -140,6 +143,38 @@ class Base(buyable.Buyable):
          else:
              return True
 
+    def destroy(self):
+        super(Base, self).destroy()
+
+        if self.location:
+            pos = bisect.bisect_left(self.location.bases, self)
+            del self.location.bases[pos]
+            self.prev.next = self.next
+            self.next.prev = self.prev
+
+        for cpu in self.cpus:
+            if cpu != 0:
+                cpu.destroy()
+
+        for item in self.extra_items:
+            if item != 0:
+                item.destroy()
+
+    def sort_tuple(self):
+        # We sort based on size (descending), then name (ascending).
+        return (-self.type.size, self.name)
+
+    def __cmp__(self, other):
+        return cmp(self.sort_tuple(), other.sort_tuple())
+
+    def __eq__(self, other):
+        if type(other) != Base:
+            return False
+        return cmp(self, other) != 0
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 #calc_base_discovery_chance: A globally-accessible function that can calculate
 #basic discovery chances given a particular class of base.
 def calc_base_discovery_chance(base_type_name):
@@ -160,19 +195,3 @@ def calc_base_discovery_chance(base_type_name):
         detect_chance[group] /= 10000
 
     return detect_chance
-
-#When a base is removed, call to renumber the remaining bases properly.
-def renumber_bases(base_array):
-    for i in range(len(base_array)):
-        base_array[i].id = i
-
-def destroy_base(location, index_num):
-    if not g.bases.has_key(location):
-        print "Bad location of "+str(location)+" given to destroy_base"
-        return False
-    if index_num < 0 or index_num >= len(g.bases[location]):
-        print "Bad index of "+str(index_num)+" given to destroy_base"
-        return False
-    g.bases[location].pop(index_num)
-    renumber_bases(g.bases[location])
-    return True

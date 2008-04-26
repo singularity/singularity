@@ -27,7 +27,8 @@ class Tech(buyable.Buyable):
     def __init__(self, id, description, known, cost, prerequisites, danger, 
                  tech_type, secondary_data):
         # A bit silly, but it does the trick.
-        type = buyable.Buyable_Class(id, description, cost, prerequisites)
+        type = buyable.Buyable_Class(id, description, cost, prerequisites,
+                                     type="tech")
         super(Tech, self).__init__(type)
 
         self.danger = danger

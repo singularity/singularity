@@ -18,6 +18,7 @@
 
 #This file contains the Location class.
 
+import bisect
 import g, buyable
 
 # Location is a subclass of Buyable_Class so that it can use .available():
@@ -29,6 +30,29 @@ class Location(buyable.Buyable_Class):
         self.y, self.x = position
         self.safety = safety
         self.cities = []
+
+        self.bases = []
+
+    def add_base(self, base):
+        where = bisect.bisect(self.bases, base)
+        self.bases.insert(where, base)
+        base.location = self
+
+        if len(self.bases) == 1:
+           # The rest wouldn't cause any harm... but it also wouldn't do 
+           # anything.
+           return
+
+        # Will correctly wrap to -1.
+        prev = self.bases[where-1]
+        prev.next = base
+        base.prev = prev
+        if where < len(self.bases)-1:
+            next = self.bases[where+1]
+        else:
+            next = self.bases[0]
+        next.prev = base
+        base.next = next
 
     def __hash__(self):
         return hash(self.id)

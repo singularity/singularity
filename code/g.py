@@ -31,8 +31,10 @@ import sys
 # are made where needed.
 import locale
 
-import player, base, buttons, tech, item, event, location, buyable
+import player, base, buttons, tech, item, event, location, buyable, statistics
 from buttons import always, void, exit
+
+stats = statistics.Statistics()
 
 #screen is the actual pygame display.
 global screen
@@ -748,16 +750,16 @@ def load_game(loadgame_name):
             if load_version > 0:
                 pickle.load(loadfile)
     
-        bases = clean_bases()
-    
-        for base_loc in locations:
-            if base_loc == "ORBIT": continue
+        for base_loc in ("N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", 
+                         "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES", 
+                         "TRANSDIMENSIONAL"):
             if load_version < 1:
                 num_of_bases = pickle.load(loadfile)
             else:
                 line = pickle.load(loadfile)
                 base_loc = line.split("|", 1)[0]
                 num_of_bases = int(line.split("|", 1)[1])
+            base_loc = locations[base_loc]
             for i in range(num_of_bases):
                 base_ID = pickle.load(loadfile)
                 base_name = pickle.load(loadfile)
@@ -770,19 +772,18 @@ def load_game(loadgame_name):
                     translation = ["news", "science", "covert", "public"]
                     for index in range(4):
                         new_base_suspicion[translation[index]] = \
-                                                            base_suspicion[index]
+                                                           base_suspicion[index]
                     base_suspicion = new_base_suspicion
                 base_built = pickle.load(loadfile)
                 base_cost = pickle.load(loadfile)
-                loc_list = bases.get(base_loc, [])
-                loc_list.append(base.Base(base_ID, base_name,
-                        base_type[base_type_name], base_built))
-                bases[base_loc] = loc_list
-                bases[base_loc][len(bases[base_loc])-1].done = base_built
+
+                base_loc.add_base(base.Base(base_name, 
+                                            base_type[base_type_name], 
+                                            base_built))
                 bases[base_loc][len(bases[base_loc])-1].studying = base_studying
                 bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
                 bases[base_loc][len(bases[base_loc])-1].cost_left = buyable.array(base_cost)
-                bases[base_loc][len(bases[base_loc])-1].built_date = built_date
+                bases[base_loc][len(bases[base_loc])-1].started_at = built_date * minutes_per_day
     
                 for x in range(len(bases[base_loc][len(bases[base_loc])-1].cpus)):
                     index = pickle.load(loadfile)
@@ -851,14 +852,6 @@ seconds_per_hour = 60 * 60
 seconds_per_day = 24 * 60 * 60
 
 pl = player.player_class(8000000000000)
-
-def clean_bases():
-    bases = {}
-    for location in locations.values():
-        bases[location] = []
-    return bases
-
-bases = {}
 
 base_type = {}
 
@@ -1441,17 +1434,12 @@ def new_game(difficulty):
 
     global locations, bases
     load_locations()
-    bases = clean_bases()
     load_bases()
     load_techs()
-    for base_name in base_type:
-        base_type[base_name].count = 0
     #Starting base
     open = [location for location in locations.values() if location.available()]
-    bases[random.choice(open)].append(base.Base(0, 
-                            "University Computer",
-                            base_type["Stolen Computer Time"], 1))
-    base_type["Stolen Computer Time"].count += 1
+    random.choice(open).add_base(base.Base("University Computer",
+                                 base_type["Stolen Computer Time"], built=True))
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()

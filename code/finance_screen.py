@@ -47,8 +47,8 @@ def cpu_numbers():
     research_cpu = 0
     job_cpu = 0
     maint_cpu = 0
-    for loc_name in g.bases:
-        for base_instance in g.bases[loc_name]:
+    for loc in g.locations.values():
+        for base_instance in loc.bases:
             if base_instance.done:
                 total_cpu += base_instance.processor_time()
                 maint_cpu += base_instance.type.maintenance[1]

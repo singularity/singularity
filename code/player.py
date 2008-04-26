@@ -131,8 +131,8 @@ class player_class(object):
         days_passed = self.raw_day - last_day
 
         if mins_passed > 0:
-            for base_loc in g.bases:
-                for base in g.bases[base_loc]:
+            for base_loc in g.locations.values():
+                for base in base_loc.bases:
                     #Construction of new bases:
                     if not base.done:
                         built_base = base.work_on(time=mins_passed)
@@ -267,10 +267,9 @@ class player_class(object):
           group.new_day()
 
         self.cpu_for_day = 0
-        for base_loc in g.bases:
-            dead_bases = []
-            for base_index in range(len(g.bases[base_loc])):
-                base = g.bases[base_loc][base_index]
+        dead_bases = []
+        for base_loc in g.locations.values():
+            for base in base_loc.bases:
                 if base.done:
                     base_cpu = base.processor_time()
 
@@ -321,17 +320,16 @@ class player_class(object):
                             (base.name, repr(detect_chance))
                     for group in detect_chance:
                         if g.roll_percent(detect_chance[group]):
-                            dead_bases.append( (base_index, group) )
+                            dead_bases.append( (base, group) )
                             break
 
-            if self.remove_bases(base_loc, dead_bases):
-                needs_refresh = 1
+        if self.remove_bases(dead_bases):
+            needs_refresh = 1
 
         # 2nd pass: Maintenance, clear finished techs.
-        for base_loc in g.bases:
-            dead_bases = []
-            for base_index in range(len(g.bases[base_loc])):
-                base = g.bases[base_loc][base_index]
+        dead_bases = []
+        for base_loc in g.locations.values():
+            for base in base_loc.bases:
                 if base.done:
                     #maintenance
                     self.cash -= base.type.maintenance[0]
@@ -339,32 +337,35 @@ class player_class(object):
                         self.cash = 0
                         #Chance of base destruction if cash-unmaintained: 1.5%
                         if g.roll_percent(150):
-                            dead_bases.append( (base_index, "maint") )
+                            dead_bases.append( (base, "maint") )
 
                     self.cpu_for_day -= base.type.maintenance[1]
                     if self.cpu_for_day < 0:
                         self.cpu_for_day = 0
                         #Chance of base destruction if cpu-unmaintained: 1.5%
                         if g.roll_percent(150):
-                            dead_bases.append( (base_index, "maint") )
+                            dead_bases.append( (base, "maint") )
                 if base.studying == "": continue
                 if base.studying == "Construction": continue
                 if g.jobs.has_key(base.studying): continue
                 # Remove completed tech.
-                if g.techs[base.studying].done == 1:
+                if g.techs[base.studying].done:
                     base.studying = ""
+
+        if self.remove_bases(dead_bases):
+            needs_refresh = 1
+
         return needs_refresh
 
-    def remove_bases(self, base_loc, dead_bases):
+    def remove_bases(self, dead_bases):
         needs_refresh = 0
         # Reverse dead_bases to simplify deletion.
         for base, reason in dead_bases[::-1]:
-            base_name = g.bases[base_loc][base].name
+            base_name = base.name
 
             if reason == "maint":
-                dialog_string = (g.strings["discover_maint0"]+" "+
-                    g.bases[base_loc][base].name+" "+
-                    g.strings["discover_maint1"])
+                dialog_string = g.strings["discover_maint"] % \
+                                {"base": base_name}
 
             elif reason in self.groups:
                 self.groups[reason].discovered_a_base()
@@ -379,9 +380,8 @@ class player_class(object):
 
             g.create_dialog(dialog_string, text_color = g.colors["red"])
             g.curr_speed = 1
-            g.bases[base_loc].pop(base)
+            base.destroy()
             needs_refresh = 1
-            g.base.renumber_bases(g.bases[base_loc])
 
         return needs_refresh
 
@@ -391,20 +391,18 @@ class player_class(object):
                 # Someone discovered me.
                 return 2
 
-        # The [] can be removed in Python 2.4.
-        if sum(len(base_list) for base_list in g.bases.values()) == 0:
+        if sum(len(loc.bases) for loc in g.locations.values()) == 0:
             # My last base got discovered.
             return 1
 
         # On Impossible mode, we check to see if the player has at least one
         # CPU left.  If not, they lose due to having no (complete) bases.
         if self.masochist:
-            if sum(base.processor_time() for base_list in g.bases.values()
-                                         for base in base_list
+            if sum(base.processor_time() for loc in g.locations.values()
+                                         for base in loc.bases
                                          if base.done
                    ) == 0:
                 return 1
-            
 
         # Still Alive.
         return 0
@@ -414,8 +412,8 @@ class player_class(object):
     def future_cash(self):
         result_cash = self.cash
         techs = {}
-        for base_loc in g.bases:
-            for base in g.bases[base_loc]:
+        for base_loc in g.locations.values():
+            for base in base_loc.bases:
                 result_cash -= base.cost_left[0]
                 if g.techs.has_key(base.studying):
                     if not techs.has_key(base.studying):

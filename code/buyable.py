@@ -50,11 +50,16 @@ class array(list):
         return False
 
 class Buyable_Class(object):
-    def __init__(self, id, description, cost, prerequisites):
+    def __init__(self, id, description, cost, prerequisites, type = ""):
         self.name = self.id = id
         self.description = description
         self._cost = cost
         self.prerequisites = prerequisites
+
+        if type:
+            self.prefix = type + "_"
+        else:
+            self.prefix = ""
 
     def get_cost(self):
         cost = array(self._cost)
@@ -86,9 +91,23 @@ class Buyable_Class(object):
         # didn't meet any of the OR prerequisites.
         return not or_mode
 
+for stat in ("count", "complete_count", "total_count", 
+             "total_complete_count"):
+    # Ugly syntax, but it seems to be the Right Way to do it.
+    def get(self, stat=stat):
+        return g.stats.get_statistic(self.prefix + self.id + "_" + stat)
+    def set(self, value, stat=stat):
+        return g.stats.set_statistic(self.prefix + self.id + "_" + stat, value)
+
+    stat_prop = property(get, set)
+    setattr(Buyable_Class, stat, stat_prop)
+
 class Buyable(object):
     def __init__(self, type):
         self.type = type
+        type.count += 1
+        type.total_count += 1
+
         self.name = self.id = type.id
         self.description = type.description
         self.prerequisites = type.prerequisites
@@ -110,8 +129,11 @@ class Buyable(object):
         return False
 
     def finish(self):
-        self.cost_left = array([0,0,0])
-        self.done = True
+        if not self.done:
+            self.cost_left = array([0,0,0])
+            self.done = True
+            self.type.complete_count += 1
+            self.type.total_complete_count += 1
 
     cost_paid = property(lambda self: self.total_cost - self.cost_left)
 
@@ -169,3 +191,7 @@ class Buyable(object):
 
         return self._work_on([cash_flow, cpu_work, time])
 
+    def destroy(self):
+        self.type.count -= 1
+        if self.done:
+            self.type.complete_count -= 1

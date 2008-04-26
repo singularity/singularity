@@ -95,8 +95,8 @@ def display_cheat_list(menu_buttons):
             g.techs[fake_base.studying].finish()
         return
     elif selection == 2:  #Build all
-        for base_loc in g.bases:
-            for base_name in g.bases[base_loc]:
+        for base_loc in g.locations.values():
+            for base_name in base_loc.bases:
                 if not base_name.done:
                     base_name.finish()
         return
@@ -461,7 +461,6 @@ def handle_pause_menu(selection, menu_buttons):
         else:
             g.load_game(load_return)
             map_loop()
-#			refresh_map(menu_buttons)
             return 0
     elif selection == 4: g.quit_game()
     elif selection == 5:
@@ -479,13 +478,15 @@ def refresh_map(menu_buttons):
         if g.locations.has_key(button.button_id):
             #determine if building in a location is possible. If so, show the
             #button.
-            if g.locations[button.button_id].available():
+            loc = g.locations[button.button_id]
+            if loc.available():
                 button.visible = 1
             else: button.visible = 0
 
-            button.text = g.locations[button.button_id].name + " ("
-            button.text += str(len(g.bases[g.locations[button.button_id]]))+")"
-            button.remake_button()
+            new_text = "%s (%d)" % (loc.name, len(loc.bases))
+            if button.text != new_text:
+                button.text = new_text
+                button.remake_button()
         button.refresh_button(0)
 
 significant_numbers = [
@@ -524,7 +525,7 @@ def generate_base_name(location, base_type):
                 " " + random.choice(base_type.flavor) + " " \
                 + random.choice(significant_numbers)
             duplicate = False
-            for check_base in g.bases[location]:
+            for check_base in location.bases:
                 if check_base.name == name:
                     duplicate = True
                     break
@@ -572,55 +573,41 @@ def display_base_list(location, menu_buttons):
                 if possible_name == "":
                     dont_exit = True
                     continue
-                base_to_add.count += 1
 
-                g.bases[location].append(g.base.Base(len(g.bases[location]),
-                    selection, g.base_type[selection], 0))
-                g.bases[location][-1].name = possible_name
+                new_base = g.base.Base(possible_name, g.base_type[selection])
+                location.add_base(new_base)
 
-                # Now that the base is built, redraw the base list.
-                refresh_map(menu_buttons)
-                return False
-        refresh_map(menu_buttons)
         return False
 
     #Showing base under construction
     elif selection != -1 and selection != "":
-        if not g.bases[location][selection].done:
+        base = selection
+        if not base.done:
             string = "Under Construction. \\n Completion in "
-            string += g.to_time(g.bases[location][selection].cost_left[2]) + ". \\n "
-            string += "Remaining cost: "+g.to_money(g.bases[location][selection].cost_left[0])
-            string +=" money, and "+g.add_commas(
-                                            g.bases[location][selection].cost_left[1])
+            string += g.to_time(base.cost_left[2]) + ". \\n "
+            string += "Remaining cost: "+g.to_money(base.cost_left[0])
+            string +=" money, and "+g.add_commas(base.cost_left[1])
             string +=" processor time."
             if not g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
                     g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
                 if g.create_yesno("Destroy this base? This will waste "+
-                        g.to_money(g.bases[location][selection].cost_paid[0])
-                        +" money, and "+
-                        g.add_commas(g.bases[location][selection].cost_paid[1])
-                        +" processor time.", g.font[0][18],
-                        (g.screen_size[0]/2 - 100, 50),
+                        g.to_money(base.cost_paid[0]) +" money, and "+
+                        g.add_commas(base.cost_paid[1]) +" processor time.", 
+                        g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                         (200, 200), g.colors["dark_blue"], g.colors["white"],
                         g.colors["white"]):
-                    g.base.destroy_base(location, selection)
+                    base.destroy()
         else:
             next_prev = 1
-            while next_prev:
-                next_prev = base_screen.show_base(g.bases[location][selection], location)
-                if next_prev == -2:
-                    g.base.destroy_base(location, selection)
+            while direction:
+                direction = base_screen.show_base(base, location)
+                if direction == -2:
+                    base.destroy()
                     break
-                selection += next_prev
-                if selection < 0: selection = len(g.bases[location]) -1
-                if selection >= len(g.bases[location]): selection = 0
-                while not g.bases[location][selection].done:
-                    selection += next_prev
-                    if selection < 0: selection = len(g.bases[location]) -1
-                    if selection >= len(g.bases[location]): selection = 0
+                else:
+                    base = base.next_base(direction)
 
-        # After looking at a base, redraw the base list.
         return False
 
     # The player hit 'Back' at this point; we're done with the base list.
@@ -632,8 +619,8 @@ def display_base_list_inner(location):
     list_size = 15
 
     base_display_list = []
-    base_id_list = []
-    for this_base in g.bases[location]:
+    base_list = []
+    for this_base in location.bases:
         studying = this_base.studying
         if not this_base.done:
             studying = g.strings["building"]
@@ -644,19 +631,19 @@ def display_base_list_inner(location):
         elif g.techs.has_key(studying):
             studying = g.techs[studying].name
         base_display_list.append(this_base.name+" ("+studying+")")
-        base_id_list.append(this_base.id)
+        base_list.append(this_base)
 
     def do_open(base_pos):
-        if base_pos < len(g.bases[location]):
-            return base_id_list[base_pos]
+        if base_pos < len(location.bases):
+            return location.bases[base_pos]
 
     def do_destroy(base_pos):
-        if base_pos >= len(g.bases[location]):
+        if base_pos >= len(location.bases):
             return
 
         g.play_sound("click")
         prompt_string = "Destroy this base?"
-        base = g.bases[location][base_pos]
+        base = location.bases[base_pos]
         if not base.done:
             prompt_string += " This will waste %s money and %s processor time."\
                 % ( g.to_money(base.cost_paid[0]), 
@@ -665,12 +652,12 @@ def display_base_list_inner(location):
                     (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
                     g.colors["white"]):
-            g.base.destroy_base(location, base_pos)
+            base.destroy()
 
             # Remove the base from the display.
             del base_display_list[base_pos]
-            # And its matching ID.
-            del base_id_list[base_pos]
+            # And its matching base object.
+            del base_list[base_pos]
             # And pad the display list back up to the correct length.
             base_display_list.append("")
 
