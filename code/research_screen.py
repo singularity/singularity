@@ -223,16 +223,18 @@ def kill_tech(tech_name):
     return return_val
 
 fake_base = None
-def assign_tech(free_CPU):
-    return_val = False
-    #use a fake base, in order to reuse the tech-changing code
+def init_fake_base():
     global fake_base
     if not fake_base:
         fake_base = g.base.Base("fake_base", g.base_type["Fake"], True)
         fake_base.cpus[0] = g.item.Item(g.items["research_screen_fake_cpu"])
         fake_base.cpus[0].finish()
-    fake_base.cpus[0].type.item_qual = free_CPU
 
+def assign_tech(free_CPU):
+    return_val = False
+    #use a fake base, in order to reuse the tech-changing code
+    fake_base.cpus[0].type.item_qual = free_CPU
+    init_fake_base()
     base_screen.change_tech(fake_base)
     if fake_base.studying == "": return False
 
