@@ -95,6 +95,9 @@ class player_class(object):
         # Overflow
         self.time_day = self.raw_day
 
+    def mins_to_next_day(self):
+        return (-self.raw_min % g.minutes_per_day) or g.minutes_per_day
+
     def give_time(self, time_sec):
         needs_refresh = 0
 

@@ -92,14 +92,14 @@ class button:
 
 
     def refresh_button(self, selected):
-        if self.visible == 0: return 0
+        if not self.visible: return 0
         if self.stay_selected == 1: selected = 1
         if selected == 0:
             g.screen.blit(self.button_surface, self.xy)
         else:
             g.screen.blit(self.sel_button_surface, self.xy)
     def is_over(self, xy):
-        if self.visible == 0: return 0
+        if not self.visible: return 0
         if xy[0] >= self.xy[0] and xy[1] >= self.xy[1] and \
         xy[0] <= self.xy[0] + self.size[0] and xy[1] <= self.xy[1] + self.size[1]:
             return 1
@@ -107,7 +107,7 @@ class button:
     #Returns 1 if the event should activate this button. Checks for keypresses
     #and button clicks.
     def was_activated(self, event):
-        if self.visible == 0: return 0
+        if not self.visible: return 0
         if event.type == pygame.KEYDOWN and self.activate_key != "":
             if event.unicode.lower() == self.activate_key.lower():
                 return 1

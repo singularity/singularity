@@ -186,7 +186,7 @@ def refresh_base(menu_buttons, this_base):
     if this_base.cpus[len(this_base.cpus)-1] != 0:
         if not this_base.cpus[len(this_base.cpus)-1].done:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.cpus[len(this_base.cpus)-1].cost[2]),
+                g.to_time(this_base.cpus[len(this_base.cpus)-1].cost_left[2]),
                 g.font[0][18], -1, (xstart+5, ystart+30), g.colors["white"])
 
     if this_base.extra_items[0] == 0: item_name = "None"
@@ -196,7 +196,7 @@ def refresh_base(menu_buttons, this_base):
     if this_base.extra_items[0] != 0:
         if not this_base.extra_items[0].done:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[0].cost[2]),
+                g.to_time(this_base.extra_items[0].cost_left[2]),
                 g.font[0][18], -1, (xstart+5, ystart+80), g.colors["white"])
 
     if this_base.extra_items[1] == 0: item_name = "None"
@@ -206,7 +206,7 @@ def refresh_base(menu_buttons, this_base):
     if this_base.extra_items[1] != 0:
         if not this_base.extra_items[1].done:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[1].cost[2]),
+                g.to_time(this_base.extra_items[1].cost_left[2]),
                 g.font[0][18], -1, (xstart+5, ystart+130), g.colors["white"])
 
     if this_base.extra_items[2] == 0: item_name = "None"
@@ -216,7 +216,7 @@ def refresh_base(menu_buttons, this_base):
     if this_base.extra_items[2] != 0:
         if not this_base.extra_items[2].done:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[2].cost[2]),
+                g.to_time(this_base.extra_items[2].cost_left[2]),
                 g.font[0][18], -1, (xstart+5, ystart+190), g.colors["white"])
 
     for button in menu_buttons:
@@ -245,8 +245,8 @@ def build_item(this_base, item_type, location):
     # First we determine the list of items that can actually be built here ...
     for item_name in g.items:
         if g.items[item_name].type == item_type:
-            if g.items[item_name].prereq != "":
-                if g.techs[g.items[item_name].prereq].done:
+            if g.items[item_name].prerequisites != "":
+                if g.techs[g.items[item_name].prerequisites].done:
                     continue
             try: g.items[item_name].buildable.index(location)
             except ValueError: continue
@@ -401,7 +401,7 @@ def refresh_item(this_base, item_name, xy_loc):
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
     string = g.add_commas(
-        str((g.items[item_name].cost[2]*g.pl.labor_bonus)/10000))+" Days"
+        (g.items[item_name].cost[2]*g.pl.labor_bonus)/10000)+" Days"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
 
@@ -413,7 +413,7 @@ def refresh_item(this_base, item_name, xy_loc):
                 g.font[0][16], -1, (xy[0]+160, xy[1]+100), g.colors["white"])
 
         # Add CPU amount here...
-        string = "Total CPU available: " + g.add_commas(str(g.items[item_name].item_qual*this_base.base_type.size))
+        string = "Total CPU available: " + g.add_commas(g.items[item_name].item_qual*this_base.base_type.size)
         g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+120), g.colors["white"])
 

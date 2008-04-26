@@ -1461,8 +1461,6 @@ def new_game(difficulty):
     bases = clean_bases()
     load_bases()
     load_techs()
-    for tech in techs:
-        techs[tech].known = 0
     for base_name in base_type:
         base_type[base_name].count = 0
     #Starting base

@@ -242,7 +242,7 @@ def refresh_research(tech_name, CPU_amount):
         g.print_string(g.screen, tech_name,
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
         #TECH
-        if g.techs["Advanced Simulacra"].known == 1:
+        if g.techs["Advanced Simulacra"].done:
             g.print_string(g.screen,
                 g.to_money(int(
                     (g.jobs[tech_name][0]*CPU_amount)*1.1))+
@@ -316,7 +316,7 @@ def assign_tech(free_CPU):
                 # We want to warn the player that we didn't use all available
                 # CPU.  But if the base isn't built yet, that's a stupid
                 # warning.
-                elif base.built:
+                elif base.done:
                    show_dangerous_dialog = True
 
     if show_dangerous_dialog:

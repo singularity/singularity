@@ -141,11 +141,11 @@ def display_knowledge_list():
 
 def display_itemtype_list():
     button_array= []
-    button_array.append(["PROCESSOR", 0])
-    button_array.append(["REACTOR", 0])
-    button_array.append(["NETWORK", 0])
-    button_array.append(["SECURITY", 0])
-    button_array.append(["RESUME", 1])
+    button_array.append(["PROCESSOR", "P"])
+    button_array.append(["REACTOR", "R"])
+    button_array.append(["NETWORK", "N"])
+    button_array.append(["SECURITY", "S"])
+    button_array.append(["RESUME", "E"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
 
     if selection == -1: return
@@ -164,12 +164,12 @@ def display_inner_techs():
     items.sort()
     for tech_name in items:
         tech_name = tech_name[1]
-        if g.techs[tech_name].prereq == "":
+        if g.techs[tech_name].prerequisites == "":
             tech_list.append(tech_name)
             tech_display_list.append(g.techs[tech_name].name)
         else:
-            for prereq in g.techs[tech_name].prereq:
-                if not g.techs[prereq].done:
+            for prerequisite in g.techs[tech_name].prerequisites:
+                if not g.techs[prerequisite].done:
                     break
             else:
                 tech_list.append(tech_name)
@@ -190,7 +190,7 @@ def display_inner_techs():
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-        "BACK", 0, g.font[1][30]))
+        "BACK", "B", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
 
@@ -259,16 +259,16 @@ def refresh_tech(tech_name, xy):
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
     #Building cost
-    if g.techs[tech_name].cost != (0, 0, 0):
+    if g.techs[tech_name].cost_left != (0, 0, 0):
         string = "Research Cost:"
         g.print_string(g.screen, string,
                 g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
 
-        string = g.to_money(g.techs[tech_name].cost[0])+" Money"
+        string = g.to_money(g.techs[tech_name].cost_left[0])+" Money"
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-        string = g.add_commas(g.techs[tech_name].cost[1]) + " CPU"
+        string = g.add_commas(g.techs[tech_name].cost_left[1]) + " CPU"
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
     else:
@@ -289,12 +289,12 @@ def refresh_tech(tech_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 
-    if g.techs[tech_name].known:
-        g.print_multiline(g.screen, g.techs[tech_name].descript+" \\n \\n "+
+    if g.techs[tech_name]:
+        g.print_multiline(g.screen, g.techs[tech_name].description+" \\n \\n "+
                 g.techs[tech_name].result,
                 g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
     else:
-        g.print_multiline(g.screen, g.techs[tech_name].descript,
+        g.print_multiline(g.screen, g.techs[tech_name].description,
                 g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
 
 def display_inner_items(item_type):
@@ -306,8 +306,8 @@ def display_inner_items(item_type):
     items.sort()
     for item_name in items:
         item_name = item_name[1]
-        if g.items[item_name].prereq == "" or \
-                g.techs[g.items[item_name].prereq].known == 1:
+        if g.items[item_name].prerequisites == "" or \
+                g.techs[g.items[item_name].prerequisites]:
             if g.items[item_name].item_type == item_type:
                 item_list.append(item_name)
                 item_display_list.append(g.items[item_name].name)
@@ -324,7 +324,7 @@ def display_inner_items(item_type):
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-        "BACK", 0, g.font[1][30]))
+        "BACK", "B", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
 
@@ -412,7 +412,7 @@ def refresh_items(item_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 
-    g.print_multiline(g.screen, g.items[item_name].descript,
+    g.print_multiline(g.screen, g.items[item_name].description,
             g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
 
 def display_concept_list():
@@ -439,7 +439,7 @@ def display_concept_list():
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-        "BACK", 0, g.font[1][30]))
+        "BACK", "B", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
 

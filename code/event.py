@@ -23,17 +23,17 @@ import g
 #detection = (news, science, covert, person)
 
 class event_class:
-    def __init__(self, name, descript, event_type, result, chance, unique):
+    def __init__(self, name, description, event_type, result, chance, unique):
         self.name = name
         self.event_id = name
-        self.descript = descript
+        self.description = description
         self.event_type = event_type
         self.result = result
         self.chance = chance
         self.unique = unique
         self.triggered = 0
     def trigger(self):
-        g.create_dialog(self.descript, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+        g.create_dialog(self.description, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
             (200, 200), g.colors["dark_blue"], g.colors["white"], g.colors["white"])
 
         # If this is a unique event, mark it as triggered.

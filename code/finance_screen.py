@@ -22,6 +22,7 @@
 import pygame
 import g
 import buttons
+from buyable import cash, cpu, labor
 
 
 
@@ -99,9 +100,11 @@ def refresh_screen(menu_buttons):
     income = g.pl.income
     jobs = 0
     maint = 0
-    research = -1 #XXX
-    base_constr = -1 #XXX
-    item_constr = -1 #XXX
+    research = 0
+    base_constr = 0
+    item_constr = 0
+
+    mins_left = g.pl.mins_to_next_day()
 
     for loc_name in g.bases:
         for base_instance in g.bases[loc_name]:
@@ -113,35 +116,22 @@ def refresh_screen(menu_buttons):
                     jobs += (g.jobs[base_instance.studying][0]*
                                     base_instance.processor_time())/10
             elif g.techs.has_key(base_instance.studying):
-                if g.techs[base_instance.studying].cost_left[1] > 0:
-                    pass #XXX
-                    #research += (g.techs[base_instance.studying].cost[0] *
-                    #        base_instance.processor_time() /
-                    #        g.techs[base_instance.studying].cost[1])
+                research += g.techs[base_instance.studying].get_wanted(
+                                      cash, cpu, base_instance.processor_time())
             if base_instance.done:
                 maint += base_instance.type.maintenance[0]
                 for item in base_instance.cpus:
                     if not item: continue
                     if item.done: continue
-                    if item.cost_left[2] > 0:
-                        pass # XXX
-                        #item_constr += (((23-g.pl.time_hour)*60+
-                        #(60-g.pl.time_min))*item.cost_left[0]/item.cost_left[2])
+                    item_constr += item.get_wanted(cash, labor, mins_left)
                 for item in base_instance.extra_items:
                     if not item: continue
                     if item.done: continue
-                    if item.cost[2] > 0:
-                        pass # XXX
-                        #item_constr += (((23-g.pl.time_hour)*60+
-                        #(60-g.pl.time_min))*item.cost[0]/item.cost[2])
+                    item_constr += item.get_wanted(cash, labor, mins_left)
 
 
             else:
-                if base_instance.cost_left[2] > 0:
-                    pass # XXX
-                    #base_constr += (((23-g.pl.time_hour)*60+
-                    #    (60-g.pl.time_min))*base_instance.cost[0]/
-                    #        base_instance.cost[2])
+                base_constr += base_instance.get_wanted(cash, labor, mins_left)
 
     total_cpu, idle_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu = cpu_numbers()
 
