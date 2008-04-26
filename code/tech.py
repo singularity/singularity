@@ -46,17 +46,17 @@ class Tech(buyable.Buyable):
 
     def gain_tech(self):
         #give the effect of the tech
-        if self.tech_id == "Personal Identification":
+        if self.id == "Personal Identification":
             for base_loc in g.bases:
                 for base_name in g.bases[base_loc]:
                     if base_name.studying == "Menial Jobs":
                         base_name.studying = "Basic Jobs"
-        if self.tech_id == "Voice Synthesis":
+        if self.id == "Voice Synthesis":
             for base_loc in g.bases:
                 for base_name in g.bases[base_loc]:
                     if base_name.studying == "Basic Jobs":
                         base_name.studying = "Intermediate Jobs"
-        if self.tech_id == "Simulacra":
+        if self.id == "Simulacra":
             for base_loc in g.bases:
                 for base_name in g.bases[base_loc]:
                     if base_name.studying == "Intermediate Jobs":

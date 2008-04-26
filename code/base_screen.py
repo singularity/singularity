@@ -244,7 +244,7 @@ def build_item(this_base, item_type, location):
 
     # First we determine the list of items that can actually be built here ...
     for item_name in g.items:
-        if g.items[item_name].type == item_type:
+        if g.items[item_name].item_type == item_type:
             if g.items[item_name].prerequisites != "":
                 if g.techs[g.items[item_name].prerequisites].done:
                     continue

@@ -35,3 +35,9 @@ class Location(object):
             if not g.techs[prerequisite].done:
                 return False
         return True
+
+    def __hash__(self):
+        return hash(self.id)
+
+    def __cmp__(self, other):
+        return cmp(self.id, other.id)

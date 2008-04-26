@@ -746,8 +746,8 @@ def load_game(loadgame_name):
         events = pickle.load(loadfile)
 
         # Changes to individual pieces go here.
-        if load_version != current_save_version:
-            pass
+        if True:#load_version != current_save_version:
+            load_locations()
             #if load_version == "singularity_savefile_r4_pre2":
             #    pl.convert_from(load_version)
             #    for tech in tech.values():

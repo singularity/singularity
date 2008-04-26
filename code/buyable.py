@@ -121,9 +121,10 @@ class Buyable(object):
         if cpu_available == None:
             cpu_available = g.pl.cpu_for_day
 
-        labor_left = (self.cost_left[labor] * g.pl.labor_bonus) /10000
-        if time > labor_left:
-            time = labor_left
+        #print cash_available, cpu_available, 
+
+        if time > self.cost_left[labor]:
+            time = self.cost_left[labor]
 
         cash_wanted = self.cost_left[cash]
         cpu_wanted = self.cost_left[cpu]
