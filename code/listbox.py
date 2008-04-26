@@ -146,27 +146,27 @@ def sane_index(index, max_value, min_value = 0):
 
 def show_listbox(*args, **kwargs):
     # Set defaults.
-    options = { 
-                 "list_pos": 0, 
-                 "list_size": 10, 
-                 "lines_per_item": 1, 
+    options = dict(
+                 list_pos = 0, 
+                 list_size = 10, 
+                 lines_per_item = 1, 
 
-                 "loc": (g.screen_size[0]/2 - 300, 50),
-                 "box_size": (250,300), 
+                 loc = (g.screen_size[0]/2 - 300, 50),
+                 box_size = (250,300), 
 
-                 "bg_color": g.colors["dark_blue"], 
-                 "sel_color": g.colors["blue"], 
-                 "out_color": g.colors["white"], 
-                 "font_color": g.colors["white"], 
+                 bg_color = g.colors["dark_blue"], 
+                 sel_color = g.colors["blue"], 
+                 out_color = g.colors["white"], 
+                 font_color = g.colors["white"], 
 
-                 "font": g.font[0][18],
+                 font = g.font[0][18],
 
-                 "pos_callback": void, 
-                 "return_callback": void, 
-                 "button_callback": void,
+                 pos_callback = void, 
+                 return_callback = void, 
+                 button_callback = void,
 
-                 "escape_exit_code": -1
-               }
+                 escape_exit_code = -1
+               )
 
     # Use any arguments given.
     options.update(kwargs)
