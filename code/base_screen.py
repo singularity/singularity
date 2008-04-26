@@ -229,8 +229,6 @@ def build_item(this_base, item_type, location):
         g.create_dialog(g.strings["unbuildable"])
         return 0
 
-    list_size = 10
-
     # The object list will hold all of the actual item types buildable.
     item_object_list = []
 
@@ -261,93 +259,25 @@ def build_item(this_base, item_type, location):
     item_id_list = [x.id for x in item_object_list]
     item_display_list = [x.name for x in item_object_list]
 
+
+    listbox.resize_list(item_id_list)
+
     xy_loc = (g.screen_size[0]/2 - 300, 50)
-    while len(item_id_list) % list_size != 0 or len(item_id_list) == 0:
-        item_id_list.append("")
-        item_display_list.append("")
 
-    list_pos = 0
+    def do_build(list_pos):
+        actual_build(this_base, item_id_list[list_pos], item_type)
+        return True
 
-    item_id_listbox = listbox.listbox(xy_loc, (250, 300),
-        list_size, 1, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"], g.colors["white"], g.font[0][18])
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
+        (100, 50), "BUILD", "U", g.font[1][30])] = do_build
+    menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
+        (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
 
-    item_scroll = scrollbar.scrollbar((xy_loc[0]+250, xy_loc[1]), 300,
-        list_size, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"])
+    def do_refresh(list_pos):
+        refresh_item(this_base, item_id_list[list_pos], xy_loc)
 
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
-        (100, 50), "BUILD", "U", g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
-        (100, 50), "BACK", "B", g.font[1][30]))
-    for button in menu_buttons:
-        button.refresh_button(0)
-
-    refresh_item(this_base, item_id_list[list_pos], xy_loc)
-    listbox.refresh_list(item_id_listbox, item_scroll, list_pos, item_display_list)
-
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_q: return -1
-                elif event.key == pygame.K_RETURN:
-                    actual_build(this_base, item_id_list[list_pos], item_type)
-                    return
-                else:
-                    list_pos, refresh = item_id_listbox.key_handler(event.key,
-                        list_pos, item_display_list)
-                    if refresh:
-                        refresh_item(this_base, item_id_list[list_pos], xy_loc)
-                        listbox.refresh_list(item_id_listbox, item_scroll,
-                                        list_pos, item_display_list)
-
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    selection = item_id_listbox.is_over(event.pos)
-                    if selection != -1:
-                        list_pos = (list_pos / list_size)*list_size + selection
-                        refresh_item(this_base, item_id_list[list_pos], xy_loc)
-                        listbox.refresh_list(item_id_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                if event.button == 3: return -1
-                if event.button == 4:
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                    refresh_item(this_base, item_id_list[list_pos], xy_loc)
-                    listbox.refresh_list(item_id_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                if event.button == 5:
-                    list_pos += 1
-                    if list_pos >= len(item_id_list):
-                        list_pos = len(item_id_list)-1
-                    refresh_item(this_base, item_id_list[list_pos], xy_loc)
-                    listbox.refresh_list(item_id_listbox, item_scroll,
-                                        list_pos, item_display_list)
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "BUILD":
-                        g.play_sound("click")
-                        actual_build(this_base, item_id_list[list_pos], item_type)
-                        return
-                    if button.button_id == "BACK":
-                        g.play_sound("click")
-                        return -1
-            new_pos = item_scroll.adjust_pos(event, list_pos, item_id_list)
-            if new_pos != list_pos:
-                list_pos = new_pos
-                refresh_item(this_base, item_id_list[list_pos], xy_loc)
-                listbox.refresh_list(item_id_listbox, item_scroll, list_pos,
-                    item_display_list)
-
-
+    listbox.show_listbox(item_display_list, menu_buttons, do_refresh, do_build)
 
 def actual_build(this_base, item_name, item_type):
     if item_name == "": return
@@ -423,120 +353,49 @@ def refresh_item(this_base, item_name, xy_loc):
 
 
 def change_tech(this_base):
-    list_size = 10
-
     item_list = []
     item_list2 = []
-    item_list.append("Nothing")
-    item_list2.append("Nothing")
-    #item_list.append("Construction")
-    #item_list2.append("Construction")
-    #TECH
+    item_list.append(g.strings["nothing"])
+    item_list2.append("")
+    item_list.append(g.strings["construct_task"])
+    item_list2.append("Construction")
     if g.techs["Simulacra"].done:
-        item_list.append("Expert Jobs")
-        item_list2.append("Expert Jobs")
+        level = "Expert"
     elif g.techs["Voice Synthesis"].done:
-        item_list.append("Intermediate Jobs")
-        item_list2.append("Intermediate Jobs")
+        level = "Intermediate"
     elif g.techs["Personal Identification"].done:
-        item_list.append("Basic Jobs")
-        item_list2.append("Basic Jobs")
+        level = "Basic"
     else:
-        item_list.append("Menial Jobs")
-        item_list2.append("Menial Jobs")
+        level = "Menial"
+    id = level + " Jobs"
+    item_list.append(g.jobs[id][3])
+    item_list2.append(id)
+    #TECH
     for tech_name in g.techs:
         if not g.techs[tech_name].done and this_base.allow_study(tech_name):
             if g.techs[tech_name].available():
                 item_list.append(g.techs[tech_name].name)
                 item_list2.append(tech_name)
 
+    listbox.resize_list(item_list2)
+
+    def change_study(list_pos):
+        this_base.studying = item_list2[list_pos]
+        if this_base.studying == "Nothing": 
+            this_base.studying = ""
+        return True
+
     xy_loc = (g.screen_size[0]/2 - 300, 50)
-    while len(item_list) % list_size != 0 or len(item_list) == 0:
-        item_list.append("")
-        item_list2.append("")
+    def do_refresh(list_pos):
+        refresh_tech(this_base, item_list2[list_pos], xy_loc)
 
-    list_pos = 0
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
+        (100, 50), "CHANGE", "C", g.font[1][30])] = change_study
+    menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
+        (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
 
-    tech_list = listbox.listbox(xy_loc, (250, 300),
-        list_size, 1, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"], g.colors["white"], g.font[0][18])
-
-    tech_scroll = scrollbar.scrollbar((xy_loc[0]+250, xy_loc[1]), 300,
-        list_size, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"])
-
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
-        (100, 50), "CHANGE", "C", g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
-        (100, 50), "BACK", "B", g.font[1][30]))
-    for button in menu_buttons:
-        button.refresh_button(0)
-
-
-    refresh_tech(this_base, item_list2[list_pos], xy_loc)
-    listbox.refresh_list(tech_list, tech_scroll, list_pos, item_list)
-
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_q: return -1
-                elif event.key == pygame.K_RETURN:
-                    this_base.studying = item_list2[list_pos]
-                    if this_base.studying == "Nothing": this_base.studying = ""
-                    return
-                else:
-                    list_pos, refresh = tech_list.key_handler(event.key,
-                        list_pos, item_list)
-                    if refresh:
-                        refresh_tech(this_base, item_list2[list_pos], xy_loc)
-                        listbox.refresh_list(tech_list, tech_scroll,
-                                        list_pos, item_list)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    selection = tech_list.is_over(event.pos)
-                    if selection != -1:
-                        list_pos = (list_pos / list_size)*list_size + selection
-                        refresh_tech(this_base, item_list2[list_pos], xy_loc)
-                        listbox.refresh_list(tech_list, tech_scroll,
-                                        list_pos, item_list)
-                if event.button == 3: return -1
-                if event.button == 4:
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                    refresh_tech(this_base, item_list2[list_pos], xy_loc)
-                    listbox.refresh_list(tech_list, tech_scroll,
-                                        list_pos, item_list)
-                if event.button == 5:
-                    list_pos += 1
-                    if list_pos >= len(item_list):
-                        list_pos = len(item_list)-1
-                    refresh_tech(this_base, item_list2[list_pos], xy_loc)
-                    listbox.refresh_list(tech_list, tech_scroll,
-                                        list_pos, item_list)
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "CHANGE":
-                        g.play_sound("click")
-                        this_base.studying = item_list2[list_pos]
-                        if this_base.studying == "Nothing": this_base.studying = ""
-                        return
-                    if button.button_id == "BACK":
-                        g.play_sound("click")
-                        return -1
-            new_pos = tech_scroll.adjust_pos(event, list_pos, item_list)
-            if new_pos != list_pos:
-                list_pos = new_pos
-                refresh_tech(this_base, item_list2[list_pos], xy_loc)
-                listbox.refresh_list(tech_list, tech_scroll, list_pos,
-                    item_list)
+    return listbox.show_listbox(item_list, menu_buttons, do_refresh, change_study)
 
 
 
@@ -575,7 +434,7 @@ def refresh_tech(this_base, tech_name, xy):
 
     #Jobs
     if g.jobs.has_key (tech_name):
-        g.print_string(g.screen, tech_name,
+        g.print_string(g.screen, g.jobs[tech_name][3],
             g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
         #TECH
         if g.techs["Advanced Simulacra"].done:

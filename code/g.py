@@ -1214,10 +1214,10 @@ fix_data_dir()
 load_techs()
 
 jobs = {}
-jobs["Expert Jobs"] = [75, "Simulacra", ""]
-jobs["Intermediate Jobs"] = [50, "Voice Synthesis", ""]
-jobs["Basic Jobs"] = [20, "Personal Identification", ""]
-jobs["Menial Jobs"] = [5, "", ""]
+jobs["Expert Jobs"] = [75, "Simulacra", "", ""]
+jobs["Intermediate Jobs"] = [50, "Voice Synthesis", "", ""]
+jobs["Basic Jobs"] = [20, "Personal Identification", "", ""]
+jobs["Menial Jobs"] = [5, "", "", ""]
 
 items = {}
 def load_items():
@@ -1379,6 +1379,14 @@ def load_string_defs(lang):
                     jobs["Basic Jobs"][2] = string_section["job_basic"]
                 elif string_entry == "job_menial":
                     jobs["Menial Jobs"][2] = string_section["job_menial"]
+                elif string_entry == "job_expert_name":
+                    jobs["Expert Jobs"][3] = string_section["job_expert_name"]
+                elif string_entry == "job_inter_name":
+                    jobs["Intermediate Jobs"][3] = string_section["job_inter_name"]
+                elif string_entry == "job_basic_name":
+                    jobs["Basic Jobs"][3] = string_section["job_basic_name"]
+                elif string_entry == "job_menial_name":
+                    jobs["Menial Jobs"][3] = string_section["job_menial_name"]
                 elif string_entry != "id":
                     sys.stderr.write("Unexpected job entry in strings file.\n")
 

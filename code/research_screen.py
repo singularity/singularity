@@ -41,114 +41,42 @@ def main_research_screen():
     g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1,
             xstart+g.screen_size[1]/5-2, 48))
 
-    list_size = 10
-
     xy_loc = (10, 70)
 
-    list_pos = 0
+    def rebuild_list():
+        global item_list, item_display_list, item_CPU_list, free_CPU
+        item_list, new_item_display_list, item_CPU_list, free_CPU = \
+                                refresh_screen(menu_buttons, 10)
+        # By doing it this way, we modify the existing list, which updates
+        # the listbox.
+        item_display_list[:] = new_item_display_list
 
-    item_listbox = listbox.listbox(xy_loc, (230, 300),
-        list_size, 1, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"], g.colors["white"], g.font[0][18])
+    def do_stop(list_pos):
+        kill_tech(item_list[list_pos])
+        rebuild_list()
 
-    item_scroll = scrollbar.scrollbar((xy_loc[0]+230, xy_loc[1]), 300,
-        list_size, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"])
+    def do_assign(list_pos):
+        assign_tech(free_CPU)
+        rebuild_list()
 
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", "B", g.font[1][20]))
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
+        "BACK", "B", g.font[1][20])] = listbox.exit
 
-    menu_buttons.append(buttons.make_norm_button((20, 390), (80, 25),
-        "STOP", "S", g.font[1][20]))
+    menu_buttons[buttons.make_norm_button((20, 390), (80, 25),
+        "STOP", "S", g.font[1][20])] = do_stop
 
-    menu_buttons.append(buttons.make_norm_button((xstart+5, ystart+20),
-        (90, 25), "ASSIGN", "A", g.font[1][20]))
+    menu_buttons[buttons.make_norm_button((xstart+5, ystart+20),
+        (90, 25), "ASSIGN", "A", g.font[1][20])] = do_assign
 
-    item_list, item_display_list, item_CPU_list, free_CPU = \
-                            refresh_screen(menu_buttons, list_size)
+    global item_display_list
+    item_display_list = []
+    rebuild_list()
 
-    sel_button = -1
-# 	for button in menu_buttons:
-# 		button.refresh_button(0)
-    refresh_research(item_list[0], item_CPU_list[0])
-    listbox.refresh_list(item_listbox, item_scroll, list_pos, item_display_list)
+    def do_refresh(list_pos):
+        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
 
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_q: return -1
-                elif event.key == pygame.K_RETURN:
-                    if kill_tech(item_list[list_pos]): return 1
-                    item_list, item_display_list, item_CPU_list, free_CPU = \
-                                    refresh_screen(menu_buttons, list_size)
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                            list_pos, item_display_list)
-                else:
-                    list_pos, refresh = item_listbox.key_handler(event.key,
-                        list_pos, item_list)
-                    if refresh:
-                        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                            list_pos, item_display_list)
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    selected = item_listbox.is_over(event.pos)
-                    if selected != -1:
-                        list_pos = (list_pos / list_size)*list_size + selected
-                        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                if event.button == 3: return -1
-                if event.button == 4:
-                    list_pos -= 1
-                    if list_pos <= 0:
-                        list_pos = 0
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-                if event.button == 5:
-                    list_pos += 1
-                    if list_pos >= len(item_list):
-                        list_pos = len(item_list)-1
-                    refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                    listbox.refresh_list(item_listbox, item_scroll,
-                                        list_pos, item_display_list)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "BACK":
-                        g.play_sound("click")
-                        return 0
-                    if button.button_id == "STOP":
-                        g.play_sound("click")
-                        #returning 1 causes the caller to refresh the list of
-                        #techs
-                        if kill_tech(item_list[list_pos]): return 1
-                        item_list, item_display_list, item_CPU_list, free_CPU = \
-                                refresh_screen(menu_buttons, list_size)
-                        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                                list_pos, item_display_list)
-                    if button.button_id == "ASSIGN":
-                        g.play_sound("click")
-                        if assign_tech(free_CPU): return 1
-                        item_list, item_display_list, item_CPU_list, free_CPU = \
-                                refresh_screen(menu_buttons, list_size)
-                        refresh_research(item_list[0], item_CPU_list[0])
-                        listbox.refresh_list(item_listbox, item_scroll,
-                                list_pos, item_display_list)
-            new_pos = item_scroll.adjust_pos(event, list_pos, item_display_list)
-            if new_pos != list_pos:
-                list_pos = new_pos
-                refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-                listbox.refresh_list(item_listbox, item_scroll,
-                        list_pos, item_display_list)
+    return listbox.show_listbox(item_display_list, menu_buttons, do_refresh, do_stop, xy_loc, (230,300))
 
 def refresh_screen(menu_buttons, list_size):
     #Border
@@ -326,7 +254,8 @@ def assign_tech(free_CPU):
     #If the tech can be completed in only one day, remove unneeded bases.
     if g.techs.has_key(fake_base.studying):
         if total_cpu > g.techs[fake_base.studying].cost_left[1]:
-            while 1:
+            removed_base = True
+            while removed_base:
                 removed_base = False
                 for base_loc in g.bases:
                     for base in g.bases[base_loc]:
@@ -336,6 +265,5 @@ def assign_tech(free_CPU):
                                 total_cpu -= base.processor_time()
                                 base.studying = ""
                                 removed_base = True
-                if removed_base == False: break
 
     return return_val

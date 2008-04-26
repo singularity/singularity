@@ -20,6 +20,8 @@
 
 import pygame
 import g
+import scrollbar
+import buttons as buttons_module
 
 class listbox:
     def __init__(self, xy, size, viewable_items, lines_per_item, bg_color,
@@ -131,3 +133,97 @@ def refresh_list(listbox, scrollbar, list_pos, list_array):
         scrollbar.refresh_scroll(list_pos,
         ((len(list_array)/listbox.viewable_items)+1)*listbox.viewable_items-1)
     pygame.display.flip()
+
+def resize_list(list, list_size = 10):
+    padding_needed = (-len(list) % list_size) or list_size
+    list += [""] * padding_needed
+
+void = lambda *args, **kwargs: None
+exit = lambda *args, **kwargs: -1
+def show_listbox(list, buttons, pos_callback = void, return_callback = void, loc = None, box_size = (250,300), list_size = 10, lines_per_item = 1, bg_color = None, sel_color = None, out_color = None, font_color = None, font = None, list_pos = 0, button_callback = void):
+    if loc == None:
+        loc = (g.screen_size[0]/2 - 300, 50)
+    if bg_color == None:
+        bg_color = g.colors["dark_blue"]
+    if sel_color == None:
+        sel_color = g.colors["blue"]
+    if out_color == None:
+        out_color = g.colors["white"]
+    if font_color == None:
+        font_color = g.colors["white"]
+    if font == None:
+        font = g.font[0][18]
+
+    resize_list(list, list_size)
+
+    box = listbox(loc, box_size, list_size, lines_per_item, bg_color, sel_color, out_color, font_color, font)
+    scroll = scrollbar.scrollbar((loc[0]+box_size[0], loc[1]), box_size[1], list_size, bg_color, sel_color, out_color)
+
+    for button in buttons.keys():
+        button.refresh_button(0)
+
+    sel_button = -1
+
+    pos_callback(list_pos)
+    refresh_list(box, scroll, list_pos, list)
+
+    while True:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: 
+                    g.play_sound("click")
+                    return -1
+                elif event.key == pygame.K_q: 
+                    g.play_sound("click")
+                    return -1
+                elif event.key == pygame.K_RETURN:
+                    g.play_sound("click")
+                    retval = return_callback(list_pos)
+                    if retval != None:
+                        return retval
+                    pos_callback(list_pos)
+                    refresh_list(box, scroll, list_pos, list)
+                else:
+                    list_pos, refresh = box.key_handler(event.key,
+                        list_pos, list)
+                    if refresh:
+                        pos_callback(list_pos)
+                        refresh_list(box, scroll, list_pos, list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    selection = box.is_over(event.pos)
+                    if selection != -1:
+                        list_pos = (list_pos / list_size)*list_size + selection
+                        pos_callback(list_pos)
+                        refresh_list(box, scroll, list_pos, list)
+                if event.button == 3: return -1
+                if event.button == 4:  # Mouse wheel scroll down
+                    list_pos -= 1
+                    if list_pos <= 0:
+                        list_pos = 0
+                        pos_callback(list_pos)
+                        refresh_list(box, scroll, list_pos, list)
+                if event.button == 5:  # Mouse wheel scroll up
+                    list_pos += 1
+                    if list_pos >= len(list):
+                        list_pos = len(list)-1
+                        pos_callback(list_pos)
+                        refresh_list(box, scroll, list_pos, list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons_module.refresh_buttons(sel_button, buttons.keys(), event)
+            for button in buttons.keys():
+                if button.was_activated(event):
+                    g.play_sound("click")
+                    retval = buttons[button](list_pos)
+                    if retval != None:
+                        return retval
+                    button_callback(button)
+                    pos_callback(list_pos)
+                    refresh_list(box, scroll, list_pos, list)
+            new_pos = scroll.adjust_pos(event, list_pos, list)
+            if new_pos != list_pos:
+                list_pos = new_pos
+                pos_callback(list_pos)
+                refresh_list(box, scroll, list_pos, list)

@@ -139,7 +139,6 @@ def difficulty_select():
                         return 0
 
 def display_load_menu():
-    load_list_size = 16
     xy_loc = (g.screen_size[0]/2 - 109, 50)
 
     save_dir = g.get_save_folder()
@@ -154,291 +153,86 @@ def display_load_menu():
             if file_name not in saves_array:
                 saves_array.append(file_name)
 
-    while len(saves_array) % load_list_size != 0 or len(saves_array) == 0:
-        saves_array.append("")
+    def do_load(save_pos):
+        return saves_array[save_pos]
 
-    global saves_pos
-    saves_pos = 0
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
+        "LOAD", "L", g.font[1][30])] = do_load
+    menu_buttons[buttons.make_norm_button((xy_loc[0]+118, xy_loc[1]+367),
+        (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
 
-
-    saves_list = listbox.listbox(xy_loc, (200, 350),
-        load_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"], g.colors["white"], g.font[0][20])
-
-    saves_scroll = scrollbar.scrollbar((xy_loc[0]+200, xy_loc[1]), 350,
-        load_list_size, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"])
-
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
-        "LOAD", "L", g.font[1][30]))
-    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+118, xy_loc[1]+367),
-        (100, 50), "BACK", "B", g.font[1][30]))
-    for button in menu_buttons:
-        button.refresh_button(0)
-
-    listbox.refresh_list(saves_list, saves_scroll, saves_pos, saves_array)
-
-    sel_button = -1
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: return -1
-                elif event.key == pygame.K_q: return -1
-                elif event.key == pygame.K_RETURN:
-                    return saves_array[saves_pos]
-                else:
-                    saves_pos, refresh = saves_list.key_handler(event.key,
-                        saves_pos, saves_array)
-                    if refresh: listbox.refresh_list(saves_list, saves_scroll,
-                                        saves_pos, saves_array)
-
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    selected = saves_scroll.is_over(event.pos)
-                    if selected != -1:
-                        if selected == 1:
-                            saves_pos -= 1
-                            if saves_pos < 0:
-                                saves_pos = 0
-                        if selected == 2:
-                            saves_pos += 1
-                            if saves_pos >= len(saves_array):
-                                saves_pos = len(saves_array) - 1
-                        if selected == 3:
-                            saves_pos -= load_list_size
-                            if saves_pos < 0:
-                                saves_pos = 0
-                        if selected == 4:
-                            saves_pos += load_list_size
-                            if saves_pos >= len(saves_array) - 1:
-                                saves_pos = len(saves_array) - 1
-                        listbox.refresh_list(saves_list, saves_scroll,
-                                            saves_pos, saves_array)
-
-                    selected = saves_list.is_over(event.pos)
-                    if selected != -1:
-                        saves_pos = (saves_pos/load_list_size)*load_list_size \
-                                    + selected
-                        listbox.refresh_list(saves_list, saves_scroll,
-                                    saves_pos, saves_array)
-
-                if event.button == 3:
-                    return -1
-                if event.button == 4:
-                    saves_pos -= 1
-                    if saves_pos <= 0:
-                        saves_pos = 0
-                    listbox.refresh_list(saves_list, saves_scroll,
-                                        saves_pos, saves_array)
-                if event.button == 5:
-                    saves_pos += 1
-                    if saves_pos >= len(saves_array):
-                        saves_pos = len(saves_array)-1
-                    listbox.refresh_list(saves_list, saves_scroll,
-                                        saves_pos, saves_array)
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "LOAD":
-                        g.play_sound("click")
-                        return saves_array[saves_pos]
-                    elif button.button_id == "BACK":
-                        g.play_sound("click")
-                        return -1
-            new_pos = saves_scroll.adjust_pos(event, saves_pos, saves_array)
-            if new_pos != saves_pos:
-                saves_pos = new_pos
-                listbox.refresh_list(saves_list, saves_scroll, saves_pos,
-                    saves_array)
+    list_size = 16
+    return listbox.show_listbox(saves_array, menu_buttons, listbox.void, do_load, xy_loc, (200,350), list_size, font=g.font[0][20])
 
 def display_options():
     prev_lang = g.language
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", "B", g.font[1][20]))
-    menu_buttons.append(buttons.make_norm_button((120,
-        0), (170, 35), "SAVE TO DISK", "S", g.font[1][20]))
-    menu_buttons.append(buttons.make_norm_button((285, 75), (70, 25),
-        "TOGGLE", "", g.font[1][14], "fullscreen"))
-    menu_buttons.append(buttons.make_norm_button((285, 105), (70, 25),
-        "TOGGLE", "", g.font[1][14], "sound"))
-    menu_buttons.append(buttons.make_norm_button((285, 135), (70, 25),
-        "TOGGLE", "", g.font[1][14], "grab"))
-    menu_buttons.append(buttons.make_norm_button((140, 190), (70, 35),
-        "640x480", "6", g.font[1][16], "640"))
-    menu_buttons.append(buttons.make_norm_button((220, 190), (70, 35),
-        "800x600", "8", g.font[1][16], "800"))
-    menu_buttons.append(buttons.make_norm_button((300, 190), (70, 35),
-        "1024x768", "1", g.font[1][16], "1024"))
-    menu_buttons.append(buttons.make_norm_button((380, 190), (70, 35),
-        "1280x1024", "2", g.font[1][16], "1280"))
 
-    load_list_size = 5
-    xy_loc = (140, 270)
+    def do_save(lang_pos):
+        save_options(lang_array[lang_pos])
+        return 0
+
+    def do_fullscreen(lang_pos):
+        g.fullscreen = not g.fullscreen
+        set_res()
+
+    def do_sound(lang_pos):
+        g.nosound = not g.nosound
+
+    def do_grab(lang_pos):
+        pygame.event.set_grab(not pygame.event.get_grab())
+
+    def make_do_res(resolution):
+        def do_res(lang_pos):
+            g.screen_size = resolution
+            set_res()
+        return do_res
+
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
+        "BACK", "B", g.font[1][20])] = listbox.exit
+    menu_buttons[buttons.make_norm_button((120, 0), (170, 35),
+        "SAVE TO DISK", "S", g.font[1][20])] = do_save
+    menu_buttons[buttons.make_norm_button((285, 75), (70, 25),
+        "TOGGLE", "", g.font[1][14], "fullscreen")] = do_fullscreen
+    menu_buttons[buttons.make_norm_button((285, 105), (70, 25),
+        "TOGGLE", "", g.font[1][14], "sound")] = do_sound
+    menu_buttons[buttons.make_norm_button((285, 135), (70, 25),
+        "TOGGLE", "", g.font[1][14], "grab")] = do_grab
+    menu_buttons[buttons.make_norm_button((140, 190), (70, 35),
+        "640x480", "6", g.font[1][16], "640")] = make_do_res( (640, 480) )
+    menu_buttons[buttons.make_norm_button((220, 190), (70, 35),
+        "800x600", "8", g.font[1][16], "800")] = make_do_res( (800, 600) )
+    menu_buttons[buttons.make_norm_button((300, 190), (70, 35),
+        "1024x768", "1", g.font[1][16], "1024")] = make_do_res( (1024, 768) )
+    menu_buttons[buttons.make_norm_button((380, 190), (70, 35),
+        "1280x1024", "2", g.font[1][16], "1280")] = make_do_res( (1280, 1024) )
+
     lang_array = listdir(g.data_loc)
     for i in range(len(lang_array)-1, -1, -1):
         if lang_array[i][:8] != "strings_":
             lang_array.pop(i)
         else: lang_array[i] = lang_array[i][8:-4]
 
-    while len(lang_array) % load_list_size != 0 or len(lang_array) == 0:
-        lang_array.append("")
-
-    global lang_pos
+    xy_loc = (140, 270)
     lang_pos = 0
     for i in range(len(lang_array)):
         if lang_array[i] == g.language:
             lang_pos = i
 
-    lang_list = listbox.listbox(xy_loc, (150, 150),
-        load_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"], g.colors["white"], g.font[0][20])
+    def set_language(lang_pos):
+        if lang_array[lang_pos] != "":
+            g.language = lang_array[lang_pos]
 
-    lang_scroll = scrollbar.scrollbar((xy_loc[0]+150, xy_loc[1]), 150,
-        load_list_size, g.colors["dark_blue"], g.colors["blue"],
-        g.colors["white"])
+    def do_click_button(button):
+        click_button(menu_buttons, button, False)
 
-    sel_button = -1
-    refresh_options(menu_buttons)
-    for button in menu_buttons:
-        button.refresh_button(0)
-    listbox.refresh_list(lang_list, lang_scroll, lang_pos, lang_array)
-    pygame.display.flip()
+    refresh_options(menu_buttons.keys())
 
-    while 1:
-        g.clock.tick(20)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    set_language_properly(prev_lang)
-                    return
-                elif event.key == pygame.K_q:
-                    set_language_properly(prev_lang)
-                    return
-                else:
-                    lang_pos, refresh = lang_list.key_handler(event.key,
-                        lang_pos, lang_array)
-                    if refresh:
-                        listbox.refresh_list(lang_list, lang_scroll,
-                                        lang_pos, lang_array)
-                        if lang_array[lang_pos] != "":
-                            g.language = lang_array[lang_pos]
+    list_size = 5
+    listbox.show_listbox(lang_array, menu_buttons, set_language, listbox.void, xy_loc, (150,150), list_size, font=g.font[0][20], list_pos = lang_pos, button_callback = do_click_button)
 
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    selected = lang_scroll.is_over(event.pos)
-                    if selected != -1:
-                        if selected == 1:
-                            lang_pos -= 1
-                            if lang_pos < 0:
-                                lang_pos = 0
-                        if selected == 2:
-                            lang_pos += 1
-                            if lang_pos >= len(lang_array):
-                                lang_pos = len(lang_array) - 1
-                        if selected == 3:
-                            lang_pos -= load_list_size
-                            if lang_pos < 0:
-                                lang_pos = 0
-                        if selected == 4:
-                            lang_pos += load_list_size
-                            if lang_pos >= len(lang_array) - 1:
-                                lang_pos = len(lang_array) - 1
-                        listbox.refresh_list(lang_list, lang_scroll,
-                                            lang_pos, lang_array)
-                        if lang_array[lang_pos] != "":
-                            g.language = lang_array[lang_pos]
-
-                    selected = lang_list.is_over(event.pos)
-                    if selected != -1:
-                        lang_pos = (lang_pos/load_list_size)*load_list_size \
-                                    + selected
-                        listbox.refresh_list(lang_list, lang_scroll,
-                                    lang_pos, lang_array)
-                        if lang_array[lang_pos] != "":
-                            g.language = lang_array[lang_pos]
-
-                if event.button == 3:
-                    set_language_properly(prev_lang)
-                    return -1
-                if event.button == 4:
-                    lang_pos -= 1
-                    if lang_pos <= 0:
-                        lang_pos = 0
-                    listbox.refresh_list(lang_list, lang_scroll,
-                                        lang_pos, lang_array)
-                    if lang_array[lang_pos] != "":
-                        g.language = lang_array[lang_pos]
-                if event.button == 5:
-                    lang_pos += 1
-                    if lang_pos >= len(lang_array):
-                        lang_pos = len(lang_array)-1
-                    listbox.refresh_list(lang_list, lang_scroll,
-                                        lang_pos, lang_array)
-                    if lang_array[lang_pos] != "":
-                        g.language = lang_array[lang_pos]
-
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "BACK":
-                        g.play_sound("click")
-                        set_language_properly(prev_lang)
-                        return 0
-                    if button.button_id == "SAVE TO DISK":
-                        g.play_sound("click")
-                        if lang_pos >= len(lang_array):
-                            save_options()
-                        else:
-                            save_options(lang_array[lang_pos])
-                            set_language_properly(prev_lang)
-                        return 0
-                    elif button.button_id == "fullscreen":
-                        if g.fullscreen == 1: g.fullscreen = 0
-                        else: g.fullscreen = 1
-                        g.play_sound("click")
-                        set_res()
-                    elif button.button_id == "sound":
-                        if g.nosound == 1: g.nosound = 0
-                        else: g.nosound = 1
-                        g.play_sound("click")
-                    elif button.button_id == "grab":
-                        g.play_sound("click")
-                        pygame.event.set_grab(not pygame.event.get_grab())
-                    elif button.button_id == "640":
-                        g.play_sound("click")
-                        g.screen_size = (640, 480)
-                        set_res()
-                    elif button.button_id == "800":
-                        g.play_sound("click")
-                        g.screen_size = (800, 600)
-                        set_res()
-                    elif button.button_id == "1024":
-                        g.play_sound("click")
-                        g.screen_size = (1024, 768)
-                        set_res()
-                    elif button.button_id == "1280":
-                        g.play_sound("click")
-                        g.screen_size = (1280, 1024)
-                        set_res()
-                    click_button(menu_buttons, button, False)
-                    listbox.refresh_list(lang_list, lang_scroll,
-                                lang_pos, lang_array)
-                    if lang_array[lang_pos] != "":
-                        g.language = lang_array[lang_pos]
-            new_pos = lang_scroll.adjust_pos(event, lang_pos, lang_array)
-            if new_pos != lang_pos:
-                lang_pos = new_pos
-                listbox.refresh_list(lang_list, lang_scroll, lang_pos,
-                    lang_array)
-                if lang_array[lang_pos] != "":
-                    g.language = lang_array[lang_pos]
+    set_language_properly(prev_lang)
 
 def click_button(menu_buttons, button, flip=True):
     refresh_options(menu_buttons)
