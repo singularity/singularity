@@ -50,14 +50,20 @@ class group(object):
         self.alter_suspicion(self.discover_suspicion)
 
 class player_class(object):
-    def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0):
+    def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0,
+                 difficulty = 5):
+        self.difficulty = difficulty
+
         self.time_sec = time_sec
         self.time_min = time_min
         self.time_hour = time_hour
         self.time_day = time_day
         self.make_raw_times()
 
-        self.had_grace = self.in_grace_period()
+        if self.raw_sec == 0:
+            self.had_grace = True
+        else:
+            self.had_grace = self.in_grace_period()
 
         self.cash = cash
         self.interest_rate = 1
