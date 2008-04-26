@@ -663,7 +663,7 @@ def save_game(savegame_name):
     save_loc = os.path.join(save_dir, savegame_name + ".sav")
     savefile=open(save_loc, 'w')
     #savefile version; update whenever the data saved changes.
-    pickle.dump("singularity_savefile_r3", savefile)
+    pickle.dump("singularity_savefile_r4_pre", savefile)
 
     global default_savegame_name
     default_savegame_name = savegame_name
@@ -680,9 +680,7 @@ def save_game(savegame_name):
     pickle.dump(pl.labor_bonus, savefile)
     pickle.dump(pl.job_bonus, savefile)
 
-    pickle.dump(pl.discover_bonus, savefile)
-    pickle.dump(pl.suspicion_bonus, savefile)
-    pickle.dump(pl.suspicion, savefile)
+    pickle.dump(pl.groups, savefile)
 
     pickle.dump(curr_speed, savefile)
 
@@ -759,7 +757,8 @@ def load_game(loadgame_name):
         # Post-change supported file formats.
         "singularity_savefile_r1",
         "singularity_savefile_r2",
-        "singularity_savefile_r3"
+        "singularity_savefile_r3_pre",
+        "singularity_savefile_r4_pre"
     )
     if load_version not in valid_savefile_versions:
         loadfile.close()
@@ -780,16 +779,23 @@ def load_game(loadgame_name):
     pl.cpu_for_day = pickle.load(loadfile)
     pl.labor_bonus = pickle.load(loadfile)
     pl.job_bonus = pickle.load(loadfile)
-    pl.discover_bonus = pickle.load(loadfile)
-    pl.suspicion_bonus = pickle.load(loadfile)
-    if (load_version == "singularity_0.21" or
-            load_version == "singularity_0.21a" or
-            load_version == "singularity_0.22" or
-            load_version == "singularity_savefile_r1"):
-        pl.suspicion_bonus = (149+pl.suspicion_bonus[0],
-                99+pl.suspicion_bonus[1], 49+pl.suspicion_bonus[2],
-                199+pl.suspicion_bonus[3])
-    pl.suspicion = pickle.load(loadfile)
+    if load_version != "singularity_savefile_r4_pre":
+        discover_bonus = pickle.load(loadfile)
+        suspicion_bonus = pickle.load(loadfile)
+        if (load_version in ("singularity_0.21", "singularity_0.21a", 
+                             "singularity_0.22", "singularity_savefile_r1")):
+            suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1], 
+                               49+suspicion_bonus[2], 199+suspicion_bonus[3])
+        suspicion = pickle.load(loadfile)
+
+        translation = ["news", "science", "covert", "public"]
+        for index in range(4):
+            group = pl.groups[translation[index]]
+            group.suspicion = suspicion[index]
+            group.suspicion_decay = suspicion_bonus[index]
+            group.discover_bonus = discover_bonus[index]
+    else:
+        pl.groups = pickle.load(loadfile)
 
     global curr_speed; curr_speed = pickle.load(loadfile)
     global techs
@@ -861,6 +867,13 @@ def load_game(loadgame_name):
             built_date = pickle.load(loadfile)
             base_studying = pickle.load(loadfile)
             base_suspicion = pickle.load(loadfile)
+            if load_version != "singularity_savefile_r4_pre":
+                new_base_suspicion = {}
+                translation = ["news", "science", "covert", "public"]
+                for index in range(4):
+                    new_base_suspicion[translation[index]] = \
+                                                        base_suspicion[index]
+                base_suspicion = new_base_suspicion
             base_built = pickle.load(loadfile)
             base_cost = pickle.load(loadfile)
             bases[base_loc].append(base.base(base_ID, base_name,
@@ -1026,7 +1039,7 @@ def load_bases():
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
         check_required_fields(base_name,
-         ("id", "cost", "size", "allowed", "d_chance", "maint"), "Base")
+         ("id", "cost", "size", "allowed", "detect_chance", "maint"), "Base")
 
         # Start converting fields read from the file into valid entries.
         base_size = int(base_name["size"])
@@ -1043,11 +1056,14 @@ def load_bases():
             sys.exit(1)
         maint_list = [int(x) for x in maint_list]
 
-        chance_list = base_name["d_chance"]
-        if type(chance_list) != list or len(chance_list) != 4:
-            sys.stderr.write("Error with d_chance given: %s\n" % repr(chance_list))
+        chance_list = base_name["detect_chance"]
+        if type(chance_list) != list:
+            sys.stderr.write("Error with detect_chance given: %s\n" % repr(chance_list))
             sys.exit(1)
-        chance_list = [int(x) for x in chance_list]
+        chance_dict = {}
+        for index in range(len(chance_list)):
+            key, value = chance_list[index].split(":")
+            chance_dict[key] = int(value)
 
         if base_name.has_key("pre"):
             base_pre = base_name["pre"]
@@ -1062,14 +1078,14 @@ def load_bases():
             allowed_list = [base_name["allowed"]]
 
         base_type[base_name["id"]]=base.base_type(base_name["id"], "", base_size,
-         allowed_list, chance_list, cost_list, base_pre, maint_list)
+         allowed_list, chance_dict, cost_list, base_pre, maint_list)
 
 #         base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 #         "This base is outside the universe itself, "+
 #         "making it safe to conduct experiments that may destroy reality.",
 #         50,
 #         ["TRANSDIMENSIONAL"],
-#         (0, 250, 0, 0),
+#         {"science": 250}
 #         (8000000000000, 60000000, 100), "Space-Time Manipulation",
 #         (5000000000, 300000, 0))
 

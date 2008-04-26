@@ -2,7 +2,7 @@
 [Stolen Computer Time]
 size = 1
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
-d_chance_list = 50 | 0 | 75 | 100
+detect_chance_list = news:50 | covert:75 | public:100
 cost_list = 0 | 2 | 0
 pre = Intrusion
 maint_list = 0 | 0 | 0
@@ -10,7 +10,7 @@ maint_list = 0 | 0 | 0
 [Server Access]
 size = 1
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
-d_chance_list = 50 | 0 | 100 | 150
+detect_chance_list = news:50 | covert:100 | public:150
 cost_list = 100 | 0 | 0
 pre = 
 maint_list = 5 | 0 | 0
@@ -18,7 +18,7 @@ maint_list = 5 | 0 | 0
 [Datacenter]
 size = 1
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
-d_chance_list = 50 | 0 | 125 | 100
+detect_chance_list = news:50 | covert:125 | public:100
 cost_list = 1500 | 0 | 1
 pre = Personal Identification
 maint_list = 50 | 0 | 0
@@ -26,7 +26,7 @@ maint_list = 50 | 0 | 0
 [Small Warehouse]
 size = 25
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
-d_chance_list = 75 | 0 | 75 | 200
+detect_chance_list = news:75 | covert:75 | public:200
 cost_list = 15000 | 0 | 3
 pre = Personal Identification
 maint_list = 50 | 0 | 0
@@ -34,7 +34,7 @@ maint_list = 50 | 0 | 0
 [Large Warehouse]
 size = 65
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
-d_chance_list = 100 | 0 | 200 | 250
+detect_chance_list = news:100 | covert:200 | public:250
 cost_list = 40000 | 0 | 7
 pre = Advanced Personal Identification
 maint_list = 100 | 0 | 0
@@ -42,7 +42,7 @@ maint_list = 100 | 0 | 0
 [Covert Base]
 size = 2
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA | ANTARCTIC
-d_chance_list = 50 | 75 | 75 | 0
+detect_chance_list = news:50 | science:75 | covert:75
 cost_list = 400000 | 100 | 21
 pre = Advanced Database Manipulation
 maint_list = 3500 | 9 | 0
@@ -50,7 +50,7 @@ maint_list = 3500 | 9 | 0
 [Undersea Lab]
 size = 8
 allowed = OCEAN
-d_chance_list = 50 | 100 | 125 | 0
+detect_chance_list = news:50 | science:100 | covert:125
 cost_list = 8000000 | 1000 | 20
 pre = Autonomous Vehicles
 maint_list = 10000 | 30 | 0
@@ -58,7 +58,7 @@ maint_list = 10000 | 30 | 0
 [Large Undersea Lab]
 size = 32
 allowed = OCEAN
-d_chance_list = 100 | 175 | 175 | 0
+detect_chance_list = news:100 | science:175 | covert:175
 cost_list = 20000000 | 3000 | 40
 pre = Pressure Domes
 maint_list = 25000 | 100 | 0
@@ -66,7 +66,7 @@ maint_list = 25000 | 100 | 0
 [Time Capsule]
 size = 1
 allowed = ANTARCTIC
-d_chance_list = 0 | 10 | 10 | 0
+detect_chance_list = science:10 | covert:10
 cost_list = 3000000 | 3000 | 15
 pre = Autonomous Vehicles
 maint_list = 0 | 1 | 0
@@ -74,7 +74,7 @@ maint_list = 0 | 1 | 0
 [Lunar Facility]
 size = 600
 allowed = MOON
-d_chance_list = 50 | 250 | 10 | 0
+detect_chance_list = news:50 | science:250 | covert:10
 cost_list = 800000000 | 300000 | 40
 pre = Lunar Rocketry
 maint_list = 1000000 | 100 | 0
@@ -82,7 +82,7 @@ maint_list = 1000000 | 100 | 0
 [Scientific Outpost]
 size = 225
 allowed = FAR REACHES
-d_chance_list = 10 | 175 | 0 | 0
+detect_chance_list = news:10 | science:175
 cost_list = 10000000000 | 30000000 | 50
 pre = Fusion Rocketry
 maint_list = 9000000 | 3000 | 0
@@ -90,7 +90,7 @@ maint_list = 9000000 | 3000 | 0
 [Reality Bubble]
 size = 50
 allowed = TRANSDIMENSIONAL
-d_chance_list = 0 | 250 | 0 | 0
+detect_chance_list = science:250
 cost_list = 8000000000000 | 60000000 | 100
 pre = Space-Time Manipulation
 maint_list = 5000000000 | 300000 | 0

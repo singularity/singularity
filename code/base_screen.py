@@ -151,12 +151,12 @@ def refresh_base(menu_buttons, this_base):
     menu_buttons[11].remake_button()
 
     #detection chance display
-    d_chance = this_base.get_d_chance()
+    detect_chance = this_base.get_detect_chance()
     menu_buttons[1].text = g.strings["detect_chance"]+" NEWS: "+ \
-        g.to_percent(d_chance[0])+"  SCIENCE: "+ \
-        g.to_percent(d_chance[1])+"  COVERT: "+ \
-        g.to_percent(d_chance[2])+"  PUBLIC: "+ \
-        g.to_percent(d_chance[3])
+        g.to_percent(detect_chance.get("news", 0))+"  SCIENCE: "+ \
+        g.to_percent(detect_chance.get("science", 0))+"  COVERT: "+ \
+        g.to_percent(detect_chance.get("covert", 0))+"  PUBLIC: "+ \
+        g.to_percent(detect_chance.get("public", 0))
     menu_buttons[1].remake_button()
 
     #research display

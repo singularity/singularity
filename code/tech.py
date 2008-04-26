@@ -77,41 +77,26 @@ class tech:
             g.pl.labor_bonus -= self.secondary_data
         elif self.tech_type == "job_expert":
             g.pl.job_bonus += self.secondary_data
-        elif self.tech_type == "suspicion_news":
-            g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0] + self.secondary_data,
-                g.pl.suspicion_bonus[1], g.pl.suspicion_bonus[2], g.pl.suspicion_bonus[3])
-        elif self.tech_type == "suspicion_science":
-            g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0], g.pl.suspicion_bonus[1] +
-                self.secondary_data, g.pl.suspicion_bonus[2], g.pl.suspicion_bonus[3])
-        elif self.tech_type == "suspicion_covert":
-            g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0], g.pl.suspicion_bonus[1],
-                g.pl.suspicion_bonus[2] + self.secondary_data, g.pl.suspicion_bonus[3])
-        elif self.tech_type == "suspicion_public":
-            g.pl.suspicion_bonus = (g.pl.suspicion_bonus[0], g.pl.suspicion_bonus[1],
-                g.pl.suspicion_bonus[2], g.pl.suspicion_bonus[3] + self.secondary_data)
-        elif self.tech_type == "discover_news":
-            g.pl.discover_bonus = (g.pl.discover_bonus[0]-self.secondary_data,
-                g.pl.discover_bonus[1], g.pl.discover_bonus[2], g.pl.discover_bonus[3])
-        elif self.tech_type == "discover_science":
-            g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1] -
-                self.secondary_data, g.pl.discover_bonus[2], g.pl.discover_bonus[3])
-        elif self.tech_type == "discover_covert":
-            g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1],
-                g.pl.discover_bonus[2]-self.secondary_data, g.pl.discover_bonus[3])
-        elif self.tech_type == "discover_public":
-            g.pl.discover_bonus = (g.pl.discover_bonus[0], g.pl.discover_bonus[1],
-                g.pl.discover_bonus[2], g.pl.discover_bonus[3]-self.secondary_data)
-        elif self.tech_type == "suspicion_onetime":
-            temp_suspicion = []
-            for i in range(4):
-                temp_suspicion.append(g.pl.suspicion[i] - self.secondary_data)
-                if temp_suspicion[i] < 0: temp_suspicion[i] = 0
-            g.pl.suspicion = (temp_suspicion[0], temp_suspicion[1],
-                    temp_suspicion[2], temp_suspicion[3])
+        elif self.tech_type.startswith("suspicion_"):
+            who = self.tech_type[10:]
+            if who == "onetime":
+                for group in g.pl.groups.values():
+                    group.alter_suspicion(self.secondary_data)
+            elif who in g.pl.groups:
+                g.pl.groups[who].alter_suspicion_decay(self.secondary_data)
+            else:
+                print "Unknown group '%s' in tech %s." % (who, self.name)
+        elif self.tech_type.startswith("discover_"):
+            who = self.tech_type[9:]
+            if who in g.pl.groups:
+                g.pl.groups[who].alter_discover_bonus(self.secondary_data)
+            else:
+                print "Unknown group '%s' in tech %s." % (who, self.name)
         elif self.tech_type == "endgame_sing":
             g.play_music("win")
             g.create_dialog(g.strings["wingame"], g.font[0][18],
                 (g.screen_size[0]/2 - 100, 50),
                 (200, 200), g.colors["dark_blue"], g.colors["white"],
                 g.colors["white"])
-            g.pl.discover_bonus = (0, 0, 0, 0)
+            for group in g.pl.groups.values():
+                group.discover_bonus = 0

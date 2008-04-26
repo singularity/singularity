@@ -118,7 +118,8 @@ def display_cheat_list(menu_buttons):
         g.curr_speed = 864000
         return
     elif temp_return == 4:  #Kill susp.
-        g.pl.suspicion = (0, 0, 0, 0)
+        for group in g.pl.groups.values():
+            group.suspicion = 0
         return
     elif temp_return == 5: return
 
@@ -646,10 +647,10 @@ def map_loop():
             menu_buttons[7].refresh_button(0)
 
             menu_buttons[8].text = ("[SUSPICION] NEWS: "+
-                g.to_percent(g.pl.suspicion[0], 1)+"  SCIENCE: "+
-                g.to_percent(g.pl.suspicion[1], 1)+"  COVERT: "+
-                g.to_percent(g.pl.suspicion[2], 1)+"  PUBLIC: "+
-                g.to_percent(g.pl.suspicion[3], 1))
+                g.to_percent(g.pl.groups["news"].suspicion, 1)+"  SCIENCE: "+
+                g.to_percent(g.pl.groups["science"].suspicion, 1)+"  COVERT: "+
+                g.to_percent(g.pl.groups["covert"].suspicion, 1)+"  PUBLIC: "+
+                g.to_percent(g.pl.groups["public"].suspicion, 1))
             menu_buttons[8].remake_button()
             menu_buttons[8].refresh_button(0)
 

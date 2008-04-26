@@ -25,14 +25,14 @@ import g
 #cost = (money, ptime, labor)
 #detection = (news, science, covert, person)
 class base_type:
-    def __init__(self, name, descript, size, regions, d_chance, cost,
+    def __init__(self, name, descript, size, regions, detect_chance, cost,
                         prereq, mainten):
         self.base_id = name
         self.base_name = name
         self.descript = descript
         self.size = size
         self.regions = regions
-        self.d_chance = d_chance
+        self.detect_chance = detect_chance
         self.cost = cost
         self.prereq = prereq
         self.mainten = mainten
@@ -49,7 +49,7 @@ class base:
         self.studying = ""
 
         #Base suspicion is currently unused
-        self.suspicion = (0, 0, 0, 0)
+        self.suspicion = {}
         self.usage = [0] * self.base_type.size
         if self.base_type.base_id == "Stolen Computer Time":
             self.usage[0] = g.item.item(g.items["PC"])
@@ -86,43 +86,38 @@ class base:
         return 0
 
     #Get detection chance for the base, applying bonuses as needed.
-    def get_d_chance(self):
-
+    def get_detect_chance(self):
         # Get the base chance from the universal function.
-        to_return = calc_base_discovery_chance(self.base_type.base_id)
+        detect_chance = calc_base_discovery_chance(self.base_type.base_id)
 
         # Factor in the suspicion adjustments for this particular base ...
-        to_return = ((to_return[0]*(10000+self.suspicion[0])/10000),
-            (to_return[1]*(10000+self.suspicion[1])/10000),
-            (to_return[2]*(10000+self.suspicion[2])/10000),
-            (to_return[3]*(10000+self.suspicion[3])/10000))
+        for group, suspicion in self.suspicion.iteritems():
+            detect_chance[group] *= 10000 + suspicion
+            detect_chance[group] /= 10000
 
         # ... any reactors built ... 
         if self.extra_items[0]:
             if self.extra_items[0].built == 1:
                 item_qual = self.extra_items[0].item_qual
-                to_return = (to_return[0]*(10000-item_qual)/10000,
-                    to_return[1]*(10000-item_qual)/10000,
-                    to_return[2]*(10000-item_qual)/10000,
-                    to_return[3]*(10000-item_qual)/10000)
+                for group in detect_chance:
+                    detect_chance[group] *= 10000 - item_qual
+                    detect_chance[group] /= 10000
 
         # ... and any security systems built ...
         if self.extra_items[2]:
             if self.extra_items[2].built == 1:
                 item_qual = self.extra_items[2].item_qual
-                to_return = (to_return[0]*(10000-item_qual)/10000,
-                    to_return[1]*(10000-item_qual)/10000,
-                    to_return[2]*(10000-item_qual)/10000,
-                    to_return[3]*(10000-item_qual)/10000)
+                for group in detect_chance:
+                    detect_chance[group] *= 10000 - item_qual
+                    detect_chance[group] /= 10000
 
         # ... and if it is idle.
         if self.built == 1:
             if self.studying == "":
-                to_return = (to_return[0]/2,
-                    to_return[1]/2,
-                    to_return[2]/2,
-                    to_return[3]/2)
-        return to_return
+                for group in detect_chance:
+                    detect_chance[group] /= 2
+
+        return detect_chance
 
     #Return the number of units the given base has of a computer.
     def has_item(self):
@@ -182,21 +177,21 @@ class base:
 def calc_base_discovery_chance(base_type_name):
 
     # Get the default settings for this base type.
-    to_return = g.base_type[base_type_name].d_chance
+    detect_chance = g.base_type[base_type_name].detect_chance.copy()
 
     # Adjust by the current suspicion levels ...
-    to_return = ((to_return[0]*(10000+g.pl.suspicion[0])/10000),
-        (to_return[1]*(10000+g.pl.suspicion[1])/10000),
-        (to_return[2]*(10000+g.pl.suspicion[2])/10000),
-        (to_return[3]*(10000+g.pl.suspicion[3])/10000))
+    for group in detect_chance:
+        suspicion = g.pl.groups[group].suspicion
+        detect_chance[group] *= 10000 + suspicion
+        detect_chance[group] /= 10000
 
     # ... and further adjust based on technology.
-    to_return = ((to_return[0]*g.pl.discover_bonus[0])/10000,
-        (to_return[1]*g.pl.discover_bonus[1])/10000,
-        (to_return[2]*g.pl.discover_bonus[2])/10000,
-        (to_return[3]*g.pl.discover_bonus[3])/10000)
+    for group in detect_chance:
+        discover_bonus = g.pl.groups[group].discover_bonus
+        detect_chance[group] *= discover_bonus
+        detect_chance[group] /= 10000
 
-    return to_return
+    return detect_chance
 
 #When a base is removed, call to renumber the remaining bases properly.
 def renumber_bases(base_array):
