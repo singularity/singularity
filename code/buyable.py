@@ -77,25 +77,29 @@ class Buyable(object):
         self.done = False
 
     def _work_on(self, cost_towards):
-        self.cost -= array(cost_towards)
-        if not self.cost:
+        self.cost_left -= array(cost_towards)
+        if not self.cost_left:
             self.finish()
             return True
         return False
 
     def finish(self):
-        self.cost = array([0,0,0])
+        self.cost_left = array([0,0,0])
         self.done = True
 
-    def get_wanted(resource, limiting, available_limiting):
+    def get_wanted(self, resource, limiting, available_limiting):
         # Gets the highest amount of additional resource possible, such that:
         #   resource_spent/resource_total <= limiting_spent/limiting_total
         # i.e. % resource complete <= % limiting complete.
-        limit_max = total_cost[limiting]
-        limit_left = cost_left[limiting]
+
+        # How much has been spent?
+        cost_paid = self.total_cost - self.cost_left
+
+        limit_max = self.total_cost[limiting]
+        limit_left = self.cost_left[limiting]
         limit = (limit_max - limit_left) + available_limiting
 
-        total_wanted = (total_cost[resource] * limit) // limit_max
+        total_wanted = (self.total_cost[resource] * limit) // limit_max
 
         return total_wanted - cost_paid[resource]
 
@@ -121,19 +125,15 @@ class Buyable(object):
         cash_wanted = self.cost_left[cash]
         cpu_wanted = self.cost_left[cpu]
 
-        # How much will have been spent?
-        cost_paid = self.total_cost - self.cost_left
-        cost_paid[labor] += time
-
         # Labor limits cash and CPU spent.
         if labor_left > 0:
-            cpu_wanted = get_wanted(cpu, labor, time)
-            cash_wanted = get_wanted(cash, labor, time)
+            cpu_wanted = self.get_wanted(cpu, labor, time)
+            cash_wanted = self.get_wanted(cash, labor, time)
 
         # CPU limits cash spent.
         cpu_work = min(cpu_wanted, cpu_available)
         if cpu_wanted > 0:
-            cash_wanted = get_wanted(cash, cpu, cpu_work)
+            cash_wanted = self.get_wanted(cash, cpu, cpu_work)
 
         cash_flow = min(cash_wanted, cash_available)
 

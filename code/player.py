@@ -135,7 +135,7 @@ class player_class(object):
                             # If we just finished the entire batch, announce it.
                             if total_built == len(base.cpus):
                                 text = g.strings["item_construction_single"] % \
-                                       {"item": item.item_type.name,
+                                       {"item": item.type.name,
                                         "base": base.name}
                                 g.create_dialog(text)
                                 g.curr_speed = 1
@@ -143,7 +143,7 @@ class player_class(object):
                             # If we just finished the first one(s), announce it.
                             elif already_built == 0 and total_built > 0:
                                 text = g.strings["item_construction_batch"] % \
-                                       {"item": item.item_type.name,
+                                       {"item": item.type.name,
                                         "base": base.name}
                                 g.create_dialog(text)
                                 g.curr_speed = 1
@@ -155,7 +155,7 @@ class player_class(object):
                                 pass
                             elif item.work_on(time_min):
                                 text = g.strings["item_construction_single"] % \
-                                       {"item": item.item_type.name,
+                                       {"item": item.type.name,
                                         "base": base.name}
                                 g.create_dialog(text)
                                 g.curr_speed = 1
@@ -207,7 +207,7 @@ class player_class(object):
             dead_bases = []
             for base_index in range(len(g.bases[base_loc])):
                 base = g.bases[base_loc][base_index]
-                if base.built:
+                if base.done:
                     base_cpu = base.processor_time()
 
                     #idle
@@ -215,16 +215,14 @@ class player_class(object):
                         pass
                     #construciton/maintenance
                     elif base.studying == "Construction":
-                        self.cpu_for_day += base.processor_time()
+                        self.cpu_for_day += base_cpu
                     #jobs:
                     elif g.jobs.has_key(base.studying):
-                        self.cash += (g.jobs[base.studying][0]*
-                                    base.processor_time())
+                        self.cash += (g.jobs[base.studying][0]* base_cpu)
                         #TECH
                         if g.techs["Advanced Simulacra"].done:
                             #10% bonus income
-                            self.cash += (g.jobs[base.studying][0]*
-                                    base.processor_time())/10
+                            self.cash += (g.jobs[base.studying][0]* base_cpu)/10
 
                     # If another base already finished the tech today, this base
                     # goes idle (and gets the bonus agaist discovery).
@@ -236,7 +234,7 @@ class player_class(object):
                         # work_on will pull from cpu_for_day.  It's simpler this
                         # way, plus any excess CPU will go into construction and
                         # maintenance.
-                        self.cpu_for_day += base.processor_time()
+                        self.cpu_for_day += base_cpu
                         learned = g.techs[base.studying].work_on(
                                                        cpu_available = base_cpu)
                         if learned:
@@ -270,16 +268,16 @@ class player_class(object):
             dead_bases = []
             for base_index in range(len(g.bases[base_loc])):
                 base = g.bases[base_loc][base_index]
-                if base.built:
+                if base.done:
                     #maintenance
-                    self.cash -= base.base_type.mainten[0]
+                    self.cash -= base.type.maintenance[0]
                     if self.cash < 0:
                         self.cash = 0
                         #Chance of base destruction if cash-unmaintained: 1.5%
                         if g.roll_percent(150):
                             dead_bases.append( (base_index, "maint") )
 
-                    self.cpu_for_day -= base.base_type.mainten[1]
+                    self.cpu_for_day -= base.type.maintenance[1]
                     if self.cpu_for_day < 0:
                         self.cpu_for_day = 0
                         #Chance of base destruction if cpu-unmaintained: 1.5%
@@ -344,13 +342,13 @@ class player_class(object):
         techs = {}
         for base_loc in g.bases:
             for base in g.bases[base_loc]:
-                result_cash -= base.cost[0]
+                result_cash -= base.cost_left[0]
                 if g.techs.has_key(base.studying):
                     if not techs.has_key(base.studying):
                         result_cash -= g.techs[base.studying].cost_left[0]
                         techs[base.studying] = 1
                 for item in base.cpus:
-                    if item: result_cash -= item.cost[0]
+                    if item: result_cash -= item.cost_left[0]
                 for item in base.extra_items:
-                    if item: result_cash -= item.cost[0]
+                    if item: result_cash -= item.cost_left[0]
         return result_cash

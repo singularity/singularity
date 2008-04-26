@@ -28,6 +28,7 @@ class Location(object):
         self.y, self.x = position
         self.safety = safety
         self.prerequisites = prerequisites
+        self.cities = []
 
     def open(self):
         for prerequisite in self.prerequisites:

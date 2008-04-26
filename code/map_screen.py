@@ -125,10 +125,10 @@ def display_cheat_list(menu_buttons):
 
 def display_knowledge_list():
     button_array= []
-    button_array.append(["TECHS", 0])
-    button_array.append(["ITEMS", 0])
-    button_array.append(["CONCEPTS", 0])
-    button_array.append(["RESUME", 0])
+    button_array.append(["TECHS", "T"])
+    button_array.append(["ITEMS", "I"])
+    button_array.append(["CONCEPTS", "C"])
+    button_array.append(["RESUME", "R"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
 
     if selection == -1: return
@@ -615,13 +615,13 @@ def map_loop():
             menu_buttons[8].remake_button()
             menu_buttons[8].refresh_button(0)
 
-            total_cpu, free_cpu, unused, unused, maint_cpu = \
+            total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
                     finance_screen.cpu_numbers()
-            if free_cpu < maint_cpu:
+            if construction_cpu < maint_cpu:
                 menu_buttons[9].text_color = g.colors["red"]
             else:
                 menu_buttons[9].text_color = g.colors["white"]
-            menu_buttons[9].text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(free_cpu)+")"
+            menu_buttons[9].text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(construction_cpu)+")"
             menu_buttons[9].remake_button()
             menu_buttons[9].refresh_button(0)
         pygame.display.flip()
@@ -821,7 +821,7 @@ def generate_base_name(location, base_type):
         if done:
             return name
     # This is both the else case and the general case.
-    name = random.choice(g.city_list[location])[0] + " " + \
+    name = random.choice(location.cities) + " " + \
         random.choice(base_type.flavor) + " " + \
         str (random.randint(0, 32767))
 
@@ -857,7 +857,7 @@ def display_base_list(location, menu_buttons):
                 return True
             base_to_add.count += 1
 
-            g.bases[location].append(g.base.base(len(g.bases[location]),
+            g.bases[location].append(g.base.Base(len(g.bases[location]),
                 selection, g.base_type[selection], 0))
             g.bases[location][-1].name = possible_name
 
@@ -1064,7 +1064,7 @@ def build_new_base_window(location):
         for region in g.base_type[base_name].regions:
             if g.base_type[base_name].prerequisites == "" or \
                     g.techs[g.base_type[base_name].prerequisites].done:
-                if region == location:
+                if region == location.id:
                     base_list.append(base_name)
                     base_display_list.append(g.base_type[base_name].base_name)
 
@@ -1163,11 +1163,11 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(str(g.base_type[base_name].cost[1])) + " CPU"
+    string = g.add_commas(g.base_type[base_name].cost[1]) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
 
-    string = g.add_commas(str(g.base_type[base_name].cost[2])) + " Days"
+    string = g.add_commas(g.base_type[base_name].cost[2]) + " Days"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 
@@ -1176,18 +1176,14 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][18], -1, (xy[0]+290, xy[1]+30), g.colors["white"])
 
-    string = g.to_money(g.base_type[base_name].mainten[0]) + " Money"
+    string = g.to_money(g.base_type[base_name].maintenance[0]) + " Money"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(str(g.base_type[base_name].mainten[1])) + " CPU"
+    string = g.add_commas(g.base_type[base_name].maintenance[1]) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+70), g.colors["white"])
 
-# 	string = g.add_commas(str(g.base_type[base_name].mainten[2])) + " Time"
-# 	g.print_string(g.screen, string,
-# 			g.font[0][16], -1, (xy[0]+290, xy[1]+90), g.colors["white"])
-#
     #Size
     string = "Size: "+str(g.base_type[base_name].size)
     g.print_string(g.screen, string,
@@ -1212,5 +1208,5 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+170), g.colors["white"])
 
-    g.print_multiline(g.screen, g.base_type[base_name].descript,
+    g.print_multiline(g.screen, g.base_type[base_name].description,
             g.font[0][18], 290, (xy[0]+160, xy[1]+190), g.colors["white"])

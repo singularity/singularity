@@ -339,7 +339,7 @@ def create_dialog(string_to_print, box_font = None, xy = None, size = (200,200),
             (xy[0]+5, xy[1]+5), text_color)
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50,
-            xy[1]+size[1]+5), (100, 50), "OK", 0, font[1][30]))
+            xy[1]+size[1]+5), (100, 50), "OK", "O", font[1][30]))
 
     for button in menu_buttons:
         button.refresh_button(0)
@@ -374,14 +374,14 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
     menu_buttons = []
     if button_names == ("YES", "NO"):
         menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-110,
-                xy[1]+size[1]+5), (100, 50), button_names[0], 0, font[1][30]))
+                xy[1]+size[1]+5), (100, 50), button_names[0], "Y", font[1][30]))
         menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2+10,
-                xy[1]+size[1]+5), (100, 50), button_names[1], 0, font[1][30]))
+                xy[1]+size[1]+5), (100, 50), button_names[1], "N", font[1][30]))
     else:
         menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-110,
-                xy[1]+size[1]+5), -1, button_names[0], 0, font[1][30]))
+                xy[1]+size[1]+5), -1, button_names[0], "", font[1][30]))
         menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2+10,
-                xy[1]+size[1]+5), -1, button_names[1], 0, font[1][30]))
+                xy[1]+size[1]+5), -1, button_names[1], "", font[1][30]))
 
 
     for button in menu_buttons:

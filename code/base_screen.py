@@ -225,7 +225,7 @@ def refresh_base(menu_buttons, this_base):
 
 
 def build_item(this_base, item_type, location):
-    if this_base.base_type.size == 1:
+    if this_base.type.size == 1:
         g.create_dialog(g.strings["unbuildable"])
         return 0
 
