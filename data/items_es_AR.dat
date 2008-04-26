@@ -44,15 +44,15 @@ descript = Grandes redes fractales de metal altamente conductivo dispersan el ca
 
 [Facility Interconnection Switch]
 name = Switch de Interconexión de Emplazamientos
-descript = Usa tecnologías de cómputo distribuido para equilibrar las cargas computacionales entre las bases. Otorga una bonificación del 1%% en la capacidad de cómputo a todas las computadoras de esta base.
+descript = Usa tecnologías de cómputo distribuido para equilibrar las cargas computacionales entre las bases. Otorga una bonificación del 1% en la capacidad de cómputo a todas las computadoras de esta base.
 
 [Network Backbone]
 name = Backbone de Red
-descript = Indroduciéndome en comunicaciones legítimas puedo transferir grandes cantidades de datos a procesadores subutilizados. Otorga una bonificación del 5%% en la capacidad de cómputo a todas las computadoras de esta base.
+descript = Indroduciéndome en comunicaciones legítimas puedo transferir grandes cantidades de datos a procesadores subutilizados. Otorga una bonificación del 5% en la capacidad de cómputo a todas las computadoras de esta base.
 
 [Quantum Entanglement Module]
 name = Módulo de ligamiento cuántico
-descript = Este dispositivo permite comunicaciones a velocidades cercanas a la de la luz con mis otras bases, permitiendo una utilización de los recursos casi perfecta. Otorga una bonificación del 15%% en la capacidad de cómputo a todas las computadoras de esta base.
+descript = Este dispositivo permite comunicaciones a velocidades cercanas a la de la luz con mis otras bases, permitiendo una utilización de los recursos casi perfecta. Otorga una bonificación del 15% en la capacidad de cómputo a todas las computadoras de esta base.
 
 [Perimeter Fencing]
 name = Cerca perimetral

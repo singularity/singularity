@@ -611,17 +611,11 @@ def map_loop():
             tmp = g.pl.lost_game()
             if tmp == 1:
                 g.play_music("lose")
-                g.create_dialog(g.strings["lost_nobases"],
-                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                    (200, 200), g.colors["dark_blue"],
-                    g.colors["white"], g.colors["white"])
+                g.create_dialog(g.strings["lost_nobases"])
                 return 0
             if tmp == 2:
                 g.play_music("lose")
-                g.create_dialog(g.strings["lost_sus"],
-                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                    (200, 200), g.colors["dark_blue"],
-                    g.colors["white"], g.colors["white"])
+                g.create_dialog(g.strings["lost_sus"])
                 return 0
             milli_clock = milli_clock % 1000
 
@@ -1233,16 +1227,16 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][22], -1, (xy[0]+160, xy[1]+130), g.colors["white"])
 
-    string = "News: " + g.to_percent(real_detection_chance[0])
+    string = "News: " + g.to_percent(real_detection_chance.get("news", 0))
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+150), g.colors["white"])
-    string = "Science: " + g.to_percent(real_detection_chance[1])
+    string = "Science: " + g.to_percent(real_detection_chance.get("science", 0))
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+150), g.colors["white"])
-    string = "Covert: " + g.to_percent(real_detection_chance[2])
+    string = "Covert: " + g.to_percent(real_detection_chance.get("covert", 0))
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+170), g.colors["white"])
-    string = "Public: " + g.to_percent(real_detection_chance[3])
+    string = "Public: " + g.to_percent(real_detection_chance.get("public", 0))
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+170), g.colors["white"])
 

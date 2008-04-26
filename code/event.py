@@ -45,7 +45,7 @@ class event_class:
             who = self.result[0][10:]
             if who == "onetime":
                 for group in g.pl.groups.values():
-                    group.alter_suspicion(self.result[1])
+                    group.alter_suspicion(-self.result[1])
             elif who in g.pl.groups:
                 g.pl.groups[who].alter_suspicion_decay(self.result[1])
             else:
@@ -53,6 +53,6 @@ class event_class:
         elif self.result[0].startswith("discover_"):
             who = self.result[0][9:]
             if who in g.pl.groups:
-                g.pl.groups[who].alter_discover_bonus(self.result[1])
+                g.pl.groups[who].alter_discover_bonus(-self.result[1])
             else:
                 print "Unknown group '%s' in event %s." % (who, self.name)

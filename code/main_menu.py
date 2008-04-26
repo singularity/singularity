@@ -494,7 +494,7 @@ def save_options(lang=""):
     # Show the user that we've saved their options.
     g.create_dialog("\\n Options Saved", g.font[0][22],
      (g.screen_size[0]/2-70, 250), (140, 90),
-     g.colors["blue"], g.colors["white"], g.colors["white"])
+     g.colors["blue"])
 
 def refresh_options(menu_buttons):
     #Border

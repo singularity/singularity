@@ -33,16 +33,16 @@ class group(object):
         # Suspicion reduction is now quadratic.  You get a certain percentage
         # reduction, or a base .01% reduction, whichever is better.
         quadratic_down = (self.suspicion * self.suspicion_decay) / 10000
-        self.alter_suspicion(max(quadratic_down, 1))
+        self.alter_suspicion(-max(quadratic_down, 1))
 
     def alter_suspicion(self, change):
-        self.suspicion = max(self.suspicion - change, 0)
+        self.suspicion = max(self.suspicion + change, 0)
 
     def alter_suspicion_decay(self, change):
-        self.suspicion_decay = max(self.suspicion_decay - change, 0)
+        self.suspicion_decay = max(self.suspicion_decay + change, 0)
 
     def alter_discover_bonus(self, change):
-        self.discover_bonus = max(self.discover_bonus - change, 0)
+        self.discover_bonus = max(self.discover_bonus + change, 0)
 
     def discovered_a_base(self):
         self.alter_suspicion(1000)
@@ -114,11 +114,9 @@ class player_class(object):
                                         cpu_towards, time_min))
                             if built_base == 1:
                                 needs_refresh = 1
-                                g.create_dialog(g.strings["construction0"]+" "+
-                                    base.name+" "+g.strings["construction1"],
-                                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                                    (200, 200), g.colors["dark_blue"],
-                                    g.colors["white"], g.colors["white"])
+                                text = g.strings["construction"] % \
+                                    {"base": base.name}
+                                g.create_dialog(text)
                                 g.curr_speed = 1
                     else:
                         #Construction of items:
@@ -143,37 +141,28 @@ class player_class(object):
                                     continue
                                 build_count += 1
                             if build_complete == 1:
-                                needs_refresh = 1
-                                g.create_dialog(g.strings["construction0"]+" "+
-                                    item.item_type.name+" "+
-                                    g.strings["item_construction1"]+" "+
-                                    base.name+".",
-                                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                                    (200, 200), g.colors["dark_blue"],
-                                    g.colors["white"], g.colors["white"])
+                                text = g.strings["item_construction_single"] % \
+                                       {"item": item.item_type.name,
+                                        "base": base.name}
+                                g.create_dialog(text)
                                 g.curr_speed = 1
-                            elif first_build_count == 0 and build_count > 0:
                                 needs_refresh = 1
-                                g.create_dialog(g.strings["construction0"]+" "+
-                                    item.item_type.name+" "+
-                                    g.strings["item_construction2"]+" "+
-                                    base.name+".",
-                                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                                    (200, 200), g.colors["dark_blue"],
-                                    g.colors["white"], g.colors["white"])
+                            elif first_build_count == 0 and build_count > 0:
+                                text = g.strings["item_construction_batch"] % \
+                                       {"item": item.item_type.name,
+                                        "base": base.name}
+                                g.create_dialog(text)
+                                needs_refresh = 1
                         for item in base.extra_items:
                             if not item: continue
                             tmp = item.work_on(time_min)
                             if tmp == 1:
-                                needs_refresh = 1
-                                g.create_dialog(g.strings["construction0"]+" "+
-                                    item.item_type.name+" "+
-                                    g.strings["item_construction1"]+" "+
-                                    base.name+".",
-                                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                                    (200, 200), g.colors["dark_blue"],
-                                    g.colors["white"], g.colors["white"])
+                                text = g.strings["item_construction_single"] % \
+                                       {"item": item.item_type.name,
+                                        "base": base.name}
+                                g.create_dialog(text)
                                 g.curr_speed = 1
+                                needs_refresh = 1
 
 
         for i in range(self.time_day - store_last_day):
@@ -205,10 +194,7 @@ class player_class(object):
 
         self.cpu_for_day = 0
         if self.time_day == 23:
-            g.create_dialog(g.strings["grace_warning"],
-                g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                (200, 200), g.colors["dark_blue"],
-                g.colors["white"], g.colors["white"])
+            g.create_dialog(g.strings["grace_warning"])
             needs_refresh = 1
             g.curr_speed = 1
 
@@ -273,16 +259,14 @@ class player_class(object):
                         learn_tech = g.techs[base.studying].study(
                             (money_towards, tmp_base_time, 0))
                         if learn_tech == 1:
-                            needs_refresh = 1
-                            g.create_dialog(g.strings["tech_construction0"]+" "+
-                                g.techs[base.studying].name+" "+
-                                g.strings["construction1"]+" "+
-                                g.techs[base.studying].result,
-                                g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-                                (200, 200), g.colors["dark_blue"],
-                                g.colors["white"], g.colors["white"])
+                            tech = g.techs[base.studying]
+                            text = g.strings["tech_gained"] % \
+                                   {"tech": tech.name, 
+                                    "tech_message": tech.result}
+                            g.create_dialog(text)
                             base.studying = ""
                             g.curr_speed = 1
+                            needs_refresh = 1
                     elif g.debug == 1:
                         print "NOT Studying "+base.studying +": "+ \
                         str(money_towards)+"/"+str(self.cash)+" Money"
@@ -332,16 +316,14 @@ class player_class(object):
                 self.groups[reason].discovered_a_base()
                 detect_phrase = g.strings["discover_" + reason]
 
-                dialog_string = (g.strings["discover0"] + " "+base_name+" " +
-                    g.strings["discover1"]+" "+detect_phrase)
+                dialog_string = g.strings["discover"] % \
+                                {"base": base_name, "group": detect_phrase}
             else:
                 print "Error: base destoyed for unknown reason: " + reason
-                dialog_string = (g.strings["discover0"] + " "+base_name+" " +
-                    g.strings["discover1"] + " ???.")
+                dialog_string = g.strings["discover"] % \
+                                {"base": base_name, "group": "???"}
 
-            g.create_dialog(dialog_string, g.font[0][18],
-                (g.screen_size[0]/2 - 100, 50), (200, 200),
-                g.colors["dark_blue"], g.colors["white"], g.colors["red"])
+            g.create_dialog(dialog_string, text_color = g.colors["red"])
             g.curr_speed = 1
             g.bases[base_loc].pop(base)
             needs_refresh = 1

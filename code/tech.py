@@ -81,7 +81,7 @@ class tech:
             who = self.tech_type[10:]
             if who == "onetime":
                 for group in g.pl.groups.values():
-                    group.alter_suspicion(self.secondary_data)
+                    group.alter_suspicion(-self.secondary_data)
             elif who in g.pl.groups:
                 g.pl.groups[who].alter_suspicion_decay(self.secondary_data)
             else:
@@ -89,14 +89,11 @@ class tech:
         elif self.tech_type.startswith("discover_"):
             who = self.tech_type[9:]
             if who in g.pl.groups:
-                g.pl.groups[who].alter_discover_bonus(self.secondary_data)
+                g.pl.groups[who].alter_discover_bonus(-self.secondary_data)
             else:
                 print "Unknown group '%s' in tech %s." % (who, self.name)
         elif self.tech_type == "endgame_sing":
             g.play_music("win")
-            g.create_dialog(g.strings["wingame"], g.font[0][18],
-                (g.screen_size[0]/2 - 100, 50),
-                (200, 200), g.colors["dark_blue"], g.colors["white"],
-                g.colors["white"])
+            g.create_dialog(g.strings["wingame"])
             for group in g.pl.groups.values():
                 group.discover_bonus = 0

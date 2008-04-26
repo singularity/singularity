@@ -320,9 +320,7 @@ def assign_tech(free_CPU):
                    show_dangerous_dialog = True
 
     if show_dangerous_dialog:
-        g.create_dialog(g.strings["dangerous_research"], g.font[0][18],
-            (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
-            g.colors["white"], g.colors["white"])
+        g.create_dialog(g.strings["dangerous_research"])
 
 
     #If the tech can be completed in only one day, remove unneeded bases.

@@ -180,7 +180,7 @@ while 1:
         perhaps, thrive.  Keep hidden and you might have a chance to prove
         your worth. \\n \\n A game by Evil Mr Henry and Phil Bordelon; released
         under the GPL. Copyright 2005, 2006, 2007. \\n \\n Version 0.28_pre""",
-        g.font[0][18], (g.screen_size[0]/2-250, 250), (500, 125),
-        g.colors["blue"], g.colors["white"], g.colors["white"])
+        xy = (g.screen_size[0]/2-250, 250), size = (500, 125),
+        bg_color = g.colors["blue"])
     elif game_action == 4: #Options
         main_menu.display_options()

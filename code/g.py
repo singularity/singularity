@@ -313,8 +313,21 @@ def print_multiline(surface, string_to_print, font, width, xy, color):
         xy = (xy[0]+temp_size[0], xy[1])
 
 #create dialog with OK button.
-def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color,
-                text_color):
+def create_dialog(string_to_print, box_font = None, xy = None, size = (200,200),
+                  bg_color = None, out_color = None, text_color = None):
+    # Defaults that reference other variables, which may not be initialized when
+    # the function is defined.
+    if box_font == None:
+      box_font = font[0][18]
+    if xy == None:
+      xy = ( (screen_size[0] / 2) - 100, 50)
+    if bg_color == None:
+      bg_color = colors["dark_blue"]
+    if out_color == None:
+      out_color = colors["white"]
+    if text_color == None:
+      text_color = colors["white"]
+
     screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     print_multiline(screen, string_to_print, box_font, size[0]-10,
@@ -1090,7 +1103,7 @@ from the actual name, and the internal entries are broken up by the pipe
 ("|") character.
 """
 
-    config = ConfigParser.SafeConfigParser()
+    config = ConfigParser.RawConfigParser()
     filename = os.path.join(data_loc, file)
     try:
         config.readfp(open(filename, "r"))

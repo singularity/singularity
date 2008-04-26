@@ -228,9 +228,7 @@ def refresh_base(menu_buttons, this_base):
 
 def build_item(this_base, item_type, location):
     if this_base.base_type.size == 1:
-        g.create_dialog(g.strings["unbuildable"], g.font[0][18],
-            (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
-            g.colors["white"], g.colors["white"])
+        g.create_dialog(g.strings["unbuildable"])
         return 0
 
     list_size = 10
