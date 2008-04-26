@@ -33,6 +33,7 @@ import research_screen
 import finance_screen
 
 from buttons import always, void, exit, Return
+from safety import safe_call
 
 def display_generic_menu(xy_loc, titlelist):
     #Border
@@ -291,8 +292,7 @@ def map_loop():
         g.play_sound("click")
         selection = display_pause_menu()
         result = handle_pause_menu(selection, menu_buttons)
-        if result == 0: 
-            return result
+        return result
 
     menu_buttons[buttons.make_norm_button((0, 0), (100, 25),
         "OPTIONS", "O", g.font[1][20])] = show_options
@@ -355,7 +355,7 @@ def map_loop():
             # We want to keep redisplaying the base_list until the
             # user is done mucking around with bases.
             done_base = False
-            while not done_base:
+            while done_base == False:
                done_base = display_base_list(g.locations[location], 
                                              menu_buttons)
                do_refresh()
@@ -425,9 +425,16 @@ def map_loop():
             return True
 
     result = -1
-    while result != 0:
-        result = buttons.show_buttons(menu_buttons, refresh_callback=do_refresh,
-                         tick_callback=on_tick)
+    while result:
+        # By using safe call here (and only here), if an exception is thrown
+        # during the game, it will drop back out of all the menus, without
+        # doing anything, and open the options dialog, so that the player can
+        # save or quit even if the error occurs every game tick.
+        result = safe_call(buttons.show_buttons,
+                           [menu_buttons], 
+                           {"refresh_callback": do_refresh, 
+                            "tick_callback": on_tick},
+                           -1)
         if result == -1:
             result = show_options()
 
@@ -600,7 +607,7 @@ def display_base_list(location, menu_buttons):
                     g.base.destroy_base(location, selection)
         else:
             next_prev = 1
-            while next_prev != 0:
+            while next_prev:
                 next_prev = base_screen.show_base(g.bases[location][selection], location)
                 if next_prev == -2:
                     g.base.destroy_base(location, selection)

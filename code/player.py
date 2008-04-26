@@ -229,7 +229,7 @@ class player_class(object):
                             self.cash += (g.jobs[base.studying][0]* base_cpu)/10
 
                     # If another base already finished the tech today, this base
-                    # goes idle (and gets the bonus agaist discovery).
+                    # goes idle (and gets the bonus against discovery).
                     elif g.techs[base.studying].done:
                         base.studying = ""
 

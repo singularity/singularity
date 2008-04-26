@@ -169,7 +169,7 @@ def show_listbox(*args, **kwargs):
     # Use any arguments given.
     options.update(kwargs)
 
-    # Pass it on to _show_listbox, using the Return exception from the buttosn
+    # Pass it on to _show_listbox, using the Return exception from the buttons
     # module.
     try:
         _show_listbox(*args, **options)

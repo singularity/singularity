@@ -166,6 +166,7 @@ default_key_handler = simple_key_handler(-1)
 
 # Used to return from within a sub[-sub...]-function
 class Return(Exception): pass 
+
 def show_buttons(buttons, key_callback = default_key_handler, keyup_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void, tick_callback = void):
     try:
         _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback)

@@ -402,9 +402,12 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
     global cursor_loc, work_string
     cursor_loc = len(starting_text)
 
+    def give_text():
+        return work_string
+
     menu_buttons = {}
     menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-50,
-            xy[1]+size[1]+5), (100, 50), "OK", "O", font[1][30])] = always(True)
+            xy[1]+size[1]+5), (100, 50), "OK", "", font[1][30])] = give_text
 
     work_string = starting_text
     sel_button = -1
@@ -1436,3 +1439,12 @@ def new_game(difficulty):
                             "University Computer",
                             base_type["Stolen Computer Time"], 1))
     base_type["Stolen Computer Time"].count += 1
+
+# Demo code for safety.safe, runs on game start.
+#load_sounds()
+#from safety import safe
+#@safe(on_error = "Made it!")
+#def raises_exception():
+#   raise Exception, "Aaaaaargh!"
+#
+#print raises_exception()
