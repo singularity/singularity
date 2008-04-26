@@ -1400,6 +1400,7 @@ def new_game(difficulty):
     global pl
 
     pl = player.player_class((50 / difficulty) * 100)
+    pl.difficulty = difficulty
     if difficulty < 3:
         pl.interest_rate = 5
         pl.labor_bonus = 2500

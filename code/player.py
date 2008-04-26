@@ -76,6 +76,12 @@ class player_class(object):
         self.grace_multiplier = 200
 
     def convert_from(self, old_version):
+         if old_version <= 3.94: # <= r4_pre4
+             # We don't know what the difficulty was, and techs have fooled with
+             # any values that would help (not to mention the headache of 
+             # different versions.  So we set it to Very Easy, which means that
+             # they shouldn't be hurt by any new mechanics.
+             self.difficulty = 1
          if old_version <= 3.93: # <= r4_pre3
              self.masochist = False
              self.grace_multiplier = int(1000000./float(self.labor_bonus))
@@ -185,10 +191,43 @@ class player_class(object):
         return needs_refresh
 
     def in_grace_period(self, had_grace = True):
-        # When other factors are added, use had_grace to ensure that the grace
-        # period can't be regained.  Don't check self.had_grace directly, it may
-        # not exist yet.
-        return self.raw_day < 23
+        # Did we already lose the grace period?  We can't check self.had_grace 
+        # directly, it may not exist yet.
+        if not had_grace:
+            return False
+        
+        # Is it day 23 yet?
+        if self.raw_day >= 23:
+            return False
+
+        # Easy and Very Easy cop out here.
+        if self.difficulty < 5:
+            return True
+
+        # Have we built a lot of bases?
+        if len(base for base_loc in g.bases for base in base_loc if base.done
+               ) > 10:
+            return False
+
+        # Normal is happy.
+        if self.difficulty == 5:
+            return True
+
+        # Have we built any complicated bases?
+        # (currently Datacenter or above)
+        if len(base for base_loc in g.bases for base in base_loc
+                    if base.done
+                    if len(g.cpus) > 1 or base.processor_time() > 20
+               ) > 0:
+            return False
+
+        # I'd put something in for Impossible, but they're already incapable of
+        # building a second base until day 20, so it seems redundant.
+
+        # Okay, so it's day 17 if they go for a Stolen Computer Time base,
+        # but in that case, they've already given themselves an extra challenge.
+
+        return True
 
     #Run every day at midnight.
     def new_day(self):
