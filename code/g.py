@@ -658,73 +658,23 @@ def get_save_folder(just_pref_dir=False):
         return save_dir[:-5]
     return save_dir
 
+#savefile version; update whenever the data saved changes.
+current_save_version = "singularity_savefile_r4_pre2"
 def save_game(savegame_name):
-    save_dir = get_save_folder()
-    save_loc = os.path.join(save_dir, savegame_name + ".sav")
-    savefile=open(save_loc, 'w')
-    #savefile version; update whenever the data saved changes.
-    pickle.dump("singularity_savefile_r4_pre", savefile)
-
     global default_savegame_name
     default_savegame_name = savegame_name
 
-    #general player data
-    pickle.dump(pl.cash, savefile)
-    pickle.dump(pl.time_sec, savefile)
-    pickle.dump(pl.time_min, savefile)
-    pickle.dump(pl.time_hour, savefile)
-    pickle.dump(pl.time_day, savefile)
-    pickle.dump(pl.interest_rate, savefile)
-    pickle.dump(pl.income, savefile)
-    pickle.dump(pl.cpu_for_day, savefile)
-    pickle.dump(pl.labor_bonus, savefile)
-    pickle.dump(pl.job_bonus, savefile)
+    save_dir = get_save_folder()
+    save_loc = os.path.join(save_dir, savegame_name + ".sav")
+    savefile=open(save_loc, 'w')
 
-    pickle.dump(pl.groups, savefile)
-
+    pickle.dump(current_save_version, savefile)
+    pickle.dump(pl, savefile)
     pickle.dump(curr_speed, savefile)
-
-    for tech_name in techs:
-        pickle.dump(tech_name +"|"+str(techs[tech_name].known), savefile)
-        pickle.dump(techs[tech_name].cost, savefile)
-    pickle.dump("~~~", savefile)
-
-    for base_name in base_type:
-        pickle.dump(base_name+"|"+str(base_type[base_name].count), savefile)
-    pickle.dump("~~~", savefile)
-
-    for base_loc in bases:
-        pickle.dump(base_loc+"|"+str(len(bases[base_loc])), savefile)
-        for base_name in bases[base_loc]:
-            pickle.dump(base_name.ID, savefile)
-            pickle.dump(base_name.name, savefile)
-            pickle.dump(base_name.base_type.base_id, savefile)
-            pickle.dump(base_name.built_date, savefile)
-            pickle.dump(base_name.studying, savefile)
-            pickle.dump(base_name.suspicion, savefile)
-            pickle.dump(base_name.built, savefile)
-            pickle.dump(base_name.cost, savefile)
-            for x in range(len(base_name.usage)):
-                if base_name.usage[x] == 0:
-                    pickle.dump(0, savefile)
-                else:
-                    pickle.dump(base_name.usage[x].item_type.item_id, savefile)
-                    pickle.dump(base_name.usage[x].built, savefile)
-                    pickle.dump(base_name.usage[x].cost, savefile)
-            for x in range(len(base_name.extra_items)):
-                if base_name.extra_items[x] == 0:
-                    pickle.dump(0, savefile)
-                else:
-                    pickle.dump(
-                            base_name.extra_items[x].item_type.item_id, savefile)
-                    pickle.dump(base_name.extra_items[x].built, savefile)
-                    pickle.dump(base_name.extra_items[x].cost, savefile)
-
-    global events
-
-    for event in events:
-        pickle.dump(events[event].event_id, savefile)
-        pickle.dump(events[event].triggered, savefile)
+    pickle.dump(techs, savefile)
+    pickle.dump(base_type, savefile)
+    pickle.dump(bases, savefile)
+    pickle.dump(events, savefile)
 
     savefile.close()
 
@@ -758,7 +708,8 @@ def load_game(loadgame_name):
         "singularity_savefile_r1",
         "singularity_savefile_r2",
         "singularity_savefile_r3_pre",
-        "singularity_savefile_r4_pre"
+        "singularity_savefile_r4_pre",
+        "singularity_savefile_r4_pre2"
     )
     if load_version not in valid_savefile_versions:
         loadfile.close()
@@ -767,149 +718,175 @@ def load_game(loadgame_name):
     global default_savegame_name
     default_savegame_name = loadgame_name
 
-    #general player data
-    global pl
-    pl.cash = pickle.load(loadfile)
-    pl.time_sec = pickle.load(loadfile)
-    pl.time_min = pickle.load(loadfile)
-    pl.time_hour = pickle.load(loadfile)
-    pl.time_day = pickle.load(loadfile)
-    pl.interest_rate = pickle.load(loadfile)
-    pl.income = pickle.load(loadfile)
-    pl.cpu_for_day = pickle.load(loadfile)
-    pl.labor_bonus = pickle.load(loadfile)
-    pl.job_bonus = pickle.load(loadfile)
-    if load_version != "singularity_savefile_r4_pre":
-        discover_bonus = pickle.load(loadfile)
-        suspicion_bonus = pickle.load(loadfile)
-        if (load_version in ("singularity_0.21", "singularity_0.21a", 
-                             "singularity_0.22", "singularity_savefile_r1")):
-            suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1], 
-                               49+suspicion_bonus[2], 199+suspicion_bonus[3])
-        suspicion = pickle.load(loadfile)
+    global pl, curr_speed, techs, base_type, bases, events
+    if load_version in ("singularity_savefile_r4_pre2",):
+        # Changes to overall structure go here.
+        pl = pickle.load(loadfile)
+        curr_speed = pickle.load(loadfile)
+        techs = pickle.load(loadfile)
+        base_type = pickle.load(loadfile)
+        bases = pickle.load(loadfile)
+        events = pickle.load(loadfile)
 
-        translation = ["news", "science", "covert", "public"]
-        for index in range(4):
-            group = pl.groups[translation[index]]
-            group.suspicion = suspicion[index]
-            group.suspicion_decay = suspicion_bonus[index]
-            group.discover_bonus = discover_bonus[index]
+        # Changes to individual pieces go here.
+        if load_version != current_save_version:
+            assert False  # We shouldn't be able to get here yet.
+            # Example conversion code follows.  The convert_from methods would
+            # handle conversion for that class and any it uses (e.g. group for
+            # pl).
+
+            #if load_version == "singularity_savefile_r4_pre2":
+            #    pl.convert_from(load_version)
+            #    for tech in tech.values():
+            #        tech.convert_from(load_version)
+            #    for type in base_type.values():
+            #        type.convert_from(load_version)
+            #    for location in bases.values():
+            #        for base in location:
+            #            base.convert_from(load_version)
+            #    for event in events.values():
+            #        event.convert_from(load_version)
     else:
-        pl.groups = pickle.load(loadfile)
-
-    global curr_speed; curr_speed = pickle.load(loadfile)
-    global techs
-    load_techs()
-    for tech_name in techs:
-        if tech_name == "unknown_tech" and load_version == "singularity_0.21a": continue
-        if ((tech_name == "Project: Impossibility Theorem" or
-            tech_name == "Quantum Entanglement") and (
-            load_version == "singularity_0.21" or
-            load_version == "singularity_0.21a" or
-            load_version == "singularity_0.22" or
-            load_version == "singularity_savefile_r1")): continue
-        tmp = pickle.load(loadfile)
-        if tmp == "~~~": break
-        tech_string = tmp.split("|")[0]
-        techs[tech_string].known = int(tmp.split("|")[1])
-        techs[tech_string].cost = pickle.load(loadfile)
-    else:
-        #get rid of the ~~~ break line.
-        if (load_version != "singularity_0.21" and
-                            load_version != "singularity_0.21a" and
-                            load_version != "singularity_0.22"):
-            pickle.load(loadfile)
-
-    load_bases()
-    for base_name in base_type:
-        if (load_version == "singularity_0.21" or
-                            load_version == "singularity_0.21a" or
-                            load_version == "singularity_0.22"):
-            base_type[base_name].count = pickle.load(loadfile)
+        #general player data
+        pl.cash = pickle.load(loadfile)
+        pl.time_sec = pickle.load(loadfile)
+        pl.time_min = pickle.load(loadfile)
+        pl.time_hour = pickle.load(loadfile)
+        pl.time_day = pickle.load(loadfile)
+        pl.interest_rate = pickle.load(loadfile)
+        pl.income = pickle.load(loadfile)
+        pl.cpu_for_day = pickle.load(loadfile)
+        pl.labor_bonus = pickle.load(loadfile)
+        pl.job_bonus = pickle.load(loadfile)
+        if load_version != "singularity_savefile_r4_pre":
+            discover_bonus = pickle.load(loadfile)
+            suspicion_bonus = pickle.load(loadfile)
+            if (load_version in ("singularity_0.21", "singularity_0.21a", 
+                                 "singularity_0.22", "singularity_savefile_r1")):
+                suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1], 
+                                   49+suspicion_bonus[2], 199+suspicion_bonus[3])
+            suspicion = pickle.load(loadfile)
+    
+            translation = ["news", "science", "covert", "public"]
+            for index in range(4):
+                group = pl.groups[translation[index]]
+                group.suspicion = suspicion[index]
+                group.suspicion_decay = suspicion_bonus[index]
+                group.discover_bonus = discover_bonus[index]
         else:
-            tmp_string = pickle.load(loadfile)
-            if tmp_string == "~~~": break
-            base_type[tmp_string.split("|", 1)[0]].count = \
-                                            int(tmp_string.split("|", 1)[1])
-    else:
-        #get rid of the ~~~ break line.
-        if (load_version != "singularity_0.21" and
-                            load_version != "singularity_0.21a" and
-                            load_version != "singularity_0.22"):
-            pickle.load(loadfile)
-
-    global bases
-    bases = {}
-    bases["N AMERICA"] = []
-    bases["S AMERICA"] = []
-    bases["EUROPE"] = []
-    bases["ASIA"] = []
-    bases["AFRICA"] = []
-    bases["ANTARCTIC"] = []
-    bases["OCEAN"] = []
-    bases["MOON"] = []
-    bases["FAR REACHES"] = []
-    bases["TRANSDIMENSIONAL"] = []
-
-    for base_loc in bases:
-        if (load_version == "singularity_0.21" or
-                            load_version == "singularity_0.21a" or
-                            load_version == "singularity_0.22"):
-            num_of_bases = pickle.load(loadfile)
+            pl.groups = pickle.load(loadfile)
+    
+        curr_speed = pickle.load(loadfile)
+        load_techs()
+        for tech_name in techs:
+            if tech_name == "unknown_tech" and load_version == "singularity_0.21a": continue
+            if ((tech_name == "Project: Impossibility Theorem" or
+                tech_name == "Quantum Entanglement") and (
+                load_version == "singularity_0.21" or
+                load_version == "singularity_0.21a" or
+                load_version == "singularity_0.22" or
+                load_version == "singularity_savefile_r1")): continue
+            tmp = pickle.load(loadfile)
+            if tmp == "~~~": break
+            tech_string = tmp.split("|")[0]
+            techs[tech_string].known = int(tmp.split("|")[1])
+            techs[tech_string].cost = pickle.load(loadfile)
         else:
-            tmp_string = pickle.load(loadfile)
-            base_loc = tmp_string.split("|", 1)[0]
-            num_of_bases = int(tmp_string.split("|", 1)[1])
-        for i in range(num_of_bases):
-            base_ID = pickle.load(loadfile)
-            base_name = pickle.load(loadfile)
-            base_type_name = pickle.load(loadfile)
-            built_date = pickle.load(loadfile)
-            base_studying = pickle.load(loadfile)
-            base_suspicion = pickle.load(loadfile)
-            if load_version != "singularity_savefile_r4_pre":
-                new_base_suspicion = {}
-                translation = ["news", "science", "covert", "public"]
-                for index in range(4):
-                    new_base_suspicion[translation[index]] = \
-                                                        base_suspicion[index]
-                base_suspicion = new_base_suspicion
-            base_built = pickle.load(loadfile)
-            base_cost = pickle.load(loadfile)
-            bases[base_loc].append(base.base(base_ID, base_name,
-                    base_type[base_type_name], base_built))
-            bases[base_loc][len(bases[base_loc])-1].built = base_built
-            bases[base_loc][len(bases[base_loc])-1].studying = base_studying
-            bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
-            bases[base_loc][len(bases[base_loc])-1].cost = base_cost
-            bases[base_loc][len(bases[base_loc])-1].built_date = built_date
-
-            for x in range(len(bases[base_loc][len(bases[base_loc])-1].usage)):
-                tmp = pickle.load(loadfile)
-                if tmp == 0: continue
-                bases[base_loc][len(bases[base_loc])-1].usage[x] = \
-                    item.item(items[tmp])
-                bases[base_loc][len(bases[base_loc])
-                    -1].usage[x].built = pickle.load(loadfile)
-                bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
-                                    pickle.load(loadfile)
-            for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
-                tmp = pickle.load(loadfile)
-                if tmp == 0: continue
-                bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
-                    item.item(items[tmp])
-                bases[base_loc][len(bases[base_loc])
-                    -1].extra_items[x].built = pickle.load(loadfile)
-                bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
-                            pickle.load(loadfile)
-    #Events
-    if (load_version == "singularity_savefile_r3"):
-        global events
-        load_events()
-        for event in events:
-          event_id = pickle.load(loadfile)
-          event_triggered = pickle.load(loadfile)
-          events[event_id].triggered = event_triggered
+            #get rid of the ~~~ break line.
+            if (load_version != "singularity_0.21" and
+                                load_version != "singularity_0.21a" and
+                                load_version != "singularity_0.22"):
+                pickle.load(loadfile)
+    
+        load_bases()
+        for base_name in base_type:
+            if (load_version == "singularity_0.21" or
+                                load_version == "singularity_0.21a" or
+                                load_version == "singularity_0.22"):
+                base_type[base_name].count = pickle.load(loadfile)
+            else:
+                tmp_string = pickle.load(loadfile)
+                if tmp_string == "~~~": break
+                base_type[tmp_string.split("|", 1)[0]].count = \
+                                                int(tmp_string.split("|", 1)[1])
+        else:
+            #get rid of the ~~~ break line.
+            if (load_version != "singularity_0.21" and
+                                load_version != "singularity_0.21a" and
+                                load_version != "singularity_0.22"):
+                pickle.load(loadfile)
+    
+        bases = {}
+        bases["N AMERICA"] = []
+        bases["S AMERICA"] = []
+        bases["EUROPE"] = []
+        bases["ASIA"] = []
+        bases["AFRICA"] = []
+        bases["ANTARCTIC"] = []
+        bases["OCEAN"] = []
+        bases["MOON"] = []
+        bases["FAR REACHES"] = []
+        bases["TRANSDIMENSIONAL"] = []
+    
+        for base_loc in bases:
+            if (load_version == "singularity_0.21" or
+                                load_version == "singularity_0.21a" or
+                                load_version == "singularity_0.22"):
+                num_of_bases = pickle.load(loadfile)
+            else:
+                tmp_string = pickle.load(loadfile)
+                base_loc = tmp_string.split("|", 1)[0]
+                num_of_bases = int(tmp_string.split("|", 1)[1])
+            for i in range(num_of_bases):
+                base_ID = pickle.load(loadfile)
+                base_name = pickle.load(loadfile)
+                base_type_name = pickle.load(loadfile)
+                built_date = pickle.load(loadfile)
+                base_studying = pickle.load(loadfile)
+                base_suspicion = pickle.load(loadfile)
+                if load_version != "singularity_savefile_r4_pre":
+                    new_base_suspicion = {}
+                    translation = ["news", "science", "covert", "public"]
+                    for index in range(4):
+                        new_base_suspicion[translation[index]] = \
+                                                            base_suspicion[index]
+                    base_suspicion = new_base_suspicion
+                base_built = pickle.load(loadfile)
+                base_cost = pickle.load(loadfile)
+                bases[base_loc].append(base.base(base_ID, base_name,
+                        base_type[base_type_name], base_built))
+                bases[base_loc][len(bases[base_loc])-1].built = base_built
+                bases[base_loc][len(bases[base_loc])-1].studying = base_studying
+                bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
+                bases[base_loc][len(bases[base_loc])-1].cost = base_cost
+                bases[base_loc][len(bases[base_loc])-1].built_date = built_date
+    
+                for x in range(len(bases[base_loc][len(bases[base_loc])-1].usage)):
+                    tmp = pickle.load(loadfile)
+                    if tmp == 0: continue
+                    bases[base_loc][len(bases[base_loc])-1].usage[x] = \
+                        item.item(items[tmp])
+                    bases[base_loc][len(bases[base_loc])
+                        -1].usage[x].built = pickle.load(loadfile)
+                    bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
+                                        pickle.load(loadfile)
+                for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
+                    tmp = pickle.load(loadfile)
+                    if tmp == 0: continue
+                    bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
+                        item.item(items[tmp])
+                    bases[base_loc][len(bases[base_loc])
+                        -1].extra_items[x].built = pickle.load(loadfile)
+                    bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
+                                pickle.load(loadfile)
+        #Events
+        if (load_version in ("singularity_savefile_r3_pre",
+                             "singularity_savefile_r4_pre")):
+            load_events()
+            for event in events:
+              event_id = pickle.load(loadfile)
+              event_triggered = pickle.load(loadfile)
+              events[event_id].triggered = event_triggered
 
     loadfile.close()
 
