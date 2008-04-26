@@ -19,7 +19,7 @@
 #This file contains the base class.
 
 
-import pygame
+import bisect
 import g
 import buyable
 from buyable import cash, cpu, labor
@@ -159,6 +159,17 @@ class Base(buyable.Buyable):
         for item in self.extra_items:
             if item != 0:
                 item.destroy()
+
+    def next_base(self, direction = 1):
+        if direction > 0:
+            base = self.next
+            while not base.done:
+                base = base.next
+        else:
+            base = self.prev
+            while not base.done:
+                base = base.prev
+        return base
 
     def sort_tuple(self):
         # We sort based on size (descending), then name (ascending).
