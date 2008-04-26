@@ -53,8 +53,16 @@ class Buyable_Class(object):
     def __init__(self, id, description, cost, prerequisites):
         self.name = self.id = id
         self.description = description
-        self.cost = cost
+        self._cost = cost
         self.prerequisites = prerequisites
+
+    def get_cost(self):
+        cost = array(self._cost)
+        cost[labor] *= g.minutes_per_day * g.pl.labor_bonus
+        cost[labor] /= 10000
+        return cost
+        
+    cost = property(get_cost)
 
     def __cmp__(self, other):
         # For sorting buyables, we sort by cost; Python's cmp() is smart enough
@@ -85,9 +93,7 @@ class Buyable(object):
         self.description = type.description
         self.prerequisites = type.prerequisites
 
-        self.total_cost = array(type.cost)
-        self.total_cost[labor] *= g.minutes_per_day * g.pl.labor_bonus
-        self.total_cost[labor] /= 10000
+        self.total_cost = type.cost
         self.cost_left = array(self.total_cost)
 
         self.done = False

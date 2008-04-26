@@ -623,7 +623,7 @@ def get_save_folder(just_pref_dir=False):
     return save_dir
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_r4_pre3"
+current_save_version = "singularity_savefile_r4_pre4"
 def save_game(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
@@ -653,7 +653,8 @@ savefile_translation = {
     "singularity_savefile_r3_pre": 2.91,
     "singularity_savefile_r4_pre": 3.91,
     #"singularity_savefile_r4_pre2": 3.92,
-    "singularity_savefile_r4_pre3": 3.93
+    "singularity_savefile_r4_pre3": 3.93,
+    "singularity_savefile_r4_pre4": 3.94
 }
 
 def load_game(loadgame_name):
@@ -818,8 +819,9 @@ def load_game(loadgame_name):
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
-        if load_version <= 3.91: # <= r4_pre
+        if load_version <= 3.93: # <= r4_pre3
             pl.convert_from(load_version)
+        if load_version <= 3.91: # <= r4_pre
         #    for tech in tech.values():
         #        tech.convert_from(load_version)
             new_bases = {}
@@ -1400,27 +1402,38 @@ def new_game(difficulty):
     pl = player.player_class((50 / difficulty) * 100)
     if difficulty < 3:
         pl.interest_rate = 5
-        pl.labor_bonus = 2000
+        pl.labor_bonus = 2500
+        pl.grace_multiplier = 400
         discover_bonus = 7000
     elif difficulty < 5:
         pl.interest_rate = 3
-        pl.labor_bonus = 3000
+        pl.labor_bonus = 5000
+        pl.grace_multiplier = 300
         discover_bonus = 9000
     elif difficulty == 5:
         pass
     #    Defaults.
     #    pl.interest_rate = 1
     #    pl.labor_bonus = 10000
+    #    pl.grace_multiplier = 200
     #    discover_bonus = 10000
     #    player.group.discover_suspicion = 1000
     elif difficulty < 8:
         pl.labor_bonus = 11000
+        pl.grace_multiplier = 180
         discover_bonus = 11000
         player.group.discover_suspicion = 1500
-    else:
-        pl.labor_bonus = 18000
+    elif difficulty <= 50:
+        pl.labor_bonus = 15000
+        pl.grace_multiplier = 150
         discover_bonus = 13000
         player.group.discover_suspicion = 2000
+    else:
+        pl.labor_bonus = 20000
+        pl.grace_multiplier = 100
+        discover_bonus = 15000
+        player.group.discover_suspicion = 2000
+        pl.masochist = True
 
     if difficulty != 5:
         for group in pl.groups.values():

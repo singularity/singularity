@@ -20,6 +20,7 @@
 
 import pygame
 import g
+import finance_screen
 
 class group(object):
     discover_suspicion = 1000
@@ -71,7 +72,13 @@ class player_class(object):
                        "covert":  group("covert",  suspicion_decay =  50),
                        "public":  group("public",  suspicion_decay = 200)}
 
+        self.masochist = False # Only set True on Impossible mode.
+        self.grace_multiplier = 200
+
     def convert_from(self, old_version):
+         if old_version <= 3.93: # <= r4_pre3
+             self.masochist = False
+             self.grace_multiplier = int(1000000./float(self.labor_bonus))
          if old_version <= 3.91: # <= r4_pre
              self.make_raw_times()
              self.had_grace = self.in_grace_period()
@@ -123,6 +130,13 @@ class player_class(object):
                             g.curr_speed = 1
                             needs_refresh = 1
                             g.create_dialog(text)
+
+                            if base.type.id == "Stolen Computer Time" and \
+                                    base.cpus[0].type.id == "Gaming PC":
+                                text = g.strings["lucky_hack"] % \
+                                    {"base": base.name}
+                                g.create_dialog(text)
+                               
                     else:
                         #Construction of CPUs:
                         already_built = just_built = 0
@@ -332,9 +346,19 @@ class player_class(object):
                 return 2
 
         # The [] can be removed in Python 2.4.
-        if sum([len(base_list) for base_list in g.bases.values()]) == 0:
+        if sum(len(base_list) for base_list in g.bases.values()) == 0:
             # My last base got discovered.
             return 1
+
+        # On Impossible mode, we check to see if the player has at least one
+        # CPU left.  If not, they lose due to having no (complete) bases.
+        if self.masochist:
+            if sum(base.processor_time() for base_list in g.bases.values()
+                                         for base in base_list
+                                         if base.done
+                   ) == 0:
+                return 1
+            
 
         # Still Alive.
         return 0

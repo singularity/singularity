@@ -248,7 +248,7 @@ def refresh_items(item_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(g.items[item_name].cost[2]) + " Days"
+    string = g.to_time(g.items[item_name].cost[2])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
 
@@ -746,7 +746,7 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
 
-    string = g.add_commas(g.base_type[base_name].cost[2]) + " Days"
+    string = g.to_time(g.base_type[base_name].cost[2])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 

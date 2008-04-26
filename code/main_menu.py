@@ -56,16 +56,16 @@ def display_main_menu():
 def difficulty_select():
 
     xsize = 75
-    ysize = 107
+    ysize = 125
     g.create_norm_box((g.screen_size[0]/2-xsize, g.screen_size[1]/2-ysize),
-        (xsize*2, ysize*2+1))
+        (xsize*2, ysize*2))
 
     xstart =g.screen_size[0]/2-xsize+5
     ystart =g.screen_size[1]/2-ysize
 
     diff_buttons = {}
     button_souls = ( ("VERY EASY", 1), ("EASY", 3), ("NORMAL", 5), ("HARD", 7), 
-                     ("IMPOSSIBLE", 9), ("BACK", 0) )
+                     ("ULTRA HARD", 10), ("IMPOSSIBLE", 100), ("BACK", 0) )
     y_offset = 5
     for name, retval in button_souls:
         diff_buttons[buttons.make_norm_button((xstart, ystart+y_offset),

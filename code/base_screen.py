@@ -292,8 +292,7 @@ def refresh_item(this_base, item_name, xy_loc):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
-    string = g.add_commas(
-        (g.items[item_name].cost[2]*g.pl.labor_bonus)/10000)+" Days"
+    string = g.to_time(g.items[item_name].cost[2])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
 

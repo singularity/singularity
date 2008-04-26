@@ -49,7 +49,13 @@ class Base(buyable.Buyable):
 
         self.cpus = [0] * self.type.size
         if self.type.force_cpu:
-            self.cpus[0] = g.item.Item(g.items[self.type.force_cpu])
+            # 1% chance for a Stolen Computer Time base to have a Gaming PC
+            # instead.  If the base is pre-built, ignore this.
+            if self.type.id == "Stolen Computer Time" and g.roll_percent(100) \
+                    and not built:
+                self.cpus[0] = g.item.Item(g.items["Gaming PC"])
+            else:
+                self.cpus[0] = g.item.Item(g.items[self.type.force_cpu])
             self.cpus[0].finish()
 
         #Reactor, network, security.
@@ -57,6 +63,8 @@ class Base(buyable.Buyable):
 
         if built:
             self.finish()
+
+        self.grace_over = False
 
     #Get detection chance for the base, applying bonuses as needed.
     def get_detect_chance(self):
@@ -121,9 +129,16 @@ class Base(buyable.Buyable):
             return False
 
     def has_grace(self):
+         if self.grace_over:
+             return False
+
          age = g.pl.time_day - self.built_date
-         build_time = self.type.cost[labor]
-         return age <= (build_time * 2)
+         grace_time = (self.total_cost[labor] * g.pl.grace_multiplier) / 100
+         if age > grace_time:
+             self.grace_over = True
+             return False
+         else:
+             return True
 
 #calc_base_discovery_chance: A globally-accessible function that can calculate
 #basic discovery chances given a particular class of base.
