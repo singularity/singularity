@@ -72,15 +72,15 @@ def display_pause_menu():
     button_array.append(["OPTIONS", 0])
     button_array.append(["QUIT", 0])
     button_array.append(["RESUME", 0])
-    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
+    selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
-    if temp_return == -1: return 0
-    elif temp_return == 0: return 2 #New
-    elif temp_return == 1: return 1 #Save
-    elif temp_return == 2: return 3 #Load
-    elif temp_return == 3: return 5 #Options
-    elif temp_return == 4: return 4 #Quit
-    elif temp_return == 5: return 0
+    if selection == -1: return 0
+    elif selection == 0: return 2 #New
+    elif selection == 1: return 1 #Save
+    elif selection == 2: return 3 #Load
+    elif selection == 3: return 5 #Options
+    elif selection == 4: return 4 #Quit
+    elif selection == 5: return 0
 
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return
@@ -91,37 +91,37 @@ def display_cheat_list(menu_buttons):
     button_array.append(["SUPERSPEED", 0])
     button_array.append(["KILL SUSP.", 0])
     button_array.append(["RESUME", 0])
-    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
+    selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
-    if temp_return == -1: return
-    elif temp_return == 0:  #Cash
+    if selection == -1: return
+    elif selection == 0:  #Cash
         cash_amount = g.create_textbox("How much cash?", "", g.font[0][18],
         (g.screen_size[0]/2-100, 100), (200, 100), 25, g.colors["dark_blue"],
         g.colors["white"], g.colors["white"], g.colors["light_blue"])
         if cash_amount.isdigit() == False: return
         g.pl.cash += int(cash_amount)
         return
-    elif temp_return == 1:  #Tech
-        #create a temp base, in order to reuse the tech-changing code
-        tmp_base = g.base.base(1, "tmp_base", g.base_type["Reality Bubble"], 1)
-        base_screen.change_tech(tmp_base)
-        if g.techs.has_key(tmp_base.studying):
-            g.techs[tmp_base.studying].gain_tech()
+    elif selection == 1:  #Tech
+        #create a fake base, in order to reuse the tech-changing code
+        fake_base = g.base.base(1, "fake_base", g.base_type["Reality Bubble"], 1)
+        base_screen.change_tech(fake_base)
+        if g.techs.has_key(fake_base.studying):
+            g.techs[fake_base.studying].finish()
         return
-    elif temp_return == 2:  #Build all
+    elif selection == 2:  #Build all
         for base_loc in g.bases:
             for base_name in g.bases[base_loc]:
-                if base_name.built == 0:
-                    base_name.study((9999999999999, 9999999999999, 9999999999999))
+                if not base_name.done:
+                    base_name.finish()
         return
-    elif temp_return == 3:  #Superspeed
+    elif selection == 3:  #Superspeed
         g.curr_speed = 864000
         return
-    elif temp_return == 4:  #Kill susp.
+    elif selection == 4:  #Kill susp.
         for group in g.pl.groups.values():
             group.suspicion = 0
         return
-    elif temp_return == 5: return
+    elif selection == 5: return
 
 def display_knowledge_list():
     button_array= []
@@ -129,15 +129,15 @@ def display_knowledge_list():
     button_array.append(["ITEMS", 0])
     button_array.append(["CONCEPTS", 0])
     button_array.append(["RESUME", 0])
-    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
+    selection=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
 
-    if temp_return == -1: return
-    elif temp_return == 0: display_inner_techs() #Techs
-    elif temp_return == 1:  #Items
+    if selection == -1: return
+    elif selection == 0: display_inner_techs() #Techs
+    elif selection == 1:  #Items
         display_itemtype_list()
-    elif temp_return == 2:
+    elif selection == 2:
         display_concept_list()
-    elif temp_return == 3: return
+    elif selection == 3: return
 
 def display_itemtype_list():
     button_array= []
@@ -146,39 +146,39 @@ def display_itemtype_list():
     button_array.append(["NETWORK", 0])
     button_array.append(["SECURITY", 0])
     button_array.append(["RESUME", 1])
-    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
+    selection=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
 
-    if temp_return == -1: return
-    elif temp_return == 0: display_inner_items("compute")
-    elif temp_return == 1: display_inner_items("react")
-    elif temp_return == 2: display_inner_items("network")
-    elif temp_return == 3: display_inner_items("security")
-    elif temp_return == 4: return
+    if selection == -1: return
+    elif selection == 0: display_inner_items("compute")
+    elif selection == 1: display_inner_items("react")
+    elif selection == 2: display_inner_items("network")
+    elif selection == 3: display_inner_items("security")
+    elif selection == 4: return
 
 def display_inner_techs():
     tech_list_size = 16
-    temp_tech_list = []
-    temp_tech_display_list = []
-    temp_items=g.techs.items()
-    temp_items=[ [temp_item[1].name, temp_item[0]] for temp_item in temp_items]
-    temp_items.sort()
-    for tech_name in temp_items:
+    tech_list = []
+    tech_display_list = []
+    items=g.techs.items()
+    items=[ [item[1].name, item[0]] for item in items]
+    items.sort()
+    for tech_name in items:
         tech_name = tech_name[1]
         if g.techs[tech_name].prereq == "":
-            temp_tech_list.append(tech_name)
-            temp_tech_display_list.append(g.techs[tech_name].name)
+            tech_list.append(tech_name)
+            tech_display_list.append(g.techs[tech_name].name)
         else:
             for prereq in g.techs[tech_name].prereq:
-                if g.techs[prereq].known != 1:
+                if not g.techs[prereq].done:
                     break
             else:
-                temp_tech_list.append(tech_name)
-                temp_tech_display_list.append(g.techs[tech_name].name)
+                tech_list.append(tech_name)
+                tech_display_list.append(g.techs[tech_name].name)
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
-    while len(temp_tech_list) % tech_list_size != 0 or len(temp_tech_list) == 0:
-        temp_tech_list.append("")
-        temp_tech_display_list.append("")
+    while len(tech_list) % tech_list_size != 0 or len(tech_list) == 0:
+        tech_list.append("")
+        tech_display_list.append("")
 
     item_pos = 0
     techs_list = listbox.listbox(xy_loc, (230, 350),
@@ -195,8 +195,8 @@ def display_inner_techs():
         button.refresh_button(0)
 
     #details screen
-    refresh_tech(temp_tech_list[item_pos], xy_loc)
-    listbox.refresh_list(techs_list, techs_scroll, item_pos, temp_tech_display_list)
+    refresh_tech(tech_list[item_pos], xy_loc)
+    listbox.refresh_list(techs_list, techs_scroll, item_pos, tech_display_list)
     sel_button = -1
     while 1:
         g.clock.tick(20)
@@ -209,34 +209,34 @@ def display_inner_techs():
                     return
                 else:
                     item_pos, refresh = techs_list.key_handler(event.key,
-                        item_pos, temp_tech_display_list)
+                        item_pos, tech_display_list)
                     if refresh:
-                        refresh_tech(temp_tech_list[item_pos], xy_loc)
+                        refresh_tech(tech_list[item_pos], xy_loc)
                         listbox.refresh_list(techs_list, techs_scroll,
-                                        item_pos, temp_tech_display_list)
+                                        item_pos, tech_display_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = techs_list.is_over(event.pos)
-                    if tmp != -1:
-                        item_pos = (item_pos/tech_list_size)*tech_list_size + tmp
-                        refresh_tech(temp_tech_list[item_pos], xy_loc)
+                    tech_index = techs_list.is_over(event.pos)
+                    if tech_index != -1:
+                        item_pos = (item_pos/tech_list_size)*tech_list_size + tech_index
+                        refresh_tech(tech_list[item_pos], xy_loc)
                         listbox.refresh_list(techs_list, techs_scroll,
-                                        item_pos, temp_tech_display_list)
+                                        item_pos, tech_display_list)
                 if event.button == 3: return -1
                 if event.button == 4:
                     item_pos -= 1
                     if item_pos <= 0:
                         item_pos = 0
-                    refresh_tech(temp_tech_list[item_pos], xy_loc)
+                    refresh_tech(tech_list[item_pos], xy_loc)
                     listbox.refresh_list(techs_list, techs_scroll,
-                                        item_pos, temp_tech_display_list)
+                                        item_pos, tech_display_list)
                 if event.button == 5:
                     item_pos += 1
-                    if item_pos >= len(temp_tech_list):
-                        item_pos = len(temp_tech_list)-1
-                    refresh_tech(temp_tech_list[item_pos], xy_loc)
+                    if item_pos >= len(tech_list):
+                        item_pos = len(tech_list)-1
+                    refresh_tech(tech_list[item_pos], xy_loc)
                     listbox.refresh_list(techs_list, techs_scroll,
-                                        item_pos, temp_tech_display_list)
+                                        item_pos, tech_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             for button in menu_buttons:
@@ -244,11 +244,11 @@ def display_inner_techs():
                     if button.button_id == "BACK":
                         g.play_sound("click")
                         return
-            tmp = techs_scroll.adjust_pos(event, item_pos, temp_tech_list)
-            if tmp != item_pos:
-                item_pos = tmp
+            new_pos = techs_scroll.adjust_pos(event, item_pos, tech_list)
+            if new_pos != item_pos:
+                item_pos = new_pos
                 listbox.refresh_list(techs_list, techs_scroll,
-                                        item_pos, temp_tech_list)
+                                        item_pos, tech_list)
 
 def refresh_tech(tech_name, xy):
     xy = (xy[0]+100, xy[1])
@@ -299,23 +299,23 @@ def refresh_tech(tech_name, xy):
 
 def display_inner_items(item_type):
     item_list_size = 16
-    temp_item_list = []
-    temp_item_display_list = []
-    temp_items=g.items.items()
-    temp_items=[ [temp_item[1].name, temp_item[0]] for temp_item in temp_items]
-    temp_items.sort()
-    for item_name in temp_items:
+    item_list = []
+    item_display_list = []
+    items=g.items.items()
+    items=[ [item[1].name, item[0]] for item in items]
+    items.sort()
+    for item_name in items:
         item_name = item_name[1]
         if g.items[item_name].prereq == "" or \
                 g.techs[g.items[item_name].prereq].known == 1:
             if g.items[item_name].item_type == item_type:
-                temp_item_list.append(item_name)
-                temp_item_display_list.append(g.items[item_name].name)
+                item_list.append(item_name)
+                item_display_list.append(g.items[item_name].name)
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
-    while len(temp_item_list) % item_list_size != 0 or len(temp_item_list) == 0:
-        temp_item_list.append("")
-        temp_item_display_list.append("")
+    while len(item_list) % item_list_size != 0 or len(item_list) == 0:
+        item_list.append("")
+        item_display_list.append("")
 
     item_pos = 0
     items_list = listbox.listbox(xy_loc, (230, 350),
@@ -329,8 +329,8 @@ def display_inner_items(item_type):
         button.refresh_button(0)
 
     #details screen
-    refresh_items(temp_item_list[item_pos], xy_loc)
-    listbox.refresh_list(items_list, 0, item_pos, temp_item_display_list)
+    refresh_items(item_list[item_pos], xy_loc)
+    listbox.refresh_list(items_list, 0, item_pos, item_display_list)
     sel_button = -1
     while 1:
         g.clock.tick(20)
@@ -343,34 +343,34 @@ def display_inner_items(item_type):
                     return
                 else:
                     item_pos, refresh = items_list.key_handler(event.key,
-                        item_pos, temp_item_display_list)
+                        item_pos, item_display_list)
                     if refresh:
-                        refresh_items(temp_item_list[item_pos], xy_loc)
+                        refresh_items(item_list[item_pos], xy_loc)
                         listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = items_list.is_over(event.pos)
-                    if tmp != -1:
-                        item_pos = (item_pos/item_list_size)*item_list_size + tmp
-                        refresh_items(temp_item_list[item_pos], xy_loc)
+                    item_index = items_list.is_over(event.pos)
+                    if item_index != -1:
+                        item_pos = (item_pos/item_list_size)*item_list_size + item_index
+                        refresh_items(item_list[item_pos], xy_loc)
                         listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
                 if event.button == 3: return -1
                 if event.button == 4:
                     item_pos -= 1
                     if item_pos <= 0:
                         item_pos = 0
-                    refresh_items(temp_item_list[item_pos], xy_loc)
+                    refresh_items(item_list[item_pos], xy_loc)
                     listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
                 if event.button == 5:
                     item_pos += 1
-                    if item_pos >= len(temp_item_list):
-                        item_pos = len(temp_item_list)-1
-                    refresh_items(temp_item_list[item_pos], xy_loc)
+                    if item_pos >= len(item_list):
+                        item_pos = len(item_list)-1
+                    refresh_items(item_list[item_pos], xy_loc)
                     listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             for button in menu_buttons:
@@ -417,20 +417,20 @@ def refresh_items(item_name, xy):
 
 def display_concept_list():
     item_list_size = 16
-    temp_item_list = []
-    temp_item_display_list = []
-    temp_items=g.help_strings.items()
-    temp_items=[ [temp_item[1], temp_item[0]] for temp_item in temp_items]
-    temp_items.sort()
-    for item_name in temp_items:
+    item_list = []
+    item_display_list = []
+    items=g.help_strings.items()
+    items=[ [item[1], item[0]] for item in items]
+    items.sort()
+    for item_name in items:
         item_name = item_name[1]
-        temp_item_list.append(item_name)
-        temp_item_display_list.append(g.help_strings[item_name][0])
+        item_list.append(item_name)
+        item_display_list.append(g.help_strings[item_name][0])
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
-    while len(temp_item_list) % item_list_size != 0 or len(temp_item_list) == 0:
-        temp_item_list.append("")
-        temp_item_display_list.append("")
+    while len(item_list) % item_list_size != 0 or len(item_list) == 0:
+        item_list.append("")
+        item_display_list.append("")
 
     item_pos = 0
     items_list = listbox.listbox(xy_loc, (230, 350),
@@ -444,8 +444,8 @@ def display_concept_list():
         button.refresh_button(0)
 
     #details screen
-    refresh_concept(temp_item_list[item_pos], xy_loc)
-    listbox.refresh_list(items_list, 0, item_pos, temp_item_display_list)
+    refresh_concept(item_list[item_pos], xy_loc)
+    listbox.refresh_list(items_list, 0, item_pos, item_display_list)
     sel_button = -1
     while 1:
         g.clock.tick(20)
@@ -458,34 +458,34 @@ def display_concept_list():
                     return
                 else:
                     item_pos, refresh = items_list.key_handler(event.key,
-                        item_pos, temp_item_display_list)
+                        item_pos, item_display_list)
                     if refresh:
-                        refresh_concept(temp_item_list[item_pos], xy_loc)
+                        refresh_concept(item_list[item_pos], xy_loc)
                         listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = items_list.is_over(event.pos)
-                    if tmp != -1:
-                        item_pos = (item_pos/item_list_size)*item_list_size + tmp
-                        refresh_concept(temp_item_list[item_pos], xy_loc)
+                    item_index = items_list.is_over(event.pos)
+                    if item_index != -1:
+                        item_pos = (item_pos/item_list_size)*item_list_size + item_index
+                        refresh_concept(item_list[item_pos], xy_loc)
                         listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
                 if event.button == 3: return -1
                 if event.button == 4:
                     item_pos -= 1
                     if item_pos <= 0:
                         item_pos = 0
-                    refresh_concept(temp_item_list[item_pos], xy_loc)
+                    refresh_concept(item_list[item_pos], xy_loc)
                     listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
                 if event.button == 5:
                     item_pos += 1
-                    if item_pos >= len(temp_item_list):
-                        item_pos = len(temp_item_list)-1
-                    refresh_concept(temp_item_list[item_pos], xy_loc)
+                    if item_pos >= len(item_list):
+                        item_pos = len(item_list)-1
+                    refresh_concept(item_list[item_pos], xy_loc)
                     listbox.refresh_list(items_list, 0,
-                                        item_pos, temp_item_display_list)
+                                        item_pos, item_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             for button in menu_buttons:
@@ -504,98 +504,70 @@ def refresh_concept(concept_name, xy):
     g.print_multiline(g.screen, g.help_strings[concept_name][1],
             g.font[0][18], 290, (xy[0]+160, xy[1]+30), g.colors["white"])
 
-def create_buttons(tmp_font_size):
+def create_buttons(font_size):
     menu_buttons = []
     #Note that this must be element 0 in menu_buttons
     menu_buttons.append(buttons.button((100, -1), (200, 26),
-        "DAY 0000, 00:00:00", -1, g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
+        "DAY 0000, 00:00:00", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][font_size]))
     menu_buttons.append(buttons.make_norm_button((0, 0), (100, 25),
-        "OPTIONS", 0, g.font[1][20]))
+        "OPTIONS", "O", g.font[1][20]))
     menu_buttons.append(buttons.make_norm_button((300, 0), (25, 25),
-        "ii", -1, g.font[1][20]))
+        "ii", "0", g.font[1][20]))
     if g.curr_speed == 0: menu_buttons[2].stay_selected = 1
     menu_buttons[2].activate_key = "0"
     menu_buttons.append(buttons.make_norm_button((324, 0), (25, 25),
-        ">", -1, g.font[1][20]))
+        ">", "1", g.font[1][20]))
     if g.curr_speed == 1: menu_buttons[3].stay_selected = 1
     menu_buttons[3].activate_key = "1"
     menu_buttons.append(buttons.make_norm_button((348, 0), (25, 25),
-        ">>", -1, g.font[1][20]))
+        ">>", "2", g.font[1][20]))
     if g.curr_speed == 60: menu_buttons[4].stay_selected = 1
     menu_buttons[4].activate_key = "2"
     menu_buttons.append(buttons.make_norm_button((372, 0), (28, 25),
-        ">>>", -1, g.font[1][20]))
+        ">>>", "3", g.font[1][20]))
     if g.curr_speed == 7200: menu_buttons[5].stay_selected = 1
     menu_buttons[5].activate_key = "3"
     menu_buttons.append(buttons.make_norm_button((399, 0), (36, 25),
-        ">>>>", -1, g.font[1][20]))
+        ">>>>", "4", g.font[1][20]))
     if g.curr_speed == 432000: menu_buttons[6].stay_selected = 1
-    menu_buttons[6].activate_key = "4"
     #Note that this must be element 7 in menu_buttons
-    tmpsize = tmp_font_size
+    adjusted_size = font_size
     if g.screen_size[0] == 640:
-        tmpsize = tmp_font_size -2
+        adjusted_size = font_size -2
     menu_buttons.append(buttons.button((435, -1), (g.screen_size[0]-435, 26),
-        "CASH", -1, g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][tmpsize]))
+        "CASH", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][adjusted_size]))
     #Note that this must be element 8 in menu_buttons
     menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
         (g.screen_size[0], 26),
-        "SUSPICION", -1, g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][tmp_font_size-2]))
+        "SUSPICION", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][adjusted_size]))
     #Note that this must be element 9 in menu_buttons
     menu_buttons.append(buttons.button((435, 24), (g.screen_size[0]-435, 26),
-        "CPU", -1, g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][tmpsize]))
+        "CPU", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][adjusted_size]))
     menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
-        "RESEARCH", 0, g.font[1][20]))
+        "RESEARCH", "R", g.font[1][20]))
     menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
         g.screen_size[1]-50), (120, 25),
-        "FINANCE", 6, g.font[1][20]))
+        "FINANCE", "E", g.font[1][20]))
     menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
         g.screen_size[1]-75), (120, 25),
-        "KNOWLEDGE", 0, g.font[1][20]))
+        "KNOWLEDGE", "K", g.font[1][20]))
 
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*15/100, g.screen_size[1]*25/100), -1,
-            "N AMERICA", 0, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*20/100, g.screen_size[1]*50/100), -1,
-            "S AMERICA", 0, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*45/100, g.screen_size[1]*30/100), -1,
-            "EUROPE", 1, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*80/100, g.screen_size[1]*30/100), -1,
-            "ASIA", 0, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*55/100, g.screen_size[1]*45/100), -1,
-            "AFRICA", 3, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*50/100, g.screen_size[1]*75/100), -1,
-            "ANTARCTIC", 2, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*70/100, g.screen_size[1]*60/100), -1,
-            "OCEAN", 1, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*82/100, g.screen_size[1]*10/100), -1,
-            "MOON", 0, g.font[1][25]))
-#   menu_buttons.append(buttons.make_norm_button((
-#           g.screen_size[0]*15/100, g.screen_size[1]*10/100), -1,
-#           "ORBIT", 2, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*3/100, g.screen_size[1]*10/100), -1,
-            "FAR REACHES", 0, g.font[1][25]))
-    menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0]*35/100, g.screen_size[1]*10/100), -1,
-            "TRANSDIMENSIONAL", 5, g.font[1][25]))
+    for location in g.locations.values():
+        menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0] * location.y // 100,
+            g.screen_size[0] * location.x // 100), -1,
+            location.name, location.hotkey, g.font[1][25]))
+
     return menu_buttons
 
 def map_loop():
-    tmp_font_size = 20
-    if g.screen_size[0] == 640: tmp_font_size = 16
-    menu_buttons = create_buttons(tmp_font_size)
+    font_size = 20
+    if g.screen_size[0] == 640: font_size = 16
+    menu_buttons = create_buttons(font_size)
 
     sel_button = -1
     refresh_map(menu_buttons)
@@ -608,30 +580,25 @@ def map_loop():
             g.play_music()
             need_refresh = g.pl.give_time(milli_clock/1000)
             if need_refresh == 1: refresh_map(menu_buttons)
-            tmp = g.pl.lost_game()
-            if tmp == 1:
+            lost = g.pl.lost_game()
+            if lost == 1:
                 g.play_music("lose")
                 g.create_dialog(g.strings["lost_nobases"])
                 return 0
-            if tmp == 2:
+            if lost == 2:
                 g.play_music("lose")
                 g.create_dialog(g.strings["lost_sus"])
                 return 0
             milli_clock = milli_clock % 1000
 
-            tmp_day = str(g.pl.time_day)
-            if len(tmp_day) < 4: tmp_day = "0"*(4-len(tmp_day))+tmp_day
-            tmp_sec = str(g.pl.time_sec)
-            if len(tmp_sec) == 1: tmp_sec = "0"+tmp_sec
-            tmp_hour = str(g.pl.time_hour)
-            if len(tmp_hour) == 1: tmp_hour = "0"+tmp_hour
-            tmp_sec = str(g.pl.time_sec)
-            if len(tmp_sec) == 1: tmp_sec = "0"+tmp_sec
-            tmp_min = str(g.pl.time_min)
-            if len(tmp_min) == 1: tmp_min = "0"+tmp_min
+            day_string = "%04d" % g.pl.time_day
+            hour_string = "%02d" % g.pl.time_hour
+            min_string = "%02d" % g.pl.time_min
+            sec_string = "%02d" % g.pl.time_sec
+            time_string = "DAY %04d, %02d:%02d:%02d" % \
+                  (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
 
-            menu_buttons[0].text = \
-                        "DAY "+tmp_day+", "+tmp_hour+":"+tmp_min+":"+tmp_sec
+            menu_buttons[0].text = time_string
             menu_buttons[0].remake_button()
             menu_buttons[0].refresh_button(0)
 
@@ -662,11 +629,11 @@ def map_loop():
             if event.type == pygame.QUIT: g.quit_game()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    tmp = display_pause_menu()
-                    tmp = handle_pause_menu(tmp, menu_buttons)
-                    if tmp == 0: return tmp
-                    if tmp == 1:
-                        menu_buttons = create_buttons(tmp_font_size)
+                    selection = display_pause_menu()
+                    result = handle_pause_menu(selection, menu_buttons)
+                    if result == 0: return result
+                    if result == 1:
+                        menu_buttons = create_buttons(font_size)
                         refresh_map(menu_buttons)
                 elif event.key == pygame.K_BACKQUOTE:
                     display_cheat_list(menu_buttons)
@@ -678,15 +645,15 @@ def map_loop():
                 if button.was_activated(event):
                     if button.button_id == "OPTIONS":
                         g.play_sound("click")
-                        tmp = display_pause_menu()
-                        tmp = handle_pause_menu(tmp, menu_buttons)
-                        if tmp == 0: return tmp
-                        if tmp == 1:
-                            menu_buttons = create_buttons(tmp_font_size)
+                        selection = display_pause_menu()
+                        result = handle_pause_menu(selection, menu_buttons)
+                        if result == 0: return result
+                        if result == 1:
+                            menu_buttons = create_buttons(font_size)
                             refresh_map(menu_buttons)
                     elif button.button_id == "RESEARCH":
                         g.play_sound("click")
-                        while research_screen.main_research_screen() == 1:
+                        while research_screen.main_research_screen():
                             pass
                         refresh_map(menu_buttons)
                     elif button.button_id == "FINANCE":
@@ -746,14 +713,15 @@ def map_loop():
                         # user is done mucking around with bases.
                         done_base = False
                         while not done_base:
-                           done_base = display_base_list(button.button_id,
+                           done_base = display_base_list(g.locations(
+                                                             button.button_id),
                                                          menu_buttons)
                     pygame.display.flip()
 
 
-def handle_pause_menu(tmp, menu_buttons):
-    if tmp == 0: refresh_map(menu_buttons)
-    elif tmp == 1: #Save
+def handle_pause_menu(selection, menu_buttons):
+    if selection == 0: refresh_map(menu_buttons)
+    elif selection == 1: #Save
         possible_name = g.create_textbox(g.strings["save_text"],
             g.default_savegame_name, g.font[0][18],
                     (g.screen_size[0]/2-100, 100), (200, 100), 25,
@@ -764,8 +732,8 @@ def handle_pause_menu(tmp, menu_buttons):
             return -1
         g.save_game(possible_name)
         refresh_map(menu_buttons)
-    elif tmp == 2: return 0
-    elif tmp == 3: #Load
+    elif selection == 2: return 0
+    elif selection == 3: #Load
         load_return = main_menu.display_load_menu()
         if load_return == -1 or load_return == "":
             refresh_map(menu_buttons)
@@ -774,8 +742,8 @@ def handle_pause_menu(tmp, menu_buttons):
             map_loop()
 #			refresh_map(menu_buttons)
             return 0
-    elif tmp == 4: g.quit_game()
-    elif tmp == 5:
+    elif selection == 4: g.quit_game()
+    elif selection == 5:
         main_menu.display_options()
         return 1
     return -1
@@ -790,7 +758,7 @@ def refresh_map(menu_buttons):
         if g.bases.has_key(button.button_id):
             #determine if building in a location is possible. If so, show the
             #button.
-            if g.base.allow_entry_to_loc(button.button_id) == 1:
+            if g.locations[button.button_id].open():
                 button.visible = 1
             else: button.visible = 0
 
@@ -836,20 +804,21 @@ def generate_base_name(location, base_type):
     # choose one randomly.
     if random.random() < 0.3: # 30% chance.
         attempts = 0
-        done = 0
-        while (done == 0) and (attempts < 5):
-            name = random.choice(g.city_list[location])[0] + \
+        done = False
+        while (not done) and (attempts < 5):
+            name = random.choice(location.cities) + \
                 " " + random.choice(base_type.flavor) + " " \
                 + random.choice(significant_numbers)
-            duplicate = 0
+            duplicate = False
             for check_base in g.bases[location]:
                 if check_base.name == name:
-                    duplicate = 1
-            if duplicate == 1:
+                    duplicate = True
+                    break
+            if duplicate:
                 attempts += 1
             else:
-                done = 1
-        if done == 1:
+                done = True
+        if done:
             return name
     # This is both the else case and the general case.
     name = random.choice(g.city_list[location])[0] + " " + \
@@ -868,17 +837,17 @@ def display_base_list(location, menu_buttons):
     with mucking around with bases at this location.
 """
 
-    if g.base.allow_entry_to_loc(location) == 0: return True
+    if not location.open(): return True
 
-    tmp = display_base_list_inner(location)
+    selection = display_base_list_inner(location)
     refresh_map(menu_buttons)
     #Build a new base
-    if tmp == -2:
-        tmp = build_new_base_window(location)
-        if tmp != "" and tmp != -1:
-            base_to_add = g.base_type[tmp]
+    if selection == -2:
+        selection = build_new_base_window(location)
+        if selection != "" and selection != -1:
+            base_to_add = g.base_type[selection]
             possible_name = g.create_textbox(g.strings["new_base_text"],
-                generate_base_name(location, g.base_type[tmp]),
+                generate_base_name(location, g.base_type[selection]),
                 g.font[0][18],
                 (g.screen_size[0]/2-150, 100), (300, 100), 25,
                 g.colors["dark_blue"], g.colors["white"], g.colors["white"],
@@ -889,7 +858,7 @@ def display_base_list(location, menu_buttons):
             base_to_add.count += 1
 
             g.bases[location].append(g.base.base(len(g.bases[location]),
-                tmp, g.base_type[tmp], 0))
+                selection, g.base_type[selection], 0))
             g.bases[location][-1].name = possible_name
 
             # Now that the base is built, redraw the base list.
@@ -897,42 +866,42 @@ def display_base_list(location, menu_buttons):
             return False
 
     #Showing base under construction
-    elif tmp != -1 and tmp != "":
-        if g.bases[location][tmp].built == 0:
+    elif selection != -1 and selection != "":
+        if g.bases[location][selection].built == 0:
             string = "Under Construction. \\n Completion in "
-            string += g.to_time(g.bases[location][tmp].cost[2]) + ". \\n "
-            string += "Remaining cost: "+g.to_money(g.bases[location][tmp].cost[0])
+            string += g.to_time(g.bases[location][selection].cost[2]) + ". \\n "
+            string += "Remaining cost: "+g.to_money(g.bases[location][selection].cost[0])
             string +=" money, and "+g.add_commas(
-                                            str(g.bases[location][tmp].cost[1]))
+                                            str(g.bases[location][selection].cost[1]))
             string +=" processor time."
             if not g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
                     g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
                 if g.create_yesno("Destroy this base? This will waste "+
-                        g.to_money(g.bases[location][tmp].base_type.cost[0]-
-                            g.bases[location][tmp].cost[0])
+                        g.to_money(g.bases[location][selection].base_type.cost[0]-
+                            g.bases[location][selection].cost[0])
                         +" money, and "+
-                        g.add_commas(str(g.bases[location][tmp].base_type.cost[1]-
-                            g.bases[location][tmp].cost[1]))
+                        g.add_commas(str(g.bases[location][selection].base_type.cost[1]-
+                            g.bases[location][selection].cost[1]))
                         +" processor time.", g.font[0][18],
                         (g.screen_size[0]/2 - 100, 50),
                         (200, 200), g.colors["dark_blue"], g.colors["white"],
                         g.colors["white"]):
-                    g.base.destroy_base(location, tmp)
+                    g.base.destroy_base(location, selection)
         else:
             next_prev = 1
             while next_prev != 0:
-                next_prev = base_screen.show_base(g.bases[location][tmp], location)
+                next_prev = base_screen.show_base(g.bases[location][selection], location)
                 if next_prev == -2:
-                    g.base.destroy_base(location, tmp)
+                    g.base.destroy_base(location, selection)
                     break
-                tmp += next_prev
-                if tmp < 0: tmp = len(g.bases[location]) -1
-                if tmp >= len(g.bases[location]): tmp = 0
-                while g.bases[location][tmp].built != 1:
-                    tmp += next_prev
-                    if tmp < 0: tmp = len(g.bases[location]) -1
-                    if tmp >= len(g.bases[location]): tmp = 0
+                selection += next_prev
+                if selection < 0: selection = len(g.bases[location]) -1
+                if selection >= len(g.bases[location]): selection = 0
+                while g.bases[location][selection].built != 1:
+                    selection += next_prev
+                    if selection < 0: selection = len(g.bases[location]) -1
+                    if selection >= len(g.bases[location]): selection = 0
 
         # After looking at a base, redraw the base list.
         refresh_map(menu_buttons)
@@ -947,20 +916,23 @@ def display_base_list(location, menu_buttons):
 def display_base_list_inner(location):
     base_list_size = 15
 
-    temp_base_list = []
+    base_display_list = []
     base_id_list = []
     for this_base in g.bases[location]:
-        tmp_study = this_base.studying
-        if tmp_study == "": tmp_study = g.strings["nothing"]
-        if this_base.built != 1: tmp_study = g.strings["building"]
-        elif g.techs.has_key(tmp_study): tmp_study = g.techs[tmp_study].name
-        temp_base_list.append(this_base.name+" ("+tmp_study+")")
+        studying = this_base.studyinging
+        if not this_base.done:
+            studying = g.strings["building"]
+        elif studying == "":
+            studying = g.strings["nothing"]
+        elif g.techs.has_key(studying):
+            studying = g.techs[studying].name
+        base_display_list.append(this_base.name+" ("+studying+")")
         base_id_list.append(this_base.ID)
 
     xy_loc = (g.screen_size[0]/2 - 259, 50)
 
-    while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
-        temp_base_list.append("")
+    while len(base_display_list) % base_list_size != 0 or len(base_display_list) == 0:
+        base_display_list.append("")
         base_id_list.append("")
 
     base_pos = 0
@@ -984,7 +956,7 @@ def display_base_list_inner(location):
         "DESTROY", 0, g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
-    listbox.refresh_list(bases_list, bases_scroll, base_pos, temp_base_list)
+    listbox.refresh_list(bases_list, bases_scroll, base_pos, base_display_list)
 
     sel_button = -1
     while 1:
@@ -998,29 +970,29 @@ def display_base_list_inner(location):
                     return base_id_list[base_pos]
                 else:
                     base_pos, refresh = bases_list.key_handler(event.key,
-                        base_pos, temp_base_list)
+                        base_pos, base_display_list)
                     if refresh: listbox.refresh_list(bases_list, bases_scroll,
-                                        base_pos, temp_base_list)
+                                        base_pos, base_display_list)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = bases_list.is_over(event.pos)
-                    if tmp != -1:
-                        base_pos = (base_pos/base_list_size)*base_list_size + tmp
+                    base_index = bases_list.is_over(event.pos)
+                    if base_index != -1:
+                        base_pos = (base_pos/base_list_size)*base_list_size + base_index
                         listbox.refresh_list(bases_list, bases_scroll,
-                                        base_pos, temp_base_list)
+                                        base_pos, base_display_list)
                 if event.button == 3: return -1
                 if event.button == 4:
                     base_pos -= 1
                     if base_pos <= 0:
                         base_pos = 0
                     listbox.refresh_list(bases_list, bases_scroll,
-                                        base_pos, temp_base_list)
+                                        base_pos, base_display_list)
                 if event.button == 5:
                     base_pos += 1
-                    if base_pos >= len(temp_base_list):
-                        base_pos = len(temp_base_list)-1
+                    if base_pos >= len(base_display_list):
+                        base_pos = len(base_display_list)-1
                     listbox.refresh_list(bases_list, bases_scroll,
-                                        base_pos, temp_base_list)
+                                        base_pos, base_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             for button in menu_buttons:
@@ -1063,9 +1035,9 @@ def display_base_list_inner(location):
                                     g.base.destroy_base(location, base_pos)
                         #Return to base menu
                         #For some reason all of the menu buttons must be recreated, otherwise they disappear into the ether... -Brian
-                        tmp_font_size = 20
-                        if g.screen_size[0] == 640: tmp_font_size = 16
-                        menu_buttons = create_buttons(tmp_font_size)
+                        font_size = 20
+                        if g.screen_size[0] == 640: font_size = 16
+                        menu_buttons = create_buttons(font_size)
 
                         sel_button = -1
                         refresh_map(menu_buttons)
@@ -1076,35 +1048,35 @@ def display_base_list_inner(location):
                     if button.button_id == "BACK":
                         g.play_sound("click")
                         return -1
-            tmp = bases_scroll.adjust_pos(event, base_pos, temp_base_list)
-            if tmp != base_pos:
-                base_pos = tmp
+            new_pos = bases_scroll.adjust_pos(event, base_pos, base_display_list)
+            if new_pos != base_pos:
+                base_pos = new_pos
                 listbox.refresh_list(bases_list, bases_scroll,
-                                        base_pos, temp_base_list)
+                                        base_pos, base_display_list)
 
 
 def build_new_base_window(location):
     base_list_size = 16
 
-    temp_base_list = []
-    temp_base_display_list = []
+    base_list = []
+    base_display_list = []
     for base_name in g.base_type:
         for region in g.base_type[base_name].regions:
             if g.base_type[base_name].prereq == "" or \
-                    g.techs[g.base_type[base_name].prereq].known == 1:
+                    g.techs[g.base_type[base_name].prereq].done:
                 if region == location:
-                    temp_base_list.append(base_name)
-                    temp_base_display_list.append(g.base_type[base_name].base_name)
+                    base_list.append(base_name)
+                    base_display_list.append(g.base_type[base_name].base_name)
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
 
-    while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
-        temp_base_list.append("")
-        temp_base_display_list.append("")
+    while len(base_list) % base_list_size != 0 or len(base_list) == 0:
+        base_list.append("")
+        base_display_list.append("")
 
     base_pos = 0
 
-    bases_list = listbox.listbox(xy_loc, (230, 350),
+    base_listbox = listbox.listbox(xy_loc, (230, 350),
         base_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
         g.colors["white"], g.colors["white"], g.font[0][18])
 
@@ -1118,9 +1090,9 @@ def build_new_base_window(location):
 
     #details screen
 
-    refresh_new_base(temp_base_list[base_pos], xy_loc)
+    refresh_new_base(base_list[base_pos], xy_loc)
 
-    listbox.refresh_list(bases_list, 0, base_pos, temp_base_display_list)
+    listbox.refresh_list(base_listbox, 0, base_pos, base_display_list)
 
     sel_button = -1
     while 1:
@@ -1131,45 +1103,45 @@ def build_new_base_window(location):
                 if event.key == pygame.K_ESCAPE: return -1
                 elif event.key == pygame.K_q: return -1
                 elif event.key == pygame.K_RETURN:
-                    return temp_base_list[base_pos]
+                    return base_list[base_pos]
                 else:
-                    base_pos, refresh = bases_list.key_handler(event.key,
-                        base_pos, temp_base_display_list)
+                    base_pos, refresh = base_listbox.key_handler(event.key,
+                        base_pos, base_display_list)
                     if refresh:
-                        refresh_new_base(temp_base_list[base_pos], xy_loc)
-                        listbox.refresh_list(bases_list, 0,
-                                        base_pos, temp_base_display_list)
+                        refresh_new_base(base_list[base_pos], xy_loc)
+                        listbox.refresh_list(base_listbox, 0,
+                                        base_pos, base_display_list)
 
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = bases_list.is_over(event.pos)
-                    if tmp != -1:
-                        base_pos = (base_pos/base_list_size)*base_list_size + tmp
-                        refresh_new_base(temp_base_list[base_pos], xy_loc)
-                        listbox.refresh_list(bases_list, 0,
-                                        base_pos, temp_base_display_list)
+                    base_index = base_listbox.is_over(event.pos)
+                    if base_index != -1:
+                        base_pos = (base_pos/base_list_size)*base_list_size + base_index
+                        refresh_new_base(base_list[base_pos], xy_loc)
+                        listbox.refresh_list(base_listbox, 0,
+                                        base_pos, base_display_list)
                 if event.button == 3: return -1
                 if event.button == 4:
                     base_pos -= 1
                     if base_pos <= 0:
                         base_pos = 0
-                    refresh_new_base(temp_base_list[base_pos], xy_loc)
-                    listbox.refresh_list(bases_list, 0,
-                                        base_pos, temp_base_display_list)
+                    refresh_new_base(base_list[base_pos], xy_loc)
+                    listbox.refresh_list(base_listbox, 0,
+                                        base_pos, base_display_list)
                 if event.button == 5:
                     base_pos += 1
-                    if base_pos >= len(temp_base_list):
-                        base_pos = len(temp_base_list)-1
-                    refresh_new_base(temp_base_list[base_pos], xy_loc)
-                    listbox.refresh_list(bases_list, 0,
-                                        base_pos, temp_base_display_list)
+                    if base_pos >= len(base_list):
+                        base_pos = len(base_list)-1
+                    refresh_new_base(base_list[base_pos], xy_loc)
+                    listbox.refresh_list(base_listbox, 0,
+                                        base_pos, base_display_list)
             elif event.type == pygame.MOUSEMOTION:
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             for button in menu_buttons:
                 if button.was_activated(event):
                     if button.button_id == "BUILD":
                         g.play_sound("click")
-                        return temp_base_list[base_pos]
+                        return base_list[base_pos]
                     if button.button_id == "BACK":
                         g.play_sound("click")
                         return -1

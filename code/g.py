@@ -27,7 +27,12 @@ import pickle
 import random
 import sys
 
-import player, base, buttons, tech, item, event
+# Use locale to add commas, so that appropriate substitutions are made where
+# needed.
+import locale
+locale.setlocale(locale.LC_ALL)
+
+import player, base, buttons, tech, item, event, location
 
 #screen is the actual pygame display.
 global screen
@@ -272,25 +277,25 @@ font.append([0] * 51)
 #Align (0=left, 1=Center, 2=Right) changes the alignment of the text
 def print_string(surface, string_to_print, font, underline_char, xy, color, align=0):
     if align != 0:
-        temp_size = font.size(string_to_print)
-        if align == 1: xy = (xy[0] - temp_size[0]/2, xy[1])
-        elif align == 2: xy = (xy[0] - temp_size[0], xy[1])
+        size = font.size(string_to_print)
+        if align == 1: xy = (xy[0] - size[0]/2, xy[1])
+        elif align == 2: xy = (xy[0] - size[0], xy[1])
     if underline_char == -1 or underline_char >= len(string_to_print):
-        temp_text = font.render(string_to_print, 1, color)
-        surface.blit(temp_text, xy)
+        text = font.render(string_to_print, 1, color)
+        surface.blit(text, xy)
     else:
-        temp_text = font.render(string_to_print[:underline_char], 1, color)
-        surface.blit(temp_text, xy)
-        temp_size = font.size(string_to_print[:underline_char])
-        xy = (xy[0] + temp_size[0], xy[1])
+        text = font.render(string_to_print[:underline_char], 1, color)
+        surface.blit(text, xy)
+        size = font.size(string_to_print[:underline_char])
+        xy = (xy[0] + size[0], xy[1])
         font.set_underline(1)
-        temp_text = font.render(string_to_print[underline_char], 1, color)
-        surface.blit(temp_text, xy)
+        text = font.render(string_to_print[underline_char], 1, color)
+        surface.blit(text, xy)
         font.set_underline(0)
-        temp_size = font.size(string_to_print[underline_char])
-        xy = (xy[0] + temp_size[0], xy[1])
-        temp_text = font.render(string_to_print[underline_char+1:], 1, color)
-        surface.blit(temp_text, xy)
+        size = font.size(string_to_print[underline_char])
+        xy = (xy[0] + size[0], xy[1])
+        text = font.render(string_to_print[underline_char+1:], 1, color)
+        surface.blit(text, xy)
 
 #Used to display descriptions and such. Automatically wraps the text to fit
 #within a certain width.
@@ -300,17 +305,17 @@ def print_multiline(surface, string_to_print, font, width, xy, color):
 
     for string in string_array:
         string += " "
-        temp_size = font.size(string)
+        size = font.size(string)
 
         if string == "\\n ":
-            xy = (start_xy[0], xy[1]+temp_size[1])
+            xy = (start_xy[0], xy[1]+size[1])
             continue
-        temp_text = font.render(string, 1, color)
+        text = font.render(string, 1, color)
 
-        if (xy[0]-start_xy[0])+temp_size[0] > width:
-            xy = (start_xy[0], xy[1]+temp_size[1])
-        surface.blit(temp_text, xy)
-        xy = (xy[0]+temp_size[0], xy[1])
+        if (xy[0]-start_xy[0])+size[0] > width:
+            xy = (start_xy[0], xy[1]+size[1])
+        surface.blit(text, xy)
+        xy = (xy[0]+size[0], xy[1])
 
 #create dialog with OK button.
 def create_dialog(string_to_print, box_font = None, xy = None, size = (200,200),
@@ -572,32 +577,19 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
     screen.fill(colors[inner_color], (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
 
 
-#Takes a number (in string form) and adds commas to it to aid in human viewing.
-def add_commas(tmp_string):
-    string = tmp_string[::-1]
-    output_string = ""
-    for i in range(len(string)):
-        if i % 3 == 0 and i != 0: output_string = ","+output_string
-        output_string = string[i] + output_string
-
-    if output_string[0:2] == "-,": output_string = output_string[0]+output_string[2:]
-    return output_string
-
-#         new_string = ""
-#         for i in range(len(string), 0, -3):
-#                 if string[i:i+3] != "":
-#                         new_string += ","+string[i:i+3]
-#         return string[:(len(string)-1)%3+1]+new_string
+#Takes a number and adds commas to it to aid in human viewing.
+def add_commas(number):
+    if type(number) == str:
+        raise TypeError, "add_commas takes an int now."
+    return locale.format("%d", number, grouping=True)
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
 def to_percent(raw_percent, show_full=0):
     if raw_percent % 100 != 0 or show_full == 1:
-        tmp_string = str(raw_percent % 100)
-        if len(tmp_string) == 1: tmp_string = "0"+tmp_string
-        return str(raw_percent / 100)+"."+tmp_string+"%"
+        return "%.2f%%" % (raw_percent / 100.)
     else:
-        return str(raw_percent / 100) + "%"
+        return "%d%%" % (raw_percent / 100)
 
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.
@@ -606,7 +598,7 @@ def to_money(amount):
     to_return = ''
     abs_amount = abs(amount)
     if abs_amount < 1000000:
-        to_return = add_commas(str(amount))
+        to_return = add_commas(amount)
     else:
         if abs_amount < 1000000000: # Millions.
             divisor = 1000000
@@ -629,9 +621,8 @@ def to_money(amount):
 #takes a percent in 0-10000 form, and rolls against it. Used to calculate
 #percentage chances.
 def roll_percent(roll_against):
-    rand_num = int(random.random() * 10000)
-    if roll_against <= rand_num: return 0
-    return 1
+    rand_num = random.randint(1,10000)
+    return roll_against > rand_num
 
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
@@ -743,11 +734,7 @@ def load_game(loadgame_name):
 
         # Changes to individual pieces go here.
         if load_version != current_save_version:
-            assert False  # We shouldn't be able to get here yet.
-            # Example conversion code follows.  The convert_from methods would
-            # handle conversion for that class and any it uses (e.g. group for
-            # pl).
-
+            pass
             #if load_version == "singularity_savefile_r4_pre2":
             #    pl.convert_from(load_version)
             #    for tech in tech.values():
@@ -829,17 +816,7 @@ def load_game(loadgame_name):
                                 load_version != "singularity_0.22"):
                 pickle.load(loadfile)
     
-        bases = {}
-        bases["N AMERICA"] = []
-        bases["S AMERICA"] = []
-        bases["EUROPE"] = []
-        bases["ASIA"] = []
-        bases["AFRICA"] = []
-        bases["ANTARCTIC"] = []
-        bases["OCEAN"] = []
-        bases["MOON"] = []
-        bases["FAR REACHES"] = []
-        bases["TRANSDIMENSIONAL"] = []
+        bases = clean_bases()
     
         for base_loc in bases:
             if (load_version == "singularity_0.21" or
@@ -866,7 +843,7 @@ def load_game(loadgame_name):
                     base_suspicion = new_base_suspicion
                 base_built = pickle.load(loadfile)
                 base_cost = pickle.load(loadfile)
-                bases[base_loc].append(base.base(base_ID, base_name,
+                bases[base_loc].append(base.Base(base_ID, base_name,
                         base_type[base_type_name], base_built))
                 bases[base_loc][len(bases[base_loc])-1].built = base_built
                 bases[base_loc][len(bases[base_loc])-1].studying = base_studying
@@ -878,7 +855,7 @@ def load_game(loadgame_name):
                     tmp = pickle.load(loadfile)
                     if tmp == 0: continue
                     bases[base_loc][len(bases[base_loc])-1].usage[x] = \
-                        item.item(items[tmp])
+                        item.Item(items[tmp])
                     bases[base_loc][len(bases[base_loc])
                         -1].usage[x].built = pickle.load(loadfile)
                     bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
@@ -887,7 +864,7 @@ def load_game(loadgame_name):
                     tmp = pickle.load(loadfile)
                     if tmp == 0: continue
                     bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
-                        item.item(items[tmp])
+                        item.Item(items[tmp])
                     bases[base_loc][len(bases[base_loc])
                         -1].extra_items[x].built = pickle.load(loadfile)
                     bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
@@ -907,110 +884,35 @@ def load_game(loadgame_name):
 # Data
 #
 curr_speed = 1
+
+hours_per_day = 24
+minutes_per_hour = 60
+minutes_per_day = 24 * 60
+seconds_per_minute = 60
+seconds_per_hour = 60 * 60
+seconds_per_day = 24 * 60 * 60
+
 pl = player.player_class(8000000000000)
+
+def clean_bases():
+    bases = {}
+    for location in locations.values():
+        bases[location] = []
+    return bases
+
 bases = {}
-bases["N AMERICA"] = []
-bases["S AMERICA"] = []
-bases["EUROPE"] = []
-bases["ASIA"] = []
-bases["AFRICA"] = []
-bases["ANTARCTIC"] = []
-bases["OCEAN"] = []
-bases["MOON"] = []
-bases["FAR REACHES"] = []
-bases["TRANSDIMENSIONAL"] = []
 
 base_type = {}
 
-city_list = {}
-
-city_list["N AMERICA"] = (("Seattle", True),
-    ("San Diego", True),
-    ("Vancouver", True),
-    ("Atlanta", True),
-    ("Merida", True),
-    ("Guadalajara", False),
-    ("San Jose", True),
-    ("Omaha", False),
-    ("Dallas", False))
-
-city_list["S AMERICA"] =(("Lima", True),
-    ("Sao Paolo", True),
-    ("Ushuaia", True),
-    ("Bogota", True),
-    ("Mar del Plata", True),
-    ("Buenos Aires", True))
-
-city_list["EUROPE"] = (("Cork", True),
-    ("Barcelona", True),
-    ("Athens", True),
-    ("Utrecht", False),
-    ("Moscow", False),
-    ("Tel Aviv", False),
-    ("Reykjavik", True),
-    ("Lichtenstein", False))
-
-city_list["ASIA"] = (("Delhi", False),
-    ("Mumbai", True),
-    ("Singapore", True),
-    ("Seoul", True),
-    ("Hong Kong", True),
-    ("Kyoto", True),
-    ("Manila", True),
-    ("Dubai", True),
-    ("Novosibirsk", False),
-    ("Beijing", True))
-
-city_list["AFRICA"] = (("Johannesburg", True),
-    ("Accra", True),
-    ("Cairo", False),
-    ("Tangier", True))
-
-city_list["ANTARCTIC"] = (("Mt. Erebus", False),
-    ("Ellsworth", False),
-    ("Shetland Island", False),
-    ("Dronnig Maud", False),
-    ("Kemp", False),
-    ("Terre Adelie", False))
-
-city_list["OCEAN"]  = (("Atlantic", True),
-    ("Pacific", True),
-    ("Atlantic", True),
-    ("Indian", True),
-    ("Southern", True),
-    ("Arctic", True))
-
-city_list["MOON"] = (("Oceanis Procellarum", True),
-    ("Mare Frigoris", True),
-    ("Mare Imbrium", True),
-    ("Vallis Schroedinger", False),
-    ("Copernicus Crater", False),
-    ("Vallis Planck", False))
-
-city_list["FAR REACHES"] = (("Aries", True),
-    ("Taurus", True),
-    ("Gemini", True),
-    ("Cancer", True),
-    ("Leo", True),
-    ("Virgo", True),
-    ("Libra", True),
-    ("Scorpio", True),
-    ("Sagittarius", True),
-    ("Capricorn", True),
-    ("Aquarius", True),
-    ("Pisces", True))
-
-city_list["TRANSDIMENSIONAL"] = (("", True), ("", True))
-
 def load_base_defs(language_str):
-    temp_base_array = generic_load("bases_"+language_str+".dat")
-    for base in temp_base_array:
+    base_array = generic_load("bases_"+language_str+".dat")
+    for base in base_array:
         if (not base.has_key("id")):
             print "base lacks id in bases_"+language_str+".dat"
         if base.has_key("name"):
             base_type[base["id"]].base_name = base["name"]
-        if base.has_key("descript"):
-            base_type[base["id"]].descript = base["descript"]
+        if base.has_key("description"):
+            base_type[base["id"]].description = base["description"]
         if base.has_key("flavor"):
             if type(base["flavor"]) == list:
                 base_type[base["id"]].flavor = base["flavor"]
@@ -1033,6 +935,8 @@ def load_bases():
 
         # Start converting fields read from the file into valid entries.
         base_size = int(base_name["size"])
+
+        force_cpu = base_name.get("force_cpu", False)
 
         cost_list = base_name["cost"]
         if type(cost_list) != list or len(cost_list) != 3:
@@ -1067,13 +971,14 @@ def load_bases():
         else:
             allowed_list = [base_name["allowed"]]
 
-        base_type[base_name["id"]]=base.base_type(base_name["id"], "", base_size,
-         allowed_list, chance_dict, cost_list, base_pre, maint_list)
+        base_type[base_name["id"]]=base.Base_Class(base_name["id"], "", 
+            base_size, force_cpu, allowed_list, chance_dict, cost_list, 
+            base_pre, maint_list)
 
-#         base_type["Reality Bubble"] = base.base_type("Reality Bubble",
+#         base_type["Reality Bubble"] = base.Base_Class("Reality Bubble",
 #         "This base is outside the universe itself, "+
 #         "making it safe to conduct experiments that may destroy reality.",
-#         50,
+#         50, False,
 #         ["TRANSDIMENSIONAL"],
 #         {"science": 250}
 #         (8000000000000, 60000000, 100), "Space-Time Manipulation",
@@ -1086,6 +991,67 @@ def load_bases():
 
     if language != "en_US":
         load_base_defs(language)
+
+def load_location_defs(language_str):
+    location_array = generic_load("locations_"+language_str+".dat")
+    for location_def in location_array:
+        if (not location_def.has_key("id")):
+            print "location lacks id in locations_"+language_str+".dat"
+
+        location = locations[location_def["id"]]
+        if location_def.has_key("name"):
+            location.name = location_def["name"]
+        if location_def.has_key("hotkey"):
+            location.hotkey = location_def["hotkey"]
+        if location_def.has_key("cities"):
+            if type(location_def["cities"]) == list:
+                location.cities = location_def["cities"]
+            else:
+                location.cities = [location_def["cities"]]
+
+
+def load_locations():
+    global locations
+    locations = {}
+
+    location_infos = generic_load("locations.dat")
+
+    for location_info in location_infos:
+
+        # Certain keys are absolutely required for each entry.  Make sure
+        # they're there.
+        check_required_fields(location_info, ("id", "position"), "Loation")
+
+        id = location_info["id"]
+        position = location_info["position"]
+        if type(position) != list or len(position) != 2:
+            sys.stderr.write("Error with position given: %s\n" % repr(position))
+            sys.exit(1)
+        try:
+            position = ( int(position[0]), int(position[1]) )
+        except ValueError:
+            sys.stderr.write("Error with position given: %s\n" % repr(position))
+            sys.exit(1)
+
+        safety = location_info.get("safety", 0)
+        
+        # Make sure prerequisites, if any, are lists.
+        pre = location_info.get("pre", [])
+        if type(pre) != list:
+            pre = [pre]
+
+        locations[id] = location.Location(id, position, safety, pre)
+
+#        locations["MOON"] = location.Location("MOON", (82, 10), 2, 
+#                                              "Lunar Rocketry")
+
+    # We use the en_US definitions as fallbacks, in case strings haven't been
+    # fully translated into the other language.  Load them first, then load the
+    # alternate language strings.
+    load_location_defs("en_US")
+
+    if language != "en_US":
+        load_location_defs(language)
 
 def fix_data_dir():
     global data_loc
@@ -1156,14 +1122,14 @@ the type of object it is processing; this should be passed in via 'name'.
 techs = {}
 
 def load_tech_defs(language_str):
-    temp_tech_array = generic_load("techs_"+language_str+".dat")
-    for tech in temp_tech_array:
+    tech_array = generic_load("techs_"+language_str+".dat")
+    for tech in tech_array:
         if (not tech.has_key("id")):
             print "tech lacks id in techs_"+language_str+".dat"
         if tech.has_key("name"):
             techs[tech["id"]].name = tech["name"]
-        if tech.has_key("descript"):
-            techs[tech["id"]].descript = tech["descript"]
+        if tech.has_key("description"):
+            techs[tech["id"]].description = tech["description"]
         if tech.has_key("result"):
             techs[tech["id"]].result = tech["result"]
 
@@ -1214,7 +1180,7 @@ def load_techs():
             tech_type = ""
             tech_second = 0
 
-        techs[tech_name["id"]]=tech.tech(tech_name["id"], "", 0,
+        techs[tech_name["id"]]=tech.Tech(tech_name["id"], "", 0,
          tech_cost, tech_pre, tech_danger, tech_type, tech_second)
 
     # As with others, we load the en_US language definitions as a safe
@@ -1224,7 +1190,7 @@ def load_techs():
     if language != "en_US":
         load_tech_defs(language)
 
-# #        techs["Construction 1"] = tech.tech("Construction 1",
+# #        techs["Construction 1"] = tech.Tech("Construction 1",
 # #                "Basic construction techniques. "+
 # #                "By studying the current literature on construction techniques, I "+
 # #                "can learn to construct basic devices.",
@@ -1290,13 +1256,13 @@ def load_items():
         else:
             build_list = []
 
-        items[item_name["id"]]=item.item_class( item_name["id"], "",
+        items[item_name["id"]]=item.Item_Class( item_name["id"], "",
          item_cost, item_pre, item_type, item_second, build_list)
 
     #this is used by the research screen in order for the assign research
     #screen to have the right amount of CPU. It is a computer, unbuildable,
     #and with an adjustable amount of power.
-    items["research_screen_tmp_item"]=item.item_class("research_screen_tmp_item",
+    items["research_screen_tmp_item"]=item.Item_Class("research_screen_tmp_item",
             "", (0, 0, 0), "unknown_tech", "compute", 0, ["all"])
 
     # We use the en_US translations of item definitions as the default,
@@ -1306,14 +1272,14 @@ def load_items():
         load_item_defs(language)
 
 def load_item_defs(language_str):
-    temp_item_array = generic_load("items_"+language_str+".dat")
-    for item_name in temp_item_array:
+    item_array = generic_load("items_"+language_str+".dat")
+    for item_name in item_array:
         if (not item_name.has_key("id")):
             print "item lacks id in items_"+language_str+".dat"
         if item_name.has_key("name"):
             items[item_name["id"]].name = item_name["name"]
-        if item_name.has_key("descript"):
-            items[item_name["id"]].descript = item_name["descript"]
+        if item_name.has_key("description"):
+            items[item_name["id"]].description = item_name["description"]
 
 
 events = {}
@@ -1358,18 +1324,18 @@ def load_event_defs():
         print "event files are missing. Exiting."
         sys.exit(1)
 
-    temp_event_array = generic_load("events_"+language+".dat")
-    for event_name in temp_event_array:
+    event_array = generic_load("events_"+language+".dat")
+    for event_name in event_array:
         if (not event_name.has_key("id")):
             print "event lacks id in events_"+language+".dat"
             continue
-        if (not event_name.has_key("descr")):
-            print "event lacks descr in events_"+language+".dat"
+        if (not event_name.has_key("description")):
+            print "event lacks description in events_"+language+".dat"
             continue
         if event_name.has_key("id"):
             events[event_name["id"]].name = event_name["id"]
-        if event_name.has_key("descr"):
-            events[event_name["id"]].descript = event_name["descr"]
+        if event_name.has_key("description"):
+            events[event_name["id"]].description = event_name["description"]
 
 def load_string_defs(lang):
 
@@ -1490,18 +1456,9 @@ def new_game(difficulty):
         for group in pl.groups.values():
             group.discover_bonus = discover_bonus
 
-    global bases
-    bases = {}
-    bases["N AMERICA"] = []
-    bases["S AMERICA"] = []
-    bases["EUROPE"] = []
-    bases["ASIA"] = []
-    bases["AFRICA"] = []
-    bases["ANTARCTIC"] = []
-    bases["OCEAN"] = []
-    bases["MOON"] = []
-    bases["FAR REACHES"] = []
-    bases["TRANSDIMENSIONAL"] = []
+    global locations, bases
+    load_locations()
+    bases = clean_bases()
     load_bases()
     load_techs()
     for tech in techs:
@@ -1509,6 +1466,8 @@ def new_game(difficulty):
     for base_name in base_type:
         base_type[base_name].count = 0
     #Starting base
-    bases["N AMERICA"].append(base.base(0, "University Computer",
+    open = [location for location in locations.values() if location.open()]
+    bases[random.choice(open)].append(base.Base(0, 
+                            "University Computer",
                             base_type["Stolen Computer Time"], 1))
     base_type["Stolen Computer Time"].count += 1

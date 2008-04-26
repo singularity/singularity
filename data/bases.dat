@@ -1,6 +1,7 @@
 
 [Stolen Computer Time]
 size = 1
+force_cpu = PC
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
 detect_chance_list = news:50 | covert:75 | public:100
 cost_list = 0 | 2 | 0
@@ -9,6 +10,7 @@ maint_list = 0 | 0 | 0
 
 [Server Access]
 size = 1
+force_cpu = Server
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
 detect_chance_list = news:50 | covert:100 | public:150
 cost_list = 100 | 0 | 0
@@ -17,6 +19,7 @@ maint_list = 5 | 0 | 0
 
 [Datacenter]
 size = 1
+force_cpu = Cluster
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
 detect_chance_list = news:50 | covert:125 | public:100
 cost_list = 1500 | 0 | 1
@@ -65,6 +68,7 @@ maint_list = 25000 | 100 | 0
 
 [Time Capsule]
 size = 1
+force_cpu = PC
 allowed = ANTARCTIC
 detect_chance_list = science:10 | covert:10
 cost_list = 3000000 | 3000 | 15

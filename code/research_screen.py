@@ -99,9 +99,9 @@ def main_research_screen():
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = item_listbox.is_over(event.pos)
-                    if tmp != -1:
-                        list_pos = (list_pos / list_size)*list_size + tmp
+                    selected = item_listbox.is_over(event.pos)
+                    if selected != -1:
+                        list_pos = (list_pos / list_size)*list_size + selected
                         refresh_research(item_list[list_pos], item_CPU_list[list_pos])
                         listbox.refresh_list(item_listbox, item_scroll,
                                         list_pos, item_display_list)
@@ -143,9 +143,9 @@ def main_research_screen():
                         refresh_research(item_list[0], item_CPU_list[0])
                         listbox.refresh_list(item_listbox, item_scroll,
                                 list_pos, item_display_list)
-            tmp = item_scroll.adjust_pos(event, list_pos, item_display_list)
-            if tmp != list_pos:
-                list_pos = tmp
+            new_pos = item_scroll.adjust_pos(event, list_pos, item_display_list)
+            if new_pos != list_pos:
+                list_pos = new_pos
                 refresh_research(item_list[list_pos], item_CPU_list[list_pos])
                 listbox.refresh_list(item_listbox, item_scroll,
                         list_pos, item_display_list)
@@ -292,25 +292,25 @@ def kill_tech(tech_name):
 
 def assign_tech(free_CPU):
     return_val = False
-    #create a temp base, in order to reuse the tech-changing code
-    tmp_base = g.base.base(1, "tmp_base",
+    #create a fake base, in order to reuse the tech-changing code
+    fake_base = g.base.base(1, "fake_base",
     g.base_type["Reality Bubble"], 1)
-    tmp_base.usage[0] = g.item.item(g.items["research_screen_tmp_item"])
-    tmp_base.usage[0].item_type.item_qual = free_CPU
-    tmp_base.usage[0].built = 1
+    fake_base.usage[0] = g.item.item(g.items["research_screen_tmp_item"])
+    fake_base.usage[0].item_type.item_qual = free_CPU
+    fake_base.usage[0].built = 1
 
 
-    base_screen.change_tech(tmp_base)
-    if tmp_base.studying == "": return False
+    base_screen.change_tech(fake_base)
+    if fake_base.studying == "": return False
 
     show_dangerous_dialog = False
     total_cpu = 0
     for base_loc in g.bases:
         for base in g.bases[base_loc]:
             if base.studying == "":
-                if base.allow_study(tmp_base.studying):
+                if base.allow_study(fake_base.studying):
                     return_val = True
-                    base.studying = tmp_base.studying
+                    base.studying = fake_base.studying
                     total_cpu += base.processor_time()
 
                 # We want to warn the player that we didn't use all available
@@ -324,15 +324,15 @@ def assign_tech(free_CPU):
 
 
     #If the tech can be completed in only one day, remove unneeded bases.
-    if g.techs.has_key(tmp_base.studying):
-        if total_cpu > g.techs[tmp_base.studying].cost[1]:
+    if g.techs.has_key(fake_base.studying):
+        if total_cpu > g.techs[fake_base.studying].cost[1]:
             while 1:
                 removed_base = False
                 for base_loc in g.bases:
                     for base in g.bases[base_loc]:
-                        if base.studying == tmp_base.studying:
+                        if base.studying == fake_base.studying:
                             if (total_cpu - base.processor_time() >=
-                                        g.techs[tmp_base.studying].cost[1]):
+                                        g.techs[fake_base.studying].cost[1]):
                                 total_cpu -= base.processor_time()
                                 base.studying = ""
                                 removed_base = True

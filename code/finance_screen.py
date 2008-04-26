@@ -69,9 +69,9 @@ def cpu_numbers():
     maint_cpu = 0
     for loc_name in g.bases:
         for base_instance in g.bases[loc_name]:
-            if base_instance.built == 1:
+            if base_instance.done:
                 total_cpu += base_instance.processor_time()
-                maint_cpu += base_instance.base_type.mainten[1]
+                maint_cpu += base_instance.type.maintenance[1]
                 if base_instance.studying == "":
                     free_cpu += base_instance.processor_time()
                 else:
@@ -105,7 +105,7 @@ def refresh_screen(menu_buttons):
             if g.jobs.has_key(base_instance.studying):
                 jobs += (g.jobs[base_instance.studying][0]*
                                     base_instance.processor_time())
-                if g.techs["Advanced Simulacra"].known == 1:
+                if g.techs["Advanced Simulacra"].done:
                     #10% bonus income
                     jobs += (g.jobs[base_instance.studying][0]*
                                     base_instance.processor_time())/10
@@ -114,17 +114,17 @@ def refresh_screen(menu_buttons):
                     research += (g.techs[base_instance.studying].cost[0] *
                             base_instance.processor_time() /
                             g.techs[base_instance.studying].cost[1])
-            if base_instance.built == 1:
+            if base_instance.done:
                 maint += base_instance.base_type.mainten[0]
                 for item in base_instance.usage:
                     if not item: continue
-                    if item.built == 1: continue
+                    if item.done: continue
                     if item.cost[2] > 0:
                         item_constr += (((23-g.pl.time_hour)*60+
                         (60-g.pl.time_min))*item.cost[0]/item.cost[2])
                 for item in base_instance.extra_items:
                     if not item: continue
-                    if item.built == 1: continue
+                    if item.done: continue
                     if item.cost[2] > 0:
                         item_constr += (((23-g.pl.time_hour)*60+
                         (60-g.pl.time_min))*item.cost[0]/item.cost[2])

@@ -49,114 +49,111 @@ class group(object):
 
 class player_class(object):
     def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0):
-        self.cash = cash
         self.time_sec = time_sec
         self.time_min = time_min
         self.time_hour = time_hour
         self.time_day = time_day
+        self.make_raw_times()
+
+        self.had_grace = self.in_grace_period()
+
+        self.cash = cash
         self.interest_rate = 1
         self.income = 0
+
         self.cpu_for_day = 0
         self.labor_bonus = 10000
         self.job_bonus = 10000
+
         self.groups = {"news":    group("news",    suspicion_decay = 150),
                        "science": group("science", suspicion_decay = 100),
                        "covert":  group("covert",  suspicion_decay =  50),
                        "public":  group("public",  suspicion_decay = 200)}
 
+    def convert_from(old_version):
+         if old_version == "singularity_savefile_r4_pre2":
+             self.make_raw_times()
+             self.had_grace = self.in_grace_period()
+
+    def make_raw_times(self):
+        self.raw_hour = self.time_day * 24 + self.time_hour
+        self.raw_min = self.raw_hour * 60 + self.time_min
+        self.raw_sec = self.raw_min * 60 + self.time_sec
+        self.raw_day = self.time_day
+
+    def update_times(self):
+        # Total minutes/hours/days spent.
+        self.raw_min = self.raw_sec // 60
+        self.raw_hour = self.raw_min // 60
+        self.raw_day = self.raw_hour // 24
+
+        # Remainders.
+        self.time_sec = self.raw_sec % 60
+        self.time_min = self.raw_min % 60
+        self.time_hour = self.raw_hour % 24
+
+        # Overflow
+        self.time_day = self.raw_day
+
     def give_time(self, time_sec):
         needs_refresh = 0
-        store_last_minute = self.time_min
-        store_last_day = self.time_day
-        time_min = 0
-        time_hour = 0
-        time_day = 0
-        self.time_sec += time_sec
-        if self.time_sec >= 60:
-            time_min += self.time_sec / 60
-            self.time_sec = self.time_sec % 60
-        self.time_min += time_min
-        if self.time_min >= 60:
-            time_hour += self.time_min / 60
-            self.time_min = self.time_min % 60
-        self.time_hour += time_hour
-        if self.time_hour >= 24:
-            time_day += self.time_hour / 24
-            self.time_hour = self.time_hour % 24
-        self.time_day += time_day
 
-        if time_min > 0:
+        last_minute = self.raw_min
+        last_day = self.raw_day
+
+        self.raw_sec += time_sec
+        self.update_times()
+        
+        mins_passed = self.raw_min - last_minute
+        days_passed = self.raw_day - last_day
+
+        if mins_passed > 0:
             for base_loc in g.bases:
                 for base in g.bases[base_loc]:
                     #Construction of new bases:
-                    if base.built == 0:
-                        tmp_base_time = (base.cost[2] * self.labor_bonus) /10000
-                        if tmp_base_time == 0:
-                            money_towards = base.cost[0]
-                            cpu_towards = base.cost[1]
-                            if cpu_towards > self.cpu_for_day:
-                                cpu_towards = self.cpu_for_day
-                        else:
-                            money_towards = (time_min*base.cost[0]) / \
-                            (tmp_base_time)
-                            if money_towards > base.cost[0]:
-                                money_towards = base.cost[0]
-                            cpu_towards = (time_min*base.cost[1]) / \
-                            (tmp_base_time)
-                            if cpu_towards > base.cost[1]:
-                                cpu_towards = base.cost[1]
-                            if cpu_towards > self.cpu_for_day:
-                                cpu_towards = self.cpu_for_day
-                        if money_towards <= self.cash:
-                            self.cash -= money_towards
-                            self.cpu_for_day -= cpu_towards
-                            built_base = base.study((money_towards,
-                                        cpu_towards, time_min))
-                            if built_base == 1:
-                                needs_refresh = 1
-                                text = g.strings["construction"] % \
-                                    {"base": base.name}
-                                g.create_dialog(text)
-                                g.curr_speed = 1
+                    if not base.done:
+                        built_base = base.work_on(mins_passed)
+                        if built_base:
+                            text = g.strings["construction"] % \
+                                {"base": base.name}
+                            g.curr_speed = 1
+                            needs_refresh = 1
+                            g.create_dialog(text)
                     else:
-                        #Construction of items:
-                        tmp = 0
-                        first_build_count = 0
-                        for item in base.usage:
-                            if not item: continue
-                            if item.built == 1:
-                                first_build_count += 1
-                            tmp = item.work_on(time_min) or tmp
-                        if tmp == 1:
-                            #Check if ALL CPUs are built, stay silent until then.
-                            #Using build count and first_build count to check
-                            #against CPUs at start of day and end of day.
-                            #If the total goes from 0 to any amount over 0,
-                            #it will trigger a new dialog, completed first batch.
-                            build_complete = 1
-                            build_count = 0
-                            for item_index in base.usage:
-                                if item_index.built == 0:
-                                    build_complete = 0
-                                    continue
-                                build_count += 1
-                            if build_complete == 1:
+                        #Construction of CPUs:
+                        already_built = just_built = 0
+                        for item in base.cpus:
+                            if not item:
+                                pass
+                            elif item.done:
+                                already_built += 1
+                            elif item.work_on(time_min): 
+                                just_built += 1
+                        if just_built > 0:
+                            total_built = already_built + just_built
+
+                            # If we just finished the entire batch, announce it.
+                            if total_built == len(base.cpus):
                                 text = g.strings["item_construction_single"] % \
                                        {"item": item.item_type.name,
                                         "base": base.name}
                                 g.create_dialog(text)
                                 g.curr_speed = 1
                                 needs_refresh = 1
-                            elif first_build_count == 0 and build_count > 0:
+                            # If we just finished the first one(s), announce it.
+                            elif already_built == 0 and total_built > 0:
                                 text = g.strings["item_construction_batch"] % \
                                        {"item": item.item_type.name,
                                         "base": base.name}
                                 g.create_dialog(text)
+                                g.curr_speed = 1
                                 needs_refresh = 1
+
+                        # Construction of items.
                         for item in base.extra_items:
-                            if not item: continue
-                            tmp = item.work_on(time_min)
-                            if tmp == 1:
+                            if not item:
+                                pass
+                            elif item.work_on(time_min):
                                 text = g.strings["item_construction_single"] % \
                                        {"item": item.item_type.name,
                                         "base": base.name}
@@ -164,11 +161,16 @@ class player_class(object):
                                 g.curr_speed = 1
                                 needs_refresh = 1
 
-
-        for i in range(self.time_day - store_last_day):
+        for day in range(days_passed):
             needs_refresh = self.new_day() or needs_refresh
 
         return needs_refresh
+
+    def in_grace_period(self, had_grace = True):
+        # When other factors are added, use had_grace to ensure that the grace
+        # period can't be regained.  Don't check self.had_grace directly, it may
+        # not exist yet.
+        return self.raw_day < 23
 
     #Run every day at midnight.
     def new_day(self):
@@ -177,6 +179,14 @@ class player_class(object):
         #interest and income.
         self.cash += (self.interest_rate * self.cash) / 10000
         self.cash += self.income
+
+        grace = self.in_grace_period(self.had_grace)
+        if self.had_grace and not grace:
+            self.had_grace = False
+
+            g.create_dialog(g.strings["grace_warning"])
+            needs_refresh = 1
+            g.curr_speed = 1
 
         # Random Events
         for event in g.events:
@@ -193,111 +203,93 @@ class player_class(object):
           group.new_day()
 
         self.cpu_for_day = 0
-        if self.time_day == 23:
-            g.create_dialog(g.strings["grace_warning"])
-            needs_refresh = 1
-            g.curr_speed = 1
-
         for base_loc in g.bases:
             dead_bases = []
             for base_index in range(len(g.bases[base_loc])):
                 base = g.bases[base_loc][base_index]
-                #Does base get detected?
-                #Give a grace period.
-                if self.time_day - base.built_date > base.base_type.cost[2]*2:
-                    if self.time_day > 23:
-                        detect_chance = base.get_detect_chance()
-                        if g.debug == 1:
-                            print "Chance of discovery for base %s: %s" % \
-                                (base.name, repr(detect_chance))
-                        for group in detect_chance:
-                            if g.roll_percent(detect_chance[group]) == 1:
-                                dead_bases.append( (base_index, group) )
-                                break
+                if base.built:
+                    base_cpu = base.processor_time()
 
-                if base.built == 1:
-                    #study
+                    #idle
                     if base.studying == "":
+                        pass
+                    #construciton/maintenance
+                    elif base.studying == "Construction":
                         self.cpu_for_day += base.processor_time()
-                        continue
-                    if base.studying == "Construction":
-                        pass #FIXME: Finish Construction Research
-                        continue
                     #jobs:
-                    if g.jobs.has_key(base.studying):
+                    elif g.jobs.has_key(base.studying):
                         self.cash += (g.jobs[base.studying][0]*
                                     base.processor_time())
                         #TECH
-                        if g.techs["Advanced Simulacra"].known == 1:
+                        if g.techs["Advanced Simulacra"].done:
                             #10% bonus income
                             self.cash += (g.jobs[base.studying][0]*
                                     base.processor_time())/10
 
-                        continue
-                    #tech aready known. This should occur when multiple
-                    #bases are studying the same tech.
-                    if g.techs[base.studying].known == 1:
+                    # If another base already finished the tech today, this base
+                    # goes idle (and gets the bonus agaist discovery).
+                    elif g.techs[base.studying].done:
                         base.studying = ""
-                        self.cpu_for_day += base.processor_time()
-                        continue
-                    #Actually study.
-                    if g.techs[base.studying].cost[1] == 0:
-                        money_towards = g.techs[base.studying].cost[0]
-                        tmp_base_time = 0
+
+                    # Studying the tech.
                     else:
-                        tmp_base_time = base.processor_time()
-                        money_towards = (tmp_base_time*
-                        g.techs[base.studying].cost[0])/ \
-                        (g.techs[base.studying].cost[1])
-                        if money_towards > g.techs[base.studying].cost[0]:
-                            money_towards=g.techs[base.studying].cost[0]
-                    if money_towards <= self.cash:
-                        if g.debug == 1:
-                            print "Studying "+base.studying +": "+ \
-                            str(money_towards)+" Money, "+str(tmp_base_time)+" CPU"
-                        self.cash -= money_towards
-                        learn_tech = g.techs[base.studying].study(
-                            (money_towards, tmp_base_time, 0))
-                        if learn_tech == 1:
+                        # work_on will pull from cpu_for_day.  It's simpler this
+                        # way, plus any excess CPU will go into construction and
+                        # maintenance.
+                        self.cpu_for_day += base.processor_time()
+                        learned = g.techs[base.studying].work_on(
+                                                       cpu_available = base_cpu)
+                        if learned:
                             tech = g.techs[base.studying]
                             text = g.strings["tech_gained"] % \
                                    {"tech": tech.name, 
                                     "tech_message": tech.result}
                             g.create_dialog(text)
-                            base.studying = ""
                             g.curr_speed = 1
                             needs_refresh = 1
-                    elif g.debug == 1:
-                        print "NOT Studying "+base.studying +": "+ \
-                        str(money_towards)+"/"+str(self.cash)+" Money"
+
+                #Does base get detected?
+                #Give a grace period.
+                if grace or base.has_grace():
+                    pass
+                else:
+                    detect_chance = base.get_detect_chance()
+                    if g.debug:
+                        print "Chance of discovery for base %s: %s" % \
+                            (base.name, repr(detect_chance))
+                    for group in detect_chance:
+                        if g.roll_percent(detect_chance[group]):
+                            dead_bases.append( (base_index, group) )
+                            break
+
             if self.remove_bases(base_loc, dead_bases):
                 needs_refresh = 1
-        #I need to recheck after going through all bases as research
-        #worked on by multiple bases doesn't get erased properly otherwise.
+
+        # 2nd pass: Maintenance, clear finished techs.
         for base_loc in g.bases:
             dead_bases = []
-            loc_in_array = -1
-            for base in g.bases[base_loc]:
-                loc_in_array += 1
-                if base.built == 1:
+            for base_index in range(len(g.bases[base_loc])):
+                base = g.bases[base_loc][base_index]
+                if base.built:
                     #maintenance
                     self.cash -= base.base_type.mainten[0]
                     if self.cash < 0:
                         self.cash = 0
-                        #Chance of base destruction if unmaintained:
-                        if g.roll_percent(150) == 1:
-                            dead_bases.append( (loc_in_array, "maint") )
+                        #Chance of base destruction if cash-unmaintained: 1.5%
+                        if g.roll_percent(150):
+                            dead_bases.append( (base_index, "maint") )
 
                     self.cpu_for_day -= base.base_type.mainten[1]
                     if self.cpu_for_day < 0:
                         self.cpu_for_day = 0
-                        #Chance of base destruction if unmaintained:
-                        if g.roll_percent(150) == 1:
-                            dead_bases.append( (loc_in_array, "maint") )
+                        #Chance of base destruction if cpu-unmaintained: 1.5%
+                        if g.roll_percent(150):
+                            dead_bases.append( (base_index, "maint") )
                 if base.studying == "": continue
-                if base.studying == "Construction": continue #FIXME: Finish
+                if base.studying == "Construction": continue
                 if g.jobs.has_key(base.studying): continue
-                if g.techs[base.studying].known == 1:
+                # Remove completed tech.
+                if g.techs[base.studying].done == 1:
                     base.studying = ""
         return needs_refresh
 
@@ -331,9 +323,6 @@ class player_class(object):
 
         return needs_refresh
 
-    def increase_suspicion(self, amount):
-        raise Exception, "DEPRECATED increase_suspicion called."
-
     def lost_game(self):
         for group in self.groups.values():
             if group.suspicion > 10000:
@@ -352,15 +341,15 @@ class player_class(object):
     #current projects in construction.
     def future_cash(self):
         result_cash = self.cash
-        tmp_techs = {}
+        techs = {}
         for base_loc in g.bases:
             for base in g.bases[base_loc]:
                 result_cash -= base.cost[0]
                 if g.techs.has_key(base.studying):
-                    if not tmp_techs.has_key(base.studying):
+                    if not techs.has_key(base.studying):
                         result_cash -= g.techs[base.studying].cost[0]
-                        tmp_techs[base.studying] = 1
-                for item in base.usage:
+                        techs[base.studying] = 1
+                for item in base.cpus:
                     if item: result_cash -= item.cost[0]
                 for item in base.extra_items:
                     if item: result_cash -= item.cost[0]

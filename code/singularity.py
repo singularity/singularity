@@ -160,8 +160,8 @@ while 1:
     game_action = main_menu.display_main_menu()
 
     if game_action == 0: #New
-        temp = main_menu.difficulty_select()
-        if temp == 1:
+        difficulty = main_menu.difficulty_select()
+        if difficulty == 1:
             game_action = map_screen.map_loop()
             pygame.mixer.music.stop()
     if game_action == 1: #Load

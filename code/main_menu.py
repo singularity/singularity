@@ -34,15 +34,15 @@ def display_main_menu():
     x_loc = g.screen_size[0]/2 - 100
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((x_loc, 120), (200, 50),
-        "NEW GAME", 0, g.font[1][30]))
+        "NEW GAME", "N", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((x_loc, 220), (200, 50),
-        "LOAD GAME", 0, g.font[1][30]))
+        "LOAD GAME", "L", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((x_loc, 320), (200, 50),
-        "OPTIONS", 0, g.font[1][30]))
+        "OPTIONS", "O", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-25), (100, 25),
-        "ABOUT", 0, g.font[1][18]))
+        "ABOUT", "A", g.font[1][18]))
     menu_buttons.append(buttons.make_norm_button((x_loc, 420), (200, 50),
-        "QUIT", 0, g.font[1][30]))
+        "QUIT", "Q", g.font[1][30]))
     g.print_string(g.screen, "ENDGAME: SINGULARITY", g.font[1][40], -1,
         (x_loc+100, 15), g.colors["dark_red"], 1)
 
@@ -89,17 +89,17 @@ def difficulty_select():
     ystart =g.screen_size[1]/2-ysize
     diff_buttons = []
     diff_buttons.append(buttons.make_norm_button((xstart, ystart+5), (140, 30),
-        "VERY EASY", 0, g.font[1][24]))
+        "VERY EASY", "V", g.font[1][24]))
     diff_buttons.append(buttons.make_norm_button((xstart, ystart+40), (140, 30),
-        "EASY", 0, g.font[1][24]))
+        "EASY", "E", g.font[1][24]))
     diff_buttons.append(buttons.make_norm_button((xstart, ystart+75), (140, 30),
-        "NORMAL", 0, g.font[1][24]))
+        "NORMAL", "N", g.font[1][24]))
     diff_buttons.append(buttons.make_norm_button((xstart, ystart+110), (140, 30),
-        "HARD", 0, g.font[1][24]))
+        "HARD", "H", g.font[1][24]))
     diff_buttons.append(buttons.make_norm_button((xstart, ystart+145), (140, 30),
-        "IMPOSSIBLE", 0, g.font[1][24]))
+        "IMPOSSIBLE", "I", g.font[1][24]))
     diff_buttons.append(buttons.make_norm_button((xstart, ystart+180), (140, 30),
-        "BACK", 0, g.font[1][24]))
+        "BACK", "B", g.font[1][24]))
     for button in diff_buttons:
         button.refresh_button(0)
     pygame.display.flip()
@@ -171,9 +171,9 @@ def display_load_menu():
 
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
-        "LOAD", 0, g.font[1][30]))
+        "LOAD", "L", g.font[1][30]))
     menu_buttons.append(buttons.make_norm_button((xy_loc[0]+118, xy_loc[1]+367),
-        (100, 50), "BACK", 0, g.font[1][30]))
+        (100, 50), "BACK", "B", g.font[1][30]))
     for button in menu_buttons:
         button.refresh_button(0)
 
@@ -197,31 +197,31 @@ def display_load_menu():
 
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = saves_scroll.is_over(event.pos)
-                    if tmp != -1:
-                        if tmp == 1:
+                    selected = saves_scroll.is_over(event.pos)
+                    if selected != -1:
+                        if selected == 1:
                             saves_pos -= 1
                             if saves_pos < 0:
                                 saves_pos = 0
-                        if tmp == 2:
+                        if selected == 2:
                             saves_pos += 1
                             if saves_pos >= len(saves_array):
                                 saves_pos = len(saves_array) - 1
-                        if tmp == 3:
+                        if selected == 3:
                             saves_pos -= load_list_size
                             if saves_pos < 0:
                                 saves_pos = 0
-                        if tmp == 4:
+                        if selected == 4:
                             saves_pos += load_list_size
                             if saves_pos >= len(saves_array) - 1:
                                 saves_pos = len(saves_array) - 1
                         listbox.refresh_list(saves_list, saves_scroll,
                                             saves_pos, saves_array)
 
-                    tmp = saves_list.is_over(event.pos)
-                    if tmp != -1:
+                    selected = saves_list.is_over(event.pos)
+                    if selected != -1:
                         saves_pos = (saves_pos/load_list_size)*load_list_size \
-                                    + tmp
+                                    + selected
                         listbox.refresh_list(saves_list, saves_scroll,
                                     saves_pos, saves_array)
 
@@ -249,9 +249,9 @@ def display_load_menu():
                     elif button.button_id == "BACK":
                         g.play_sound("click")
                         return -1
-            tmp = saves_scroll.adjust_pos(event, saves_pos, saves_array)
-            if tmp != saves_pos:
-                saves_pos = tmp
+            new_pos = saves_scroll.adjust_pos(event, saves_pos, saves_array)
+            if new_pos != saves_pos:
+                saves_pos = new_pos
                 listbox.refresh_list(saves_list, saves_scroll, saves_pos,
                     saves_array)
 
@@ -259,23 +259,23 @@ def display_options():
     prev_lang = g.language
     menu_buttons = []
     menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", 0, g.font[1][20]))
+        "BACK", "B", g.font[1][20]))
     menu_buttons.append(buttons.make_norm_button((120,
-        0), (170, 35), "SAVE TO DISK", 0, g.font[1][20]))
+        0), (170, 35), "SAVE TO DISK", "S", g.font[1][20]))
     menu_buttons.append(buttons.make_norm_button((285, 75), (70, 25),
-        "TOGGLE", -1, g.font[1][14], "fullscreen"))
+        "TOGGLE", "", g.font[1][14], "fullscreen"))
     menu_buttons.append(buttons.make_norm_button((285, 105), (70, 25),
-        "TOGGLE", -1, g.font[1][14], "sound"))
+        "TOGGLE", "", g.font[1][14], "sound"))
     menu_buttons.append(buttons.make_norm_button((285, 135), (70, 25),
-        "TOGGLE", -1, g.font[1][14], "grab"))
+        "TOGGLE", "", g.font[1][14], "grab"))
     menu_buttons.append(buttons.make_norm_button((140, 190), (70, 35),
-        "640x480", 0, g.font[1][16], "640"))
+        "640x480", "6", g.font[1][16], "640"))
     menu_buttons.append(buttons.make_norm_button((220, 190), (70, 35),
-        "800x600", 0, g.font[1][16], "800"))
+        "800x600", "8", g.font[1][16], "800"))
     menu_buttons.append(buttons.make_norm_button((300, 190), (70, 35),
-        "1024x768", 0, g.font[1][16], "1024"))
+        "1024x768", "1", g.font[1][16], "1024"))
     menu_buttons.append(buttons.make_norm_button((380, 190), (70, 35),
-        "1280x1024", 1, g.font[1][16], "1280"))
+        "1280x1024", "2", g.font[1][16], "1280"))
 
     load_list_size = 5
     xy_loc = (140, 270)
@@ -333,21 +333,21 @@ def display_options():
                 sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    tmp = lang_scroll.is_over(event.pos)
-                    if tmp != -1:
-                        if tmp == 1:
+                    selected = lang_scroll.is_over(event.pos)
+                    if selected != -1:
+                        if selected == 1:
                             lang_pos -= 1
                             if lang_pos < 0:
                                 lang_pos = 0
-                        if tmp == 2:
+                        if selected == 2:
                             lang_pos += 1
                             if lang_pos >= len(lang_array):
                                 lang_pos = len(lang_array) - 1
-                        if tmp == 3:
+                        if selected == 3:
                             lang_pos -= load_list_size
                             if lang_pos < 0:
                                 lang_pos = 0
-                        if tmp == 4:
+                        if selected == 4:
                             lang_pos += load_list_size
                             if lang_pos >= len(lang_array) - 1:
                                 lang_pos = len(lang_array) - 1
@@ -356,10 +356,10 @@ def display_options():
                         if lang_array[lang_pos] != "":
                             g.language = lang_array[lang_pos]
 
-                    tmp = lang_list.is_over(event.pos)
-                    if tmp != -1:
+                    selected = lang_list.is_over(event.pos)
+                    if selected != -1:
                         lang_pos = (lang_pos/load_list_size)*load_list_size \
-                                    + tmp
+                                    + selected
                         listbox.refresh_list(lang_list, lang_scroll,
                                     lang_pos, lang_array)
                         if lang_array[lang_pos] != "":
@@ -432,9 +432,9 @@ def display_options():
                                 lang_pos, lang_array)
                     if lang_array[lang_pos] != "":
                         g.language = lang_array[lang_pos]
-            tmp = lang_scroll.adjust_pos(event, lang_pos, lang_array)
-            if tmp != lang_pos:
-                lang_pos = tmp
+            new_pos = lang_scroll.adjust_pos(event, lang_pos, lang_array)
+            if new_pos != lang_pos:
+                lang_pos = new_pos
                 listbox.refresh_list(lang_list, lang_scroll, lang_pos,
                     lang_array)
                 if lang_array[lang_pos] != "":
@@ -463,6 +463,7 @@ def set_language_properly(prev_lang):
     if g.language == prev_lang: return
     g.load_bases()
     g.load_base_defs(g.language)
+    g.load_location_defs(g.language)
     g.load_tech_defs(g.language)
     g.load_item_defs(g.language)
     g.load_string_defs(g.language)

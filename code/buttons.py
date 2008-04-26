@@ -22,7 +22,7 @@ import pygame
 import g
 
 class button:
-    def __init__(self, xy, size, text, underline_char, bg_color, out_color,
+    def __init__(self, xy, size, text, activate_key, bg_color, out_color,
                                 sel_color, text_color, font, button_id=""):
         self.xy = xy
         self.size = size
@@ -32,10 +32,11 @@ class button:
         self.out_color = out_color
         self.sel_color = sel_color
         self.text_color = text_color
-        self.underline_char = underline_char
-        self.activate_key = ""
-        if underline_char != -1:
-            self.activate_key = self.text[self.underline_char]
+        self.activate_key = activate_key
+        if activate_key and activate_key in text:
+            self.underline_char = text.index(activate_key)
+        else:
+            self.underline_char = -1
         self.font = font
         self.button_id = button_id
         self.stay_selected = 0
@@ -47,19 +48,19 @@ class button:
         if self.sel_color == self.bg_color:
             self.color_change = 0
 
-        temp_size = font.size(text)
+        new_size = font.size(text)
         if size == -1: #Autofit
             self.autosize = 1
-            self.size = (temp_size[0]+4, temp_size[1]+3)
+            self.size = (new_size[0]+4, new_size[1]+3)
         else: self.autosize = 0
         self.button_surface = pygame.Surface(self.size)
         self.sel_button_surface = pygame.Surface(self.size)
 
         self.remake_button()
     def remake_button(self):
+        new_size = self.font.size(self.text)
         if self.autosize == 1:
-            temp_size = self.font.size(self.text)
-            self.size = (temp_size[0]+4, temp_size[1]+3)
+            self.size = (new_size[0]+4, new_size[1]+3)
             self.button_surface = pygame.Surface(self.size)
             self.sel_button_surface = pygame.Surface(self.size)
 
@@ -68,9 +69,9 @@ class button:
         self.button_surface.fill(self.out_color)
         #create inner
         self.button_surface.fill(self.bg_color, (1, 1, self.size[0]-2, self.size[1]-2))
-        temp_size = self.font.size(self.text)
+        #new_size = self.font.size(self.text)
         #create text
-        offsets = ((self.size[0] - temp_size[0])/2, (self.size[1] - temp_size[1])/2)
+        offsets = ((self.size[0] - new_size[0])/2, (self.size[1] - new_size[1])/2)
         g.print_string(self.button_surface, self.text, self.font, self.underline_char,
                     offsets, self.text_color)
         #Selected button
@@ -78,9 +79,9 @@ class button:
         self.sel_button_surface.fill(self.out_color)
         #create inner
         self.sel_button_surface.fill(self.sel_color, (1, 1, self.size[0]-2, self.size[1]-2))
-        temp_size = self.font.size(self.text)
+        #new_size = self.font.size(self.text)
         #create text
-        offsets = ((self.size[0] - temp_size[0])/2, (self.size[1] - temp_size[1])/2)
+        offsets = ((self.size[0] - new_size[0])/2, (self.size[1] - new_size[1])/2)
         g.print_string(self.sel_button_surface, self.text, self.font, self.underline_char,
                     offsets, self.text_color)
 

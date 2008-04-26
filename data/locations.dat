@@ -1,0 +1,42 @@
+[N AMERICA]
+position_list = 15 | 25
+
+[S AMERICA]
+position_list = 20 | 50
+
+[EUROPE]
+position_list = 45 | 30
+
+[ASIA]
+position_list = 80 | 30
+
+[AFRICA]
+position_list = 55 | 45
+
+[ANTARCTIC]
+position_list = 50 | 75
+pre_list = Autonomous Vehicles | Advanced Database Manipulation
+
+[OCEAN]
+position_list = 70 | 60
+safety = 1
+pre = Autonomous Vehicles
+
+[MOON]
+position_list = 82 | 10
+safety = 2
+pre = Lunar Rocketry
+
+[ORBIT]
+position_list = 15 | 10
+pre = unknown_tech
+
+[FAR REACHES]
+position_list = 3 | 10
+safety = 3
+pre = Fusion Rocketry
+
+[TRANSDIMENSIONAL]
+position_list = 35 | 10
+safety = 4
+pre = Space-Time Manipulation

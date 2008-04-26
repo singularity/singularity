@@ -51,7 +51,7 @@ class listbox:
         if len(lines_array) != self.viewable_items:
             print "CRASH WARNING: len(lines_array)="+str(len(lines_array))
             print "CRASH WARNING: self.viewable_items="+str(self.viewable_items)
-            return 0
+            return False
 
         if selected >= self.viewable_items:
             print "Error in refresh_listbox(). selected =" + str(selected)
@@ -60,7 +60,7 @@ class listbox:
         if len(lines_array) % (self.viewable_items*self.lines_per_item) != 0:
             print "Error in refresh_listbox(). len(lines_array)="+ \
                                 str(len(lines_array))
-            return 0
+            return False
 
         g.screen.blit(self.list_surface, self.xy)
 
@@ -78,7 +78,7 @@ class listbox:
                         self.font, -1, (self.xy[0]+4, self.xy[1] +
                         (i*self.size[1]) / self.viewable_items +
                         j*(txt_y_size[1]+2)), self.font_color)
-        return 1
+        return True
 
     def is_over(self, xy):
         if xy[0] >= self.xy[0] and xy[1] >= self.xy[1] and \
@@ -121,13 +121,13 @@ class listbox:
 
 
 def refresh_list(listbox, scrollbar, list_pos, list_array):
-    tmp=listbox.refresh_listbox(list_pos%listbox.viewable_items,
+    success=listbox.refresh_listbox(list_pos%listbox.viewable_items,
         list_array[(list_pos/listbox.viewable_items)*
         listbox.viewable_items:(list_pos/listbox.viewable_items)*
         listbox.viewable_items+ listbox.viewable_items])
-    if tmp==0:
+    if not success:
         print list_array
-    if scrollbar != 0:
+    if scrollbar:
         scrollbar.refresh_scroll(list_pos,
         ((len(list_array)/listbox.viewable_items)+1)*listbox.viewable_items-1)
     pygame.display.flip()

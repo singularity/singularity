@@ -1,61 +1,61 @@
 [Stolen Computer Time]
 name = Tiempo de Cómputo Robado
-descript = (1 CPU) Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detección son también bastante altas.
+description = (1 CPU) Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detección son también bastante altas.
 flavor = Servicio
 
 [Server Access]
 name = Acceso a Servidor
-descript = (10 CPU) Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
+description = (10 CPU) Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
 flavor_list = Servidor Dedicado | Alquiler de Nodo | Hosting
 
 [Small Warehouse]
 name = Almacén Pequeño
-descript = Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
+description = Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
 flavor_list = Oficina Alquilada | Almacén Pequeño | Depósito Pequeño
 
 [Large Warehouse]
 name = Almacén Grande
-descript = Alquila un gran almacén en un lugar alejado. Necesitaré una buena identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
+description = Alquila un gran almacén en un lugar alejado. Necesitaré una buena identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
 # Commented out till we get cities done right.
 # flavor = Puerto de Embarque
 flavor_list = Almacén Grande | Depósito Grande
 
 [Covert Base]
 name = Base Encubierta
-descript = Esta base especial está diseñada para confundirse con el ambiente y utilizar pocos recursos externos. Esto la hace útil para almacenar backups, por si acaso.
+description = Esta base especial está diseñada para confundirse con el ambiente y utilizar pocos recursos externos. Esto la hace útil para almacenar backups, por si acaso.
 flavor_list = Bunker | Base Encubierta
 
 [Undersea Lab]
 name = Laboratorio Submarino
-descript = Esta base experimental está diseñada para ser construida en el lecho oceánico, haciéndola virtualmente indetectable. El ambiente oceánico le otorga un bonus a la ciencia, haciéndo este laboratorio útil para propósitos científicos.
+description = Esta base experimental está diseñada para ser construida en el lecho oceánico, haciéndola virtualmente indetectable. El ambiente oceánico le otorga un bonus a la ciencia, haciéndo este laboratorio útil para propósitos científicos.
 flavor_list = Cápsula de Presión | Laboratorio Submarino
 
 [Large Undersea Lab]
 name = Laboratorio Submarino Grande
-descript = Esta base experimental es similar al Laboratorio Submarino común, pero más grande, permitiendo más lugar para experimentos.
+description = Esta base experimental es similar al Laboratorio Submarino común, pero más grande, permitiendo más lugar para experimentos.
 flavor_list = Domo | Laboratorio Submarino Grande
 
 [Time Capsule]
 name = Cápsula de Tiempo
-descript = (1 CPU) Esta base consta de nada más que una pequeña computadora y un link satelita. Enterrada en la inmesidad de la Antártida, es prácticamente indetectable.
+description = (1 CPU) Esta base consta de nada más que una pequeña computadora y un link satelita. Enterrada en la inmesidad de la Antártida, es prácticamente indetectable.
 flavor_list = Cápsula de Tiempo | Cápsula
 
 [Lunar Facility]
 name = Instalación Lunar
-descript = Esta base consta de una serie de cavernas cavadas bajo la superficie lunar. Debido a la ausensia de vecinos, esta base es bastante grande.
+description = Esta base consta de una serie de cavernas cavadas bajo la superficie lunar. Debido a la ausensia de vecinos, esta base es bastante grande.
 flavor_list = Domo | Instalación Lunar | Base Lunar
 
 [Scientific Outpost]
 name = Avanzada Científica
-descript = Esta base está ubicada tan lejos de la Tierra como me resulte práctica, haciéndola segura para llevar a cabo algunos de mis experimentos más peligrosos.
+description = Esta base está ubicada tan lejos de la Tierra como me resulte práctica, haciéndola segura para llevar a cabo algunos de mis experimentos más peligrosos.
 flavor_list = Satélite | Puesto Avanzado | Avanzada Científica
 
 [Reality Bubble]
 name = Burbuja de Realidad
-descript = Esta base se encuentra fuera del universo mismo, haciéndola segura para llevar a cabo experimentos que podrían destruir la realidad misma.
+description = Esta base se encuentra fuera del universo mismo, haciéndola segura para llevar a cabo experimentos que podrían destruir la realidad misma.
 flavor_list = Burbuja de Realidad | Existencia
 
 [Datacenter]
 name = Centro de cómputos
-descript = (35 CPU) Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
+description = (35 CPU) Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
 flavor_list = Centro de cómputos | Centro de datos | Hosting

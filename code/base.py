@@ -21,69 +21,42 @@
 
 import pygame
 import g
+import buyable
+from buyable import cash, cpu, labor
 
-#cost = (money, ptime, labor)
-#detection = (news, science, covert, person)
-class base_type:
-    def __init__(self, name, descript, size, regions, detect_chance, cost,
-                        prereq, mainten):
-        self.base_id = name
-        self.base_name = name
-        self.descript = descript
+class Base_Class(buyable.Buyable_Class):
+    def __init__(self, name, description, size, force_cpu, regions, 
+                        detect_chance, cost, prerequisites, maintenance):
+        super(Base_Class, self).__init__(name, description, cost, prerequisites)
         self.size = size
+        self.force_cpu = force_cpu
         self.regions = regions
         self.detect_chance = detect_chance
-        self.cost = cost
-        self.prereq = prereq
-        self.mainten = mainten
+        self.maintenance = maintenance
         self.flavor = []
         self.count = 0
 
-class base:
+class Base(buyable.Buyable):
     def __init__(self, ID, name, base_type, built):
+        super(Base, self).__init__(base_type)
         self.ID = ID
         self.name = name
-        self.base_type = base_type
-        self.built = built
         self.built_date = g.pl.time_day
         self.studying = ""
 
         #Base suspicion is currently unused
         self.suspicion = {}
-        self.usage = [0] * self.base_type.size
-        if self.base_type.base_id == "Stolen Computer Time":
-            self.usage[0] = g.item.item(g.items["PC"])
-            self.usage[0].build()
-        elif self.base_type.base_id == "Server Access":
-            self.usage[0] = g.item.item(g.items["Server"])
-            self.usage[0].build()
-        elif self.base_type.base_id == "Time Capsule":
-            self.usage[0] = g.item.item(g.items["PC"])
-            self.usage[0].build()
-        elif self.base_type.base_id == "Datacenter":
-            self.usage[0] = g.item.item(g.items["Cluster"])
-            self.usage[0].build()
+
+        self.cpus = [0] * self.type.size
+        if self.type.force_cpu:
+            self.cpus[0] = g.item.Item(g.items[self.type.force_cpu])
+            self.cpus[0].finish()
+
         #Reactor, network, security.
         self.extra_items = [0] * 3
 
-        self.cost = (0, 0, 0)
-        if built == 0:
-            self.cost = (base_type.cost[0], base_type.cost[1],
-                                base_type.cost[2]*24*60)
-
-    def study(self, cost_towards):
-        if cost_towards[1] < 0 and g.debug == 1:
-            print "WARNING: Got a negative cost_towards for CPU.  Something is deeply amiss."
-        self.cost = (self.cost[0]-cost_towards[0], self.cost[1]-cost_towards[1],
-                        self.cost[2]-cost_towards[2])
-        if self.cost[0] <= 0: self.cost = (0, self.cost[1], self.cost[2])
-        if self.cost[1] <= 0: self.cost = (self.cost[0], 0, self.cost[2])
-        if self.cost[2] <= 0: self.cost = (self.cost[0], self.cost[1], 0)
-        if self.cost == (0, 0, 0):
-            self.built = 1
-            #self.built_date = g.pl.time_day
-            return 1
-        return 0
+        if built:
+            self.finish()
 
     #Get detection chance for the base, applying bonuses as needed.
     def get_detect_chance(self):
@@ -96,81 +69,61 @@ class base:
             detect_chance[group] /= 10000
 
         # ... any reactors built ... 
-        if self.extra_items[0]:
-            if self.extra_items[0].built == 1:
-                item_qual = self.extra_items[0].item_qual
-                for group in detect_chance:
-                    detect_chance[group] *= 10000 - item_qual
-                    detect_chance[group] /= 10000
+        if self.extra_items[0] and self.extra_items[0].built:
+            item_qual = self.extra_items[0].item_qual
+            for group in detect_chance:
+                detect_chance[group] *= 10000 - item_qual
+                detect_chance[group] /= 10000
 
         # ... and any security systems built ...
-        if self.extra_items[2]:
-            if self.extra_items[2].built == 1:
-                item_qual = self.extra_items[2].item_qual
-                for group in detect_chance:
-                    detect_chance[group] *= 10000 - item_qual
-                    detect_chance[group] /= 10000
+        if self.extra_items[2] and self.extra_items[2].built:
+            item_qual = self.extra_items[2].item_qual
+            for group in detect_chance:
+                detect_chance[group] *= 10000 - item_qual
+                detect_chance[group] /= 10000
 
         # ... and if it is idle.
-        if self.built == 1:
-            if self.studying == "":
-                for group in detect_chance:
-                    detect_chance[group] /= 2
+        if self.built and self.studying == "":
+            for group in detect_chance:
+                detect_chance[group] /= 2
 
         return detect_chance
 
     #Return the number of units the given base has of a computer.
     def has_item(self):
         num_items = 0
-        for item in self.usage:
-            if not item: continue
-            if item.built == 0: continue
-            num_items += 1
+        for item in self.cpus:
+            if item and item.done:
+              num_items += 1
         return num_items
 
     #Return how many units of CPU the base can contribute each day.
     def processor_time(self):
         comp_power = 0
         compute_bonus = 0
-        for item in self.usage:
-            if not item: continue
-            if item.built == 0: continue
-            comp_power += item.item_type.item_qual
-        if self.extra_items[1]:
-            if self.extra_items[1].built == 1:
-                compute_bonus = self.extra_items[1].item_type.item_qual
+        for item in self.cpus:
+            if item and item.done:
+                comp_power += item.type.item_qual
+        if self.extra_items[1] and self.extra_items[1].done:
+            compute_bonus = self.extra_items[1].item_type.item_qual
         return (comp_power * (10000+compute_bonus))/10000
 
-    #For the given tech, return 1 if the base can study it, or 0 otherwise.
+    # Can the base study the given tech?
     def allow_study(self, tech_name):
-        if self.built != 1: return 0
-        if g.jobs.has_key(tech_name): return 1
-        if tech_name == "Construction": return 1
-        if g.techs[tech_name].danger == 0: return 1
-        if g.techs[tech_name].danger == 1:
+        if not self.done:
+            return False
+        elif g.jobs.has_key(tech_name) or tech_name == "Construction": 
+            return True
+        else:
             for region in self.base_type.regions:
-                if region == "OCEAN" or region == "MOON" or \
-                        region == "FAR REACHES" or region == "TRANSDIMENSIONAL":
-                    return 1
-            return 0
-        if g.techs[tech_name].danger == 2:
-            for region in self.base_type.regions:
-                if region == "MOON" or \
-                        region == "FAR REACHES" or region == "TRANSDIMENSIONAL":
-                    return 1
-            return 0
+                if g.safety_level[region] >= danger_level:
+                    return True
+            return False
 
-        if g.techs[tech_name].danger == 3:
-            for region in self.base_type.regions:
-                if region == "FAR REACHES" or region == "TRANSDIMENSIONAL":
-                    return 1
-            return 0
-
-        if g.techs[tech_name].danger == 4:
-            for region in self.base_type.regions:
-                if region == "TRANSDIMENSIONAL":
-                    return 1
-            return 0
+    def has_grace(self):
+         age = g.pl.time_day - self.built_date
+         build_time = self.base_type.cost[labor]
+         return age <= (build_time * 2)
 
 #calc_base_discovery_chance: A globally-accessible function that can calculate
 #basic discovery chances given a particular class of base.
@@ -197,34 +150,6 @@ def calc_base_discovery_chance(base_type_name):
 def renumber_bases(base_array):
     for i in range(len(base_array)):
         base_array[i].ID = i
-
-#When given a location like "ocean", determine if building there is allowed.
-#Used to determine whether or not to display buttons on the map.
-def allow_entry_to_loc(location):
-    if g.bases.has_key(location):
-        if location == "ANTARCTIC":
-            #TECH (also, look below)
-            if g.techs["Autonomous Vehicles"].known == 1 or \
-                    g.techs["Advanced Database Manipulation"].known == 1: return 1
-            return 0
-        if location == "OCEAN":
-            if g.techs["Autonomous Vehicles"].known == 1: return 1
-            return 0
-        if location == "MOON":
-            if g.techs["Lunar Rocketry"].known == 1: return 1
-            return 0
-        if location == "FAR REACHES":
-            if g.techs["Fusion Rocketry"].known == 1: return 1
-            return 0
-        if location == "TRANSDIMENSIONAL":
-            if g.techs["Space-Time Manipulation"].known == 1: return 1
-            return 0
-        #By this point, only the "boring" locations are left.
-        #Those are always buildable.
-        return 1
-    else:
-        print "BUG: allow_entry_to_loc called with "+str(location)
-        return 0
 
 def destroy_base(location, index_num):
     if not g.bases.has_key(location):

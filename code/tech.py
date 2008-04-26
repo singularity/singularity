@@ -21,38 +21,31 @@
 
 import pygame
 import g
+import buyable
 
-#cost = (money, ptime, labor)
-#detection = (news, science, covert, person)
-class tech:
-    def __init__(self, tech_id, descript, known, cost, prereq, danger, tech_type,
-                                        secondary_data):
-        self.tech_id = tech_id
-        self.name = tech_id
-        self.descript = descript
-        self.known = known
-        self.cost = cost
-        self.prereq = prereq
+class Tech(buyable.Buyable):
+    def __init__(self, id, description, known, cost, prerequisites, danger, 
+                 tech_type, secondary_data):
+        # A bit silly, but it does the trick.
+        type = buyable.Buyable_Class(id, description, cost, prerequisites)
+        super(Tech, self).__init__(type)
+
         self.danger = danger
         self.result = ""
         self.tech_type = tech_type
         self.secondary_data = secondary_data
-    def study(self, cost_towards):
-        self.cost = (self.cost[0]-cost_towards[0], self.cost[1]-cost_towards[1],
-                self.cost[2]-cost_towards[2])
-        if self.cost[0] <= 0: self.cost = (0, self.cost[1], self.cost[2])
-        if self.cost[1] <= 0: self.cost = (self.cost[0], 0, self.cost[2])
-        if self.cost[2] <= 0: self.cost = (self.cost[0], self.cost[1], 0)
-        if self.cost == (0, 0, 0):
-            self.gain_tech()
-            return 1
-        return 0
+
+        if known:
+            # self.finish would re-apply the tech benefit, which is already in
+            # place.
+            super(Tech, self).finish()
+
+    def finish(self):
+        super(Tech, self).finish()
+        self.gain_tech()
+
     def gain_tech(self):
-        self.cost = (0, 0, 0)
-        self.known = 1
-
         #give the effect of the tech
-
         if self.tech_id == "Personal Identification":
             for base_loc in g.bases:
                 for base_name in g.bases[base_loc]:
