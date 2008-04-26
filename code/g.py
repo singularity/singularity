@@ -402,148 +402,140 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
     screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     screen.fill(out_color, (xy[0]+5, xy[1]+size[1]-30, size[0]-10, 25))
-#        print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
     print_multiline(screen, descript_text, box_font,
                                 size[0]-10, (xy[0]+5, xy[1]+5), text_color)
-    #If the cursor is in a blank string, we want it at the beginning;
-    #otherwise put it after the last character.
-    cursor_loc = len(starting_text)
-#         if cursor_loc > 0:
-#            cursor_loc += 1
 
-    menu_buttons = []
-    menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50,
-            xy[1]+size[1]+5), (100, 50), "OK", 0, font[1][30]))
+    # Cursor starts at the end.
+    global cursor_loc, work_string
+    cursor_loc = len(starting_text)
+
+    menu_buttons = {}
+    menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-50,
+            xy[1]+size[1]+5), (100, 50), "OK", "O", font[1][30])] = always(True)
 
     work_string = starting_text
-    for button in menu_buttons:
-        button.refresh_button(0)
     sel_button = -1
 
-    need_redraw = True
     key_down_dict = {
+        pygame.K_BACKSPACE: False,
+        pygame.K_DELETE: False,
+        pygame.K_LEFT: False,
+        pygame.K_RIGHT: False
+    }
+    key_down_time_dict = {
         pygame.K_BACKSPACE: 0,
         pygame.K_DELETE: 0,
         pygame.K_LEFT: 0,
         pygame.K_RIGHT: 0
     }
     repeat_timing_dict = {
-        pygame.K_BACKSPACE: 5,
-        pygame.K_DELETE: 5,
-        pygame.K_LEFT: 5,
-        pygame.K_RIGHT: 5
+        pygame.K_BACKSPACE: 6,
+        pygame.K_DELETE: 6,
+        pygame.K_LEFT: 6,
+        pygame.K_RIGHT: 6
     }
 
-    while 1:
-        clock.tick(20)
-        if key_down_dict[pygame.K_BACKSPACE] > 0:
-            key_down_dict[pygame.K_BACKSPACE] += 1
-            if key_down_dict[pygame.K_BACKSPACE] > repeat_timing_dict[pygame.K_BACKSPACE]:
-                if cursor_loc > 0:
-                    work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
-                    cursor_loc -= 1
-                    need_redraw = True
-                key_down_dict[pygame.K_BACKSPACE] = 1
-                if repeat_timing_dict[pygame.K_BACKSPACE] > 1:
-                    repeat_timing_dict[pygame.K_BACKSPACE] -= 1
-        if key_down_dict[pygame.K_DELETE] > 0:
-            key_down_dict[pygame.K_DELETE] += 1
-            if key_down_dict[pygame.K_DELETE] > repeat_timing_dict[pygame.K_DELETE]:
-                if cursor_loc < len(work_string):
-                    work_string = work_string[:cursor_loc]+work_string[cursor_loc+1:]
-                    need_redraw = True
-                key_down_dict[pygame.K_DELETE] = 1
-                if repeat_timing_dict[pygame.K_DELETE] > 1:
-                    repeat_timing_dict[pygame.K_DELETE] -= 1
-        if key_down_dict[pygame.K_LEFT] > 0:
-            key_down_dict[pygame.K_LEFT] += 1
-            if key_down_dict[pygame.K_LEFT] > repeat_timing_dict[pygame.K_LEFT]:
-                cursor_loc -= 1
-                if cursor_loc < 0: cursor_loc = 0
-                need_redraw = True
-                key_down_dict[pygame.K_LEFT] = 1
-                if repeat_timing_dict[pygame.K_LEFT] > 1:
-                    repeat_timing_dict[pygame.K_LEFT] -= 1
-        if key_down_dict[pygame.K_RIGHT] > 0:
-            key_down_dict[pygame.K_RIGHT] += 1
-            if key_down_dict[pygame.K_RIGHT] > repeat_timing_dict[pygame.K_RIGHT]:
-                cursor_loc += 1
-                if cursor_loc > len(work_string): cursor_loc = len(work_string)
-                need_redraw = True
-                key_down_dict[pygame.K_RIGHT] = 1
-                if repeat_timing_dict[pygame.K_RIGHT] > 1:
-                    repeat_timing_dict[pygame.K_RIGHT] -= 1
+    def on_tick(tick_len):
+        global cursor_loc, work_string
+        need_redraw = False
 
-        if need_redraw:
-            draw_cursor_pos = box_font.size(work_string[:cursor_loc])
-            screen.fill(text_bg_color, (xy[0]+6, xy[1]+size[1]-29,
-                        size[0]-12, 23))
-            screen.fill(text_color, (xy[0]+6+draw_cursor_pos[0], xy[1]+size[1]-28,
-                    1, draw_cursor_pos[1]))
-            print_string(screen, work_string, box_font, -1, (xy[0]+7,
-                        xy[1]+size[1]-28), text_color)
-            pygame.display.flip()
-            need_redraw = False
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: quit_game()
-            elif event.type == pygame.KEYDOWN:
-                key_down_dict[event.key] = 1
-                if (event.key == pygame.K_ESCAPE): return ""
-                elif (event.key == pygame.K_RETURN): return work_string
-                elif (event.key == pygame.K_BACKSPACE):
-                    if cursor_loc > 0:
-                        work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
+        keys = (pygame.K_BACKSPACE, pygame.K_DELETE, pygame.K_LEFT, 
+                pygame.K_RIGHT)
+        backspace, delete, left, right = keys
+        for key in keys:
+            if key_down_time_dict[key]:
+                i_need_redraw = False
+
+                key_down_time_dict[key] += 1
+                if key_down_time_dict[key] > repeat_timing_dict[key]:
+                    key_down_time_dict[key] = 1
+                    if repeat_timing_dict[key] > 1:
+                        repeat_timing_dict[key] -= 1
+
+                    i_need_redraw = True
+                    if key == backspace and cursor_loc > 0:
+                        work_string = work_string[:cursor_loc-1] + \
+                                      work_string[cursor_loc:]
                         cursor_loc -= 1
-                        need_redraw = True
-                elif (event.key == pygame.K_DELETE):
-                    if cursor_loc < len(work_string):
-                        work_string = work_string[:cursor_loc]+work_string[cursor_loc+1:]
-                        need_redraw = True
-                elif (event.key == pygame.K_LEFT):
-                    cursor_loc -= 1
-                    if cursor_loc < 0: cursor_loc = 0
-                    need_redraw = True
-                elif (event.key == pygame.K_RIGHT):
-                    cursor_loc += 1
-                    if cursor_loc > len(work_string): cursor_loc = len(work_string)
-                    need_redraw = True
-                elif event.unicode in valid_input_characters:
-                    if cursor_loc < max_length:
-                        work_string = work_string[:cursor_loc]+event.unicode+ \
-                                                    work_string[cursor_loc:]
+                    elif key == delete and cursor_loc < len(work_string):
+                        work_string = work_string[:cursor_loc] + \
+                                      work_string[cursor_loc+1:]
+                    elif key == left and cursor_loc > 0:
+                        cursor_loc -= 1
+                    elif key == right and cursor_loc < len(work_string):
                         cursor_loc += 1
-                        need_redraw = True
-            elif event.type == pygame.KEYUP:
-                key_down_dict[event.key] = 0
-                repeat_timing_dict[event.key] = 5
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-                return ""
-            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                for button in menu_buttons:
-                    if button.is_over(event.pos):
-                        if button.text == "OK":
-                            play_sound("click")
-                            return work_string
-                if (event.pos[0] > xy[0]+6 and event.pos[1] > xy[1]+size[1]-29 and
-                event.pos[0] < xy[0]+size[0]-6 and event.pos[1] < xy[1]+size[1]-6):
-                    cursor_x = event.pos[0] - (xy[0]+6)
-                    prev_x = 0
-                    i=0
-                    for i in range(1, len(work_string)):
-                        if (box_font.size(work_string[:i])[0]+prev_x)/2 >= cursor_x:
-                            cursor_loc=i-1
-                            need_redraw = True
-                            break
-                        elif box_font.size(work_string[:i])[0] >= cursor_x:
-                            cursor_loc=i
-                            need_redraw = True
-                            break
-                        prev_x = box_font.size(work_string[:i])[0]
                     else:
-                        cursor_loc=i+1
-                        need_redraw = True
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+                        # Nothing happened.
+                        i_need_redraw = False
+
+                if not key_down_dict[key]:
+                    key_down_time_dict[key] = 0
+                    repeat_timing_dict[key] = 6
+
+                need_redraw = need_redraw or i_need_redraw
+
+        return need_redraw
+
+    def do_refresh():
+        draw_cursor_pos = box_font.size(work_string[:cursor_loc])
+        screen.fill(text_bg_color, (xy[0]+6, xy[1]+size[1]-29,
+                    size[0]-12, 23))
+        screen.fill(text_color, (xy[0]+6+draw_cursor_pos[0], xy[1]+size[1]-28,
+                1, draw_cursor_pos[1]))
+        print_string(screen, work_string, box_font, -1, (xy[0]+7,
+                    xy[1]+size[1]-28), text_color)
+
+    def on_key_down(event):
+        key = event.key
+        global cursor_loc, work_string
+        if key == pygame.K_RETURN:
+            return True
+
+        if event.unicode in valid_input_characters:
+            if cursor_loc < max_length:
+                work_string = work_string[:cursor_loc]+event.unicode+ \
+                                            work_string[cursor_loc:]
+                cursor_loc += 1
+            return
+
+        # Mark the key as down.
+        key_down_dict[key] = True
+        # And force it to trigger immediately.
+        key_down_time_dict[key] = 6
+
+    def on_key_up(event):
+        key = event.key
+        # Mark the key as up, but don't clear its down time.
+        key_down_dict[key] = False
+
+    def on_click(event):
+        global cursor_loc
+        if event.button == 1:
+            if (event.pos[0] > xy[0]+6 and event.pos[1] > xy[1]+size[1]-29 and
+             event.pos[0] < xy[0]+size[0]-6 and event.pos[1] < xy[1]+size[1]-6):
+                cursor_x = event.pos[0] - (xy[0]+6)
+                prev_x = 0
+                for i in range(1, len(work_string)):
+                    curr_x = box_font.size(work_string[:i])[0]
+                    if (curr_x + prev_x) / 2 >= cursor_x:
+                        cursor_loc=i-1
+                        break
+                    elif curr_x >= cursor_x:
+                        cursor_loc=i
+                        break
+                    prev_x = curr_x
+                else:
+                    cursor_loc=len(work_string)
+
+    result = buttons.show_buttons(menu_buttons, click_callback=on_click,
+                                  tick_callback=on_tick, 
+                                  key_callback=on_key_down,
+                                  keyup_callback=on_key_up,
+                                  refresh_callback=do_refresh)
+    if result == True:
+        return work_string
+    else:
+        return ""
 
 #creates a box, as used throughout the game.
 def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):

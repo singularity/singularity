@@ -159,9 +159,9 @@ no_args = always( () )
 
 # Used to return from within a sub[-sub...]-function
 class Return(Exception): pass 
-def show_buttons(buttons, key_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void, tick_callback = void):
+def show_buttons(buttons, key_callback = void, keyup_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void, tick_callback = void):
     try:
-        _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback)
+        _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback)
     except Return, e:
         return e.args[0]
 
@@ -172,7 +172,7 @@ def maybe_return(retval):
         g.play_sound("click")
         raise Return, retval
 
-def _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback):
+def _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback):
     def check_buttons():
         for button in buttons.keys():
             if button.was_activated(event):
@@ -196,10 +196,12 @@ def _show_buttons(buttons, key_callback, click_callback, button_callback, button
             if event.type == pygame.QUIT:
                 g.quit_game()
             elif event.type == pygame.KEYDOWN:
-                maybe_return( key_callback(event.key) )
+                maybe_return( key_callback(event) )
                 maybe_return( check_buttons() )
                 if event.key in (pygame.K_ESCAPE, pygame.K_RETURN, pygame.K_q):
                     maybe_return(-1) # Will return -1.
+            elif event.type == pygame.KEYUP:
+                maybe_return( keyup_callback(event) )
             elif event.type == pygame.MOUSEBUTTONUP:
                 maybe_return( click_callback(event) )
                 maybe_return( check_buttons() )

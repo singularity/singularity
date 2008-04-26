@@ -188,7 +188,8 @@ def _show_listbox(list, buttons, **kwargs):
     box = listbox(kw.loc, kw.box_size, kw.list_size, kw.lines_per_item, kw.bg_color, kw.sel_color, kw.out_color, kw.font_color, kw.font)
     scroll = scrollbar.scrollbar((kw.loc[0]+kw.box_size[0], kw.loc[1]), kw.box_size[1], kw.list_size, kw.bg_color, kw.sel_color, kw.out_color)
 
-    def handle_key(key):
+    def handle_key(event):
+        key = event.key
         if key == pygame.K_RETURN:
             maybe_return( kw.return_callback(kw.list_pos) )
 
@@ -216,4 +217,8 @@ def _show_listbox(list, buttons, **kwargs):
         kw.pos_callback(kw.list_pos)
         refresh_list(box, scroll, kw.list_pos, list)
 
-    raise Return, show_buttons(buttons, handle_key, handle_click, kw.button_callback, give_list_pos, do_refresh)
+    raise Return, show_buttons(buttons, key_callback=handle_key, 
+                               click_callback=handle_click, 
+                               button_callback=kw.button_callback, 
+                               button_args=give_list_pos, 
+                               refresh_callback=do_refresh)
