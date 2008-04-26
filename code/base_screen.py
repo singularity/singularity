@@ -245,9 +245,8 @@ def build_item(this_base, item_type, location):
     # First we determine the list of items that can actually be built here ...
     for item_name in g.items:
         if g.items[item_name].item_type == item_type:
-            if g.items[item_name].prerequisites != "":
-                if not g.techs[g.items[item_name].prerequisites].done:
-                    continue
+            if not g.items[item_name].available():
+                continue
             try: g.items[item_name].buildable.index(location)
             except ValueError: continue
             item_object_list.append(g.items[item_name])
@@ -447,10 +446,7 @@ def change_tech(this_base):
         item_list2.append("Menial Jobs")
     for tech_name in g.techs:
         if not g.techs[tech_name].done and this_base.allow_study(tech_name):
-            for tech_pre in g.techs[tech_name].prerequisites:
-                if not g.techs[tech_pre].done:
-                    break
-            else:
+            if g.techs[tech_name].available():
                 item_list.append(g.techs[tech_name].name)
                 item_list2.append(tech_name)
 

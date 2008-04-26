@@ -14,7 +14,6 @@ force_cpu = Server
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA
 detect_chance_list = news:50 | covert:100 | public:150
 cost_list = 100 | 0 | 0
-pre = 
 maint_list = 5 | 0 | 0
 
 [Datacenter]

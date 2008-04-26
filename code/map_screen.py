@@ -164,16 +164,9 @@ def display_inner_techs():
     items.sort()
     for tech_name in items:
         tech_name = tech_name[1]
-        if g.techs[tech_name].prerequisites == "":
+        if g.techs[tech_name].available():
             tech_list.append(tech_name)
             tech_display_list.append(g.techs[tech_name].name)
-        else:
-            for prerequisite in g.techs[tech_name].prerequisites:
-                if not g.techs[prerequisite].done:
-                    break
-            else:
-                tech_list.append(tech_name)
-                tech_display_list.append(g.techs[tech_name].name)
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
     while len(tech_list) % tech_list_size != 0 or len(tech_list) == 0:
@@ -306,9 +299,8 @@ def display_inner_items(item_type):
     items.sort()
     for item_name in items:
         item_name = item_name[1]
-        if g.items[item_name].prerequisites == "" or \
-                g.techs[g.items[item_name].prerequisites].done:
-            if g.items[item_name].item_type == item_type:
+        if g.items[item_name].item_type == item_type:
+            if g.items[item_name].available():
                 item_list.append(item_name)
                 item_display_list.append(g.items[item_name].name)
 
@@ -758,7 +750,7 @@ def refresh_map(menu_buttons):
         if g.locations.has_key(button.button_id):
             #determine if building in a location is possible. If so, show the
             #button.
-            if g.locations[button.button_id].open():
+            if g.locations[button.button_id].available():
                 button.visible = 1
             else: button.visible = 0
 
@@ -837,7 +829,7 @@ def display_base_list(location, menu_buttons):
     with mucking around with bases at this location.
 """
 
-    if not location.open(): return True
+    if not location.available(): return True
 
     selection = display_base_list_inner(location)
     refresh_map(menu_buttons)
@@ -1058,9 +1050,8 @@ def build_new_base_window(location):
     base_display_list = []
     for base_name in g.base_type:
         for region in g.base_type[base_name].regions:
-            if g.base_type[base_name].prerequisites == "" or \
-                    g.techs[g.base_type[base_name].prerequisites].done:
-                if region == location.id:
+            if region == location.id:
+                if g.base_type[base_name].available():
                     base_list.append(base_name)
                     base_display_list.append(g.base_type[base_name].base_name)
 

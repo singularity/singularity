@@ -20,7 +20,7 @@ position_list = 48 | 45
 
 [ANTARCTIC]
 position_list = 40 | 75
-pre_list = Autonomous Vehicles | Advanced Database Manipulation
+pre_list = OR | Autonomous Vehicles | Advanced Database Manipulation
 
 [OCEAN]
 position_list = 70 | 60

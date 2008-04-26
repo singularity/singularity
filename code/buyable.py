@@ -62,12 +62,31 @@ class Buyable_Class(object):
         # cash, which is the one we care about the most.
         return cmp(self.cost, other.cost)
 
+    def available(self):
+        or_mode = False
+        assert type(self.prerequisites) == list
+        for prerequisite in self.prerequisites:
+            if prerequisite == "OR":
+                or_mode = True
+            if prerequisite in g.techs and g.techs[prerequisite].done:
+                if or_mode:
+                    return True
+            else:
+                if not or_mode:
+                    return False
+        # If we're not in OR mode, we met all our prerequisites.  If we are, we
+        # didn't meet any of the OR prerequisites.
+        return not or_mode
+
 class Buyable(object):
     def __init__(self, type):
         self.type = type
         self.name = self.id = type.id
         self.description = type.description
         self.prerequisites = type.prerequisites
+
+        # Note that this is a method.
+        self.available = type.available
 
         self.total_cost = array(type.cost)
         self.total_cost[labor] *= g.minutes_per_day * g.pl.labor_bonus
@@ -142,3 +161,4 @@ class Buyable(object):
         g.pl.cash -= cash_flow
 
         return self._work_on([cash_flow, cpu_work, time])
+

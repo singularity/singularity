@@ -968,10 +968,10 @@ def load_bases():
             key, value = chance_list[index].split(":")
             chance_dict[key] = int(value)
 
-        if base_name.has_key("pre"):
-            base_pre = base_name["pre"]
-        else:
-            base_pre = ""
+        # Make sure prerequisites, if any, are lists.
+        base_pre = base_name.get("pre", [])
+        if type(base_pre) != list:
+            base_pre = [base_pre]
 
         # Make sure that the allowed "list" is actually a list and not a solo
         # item.
@@ -1171,13 +1171,9 @@ def load_techs():
         tech_cost = [int(x) for x in cost_list]
 
         # Make sure prerequisites, if any, are lists.
-        if tech_name.has_key("pre"):
-            if type(tech_name["pre"]) == list:
-                tech_pre = tech_name["pre"]
-            else:
-                tech_pre = [tech_name["pre"]]
-        else:
-            tech_pre = []
+        tech_pre = tech_name.get("pre", [])
+        if type(tech_pre) != list:
+            tech_pre = [tech_pre]
 
         if tech_name.has_key("danger"):
             tech_danger = int(tech_name["danger"])
@@ -1243,11 +1239,10 @@ def load_items():
 
         item_cost = [int(x) for x in cost_list]
 
-        # Get prerequisites, if any.
-        if item_name.has_key("pre"):
-            item_pre = item_name["pre"]
-        else:
-            item_pre = ""
+        # Make sure prerequisites, if any, are lists.
+        item_pre = item_name.get("pre", [])
+        if type(item_pre) != list:
+            item_pre = [item_pre]
 
         if item_name.has_key("type"):
 
@@ -1279,7 +1274,7 @@ def load_items():
     #screen to have the right amount of CPU. It is a computer, unbuildable,
     #and with an adjustable amount of power.
     items["research_screen_fake_cpu"]=item.Item_Class("research_screen_fake_cpu",
-            "", (0, 0, 0), "unknown_tech", "compute", 0, ["all"])
+            "", (0, 0, 0), ["unknown_tech"], "compute", 0, ["all"])
 
     # We use the en_US translations of item definitions as the default,
     # then overwrite those with any available entries in the native language.
@@ -1484,7 +1479,7 @@ def new_game(difficulty):
     for base_name in base_type:
         base_type[base_name].count = 0
     #Starting base
-    open = [location for location in locations.values() if location.open()]
+    open = [location for location in locations.values() if location.available()]
     bases[random.choice(open)].append(base.Base(0, 
                             "University Computer",
                             base_type["Stolen Computer Time"], 1))

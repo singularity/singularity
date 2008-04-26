@@ -18,23 +18,17 @@
 
 #This file contains the Location class.
 
-import g
+import g, buyable
 
-class Location(object):
+# Location is a subclass of Buyable_Class so that it can use .available():
+class Location(buyable.Buyable_Class):
     def __init__(self, id, position, safety, prerequisites):
-        # .name should be changed by load_location_defs, but we initialize it
-        # just in case.
-        self.id = self.name = id 
+        # Kinda hackish, but it works.
+        super(Location, self).__init__(id, "", (0,0,0), prerequisites)
+
         self.y, self.x = position
         self.safety = safety
-        self.prerequisites = prerequisites
         self.cities = []
-
-    def open(self):
-        for prerequisite in self.prerequisites:
-            if not g.techs[prerequisite].done:
-                return False
-        return True
 
     def __hash__(self):
         return hash(self.id)

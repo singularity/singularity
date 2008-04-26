@@ -145,14 +145,14 @@ def display_load_menu():
     save_dir = g.get_save_folder()
 
     saves_array = []
-    saves_array = listdir(save_dir)
-    for save_name in saves_array:
-        if save_name[0] != "." and save_name != "CVS":
+    all_files = listdir(save_dir)
+    for file_name in all_files:
+        if file_name[0] != "." and file_name != "CVS":
             # If it's a new-style save, trim the .sav bit.
-            if len (save_name) > 4 and save_name[-4:] == ".sav":
-                save_name = save_name[:-4]
-            if save_name not in saves_array:
-                saves_array.append(save_name)
+            if len (file_name) > 4 and file_name[-4:] == ".sav":
+                file_name = file_name[:-4]
+            if file_name not in saves_array:
+                saves_array.append(file_name)
 
     while len(saves_array) % load_list_size != 0 or len(saves_array) == 0:
         saves_array.append("")
