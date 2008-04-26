@@ -93,6 +93,13 @@ class Base(buyable.Buyable):
                 detect_chance[group] *= 10000 - item_qual
                 detect_chance[group] /= 10000
 
+        # ... and its location ...
+        if self.location:
+            multiplier = self.location.discovery_bonus()
+            for group in detect_chance:
+                detect_chance[group] *= multiplier
+                detect_chance[group] /= 100
+
         # ... and if it is idle.
         if self.done and self.studying == "":
             for group in detect_chance:

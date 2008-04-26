@@ -34,6 +34,17 @@ class Location(buyable.Buyable_Class):
 
         self.bases = []
 
+    had_last_discovery = property(lambda self: g.pl.last_discovery == self)
+    had_prev_discovery = property(lambda self: g.pl.prev_discovery == self)
+
+    def discovery_bonus(self):
+        discovery_bonus = 1
+        if self.had_last_discovery:
+            discovery_bonus *= 1.2
+        if self.had_prev_discovery:
+            discovery_bonus *= 1.1
+        return int(discovery_bonus * 100)
+
     def add_base(self, base):
         where = bisect.bisect(self.bases, base)
         self.bases.insert(where, base)

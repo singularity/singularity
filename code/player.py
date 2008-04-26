@@ -80,6 +80,7 @@ class player_class(object):
 
         self.masochist = False # Only set True on Impossible mode.
         self.grace_multiplier = 200
+        self.last_discovery = self.prev_discovery = ""
 
     def convert_from(self, old_version):
          if old_version <= 3.94: # <= r4_pre4
@@ -320,8 +321,8 @@ class player_class(object):
                     if g.debug:
                         print "Chance of discovery for base %s: %s" % \
                             (base.name, repr(detect_chance))
-                    for group in detect_chance:
-                        if g.roll_percent(detect_chance[group]):
+                    for group, chance in detect_chance.iteritems():
+                        if g.roll_percent(chance):
                             dead_bases.append( (base, group) )
                             break
 
@@ -360,6 +361,7 @@ class player_class(object):
         return needs_refresh
 
     def remove_bases(self, dead_bases):
+        discovery_locs = []
         needs_refresh = 0
         # Reverse dead_bases to simplify deletion.
         for base, reason in dead_bases[::-1]:
@@ -370,6 +372,7 @@ class player_class(object):
                                 {"base": base_name}
 
             elif reason in self.groups:
+                discovery_locs.append(base.location)
                 self.groups[reason].discovered_a_base()
                 detect_phrase = g.strings["discover_" + reason]
 
@@ -384,6 +387,14 @@ class player_class(object):
             g.curr_speed = 1
             base.destroy()
             needs_refresh = 1
+
+        discovery_locs = [loc for loc in discovery_locs if loc]
+        if discovery_locs:
+            if len(discovery_locs) > 1:
+                discovery_locs = random.shuffle(discovery_locs)
+                self.last_discovery = discovery_locs[1]
+            self.prev_discovery = self.last_discovery
+            self.last_discovery = discovery_locs[0]
 
         return needs_refresh
 
