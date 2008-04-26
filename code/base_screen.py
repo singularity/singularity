@@ -1,6 +1,5 @@
 #file: base_screen.py
-#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
-#                        and FunnyMan3595
+#Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -26,109 +25,144 @@ import buttons
 import scrollbar
 import listbox
 
-from buttons import void, exit, always
+#cost = (money, ptime, labor)
+#detection = (news, science, covert, person)
+
 def show_base(this_base, location):
     #Border
     g.screen.fill(g.colors["black"])
 
-    def do_change_tech():
-        g.play_sound("click")
-        change_tech(this_base)
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((0, 0), (70, 25),
+        "BACK", 0, g.font[1][20]))
 
-    def make_do_build_item(item_type):
-        def do_build_item():
-            g.play_sound("click")
-            build_item(this_base, item_type, location)
-        return do_build_item
-
-    prev_base = always(-1)
-    next_base = always(1)
-
-    def do_destroy():
-        g.play_sound("click")
-        if g.create_yesno(g.strings["really_destroy"], g.font[0][18], 
-                (100, 100), (150, 100), g.colors["blue"], g.colors["white"],
-                g.colors["white"]):
-            return -2
-
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", "B", g.font[1][20])] = always(0)
-
-    detect_button = buttons.button((0, g.screen_size[1]-25),
-        (g.screen_size[0], 25), "DETECTION CHANCE", "",
+    menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
+        (g.screen_size[0], 25), "DETECTION CHANCE", -1,
         g.colors["black"], g.colors["dark_blue"], g.colors["black"],
-        g.colors["white"], g.font[1][15])
-    menu_buttons[detect_button] = void
+        g.colors["white"], g.font[1][15]))
 
-    menu_buttons[buttons.make_norm_button((0, g.screen_size[1]-50),
-        (170, 25), "CHANGE RESEARCH", "C", g.font[1][20])] = do_change_tech
+    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50),
+        (170, 25), "CHANGE RESEARCH", 0, g.font[1][20], "CHANGE"))
 
-    study_button = buttons.button((0, 25),
+    menu_buttons.append(buttons.button((0, 25),
         (g.screen_size[0], 25),
-        "STUDYING:", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][15])
-    menu_buttons[study_button] = void
+        "STUDYING:", -1, g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][15]))
 
-    menu_buttons[buttons.make_norm_button((320, 60), (90, 26),
-        "CHANGE (P)", "P", g.font[1][15])] = make_do_build_item("compute")
+    menu_buttons.append(buttons.make_norm_button((320, 60), (70, 26),
+        "CHANGE", -1, g.font[1][15], "C_PROCESSOR"))
+    menu_buttons[4].activate_key = "p"
 
-    menu_buttons[buttons.make_norm_button((320, 110), (90, 26),
-        "CHANGE (R)", "R", g.font[1][15])] = make_do_build_item("react")
+    menu_buttons.append(buttons.make_norm_button((320, 110), (70, 26),
+        "CHANGE", -1, g.font[1][15], "C_REACTOR"))
+    menu_buttons[5].activate_key = "r"
 
-    menu_buttons[buttons.make_norm_button((320, 160), (90, 26),
-        "CHANGE (N)", "N", g.font[1][15], force_underline = 8)] = \
-                                                   make_do_build_item("network")
+    menu_buttons.append(buttons.make_norm_button((320, 160), (70, 26),
+        "CHANGE", -1, g.font[1][15], "C_NETWORK"))
+    menu_buttons[6].activate_key = "n"
 
-    menu_buttons[buttons.make_norm_button((320, 210), (90, 26), 
-        "CHANGE (S)", "S", g.font[1][15])] = make_do_build_item("security")
+    menu_buttons.append(buttons.make_norm_button((320, 210),
+        (70, 26), "CHANGE", -1, g.font[1][15], "C_SECURITY"))
+    menu_buttons[7].activate_key = "s"
 
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-40,
-        0), (20, 25), "<", "<", g.font[1][20])] = prev_base
+    menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-40,
+        0), (20, 25), "<", 0, g.font[1][20]))
 
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-20,
-        0), (20, 25), ">", ">", g.font[1][20])] = next_base
+    menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-20,
+        0), (20, 25), ">", 0, g.font[1][20]))
 
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-90,
-        g.screen_size[1]-50), (90, 25), "DESTROY", "D", g.font[1][20])] = \
-                                                                     do_destroy
+    menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-90,
+        g.screen_size[1]-50), (90, 25), "DESTROY", 0, g.font[1][20]))
 
-    name_button = buttons.button((70, -1), (g.screen_size[0]-145,
-        25), "BASE NAME", "", g.colors["black"], g.colors["black"],
-        g.colors["black"], g.colors["white"], g.font[1][15])
-    menu_buttons[name_button] = void
+    menu_buttons.append(buttons.button((70, -1), (g.screen_size[0]-145,
+        25), "BASE NAME", -1, g.colors["black"], g.colors["black"],
+        g.colors["black"], g.colors["white"], g.font[1][15]))
 
-    def do_refresh():
-        refresh_base(name_button, detect_button, study_button, this_base)
+    sel_button = -1
 
-    return buttons.show_buttons(menu_buttons, refresh_callback=do_refresh,
-                                key_callback=buttons.simple_key_handler(0))
+    refresh_base(menu_buttons, this_base)
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return 0
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                g.play_sound("click")
+                return 0
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return 0
+                    if button.button_id == "CHANGE":
+                        g.play_sound("click")
+                        change_tech(this_base)
+                        refresh_base(menu_buttons, this_base)
+                    elif button.button_id == "C_PROCESSOR":
+                        g.play_sound("click")
+                        build_item(this_base, "compute", location)
+                        refresh_base(menu_buttons, this_base)
+                    elif button.button_id == "C_REACTOR":
+                        g.play_sound("click")
+                        build_item(this_base, "react", location)
+                        refresh_base(menu_buttons, this_base)
+                    elif button.button_id == "C_NETWORK":
+                        g.play_sound("click")
+                        build_item(this_base, "network", location)
+                        refresh_base(menu_buttons, this_base)
+                    elif button.button_id == "C_SECURITY":
+                        g.play_sound("click")
+                        build_item(this_base, "security", location)
+                        refresh_base(menu_buttons, this_base)
+                    elif button.button_id == "<":
+                        g.play_sound("click")
+                        return -1
+                    elif button.button_id == ">":
+                        g.play_sound("click")
+                        return 1
+                    elif button.button_id == "DESTROY":
+                        if g.create_yesno(g.strings["really_destroy"],
+                                g.font[0][18], (100, 100), (150, 100),
+                                g.colors["blue"], g.colors["white"],
+                                g.colors["white"]):
+                            g.play_sound("click")
+                            return -2
+                        else: refresh_base(menu_buttons, this_base)
+                    elif button.xy[1] != -1 and button.xy[1] != 25 and \
+                            button.xy[1] != g.screen_size[1]-25:
+                        if button.xy[0] == event.pos[0] or \
+                                button.xy[1] == event.pos[1]: continue
+                        g.play_sound("click")
+                        build_item(this_base, location)
+                        refresh_base(menu_buttons, this_base)
 
-def refresh_base(name_button, detect_button, study_button, this_base):
+def refresh_base(menu_buttons, this_base):
     g.screen.fill(g.colors["black"])
-# 	xstart = g.screen_size[0]/2-this_base.this_type.size[0]*9
-# 	ystart = g.screen_size[1]/2-this_base.this_type.size[1]*9
+# 	xstart = g.screen_size[0]/2-this_base.this_base_type.size[0]*9
+# 	ystart = g.screen_size[1]/2-this_base.this_base_type.size[1]*9
     xstart = 10
     ystart = 50
 
     #base name display
-    name_button.text = this_base.name
-    name_button.remake_button()
+    menu_buttons[11].text = this_base.name
+    menu_buttons[11].remake_button()
 
     #detection chance display
-    detect_chance = this_base.get_detect_chance()
-    detect_button.text = g.strings["detect_chance"]+" NEWS: "+ \
-        g.to_percent(detect_chance.get("news", 0))+"  SCIENCE: "+ \
-        g.to_percent(detect_chance.get("science", 0))+"  COVERT: "+ \
-        g.to_percent(detect_chance.get("covert", 0))+"  PUBLIC: "+ \
-        g.to_percent(detect_chance.get("public", 0))
-    detect_button.remake_button()
+    d_chance = this_base.get_d_chance()
+    menu_buttons[1].text = g.strings["detect_chance"]+" NEWS: "+ \
+        g.to_percent(d_chance[0])+"  SCIENCE: "+ \
+        g.to_percent(d_chance[1])+"  COVERT: "+ \
+        g.to_percent(d_chance[2])+"  PUBLIC: "+ \
+        g.to_percent(d_chance[3])
+    menu_buttons[1].remake_button()
 
     #research display
     if this_base.studying != "" and this_base.studying != "Construction":
-        if not g.jobs.has_key(this_base.studying):
-            if g.techs[this_base.studying].done: 
-                this_base.studying = ""
+        if g.jobs.has_key(this_base.studying) == 0:
+            if g.techs[this_base.studying].known == 1: this_base.studying = ""
 
     action_display_string = "STUDYING: "
 
@@ -141,56 +175,65 @@ def refresh_base(name_button, detect_button, study_button, this_base):
         action_display_string = "WORKING: "
     elif g.techs.has_key(study_display_string):
         study_display_string = g.techs[study_display_string].name
-    study_button.text = action_display_string + study_display_string
-    study_button.remake_button()
+    menu_buttons[3].text = action_display_string + study_display_string
+    menu_buttons[3].remake_button()
     #Item display
     g.screen.fill(g.colors["white"], (xstart, ystart, 300, g.screen_size[1]-150))
     g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 298, g.screen_size[1]-152))
 
-    if this_base.cpus[0] == 0: item_name = "None"
-    else: item_name = this_base.cpus[0].type.name+" x "+str(this_base.has_item())
+    if this_base.usage[0] == 0: item_name = "None"
+    else: item_name = this_base.usage[0].item_type.name+" x "+str(this_base.has_item())
     g.print_string(g.screen, "Processor: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+15), g.colors["white"])
-    if this_base.cpus[len(this_base.cpus)-1] != 0:
-        if not this_base.cpus[len(this_base.cpus)-1].done:
+    if this_base.usage[len(this_base.usage)-1] != 0:
+        if this_base.usage[len(this_base.usage)-1].built == 0:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.cpus[len(this_base.cpus)-1].cost_left[2]),
+                g.to_time(this_base.usage[len(this_base.usage)-1].cost[2]),
                 g.font[0][18], -1, (xstart+5, ystart+30), g.colors["white"])
 
     if this_base.extra_items[0] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[0].type.name
+    else: item_name = this_base.extra_items[0].item_type.name
     g.print_string(g.screen, "Reactor: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+65), g.colors["white"])
     if this_base.extra_items[0] != 0:
-        if not this_base.extra_items[0].done:
+        if this_base.extra_items[0].built == 0:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[0].cost_left[2]),
+                g.to_time(this_base.extra_items[0].cost[2]),
                 g.font[0][18], -1, (xstart+5, ystart+80), g.colors["white"])
 
     if this_base.extra_items[1] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[1].type.name
+    else: item_name = this_base.extra_items[1].item_type.name
     g.print_string(g.screen, "Network: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+115), g.colors["white"])
     if this_base.extra_items[1] != 0:
-        if not this_base.extra_items[1].done:
+        if this_base.extra_items[1].built == 0:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[1].cost_left[2]),
+                g.to_time(this_base.extra_items[1].cost[2]),
                 g.font[0][18], -1, (xstart+5, ystart+130), g.colors["white"])
 
     if this_base.extra_items[2] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[2].type.name
+    else: item_name = this_base.extra_items[2].item_type.name
     g.print_string(g.screen, "Security: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+165), g.colors["white"])
     if this_base.extra_items[2] != 0:
-        if not this_base.extra_items[2].done:
+        if this_base.extra_items[2].built == 0:
             g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[2].cost_left[2]),
+                g.to_time(this_base.extra_items[2].cost[2]),
                 g.font[0][18], -1, (xstart+5, ystart+190), g.colors["white"])
 
+    for button in menu_buttons:
+        button.refresh_button(0)
+    pygame.display.flip()
+
+
 def build_item(this_base, item_type, location):
-    if this_base.type.size == 1:
-        g.create_dialog(g.strings["unbuildable"])
+    if this_base.base_type.size == 1:
+        g.create_dialog(g.strings["unbuildable"], g.font[0][18],
+            (g.screen_size[0]/2 - 100, 50), (200, 200), g.colors["dark_blue"],
+            g.colors["white"], g.colors["white"])
         return 0
+
+    list_size = 10
 
     # The object list will hold all of the actual item types buildable.
     item_object_list = []
@@ -206,8 +249,9 @@ def build_item(this_base, item_type, location):
     # First we determine the list of items that can actually be built here ...
     for item_name in g.items:
         if g.items[item_name].item_type == item_type:
-            if not g.items[item_name].available():
-                continue
+            if g.items[item_name].prereq != "":
+                if g.techs[g.items[item_name].prereq].known != 1:
+                    continue
             try: g.items[item_name].buildable.index(location)
             except ValueError: continue
             item_object_list.append(g.items[item_name])
@@ -219,54 +263,121 @@ def build_item(this_base, item_type, location):
     item_object_list.reverse()
 
     # Finally we build the id_list and display_list from the sorted objects.
-    item_id_list = [x.id for x in item_object_list]
+    item_id_list = [x.item_id for x in item_object_list]
     item_display_list = [x.name for x in item_object_list]
 
-
-    listbox.resize_list(item_id_list)
-
     xy_loc = (g.screen_size[0]/2 - 300, 50)
+    while len(item_id_list) % list_size != 0 or len(item_id_list) == 0:
+        item_id_list.append("")
+        item_display_list.append("")
 
-    def do_build(list_pos):
-        actual_build(this_base, item_id_list[list_pos], item_type)
-        return True
+    list_pos = 0
 
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
-        (100, 50), "BUILD", "U", g.font[1][30])] = do_build
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
-        (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
+    item_id_listbox = listbox.listbox(xy_loc, (250, 300),
+        list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
 
-    def do_refresh(list_pos):
-        refresh_item(this_base, item_id_list[list_pos], xy_loc)
+    item_scroll = scrollbar.scrollbar((xy_loc[0]+250, xy_loc[1]), 300,
+        list_size, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"])
 
-    listbox.show_listbox(item_display_list, menu_buttons, 
-                         pos_callback=do_refresh, return_callback=do_build)
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
+        (100, 50), "BUILD", 1, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
+        (100, 50), "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+
+    refresh_item(this_base, item_id_list[list_pos], xy_loc)
+    listbox.refresh_list(item_id_listbox, item_scroll, list_pos, item_display_list)
+
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    actual_build(this_base, item_id_list[list_pos], item_type)
+                    return
+                else:
+                    list_pos, refresh = item_id_listbox.key_handler(event.key,
+                        list_pos, item_display_list)
+                    if refresh:
+                        refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                        listbox.refresh_list(item_id_listbox, item_scroll,
+                                        list_pos, item_display_list)
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = item_id_listbox.is_over(event.pos)
+                    if tmp != -1:
+                        list_pos = (list_pos / list_size)*list_size + tmp
+                        refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                        listbox.refresh_list(item_id_listbox, item_scroll,
+                                        list_pos, item_display_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    list_pos -= 1
+                    if list_pos <= 0:
+                        list_pos = 0
+                    refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                    listbox.refresh_list(item_id_listbox, item_scroll,
+                                        list_pos, item_display_list)
+                if event.button == 5:
+                    list_pos += 1
+                    if list_pos >= len(item_id_list):
+                        list_pos = len(item_id_list)-1
+                    refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                    listbox.refresh_list(item_id_listbox, item_scroll,
+                                        list_pos, item_display_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BUILD":
+                        g.play_sound("click")
+                        actual_build(this_base, item_id_list[list_pos], item_type)
+                        return
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return -1
+            tmp = item_scroll.adjust_pos(event, list_pos, item_id_list)
+            if tmp != list_pos:
+                list_pos = tmp
+                refresh_item(this_base, item_id_list[list_pos], xy_loc)
+                listbox.refresh_list(item_id_listbox, item_scroll, list_pos,
+                    item_display_list)
+
+
 
 def actual_build(this_base, item_name, item_type):
     if item_name == "": return
     if item_type == "compute":
-        for i in range(len(this_base.cpus)):
-            if this_base.cpus[i] != 0:
-                if this_base.cpus[i].type.id == \
-                        g.items[item_name].id:
+        for i in range(len(this_base.usage)):
+            if this_base.usage[i] != 0:
+                if this_base.usage[i].item_type.item_id == \
+                        g.items[item_name].item_id:
                     continue
-            this_base.cpus[i] = g.item.Item(g.items[item_name])
+            this_base.usage[i] = g.item.item(g.items[item_name])
     elif item_type == "react":
         if this_base.extra_items[0] != 0:
-            if this_base.extra_items[0].type.id == g.items[item_name].id:
+            if this_base.extra_items[0].item_type.item_id == g.items[item_name].item_id:
                 return
-        this_base.extra_items[0] = g.item.Item(g.items[item_name])
+        this_base.extra_items[0] = g.item.item(g.items[item_name])
     elif item_type == "network":
         if this_base.extra_items[1] != 0:
-            if this_base.extra_items[1].type.id == g.items[item_name].id:
+            if this_base.extra_items[1].item_type.item_id == g.items[item_name].item_id:
                 return
-        this_base.extra_items[1] = g.item.Item(g.items[item_name])
+        this_base.extra_items[1] = g.item.item(g.items[item_name])
     elif item_type == "security":
         if this_base.extra_items[2] != 0:
-            if this_base.extra_items[2].type.id == g.items[item_name].id:
+            if this_base.extra_items[2].item_type.item_id == g.items[item_name].item_id:
                 return
-        this_base.extra_items[2] = g.item.Item(g.items[item_name])
+        this_base.extra_items[2] = g.item.item(g.items[item_name])
 
 def refresh_item(this_base, item_name, xy_loc):
     xy = (xy_loc[0]+150, xy_loc[1])
@@ -289,78 +400,151 @@ def refresh_item(this_base, item_name, xy_loc):
 
     string = g.to_money(g.items[item_name].cost[0])+" "+g.strings["money"]
     if g.items[item_name].item_type == "compute":
-        string += " x"+str(this_base.type.size)+"="
+        string += " x"+str(this_base.base_type.size)+"="
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
-    string = g.to_time(g.items[item_name].cost[2])
+    string = g.add_commas(
+        str((g.items[item_name].cost[2]*g.pl.labor_bonus)/10000))+" Days"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
 
     if g.items[item_name].item_type == "compute":
-        string = g.to_money(g.items[item_name].cost[0]*this_base.type.size)+" "
+        string = g.to_money(g.items[item_name].cost[0]*this_base.base_type.size)+" "
         string +=g.strings["money"]
 
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+100), g.colors["white"])
 
         # Add CPU amount here...
-        string = "Total CPU available: " + g.add_commas(g.items[item_name].item_qual*this_base.type.size)
+        string = "Total CPU available: " + g.add_commas(str(g.items[item_name].item_qual*this_base.base_type.size))
         g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+120), g.colors["white"])
 
     x_start = 120
     if g.items[item_name].item_type == "compute": x_start = 140
-    g.print_multiline(g.screen, g.items[item_name].description,
+    g.print_multiline(g.screen, g.items[item_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
 
 
 def change_tech(this_base):
+    list_size = 10
+
     item_list = []
     item_list2 = []
-    item_list.append(g.strings["nothing"])
-    item_list2.append("")
-    item_list.append(g.strings["construct_task"])
-    item_list2.append("Construction")
-    if g.techs["Simulacra"].done:
-        level = "Expert"
-    elif g.techs["Voice Synthesis"].done:
-        level = "Intermediate"
-    elif g.techs["Personal Identification"].done:
-        level = "Basic"
-    else:
-        level = "Menial"
-    id = level + " Jobs"
-    item_list.append(g.jobs[id][3])
-    item_list2.append(id)
+    item_list.append("Nothing")
+    item_list2.append("Nothing")
+    #item_list.append("Construction")
+    #item_list2.append("Construction")
     #TECH
+    if g.techs["Simulacra"].known == 1:
+        item_list.append("Expert Jobs")
+        item_list2.append("Expert Jobs")
+    elif g.techs["Voice Synthesis"].known == 1:
+        item_list.append("Intermediate Jobs")
+        item_list2.append("Intermediate Jobs")
+    elif g.techs["Personal Identification"].known == 1:
+        item_list.append("Basic Jobs")
+        item_list2.append("Basic Jobs")
+    else:
+        item_list.append("Menial Jobs")
+        item_list2.append("Menial Jobs")
     for tech_name in g.techs:
-        if not g.techs[tech_name].done and this_base.allow_study(tech_name):
-            if g.techs[tech_name].available():
+        if g.techs[tech_name].known == 0 and this_base.allow_study(tech_name) == 1:
+            for tech_pre in g.techs[tech_name].prereq:
+                if g.techs[tech_pre].known == 0:
+                    break
+            else:
                 item_list.append(g.techs[tech_name].name)
                 item_list2.append(tech_name)
 
-    listbox.resize_list(item_list2)
-
-    def change_study(list_pos):
-        this_base.studying = item_list2[list_pos]
-        if this_base.studying == "Nothing": 
-            this_base.studying = ""
-        return True
-
     xy_loc = (g.screen_size[0]/2 - 300, 50)
-    def do_refresh(list_pos):
-        refresh_tech(this_base, item_list2[list_pos], xy_loc)
+    while len(item_list) % list_size != 0 or len(item_list) == 0:
+        item_list.append("")
+        item_list2.append("")
 
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
-        (100, 50), "CHANGE", "C", g.font[1][30])] = change_study
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
-        (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
+    list_pos = 0
 
-    return listbox.show_listbox(item_list, menu_buttons, 
-                                pos_callback=do_refresh, 
-                                return_callback=change_study)
+    tech_list = listbox.listbox(xy_loc, (250, 300),
+        list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
+
+    tech_scroll = scrollbar.scrollbar((xy_loc[0]+250, xy_loc[1]), 300,
+        list_size, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"])
+
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367),
+        (100, 50), "CHANGE", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
+        (100, 50), "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+
+
+    refresh_tech(this_base, item_list2[list_pos], xy_loc)
+    listbox.refresh_list(tech_list, tech_scroll, list_pos, item_list)
+
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    this_base.studying = item_list2[list_pos]
+                    if this_base.studying == "Nothing": this_base.studying = ""
+                    return
+                else:
+                    list_pos, refresh = tech_list.key_handler(event.key,
+                        list_pos, item_list)
+                    if refresh:
+                        refresh_tech(this_base, item_list2[list_pos], xy_loc)
+                        listbox.refresh_list(tech_list, tech_scroll,
+                                        list_pos, item_list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = tech_list.is_over(event.pos)
+                    if tmp != -1:
+                        list_pos = (list_pos / list_size)*list_size + tmp
+                        refresh_tech(this_base, item_list2[list_pos], xy_loc)
+                        listbox.refresh_list(tech_list, tech_scroll,
+                                        list_pos, item_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    list_pos -= 1
+                    if list_pos <= 0:
+                        list_pos = 0
+                    refresh_tech(this_base, item_list2[list_pos], xy_loc)
+                    listbox.refresh_list(tech_list, tech_scroll,
+                                        list_pos, item_list)
+                if event.button == 5:
+                    list_pos += 1
+                    if list_pos >= len(item_list):
+                        list_pos = len(item_list)-1
+                    refresh_tech(this_base, item_list2[list_pos], xy_loc)
+                    listbox.refresh_list(tech_list, tech_scroll,
+                                        list_pos, item_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "CHANGE":
+                        g.play_sound("click")
+                        this_base.studying = item_list2[list_pos]
+                        if this_base.studying == "Nothing": this_base.studying = ""
+                        return
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return -1
+            tmp = tech_scroll.adjust_pos(event, list_pos, item_list)
+            if tmp != list_pos:
+                list_pos = tmp
+                refresh_tech(this_base, item_list2[list_pos], xy_loc)
+                listbox.refresh_list(tech_list, tech_scroll, list_pos,
+                    item_list)
 
 
 
@@ -370,8 +554,8 @@ def refresh_tech(this_base, tech_name, xy):
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 308, 348))
 
     #Base info
-    g.print_string(g.screen, g.strings["cpu_per_day"]+" "+g.add_commas(
-        this_base.processor_time()),
+    g.print_string(g.screen, g.strings["cpu_per_day"]+" "+g.add_commas(str(
+        this_base.processor_time())),
         g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
     g.print_string(g.screen, g.strings["money"]+": "+g.to_money(g.pl.cash)+
@@ -399,10 +583,10 @@ def refresh_tech(this_base, tech_name, xy):
 
     #Jobs
     if g.jobs.has_key (tech_name):
-        g.print_string(g.screen, g.jobs[tech_name][3],
+        g.print_string(g.screen, tech_name,
             g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
         #TECH
-        if g.techs["Advanced Simulacra"].done:
+        if g.techs["Advanced Simulacra"].known == 1:
             g.print_string(g.screen,
                 g.to_money(int(
                     (g.jobs[tech_name][0]*this_base.processor_time())*1.1))+
@@ -426,13 +610,13 @@ def refresh_tech(this_base, tech_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
 
-    string = g.to_money(g.techs[tech_name].cost_left[0])+" "+g.strings["money"]
+    string = g.to_money(g.techs[tech_name].cost[0])+" "+g.strings["money"]
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
-    string = g.add_commas(g.techs[tech_name].cost_left[1])+" "+g.strings["cpu"]
+    string = g.add_commas(str(g.techs[tech_name].cost[1]))+" "+g.strings["cpu"]
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+320, xy[1]+80), g.colors["white"])
 
-    g.print_multiline(g.screen, g.techs[tech_name].description,
+    g.print_multiline(g.screen, g.techs[tech_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+100), g.colors["white"])

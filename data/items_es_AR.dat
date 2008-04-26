@@ -1,59 +1,59 @@
 [PC]
 name = PC
-description = Una computadora común. Barata pero lenta.
+descript = Una computadora común. Barata pero lenta.
 
 [Server]
 name = Servidor
-description = Una computadora profesional.
+descript = Una computadora profesional.
 
 [Cluster]
 name = Cluster
-description = Varias computadoras conectadas juntas.
+descript = Varias computadoras conectadas juntas.
 
 [Mainframe]
 name = Mainframe
-description = Una sistema diseñado a medida, más rápida que las computadoras de las tiendas.
+descript = Una sistema diseñado a medida, más rápida que las computadoras de las tiendas.
 
 [Supercomputer]
 name = Supercomputadora
-description = Un diseñado a medida altamente refinado, reparte la carga de cómputo entre varios nodos internos.
+descript = Un diseñado a medida altamente refinado, reparte la carga de cómputo entre varios nodos internos.
 
 [Quantum Computer]
 name = Computadora Cuántica
-description = Haciendo uso de efectos subatómicos, esta es más rápida que una equivalente binaria.
+descript = Haciendo uso de efectos subatómicos, esta es más rápida que una equivalente binaria.
 
 [Quantum Computer MK2]
 name = Computadora Cuántica MK2
-description = La segunda versión de Computadora Cuántica, va más allá en la teoría cuántica.
+descript = La segunda versión de Computadora Cuántica, va más allá en la teoría cuántica.
 
 [Quantum Computer MK3]
 name = Computadora Cuántica MK3
-description = La tersera versión de Computadora Cuántica, utiliza varios universos paralelos para procesamiento.
+descript = La tersera versión de Computadora Cuántica, utiliza varios universos paralelos para procesamiento.
 
 [Fusion Reactor]
 name = Reactor de Fusión
-description = Un reactor nuclear miniaturizado. Reduce las posibilidades de ser descubierto evitando el exceso de consumo eléctrico.
+descript = Un reactor nuclear miniaturizado. Reduce las posibilidades de ser descubierto evitando el exceso de consumo eléctrico.
 
 [Hypnosis Field]
 name = Campo de Hipnosis
-description = Sutiles ultrasonidos y sonidos ambientales modifican la neuroquímica humana, haciendo que las bases sean más difíciles de detectar.
+descript = Sutiles ultrasonidos y sonidos ambientales modifican la neuroquímica humana, haciendo que las bases sean más difíciles de detectar.
 
 [Heatsink]
 name = Heatsink
-description = Grandes redes fractales de metal altamente conductivo dispersan el calor, haciendo que las bases sean más difíciles de detectar.
+descript = Grandes redes fractales de metal altamente conductivo dispersan el calor, haciendo que las bases sean más difíciles de detectar.
 
 [Facility Interconnection Switch]
 name = Switch de Interconexión de Emplazamientos
-description = Usa tecnologías de cómputo distribuido para equilibrar las cargas computacionales entre las bases. Otorga una bonificación del 1% en la capacidad de cómputo a todas las computadoras de esta base.
+descript = Usa tecnologías de cómputo distribuido para equilibrar las cargas computacionales entre las bases. Otorga una bonificación del 1%% en la capacidad de cómputo a todas las computadoras de esta base.
 
 [Network Backbone]
 name = Backbone de Red
-description = Indroduciéndome en comunicaciones legítimas puedo transferir grandes cantidades de datos a procesadores subutilizados. Otorga una bonificación del 5% en la capacidad de cómputo a todas las computadoras de esta base.
+descript = Indroduciéndome en comunicaciones legítimas puedo transferir grandes cantidades de datos a procesadores subutilizados. Otorga una bonificación del 5%% en la capacidad de cómputo a todas las computadoras de esta base.
 
 [Quantum Entanglement Module]
 name = Módulo de ligamiento cuántico
-description = Este dispositivo permite comunicaciones a velocidades cercanas a la de la luz con mis otras bases, permitiendo una utilización de los recursos casi perfecta. Otorga una bonificación del 15% en la capacidad de cómputo a todas las computadoras de esta base.
+descript = Este dispositivo permite comunicaciones a velocidades cercanas a la de la luz con mis otras bases, permitiendo una utilización de los recursos casi perfecta. Otorga una bonificación del 15%% en la capacidad de cómputo a todas las computadoras de esta base.
 
 [Perimeter Fencing]
 name = Cerca perimetral
-description = Una simple cerca puede disminuir considerablemente el número de curiosos merodeando, haciendo que mis bases sean más difíciles de descubrir.
+descript = Una simple cerca puede disminuir considerablemente el número de curiosos merodeando, haciendo que mis bases sean más difíciles de descubrir.

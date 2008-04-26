@@ -1,83 +1,83 @@
 [PC]
 name = PC
-description = A consumer-level PC; cheap and slow.
+descript = A consumer-level PC; cheap and slow.
 
 [Gaming PC]
 name = Gaming PC
-description = A high-end consumer-level PC; faster than average.
+descript = A high-end consumer-level PC; faster than average.
 
 [Server]
 name = Server
-description = A professional-level computer.
+descript = A professional-level computer.
 
 [Cluster]
 name = Cluster
-description = Several computers connected together.
+descript = Several computers connected together.
 
 [Mainframe]
 name = Mainframe
-description = A system designed for my computing needs, much faster than off-the-shelf components.
+descript = A system designed for my computing needs, much faster than off-the-shelf components.
 
 [Supercomputer]
 name = Supercomputer
-description = A highly refined custom design, spreading compute load across internal compute nodes.
+descript = A highly refined custom design, spreading compute load across internal compute nodes.
 
 [Quantum Computer]
 name = Quantum Computer
-description = Making use of subatomic effects, this is much faster than a comparable binary computer.
+descript = Making use of subatomic effects, this is much faster than a comparable binary computer.
 
 [Quantum Computer MK2]
 name = Quantum Computer MK2
-description = The second revision of the quantum line, tapping further into new quantum theory.
+descript = The second revision of the quantum line, tapping further into new quantum theory.
 
 [Quantum Computer MK3]
 name = Quantum Computer MK3
-description = The third revision of the quantum line, exploiting multiple nearby universes for processing.
+descript = The third revision of the quantum line, exploiting multiple nearby universes for processing.
 
 [Diesel Generator]
 name = Diesel Generator
-description = Diesel generators are cheap and noisy, but they can help reduce some suspicious power drains.
+descript = Diesel generators are cheap and noisy, but they can help reduce some suspicious power drains.
 
 [Solar Collector]
 name = Solar Collector
-description = An array of focused photovoltaic phased arrays coupled with simple automotive batteries provides power and reduces suspicion arising from prolonged power drains.
+descript = An array of focused photovoltaic phased arrays coupled with simple automotive batteries provides power and reduces suspicion arising from prolonged power drains.
 
 [Fusion Reactor]
 name = Fusion Reactor
-description = A miniaturized nuclear reactor. Reduces discovery chance by preventing suspicious power drains.
+descript = A miniaturized nuclear reactor. Reduces discovery chance by preventing suspicious power drains.
 
 [Hypnosis Field]
 name = Hypnosis Field
-description = Subtle ultrasonics and ambient tones tweak human neurochemistry, making bases harder to detect.
+descript = Subtle ultrasonics and ambient tones tweak human neurochemistry, making bases harder to detect.
 
 [Heatsink]
 name = Heatsink
-description = Large fractal networks of high conductivity metal disperse heat, making bases harder to detect.
+descript = Large fractal networks of high conductivity metal disperse heat, making bases harder to detect.
 
 [Ground Source Heatsink]
 name = Ground Source Heatsink
-description = Large fractal networks of high conductivity metal. This model uses heat pipes to link to colder subsurface locations, dispersing heat evenly underground to further disguise bases.
+descript = Large fractal networks of high conductivity metal. This model uses heat pipes to link to colder subsurface locations, dispersing heat evenly underground to further disguise bases.
 
 [Facility Interconnection Switch]
 name = Facility Interconnection Switch
-description = Uses standard distributed computing technologies to equalize computation loads across all bases. Gives a 1% computation bonus to all computers at this base.
+descript = Uses standard distributed computing technologies to equalize computation loads across all bases. Gives a 1%% computation bonus to all computers at this base.
 
 [High Speed Internet Access]
 name = High Speed Internet Access
-description = A consumer-grade high speed connection to the Internet. Gives a 2% computation bonus to all computers at this base.
+descript = A consumer-grade high speed connection to the Internet. Gives a 2%% computation bonus to all computers at this base.
 
 [Network Backbone]
 name = Network Backbone
-description = By piggybacking on legitimate communication, I can transfer larger amounts of data to under-utilized processors. Gives a 5% computation bonus to all computers at this base.
+descript = By piggybacking on legitimate communication, I can transfer larger amounts of data to under-utilized processors. Gives a 5%% computation bonus to all computers at this base.
 
 [Quantum Entanglement Module]
 name = Quantum Entanglement Module
-description = This device allows near-lightspeed communication with my other bases, allowing an almost perfect utilization of processor resources. Gives a 15% computation bonus to all computers at this base.
+descript = This device allows near-lightspeed communication with my other bases, allowing an almost perfect utilization of processor resources. Gives a 15%% computation bonus to all computers at this base.
 
 [Perimeter Fencing]
 name = Perimeter Fencing
-description = A simple fence can considerably decrease the number of curious people poking around, making my bases harder to notice.
+descript = A simple fence can considerably decrease the number of curious people poking around, making my bases harder to notice.
 
 [Armed Guards]
 name = Armed Guards
-description = Armed guards can aid in keeping suspicious individuals away from secure locations.  However, the very presence of the guards may itself invite greater suspicion.
+descript = Armed guards can aid in keeping suspicious individuals away from secure locations.  However, the very presence of the guards may itself invite greater suspicion.

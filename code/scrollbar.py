@@ -85,20 +85,20 @@ class scrollbar:
         if event.type != pygame.MOUSEBUTTONUP: return list_pos
         if event.button != 1: return list_pos
         xy = event.pos
-        selected = self.is_over(xy)
-        if selected == 1:
+        tmp = self.is_over(xy)
+        if tmp == 1:
             list_pos -= 1
             if list_pos < 0:
                 list_pos = 0
-        elif selected == 2:
+        elif tmp == 2:
             list_pos += 1
             if list_pos >= len(item_list):
                 list_pos = len(item_list) - 1
-        elif selected == 3:
+        elif tmp == 3:
             list_pos -= self.viewable_items
             if list_pos < 0:
                 list_pos = 0
-        elif selected == 4:
+        elif tmp == 4:
             list_pos += self.viewable_items
             if list_pos >= len(item_list) - 1:
                 list_pos = len(item_list) - 1

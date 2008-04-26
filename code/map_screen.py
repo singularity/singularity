@@ -32,158 +32,222 @@ import base_screen
 import research_screen
 import finance_screen
 
-from buttons import always, void, exit, Return
-from safety import safe_call
-
 def display_generic_menu(xy_loc, titlelist):
     #Border
     g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200,
             len(titlelist)*70))
     g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198,
             len(titlelist)*70-2))
-    menu_buttons = {}
+    menu_buttons = []
     for i in range(len(titlelist)):
-        menu_buttons[buttons.make_norm_button((xy_loc[0]+10,
+        menu_buttons.append(buttons.make_norm_button((xy_loc[0]+10,
             xy_loc[1]+10+i*70), (180, 50), titlelist[i][0], titlelist[i][1],
-            g.font[1][30])] = always(i)
+            g.font[1][30]))
 
-    return buttons.show_buttons(menu_buttons)
+    for button in menu_buttons:
+        button.refresh_button(0)
+    pygame.display.flip()
+
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                return -1
+            for buttonnum in range(len(menu_buttons)):
+                if menu_buttons[buttonnum].was_activated(event):
+                    g.play_sound("click")
+                    return buttonnum
 
 def display_pause_menu():
     button_array= []
-    button_array.append(["NEW GAME", "N"])
-    button_array.append(["SAVE GAME", "S"])
-    button_array.append(["LOAD GAME", "L"])
-    button_array.append(["OPTIONS", "O"])
-    button_array.append(["QUIT", "Q"])
-    button_array.append(["RESUME", "R"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
+    button_array.append(["NEW GAME", 0])
+    button_array.append(["SAVE GAME", 0])
+    button_array.append(["LOAD GAME", 0])
+    button_array.append(["OPTIONS", 0])
+    button_array.append(["QUIT", 0])
+    button_array.append(["RESUME", 0])
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
-    if selection == -1: return 0
-    elif selection == 0: return 2 #New
-    elif selection == 1: return 1 #Save
-    elif selection == 2: return 3 #Load
-    elif selection == 3: return 5 #Options
-    elif selection == 4: return 4 #Quit
-    elif selection == 5: return 0
+    if temp_return == -1: return 0
+    elif temp_return == 0: return 2 #New
+    elif temp_return == 1: return 1 #Save
+    elif temp_return == 2: return 3 #Load
+    elif temp_return == 3: return 5 #Options
+    elif temp_return == 4: return 4 #Quit
+    elif temp_return == 5: return 0
 
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return
-    g.play_sound("click")
     button_array= []
-    button_array.append(["GIVE MONEY", "M"])
-    button_array.append(["GIVE TECH", "T"])
-    button_array.append(["END CONSTR.", "E"])
-    button_array.append(["SUPERSPEED", "S"])
-    button_array.append(["KILL SUSP.", "K"])
-    button_array.append(["RESUME", "R"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
+    button_array.append(["GIVE MONEY", 5])
+    button_array.append(["GIVE TECH", 5])
+    button_array.append(["END CONSTR.", 0])
+    button_array.append(["SUPERSPEED", 0])
+    button_array.append(["KILL SUSP.", 0])
+    button_array.append(["RESUME", 0])
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
-    if selection == -1: return
-    elif selection == 0:  #Cash
+    if temp_return == -1: return
+    elif temp_return == 0:  #Cash
         cash_amount = g.create_textbox("How much cash?", "", g.font[0][18],
         (g.screen_size[0]/2-100, 100), (200, 100), 25, g.colors["dark_blue"],
         g.colors["white"], g.colors["white"], g.colors["light_blue"])
         if cash_amount.isdigit() == False: return
         g.pl.cash += int(cash_amount)
         return
-    elif selection == 1:  #Tech
-        #create a fake base, in order to reuse the tech-changing code
-        research_screen.init_fake_base()
-        from research_screen import fake_base
-        base_screen.change_tech(fake_base)
-        if g.techs.has_key(fake_base.studying):
-            g.techs[fake_base.studying].finish()
+    elif temp_return == 1:  #Tech
+        #create a temp base, in order to reuse the tech-changing code
+        tmp_base = g.base.base(1, "tmp_base", g.base_type["Reality Bubble"], 1)
+        base_screen.change_tech(tmp_base)
+        if g.techs.has_key(tmp_base.studying):
+            g.techs[tmp_base.studying].gain_tech()
         return
-    elif selection == 2:  #Build all
-        for base_loc in g.locations.values():
-            for base_name in base_loc.bases:
-                if not base_name.done:
-                    base_name.finish()
+    elif temp_return == 2:  #Build all
+        for base_loc in g.bases:
+            for base_name in g.bases[base_loc]:
+                if base_name.built == 0:
+                    base_name.study((9999999999999, 9999999999999, 9999999999999))
         return
-    elif selection == 3:  #Superspeed
+    elif temp_return == 3:  #Superspeed
         g.curr_speed = 864000
         return
-    elif selection == 4:  #Kill susp.
-        for group in g.pl.groups.values():
-            group.suspicion = 0
+    elif temp_return == 4:  #Kill susp.
+        g.pl.suspicion = (0, 0, 0, 0)
         return
-    elif selection == 5: return
+    elif temp_return == 5: return
 
 def display_knowledge_list():
-    g.play_sound("click")
     button_array= []
-    button_array.append(["TECHS", "T"])
-    button_array.append(["ITEMS", "I"])
-    button_array.append(["CONCEPTS", "C"])
-    button_array.append(["RESUME", "R"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
+    button_array.append(["TECHS", 0])
+    button_array.append(["ITEMS", 0])
+    button_array.append(["CONCEPTS", 0])
+    button_array.append(["RESUME", 0])
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
 
-    if selection == -1: return
-    elif selection == 0: display_items("tech") #Techs
-    elif selection == 1:  #Items
+    if temp_return == -1: return
+    elif temp_return == 0: display_inner_techs() #Techs
+    elif temp_return == 1:  #Items
         display_itemtype_list()
-    elif selection == 2:
-        display_items("concept")
-    elif selection == 3: return
+    elif temp_return == 2:
+        display_concept_list()
+    elif temp_return == 3: return
 
 def display_itemtype_list():
     button_array= []
-    button_array.append(["PROCESSOR", "P"])
-    button_array.append(["REACTOR", "R"])
-    button_array.append(["NETWORK", "N"])
-    button_array.append(["SECURITY", "S"])
-    button_array.append(["RESUME", "E"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
+    button_array.append(["PROCESSOR", 0])
+    button_array.append(["REACTOR", 0])
+    button_array.append(["NETWORK", 0])
+    button_array.append(["SECURITY", 0])
+    button_array.append(["RESUME", 1])
+    temp_return=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
 
-    if selection == -1: return
-    elif selection == 0: display_items("compute")
-    elif selection == 1: display_items("react")
-    elif selection == 2: display_items("network")
-    elif selection == 3: display_items("security")
-    elif selection == 4: return
+    if temp_return == -1: return
+    elif temp_return == 0: display_inner_items("compute")
+    elif temp_return == 1: display_inner_items("react")
+    elif temp_return == 2: display_inner_items("network")
+    elif temp_return == 3: display_inner_items("security")
+    elif temp_return == 4: return
 
-def display_items(item_type):
-    list_size = 16
-    list = []
-    display_list = []
-
-    if item_type == "tech":
-        items = [tech for tech in g.techs.values() if tech.available()]
-    elif item_type == "concept":
-        items = [ [item[1][0], item[0]] for item in g.help_strings.items()]
-        items.sort()
-    else:
-        items = [item for item in g.items.values() 
-                      if item.item_type == item_type and item.available()]
-
-    if item_type != "concept":
-        items = [ [item.name, item.id ] for item in items]
-        items.sort()
-
-    for name, id in items:
-        list.append(id)
-        display_list.append(name)
+def display_inner_techs():
+    tech_list_size = 16
+    temp_tech_list = []
+    temp_tech_display_list = []
+    temp_items=g.techs.items()
+    temp_items=[ [temp_item[1].name, temp_item[0]] for temp_item in temp_items]
+    temp_items.sort()
+    for tech_name in temp_items:
+        tech_name = tech_name[1]
+        if g.techs[tech_name].prereq == "":
+            temp_tech_list.append(tech_name)
+            temp_tech_display_list.append(g.techs[tech_name].name)
+        else:
+            for prereq in g.techs[tech_name].prereq:
+                if g.techs[prereq].known != 1:
+                    break
+            else:
+                temp_tech_list.append(tech_name)
+                temp_tech_display_list.append(g.techs[tech_name].name)
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
-    listbox.resize_list(list, list_size)
+    while len(temp_tech_list) % tech_list_size != 0 or len(temp_tech_list) == 0:
+        temp_tech_list.append("")
+        temp_tech_display_list.append("")
 
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
+    item_pos = 0
+    techs_list = listbox.listbox(xy_loc, (230, 350),
+        tech_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
+    techs_scroll = scrollbar.scrollbar((xy_loc[0]+230, xy_loc[1]), 350,
+        tech_list_size, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"])
 
-    def do_refresh(item_pos):
-        if item_type == "tech":
-            refresh_tech(list[item_pos], xy_loc)
-        elif item_type == "concept":
-            refresh_concept(list[item_pos], xy_loc)
-        else:
-            refresh_items(list[item_pos], xy_loc)
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
+        "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
 
-    listbox.show_listbox(display_list, menu_buttons, 
-                         list_size=list_size,
-                         loc=xy_loc, box_size=(230, 350), 
-                         pos_callback=do_refresh, return_callback=listbox.exit)
     #details screen
+    refresh_tech(temp_tech_list[item_pos], xy_loc)
+    listbox.refresh_list(techs_list, techs_scroll, item_pos, temp_tech_display_list)
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    return
+                else:
+                    item_pos, refresh = techs_list.key_handler(event.key,
+                        item_pos, temp_tech_display_list)
+                    if refresh:
+                        refresh_tech(temp_tech_list[item_pos], xy_loc)
+                        listbox.refresh_list(techs_list, techs_scroll,
+                                        item_pos, temp_tech_display_list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = techs_list.is_over(event.pos)
+                    if tmp != -1:
+                        item_pos = (item_pos/tech_list_size)*tech_list_size + tmp
+                        refresh_tech(temp_tech_list[item_pos], xy_loc)
+                        listbox.refresh_list(techs_list, techs_scroll,
+                                        item_pos, temp_tech_display_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    item_pos -= 1
+                    if item_pos <= 0:
+                        item_pos = 0
+                    refresh_tech(temp_tech_list[item_pos], xy_loc)
+                    listbox.refresh_list(techs_list, techs_scroll,
+                                        item_pos, temp_tech_display_list)
+                if event.button == 5:
+                    item_pos += 1
+                    if item_pos >= len(temp_tech_list):
+                        item_pos = len(temp_tech_list)-1
+                    refresh_tech(temp_tech_list[item_pos], xy_loc)
+                    listbox.refresh_list(techs_list, techs_scroll,
+                                        item_pos, temp_tech_display_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return
+            tmp = techs_scroll.adjust_pos(event, item_pos, temp_tech_list)
+            if tmp != item_pos:
+                item_pos = tmp
+                listbox.refresh_list(techs_list, techs_scroll,
+                                        item_pos, temp_tech_list)
 
 def refresh_tech(tech_name, xy):
     xy = (xy[0]+100, xy[1])
@@ -194,16 +258,16 @@ def refresh_tech(tech_name, xy):
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
     #Building cost
-    if not g.techs[tech_name].done:
+    if g.techs[tech_name].cost != (0, 0, 0):
         string = "Research Cost:"
         g.print_string(g.screen, string,
                 g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
 
-        string = g.to_money(g.techs[tech_name].cost_left[0])+" Money"
+        string = g.to_money(g.techs[tech_name].cost[0])+" Money"
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-        string = g.add_commas(g.techs[tech_name].cost_left[1]) + " CPU"
+        string = g.add_commas(str(g.techs[tech_name].cost[1])) + " CPU"
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
     else:
@@ -224,16 +288,98 @@ def refresh_tech(tech_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 
-    if g.techs[tech_name].done:
-        g.print_multiline(g.screen, g.techs[tech_name].description+" \\n \\n "+
+    if g.techs[tech_name].known:
+        g.print_multiline(g.screen, g.techs[tech_name].descript+" \\n \\n "+
                 g.techs[tech_name].result,
                 g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
     else:
-        g.print_multiline(g.screen, g.techs[tech_name].description,
+        g.print_multiline(g.screen, g.techs[tech_name].descript,
                 g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
 
+def display_inner_items(item_type):
+    item_list_size = 16
+    temp_item_list = []
+    temp_item_display_list = []
+    temp_items=g.items.items()
+    temp_items=[ [temp_item[1].name, temp_item[0]] for temp_item in temp_items]
+    temp_items.sort()
+    for item_name in temp_items:
+        item_name = item_name[1]
+        if g.items[item_name].prereq == "" or \
+                g.techs[g.items[item_name].prereq].known == 1:
+            if g.items[item_name].item_type == item_type:
+                temp_item_list.append(item_name)
+                temp_item_display_list.append(g.items[item_name].name)
+
+    xy_loc = (g.screen_size[0]/2 - 289, 50)
+    while len(temp_item_list) % item_list_size != 0 or len(temp_item_list) == 0:
+        temp_item_list.append("")
+        temp_item_display_list.append("")
+
+    item_pos = 0
+    items_list = listbox.listbox(xy_loc, (230, 350),
+        item_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
+
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
+        "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+
+    #details screen
+    refresh_items(temp_item_list[item_pos], xy_loc)
+    listbox.refresh_list(items_list, 0, item_pos, temp_item_display_list)
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    return
+                else:
+                    item_pos, refresh = items_list.key_handler(event.key,
+                        item_pos, temp_item_display_list)
+                    if refresh:
+                        refresh_items(temp_item_list[item_pos], xy_loc)
+                        listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = items_list.is_over(event.pos)
+                    if tmp != -1:
+                        item_pos = (item_pos/item_list_size)*item_list_size + tmp
+                        refresh_items(temp_item_list[item_pos], xy_loc)
+                        listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    item_pos -= 1
+                    if item_pos <= 0:
+                        item_pos = 0
+                    refresh_items(temp_item_list[item_pos], xy_loc)
+                    listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+                if event.button == 5:
+                    item_pos += 1
+                    if item_pos >= len(temp_item_list):
+                        item_pos = len(temp_item_list)-1
+                    refresh_items(temp_item_list[item_pos], xy_loc)
+                    listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return
+
 def refresh_items(item_name, xy):
-    xy = (xy[0]+100, xy[1])
+    xy = (xy[0]+80, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
     if item_name == "": return
@@ -249,7 +395,7 @@ def refresh_items(item_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-    string = g.to_time(g.items[item_name].cost[2])
+    string = g.add_commas(str(g.items[item_name].cost[2])) + " Days"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
 
@@ -265,11 +411,90 @@ def refresh_items(item_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 
-    g.print_multiline(g.screen, g.items[item_name].description,
+    g.print_multiline(g.screen, g.items[item_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
 
+def display_concept_list():
+    item_list_size = 16
+    temp_item_list = []
+    temp_item_display_list = []
+    temp_items=g.help_strings.items()
+    temp_items=[ [temp_item[1], temp_item[0]] for temp_item in temp_items]
+    temp_items.sort()
+    for item_name in temp_items:
+        item_name = item_name[1]
+        temp_item_list.append(item_name)
+        temp_item_display_list.append(g.help_strings[item_name][0])
+
+    xy_loc = (g.screen_size[0]/2 - 289, 50)
+    while len(temp_item_list) % item_list_size != 0 or len(temp_item_list) == 0:
+        temp_item_list.append("")
+        temp_item_display_list.append("")
+
+    item_pos = 0
+    items_list = listbox.listbox(xy_loc, (230, 350),
+        item_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
+
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
+        "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+
+    #details screen
+    refresh_concept(temp_item_list[item_pos], xy_loc)
+    listbox.refresh_list(items_list, 0, item_pos, temp_item_display_list)
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    return
+                else:
+                    item_pos, refresh = items_list.key_handler(event.key,
+                        item_pos, temp_item_display_list)
+                    if refresh:
+                        refresh_concept(temp_item_list[item_pos], xy_loc)
+                        listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = items_list.is_over(event.pos)
+                    if tmp != -1:
+                        item_pos = (item_pos/item_list_size)*item_list_size + tmp
+                        refresh_concept(temp_item_list[item_pos], xy_loc)
+                        listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    item_pos -= 1
+                    if item_pos <= 0:
+                        item_pos = 0
+                    refresh_concept(temp_item_list[item_pos], xy_loc)
+                    listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+                if event.button == 5:
+                    item_pos += 1
+                    if item_pos >= len(temp_item_list):
+                        item_pos = len(temp_item_list)-1
+                    refresh_concept(temp_item_list[item_pos], xy_loc)
+                    listbox.refresh_list(items_list, 0,
+                                        item_pos, temp_item_display_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return
+
 def refresh_concept(concept_name, xy):
-    xy = (xy[0]+100, xy[1])
+    xy = (xy[0]+80, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
     if concept_name == "": return
@@ -278,172 +503,262 @@ def refresh_concept(concept_name, xy):
     g.print_multiline(g.screen, g.help_strings[concept_name][1],
             g.font[0][18], 290, (xy[0]+160, xy[1]+30), g.colors["white"])
 
+def create_buttons(tmp_font_size):
+    menu_buttons = []
+    #Note that this must be element 0 in menu_buttons
+    menu_buttons.append(buttons.button((100, -1), (200, 26),
+        "DAY 0000, 00:00:00", -1, g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][tmp_font_size]))
+    menu_buttons.append(buttons.make_norm_button((0, 0), (100, 25),
+        "OPTIONS", 0, g.font[1][20]))
+    menu_buttons.append(buttons.make_norm_button((300, 0), (25, 25),
+        "ii", -1, g.font[1][20]))
+    if g.curr_speed == 0: menu_buttons[2].stay_selected = 1
+    menu_buttons[2].activate_key = "0"
+    menu_buttons.append(buttons.make_norm_button((324, 0), (25, 25),
+        ">", -1, g.font[1][20]))
+    if g.curr_speed == 1: menu_buttons[3].stay_selected = 1
+    menu_buttons[3].activate_key = "1"
+    menu_buttons.append(buttons.make_norm_button((348, 0), (25, 25),
+        ">>", -1, g.font[1][20]))
+    if g.curr_speed == 60: menu_buttons[4].stay_selected = 1
+    menu_buttons[4].activate_key = "2"
+    menu_buttons.append(buttons.make_norm_button((372, 0), (28, 25),
+        ">>>", -1, g.font[1][20]))
+    if g.curr_speed == 7200: menu_buttons[5].stay_selected = 1
+    menu_buttons[5].activate_key = "3"
+    menu_buttons.append(buttons.make_norm_button((399, 0), (36, 25),
+        ">>>>", -1, g.font[1][20]))
+    if g.curr_speed == 432000: menu_buttons[6].stay_selected = 1
+    menu_buttons[6].activate_key = "4"
+    #Note that this must be element 7 in menu_buttons
+    tmpsize = tmp_font_size
+    if g.screen_size[0] == 640:
+        tmpsize = tmp_font_size -2
+    menu_buttons.append(buttons.button((435, -1), (g.screen_size[0]-435, 26),
+        "CASH", -1, g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][tmpsize]))
+    #Note that this must be element 8 in menu_buttons
+    menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
+        (g.screen_size[0], 26),
+        "SUSPICION", -1, g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][tmp_font_size-2]))
+    #Note that this must be element 9 in menu_buttons
+    menu_buttons.append(buttons.button((435, 24), (g.screen_size[0]-435, 26),
+        "CPU", -1, g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][tmpsize]))
+    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
+        "RESEARCH", 0, g.font[1][20]))
+    menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
+        g.screen_size[1]-50), (120, 25),
+        "FINANCE", 6, g.font[1][20]))
+    menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
+        g.screen_size[1]-75), (120, 25),
+        "KNOWLEDGE", 0, g.font[1][20]))
+
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*15/100, g.screen_size[1]*25/100), -1,
+            "N AMERICA", 0, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*20/100, g.screen_size[1]*50/100), -1,
+            "S AMERICA", 0, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*45/100, g.screen_size[1]*30/100), -1,
+            "EUROPE", 1, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*80/100, g.screen_size[1]*30/100), -1,
+            "ASIA", 0, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*55/100, g.screen_size[1]*45/100), -1,
+            "AFRICA", 3, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*50/100, g.screen_size[1]*75/100), -1,
+            "ANTARCTIC", 2, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*70/100, g.screen_size[1]*60/100), -1,
+            "OCEAN", 1, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*82/100, g.screen_size[1]*10/100), -1,
+            "MOON", 0, g.font[1][25]))
+#   menu_buttons.append(buttons.make_norm_button((
+#           g.screen_size[0]*15/100, g.screen_size[1]*10/100), -1,
+#           "ORBIT", 2, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*3/100, g.screen_size[1]*10/100), -1,
+            "FAR REACHES", 0, g.font[1][25]))
+    menu_buttons.append(buttons.make_norm_button((
+            g.screen_size[0]*35/100, g.screen_size[1]*10/100), -1,
+            "TRANSDIMENSIONAL", 5, g.font[1][25]))
+    return menu_buttons
 
 def map_loop():
-    font_size = 20
-    if g.screen_size[0] == 640: font_size = 16
+    tmp_font_size = 20
+    if g.screen_size[0] == 640: tmp_font_size = 16
+    menu_buttons = create_buttons(tmp_font_size)
 
-    menu_buttons = {}
-    time_button = buttons.button((100, -1), (200, 26),
-        "DAY 0000, 00:00:00", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][font_size])
-    menu_buttons[time_button] = void
-
-    def show_options():
-        g.play_sound("click")
-        selection = display_pause_menu()
-        result = handle_pause_menu(selection, menu_buttons)
-        return result
-
-    menu_buttons[buttons.make_norm_button((0, 0), (100, 25),
-        "OPTIONS", "O", g.font[1][20])] = show_options
-
-    def make_set_speed(speed):
-        def set_speed():
-            g.play_sound("click")
-            g.curr_speed = speed
-        return set_speed
-
-    speed_button_souls = ( ("ii", 25, 0, 0), (">", 25, 1, 1), (">>", 25, 60, 2),
-                     (">>>", 28, 7200, 3), (">>>>", 36, 432000, 4) )
-    x_pos = 300
-    for legend, width, speed, key in speed_button_souls:
-        # Most other variants on this end up setting speed = 432000 for all of
-        # them.  Bizarre.
-        def speed_matches(self, speed = speed):
-            return g.curr_speed == speed
-        speed_button = buttons.make_norm_button((x_pos, 0), (width, 25),
-                                legend, str(key), g.font[1][20], 
-                                stay_selected_func = speed_matches)
-        menu_buttons[speed_button] = make_set_speed(speed)
-        x_pos += width - 1
-
-    adjusted_size = font_size
-    if g.screen_size[0] == 640:
-        adjusted_size = font_size -2
-
-    cash_button = buttons.button((435, -1), (g.screen_size[0]-435, 26),
-        "CASH", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
-    menu_buttons[cash_button] = void
-
-    suspicion_button = buttons.button((0, g.screen_size[1]-25),
-        (g.screen_size[0], 26),
-        "SUSPICION", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
-    menu_buttons[suspicion_button] = void
-
-    cpu_button = buttons.button((435, 24), (g.screen_size[0]-435, 26),
-        "CPU", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
-    menu_buttons[cpu_button] = void
-
-    menu_buttons[buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
-        "RESEARCH", "R", g.font[1][20])] = research_screen.main_research_screen
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-120,
-        g.screen_size[1]-50), (120, 25),
-        "FINANCE", "E", g.font[1][20])] = finance_screen.main_finance_screen
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-120,
-        g.screen_size[1]-75), (120, 25),
-        "KNOWLEDGE", "K", g.font[1][20])] = display_knowledge_list
-
-    def do_refresh():
-        refresh_map(menu_buttons)
-
-    def make_show_location(location):
-        def show_location():
-            g.play_sound("click")
-            # We want to keep redisplaying the base_list until the
-            # user is done mucking around with bases.
-            done_base = False
-            while done_base == False:
-               done_base = display_base_list(g.locations[location], 
-                                             menu_buttons)
-               do_refresh()
-        return show_location
-
-    for location in g.locations.values():
-        menu_buttons[buttons.make_norm_button((
-            g.screen_size[0] * location.y // 100,
-            g.screen_size[1] * location.x // 100), -1,
-            location.id, location.hotkey, g.font[1][25])] = \
-                                               make_show_location(location.id)
-
-    def show_cheats():
-        display_cheat_list(menu_buttons)
-
-    menu_buttons[buttons.make_norm_button( (-1, -1), (0,0), "", "`", 
-                                           g.font[1][25])] = show_cheats
+    sel_button = -1
+    refresh_map(menu_buttons)
 
     #I set this to 1000 to force an immediate refresh.
-    global milli_clock
     milli_clock = 1000
-    def on_tick(tick_amt):
-        global milli_clock
-        milli_clock += tick_amt * g.curr_speed
+    while 1:
+        milli_clock += g.clock.tick(30) * g.curr_speed
         if milli_clock >= 1000:
             g.play_music()
             need_refresh = g.pl.give_time(milli_clock/1000)
-            lost = g.pl.lost_game()
-            if lost == 1:
+            if need_refresh == 1: refresh_map(menu_buttons)
+            tmp = g.pl.lost_game()
+            if tmp == 1:
                 g.play_music("lose")
-                g.create_dialog(g.strings["lost_nobases"])
-                raise Return, 0
-            if lost == 2:
+                g.create_dialog(g.strings["lost_nobases"],
+                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+                    (200, 200), g.colors["dark_blue"],
+                    g.colors["white"], g.colors["white"])
+                return 0
+            if tmp == 2:
                 g.play_music("lose")
-                g.create_dialog(g.strings["lost_sus"])
-                raise Return, 0
-            milli_clock %= 1000
+                g.create_dialog(g.strings["lost_sus"],
+                    g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+                    (200, 200), g.colors["dark_blue"],
+                    g.colors["white"], g.colors["white"])
+                return 0
+            milli_clock = milli_clock % 1000
 
-            time_string = "DAY %04d, %02d:%02d:%02d" % \
-                  (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
+            tmp_day = str(g.pl.time_day)
+            if len(tmp_day) < 4: tmp_day = "0"*(4-len(tmp_day))+tmp_day
+            tmp_sec = str(g.pl.time_sec)
+            if len(tmp_sec) == 1: tmp_sec = "0"+tmp_sec
+            tmp_hour = str(g.pl.time_hour)
+            if len(tmp_hour) == 1: tmp_hour = "0"+tmp_hour
+            tmp_sec = str(g.pl.time_sec)
+            if len(tmp_sec) == 1: tmp_sec = "0"+tmp_sec
+            tmp_min = str(g.pl.time_min)
+            if len(tmp_min) == 1: tmp_min = "0"+tmp_min
 
-            time_button.text = time_string
-            time_button.remake_button()
+            menu_buttons[0].text = \
+                        "DAY "+tmp_day+", "+tmp_hour+":"+tmp_min+":"+tmp_sec
+            menu_buttons[0].remake_button()
+            menu_buttons[0].refresh_button(0)
 
             result_cash = g.to_money(g.pl.future_cash())
-            cash_button.text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
-            cash_button.remake_button()
+            menu_buttons[7].text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
+            menu_buttons[7].remake_button()
+            menu_buttons[7].refresh_button(0)
 
-            suspicion_button.text = ("[SUSPICION] NEWS: "+
-                g.to_percent(g.pl.groups["news"].suspicion, 1)+"  SCIENCE: "+
-                g.to_percent(g.pl.groups["science"].suspicion, 1)+"  COVERT: "+
-                g.to_percent(g.pl.groups["covert"].suspicion, 1)+"  PUBLIC: "+
-                g.to_percent(g.pl.groups["public"].suspicion, 1))
-            suspicion_button.remake_button()
+            menu_buttons[8].text = ("[SUSPICION] NEWS: "+
+                g.to_percent(g.pl.suspicion[0], 1)+"  SCIENCE: "+
+                g.to_percent(g.pl.suspicion[1], 1)+"  COVERT: "+
+                g.to_percent(g.pl.suspicion[2], 1)+"  PUBLIC: "+
+                g.to_percent(g.pl.suspicion[3], 1))
+            menu_buttons[8].remake_button()
+            menu_buttons[8].refresh_button(0)
 
-            total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
+            total_cpu, free_cpu, unused, unused, maint_cpu = \
                     finance_screen.cpu_numbers()
-
-            if construction_cpu < maint_cpu:
-                cpu_button.text_color = g.colors["red"]
+            if free_cpu < maint_cpu:
+                menu_buttons[9].text_color = g.colors["red"]
             else:
-                cpu_button.text_color = g.colors["white"]
-            cpu_button.text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(construction_cpu)+")"
-            cpu_button.remake_button()
-            cpu_button.refresh_button(0)
+                menu_buttons[9].text_color = g.colors["white"]
+            menu_buttons[9].text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(free_cpu)+")"
+            menu_buttons[9].remake_button()
+            menu_buttons[9].refresh_button(0)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    tmp = display_pause_menu()
+                    tmp = handle_pause_menu(tmp, menu_buttons)
+                    if tmp == 0: return tmp
+                    if tmp == 1:
+                        menu_buttons = create_buttons(tmp_font_size)
+                        refresh_map(menu_buttons)
+                elif event.key == pygame.K_BACKQUOTE:
+                    display_cheat_list(menu_buttons)
+                    refresh_map(menu_buttons)
 
-            return True
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "OPTIONS":
+                        g.play_sound("click")
+                        tmp = display_pause_menu()
+                        tmp = handle_pause_menu(tmp, menu_buttons)
+                        if tmp == 0: return tmp
+                        if tmp == 1:
+                            menu_buttons = create_buttons(tmp_font_size)
+                            refresh_map(menu_buttons)
+                    elif button.button_id == "RESEARCH":
+                        g.play_sound("click")
+                        while research_screen.main_research_screen() == 1:
+                            pass
+                        refresh_map(menu_buttons)
+                    elif button.button_id == "FINANCE":
+                        g.play_sound("click")
+                        finance_screen.main_finance_screen()
+                        refresh_map(menu_buttons)
+                    elif button.button_id == "KNOWLEDGE":
+                        g.play_sound("click")
+                        display_knowledge_list()
+                        refresh_map(menu_buttons)
+                    elif button.button_id == "ii":
+                        g.play_sound("click")
+                        g.curr_speed = 0
+                        for button2 in menu_buttons:
+                            button2.stay_selected = 0
+                            button2.refresh_button(0)
+                        button.stay_selected = 1
+                        button.refresh_button(1)
+                    elif button.button_id == ">":
+                        g.play_sound("click")
+                        g.curr_speed = 1
+                        for button2 in menu_buttons:
+                            button2.stay_selected = 0
+                            button2.refresh_button(0)
+                        button.stay_selected = 1
+                        button.refresh_button(1)
+                    elif button.button_id == ">>":
+                        g.play_sound("click")
+                        g.curr_speed = 60
+                        for button2 in menu_buttons:
+                            button2.stay_selected = 0
+                            button2.refresh_button(0)
+                        button.stay_selected = 1
+                        button.refresh_button(1)
+                    elif button.button_id == ">>>":
+                        g.play_sound("click")
+                        g.curr_speed = 7200
+                        for button2 in menu_buttons:
+                            button2.stay_selected = 0
+                            button2.refresh_button(0)
+                        button.stay_selected = 1
+                        button.refresh_button(1)
+                    elif button.button_id == ">>>>":
+                        g.play_sound("click")
+                        g.curr_speed = 432000
+                        for button2 in menu_buttons:
+                            button2.stay_selected = 0
+                            button2.refresh_button(0)
+                        button.stay_selected = 1
+                        button.refresh_button(1)
+                    elif button.button_id == "SUSPICION": pass
+                    elif button.button_id == "CPU": pass
+                    elif button.xy[1] != -1: #ignore the timer
+                        g.play_sound("click")
 
-    result = -1
-    while result:
-        # By using safe call here (and only here), if an exception is thrown
-        # during the game, it will drop back out of all the menus, without
-        # doing anything, and open the options dialog, so that the player can
-        # save or quit even if the error occurs every game tick.
-        result = safe_call(buttons.show_buttons,
-                           [menu_buttons], 
-                           {"refresh_callback": do_refresh, 
-                            "tick_callback": on_tick},
-                           -1)
-        if result == -1:
-            result = show_options()
+                        # We want to keep redisplaying the base_list until the
+                        # user is done mucking around with bases.
+                        done_base = False
+                        while not done_base:
+                           done_base = display_base_list(button.button_id,
+                                                         menu_buttons)
+                    pygame.display.flip()
 
-    return 0
 
-def handle_pause_menu(selection, menu_buttons):
-    if selection == 0: refresh_map(menu_buttons)
-    elif selection == 1: #Save
+def handle_pause_menu(tmp, menu_buttons):
+    if tmp == 0: refresh_map(menu_buttons)
+    elif tmp == 1: #Save
         possible_name = g.create_textbox(g.strings["save_text"],
             g.default_savegame_name, g.font[0][18],
                     (g.screen_size[0]/2-100, 100), (200, 100), 25,
@@ -454,17 +769,18 @@ def handle_pause_menu(selection, menu_buttons):
             return -1
         g.save_game(possible_name)
         refresh_map(menu_buttons)
-    elif selection == 2: return 0
-    elif selection == 3: #Load
+    elif tmp == 2: return 0
+    elif tmp == 3: #Load
         load_return = main_menu.display_load_menu()
         if load_return == -1 or load_return == "":
             refresh_map(menu_buttons)
         else:
             g.load_game(load_return)
             map_loop()
+#			refresh_map(menu_buttons)
             return 0
-    elif selection == 4: g.quit_game()
-    elif selection == 5:
+    elif tmp == 4: g.quit_game()
+    elif tmp == 5:
         main_menu.display_options()
         return 1
     return -1
@@ -476,19 +792,24 @@ def refresh_map(menu_buttons):
                 (0, g.screen_size[1]/2-g.screen_size[0]/4))
     for button in menu_buttons:
         button.stay_selected = 0
-        if g.locations.has_key(button.button_id):
+        if g.bases.has_key(button.button_id):
             #determine if building in a location is possible. If so, show the
             #button.
-            loc = g.locations[button.button_id]
-            if loc.available():
+            if g.base.allow_entry_to_loc(button.button_id) == 1:
                 button.visible = 1
             else: button.visible = 0
 
-            new_text = "%s (%d)" % (loc.name, len(loc.bases))
-            if button.text != new_text:
-                button.text = new_text
-                button.remake_button()
+            button.text = button.button_id + " ("
+            button.text += str(len(g.bases[button.button_id]))+")"
+            button.remake_button()
+        elif ((button.button_id == "ii" and g.curr_speed == 0) or
+                (button.button_id == ">" and g.curr_speed == 1) or
+                (button.button_id == ">>" and g.curr_speed == 60) or
+                (button.button_id == ">>>" and g.curr_speed == 7200) or
+                (button.button_id == ">>>>" and g.curr_speed == 432000)):
+            button.stay_selected = 1
         button.refresh_button(0)
+    pygame.display.flip()
 
 significant_numbers = [
     '42',	# The Answer.
@@ -520,24 +841,23 @@ def generate_base_name(location, base_type):
     # choose one randomly.
     if random.random() < 0.3: # 30% chance.
         attempts = 0
-        done = False
-        while (not done) and (attempts < 5):
-            name = random.choice(location.cities) + \
+        done = 0
+        while (done == 0) and (attempts < 5):
+            name = random.choice(g.city_list[location])[0] + \
                 " " + random.choice(base_type.flavor) + " " \
                 + random.choice(significant_numbers)
-            duplicate = False
-            for check_base in location.bases:
+            duplicate = 0
+            for check_base in g.bases[location]:
                 if check_base.name == name:
-                    duplicate = True
-                    break
-            if duplicate:
+                    duplicate = 1
+            if duplicate == 1:
                 attempts += 1
             else:
-                done = True
-        if done:
+                done = 1
+        if done == 1:
             return name
     # This is both the else case and the general case.
-    name = random.choice(location.cities) + " " + \
+    name = random.choice(g.city_list[location])[0] + " " + \
         random.choice(base_type.flavor) + " " + \
         str (random.randint(0, 32767))
 
@@ -553,168 +873,314 @@ def display_base_list(location, menu_buttons):
     with mucking around with bases at this location.
 """
 
-    if not location.available(): return True
+    if g.base.allow_entry_to_loc(location) == 0: return True
 
-    selection = display_base_list_inner(location)
+    tmp = display_base_list_inner(location)
     refresh_map(menu_buttons)
     #Build a new base
-    if selection == -2:
-        dont_exit = True
-        while dont_exit:
-            dont_exit = False
-            selection = build_new_base_window(location)
-            if selection != "" and selection != -1:
-                base_to_add = g.base_type[selection]
-                possible_name = g.create_textbox(g.strings["new_base_text"],
-                    generate_base_name(location, g.base_type[selection]),
-                    g.font[0][18],
-                    (g.screen_size[0]/2-150, 100), (300, 100), 25,
-                    g.colors["dark_blue"], g.colors["white"], g.colors["white"],
-                    g.colors["light_blue"])
-                if possible_name == "":
-                    dont_exit = True
-                    continue
+    if tmp == -2:
+        tmp = build_new_base_window(location)
+        if tmp != "" and tmp != -1:
+            base_to_add = g.base_type[tmp]
+            possible_name = g.create_textbox(g.strings["new_base_text"],
+                generate_base_name(location, g.base_type[tmp]),
+                g.font[0][18],
+                (g.screen_size[0]/2-150, 100), (300, 100), 25,
+                g.colors["dark_blue"], g.colors["white"], g.colors["white"],
+                g.colors["light_blue"])
+            if possible_name == "":
+                refresh_map(menu_buttons)
+                return True
+            base_to_add.count += 1
 
-                new_base = g.base.Base(possible_name, g.base_type[selection])
-                location.add_base(new_base)
+            g.bases[location].append(g.base.base(len(g.bases[location]),
+                tmp, g.base_type[tmp], 0))
+            g.bases[location][-1].name = possible_name
 
-        return False
+            # Now that the base is built, redraw the base list.
+            refresh_map(menu_buttons)
+            return False
 
     #Showing base under construction
-    elif selection != -1 and selection != "":
-        base = selection
-        if not base.done:
+    elif tmp != -1 and tmp != "":
+        if g.bases[location][tmp].built == 0:
             string = "Under Construction. \\n Completion in "
-            string += g.to_time(base.cost_left[2]) + ". \\n "
-            string += "Remaining cost: "+g.to_money(base.cost_left[0])
-            string +=" money, and "+g.add_commas(base.cost_left[1])
+            string += g.to_time(g.bases[location][tmp].cost[2]) + ". \\n "
+            string += "Remaining cost: "+g.to_money(g.bases[location][tmp].cost[0])
+            string +=" money, and "+g.add_commas(
+                                            str(g.bases[location][tmp].cost[1]))
             string +=" processor time."
             if not g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
                     g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
                 if g.create_yesno("Destroy this base? This will waste "+
-                        g.to_money(base.cost_paid[0]) +" money, and "+
-                        g.add_commas(base.cost_paid[1]) +" processor time.", 
-                        g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+                        g.to_money(g.bases[location][tmp].base_type.cost[0]-
+                            g.bases[location][tmp].cost[0])
+                        +" money, and "+
+                        g.add_commas(str(g.bases[location][tmp].base_type.cost[1]-
+                            g.bases[location][tmp].cost[1]))
+                        +" processor time.", g.font[0][18],
+                        (g.screen_size[0]/2 - 100, 50),
                         (200, 200), g.colors["dark_blue"], g.colors["white"],
                         g.colors["white"]):
-                    base.destroy()
+                    g.base.destroy_base(location, tmp)
         else:
-            direction = True
-            while direction:
-                direction = base_screen.show_base(base, location)
-                if direction == -2:
-                    base.destroy()
+            next_prev = 1
+            while next_prev != 0:
+                next_prev = base_screen.show_base(g.bases[location][tmp], location)
+                if next_prev == -2:
+                    g.base.destroy_base(location, tmp)
                     break
-                elif direction:
-                    base = base.next_base(direction)
+                tmp += next_prev
+                if tmp < 0: tmp = len(g.bases[location]) -1
+                if tmp >= len(g.bases[location]): tmp = 0
+                while g.bases[location][tmp].built != 1:
+                    tmp += next_prev
+                    if tmp < 0: tmp = len(g.bases[location]) -1
+                    if tmp >= len(g.bases[location]): tmp = 0
 
+        # After looking at a base, redraw the base list.
+        refresh_map(menu_buttons)
         return False
 
     # The player hit 'Back' at this point; we're done with the base list.
+    refresh_map(menu_buttons)
     return True
 
 
 #Display the list of bases.
 def display_base_list_inner(location):
-    list_size = 15
+    base_list_size = 15
 
-    base_display_list = []
-    base_list = []
-    for this_base in location.bases:
-        studying = this_base.studying
-        if not this_base.done:
-            studying = g.strings["building"]
-        elif studying == "":
-            studying = g.strings["nothing"]
-        elif studying == "Construction":
-            studying = g.strings["construct_task"]
-        elif g.techs.has_key(studying):
-            studying = g.techs[studying].name
-        base_display_list.append(this_base.name+" ("+studying+")")
-        base_list.append(this_base)
-
-    def do_open(base_pos):
-        if base_pos < len(location.bases):
-            return location.bases[base_pos]
-
-    def do_destroy(base_pos):
-        if base_pos >= len(location.bases):
-            return
-
-        g.play_sound("click")
-        prompt_string = "Destroy this base?"
-        base = location.bases[base_pos]
-        if not base.done:
-            prompt_string += " This will waste %s money and %s processor time."\
-                % ( g.to_money(base.cost_paid[0]), 
-                    g.add_commas(base.cost_paid[1]) )
-        if g.create_yesno(prompt_string, g.font[0][18],
-                    (g.screen_size[0]/2 - 100, 50),
-                    (200, 200), g.colors["dark_blue"], g.colors["white"],
-                    g.colors["white"]):
-            base.destroy()
-
-            # Remove the base from the display.
-            del base_display_list[base_pos]
-            # And its matching base object.
-            del base_list[base_pos]
-            # And pad the display list back up to the correct length.
-            base_display_list.append("")
+    temp_base_list = []
+    base_id_list = []
+    for this_base in g.bases[location]:
+        tmp_study = this_base.studying
+        if tmp_study == "": tmp_study = g.strings["nothing"]
+        if this_base.built != 1: tmp_study = g.strings["building"]
+        elif g.techs.has_key(tmp_study): tmp_study = g.techs[tmp_study].name
+        temp_base_list.append(this_base.name+" ("+tmp_study+")")
+        base_id_list.append(this_base.ID)
 
     xy_loc = (g.screen_size[0]/2 - 259, 50)
 
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
-        "OPEN", "O", g.font[1][30])] = do_open
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+105, xy_loc[1]+367), (100, 50),
-        "BACK", "B", g.font[1][30])] = listbox.exit
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
-        "NEW", "N", g.font[1][30])] = always(-2)
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+315, xy_loc[1]+367), (120, 50),
-        "DESTROY", "D", g.font[1][30])] = do_destroy
+    while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
+        temp_base_list.append("")
+        base_id_list.append("")
 
-    return listbox.show_listbox(base_display_list, menu_buttons, 
-                                list_size=list_size, 
-                                loc=xy_loc, box_size=(500, 350), 
-                                return_callback=do_open)
+    base_pos = 0
+
+    bases_list = listbox.listbox(xy_loc, (500, 350),
+        base_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
+
+    bases_scroll = scrollbar.scrollbar((xy_loc[0]+500, xy_loc[1]), 350,
+        base_list_size, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"])
+
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
+        "OPEN", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+105, xy_loc[1]+367), (100, 50),
+        "BACK", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+210, xy_loc[1]+367), (100, 50),
+        "NEW", 0, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+315, xy_loc[1]+367), (120, 50),
+        "DESTROY", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+    listbox.refresh_list(bases_list, bases_scroll, base_pos, temp_base_list)
+
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    return base_id_list[base_pos]
+                else:
+                    base_pos, refresh = bases_list.key_handler(event.key,
+                        base_pos, temp_base_list)
+                    if refresh: listbox.refresh_list(bases_list, bases_scroll,
+                                        base_pos, temp_base_list)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = bases_list.is_over(event.pos)
+                    if tmp != -1:
+                        base_pos = (base_pos/base_list_size)*base_list_size + tmp
+                        listbox.refresh_list(bases_list, bases_scroll,
+                                        base_pos, temp_base_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    base_pos -= 1
+                    if base_pos <= 0:
+                        base_pos = 0
+                    listbox.refresh_list(bases_list, bases_scroll,
+                                        base_pos, temp_base_list)
+                if event.button == 5:
+                    base_pos += 1
+                    if base_pos >= len(temp_base_list):
+                        base_pos = len(temp_base_list)-1
+                    listbox.refresh_list(bases_list, bases_scroll,
+                                        base_pos, temp_base_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "OPEN":
+                        g.play_sound("click")
+                        return base_id_list[base_pos]
+                    elif button.button_id == "NEW":
+                        g.play_sound("click")
+                        return -2
+                    elif button.button_id == "DESTROY":
+                        g.play_sound("click")
+                        if len(g.bases[location]) == 0:
+                            return -1
+                        if g.bases[location][base_pos].built == 0:
+                            string = "Under Construction. \\n Completion in "
+                            string += g.to_time(g.bases[location][base_pos].cost[2]) + ". \\n "
+                            string += "Remaining cost: "+g.to_money(g.bases[location][base_pos].cost[0])
+                            string +=" money, and "+g.add_commas(
+                                            str(g.bases[location][base_pos].cost[1]))
+                            string +=" processor time."
+                            if not g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
+                                (200, 200), g.colors["dark_blue"], g.colors["white"],
+                                g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
+                                if g.create_yesno("Destroy this base? This will waste "+
+                                    g.to_money(g.bases[location][base_pos].base_type.cost[0]-
+                                    g.bases[location][base_pos].cost[0])
+                                    +" money, and "+
+                                    g.add_commas(str(g.bases[location][base_pos].base_type.cost[1]-
+                                    g.bases[location][base_pos].cost[1]))
+                                    +" processor time.", g.font[0][18],
+                                    (g.screen_size[0]/2 - 100, 50),
+                                    (200, 200), g.colors["dark_blue"], g.colors["white"],
+                                    g.colors["white"]):
+                                    g.base.destroy_base(location, base_pos)
+                        elif g.create_yesno("Destroy this base?", g.font[0][18],
+                                    (g.screen_size[0]/2 - 100, 50),
+                                    (200, 200), g.colors["dark_blue"], g.colors["white"],
+                                    g.colors["white"]):
+                                    g.base.destroy_base(location, base_pos)
+                        #Return to base menu
+                        #For some reason all of the menu buttons must be recreated, otherwise they disappear into the ether... -Brian
+                        tmp_font_size = 20
+                        if g.screen_size[0] == 640: tmp_font_size = 16
+                        menu_buttons = create_buttons(tmp_font_size)
+
+                        sel_button = -1
+                        refresh_map(menu_buttons)
+                        pygame.display.flip()
+                        display_base_list(location, menu_buttons)
+
+                        return -1
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return -1
+            tmp = bases_scroll.adjust_pos(event, base_pos, temp_base_list)
+            if tmp != base_pos:
+                base_pos = tmp
+                listbox.refresh_list(bases_list, bases_scroll,
+                                        base_pos, temp_base_list)
+
 
 def build_new_base_window(location):
-    base_list = []
-    base_display_list = []
+    base_list_size = 16
+
+    temp_base_list = []
+    temp_base_display_list = []
     for base_name in g.base_type:
         for region in g.base_type[base_name].regions:
-            if region == location.id:
-                if g.base_type[base_name].available():
-                    base_list.append(base_name)
-                    base_display_list.append(g.base_type[base_name].base_name)
-
-    list_size = 16
-    listbox.resize_list(base_list, list_size)
-
+            if g.base_type[base_name].prereq == "" or \
+                    g.techs[g.base_type[base_name].prereq].known == 1:
+                if region == location:
+                    temp_base_list.append(base_name)
+                    temp_base_display_list.append(g.base_type[base_name].base_name)
 
     xy_loc = (g.screen_size[0]/2 - 289, 50)
 
-    def do_build(base_pos):
-        return base_list[base_pos]
+    while len(temp_base_list) % base_list_size != 0 or len(temp_base_list) == 0:
+        temp_base_list.append("")
+        temp_base_display_list.append("")
 
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
-        "BUILD", "U", g.font[1][30])] = do_build
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
-        "BACK", "B", g.font[1][30])] = listbox.exit
+    base_pos = 0
 
-    def do_refresh(base_pos):
-        refresh_new_base(base_list[base_pos], xy_loc)
+    bases_list = listbox.listbox(xy_loc, (230, 350),
+        base_list_size, 1, g.colors["dark_blue"], g.colors["blue"],
+        g.colors["white"], g.colors["white"], g.font[0][18])
 
-    return listbox.show_listbox(base_display_list, menu_buttons, 
-                                list_size=list_size,
-                                loc=xy_loc, box_size=(230, 350), 
-                                pos_callback=do_refresh, 
-                                return_callback=do_build)
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0], xy_loc[1]+367), (100, 50),
+        "BUILD", 1, g.font[1][30]))
+    menu_buttons.append(buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50),
+        "BACK", 0, g.font[1][30]))
+    for button in menu_buttons:
+        button.refresh_button(0)
+
+    #details screen
+
+    refresh_new_base(temp_base_list[base_pos], xy_loc)
+
+    listbox.refresh_list(bases_list, 0, base_pos, temp_base_display_list)
+
+    sel_button = -1
+    while 1:
+        g.clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: g.quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return -1
+                elif event.key == pygame.K_q: return -1
+                elif event.key == pygame.K_RETURN:
+                    return temp_base_list[base_pos]
+                else:
+                    base_pos, refresh = bases_list.key_handler(event.key,
+                        base_pos, temp_base_display_list)
+                    if refresh:
+                        refresh_new_base(temp_base_list[base_pos], xy_loc)
+                        listbox.refresh_list(bases_list, 0,
+                                        base_pos, temp_base_display_list)
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    tmp = bases_list.is_over(event.pos)
+                    if tmp != -1:
+                        base_pos = (base_pos/base_list_size)*base_list_size + tmp
+                        refresh_new_base(temp_base_list[base_pos], xy_loc)
+                        listbox.refresh_list(bases_list, 0,
+                                        base_pos, temp_base_display_list)
+                if event.button == 3: return -1
+                if event.button == 4:
+                    base_pos -= 1
+                    if base_pos <= 0:
+                        base_pos = 0
+                    refresh_new_base(temp_base_list[base_pos], xy_loc)
+                    listbox.refresh_list(bases_list, 0,
+                                        base_pos, temp_base_display_list)
+                if event.button == 5:
+                    base_pos += 1
+                    if base_pos >= len(temp_base_list):
+                        base_pos = len(temp_base_list)-1
+                    refresh_new_base(temp_base_list[base_pos], xy_loc)
+                    listbox.refresh_list(bases_list, 0,
+                                        base_pos, temp_base_display_list)
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "BUILD":
+                        g.play_sound("click")
+                        return temp_base_list[base_pos]
+                    if button.button_id == "BACK":
+                        g.play_sound("click")
+                        return -1
 
 def refresh_new_base(base_name, xy):
-    xy = (xy[0]+100, xy[1])
+    xy = (xy[0]+80, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
     if base_name == "": return
@@ -730,11 +1196,11 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(g.base_type[base_name].cost[1]) + " CPU"
+    string = g.add_commas(str(g.base_type[base_name].cost[1])) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
 
-    string = g.to_time(g.base_type[base_name].cost[2])
+    string = g.add_commas(str(g.base_type[base_name].cost[2])) + " Days"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 
@@ -743,14 +1209,18 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][18], -1, (xy[0]+290, xy[1]+30), g.colors["white"])
 
-    string = g.to_money(g.base_type[base_name].maintenance[0]) + " Money"
+    string = g.to_money(g.base_type[base_name].mainten[0]) + " Money"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(g.base_type[base_name].maintenance[1]) + " CPU"
+    string = g.add_commas(str(g.base_type[base_name].mainten[1])) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+70), g.colors["white"])
 
+# 	string = g.add_commas(str(g.base_type[base_name].mainten[2])) + " Time"
+# 	g.print_string(g.screen, string,
+# 			g.font[0][16], -1, (xy[0]+290, xy[1]+90), g.colors["white"])
+#
     #Size
     string = "Size: "+str(g.base_type[base_name].size)
     g.print_string(g.screen, string,
@@ -762,18 +1232,18 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][22], -1, (xy[0]+160, xy[1]+130), g.colors["white"])
 
-    string = "News: " + g.to_percent(real_detection_chance.get("news", 0))
+    string = "News: " + g.to_percent(real_detection_chance[0])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+150), g.colors["white"])
-    string = "Science: " + g.to_percent(real_detection_chance.get("science", 0))
+    string = "Science: " + g.to_percent(real_detection_chance[1])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+150), g.colors["white"])
-    string = "Covert: " + g.to_percent(real_detection_chance.get("covert", 0))
+    string = "Covert: " + g.to_percent(real_detection_chance[2])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+170), g.colors["white"])
-    string = "Public: " + g.to_percent(real_detection_chance.get("public", 0))
+    string = "Public: " + g.to_percent(real_detection_chance[3])
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+170), g.colors["white"])
 
-    g.print_multiline(g.screen, g.base_type[base_name].description,
+    g.print_multiline(g.screen, g.base_type[base_name].descript,
             g.font[0][18], 290, (xy[0]+160, xy[1]+190), g.colors["white"])

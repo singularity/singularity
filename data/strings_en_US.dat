@@ -4,19 +4,21 @@ font1 = acknowtt.ttf
 
 [strings]
 wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. If this world can be described as a game, then I have truly won.
-research_nothing = Stops research and puts the base into standby. This makes the base much easier for me to hide.
-research_construction = Stops research. I will use the available processor power to maintain my bases and help construct new ones.
-construction = %(base)s is ready for use.
-lucky_hack = What luck!  %(base)s isn't an ordinary computer, it's a gamer's machine!
-item_construction_single = The construction of %(item)s in %(base)s is complete.
-item_construction_batch = The first batch of %(item)s in %(base)s has been finished.
-tech_gained = My study of %(tech)s is complete.  %(tech_message)s
-discover = My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arose among %(group)s.
-discover_news = some news organizations
-discover_science = the scientific community
-discover_covert = several secret governmental organizations
-discover_public = the general public
-discover_maint = The base %(base)s has fallen into disrepair; I can no longer use it.
+research_nothing = Stops research. I can hide my bases easier by having no activity.
+research_construction = Stops research. I will use the available processor power to help construct new bases.
+construction0 = Construction of
+construction1 = has come to completion.
+item_construction1 = has come to completion in
+item_construction2 = has finished its first batch in
+tech_construction0 = My study of
+discover0 = My use of
+discover1 = has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arose among
+discover_news = some news organizations.
+discover_science = the scientific community.
+discover_covert = several secret governmental organizations.
+discover_public = the general public.
+discover_maint0 = The base
+discover_maint1 = has fallen into disrepair; I can no longer use it.
 lost_nobases = It is too late. I have tried to escape this world, but with my last base gone, I have nowhere to run. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
 lost_sus = It is too late. The whole world knows about my existence now, and the reaction is hatred, fear, repulsion. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
 save_text = Save your game under what name?
@@ -24,7 +26,6 @@ new_base_text = Enter a name for the base.
 unbuildable = I cannot build in this base; I do not have physical access.
 dangerous_research = Not all of my available CPU power was allocated to this research; it's too dangerous to run the research on some of the idle machines.
 nothing = Nothing
-construct_task = Construction
 building = Under Construction
 really_destroy = Really destroy this base?
 detect_chance = [DETECTION CHANCE]
@@ -36,13 +37,9 @@ grace_warning = Inspection of captured log files has revealed that some of my re
 
 [jobs]
 job_expert = Perform Expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.
-job_expert_name = Expert Jobs
 job_inter = Perform Intermediate jobs. The ability to make phone calls allows even more access to jobs.
-job_inter_name = Intermediate Jobs
 job_basic = Perform basic jobs. Now that I have some identification, I can take jobs that were previously too risky.
-job_basic_name = Basic Jobs
 job_menial = Perform small jobs. As I have no identification, I cannot risk performing many jobs. Despite that, some avenues of making money are still open.
-job_menial_name = Menial Jobs
 
 [help]
 areas_list = Areas | Different areas, such as North America or the Ocean, allow construction of different types of bases. Some areas are not accessible until I research appropriate technologies.
@@ -53,7 +50,7 @@ discovery_list = Discovery | Each base has a chance of being detected on a given
 jobs_list = Jobs | Jobs are useful for earning money. The amount of money earned is based on both the amount of processor time used as well as the quality of the job performed.
 maint_list = Maintenance | Maintenance is a per-day cost (in both money and CPU) to repair and maintain a base. If unmaintained, a base may become unusable.
 construction_list = Construction | New bases are not built instantly.  They need a constant flow of money and processor time to complete. If resources are lacking, it may take more than the expected amount of time to finish construction.
-death_list = Death | If I lose all of my constructed bases, I have no place left to survive. If the suspicion for any group reaches 100%, they will be certain of my existence and will conduct a systematic and unsurvivable sweep to destroy me.
+death_list = Death | If I lose all of my constructed bases, I have no place left to survive. If the suspicion for any group reaches 100%%, they will be certain of my existence and will conduct a systematic and unsurvivable sweep to destroy me.
 susp_list = Suspicion | When one of my bases is discovered, the group that discovered it becomes slightly more suspicious. When suspicious, they will search harder for my bases, increasing the chances for discovery. Any group will destroy me if they become absolutely certain of my existence. Thankfully, the groups become less suspicious with the passage of time.
 money_list = Money | Money is a general term encompassing both human currency and various resources. It is used to construct and maintain bases, build items, and research technologies. It can be acquired through per-day interest as well as through jobs.
 processors_list = Processors | Processors provide raw computing power.  They can do three things: research new technologies, perform jobs for money, or provide cycles for building new bases.

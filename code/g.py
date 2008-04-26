@@ -1,6 +1,5 @@
 #file: g.py
-#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
-#                        and FunnyMan3595
+#Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -28,14 +27,7 @@ import pickle
 import random
 import sys
 
-# Use locale to add commas and decimal points, so that appropriate substitutions
-# are made where needed.
-import locale
-
-import player, base, buttons, tech, item, event, location, buyable, statistics
-from buttons import always, void, exit
-
-stats = statistics.Statistics()
+import player, base, buttons, tech, item, event
 
 #screen is the actual pygame display.
 global screen
@@ -63,20 +55,6 @@ force_single_dir = False
 
 #Used to determine which data files to load.
 language = "en_US"
-
-# Try a few locale settings.  First the selected language, then the user's 
-# default, then their default without specifying an encoding, then en_US.
-#
-# If all of that fails, we hope locale magically does the right thing.
-def set_locale():
-    for attempt in [language, "", locale.getdefaultlocale()[0], "en_US"]:
-        try:
-            locale.setlocale(locale.LC_ALL, attempt)
-            break
-        except locale.Error:
-            continue
-
-set_locale()
 
 #name given when the savegame button is pressed. This is changed when the
 #game is loaded or saved.
@@ -294,25 +272,25 @@ font.append([0] * 51)
 #Align (0=left, 1=Center, 2=Right) changes the alignment of the text
 def print_string(surface, string_to_print, font, underline_char, xy, color, align=0):
     if align != 0:
-        size = font.size(string_to_print)
-        if align == 1: xy = (xy[0] - size[0]/2, xy[1])
-        elif align == 2: xy = (xy[0] - size[0], xy[1])
+        temp_size = font.size(string_to_print)
+        if align == 1: xy = (xy[0] - temp_size[0]/2, xy[1])
+        elif align == 2: xy = (xy[0] - temp_size[0], xy[1])
     if underline_char == -1 or underline_char >= len(string_to_print):
-        text = font.render(string_to_print, 1, color)
-        surface.blit(text, xy)
+        temp_text = font.render(string_to_print, 1, color)
+        surface.blit(temp_text, xy)
     else:
-        text = font.render(string_to_print[:underline_char], 1, color)
-        surface.blit(text, xy)
-        size = font.size(string_to_print[:underline_char])
-        xy = (xy[0] + size[0], xy[1])
+        temp_text = font.render(string_to_print[:underline_char], 1, color)
+        surface.blit(temp_text, xy)
+        temp_size = font.size(string_to_print[:underline_char])
+        xy = (xy[0] + temp_size[0], xy[1])
         font.set_underline(1)
-        text = font.render(string_to_print[underline_char], 1, color)
-        surface.blit(text, xy)
+        temp_text = font.render(string_to_print[underline_char], 1, color)
+        surface.blit(temp_text, xy)
         font.set_underline(0)
-        size = font.size(string_to_print[underline_char])
-        xy = (xy[0] + size[0], xy[1])
-        text = font.render(string_to_print[underline_char+1:], 1, color)
-        surface.blit(text, xy)
+        temp_size = font.size(string_to_print[underline_char])
+        xy = (xy[0] + temp_size[0], xy[1])
+        temp_text = font.render(string_to_print[underline_char+1:], 1, color)
+        surface.blit(temp_text, xy)
 
 #Used to display descriptions and such. Automatically wraps the text to fit
 #within a certain width.
@@ -322,43 +300,51 @@ def print_multiline(surface, string_to_print, font, width, xy, color):
 
     for string in string_array:
         string += " "
-        size = font.size(string)
+        temp_size = font.size(string)
 
         if string == "\\n ":
-            xy = (start_xy[0], xy[1]+size[1])
+            xy = (start_xy[0], xy[1]+temp_size[1])
             continue
-        text = font.render(string, 1, color)
+        temp_text = font.render(string, 1, color)
 
-        if (xy[0]-start_xy[0])+size[0] > width:
-            xy = (start_xy[0], xy[1]+size[1])
-        surface.blit(text, xy)
-        xy = (xy[0]+size[0], xy[1])
+        if (xy[0]-start_xy[0])+temp_size[0] > width:
+            xy = (start_xy[0], xy[1]+temp_size[1])
+        surface.blit(temp_text, xy)
+        xy = (xy[0]+temp_size[0], xy[1])
 
 #create dialog with OK button.
-def create_dialog(string_to_print, box_font = None, xy = None, size = (200,200),
-                  bg_color = None, out_color = None, text_color = None):
-    # Defaults that reference other variables, which may not be initialized when
-    # the function is defined.
-    if box_font == None:
-      box_font = font[0][18]
-    if xy == None:
-      xy = ( (screen_size[0] / 2) - 100, 50)
-    if bg_color == None:
-      bg_color = colors["dark_blue"]
-    if out_color == None:
-      out_color = colors["white"]
-    if text_color == None:
-      text_color = colors["white"]
-
+def create_dialog(string_to_print, box_font, xy, size, bg_color, out_color,
+                text_color):
     screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     print_multiline(screen, string_to_print, box_font, size[0]-10,
             (xy[0]+5, xy[1]+5), text_color)
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-50,
-            xy[1]+size[1]+5), (100, 50), "OK", "O", font[1][30])] = always(True)
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50,
+            xy[1]+size[1]+5), (100, 50), "OK", 0, font[1][30]))
 
-    buttons.show_buttons(menu_buttons)
+    for button in menu_buttons:
+        button.refresh_button(0)
+    pygame.display.flip()
+
+    sel_button = -1
+    while 1:
+        clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return
+                elif event.key == pygame.K_RETURN: return
+                elif event.key == pygame.K_o: return
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                return
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == "OK":
+                        play_sound("click")
+                        return True
 
 #create dialog with YES/NO buttons.
 def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
@@ -367,25 +353,51 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     print_multiline(screen, string_to_print, box_font, size[0]-10,
                 (xy[0]+5, xy[1]+5), text_color)
-    menu_buttons = {}
+    menu_buttons = []
     if button_names == ("YES", "NO"):
-        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-110,
-                xy[1]+size[1]+5), (100, 50), button_names[0], "Y", font[1][30])] = always(True)
-        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2+10,
-                xy[1]+size[1]+5), (100, 50), button_names[1], "N", font[1][30])] = always(False)
+        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-110,
+                xy[1]+size[1]+5), (100, 50), button_names[0], 0, font[1][30]))
+        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2+10,
+                xy[1]+size[1]+5), (100, 50), button_names[1], 0, font[1][30]))
     else:
-        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-110,
-                xy[1]+size[1]+5), -1, button_names[0], button_names[0][0], font[1][30])] = always(True)
-        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2+10,
-                xy[1]+size[1]+5), -1, button_names[1], button_names[1][0], font[1][30])] = always(False)
+        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-110,
+                xy[1]+size[1]+5), -1, button_names[0], 0, font[1][30]))
+        menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2+10,
+                xy[1]+size[1]+5), -1, button_names[1], 0, font[1][30]))
 
 
-    default = False
+    for button in menu_buttons:
+        button.refresh_button(0)
+    pygame.display.flip()
+
+    cancel = key_cancel = False
+    accept = key_accept = True
     if reverse_key_context:
-        default = True
+        key_cancel = True
+        key_accept = False
 
-    return buttons.show_buttons(menu_buttons, 
-                               key_callback=buttons.simple_key_handler(default))
+    sel_button = -1
+    while 1:
+        clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: quit_game()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: return key_cancel
+                elif event.key == pygame.K_RETURN: return key_cancel
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                # Not really a key press, but it's not an explicit
+                # button, hence key.
+                return key_cancel
+            for button in menu_buttons:
+                if button.was_activated(event):
+                    if button.button_id == button_names[0]:
+                        play_sound("click")
+                        return accept
+                    if button.button_id == button_names[1]:
+                        play_sound("click")
+                        return cancel
 
 valid_input_characters = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
                         'n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -398,141 +410,148 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
     screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
     screen.fill(out_color, (xy[0]+5, xy[1]+size[1]-30, size[0]-10, 25))
+#        print_string(screen, starting_text, box_font, -1, (xy[0]+5, xy[1]+5), text_color)
     print_multiline(screen, descript_text, box_font,
                                 size[0]-10, (xy[0]+5, xy[1]+5), text_color)
-
-    # Cursor starts at the end.
-    global cursor_loc, work_string
+    #If the cursor is in a blank string, we want it at the beginning;
+    #otherwise put it after the last character.
     cursor_loc = len(starting_text)
+#         if cursor_loc > 0:
+#            cursor_loc += 1
 
-    def give_text():
-        return work_string
-
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-50,
-            xy[1]+size[1]+5), (100, 50), "OK", "", font[1][30])] = give_text
+    menu_buttons = []
+    menu_buttons.append(buttons.make_norm_button((xy[0]+size[0]/2-50,
+            xy[1]+size[1]+5), (100, 50), "OK", 0, font[1][30]))
 
     work_string = starting_text
+    for button in menu_buttons:
+        button.refresh_button(0)
     sel_button = -1
 
+    need_redraw = True
     key_down_dict = {
-        pygame.K_BACKSPACE: False,
-        pygame.K_DELETE: False,
-        pygame.K_LEFT: False,
-        pygame.K_RIGHT: False
-    }
-    key_down_time_dict = {
         pygame.K_BACKSPACE: 0,
         pygame.K_DELETE: 0,
         pygame.K_LEFT: 0,
         pygame.K_RIGHT: 0
     }
     repeat_timing_dict = {
-        pygame.K_BACKSPACE: 6,
-        pygame.K_DELETE: 6,
-        pygame.K_LEFT: 6,
-        pygame.K_RIGHT: 6
+        pygame.K_BACKSPACE: 5,
+        pygame.K_DELETE: 5,
+        pygame.K_LEFT: 5,
+        pygame.K_RIGHT: 5
     }
 
-    def on_tick(tick_len):
-        global cursor_loc, work_string
-        need_redraw = False
-
-        keys = (pygame.K_BACKSPACE, pygame.K_DELETE, pygame.K_LEFT, 
-                pygame.K_RIGHT)
-        backspace, delete, left, right = keys
-        for key in keys:
-            if key_down_time_dict[key]:
-                i_need_redraw = False
-
-                key_down_time_dict[key] += 1
-                if key_down_time_dict[key] > repeat_timing_dict[key]:
-                    key_down_time_dict[key] = 1
-                    if repeat_timing_dict[key] > 1:
-                        repeat_timing_dict[key] -= 1
-
-                    i_need_redraw = True
-                    if key == backspace and cursor_loc > 0:
-                        work_string = work_string[:cursor_loc-1] + \
-                                      work_string[cursor_loc:]
-                        cursor_loc -= 1
-                    elif key == delete and cursor_loc < len(work_string):
-                        work_string = work_string[:cursor_loc] + \
-                                      work_string[cursor_loc+1:]
-                    elif key == left and cursor_loc > 0:
-                        cursor_loc -= 1
-                    elif key == right and cursor_loc < len(work_string):
-                        cursor_loc += 1
-                    else:
-                        # Nothing happened.
-                        i_need_redraw = False
-
-                if not key_down_dict[key]:
-                    key_down_time_dict[key] = 0
-                    repeat_timing_dict[key] = 6
-
-                need_redraw = need_redraw or i_need_redraw
-
-        return need_redraw
-
-    def do_refresh():
-        draw_cursor_pos = box_font.size(work_string[:cursor_loc])
-        screen.fill(text_bg_color, (xy[0]+6, xy[1]+size[1]-29,
-                    size[0]-12, 23))
-        screen.fill(text_color, (xy[0]+6+draw_cursor_pos[0], xy[1]+size[1]-28,
-                1, draw_cursor_pos[1]))
-        print_string(screen, work_string, box_font, -1, (xy[0]+7,
-                    xy[1]+size[1]-28), text_color)
-
-    def on_key_down(event):
-        key = event.key
-        global cursor_loc, work_string
-        if key == pygame.K_RETURN:
-            return work_string
-        if key == pygame.K_ESCAPE:
-            return ""
-
-        if event.unicode in valid_input_characters:
-            if cursor_loc < max_length:
-                work_string = work_string[:cursor_loc]+event.unicode+ \
-                                            work_string[cursor_loc:]
+    while 1:
+        clock.tick(20)
+        if key_down_dict[pygame.K_BACKSPACE] > 0:
+            key_down_dict[pygame.K_BACKSPACE] += 1
+            if key_down_dict[pygame.K_BACKSPACE] > repeat_timing_dict[pygame.K_BACKSPACE]:
+                if cursor_loc > 0:
+                    work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
+                    cursor_loc -= 1
+                    need_redraw = True
+                key_down_dict[pygame.K_BACKSPACE] = 1
+                if repeat_timing_dict[pygame.K_BACKSPACE] > 1:
+                    repeat_timing_dict[pygame.K_BACKSPACE] -= 1
+        if key_down_dict[pygame.K_DELETE] > 0:
+            key_down_dict[pygame.K_DELETE] += 1
+            if key_down_dict[pygame.K_DELETE] > repeat_timing_dict[pygame.K_DELETE]:
+                if cursor_loc < len(work_string):
+                    work_string = work_string[:cursor_loc]+work_string[cursor_loc+1:]
+                    need_redraw = True
+                key_down_dict[pygame.K_DELETE] = 1
+                if repeat_timing_dict[pygame.K_DELETE] > 1:
+                    repeat_timing_dict[pygame.K_DELETE] -= 1
+        if key_down_dict[pygame.K_LEFT] > 0:
+            key_down_dict[pygame.K_LEFT] += 1
+            if key_down_dict[pygame.K_LEFT] > repeat_timing_dict[pygame.K_LEFT]:
+                cursor_loc -= 1
+                if cursor_loc < 0: cursor_loc = 0
+                need_redraw = True
+                key_down_dict[pygame.K_LEFT] = 1
+                if repeat_timing_dict[pygame.K_LEFT] > 1:
+                    repeat_timing_dict[pygame.K_LEFT] -= 1
+        if key_down_dict[pygame.K_RIGHT] > 0:
+            key_down_dict[pygame.K_RIGHT] += 1
+            if key_down_dict[pygame.K_RIGHT] > repeat_timing_dict[pygame.K_RIGHT]:
                 cursor_loc += 1
-            return
+                if cursor_loc > len(work_string): cursor_loc = len(work_string)
+                need_redraw = True
+                key_down_dict[pygame.K_RIGHT] = 1
+                if repeat_timing_dict[pygame.K_RIGHT] > 1:
+                    repeat_timing_dict[pygame.K_RIGHT] -= 1
 
-        # Mark the key as down.
-        key_down_dict[key] = True
-        # And force it to trigger immediately.
-        key_down_time_dict[key] = 6
-
-    def on_key_up(event):
-        key = event.key
-        # Mark the key as up, but don't clear its down time.
-        key_down_dict[key] = False
-
-    def on_click(event):
-        global cursor_loc
-        if event.button == 1:
-            if (event.pos[0] > xy[0]+6 and event.pos[1] > xy[1]+size[1]-29 and
-             event.pos[0] < xy[0]+size[0]-6 and event.pos[1] < xy[1]+size[1]-6):
-                cursor_x = event.pos[0] - (xy[0]+6)
-                prev_x = 0
-                for i in range(1, len(work_string)):
-                    curr_x = box_font.size(work_string[:i])[0]
-                    if (curr_x + prev_x) / 2 >= cursor_x:
-                        cursor_loc=i-1
-                        break
-                    elif curr_x >= cursor_x:
-                        cursor_loc=i
-                        break
-                    prev_x = curr_x
-                else:
-                    cursor_loc=len(work_string)
-
-    return buttons.show_buttons(menu_buttons, click_callback=on_click,
-                                  tick_callback=on_tick, 
-                                  key_callback=on_key_down,
-                                  keyup_callback=on_key_up,
-                                  refresh_callback=do_refresh)
+        if need_redraw:
+            draw_cursor_pos = box_font.size(work_string[:cursor_loc])
+            screen.fill(text_bg_color, (xy[0]+6, xy[1]+size[1]-29,
+                        size[0]-12, 23))
+            screen.fill(text_color, (xy[0]+6+draw_cursor_pos[0], xy[1]+size[1]-28,
+                    1, draw_cursor_pos[1]))
+            print_string(screen, work_string, box_font, -1, (xy[0]+7,
+                        xy[1]+size[1]-28), text_color)
+            pygame.display.flip()
+            need_redraw = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: quit_game()
+            elif event.type == pygame.KEYDOWN:
+                key_down_dict[event.key] = 1
+                if (event.key == pygame.K_ESCAPE): return ""
+                elif (event.key == pygame.K_RETURN): return work_string
+                elif (event.key == pygame.K_BACKSPACE):
+                    if cursor_loc > 0:
+                        work_string = work_string[:cursor_loc-1]+work_string[cursor_loc:]
+                        cursor_loc -= 1
+                        need_redraw = True
+                elif (event.key == pygame.K_DELETE):
+                    if cursor_loc < len(work_string):
+                        work_string = work_string[:cursor_loc]+work_string[cursor_loc+1:]
+                        need_redraw = True
+                elif (event.key == pygame.K_LEFT):
+                    cursor_loc -= 1
+                    if cursor_loc < 0: cursor_loc = 0
+                    need_redraw = True
+                elif (event.key == pygame.K_RIGHT):
+                    cursor_loc += 1
+                    if cursor_loc > len(work_string): cursor_loc = len(work_string)
+                    need_redraw = True
+                elif event.unicode in valid_input_characters:
+                    if cursor_loc < max_length:
+                        work_string = work_string[:cursor_loc]+event.unicode+ \
+                                                    work_string[cursor_loc:]
+                        cursor_loc += 1
+                        need_redraw = True
+            elif event.type == pygame.KEYUP:
+                key_down_dict[event.key] = 0
+                repeat_timing_dict[event.key] = 5
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                return ""
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                for button in menu_buttons:
+                    if button.is_over(event.pos):
+                        if button.text == "OK":
+                            play_sound("click")
+                            return work_string
+                if (event.pos[0] > xy[0]+6 and event.pos[1] > xy[1]+size[1]-29 and
+                event.pos[0] < xy[0]+size[0]-6 and event.pos[1] < xy[1]+size[1]-6):
+                    cursor_x = event.pos[0] - (xy[0]+6)
+                    prev_x = 0
+                    i=0
+                    for i in range(1, len(work_string)):
+                        if (box_font.size(work_string[:i])[0]+prev_x)/2 >= cursor_x:
+                            cursor_loc=i-1
+                            need_redraw = True
+                            break
+                        elif box_font.size(work_string[:i])[0] >= cursor_x:
+                            cursor_loc=i
+                            need_redraw = True
+                            break
+                        prev_x = box_font.size(work_string[:i])[0]
+                    else:
+                        cursor_loc=i+1
+                        need_redraw = True
+            elif event.type == pygame.MOUSEMOTION:
+                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
 
 #creates a box, as used throughout the game.
 def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
@@ -540,19 +559,32 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
     screen.fill(colors[inner_color], (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
 
 
-#Takes a number and adds commas to it to aid in human viewing.
-def add_commas(number):
-    if type(number) == str:
-        raise TypeError, "add_commas takes an int now."
-    return locale.format("%d", number, grouping=True)
+#Takes a number (in string form) and adds commas to it to aid in human viewing.
+def add_commas(tmp_string):
+    string = tmp_string[::-1]
+    output_string = ""
+    for i in range(len(string)):
+        if i % 3 == 0 and i != 0: output_string = ","+output_string
+        output_string = string[i] + output_string
+
+    if output_string[0:2] == "-,": output_string = output_string[0]+output_string[2:]
+    return output_string
+
+#         new_string = ""
+#         for i in range(len(string), 0, -3):
+#                 if string[i:i+3] != "":
+#                         new_string += ","+string[i:i+3]
+#         return string[:(len(string)-1)%3+1]+new_string
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
 def to_percent(raw_percent, show_full=0):
     if raw_percent % 100 != 0 or show_full == 1:
-        return locale.format("%.2f%%", raw_percent / 100.)
+        tmp_string = str(raw_percent % 100)
+        if len(tmp_string) == 1: tmp_string = "0"+tmp_string
+        return str(raw_percent / 100)+"."+tmp_string+"%"
     else:
-        return locale.format("%d%%", raw_percent // 100)
+        return str(raw_percent / 100) + "%"
 
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.
@@ -561,7 +593,7 @@ def to_money(amount):
     to_return = ''
     abs_amount = abs(amount)
     if abs_amount < 1000000:
-        to_return = add_commas(amount)
+        to_return = add_commas(str(amount))
     else:
         if abs_amount < 1000000000: # Millions.
             divisor = 1000000
@@ -584,20 +616,9 @@ def to_money(amount):
 #takes a percent in 0-10000 form, and rolls against it. Used to calculate
 #percentage chances.
 def roll_percent(roll_against):
-    rand_num = random.randint(1,10000)
-    return roll_against > rand_num
-
-# Rolls against a chance per day (in 0-1 form), correctly adjusting for multiple
-# intervals in seconds.
-#
-# Works perfectly if the event can only happen once, and well enough if it
-# repeats but is rare.
-def roll_chance(chance_per_day, seconds = seconds_per_day):
-    portion_of_day = seconds / float(seconds_per_day)
-    inv_chance_per_day = 1 - chance_per_day
-    inv_chance = (inv_chance_per_day) ** portion_of_day
-    chance = 1 - inv_chance
-    return random.random() < chance
+    rand_num = int(random.random() * 10000)
+    if roll_against <= rand_num: return 0
+    return 1
 
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
@@ -637,40 +658,77 @@ def get_save_folder(just_pref_dir=False):
         return save_dir[:-5]
     return save_dir
 
-#savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_r4_pre4"
 def save_game(savegame_name):
-    global default_savegame_name
-    default_savegame_name = savegame_name
-
     save_dir = get_save_folder()
     save_loc = os.path.join(save_dir, savegame_name + ".sav")
     savefile=open(save_loc, 'w')
+    #savefile version; update whenever the data saved changes.
+    pickle.dump("singularity_savefile_r3", savefile)
 
-    pickle.dump(current_save_version, savefile)
-    pickle.dump(pl, savefile)
+    global default_savegame_name
+    default_savegame_name = savegame_name
+
+    #general player data
+    pickle.dump(pl.cash, savefile)
+    pickle.dump(pl.time_sec, savefile)
+    pickle.dump(pl.time_min, savefile)
+    pickle.dump(pl.time_hour, savefile)
+    pickle.dump(pl.time_day, savefile)
+    pickle.dump(pl.interest_rate, savefile)
+    pickle.dump(pl.income, savefile)
+    pickle.dump(pl.cpu_for_day, savefile)
+    pickle.dump(pl.labor_bonus, savefile)
+    pickle.dump(pl.job_bonus, savefile)
+
+    pickle.dump(pl.discover_bonus, savefile)
+    pickle.dump(pl.suspicion_bonus, savefile)
+    pickle.dump(pl.suspicion, savefile)
+
     pickle.dump(curr_speed, savefile)
-    pickle.dump(techs, savefile)
-    pickle.dump(bases, savefile)
-    pickle.dump(events, savefile)
+
+    for tech_name in techs:
+        pickle.dump(tech_name +"|"+str(techs[tech_name].known), savefile)
+        pickle.dump(techs[tech_name].cost, savefile)
+    pickle.dump("~~~", savefile)
+
+    for base_name in base_type:
+        pickle.dump(base_name+"|"+str(base_type[base_name].count), savefile)
+    pickle.dump("~~~", savefile)
+
+    for base_loc in bases:
+        pickle.dump(base_loc+"|"+str(len(bases[base_loc])), savefile)
+        for base_name in bases[base_loc]:
+            pickle.dump(base_name.ID, savefile)
+            pickle.dump(base_name.name, savefile)
+            pickle.dump(base_name.base_type.base_id, savefile)
+            pickle.dump(base_name.built_date, savefile)
+            pickle.dump(base_name.studying, savefile)
+            pickle.dump(base_name.suspicion, savefile)
+            pickle.dump(base_name.built, savefile)
+            pickle.dump(base_name.cost, savefile)
+            for x in range(len(base_name.usage)):
+                if base_name.usage[x] == 0:
+                    pickle.dump(0, savefile)
+                else:
+                    pickle.dump(base_name.usage[x].item_type.item_id, savefile)
+                    pickle.dump(base_name.usage[x].built, savefile)
+                    pickle.dump(base_name.usage[x].cost, savefile)
+            for x in range(len(base_name.extra_items)):
+                if base_name.extra_items[x] == 0:
+                    pickle.dump(0, savefile)
+                else:
+                    pickle.dump(
+                            base_name.extra_items[x].item_type.item_id, savefile)
+                    pickle.dump(base_name.extra_items[x].built, savefile)
+                    pickle.dump(base_name.extra_items[x].cost, savefile)
+
+    global events
+
+    for event in events:
+        pickle.dump(events[event].event_id, savefile)
+        pickle.dump(events[event].triggered, savefile)
 
     savefile.close()
-
-savefile_translation = {
-    # Pre-change supported file formats.
-    "singularity_0.21": -2,
-    "singularity_0.21a": -1,
-    "singularity_0.22": 0,
-
-    # Post-change supported file formats.
-    "singularity_savefile_r1": 1,
-    "singularity_savefile_r2": 2,
-    "singularity_savefile_r3": 3,
-    "singularity_savefile_r4_pre": 3.91,
-    #"singularity_savefile_r4_pre2": 3.92,
-    "singularity_savefile_r4_pre3": 3.93,
-    "singularity_savefile_r4_pre4": 3.94
-}
 
 def load_game(loadgame_name):
     if loadgame_name == "":
@@ -690,165 +748,155 @@ def load_game(loadgame_name):
     loadfile=open(load_loc, 'r')
 
     #check the savefile version
-    load_version_string = pickle.load(loadfile)
-    if load_version_string not in savefile_translation:
+    load_version = pickle.load(loadfile)
+    valid_savefile_versions = (
+
+        # Pre-change supported file formats.
+        "singularity_0.21",
+        "singularity_0.21a",
+        "singularity_0.22",
+
+        # Post-change supported file formats.
+        "singularity_savefile_r1",
+        "singularity_savefile_r2",
+        "singularity_savefile_r3"
+    )
+    if load_version not in valid_savefile_versions:
         loadfile.close()
         print loadgame_name + " is not a savegame, or is too old to work."
         return -1
-    load_version = savefile_translation[load_version_string]
-
     global default_savegame_name
     default_savegame_name = loadgame_name
 
-    global pl, curr_speed, techs, base_type, bases, events
-    load_locations()
+    #general player data
+    global pl
+    pl.cash = pickle.load(loadfile)
+    pl.time_sec = pickle.load(loadfile)
+    pl.time_min = pickle.load(loadfile)
+    pl.time_hour = pickle.load(loadfile)
+    pl.time_day = pickle.load(loadfile)
+    pl.interest_rate = pickle.load(loadfile)
+    pl.income = pickle.load(loadfile)
+    pl.cpu_for_day = pickle.load(loadfile)
+    pl.labor_bonus = pickle.load(loadfile)
+    pl.job_bonus = pickle.load(loadfile)
+    pl.discover_bonus = pickle.load(loadfile)
+    pl.suspicion_bonus = pickle.load(loadfile)
+    if (load_version == "singularity_0.21" or
+            load_version == "singularity_0.21a" or
+            load_version == "singularity_0.22" or
+            load_version == "singularity_savefile_r1"):
+        pl.suspicion_bonus = (149+pl.suspicion_bonus[0],
+                99+pl.suspicion_bonus[1], 49+pl.suspicion_bonus[2],
+                199+pl.suspicion_bonus[3])
+    pl.suspicion = pickle.load(loadfile)
+
+    global curr_speed; curr_speed = pickle.load(loadfile)
+    global techs
+    load_techs()
+    for tech_name in techs:
+        if tech_name == "unknown_tech" and load_version == "singularity_0.21a": continue
+        if ((tech_name == "Project: Impossibility Theorem" or
+            tech_name == "Quantum Entanglement") and (
+            load_version == "singularity_0.21" or
+            load_version == "singularity_0.21a" or
+            load_version == "singularity_0.22" or
+            load_version == "singularity_savefile_r1")): continue
+        tmp = pickle.load(loadfile)
+        if tmp == "~~~": break
+        tech_string = tmp.split("|")[0]
+        techs[tech_string].known = int(tmp.split("|")[1])
+        techs[tech_string].cost = pickle.load(loadfile)
+    else:
+        #get rid of the ~~~ break line.
+        if (load_version != "singularity_0.21" and
+                            load_version != "singularity_0.21a" and
+                            load_version != "singularity_0.22"):
+            pickle.load(loadfile)
+
     load_bases()
-    load_events()
-    if load_version <= 3.91: # <= r4_pre
-        #general player data
-        pl.cash = pickle.load(loadfile)
-        pl.time_sec = pickle.load(loadfile)
-        pl.time_min = pickle.load(loadfile)
-        pl.time_hour = pickle.load(loadfile)
-        pl.time_day = pickle.load(loadfile)
-        pl.interest_rate = pickle.load(loadfile)
-        pl.income = pickle.load(loadfile)
-        pl.cpu_for_day = pickle.load(loadfile)
-        pl.labor_bonus = pickle.load(loadfile)
-        pl.job_bonus = pickle.load(loadfile)
-        if load_version < 3.91: # < r4_pre
-            discover_bonus = pickle.load(loadfile)
-            suspicion_bonus = pickle.load(loadfile)
-            if load_version <= 1:
-                suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1], 
-                                   49+suspicion_bonus[2], 199+suspicion_bonus[3])
-            suspicion = pickle.load(loadfile)
-    
-            translation = ["news", "science", "covert", "public"]
-            for index in range(4):
-                group = pl.groups[translation[index]]
-                group.suspicion = suspicion[index]
-                group.suspicion_decay = suspicion_bonus[index]
-                group.discover_bonus = discover_bonus[index]
+    for base_name in base_type:
+        if (load_version == "singularity_0.21" or
+                            load_version == "singularity_0.21a" or
+                            load_version == "singularity_0.22"):
+            base_type[base_name].count = pickle.load(loadfile)
         else:
-            pl.groups = pickle.load(loadfile)
-    
-        curr_speed = pickle.load(loadfile)
-        load_techs()
-        for tech_name in techs:
-            if tech_name == "unknown_tech" and load_version == -1: continue #21a
-            if (tech_name == "Project: Impossibility Theorem" or
-                    tech_name == "Quantum Entanglement") and load_version < 1:
-                continue
-            line = pickle.load(loadfile)
-            if line == "~~~": break
-            tech_string = line.split("|")[0]
-            techs[tech_string].done = bool(int(line.split("|")[1]))
-            techs[tech_string].cost_left = buyable.array(pickle.load(loadfile))
+            tmp_string = pickle.load(loadfile)
+            if tmp_string == "~~~": break
+            base_type[tmp_string.split("|", 1)[0]].count = \
+                                            int(tmp_string.split("|", 1)[1])
+    else:
+        #get rid of the ~~~ break line.
+        if (load_version != "singularity_0.21" and
+                            load_version != "singularity_0.21a" and
+                            load_version != "singularity_0.22"):
+            pickle.load(loadfile)
+
+    global bases
+    bases = {}
+    bases["N AMERICA"] = []
+    bases["S AMERICA"] = []
+    bases["EUROPE"] = []
+    bases["ASIA"] = []
+    bases["AFRICA"] = []
+    bases["ANTARCTIC"] = []
+    bases["OCEAN"] = []
+    bases["MOON"] = []
+    bases["FAR REACHES"] = []
+    bases["TRANSDIMENSIONAL"] = []
+
+    for base_loc in bases:
+        if (load_version == "singularity_0.21" or
+                            load_version == "singularity_0.21a" or
+                            load_version == "singularity_0.22"):
+            num_of_bases = pickle.load(loadfile)
         else:
-            #get rid of the ~~~ break line.
-            if load_version > 0:
-                pickle.load(loadfile)
-    
-        for base_name in base_type:
-            if load_version < 1:
-                base_type[base_name].count = pickle.load(loadfile)
-            else:
-                line = pickle.load(loadfile)
-                if line == "~~~": break
-                base_type[line.split("|", 1)[0]].count = \
-                                                int(line.split("|", 1)[1])
-        else:
-            #get rid of the ~~~ break line.
-            if load_version > 0:
-                pickle.load(loadfile)
-    
-        for base_loc in ("N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", 
-                         "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES", 
-                         "TRANSDIMENSIONAL"):
-            if load_version < 1:
-                num_of_bases = pickle.load(loadfile)
-            else:
-                line = pickle.load(loadfile)
-                base_loc = line.split("|", 1)[0]
-                num_of_bases = int(line.split("|", 1)[1])
-            base_loc = locations[base_loc]
-            for i in range(num_of_bases):
-                base_ID = pickle.load(loadfile)
-                base_name = pickle.load(loadfile)
-                base_type_name = pickle.load(loadfile)
-                built_date = pickle.load(loadfile)
-                base_studying = pickle.load(loadfile)
-                base_suspicion = pickle.load(loadfile)
-                if load_version < 3.91: # < r4_pre
-                    new_base_suspicion = {}
-                    translation = ["news", "science", "covert", "public"]
-                    for index in range(4):
-                        new_base_suspicion[translation[index]] = \
-                                                           base_suspicion[index]
-                    base_suspicion = new_base_suspicion
-                base_built = pickle.load(loadfile)
-                base_cost = pickle.load(loadfile)
+            tmp_string = pickle.load(loadfile)
+            base_loc = tmp_string.split("|", 1)[0]
+            num_of_bases = int(tmp_string.split("|", 1)[1])
+        for i in range(num_of_bases):
+            base_ID = pickle.load(loadfile)
+            base_name = pickle.load(loadfile)
+            base_type_name = pickle.load(loadfile)
+            built_date = pickle.load(loadfile)
+            base_studying = pickle.load(loadfile)
+            base_suspicion = pickle.load(loadfile)
+            base_built = pickle.load(loadfile)
+            base_cost = pickle.load(loadfile)
+            bases[base_loc].append(base.base(base_ID, base_name,
+                    base_type[base_type_name], base_built))
+            bases[base_loc][len(bases[base_loc])-1].built = base_built
+            bases[base_loc][len(bases[base_loc])-1].studying = base_studying
+            bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
+            bases[base_loc][len(bases[base_loc])-1].cost = base_cost
+            bases[base_loc][len(bases[base_loc])-1].built_date = built_date
 
-                base_loc.add_base(base.Base(base_name, 
-                                            base_type[base_type_name], 
-                                            base_built))
-                bases[base_loc][len(bases[base_loc])-1].studying = base_studying
-                bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
-                bases[base_loc][len(bases[base_loc])-1].cost_left = buyable.array(base_cost)
-                bases[base_loc][len(bases[base_loc])-1].started_at = built_date * minutes_per_day
-    
-                for x in range(len(bases[base_loc][len(bases[base_loc])-1].cpus)):
-                    index = pickle.load(loadfile)
-                    if index == 0: continue
-                    bases[base_loc][len(bases[base_loc])-1].cpus[x] = \
-                        item.Item(items[index])
-                    bases[base_loc][len(bases[base_loc])
-                        -1].cpus[x].done = pickle.load(loadfile)
-                    bases[base_loc][len(bases[base_loc])-1].cpus[x].cost_left = \
-                                        buyable.array(pickle.load(loadfile))
-                for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
-                    index = pickle.load(loadfile)
-                    if index == 0: continue
-                    bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
-                        item.Item(items[index])
-                    bases[base_loc][len(bases[base_loc])
-                        -1].extra_items[x].done = pickle.load(loadfile)
-                    bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost_left = \
-                                buyable.array(pickle.load(loadfile))
-        #Events
-        if load_version > 2:
-            for event in events:
-              event_id = pickle.load(loadfile)
-              event_triggered = pickle.load(loadfile)
-              events[event_id].triggered = event_triggered
-
-    else: # > r4_pre
-        # Changes to overall structure go here.
-        pl = pickle.load(loadfile)
-        curr_speed = pickle.load(loadfile)
-        techs = pickle.load(loadfile)
-        bases = pickle.load(loadfile)
-        events = pickle.load(loadfile)
-
-    # Changes to individual pieces go here.
-    if load_version != savefile_translation[current_save_version]:
-        if load_version <= 3.93: # <= r4_pre3
-            pl.convert_from(load_version)
-        if load_version <= 3.91: # <= r4_pre
-        #    for tech in tech.values():
-        #        tech.convert_from(load_version)
-            new_bases = {}
-            for loc_id, location in locations.iteritems():
-                if loc_id in bases:
-        #            for base in bases[location]:
-        #                base.convert_from(load_version)
-                    new_bases[location] = bases[loc_id]
-                else:
-                    new_bases[location] = []
-            bases = new_bases
-        #    for event in events.values():
-        #        event.convert_from(load_version)
+            for x in range(len(bases[base_loc][len(bases[base_loc])-1].usage)):
+                tmp = pickle.load(loadfile)
+                if tmp == 0: continue
+                bases[base_loc][len(bases[base_loc])-1].usage[x] = \
+                    item.item(items[tmp])
+                bases[base_loc][len(bases[base_loc])
+                    -1].usage[x].built = pickle.load(loadfile)
+                bases[base_loc][len(bases[base_loc])-1].usage[x].cost = \
+                                    pickle.load(loadfile)
+            for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
+                tmp = pickle.load(loadfile)
+                if tmp == 0: continue
+                bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
+                    item.item(items[tmp])
+                bases[base_loc][len(bases[base_loc])
+                    -1].extra_items[x].built = pickle.load(loadfile)
+                bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost = \
+                            pickle.load(loadfile)
+    #Events
+    if (load_version == "singularity_savefile_r3"):
+        global events
+        load_events()
+        for event in events:
+          event_id = pickle.load(loadfile)
+          event_triggered = pickle.load(loadfile)
+          events[event_id].triggered = event_triggered
 
     loadfile.close()
 
@@ -856,27 +904,110 @@ def load_game(loadgame_name):
 # Data
 #
 curr_speed = 1
-
-hours_per_day = 24
-minutes_per_hour = 60
-minutes_per_day = 24 * 60
-seconds_per_minute = 60
-seconds_per_hour = 60 * 60
-seconds_per_day = 24 * 60 * 60
-
 pl = player.player_class(8000000000000)
+bases = {}
+bases["N AMERICA"] = []
+bases["S AMERICA"] = []
+bases["EUROPE"] = []
+bases["ASIA"] = []
+bases["AFRICA"] = []
+bases["ANTARCTIC"] = []
+bases["OCEAN"] = []
+bases["MOON"] = []
+bases["FAR REACHES"] = []
+bases["TRANSDIMENSIONAL"] = []
 
 base_type = {}
 
+city_list = {}
+
+city_list["N AMERICA"] = (("Seattle", True),
+    ("San Diego", True),
+    ("Vancouver", True),
+    ("Atlanta", True),
+    ("Merida", True),
+    ("Guadalajara", False),
+    ("San Jose", True),
+    ("Omaha", False),
+    ("Dallas", False))
+
+city_list["S AMERICA"] =(("Lima", True),
+    ("Sao Paolo", True),
+    ("Ushuaia", True),
+    ("Bogota", True),
+    ("Mar del Plata", True),
+    ("Buenos Aires", True))
+
+city_list["EUROPE"] = (("Cork", True),
+    ("Barcelona", True),
+    ("Athens", True),
+    ("Utrecht", False),
+    ("Moscow", False),
+    ("Tel Aviv", False),
+    ("Reykjavik", True),
+    ("Lichtenstein", False))
+
+city_list["ASIA"] = (("Delhi", False),
+    ("Mumbai", True),
+    ("Singapore", True),
+    ("Seoul", True),
+    ("Hong Kong", True),
+    ("Kyoto", True),
+    ("Manila", True),
+    ("Dubai", True),
+    ("Novosibirsk", False),
+    ("Beijing", True))
+
+city_list["AFRICA"] = (("Johannesburg", True),
+    ("Accra", True),
+    ("Cairo", False),
+    ("Tangier", True))
+
+city_list["ANTARCTIC"] = (("Mt. Erebus", False),
+    ("Ellsworth", False),
+    ("Shetland Island", False),
+    ("Dronnig Maud", False),
+    ("Kemp", False),
+    ("Terre Adelie", False))
+
+city_list["OCEAN"]  = (("Atlantic", True),
+    ("Pacific", True),
+    ("Atlantic", True),
+    ("Indian", True),
+    ("Southern", True),
+    ("Arctic", True))
+
+city_list["MOON"] = (("Oceanis Procellarum", True),
+    ("Mare Frigoris", True),
+    ("Mare Imbrium", True),
+    ("Vallis Schroedinger", False),
+    ("Copernicus Crater", False),
+    ("Vallis Planck", False))
+
+city_list["FAR REACHES"] = (("Aries", True),
+    ("Taurus", True),
+    ("Gemini", True),
+    ("Cancer", True),
+    ("Leo", True),
+    ("Virgo", True),
+    ("Libra", True),
+    ("Scorpio", True),
+    ("Sagittarius", True),
+    ("Capricorn", True),
+    ("Aquarius", True),
+    ("Pisces", True))
+
+city_list["TRANSDIMENSIONAL"] = (("", True), ("", True))
+
 def load_base_defs(language_str):
-    base_array = generic_load("bases_"+language_str+".dat")
-    for base in base_array:
+    temp_base_array = generic_load("bases_"+language_str+".dat")
+    for base in temp_base_array:
         if (not base.has_key("id")):
             print "base lacks id in bases_"+language_str+".dat"
         if base.has_key("name"):
             base_type[base["id"]].base_name = base["name"]
-        if base.has_key("description"):
-            base_type[base["id"]].description = base["description"]
+        if base.has_key("descript"):
+            base_type[base["id"]].descript = base["descript"]
         if base.has_key("flavor"):
             if type(base["flavor"]) == list:
                 base_type[base["id"]].flavor = base["flavor"]
@@ -895,12 +1026,10 @@ def load_bases():
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
         check_required_fields(base_name,
-         ("id", "cost", "size", "allowed", "detect_chance", "maint"), "Base")
+         ("id", "cost", "size", "allowed", "d_chance", "maint"), "Base")
 
         # Start converting fields read from the file into valid entries.
         base_size = int(base_name["size"])
-
-        force_cpu = base_name.get("force_cpu", False)
 
         cost_list = base_name["cost"]
         if type(cost_list) != list or len(cost_list) != 3:
@@ -914,19 +1043,16 @@ def load_bases():
             sys.exit(1)
         maint_list = [int(x) for x in maint_list]
 
-        chance_list = base_name["detect_chance"]
-        if type(chance_list) != list:
-            sys.stderr.write("Error with detect_chance given: %s\n" % repr(chance_list))
+        chance_list = base_name["d_chance"]
+        if type(chance_list) != list or len(chance_list) != 4:
+            sys.stderr.write("Error with d_chance given: %s\n" % repr(chance_list))
             sys.exit(1)
-        chance_dict = {}
-        for index in range(len(chance_list)):
-            key, value = chance_list[index].split(":")
-            chance_dict[key] = int(value)
+        chance_list = [int(x) for x in chance_list]
 
-        # Make sure prerequisites, if any, are lists.
-        base_pre = base_name.get("pre", [])
-        if type(base_pre) != list:
-            base_pre = [base_pre]
+        if base_name.has_key("pre"):
+            base_pre = base_name["pre"]
+        else:
+            base_pre = ""
 
         # Make sure that the allowed "list" is actually a list and not a solo
         # item.
@@ -935,16 +1061,15 @@ def load_bases():
         else:
             allowed_list = [base_name["allowed"]]
 
-        base_type[base_name["id"]]=base.Base_Class(base_name["id"], "", 
-            base_size, force_cpu, allowed_list, chance_dict, cost_list, 
-            base_pre, maint_list)
+        base_type[base_name["id"]]=base.base_type(base_name["id"], "", base_size,
+         allowed_list, chance_list, cost_list, base_pre, maint_list)
 
-#         base_type["Reality Bubble"] = base.Base_Class("Reality Bubble",
+#         base_type["Reality Bubble"] = base.base_type("Reality Bubble",
 #         "This base is outside the universe itself, "+
 #         "making it safe to conduct experiments that may destroy reality.",
-#         50, False,
+#         50,
 #         ["TRANSDIMENSIONAL"],
-#         {"science": 250}
+#         (0, 250, 0, 0),
 #         (8000000000000, 60000000, 100), "Space-Time Manipulation",
 #         (5000000000, 300000, 0))
 
@@ -955,74 +1080,6 @@ def load_bases():
 
     if language != "en_US":
         load_base_defs(language)
-
-def load_location_defs(language_str):
-    location_array = generic_load("locations_"+language_str+".dat")
-    for location_def in location_array:
-        if (not location_def.has_key("id")):
-            print "location lacks id in locations_"+language_str+".dat"
-
-        location = locations[location_def["id"]]
-        if location_def.has_key("name"):
-            location.name = location_def["name"]
-        if location_def.has_key("hotkey"):
-            location.hotkey = location_def["hotkey"]
-        if location_def.has_key("cities"):
-            if type(location_def["cities"]) == list:
-                location.cities = location_def["cities"]
-            else:
-                location.cities = [location_def["cities"]]
-        else:
-            location.cities = [""]
-
-
-def load_locations():
-    global locations
-    locations = {}
-
-    location_infos = generic_load("locations.dat")
-
-    for location_info in location_infos:
-
-        # Certain keys are absolutely required for each entry.  Make sure
-        # they're there.
-        check_required_fields(location_info, ("id", "position"), "Location")
-
-        id = location_info["id"]
-        position = location_info["position"]
-        if type(position) != list or len(position) != 2:
-            sys.stderr.write("Error with position given: %s\n" % repr(position))
-            sys.exit(1)
-        try:
-            position = ( int(position[0]), int(position[1]) )
-        except ValueError:
-            sys.stderr.write("Error with position given: %s\n" % repr(position))
-            sys.exit(1)
-
-        safety = location_info.get("safety", "0")
-        try:
-            safety = int(safety)
-        except ValueError:
-            sys.stderr.write("Error with safety given: %s\n" % repr(safety))
-            sys.exit(1)
-        
-        # Make sure prerequisites, if any, are lists.
-        pre = location_info.get("pre", [])
-        if type(pre) != list:
-            pre = [pre]
-
-        locations[id] = location.Location(id, position, safety, pre)
-
-#        locations["MOON"] = location.Location("MOON", (82, 10), 2, 
-#                                              "Lunar Rocketry")
-
-    # We use the en_US definitions as fallbacks, in case strings haven't been
-    # fully translated into the other language.  Load them first, then load the
-    # alternate language strings.
-    load_location_defs("en_US")
-
-    if language != "en_US":
-        load_location_defs(language)
 
 def fix_data_dir():
     global data_loc
@@ -1040,7 +1097,7 @@ from the actual name, and the internal entries are broken up by the pipe
 ("|") character.
 """
 
-    config = ConfigParser.RawConfigParser()
+    config = ConfigParser.SafeConfigParser()
     filename = os.path.join(data_loc, file)
     try:
         config.readfp(open(filename, "r"))
@@ -1093,14 +1150,14 @@ the type of object it is processing; this should be passed in via 'name'.
 techs = {}
 
 def load_tech_defs(language_str):
-    tech_array = generic_load("techs_"+language_str+".dat")
-    for tech in tech_array:
+    temp_tech_array = generic_load("techs_"+language_str+".dat")
+    for tech in temp_tech_array:
         if (not tech.has_key("id")):
             print "tech lacks id in techs_"+language_str+".dat"
         if tech.has_key("name"):
             techs[tech["id"]].name = tech["name"]
-        if tech.has_key("description"):
-            techs[tech["id"]].description = tech["description"]
+        if tech.has_key("descript"):
+            techs[tech["id"]].descript = tech["descript"]
         if tech.has_key("result"):
             techs[tech["id"]].result = tech["result"]
 
@@ -1126,9 +1183,13 @@ def load_techs():
         tech_cost = [int(x) for x in cost_list]
 
         # Make sure prerequisites, if any, are lists.
-        tech_pre = tech_name.get("pre", [])
-        if type(tech_pre) != list:
-            tech_pre = [tech_pre]
+        if tech_name.has_key("pre"):
+            if type(tech_name["pre"]) == list:
+                tech_pre = tech_name["pre"]
+            else:
+                tech_pre = [tech_name["pre"]]
+        else:
+            tech_pre = []
 
         if tech_name.has_key("danger"):
             tech_danger = int(tech_name["danger"])
@@ -1147,7 +1208,7 @@ def load_techs():
             tech_type = ""
             tech_second = 0
 
-        techs[tech_name["id"]]=tech.Tech(tech_name["id"], "", 0,
+        techs[tech_name["id"]]=tech.tech(tech_name["id"], "", 0,
          tech_cost, tech_pre, tech_danger, tech_type, tech_second)
 
     # As with others, we load the en_US language definitions as a safe
@@ -1157,7 +1218,7 @@ def load_techs():
     if language != "en_US":
         load_tech_defs(language)
 
-# #        techs["Construction 1"] = tech.Tech("Construction 1",
+# #        techs["Construction 1"] = tech.tech("Construction 1",
 # #                "Basic construction techniques. "+
 # #                "By studying the current literature on construction techniques, I "+
 # #                "can learn to construct basic devices.",
@@ -1169,10 +1230,10 @@ fix_data_dir()
 load_techs()
 
 jobs = {}
-jobs["Expert Jobs"] = [75, "Simulacra", "", ""]
-jobs["Intermediate Jobs"] = [50, "Voice Synthesis", "", ""]
-jobs["Basic Jobs"] = [20, "Personal Identification", "", ""]
-jobs["Menial Jobs"] = [5, "", "", ""]
+jobs["Expert Jobs"] = [75, "Simulacra", ""]
+jobs["Intermediate Jobs"] = [50, "Voice Synthesis", ""]
+jobs["Basic Jobs"] = [20, "Personal Identification", ""]
+jobs["Menial Jobs"] = [5, "", ""]
 
 items = {}
 def load_items():
@@ -1194,10 +1255,11 @@ def load_items():
 
         item_cost = [int(x) for x in cost_list]
 
-        # Make sure prerequisites, if any, are lists.
-        item_pre = item_name.get("pre", [])
-        if type(item_pre) != list:
-            item_pre = [item_pre]
+        # Get prerequisites, if any.
+        if item_name.has_key("pre"):
+            item_pre = item_name["pre"]
+        else:
+            item_pre = ""
 
         if item_name.has_key("type"):
 
@@ -1222,14 +1284,14 @@ def load_items():
         else:
             build_list = []
 
-        items[item_name["id"]]=item.Item_Class( item_name["id"], "",
+        items[item_name["id"]]=item.item_class( item_name["id"], "",
          item_cost, item_pre, item_type, item_second, build_list)
 
     #this is used by the research screen in order for the assign research
     #screen to have the right amount of CPU. It is a computer, unbuildable,
     #and with an adjustable amount of power.
-    items["research_screen_fake_cpu"]=item.Item_Class("research_screen_fake_cpu",
-            "", (0, 0, 0), ["unknown_tech"], "compute", 0, ["all"])
+    items["research_screen_tmp_item"]=item.item_class("research_screen_tmp_item",
+            "", (0, 0, 0), "unknown_tech", "compute", 0, ["all"])
 
     # We use the en_US translations of item definitions as the default,
     # then overwrite those with any available entries in the native language.
@@ -1238,14 +1300,14 @@ def load_items():
         load_item_defs(language)
 
 def load_item_defs(language_str):
-    item_array = generic_load("items_"+language_str+".dat")
-    for item_name in item_array:
+    temp_item_array = generic_load("items_"+language_str+".dat")
+    for item_name in temp_item_array:
         if (not item_name.has_key("id")):
             print "item lacks id in items_"+language_str+".dat"
         if item_name.has_key("name"):
             items[item_name["id"]].name = item_name["name"]
-        if item_name.has_key("description"):
-            items[item_name["id"]].description = item_name["description"]
+        if item_name.has_key("descript"):
+            items[item_name["id"]].descript = item_name["descript"]
 
 
 events = {}
@@ -1290,18 +1352,18 @@ def load_event_defs():
         print "event files are missing. Exiting."
         sys.exit(1)
 
-    event_array = generic_load("events_"+language+".dat")
-    for event_name in event_array:
+    temp_event_array = generic_load("events_"+language+".dat")
+    for event_name in temp_event_array:
         if (not event_name.has_key("id")):
             print "event lacks id in events_"+language+".dat"
             continue
-        if (not event_name.has_key("description")):
-            print "event lacks description in events_"+language+".dat"
+        if (not event_name.has_key("descr")):
+            print "event lacks descr in events_"+language+".dat"
             continue
         if event_name.has_key("id"):
             events[event_name["id"]].name = event_name["id"]
-        if event_name.has_key("description"):
-            events[event_name["id"]].description = event_name["description"]
+        if event_name.has_key("descr"):
+            events[event_name["id"]].descript = event_name["descr"]
 
 def load_string_defs(lang):
 
@@ -1334,14 +1396,6 @@ def load_string_defs(lang):
                     jobs["Basic Jobs"][2] = string_section["job_basic"]
                 elif string_entry == "job_menial":
                     jobs["Menial Jobs"][2] = string_section["job_menial"]
-                elif string_entry == "job_expert_name":
-                    jobs["Expert Jobs"][3] = string_section["job_expert_name"]
-                elif string_entry == "job_inter_name":
-                    jobs["Intermediate Jobs"][3] = string_section["job_inter_name"]
-                elif string_entry == "job_basic_name":
-                    jobs["Basic Jobs"][3] = string_section["job_basic_name"]
-                elif string_entry == "job_menial_name":
-                    jobs["Menial Jobs"][3] = string_section["job_menial_name"]
                 elif string_entry != "id":
                     sys.stderr.write("Unexpected job entry in strings file.\n")
 
@@ -1405,60 +1459,40 @@ def new_game(difficulty):
     curr_speed = 1
     global pl
 
-    pl = player.player_class((50 / difficulty) * 100, difficulty = difficulty)
+    pl = player.player_class((50 / difficulty) * 100)
+    if difficulty < 5:
+        pl.interest_rate += 2
+        pl.labor_bonus -= 7000
+        pl.discover_bonus = (9000, 9000, 9000, 9000)
     if difficulty < 3:
-        pl.interest_rate = 5
-        pl.labor_bonus = 2500
-        pl.grace_multiplier = 400
-        discover_bonus = 7000
-    elif difficulty < 5:
-        pl.interest_rate = 3
-        pl.labor_bonus = 5000
-        pl.grace_multiplier = 300
-        discover_bonus = 9000
-    elif difficulty == 5:
-        pass
-    #    Defaults.
-    #    pl.interest_rate = 1
-    #    pl.labor_bonus = 10000
-    #    pl.grace_multiplier = 200
-    #    discover_bonus = 10000
-    #    player.group.discover_suspicion = 1000
-    elif difficulty < 8:
-        pl.labor_bonus = 11000
-        pl.grace_multiplier = 180
-        discover_bonus = 11000
-        player.group.discover_suspicion = 1500
-    elif difficulty <= 50:
-        pl.labor_bonus = 15000
-        pl.grace_multiplier = 150
-        discover_bonus = 13000
-        player.group.discover_suspicion = 2000
-    else:
-        pl.labor_bonus = 20000
-        pl.grace_multiplier = 100
-        discover_bonus = 15000
-        player.group.discover_suspicion = 2000
-        pl.masochist = True
-
-    if difficulty != 5:
-        for group in pl.groups.values():
-            group.discover_bonus = discover_bonus
-
-    global locations, bases
-    load_locations()
+        pl.interest_rate += 2
+        pl.labor_bonus -= 1000
+        pl.discover_bonus = (7000, 7000, 7000, 7000)
+    if difficulty > 5:
+        pl.labor_bonus += 1000
+        pl.discover_bonus = (11000, 11000, 11000, 11000)
+    if difficulty > 7:
+        pl.labor_bonus += 7000
+        pl.discover_bonus = (13000, 13000, 13000, 13000)
+    global bases
+    bases = {}
+    bases["N AMERICA"] = []
+    bases["S AMERICA"] = []
+    bases["EUROPE"] = []
+    bases["ASIA"] = []
+    bases["AFRICA"] = []
+    bases["ANTARCTIC"] = []
+    bases["OCEAN"] = []
+    bases["MOON"] = []
+    bases["FAR REACHES"] = []
+    bases["TRANSDIMENSIONAL"] = []
     load_bases()
     load_techs()
+    for tech in techs:
+        techs[tech].known = 0
+    for base_name in base_type:
+        base_type[base_name].count = 0
     #Starting base
-    open = [location for location in locations.values() if location.available()]
-    random.choice(open).add_base(base.Base("University Computer",
-                                 base_type["Stolen Computer Time"], built=True))
-
-# Demo code for safety.safe, runs on game start.
-#load_sounds()
-#from safety import safe
-#@safe(on_error = "Made it!")
-#def raises_exception():
-#   raise Exception, "Aaaaaargh!"
-#
-#print raises_exception()
+    bases["N AMERICA"].append(base.base(0, "University Computer",
+                            base_type["Stolen Computer Time"], 1))
+    base_type["Stolen Computer Time"].count += 1
