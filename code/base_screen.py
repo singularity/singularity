@@ -31,10 +31,12 @@ def show_base(this_base, location):
     g.screen.fill(g.colors["black"])
 
     def do_change_tech():
+        g.play_sound("click")
         change_tech(this_base)
 
     def make_do_build_item(item_type):
         def do_build_item():
+            g.play_sound("click")
             build_item(this_base, item_type, location)
         return do_build_item
 
@@ -42,6 +44,7 @@ def show_base(this_base, location):
     next_base = always(1)
 
     def do_destroy():
+        g.play_sound("click")
         if g.create_yesno(g.strings["really_destroy"], g.font[0][18], 
                 (100, 100), (150, 100), g.colors["blue"], g.colors["white"],
                 g.colors["white"]):

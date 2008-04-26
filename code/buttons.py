@@ -20,11 +20,13 @@
 
 import pygame
 import g
+from new import instancemethod
 
 class button:
     def __init__(self, xy, size, text, activate_key, bg_color, out_color,
                                 sel_color, text_color, font, button_id="",
-                                force_underline = None):
+                                force_underline = None, 
+                                stay_selected_func = lambda self: None):
         self.xy = xy
         self.size = size
         self.text = text
@@ -43,6 +45,7 @@ class button:
         self.font = font
         self.button_id = button_id
         self.stay_selected = 0
+        self.stay_selected_func = instancemethod(stay_selected_func, self, button)
         if button_id == "":
             self.button_id = self.text
 
@@ -95,18 +98,22 @@ class button:
 
 
     def refresh_button(self, selected):
-        if not self.visible: return 0
-        if self.stay_selected == 1: selected = 1
-        if selected == 0:
+        if not self.visible: return
+        func_selected = self.stay_selected_func()
+        if func_selected == None:
+            selected = selected or self.stay_selected
+        else:
+            selected = selected or func_selected
+        if not selected:
             g.screen.blit(self.button_surface, self.xy)
         else:
             g.screen.blit(self.sel_button_surface, self.xy)
     def is_over(self, xy):
-        if not self.visible: return 0
+        if not self.visible: return False
         if xy[0] >= self.xy[0] and xy[1] >= self.xy[1] and \
         xy[0] <= self.xy[0] + self.size[0] and xy[1] <= self.xy[1] + self.size[1]:
-            return 1
-        return 0
+            return True
+        return False
     #Returns 1 if the event should activate this button. Checks for keypresses
     #and button clicks.
     def was_activated(self, event):
@@ -138,11 +145,12 @@ def refresh_buttons(sel_button, menu_buttons, event):
 #while buttons allow for creation of any button style needed, most of the
 #buttons are of one style.
 def make_norm_button(xy, size, text, select_char, font, button_id="", 
-                     force_underline=None):
+                     force_underline=None,
+                     stay_selected_func = lambda self: None):
     return button(xy, size, text, select_char,
         g.colors["dark_blue"], g.colors["white"],
         g.colors["light_blue"], g.colors["white"], font, button_id, 
-        force_underline)
+        force_underline, stay_selected_func)
 
 always = lambda return_this: lambda *args, **kwargs: return_this
 void = always(None)
@@ -151,9 +159,9 @@ no_args = always( () )
 
 # Used to return from within a sub[-sub...]-function
 class Return(Exception): pass 
-def show_buttons(buttons, key_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void):
+def show_buttons(buttons, key_callback = void, click_callback = void, button_callback = void, button_args = no_args, refresh_callback = void, tick_callback = void):
     try:
-        _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback)
+        _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback)
     except Return, e:
         return e.args[0]
 
@@ -164,7 +172,7 @@ def maybe_return(retval):
         g.play_sound("click")
         raise Return, retval
 
-def _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback):
+def _show_buttons(buttons, key_callback, click_callback, button_callback, button_args, refresh_callback, tick_callback):
     def check_buttons():
         for button in buttons.keys():
             if button.was_activated(event):
@@ -175,17 +183,16 @@ def _show_buttons(buttons, key_callback, click_callback, button_callback, button
         refresh_callback()
         for button in buttons.keys():
             button.refresh_button(False)
+        pygame.display.flip()
 
     do_refresh()
-    pygame.display.flip()
 
     sel_button = -1
-    retval = None
     while True:
-        need_refresh = False
-        g.clock.tick(20)
+        event_refresh = False
+        need_refresh = tick_callback(g.clock.tick(20))
         for event in pygame.event.get():
-            need_refresh = True
+            event_refresh = True
             if event.type == pygame.QUIT:
                 g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -199,8 +206,7 @@ def _show_buttons(buttons, key_callback, click_callback, button_callback, button
                 if event.button == 3:
                     maybe_return(-1) # Will return -1.
             elif event.type == pygame.MOUSEMOTION:
-                need_refresh = False
+                event_refresh = False
                 sel_button = refresh_buttons(sel_button, buttons.keys(), event)
-        if need_refresh:
+        if need_refresh or event_refresh:
             do_refresh()
-            pygame.display.flip()

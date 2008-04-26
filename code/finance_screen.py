@@ -26,6 +26,7 @@ from buyable import cash, cpu, labor
 
 from buttons import exit
 def main_finance_screen():
+    g.play_sound("click")
     #Border
     g.screen.fill(g.colors["black"])
 

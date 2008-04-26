@@ -30,6 +30,7 @@ import base_screen
 #detection = (news, science, covert, person)
 
 def main_research_screen():
+    g.play_sound("click")
     #Border
     g.screen.fill(g.colors["black"])
 
@@ -52,7 +53,8 @@ def main_research_screen():
         item_display_list[:] = new_item_display_list
 
     def do_stop(list_pos):
-        kill_tech(item_list[list_pos])
+        if kill_tech(item_list[list_pos]):
+            g.play_sound("click")
         rebuild_list()
 
     def do_assign(list_pos):
@@ -76,10 +78,9 @@ def main_research_screen():
     def do_refresh(list_pos):
         refresh_research(item_list[list_pos], item_CPU_list[list_pos])
 
-    return listbox.show_listbox(item_display_list, menu_buttons, 
-                                loc=xy_loc, box_size=(230, 300),
-                                pos_callback=do_refresh, 
-                                return_callback=do_stop)
+    listbox.show_listbox(item_display_list, menu_buttons, 
+                         loc=xy_loc, box_size=(230, 300),
+                         pos_callback=do_refresh, return_callback=do_stop)
 
 def refresh_screen(menu_buttons, list_size):
     #Border

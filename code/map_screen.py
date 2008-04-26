@@ -68,6 +68,7 @@ def display_pause_menu():
 
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return
+    g.play_sound("click")
     button_array= []
     button_array.append(["GIVE MONEY", "M"])
     button_array.append(["GIVE TECH", "T"])
@@ -108,6 +109,7 @@ def display_cheat_list(menu_buttons):
     elif selection == 5: return
 
 def display_knowledge_list():
+    g.play_sound("click")
     button_array= []
     button_array.append(["TECHS", "T"])
     button_array.append(["ITEMS", "I"])
@@ -274,82 +276,113 @@ def refresh_concept(concept_name, xy):
     g.print_multiline(g.screen, g.help_strings[concept_name][1],
             g.font[0][18], 290, (xy[0]+160, xy[1]+30), g.colors["white"])
 
-def create_buttons(font_size):
-    menu_buttons = []
-    #Note that this must be element 0 in menu_buttons
-    menu_buttons.append(buttons.button((100, -1), (200, 26),
-        "DAY 0000, 00:00:00", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][font_size]))
-    menu_buttons.append(buttons.make_norm_button((0, 0), (100, 25),
-        "OPTIONS", "O", g.font[1][20]))
-    menu_buttons.append(buttons.make_norm_button((300, 0), (25, 25),
-        "ii", "0", g.font[1][20]))
-    if g.curr_speed == 0: menu_buttons[2].stay_selected = 1
-    menu_buttons[2].activate_key = "0"
-    menu_buttons.append(buttons.make_norm_button((324, 0), (25, 25),
-        ">", "1", g.font[1][20]))
-    if g.curr_speed == 1: menu_buttons[3].stay_selected = 1
-    menu_buttons[3].activate_key = "1"
-    menu_buttons.append(buttons.make_norm_button((348, 0), (25, 25),
-        ">>", "2", g.font[1][20]))
-    if g.curr_speed == 60: menu_buttons[4].stay_selected = 1
-    menu_buttons[4].activate_key = "2"
-    menu_buttons.append(buttons.make_norm_button((372, 0), (28, 25),
-        ">>>", "3", g.font[1][20]))
-    if g.curr_speed == 7200: menu_buttons[5].stay_selected = 1
-    menu_buttons[5].activate_key = "3"
-    menu_buttons.append(buttons.make_norm_button((399, 0), (36, 25),
-        ">>>>", "4", g.font[1][20]))
-    if g.curr_speed == 432000: menu_buttons[6].stay_selected = 1
-    #Note that this must be element 7 in menu_buttons
-    adjusted_size = font_size
-    if g.screen_size[0] == 640:
-        adjusted_size = font_size -2
-    menu_buttons.append(buttons.button((435, -1), (g.screen_size[0]-435, 26),
-        "CASH", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size]))
-    #Note that this must be element 8 in menu_buttons
-    menu_buttons.append(buttons.button((0, g.screen_size[1]-25),
-        (g.screen_size[0], 26),
-        "SUSPICION", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size]))
-    #Note that this must be element 9 in menu_buttons
-    menu_buttons.append(buttons.button((435, 24), (g.screen_size[0]-435, 26),
-        "CPU", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size]))
-    menu_buttons.append(buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
-        "RESEARCH", "R", g.font[1][20]))
-    menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
-        g.screen_size[1]-50), (120, 25),
-        "FINANCE", "E", g.font[1][20]))
-    menu_buttons.append(buttons.make_norm_button((g.screen_size[0]-120,
-        g.screen_size[1]-75), (120, 25),
-        "KNOWLEDGE", "K", g.font[1][20]))
-
-    for location in g.locations.values():
-        menu_buttons.append(buttons.make_norm_button((
-            g.screen_size[0] * location.y // 100,
-            g.screen_size[1] * location.x // 100), -1,
-            location.id, location.hotkey, g.font[1][25]))
-
-    return menu_buttons
 
 def map_loop():
     font_size = 20
     if g.screen_size[0] == 640: font_size = 16
-    menu_buttons = create_buttons(font_size)
 
-    sel_button = -1
-    refresh_map(menu_buttons)
+    menu_buttons = {}
+    time_button = buttons.button((100, -1), (200, 26),
+        "DAY 0000, 00:00:00", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][font_size])
+    menu_buttons[time_button] = void
+
+    def show_options():
+        g.play_sound("click")
+        selection = display_pause_menu()
+        result = handle_pause_menu(selection, menu_buttons)
+        if result == 0: 
+            return result
+
+    menu_buttons[buttons.make_norm_button((0, 0), (100, 25),
+        "OPTIONS", "O", g.font[1][20])] = show_options
+
+    def make_set_speed(speed):
+        def set_speed():
+            g.play_sound("click")
+            g.curr_speed = speed
+        return set_speed
+
+    speed_button_souls = ( ("ii", 25, 0, 0), (">", 25, 1, 1), (">>", 25, 60, 2),
+                     (">>>", 28, 7200, 3), (">>>>", 36, 432000, 4) )
+    x_pos = 300
+    for legend, width, speed, key in speed_button_souls:
+        # Most other variants on this end up setting speed = 432000 for all of
+        # them.  Bizarre.
+        def speed_matches(self, speed = speed):
+            return g.curr_speed == speed
+        speed_button = buttons.make_norm_button((x_pos, 0), (width, 25),
+                                legend, str(key), g.font[1][20], 
+                                stay_selected_func = speed_matches)
+        menu_buttons[speed_button] = make_set_speed(speed)
+        x_pos += width - 1
+
+    adjusted_size = font_size
+    if g.screen_size[0] == 640:
+        adjusted_size = font_size -2
+
+    cash_button = buttons.button((435, -1), (g.screen_size[0]-435, 26),
+        "CASH", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
+    menu_buttons[cash_button] = void
+
+    suspicion_button = buttons.button((0, g.screen_size[1]-25),
+        (g.screen_size[0], 26),
+        "SUSPICION", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
+    menu_buttons[suspicion_button] = void
+
+    cpu_button = buttons.button((435, 24), (g.screen_size[0]-435, 26),
+        "CPU", "", g.colors["black"], g.colors["dark_blue"],
+        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
+    menu_buttons[cpu_button] = void
+
+    menu_buttons[buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
+        "RESEARCH", "R", g.font[1][20])] = research_screen.main_research_screen
+    menu_buttons[buttons.make_norm_button((g.screen_size[0]-120,
+        g.screen_size[1]-50), (120, 25),
+        "FINANCE", "E", g.font[1][20])] = finance_screen.main_finance_screen
+    menu_buttons[buttons.make_norm_button((g.screen_size[0]-120,
+        g.screen_size[1]-75), (120, 25),
+        "KNOWLEDGE", "K", g.font[1][20])] = display_knowledge_list
+
+    def do_refresh():
+        refresh_map(menu_buttons)
+
+    def make_show_location(location):
+        def show_location():
+            g.play_sound("click")
+            # We want to keep redisplaying the base_list until the
+            # user is done mucking around with bases.
+            done_base = False
+            while not done_base:
+               done_base = display_base_list(g.locations[location], 
+                                             menu_buttons)
+               do_refresh()
+        return show_location
+
+    for location in g.locations.values():
+        menu_buttons[buttons.make_norm_button((
+            g.screen_size[0] * location.y // 100,
+            g.screen_size[1] * location.x // 100), -1,
+            location.id, location.hotkey, g.font[1][25])] = \
+                                               make_show_location(location.id)
+
+    def show_cheats():
+        display_cheat_list(menu_buttons)
+
+    menu_buttons[buttons.make_norm_button( (-1, -1), (0,0), "", "`", 
+                                           g.font[1][25])] = show_cheats
 
     #I set this to 1000 to force an immediate refresh.
+    global milli_clock
     milli_clock = 1000
-    while 1:
-        milli_clock += g.clock.tick(30) * g.curr_speed
+    def on_tick(tick_amt):
+        global milli_clock
+        milli_clock += tick_amt * g.curr_speed
         if milli_clock >= 1000:
             g.play_music()
             need_refresh = g.pl.give_time(milli_clock/1000)
-            if need_refresh == 1: refresh_map(menu_buttons)
             lost = g.pl.lost_game()
             if lost == 1:
                 g.play_music("lose")
@@ -359,134 +392,46 @@ def map_loop():
                 g.play_music("lose")
                 g.create_dialog(g.strings["lost_sus"])
                 return 0
-            milli_clock = milli_clock % 1000
+            milli_clock %= 1000
 
-            day_string = "%04d" % g.pl.time_day
-            hour_string = "%02d" % g.pl.time_hour
-            min_string = "%02d" % g.pl.time_min
-            sec_string = "%02d" % g.pl.time_sec
             time_string = "DAY %04d, %02d:%02d:%02d" % \
                   (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
 
-            menu_buttons[0].text = time_string
-            menu_buttons[0].remake_button()
-            menu_buttons[0].refresh_button(0)
+            time_button.text = time_string
+            time_button.remake_button()
 
             result_cash = g.to_money(g.pl.future_cash())
-            menu_buttons[7].text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
-            menu_buttons[7].remake_button()
-            menu_buttons[7].refresh_button(0)
+            cash_button.text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
+            cash_button.remake_button()
 
-            menu_buttons[8].text = ("[SUSPICION] NEWS: "+
+            suspicion_button.text = ("[SUSPICION] NEWS: "+
                 g.to_percent(g.pl.groups["news"].suspicion, 1)+"  SCIENCE: "+
                 g.to_percent(g.pl.groups["science"].suspicion, 1)+"  COVERT: "+
                 g.to_percent(g.pl.groups["covert"].suspicion, 1)+"  PUBLIC: "+
                 g.to_percent(g.pl.groups["public"].suspicion, 1))
-            menu_buttons[8].remake_button()
-            menu_buttons[8].refresh_button(0)
+            suspicion_button.remake_button()
 
             total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
                     finance_screen.cpu_numbers()
+
             if construction_cpu < maint_cpu:
-                menu_buttons[9].text_color = g.colors["red"]
+                cpu_button.text_color = g.colors["red"]
             else:
-                menu_buttons[9].text_color = g.colors["white"]
-            menu_buttons[9].text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(construction_cpu)+")"
-            menu_buttons[9].remake_button()
-            menu_buttons[9].refresh_button(0)
-        pygame.display.flip()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: g.quit_game()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    selection = display_pause_menu()
-                    result = handle_pause_menu(selection, menu_buttons)
-                    if result == 0: return result
-                    if result == 1:
-                        menu_buttons = create_buttons(font_size)
-                        refresh_map(menu_buttons)
-                elif event.key == pygame.K_BACKQUOTE:
-                    display_cheat_list(menu_buttons)
-                    refresh_map(menu_buttons)
+                cpu_button.text_color = g.colors["white"]
+            cpu_button.text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(construction_cpu)+")"
+            cpu_button.remake_button()
+            cpu_button.refresh_button(0)
 
-            elif event.type == pygame.MOUSEMOTION:
-                sel_button = buttons.refresh_buttons(sel_button, menu_buttons, event)
-            for button in menu_buttons:
-                if button.was_activated(event):
-                    if button.button_id == "OPTIONS":
-                        g.play_sound("click")
-                        selection = display_pause_menu()
-                        result = handle_pause_menu(selection, menu_buttons)
-                        if result == 0: return result
-                        if result == 1:
-                            menu_buttons = create_buttons(font_size)
-                            refresh_map(menu_buttons)
-                    elif button.button_id == "RESEARCH":
-                        g.play_sound("click")
-                        research_screen.main_research_screen()
-                        refresh_map(menu_buttons)
-                    elif button.button_id == "FINANCE":
-                        g.play_sound("click")
-                        finance_screen.main_finance_screen()
-                        refresh_map(menu_buttons)
-                    elif button.button_id == "KNOWLEDGE":
-                        g.play_sound("click")
-                        display_knowledge_list()
-                        refresh_map(menu_buttons)
-                    elif button.button_id == "ii":
-                        g.play_sound("click")
-                        g.curr_speed = 0
-                        for button2 in menu_buttons:
-                            button2.stay_selected = 0
-                            button2.refresh_button(0)
-                        button.stay_selected = 1
-                        button.refresh_button(1)
-                    elif button.button_id == ">":
-                        g.play_sound("click")
-                        g.curr_speed = 1
-                        for button2 in menu_buttons:
-                            button2.stay_selected = 0
-                            button2.refresh_button(0)
-                        button.stay_selected = 1
-                        button.refresh_button(1)
-                    elif button.button_id == ">>":
-                        g.play_sound("click")
-                        g.curr_speed = 60
-                        for button2 in menu_buttons:
-                            button2.stay_selected = 0
-                            button2.refresh_button(0)
-                        button.stay_selected = 1
-                        button.refresh_button(1)
-                    elif button.button_id == ">>>":
-                        g.play_sound("click")
-                        g.curr_speed = 7200
-                        for button2 in menu_buttons:
-                            button2.stay_selected = 0
-                            button2.refresh_button(0)
-                        button.stay_selected = 1
-                        button.refresh_button(1)
-                    elif button.button_id == ">>>>":
-                        g.play_sound("click")
-                        g.curr_speed = 432000
-                        for button2 in menu_buttons:
-                            button2.stay_selected = 0
-                            button2.refresh_button(0)
-                        button.stay_selected = 1
-                        button.refresh_button(1)
-                    elif button.button_id == "SUSPICION": pass
-                    elif button.button_id == "CPU": pass
-                    elif button.xy[1] != -1: #ignore the timer
-                        g.play_sound("click")
+            return True
 
-                        # We want to keep redisplaying the base_list until the
-                        # user is done mucking around with bases.
-                        done_base = False
-                        while not done_base:
-                           done_base = display_base_list(g.locations[
-                                                             button.button_id],
-                                                         menu_buttons)
-                    pygame.display.flip()
+    result = -1
+    while result != 0:
+        result = buttons.show_buttons(menu_buttons, refresh_callback=do_refresh,
+                         tick_callback=on_tick)
+        if result == -1:
+            result = show_options()
 
+    return 0
 
 def handle_pause_menu(selection, menu_buttons):
     if selection == 0: refresh_map(menu_buttons)
@@ -534,14 +479,7 @@ def refresh_map(menu_buttons):
             button.text = g.locations[button.button_id].name + " ("
             button.text += str(len(g.bases[g.locations[button.button_id]]))+")"
             button.remake_button()
-        elif ((button.button_id == "ii" and g.curr_speed == 0) or
-                (button.button_id == ">" and g.curr_speed == 1) or
-                (button.button_id == ">>" and g.curr_speed == 60) or
-                (button.button_id == ">>>" and g.curr_speed == 7200) or
-                (button.button_id == ">>>>" and g.curr_speed == 432000)):
-            button.stay_selected = 1
         button.refresh_button(0)
-    pygame.display.flip()
 
 significant_numbers = [
     '42',	# The Answer.
@@ -673,11 +611,9 @@ def display_base_list(location, menu_buttons):
                     if selection >= len(g.bases[location]): selection = 0
 
         # After looking at a base, redraw the base list.
-        refresh_map(menu_buttons)
         return False
 
     # The player hit 'Back' at this point; we're done with the base list.
-    refresh_map(menu_buttons)
     return True
 
 
@@ -708,6 +644,7 @@ def display_base_list_inner(location):
         if base_pos >= len(g.bases[location]):
             return
 
+        g.play_sound("click")
         prompt_string = "Destroy this base?"
         base = g.bases[location][base_pos]
         if not base.done:
