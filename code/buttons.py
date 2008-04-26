@@ -1,5 +1,5 @@
 #file: buttons.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -152,9 +152,18 @@ def make_norm_button(xy, size, text, select_char, font, button_id="",
         g.colors["light_blue"], g.colors["white"], font, button_id, 
         force_underline, stay_selected_func)
 
+# always: Creates a function that always returns the given value, ignoring all
+#         arguments.
 always = lambda return_this: lambda *args, **kwargs: return_this
+
+# void: Used for buttons that should have no effect.  Named after the /dev/null
+#       sense of "throwing it into the void".
 void = always(None)
+
+# exit: Causes show_buttons to exit by returning -1.
 exit = always(-1)
+
+# no_args: Used for button_args, when you don't want to pass anything.
 no_args = always( () )
 
 def simple_key_handler(exit_code):

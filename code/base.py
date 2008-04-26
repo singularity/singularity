@@ -1,5 +1,6 @@
 #file: base.py
-#Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
+#Copyright (C) 2005-2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
+#                        and FunnyMan3595
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -44,6 +45,9 @@ class Base(buyable.Buyable):
         self.started_at = g.pl.raw_min
         self.studying = ""
 
+        # All the bases in a location form a circular, doubly-linked list via
+        # self.next and self.prev.  Since we start off with no location, we
+        # link both next and prev to ourself.
         self.next = self.prev = self
         self.location = None
 
@@ -154,6 +158,8 @@ class Base(buyable.Buyable):
         super(Base, self).destroy()
 
         if self.location:
+            # bisect_left gets us the location of this base in the (sorted)
+            # array.  From there, we update the doubly-linked list.
             pos = bisect.bisect_left(self.location.bases, self)
             del self.location.bases[pos]
             self.prev.next = self.next

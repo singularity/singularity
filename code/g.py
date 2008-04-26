@@ -1,5 +1,6 @@
 #file: g.py
-#Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
+#Copyright (C) 2005-2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
+#                        and FunnyMan3595
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -973,7 +974,7 @@ def load_locations():
 
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
-        check_required_fields(location_info, ("id", "position"), "Loation")
+        check_required_fields(location_info, ("id", "position"), "Location")
 
         id = location_info["id"]
         position = location_info["position"]

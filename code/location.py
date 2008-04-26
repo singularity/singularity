@@ -1,5 +1,5 @@
 #file: location.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -32,6 +32,7 @@ class Location(buyable.Buyable_Class):
         self.cities = []
         self.hotkey = ""
 
+        # A sorted list of the bases at this location.
         self.bases = []
 
     had_last_discovery = property(lambda self: g.pl.last_discovery == self)
@@ -46,6 +47,8 @@ class Location(buyable.Buyable_Class):
         return int(discovery_bonus * 100)
 
     def add_base(self, base):
+        # We keep self.bases sorted by inserting at the correct position, thanks
+        # to bisect.
         where = bisect.bisect(self.bases, base)
         self.bases.insert(where, base)
         base.location = self
@@ -55,10 +58,13 @@ class Location(buyable.Buyable_Class):
            # anything.
            return
 
-        # Will correctly wrap to -1.
-        prev = self.bases[where-1]
+        # Update the linked list.
+        # ...going backwards.
+        prev = self.bases[where-1] # Will correctly wrap to -1.
         prev.next = base
         base.prev = prev
+
+        # ... and going forwards.
         if where < len(self.bases)-1:
             next = self.bases[where+1]
         else:
