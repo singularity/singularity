@@ -1,5 +1,5 @@
 #file: player.py
-#Copyright (C) 2005-2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
+#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
 #This file is part of Endgame: Singularity.
 
