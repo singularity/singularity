@@ -40,6 +40,14 @@ stats = statistics.Statistics()
 #screen is the actual pygame display.
 global screen
 
+# Useful constants.
+hours_per_day = 24
+minutes_per_hour = 60
+minutes_per_day = 24 * 60
+seconds_per_minute = 60
+seconds_per_hour = 60 * 60
+seconds_per_day = 24 * 60 * 60
+
 #size of the screen. This can be set via command-line option.
 screen_size = (800, 600)
 
@@ -856,13 +864,6 @@ def load_game(loadgame_name):
 # Data
 #
 curr_speed = 1
-
-hours_per_day = 24
-minutes_per_hour = 60
-minutes_per_day = 24 * 60
-seconds_per_minute = 60
-seconds_per_hour = 60 * 60
-seconds_per_day = 24 * 60 * 60
 
 pl = player.player_class(8000000000000)
 
