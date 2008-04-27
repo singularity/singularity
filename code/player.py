@@ -404,7 +404,7 @@ class player_class(object):
             # we shuffle the list and pick the first two for the dubious
             # honor.
             if len(discovery_locs) > 1:
-                discovery_locs = random.shuffle(discovery_locs)
+                random.shuffle(discovery_locs)
                 self.last_discovery = discovery_locs[1]
             self.prev_discovery = self.last_discovery
             self.last_discovery = discovery_locs[0]
