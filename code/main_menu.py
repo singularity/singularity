@@ -27,8 +27,8 @@ import g
 import buttons
 import scrollbar
 import listbox
-
 from buttons import void, exit, always
+
 #Displays the main menu. Returns 0 (new game), 1 (load game), or 2 (quit).
 def display_main_menu():
     g.screen.fill(g.colors["black"])

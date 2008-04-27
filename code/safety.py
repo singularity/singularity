@@ -18,7 +18,11 @@
 
 #This file contains wrapper functions for making error-tolerant "safe" calls.
 
-import logging, time, traceback, sys
+import logging
+import time
+import traceback
+import sys
+
 logging.getLogger().addHandler(logging.FileHandler("error.log"))
 
 class Buffer(object):

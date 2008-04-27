@@ -19,7 +19,9 @@
 
 #This file contains the player class.
 
-import pygame, random
+import pygame
+import random
+
 import g
 import finance_screen
 

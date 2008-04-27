@@ -19,7 +19,8 @@
 #This file contains the Location class.
 
 import bisect
-import g, buyable
+import g
+import buyable
 
 # Location is a subclass of Buyable_Class so that it can use .available():
 class Location(buyable.Buyable_Class):

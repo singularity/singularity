@@ -21,7 +21,7 @@
 
 import clock as sing_clock
 import ConfigParser
-import pygame, sys
+import pygame
 import os
 import os.path
 import pickle

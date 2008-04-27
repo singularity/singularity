@@ -20,10 +20,11 @@
 #This file is the starting file for the game. Run it to start the game.
 
 import ConfigParser
-import pygame, sys
-import g, main_menu, map_screen
+import pygame
+import sys
 import os.path
 
+import g, main_menu, map_screen
 
 pygame.init()
 pygame.font.init()
