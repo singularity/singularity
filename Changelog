@@ -3,9 +3,39 @@ Endgame: Singularity Changelog
 v0.28 (release 2008.??.??):
 
 USER-VISIBLE CHANGES:
-- Minor text cleanups. (Phil)
+- Minor text cleanups. (Phil, FM)
+- Minor dialog behavior fixes. (FM)
+- Construction task complete. (FM)
+    Note that the meaning of the number in parentheses by CPU on the main screen
+    has changed.  It currently represents the CPU assigned to construction.
+    This will likely change before release.
+- The CHANGE buttons inside the base dialog now show their hotkeys. (FM)
+- The location buttons have had their on-screen positions tweaked. (FM)
+- Start location is randomized to any of the 5 available continents. (FM)
+- Constructions will use resources more smoothly. (FM)
+- Location and city names can now be localized. (FM)
+- Numbers automatically localize to the correct comma-vs-period usage. (FM)
+- New difficulty level, Ultra Hard. (FM, emh for suggestion)
+- Build times change with difficulty, ranging from 25% to 200% of normal. (FM)
+- The grace period applied to a new base now changes with difficulty, ranging
+  from 4x to 1x the minimum build time. (FM)
+- Suspicion gain per discovery is now 15% on Hard, 20% on Ultra Hard and 
+  Impossible. (FM)
+- Bases in a location are now sorted by size, then name. 
+  (FM, emh for suggestion)
+- The global (day 23) grace period now expires on Normal and above if you build
+  more than 10 bases, and on Ultra Hard if you build a datacenter, warehouse, or
+  any larger base. (FM)
+- The most recent location you had a base discovered in gets a 20% bonus to
+  discovering bases.  The location before that gets a 10% bonus.  These stack
+  if the same location has two bases discovered in a row, giving a 32% bonus.
+  (FM)
 
 OTHER CHANGES:
+- Massive (~50%) code changes, to improve clarity and reduce duplication. (FM)
+- "safety" module should trap most crash bugs and show the pause menu, allowing
+  the user to save or attempt to resume play.  Errors are written to stdout and
+  error.log, located in the current working directory. (FM)
 
 v0.27 (release 2008.04.17):
 

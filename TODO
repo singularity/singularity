@@ -11,21 +11,11 @@ TODO:
         # per-tech time to completion (from day 0 to start, then time to completion)
     - Add more items.
     - Get more items translatable.
-    - Make construction that requires CPU a research option when needed. Complete implementation.
     - Convert CPU usage into pools instead of per-base settings.
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
     - Make translations easier to do.  (Phil has good ideas on how to do this.)
-    - Sort bases by size. (emh for suggestion)
-    - Make 'Impossible' more impossible--perhaps get rid of the quadratic
-      reductions?
-    - Make discoveries in a particular location up the chance for a while of
-      discoveries of other bases in said location.  (Durandal7 for suggestion.)
     - In general, differentiate locations (especially the starting continents)
       more.
-    - Make it so that it's not always day 22 when you can get discovered; make
-      it the less of [some amount of money collected | some amount of time
-      passed | some number of bases built | some amount of CPU spent
-      researching].
     - Arbitrary resolution, including non 4:3 scales.
     - Consistent use of stderr and print.
     - Make effects of construction class techs more obvious.
