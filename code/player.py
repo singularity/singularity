@@ -391,8 +391,18 @@ class player_class(object):
             base.destroy()
             needs_refresh = 1
 
+        # Now we update the internal information about what locations had
+        # the most recent discovery and the nextmost recent one.  First,
+        # we filter out any locations of None, which shouldn't occur
+        # unless something bad's happening with base creation ...
         discovery_locs = [loc for loc in discovery_locs if loc]
         if discovery_locs:
+
+            # Now we handle the case where more than one discovery happened
+            # on a given tick.  If that's the case, we need to arbitrarily
+            # pick two of them to be most recent and nextmost recent.  So
+            # we shuffle the list and pick the first two for the dubious
+            # honor.
             if len(discovery_locs) > 1:
                 discovery_locs = random.shuffle(discovery_locs)
                 self.last_discovery = discovery_locs[1]
