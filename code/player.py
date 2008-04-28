@@ -415,18 +415,14 @@ class player_class(object):
                 # Someone discovered me.
                 return 2
 
-        if sum(len(loc.bases) for loc in g.locations.values()) == 0:
-            # My last base got discovered.
+        # Check to see if the player has at least one CPU left.  If not, they
+        # lose due to having no (complete) bases.
+        if sum(base.processor_time() for loc in g.locations.values()
+                                     for base in loc.bases
+                                     if base.done
+               ) == 0:
+            # I have no usable bases left.
             return 1
-
-        # On Impossible mode, we check to see if the player has at least one
-        # CPU left.  If not, they lose due to having no (complete) bases.
-        if self.difficulty > 50:
-            if sum(base.processor_time() for loc in g.locations.values()
-                                         for base in loc.bases
-                                         if base.done
-                   ) == 0:
-                return 1
 
         # Still Alive.
         return 0
