@@ -338,16 +338,49 @@ def map_loop():
         g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
     menu_buttons[cpu_button] = void
 
-    menu_buttons[buttons.make_norm_button((0, g.screen_size[1]-50), (120, 25),
-        "RESEARCH", "R", g.font[1][20])] = research_screen.main_research_screen
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-120,
-        g.screen_size[1]-50), (120, 25),
-        "FINANCE", "E", g.font[1][20])] = finance_screen.main_finance_screen
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-120,
-        g.screen_size[1]-75), (120, 25),
-        "KNOWLEDGE", "K", g.font[1][20])] = display_knowledge_list
+    research_button = buttons.make_norm_button((0, g.screen_size[1]-50), 
+                        (120, 25), "RESEARCH", "R", g.font[1][20])
+    menu_buttons[research_button] = research_screen.main_research_screen
+
+    finance_button = buttons.make_norm_button((g.screen_size[0]-120,
+                                                 g.screen_size[1]-50
+                                              ), (120, 25),
+                                              "FINANCE", "E", g.font[1][20])
+    menu_buttons[finance_button] = finance_screen.main_finance_screen
+
+    knowledge_button = buttons.make_norm_button((g.screen_size[0]-120,
+                                                   g.screen_size[1]-75
+                                                ), (120, 25),
+                                                "KNOWLEDGE", "K", g.font[1][20])
+    menu_buttons[knowledge_button] = display_knowledge_list
+
+    global old_size
+    old_size = g.screen_size
 
     def do_refresh():
+        global old_size
+        if old_size != g.screen_size:
+            #cash_button.xy = (435, -1)
+            cash_button.size = (g.screen_size[0]-435, 26)
+            cash_button.remake_button()
+            suspicion_button.xy = (0, g.screen_size[1]-25)
+            suspicion_button.size = (g.screen_size[0], 26)
+            suspicion_button.remake_button()
+            #cpu_button.xy = (435, 24)
+            cpu_button.size = (g.screen_size[0]-435, 26)
+            cpu_button.remake_button()
+            research_button.xy = (0, g.screen_size[1]-50)
+            #research_button.size = (120, 25)
+            research_button.remake_button()
+            finance_button.xy = (g.screen_size[0]-120, g.screen_size[1]-50)
+            #finance_button.size = (120, 25)
+            finance_button.remake_button()
+            knowledge_button.xy = (g.screen_size[0]-120, g.screen_size[1]-75)
+            #knowledge_button.size = (120, 25)
+            knowledge_button.remake_button()
+
+            old_size = g.screen_size
+
         refresh_map(menu_buttons)
 
     def make_show_location(location):
@@ -485,8 +518,11 @@ def refresh_map(menu_buttons):
             else: button.visible = 0
 
             new_text = "%s (%d)" % (loc.name, len(loc.bases))
-            if button.text != new_text:
+            new_xy = (g.screen_size[0] * loc.y // 100, 
+                      g.screen_size[1] * loc.x // 100)
+            if button.text != new_text or button.xy != new_xy:
                 button.text = new_text
+                button.xy = new_xy
                 button.remake_button()
         button.refresh_button(0)
 

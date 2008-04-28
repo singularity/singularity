@@ -67,8 +67,8 @@ class button:
         new_size = self.font.size(self.text)
         if self.autosize == 1:
             self.size = (new_size[0]+4, new_size[1]+3)
-            self.button_surface = pygame.Surface(self.size)
-            self.sel_button_surface = pygame.Surface(self.size)
+        self.button_surface = pygame.Surface(self.size)
+        self.sel_button_surface = pygame.Surface(self.size)
 
         #Regular button:
         #create outline
