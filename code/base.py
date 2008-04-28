@@ -78,6 +78,9 @@ class Base(buyable.Buyable):
         # Get the base chance from the universal function.
         detect_chance = calc_base_discovery_chance(self.type.id)
 
+        for group in g.pl.groups:
+            detect_chance.setdefault(group, 0)
+
         # Factor in the suspicion adjustments for this particular base ...
         for group, suspicion in self.suspicion.iteritems():
             detect_chance[group] *= 10000 + suspicion
