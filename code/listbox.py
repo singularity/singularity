@@ -209,10 +209,13 @@ def _show_listbox(list, buttons, **kwargs):
     def handle_click(event):
         if event.button == 1:
             selection = box.is_over(event.pos)
-            if selection == -1:
-                selection = scroll.adjust_pos(event, kw.list_pos, list)
             if selection != -1:
-                kw.list_pos += selection - (kw.list_pos % kw.list_size)
+                selection += kw.list_pos - (kw.list_pos % kw.list_size)
+            else:
+                selection = scroll.adjust_pos(event, kw.list_pos, list)
+
+            if selection != -1:
+                kw.list_pos = selection
         elif event.button == 4:  # Mouse wheel scroll down
             kw.list_pos -= 1
         elif event.button == 5:  # Mouse wheel scroll up
