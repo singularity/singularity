@@ -659,7 +659,7 @@ def save_game(savegame_name):
     pickle.dump(pl, savefile)
     pickle.dump(curr_speed, savefile)
     pickle.dump(techs, savefile)
-    pickle.dump(bases, savefile)
+    pickle.dump(locations, savefile)
     pickle.dump(events, savefile)
 
     savefile.close()
@@ -708,7 +708,7 @@ def load_game(loadgame_name):
     global default_savegame_name
     default_savegame_name = loadgame_name
 
-    global pl, curr_speed, techs, base_type, bases, events
+    global pl, curr_speed, techs, base_type, events, locations
     load_locations()
     load_bases()
     load_events()
@@ -836,7 +836,7 @@ def load_game(loadgame_name):
         pl = pickle.load(loadfile)
         curr_speed = pickle.load(loadfile)
         techs = pickle.load(loadfile)
-        bases = pickle.load(loadfile)
+        locations = pickle.load(loadfile)
         events = pickle.load(loadfile)
 
     # Changes to individual pieces go here.
@@ -1446,7 +1446,7 @@ def new_game(difficulty):
         for group in pl.groups.values():
             group.discover_bonus = discover_bonus
 
-    global locations, bases
+    global locations
     load_locations()
     load_bases()
     load_techs()
