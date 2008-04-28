@@ -556,11 +556,20 @@ def add_commas(number):
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
-def to_percent(raw_percent, show_full=0):
-    if raw_percent % 100 != 0 or show_full == 1:
+def to_percent(raw_percent, show_full = False):
+    if raw_percent % 100 != 0 or show_full:
         return locale.format("%.2f%%", raw_percent / 100.)
     else:
         return locale.format("%d%%", raw_percent // 100)
+
+# nearest_percent takes values in the internal representation and modifies
+# them so that they only represent the nearest percentage.
+def nearest_percent(value):
+    sub_percent = value % 100
+    if sub_percent <= 50:
+        return value - sub_percent
+    else:
+        return value + (100 - sub_percent)
 
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.
