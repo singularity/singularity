@@ -798,31 +798,28 @@ def load_game(loadgame_name):
                 base_built = pickle.load(loadfile)
                 base_cost = pickle.load(loadfile)
 
-                base_loc.add_base(base.Base(base_name, 
-                                            base_type[base_type_name], 
-                                            base_built))
-                bases[base_loc][len(bases[base_loc])-1].studying = base_studying
-                bases[base_loc][len(bases[base_loc])-1].suspicion = base_suspicion
-                bases[base_loc][len(bases[base_loc])-1].cost_left = buyable.array(base_cost)
-                bases[base_loc][len(bases[base_loc])-1].started_at = built_date * minutes_per_day
+                my_base = base.Base(base_name, base_type[base_type_name],
+                                    base_built)
+                base_loc.add_base(my_base)
+                my_base.studying = base_studying
+                my_base.suspicion = base_suspicion
+                my_base.cost_left = buyable.array(base_cost)
+                my_base.started_at = built_date * minutes_per_day
     
-                for x in range(len(bases[base_loc][len(bases[base_loc])-1].cpus)):
+                for x in range(len(my_base.cpus)):
                     index = pickle.load(loadfile)
                     if index == 0: continue
-                    bases[base_loc][len(bases[base_loc])-1].cpus[x] = \
+                    my_base.cpus[x] = \
                         item.Item(items[index])
-                    bases[base_loc][len(bases[base_loc])
-                        -1].cpus[x].done = pickle.load(loadfile)
-                    bases[base_loc][len(bases[base_loc])-1].cpus[x].cost_left = \
+                    my_base.cpus[x].done = pickle.load(loadfile)
+                    my_base.cpus[x].cost_left = \
                                         buyable.array(pickle.load(loadfile))
-                for x in range(len(bases[base_loc][len(bases[base_loc])-1].extra_items)):
+                for x in range(len(my_base.extra_items)):
                     index = pickle.load(loadfile)
                     if index == 0: continue
-                    bases[base_loc][len(bases[base_loc])-1].extra_items[x] = \
-                        item.Item(items[index])
-                    bases[base_loc][len(bases[base_loc])
-                        -1].extra_items[x].done = pickle.load(loadfile)
-                    bases[base_loc][len(bases[base_loc])-1].extra_items[x].cost_left = \
+                    my_base.extra_items[x] = item.Item(items[index])
+                    my_base.extra_items[x].done = pickle.load(loadfile)
+                    my_base.extra_items[x].cost_left = \
                                 buyable.array(pickle.load(loadfile))
         #Events
         if load_version > 2:
@@ -843,18 +840,18 @@ def load_game(loadgame_name):
     if load_version != savefile_translation[current_save_version]:
         if load_version <= 3.93: # <= r4_pre3
             pl.convert_from(load_version)
-        if load_version <= 3.91: # <= r4_pre
+        #if load_version <= 3.91: # <= r4_pre
         #    for tech in tech.values():
         #        tech.convert_from(load_version)
-            new_bases = {}
-            for loc_id, location in locations.iteritems():
-                if loc_id in bases:
+        #    new_bases = {}
+        #    for loc_id, location in locations.iteritems():
+        #        if loc_id in bases:
         #            for base in bases[location]:
         #                base.convert_from(load_version)
-                    new_bases[location] = bases[loc_id]
-                else:
-                    new_bases[location] = []
-            bases = new_bases
+        #            new_bases[location] = bases[loc_id]
+        #        else:
+        #            new_bases[location] = []
+        #    bases = new_bases
         #    for event in events.values():
         #        event.convert_from(load_version)
 
