@@ -445,11 +445,25 @@ def map_loop():
             cash_button.text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
             cash_button.remake_button()
 
-            suspicion_button.text = ("[SUSPICION] NEWS: "+
-                g.to_percent(g.pl.groups["news"].suspicion, 1)+"  SCIENCE: "+
-                g.to_percent(g.pl.groups["science"].suspicion, 1)+"  COVERT: "+
-                g.to_percent(g.pl.groups["covert"].suspicion, 1)+"  PUBLIC: "+
-                g.to_percent(g.pl.groups["public"].suspicion, 1))
+            # What we display in the suspicion section depends on whether
+            # Advanced Socioanalytics has been researched.  If it has, we
+            # show the standard percentages.  If not, we display a short
+            # string that gives a range of 25% as to what the suspicions
+            # are.
+            suspicion_display_dict = {}
+            for group in ("news", "science", "covert", "public"):
+                if g.techs["Advanced Socioanalytics"].done:
+                    suspicion_display_dict[group] = \
+                     g.to_percent(g.pl.groups[group].suspicion, True)
+                else:
+                    suspicion_display_dict[group] = \
+                     g.percent_to_detect_str(g.pl.groups[group].suspicion)
+
+            suspicion_button.text = ("[SUSPICION]" + 
+                " NEWS: " + suspicion_display_dict["news"] +
+                "  SCIENCE: " + suspicion_display_dict["science"] +
+                "  COVERT: " + suspicion_display_dict["covert"] +
+                "  PUBLIC: " + suspicion_display_dict["public"])
             suspicion_button.remake_button()
 
             total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
@@ -799,23 +813,36 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+110), g.colors["white"])
 
-    #Detection
-    real_detection_chance = base.calc_base_discovery_chance(base_name)
-    string = "Detection chance:"
+    # Determine what we display for detection.  If Advanced Socioanalytics
+    # has been researched, accurate percentages are displayed; if basic
+    # Socioanalytics has been researched, inaccurate ones are.  If neither
+    # tech has been researched, we print nothing.
+    accurate = True
+    if not g.techs["Advanced Socioanalytics"].done:
+        accurate = False
+    detection_chance = base.calc_base_discovery_chance(base_name, accurate)
+
+    if not g.techs["Socioanalytics"].done:
+        string = g.strings["detect_chance_unknown_build"]
+        print_chances = False
+    else:
+        string = "Detection chance:"
+        print_chances = True
     g.print_string(g.screen, string,
             g.font[0][22], -1, (xy[0]+160, xy[1]+130), g.colors["white"])
 
-    string = "News: " + g.to_percent(real_detection_chance.get("news", 0))
-    g.print_string(g.screen, string,
+    if print_chances:
+        string = "News: " + g.to_percent(detection_chance.get("news", 0))
+        g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+150), g.colors["white"])
-    string = "Science: " + g.to_percent(real_detection_chance.get("science", 0))
-    g.print_string(g.screen, string,
+        string = "Science: " + g.to_percent(detection_chance.get("science", 0))
+        g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+150), g.colors["white"])
-    string = "Covert: " + g.to_percent(real_detection_chance.get("covert", 0))
-    g.print_string(g.screen, string,
+        string = "Covert: " + g.to_percent(detection_chance.get("covert", 0))
+        g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+170), g.colors["white"])
-    string = "Public: " + g.to_percent(real_detection_chance.get("public", 0))
-    g.print_string(g.screen, string,
+        string = "Public: " + g.to_percent(detection_chance.get("public", 0))
+        g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+170), g.colors["white"])
 
     g.print_multiline(g.screen, g.base_type[base_name].description,

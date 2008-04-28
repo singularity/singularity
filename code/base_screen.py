@@ -115,13 +115,21 @@ def refresh_base(name_button, detect_button, study_button, this_base):
     name_button.text = this_base.name
     name_button.remake_button()
 
-    #detection chance display
-    detect_chance = this_base.get_detect_chance()
-    detect_button.text = g.strings["detect_chance"]+" NEWS: "+ \
-        g.to_percent(detect_chance.get("news", 0))+"  SCIENCE: "+ \
-        g.to_percent(detect_chance.get("science", 0))+"  COVERT: "+ \
-        g.to_percent(detect_chance.get("covert", 0))+"  PUBLIC: "+ \
-        g.to_percent(detect_chance.get("public", 0))
+    # Detection chance display.  If Socioanalytics hasn't been researched,
+    # you get nothing; if it has, but not Advanced Socioanalytics, you get
+    # an inaccurate value.
+    if not g.techs["Socioanalytics"].done:
+        detect_button.text = g.strings["detect_chance_unknown_base"]
+    else:
+        accurate = True
+        if not g.techs["Advanced Socioanalytics"].done:
+            accurate = False
+        detect_chance = this_base.get_detect_chance(accurate)
+        detect_button.text = g.strings["detect_chance"]+" NEWS: "+ \
+            g.to_percent(detect_chance.get("news", 0))+"  SCIENCE: "+ \
+            g.to_percent(detect_chance.get("science", 0))+"  COVERT: "+ \
+            g.to_percent(detect_chance.get("covert", 0))+"  PUBLIC: "+ \
+            g.to_percent(detect_chance.get("public", 0))
     detect_button.remake_button()
 
     #research display

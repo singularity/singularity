@@ -20,6 +20,3 @@ TODO:
     - Consistent use of stderr and print.
     - Make effects of construction class techs more obvious.
     - Add intro.
-    - When you start the game, you shouldn't be able to tell what the discovery
-      chances are (either overall or per-location).  Techs you research should
-      enable these displays.

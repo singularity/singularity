@@ -571,6 +571,22 @@ def nearest_percent(value):
     else:
         return value + (100 - sub_percent)
 
+# percent_to_detect_str takes a percent and renders it to a short (four
+# characters or less) string representing whether it is low, moderate, high,
+# or critically high.
+def percent_to_detect_str(value):
+
+    global strings
+
+    if value < 2500:
+        return strings["detect_str_low"]
+    elif value < 5000:
+        return strings["detect_str_moderate"]
+    elif value < 7500:
+        return strings["detect_str_high"]
+    else:
+        return strings["detect_str_critical"]
+
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.
 

@@ -199,6 +199,14 @@ pre = Advanced Simulacra
 cost_list = 5000000 | 250000 | 0
 pre = Autonomous Vehicles
 
+[Socioanalytics]
+cost_list = 4000 | 7000 | 0
+pre = Memetics
+
+[Advanced Socioanalytics]
+cost_list = 75000 | 30000 | 0
+pre_list = Advanced Memetics | Socioanalytics
+
 # This tech is used for anything that needs to be unbuildable. Note the
 # circular dependency on itself.
 [unknown_tech]

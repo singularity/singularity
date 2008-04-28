@@ -73,8 +73,10 @@ class Base(buyable.Buyable):
 
         self.grace_over = False
 
-    #Get detection chance for the base, applying bonuses as needed.
-    def get_detect_chance(self):
+    # Get the detection chance for the base, applying bonuses as needed.  If
+    # accurate is False, we just return the value to the nearest full
+    # percent.
+    def get_detect_chance(self, accurate = True):
         # Get the base chance from the universal function.
         detect_chance = calc_base_discovery_chance(self.type.id)
 
@@ -111,6 +113,12 @@ class Base(buyable.Buyable):
         if self.done and self.studying == "":
             for group in detect_chance:
                 detect_chance[group] /= 2
+
+        # Lastly, if we're not returning the accurate values, adjust
+        # to the nearest percent.
+        if not accurate:
+            for group in detect_chance:
+                detect_chance[group] = g.nearest_percent(detect_chance[group])
 
         return detect_chance
 
@@ -202,9 +210,10 @@ class Base(buyable.Buyable):
     def __ne__(self, other):
         return not self.__eq__(other)
 
-#calc_base_discovery_chance: A globally-accessible function that can calculate
-#basic discovery chances given a particular class of base.
-def calc_base_discovery_chance(base_type_name):
+# calc_base_discovery_chance is a globally-accessible function that can
+# calculate basic discovery chances given a particular class of base.  If
+# told to be inaccurate, it rounds the value to the nearest percent.
+def calc_base_discovery_chance(base_type_name, accurate = True):
 
     # Get the default settings for this base type.
     detect_chance = g.base_type[base_type_name].detect_chance.copy()
@@ -220,5 +229,11 @@ def calc_base_discovery_chance(base_type_name):
         discover_bonus = g.pl.groups[group].discover_bonus
         detect_chance[group] *= discover_bonus
         detect_chance[group] /= 10000
+
+    # Lastly, if we're told to be inaccurate, adjust the values to their
+    # nearest percent.
+    if not accurate:
+        for group in detect_chance:
+            detect_chance[group] = g.nearest_percent(detect_chance[group])
 
     return detect_chance

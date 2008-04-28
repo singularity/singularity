@@ -28,6 +28,19 @@ construct_task = Construction
 building = Under Construction
 really_destroy = Really destroy this base?
 detect_chance = [DETECTION CHANCE]
+
+# Until a certain technology is researched, the chance of bases being detected
+# is unknown.
+detect_chance_unknown_base = DETECTION PROBABILITY UNKNOWN
+detect_chance_unknown_build = Unknown detection probabilities.
+
+# The following strings are used on the map screen in place of percentages until
+# a certain technology is researched.
+detect_str_low = LOW
+detect_str_moderate = MODR
+detect_str_high = HIGH
+detect_str_critical = CRIT
+
 cpu = CPU
 cpu_per_day = Processor power per day:
 money = Money
