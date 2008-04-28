@@ -195,12 +195,12 @@ pre = Advanced Simulacra
 cost_list = 150000 | 200000 | 0
 pre = Advanced Simulacra
 
+[Solar Collectors]
+cost_list = 5000000 | 250000 | 0
+pre = Autonomous Vehicles
+
 # This tech is used for anything that needs to be unbuildable. Note the
 # circular dependency on itself.
 [unknown_tech]
 cost_list = 1000000000 | 10000000000 | 0
 pre = unknown_tech
-
-[Solar Collectors]
-cost_list = 5000000 | 250000 | 0
-pre = Autonomous Vehicles
