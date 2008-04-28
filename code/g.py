@@ -1437,7 +1437,6 @@ def new_game(difficulty):
         pl.grace_multiplier = 100
         discover_bonus = 15000
         player.group.discover_suspicion = 2000
-        pl.masochist = True
 
     if difficulty != 5:
         for group in pl.groups.values():

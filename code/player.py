@@ -81,7 +81,6 @@ class player_class(object):
                        "covert":  group("covert",  suspicion_decay =  50),
                        "public":  group("public",  suspicion_decay = 200)}
 
-        self.masochist = False # Only set True on Impossible mode.
         self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""
 
@@ -93,7 +92,6 @@ class player_class(object):
              # they shouldn't be hurt by any new mechanics.
              self.difficulty = 1
          if old_version <= 3.93: # <= r4_pre3
-             self.masochist = False
              self.grace_multiplier = int(1000000./float(self.labor_bonus))
          if old_version <= 3.91: # <= r4_pre
              self.make_raw_times()
@@ -423,7 +421,7 @@ class player_class(object):
 
         # On Impossible mode, we check to see if the player has at least one
         # CPU left.  If not, they lose due to having no (complete) bases.
-        if self.masochist:
+        if self.difficulty > 50:
             if sum(base.processor_time() for loc in g.locations.values()
                                          for base in loc.bases
                                          if base.done
