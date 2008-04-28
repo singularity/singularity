@@ -135,7 +135,10 @@ def refresh_list(listbox, scrollbar, list_pos, list_array):
     pygame.display.flip()
 
 def resize_list(list, list_size = 10):
-    padding_needed = (-len(list) % list_size) or list_size
+    if len(list) > 0:
+        padding_needed = (-len(list) % list_size)
+    else:
+        padding_needed = list_size
     list += [""] * padding_needed
 
 def sane_index(index, max_value, min_value = 0):
@@ -210,7 +213,6 @@ def _show_listbox(list, buttons, **kwargs):
                 selection = scroll.adjust_pos(event, kw.list_pos, list)
             if selection != -1:
                 kw.list_pos += selection - (kw.list_pos % kw.list_size)
-                kw.pos_callback(kw.list_pos)
         elif event.button == 4:  # Mouse wheel scroll down
             kw.list_pos -= 1
         elif event.button == 5:  # Mouse wheel scroll up
