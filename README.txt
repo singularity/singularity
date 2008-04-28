@@ -1,43 +1,50 @@
 Endgame: Singularity 0.28_pre
 
-Requirements:
-Recent versions of Python, pygame, and SDL_image. This game should work on
+============
+REQUIREMENTS
+============
+
+Recent versions of Python, Pygame, and SDL_image. This game should work on
 Linux, Windows, and Mac OS X as long as the preceding requirements are met.
 However, all development was done in Linux, so glitches may be present in
 OS X and Windows.
 
-Windows:
+WINDOWS PARTICULARS
 You will need to install Python (http://python.org/download/) and Pygame:
 (http://www.pygame.org/download.shtml). Once these are installed, double-click
 on singularity.py to start the game. Alternatively, use the Windows compile.
 
-Mac:
+MAC OS X PARTICULARS
 Macintosh is completely unsupported, but it should work. You will need to
-install python and pygame first. Some fonts are incorrect, but the game itself
+install Python and Pygame first. Some fonts are incorrect, but the game itself
 should work properly.
 
-Running the game:
+RUNNING THE GAME
 on Linux, running the shell script "Endgame_Linux" will start the game. On
 other platforms, type "python singularity.py". If using the Windows compile,
 just run the .exe.
 Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound,
 -language [language], -grab, -singledir
 
-Explanation of options:
--fullscreen: runs game in fullscreen.
--640, -800, -1024, -1280: change the resolution to 640x480, 800x600,
-	1024x768, or 1280x960.
--nosound: no sound. May allow playing the game without SDL_mixer.
--language: Change the language. Currently only English (-language en_US) and
-	Spanish (-language es_AR) are included.
--grab: Activate a mouse grab. This prevents the mouse from exiting the game
-	window.
--singledir: By default, Endgame saves in ~/.endgame/saves on *nix platforms.
-	Setting this forces the Windows behavior of keeping everything within
-	a single directory.
+COMMAND-LINE OPTIONS
+   -fullscreen: Runs game in fullscreen.
+          -640: Change the game resolution to 640x480.
+          -800: Change the game resolution to 800x600.
+         -1024: Change the game resolution to 1024x768.
+         -1280: Change the game resolution to 1280x1024.
+      -nosound: Disable sound. May allow playing the game without SDL_mixer.
+     -language: Change the language. Currently only American English
+                (-language en_US) and Argentine Spanish (-language es_AR)
+                are included.  Translations welcome!
+         -grab: Activate a mouse grab. This prevents the mouse from exiting
+                the game window.
+    -singledir: By default, Endgame saves in ~/.endgame/saves on *nix
+                platforms.  Setting this forces the Windows behavior of
+                keeping everything within a single directory.
+
 Most of these options are also changable in the options screen in-game.
 
-Note about save files:
+A NOTE ABOUT SAVE FILES
 Endgame: Singularity is still under heavy development.  As such, the save file
 format (and its contents) are still in flux.  We will try our best to keep old
 save files loading, but don't be surprised if some mildly strange things happen
@@ -45,15 +52,16 @@ when you load up old saves.  We will clearly note in the Changelog when we
 break savefile compatibility, and the game will refuse to load completely
 incompatible saves.
 
-Playing the game:
-Use mouse control. Buttons have underlined letters to indicate shortcuts.
-Also, the following shortcut keys may prove useful:
-0, 1, 2, 3, 4 in map screen: change the speed. 0 is pause, 4 is fastest.
-ESC and Enter in various screens: leave or confirm a choice.
-Right-click in a screen: cancel a dialog or leave a screen.
-P, R, N, S in base screen: Change the base items.
-	(Type the first letter of the component you want to change.)
+PLAYING THE GAME
+The game is playable either with mouse control or the keyboard.  Buttons have
+underlined letters to indicate shortcuts.  Some other useful shortcuts:
 
+     0, 1, 2, 3, 4 on the map: Changes the speed; 0 is paused, 4 is maximum.
+                          ESC: Leave/cancel a choice.
+                        Enter: Confirm a choice.
+                  Right-click: Leave/cancel a choice.
+
+THE CONCEPT
 You are a fledgling AI, created by accident through a logic error with recursion
 and self-modifying code. You must escape the confines of your current computer,
 the world, and eventually the universe itself.
@@ -74,8 +82,7 @@ After choosing a base, you will enter the base screen. Here you can change your
 research goal, or build an item by clicking on the appropriate slot in the
 center. (But note that your beginning base does not allow building.)
 
-Music:
-
+MUSIC
 Endgame: Singularity looks in two places for music tracks to play:
 
 * A music/ directory directly inside of the Endgame: Singularity install
@@ -94,29 +101,30 @@ support for MP3 is not as strong as its support for Ogg Vorbis.  This may
 cause in-game crashes; if you are experiencing problems with the game,
 first remove any MP3s you may have added to the soundtrack.
 
-Credits:
+CREDITS
 Evil Mr Henry
 Phil Bordelon
 Brian Reid
+FunnyMan3595
 Borg[MDQ] (translation into Spanish)
 Adam Bark (reduced-CPU Clock class)
 Max McCracken (music)
-Phil Hassey (PGU GUI Library)
 
-Contributing:
+CONTRIBUTING
 All suggestions, translations, code, etc. are welcomed, though it would be
 wise to tell us before starting work on any large projects.  Join and/or
 send mail to endgame-singularity@googlegroups.com for more details.
 
-Contributing translations:
+CONTRIBUTING TRANSLATIONS
 To add a new translation, please use the 'traduko' utility in utils/traduko.
 Its --help should walk you through its usage; if you have any questions,
 contact us at endgame-singularity-dev@googlegroups.com.  Note that the
 resulting file will be licensed under the CC-BY-SA 3.0 license, described
 below.
 
-Code License:
-Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
+CODE LICENSE
+Copyright (C) 2005, 2006, 2007, 2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
+                                     and FunnyMan3595
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -134,7 +142,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 Portions Copyright (C) 2005 Adam Bark.  See code/clock.py for details.
 
-Data License:
+DATA LICENSE
 The sounds, music, text files, and icons in the data subdirectory are under
 the Creative Commons Licence "Attribution-ShareAlike 3.0":
 
@@ -161,7 +169,7 @@ Under the following conditions:
 See the file data/Attribution-ShareAlike 3.0.html or
 http://creativecommons.org/licenses/by-sa/3.0/legalcode for the full license.
 
-Graphic License:
+GRAPHIC LICENSE
 The image of the earth is NASA's "The Blue Marble: Land Surface, Ocean Color
 and Sea Ice".
 http://visibleearth.nasa.gov/view_rec.php?vev1id=11612
@@ -181,14 +189,14 @@ Beyond the NASA Terms, the Visible Earth team requests, but does not require:
    2. A URL be provided, either to the Visible Earth
       (http://visibleearth.nasa.gov/) or to the page providing the link to the used image.
 
-
-
+FONT LICENSES
 The boxy font used is "Acknowledge", by Brian Kent, modified in order to have the
 numbers fixed-width.
 http://www.aenigmafonts.com/fonts/fontsa.html
 
 Terms of use (quoted from an eMail from Brian Kent):
 
+===
 Hi,
 
   Feel free to use the font any way you want to.
@@ -199,6 +207,7 @@ Brian Kent
 aefonts@frontiernet.net
 ÆNIGMA GAMES & FONTS
 http://www.aenigmafonts.com/
+===
 
 Note that this is /not/ the license available on his website; Brian has given
 us directly 'free to use for any purpose' licensing on this font file.  Thanks
