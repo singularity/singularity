@@ -360,15 +360,22 @@ def map_loop():
     def do_refresh():
         global old_size
         if old_size != g.screen_size:
+            if g.screen_size[0] == 640:
+              font_size = 18
+            else:
+              font_size = 20
             #cash_button.xy = (435, -1)
             cash_button.size = (g.screen_size[0]-435, 26)
+            cash_button.font = g.font[1][font_size]
             cash_button.remake_button()
             suspicion_button.xy = (0, g.screen_size[1]-25)
             suspicion_button.size = (g.screen_size[0], 26)
+            suspicion_button.font = g.font[1][font_size]
             suspicion_button.remake_button()
             #cpu_button.xy = (435, 24)
             cpu_button.size = (g.screen_size[0]-435, 26)
             cpu_button.remake_button()
+            cpu_button.font = g.font[1][font_size]
             research_button.xy = (0, g.screen_size[1]-50)
             #research_button.size = (120, 25)
             research_button.remake_button()
