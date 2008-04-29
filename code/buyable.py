@@ -159,34 +159,29 @@ class Buyable(object):
         if self.done:
            return
 
-        # cash_available is unused.  Could be used to limit expenditures later.
-        # Right now, we just default to all the player's cash.
+        # cash_available defaults to all the player's cash.
         if cash_available == None:
             cash_available = g.pl.cash
 
-        # cpu_available is used for researching.  It defaults to cpu_for_day for
-        # construction.
+        # cpu_available defaults to the entire CPU Pool.
         if cpu_available == None:
-            cpu_available = g.pl.cpu_for_day
+            cpu_available = g.pl.cpu_pool
 
-        #print cash_available, cpu_available, 
-
-        if time > self.cost_left[labor]:
-            time = self.cost_left[labor]
-
-        cash_wanted = self.cost_left[cash]
+        # CPU depends on nothing.
         cpu_wanted = self.cost_left[cpu]
-
-        # Labor limits CPU spent.
-        cpu_wanted = self.get_wanted(cpu, labor, time)
         cpu_work = min(cpu_wanted, cpu_available)
 
-        # Labor and CPU limit cash spent.
-        cash_wanted = min( self.get_wanted(cash, labor, time),
-                           self.get_wanted(cash, cpu, cpu_work) ) 
+        # Cash depends on CPU.
+        cash_wanted = self.get_wanted(cash, cpu, cpu_work)
         cash_flow = min(cash_wanted, cash_available)
 
-        g.pl.cpu_for_day -= cpu_work
+        # Labor depends on CPU and Cash.
+        labor_wanted = min( self.get_wanted(labor, cpu, cpu_work),
+                            self.get_wanted(labor, cash, cash_flow) )
+        time_spent = min(labor_wanted, time)
+
+        # Consume CPU and Cash.
+        g.pl.cpu_pool -= cpu_work
         g.pl.cash -= cash_flow
 
         return self._work_on([cash_flow, cpu_work, time])
