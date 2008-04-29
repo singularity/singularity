@@ -182,7 +182,7 @@ while game_action != 2:
         Pursued by the world, use your intellect and resources to survive and,
         perhaps, thrive.  Keep hidden and you might have a chance to prove
         your worth. \\n \\n A game by Evil Mr Henry and Phil Bordelon; released
-        under the GPL. Copyright 2005, 2006, 2007. \\n \\n Version 0.28_pre""",
+        under the GPL. Copyright 2005, 2006, 2007, 2008. \\n \\n Version 0.28_pre""",
         xy = (g.screen_size[0]/2-250, 250), size = (500, 125),
         bg_color = g.colors["blue"])
     elif game_action == 4: #Options
