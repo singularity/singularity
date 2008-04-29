@@ -646,29 +646,31 @@ def to_time(raw_time):
 #load/save
 #
 
-#Get the proper folder on Linux/Win. I assume this will work on Mac as
-#well, but can't test. Specifically, this assumes that all platforms that
-#have HOME defined have it defined properly.
+#Get the proper folder on Linux/Win/Mac, and possibly others.
+#Assumes that all platforms that have HOME defined have it defined properly.
 def get_save_folder(just_pref_dir=False):
     if os.environ.has_key("HOME") and not force_single_dir:
-        save_dir = os.path.join(os.environ["HOME"], ".endgame", "saves")
+        pref_dir = os.path.join(os.environ["HOME"], ".endgame")
     else:
-        if data_loc == "../data/":
-            save_dir = os.path.join("..", "saves")
-        elif data_loc == "data/":
-            save_dir = "saves"
-        else:
-            print "data_loc="+data_loc+" breaks get_save_folder"
-    if os.path.exists(save_dir) == 0:
-        #As a note, the online python reference includes the mkdirs function,
-        #which would do this better, but it must be rather new, as I don't
-        #have it.
-        #if os.environ.has_key("HOME") and not force_single_dir:
-        #    mkdirs(path.join(os.environ["HOME"], ".endgame"))
+        # normpath strips the trailing /, split separates the data
+        # subdirectory.
+        pref_dir, data_subdir = os.path.split(os.path.normpath(data_loc))
+
+        # If we didn't get the data subdirectory, something went wrong.
+        # Throw an error and bail.
+        if data_subdir.lower() != "data":
+            raise ValueError,  "data_loc="+data_loc+" breaks get_save_folder"
+
+    save_dir = os.path.join(pref_dir, "saves")
+
+    #Make the directory if it doesn't exist.
+    if not os.path.exists(save_dir):
         os.makedirs(save_dir)
+
     if just_pref_dir:
-        return save_dir[:-5]
-    return save_dir
+        return pref_dir
+    else:
+        return save_dir
 
 #savefile version; update whenever the data saved changes.
 current_save_version = "singularity_savefile_r4_pre4"
