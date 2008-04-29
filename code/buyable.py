@@ -184,7 +184,7 @@ class Buyable(object):
         g.pl.cpu_pool -= cpu_work
         g.pl.cash -= cash_flow
 
-        return self._work_on([cash_flow, cpu_work, time])
+        return self._work_on([cash_flow, cpu_work, time_spent])
 
     def destroy(self):
         self.type.count -= 1

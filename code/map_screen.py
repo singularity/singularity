@@ -98,8 +98,8 @@ def display_cheat_list(menu_buttons):
         return
     elif selection == 2:  #Build all
         for base in g.all_bases():
-            if not base_name.done:
-                base_name.finish()
+            if not base.done:
+                base.finish()
         return
     elif selection == 3:  #Superspeed
         g.curr_speed = 864000
