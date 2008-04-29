@@ -618,7 +618,7 @@ def to_money(amount):
 #percentage chances.
 def roll_percent(roll_against):
     rand_num = random.randint(1,10000)
-    return roll_against > rand_num
+    return roll_against >= rand_num
 
 # Rolls against a chance per day (in 0-1 form), correctly adjusting for multiple
 # intervals in seconds.
