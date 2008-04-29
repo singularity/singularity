@@ -632,6 +632,23 @@ def roll_chance(chance_per_day, seconds = seconds_per_day):
     chance = 1 - inv_chance
     return random.random() < chance
 
+# Spreads a number of events per day (e.g. processor ticks) out over the course
+# of the day.
+def current_share(num_per_day, time_of_day, seconds_passed):
+    last_time = time_of_day - seconds_passed
+    if last_time < 0:
+        share_yesterday = current_share(num_per_day, seconds_per_day, 
+                                        -last_time)
+        last_time = 0
+    else:
+        share_yesterday = 0
+
+    previously_passed = num_per_day * last_time // seconds_per_day
+    current_passed = num_per_day * time_of_day // seconds_per_day
+    passed_this_tick = current_passed - previously_passed
+
+    return share_yesterday + passed_this_tick
+
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time/60 > 48:
@@ -756,7 +773,7 @@ def load_game(loadgame_name):
         pl.time_day = pickle.load(loadfile)
         pl.interest_rate = pickle.load(loadfile)
         pl.income = pickle.load(loadfile)
-        pl.cpu_for_day = pickle.load(loadfile)
+        pl.cpu_pool = pickle.load(loadfile)
         pl.labor_bonus = pickle.load(loadfile)
         pl.job_bonus = pickle.load(loadfile)
         if load_version < 3.91: # < r4_pre
@@ -1485,6 +1502,18 @@ def new_game(difficulty):
     open = [location for location in locations.values() if location.available()]
     random.choice(open).add_base(base.Base("University Computer",
                                  base_type["Stolen Computer Time"], built=True))
+
+def get_job_level():
+    if techs["Simulacra"].done:
+        level = "Expert"
+    elif techs["Voice Synthesis"].done:
+        level = "Intermediate"
+    elif techs["Personal Identification"].done:
+        level = "Basic"
+    else:
+        level = "Menial"
+
+    return level + " Jobs"
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()

@@ -103,7 +103,7 @@ def refresh_screen(menu_buttons, list_size):
         if not base.done: continue
         if base.studying == "":
             free_CPU += base.processor_time()
-        elif base.studying == "Construction":
+        elif base.studying in ("CPU Pool", "Sleep"):
             for i in range(len(item_list)):
                 if item_list[i] == base.studying:
                     item_CPU_list[i] += base.processor_time()
@@ -151,18 +151,27 @@ def refresh_research(tech_name, CPU_amount):
 
     #None selected
     if tech_name == "" or tech_name == "Nothing":
-        g.print_string(g.screen, "Nothing",
+        g.print_string(g.screen, g.strings["nothing"],
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
         string = g.strings["research_nothing"]
         g.print_multiline(g.screen, string,
             g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
         return
 
-    #Construction
-    if tech_name == "Construction":
-        g.print_string(g.screen, "Construction",
+    #Sleep
+    if tech_name == "Sleep":
+        g.print_string(g.screen, g.strings["sleep"],
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
-        string = g.strings["research_construction"]
+        string = g.strings["research_sleep"]
+        g.print_multiline(g.screen, string,
+            g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
+        return
+
+    #CPU Pool
+    if tech_name == "CPU Pool":
+        g.print_string(g.screen, g.strings["cpu_pool"],
+            g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
+        string = g.strings["research_cpu_pool"]
         g.print_multiline(g.screen, string,
             g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
         return
@@ -237,38 +246,24 @@ def assign_tech(free_CPU):
     if fake_base.studying == "": return False
 
     show_dangerous_dialog = False
-    total_cpu = 0
     for base in g.all_bases():
         if base.studying == "":
             if base.allow_study(fake_base.studying):
                 return_val = True
                 base.studying = fake_base.studying
-                total_cpu += base.processor_time()
+
+                if fake_base.studying == "Sleep":
+                    base.power_state = "Sleep"
+                else:
+                    base.power_state = "Active"
 
             # We want to warn the player that we didn't use all available
             # CPU.  But if the base isn't built yet, that's a stupid
             # warning.
             elif base.done:
                show_dangerous_dialog = True
-        elif base.studying == fake_base.studying:
-            total_cpu += base.processor_time()
 
     if show_dangerous_dialog:
         g.create_dialog(g.strings["dangerous_research"])
-
-
-    #If the tech can be completed in only one day, remove unneeded bases.
-    if g.techs.has_key(fake_base.studying):
-        if total_cpu > g.techs[fake_base.studying].cost_left[1]:
-            removed_base = True
-            while removed_base:
-                removed_base = False
-                for base in g.all_bases():
-                    if base.studying == fake_base.studying:
-                        if (total_cpu - base.processor_time() >=
-                                    g.techs[fake_base.studying].cost_left[1]):
-                            total_cpu -= base.processor_time()
-                            base.studying = ""
-                            removed_base = True
 
     return return_val

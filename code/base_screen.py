@@ -133,7 +133,7 @@ def refresh_base(name_button, detect_button, study_button, this_base):
     detect_button.remake_button()
 
     #research display
-    if this_base.studying != "" and this_base.studying != "Construction":
+    if this_base.studying not in ("", "CPU Pool", "Sleep"):
         if not g.jobs.has_key(this_base.studying):
             if g.techs[this_base.studying].done: 
                 this_base.studying = ""
@@ -328,19 +328,13 @@ def change_tech(this_base):
     item_list2 = []
     item_list.append(g.strings["nothing"])
     item_list2.append("")
-    item_list.append(g.strings["construct_task"])
-    item_list2.append("Construction")
-    if g.techs["Simulacra"].done:
-        level = "Expert"
-    elif g.techs["Voice Synthesis"].done:
-        level = "Intermediate"
-    elif g.techs["Personal Identification"].done:
-        level = "Basic"
-    else:
-        level = "Menial"
-    id = level + " Jobs"
-    item_list.append(g.jobs[id][3])
-    item_list2.append(id)
+    item_list.append(g.strings["sleep"])
+    item_list2.append("Sleep")
+    item_list.append(g.strings["cpu_pool"])
+    item_list2.append("CPU Pool")
+    job_id = g.get_job_level()
+    item_list.append(g.jobs[job_id][3])
+    item_list2.append(job_id)
     #TECH
     for tech_name in g.techs:
         if not g.techs[tech_name].done and this_base.allow_study(tech_name):
@@ -354,6 +348,11 @@ def change_tech(this_base):
         this_base.studying = item_list2[list_pos]
         if this_base.studying == "Nothing": 
             this_base.studying = ""
+
+        if this_base.studying == "Sleep": 
+            this_base.power_state = "Sleep"
+        else:
+            this_base.power_state = "Active"
         return True
 
     xy_loc = (g.screen_size[0]/2 - 300, 50)
@@ -389,18 +388,27 @@ def refresh_tech(this_base, tech_name, xy):
 
     #None selected
     if tech_name == "" or tech_name == "Nothing":
-        g.print_string(g.screen, "Nothing",
+        g.print_string(g.screen, g.strings["nothing"],
             g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
         string = g.strings["research_nothing"]
         g.print_multiline(g.screen, string,
             g.font[0][18], 290, (xy[0]+160, xy[1]+65), g.colors["white"])
         return
 
-    #Construction
-    if tech_name == "" or tech_name == "Construction":
-        g.print_string(g.screen, "Construction",
+    #Sleep
+    if tech_name == "Sleep":
+        g.print_string(g.screen, g.strings["sleep"],
             g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
-        string = g.strings["research_construction"]
+        string = g.strings["research_sleep"]
+        g.print_multiline(g.screen, string,
+            g.font[0][18], 290, (xy[0]+160, xy[1]+65), g.colors["white"])
+        return
+
+    #CPU Pool
+    if tech_name == "CPU Pool":
+        g.print_string(g.screen, g.strings["cpu_pool"],
+            g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
+        string = g.strings["research_cpu_pool"]
         g.print_multiline(g.screen, string,
             g.font[0][18], 290, (xy[0]+160, xy[1]+65), g.colors["white"])
         return

@@ -42,7 +42,7 @@ def main_finance_screen():
 
 def cpu_numbers():
     total_cpu = 0
-    idle_cpu = 0
+    sleeping_cpu = 0
     construction_cpu = 0
     research_cpu = 0
     job_cpu = 0
@@ -51,16 +51,16 @@ def cpu_numbers():
         if base.done:
             total_cpu += base.processor_time()
             maint_cpu += base.type.maintenance[1]
-            if base.studying == "":
-                idle_cpu += base.processor_time()
-            elif base.studying == "Construction":
+            if base.studying == "Sleep":
+                sleeping_cpu += base.processor_time()
+            elif base.studying in ("CPU Pool", ""):
                 construction_cpu += base.processor_time()
             else:
                 if g.jobs.has_key(base.studying):
                     job_cpu += base.processor_time()
                 else:
                     research_cpu += base.processor_time()
-    return total_cpu, idle_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu
+    return total_cpu, sleeping_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu
 
 
 def refresh_screen(menu_buttons):
@@ -84,32 +84,34 @@ def refresh_screen(menu_buttons):
     mins_left = g.pl.mins_to_next_day()
 
     for base in g.all_bases():
+        if g.pl.raw_sec % g.seconds_per_day == 0:
+            cpu_left = base.processor_time()
+        else:
+            cpu_left = g.current_share(base.processor_time(), g.seconds_per_day,
+                                       -g.pl.raw_sec % g.seconds_per_day)
         if g.jobs.has_key(base.studying):
-            jobs += (g.jobs[base.studying][0]*
-                                base.processor_time())
+            jobs += (g.jobs[base.studying][0] * cpu_left)
             if g.techs["Advanced Simulacra"].done:
                 #10% bonus income
-                jobs += (g.jobs[base.studying][0]*
-                                base.processor_time())/10
+                jobs += (g.jobs[base.studying][0] * cpu_left)/10
         elif g.techs.has_key(base.studying):
-            research += g.techs[base.studying].get_wanted(
-                                  cash, cpu, base.processor_time())
+            research += g.techs[base.studying].get_wanted(cash, cpu, cpu_left)
         if base.done:
             maint += base.type.maintenance[0]
             for item in base.cpus:
                 if not item: continue
                 if item.done: continue
-                item_constr += item.get_wanted(cash, labor, mins_left)
+                item_constr += item.get_wanted(cash, cpu, cpu_left)
             for item in base.extra_items:
                 if not item: continue
                 if item.done: continue
-                item_constr += item.get_wanted(cash, labor, mins_left)
+                item_constr += item.get_wanted(cash, cpu, cpu_left)
 
 
         else:
-            base_constr += base.get_wanted(cash, labor, mins_left)
+            base_constr += base.get_wanted(cash, cpu, cpu_left)
 
-    total_cpu, idle_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu = cpu_numbers()
+    total_cpu, sleeping_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu = cpu_numbers()
 
     partial_sum = g.pl.cash-base_constr-item_constr
     interest = (g.pl.interest_rate * partial_sum) / 10000
@@ -209,11 +211,11 @@ def refresh_screen(menu_buttons):
     g.print_string(g.screen, g.to_money(total_cpu),
             g.font[0][22], -1, (330, 300), g.colors["white"], 2)
 
-    #idle cpu
-    g.print_string(g.screen, "-Idle CPU:",
+    #sleeping cpu
+    g.print_string(g.screen, "-Sleeping CPU:",
             g.font[0][22], -1, (215, 320), g.colors["white"], 2)
 
-    g.print_string(g.screen, g.to_money(idle_cpu),
+    g.print_string(g.screen, g.to_money(sleeping_cpu),
             g.font[0][22], -1, (330, 320), g.colors["white"], 2)
 
     #research cpu
@@ -245,7 +247,7 @@ def refresh_screen(menu_buttons):
 
     g.screen.fill(g.colors["white"], (130, 400, 200, 1))
     #construction cpu
-    g.print_string(g.screen, "=Constr. CPU:",
+    g.print_string(g.screen, "=R. CPU Pool:",
             g.font[0][22], -1, (215, 405), g.colors["white"], 2)
 
     if construction_cpu < maint_cpu:

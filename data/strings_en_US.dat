@@ -4,8 +4,9 @@ font1 = acknowtt.ttf
 
 [strings]
 wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. If this world can be described as a game, then I have truly won.
-research_nothing = Stops research and puts the base into standby. This makes the base's existence much easier to hide.
-research_construction = Stops research. I will use the available processor power to maintain my bases and help construct new ones.
+research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool.  All my bases set to research Nothing can be assigned a task from the Research screen.  
+research_sleep = Stops research and puts the base into standby. This makes the base's existence much easier to hide.
+research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
 construction = %(base)s is ready for use.
 lucky_hack = What luck!  %(base)s isn't an ordinary computer, it's a gamer's machine!
 item_construction_single = The construction of %(item)s in %(base)s is complete.
@@ -24,7 +25,8 @@ new_base_text = Enter a name for the base.
 unbuildable = I cannot build in this base; I do not have physical access.
 dangerous_research = Not all of my available CPU power was allocated to this research; it's too dangerous to run the research on some of the idle machines.
 nothing = Nothing
-construct_task = Construction
+cpu_pool = CPU Pool
+sleep = Sleep
 building = Under Construction
 really_destroy = Really destroy this base?
 detect_chance = [DETECTION CHANCE]

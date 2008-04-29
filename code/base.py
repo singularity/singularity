@@ -71,6 +71,7 @@ class Base(buyable.Buyable):
         if built:
             self.finish()
 
+        self.power_state = "Active"
         self.grace_over = False
 
     # Get the detection chance for the base, applying bonuses as needed.  If
@@ -109,8 +110,8 @@ class Base(buyable.Buyable):
                 detect_chance[group] *= multiplier
                 detect_chance[group] /= 100
 
-        # ... and if it is idle.
-        if self.done and self.studying == "":
+        # ... and its power state.
+        if self.done and self.power_state == "Sleep":
             for group in detect_chance:
                 detect_chance[group] /= 2
 
@@ -145,7 +146,8 @@ class Base(buyable.Buyable):
     def allow_study(self, tech_name):
         if not self.done:
             return False
-        elif g.jobs.has_key(tech_name) or tech_name == "Construction": 
+        elif g.jobs.has_key(tech_name) \
+                or tech_name in ("Sleep", "CPU Pool", ""):
             return True
         else:
             for region in self.type.regions:
@@ -154,16 +156,19 @@ class Base(buyable.Buyable):
             return False
 
     def has_grace(self):
-         if self.grace_over:
-             return False
+        if self.grace_over:
+            return False
 
-         age = g.pl.raw_min - self.started_at
-         grace_time = (self.total_cost[labor] * g.pl.grace_multiplier) / 100
-         if age > grace_time:
-             self.grace_over = True
-             return False
-         else:
-             return True
+        age = g.pl.raw_min - self.started_at
+        grace_time = (self.total_cost[labor] * g.pl.grace_multiplier) / 100
+        if age > grace_time:
+            self.grace_over = True
+            return False
+        else:
+            return True
+
+    def is_complex(self):
+        return self.type.size > 1 or self.processor_time() > 20
 
     def destroy(self):
         super(Base, self).destroy()
