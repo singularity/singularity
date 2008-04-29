@@ -249,6 +249,8 @@ def assign_tech(free_CPU):
             # warning.
             elif base.done:
                show_dangerous_dialog = True
+        elif base.studying == fake_base.studying:
+            total_cpu += base.processor_time()
 
     if show_dangerous_dialog:
         g.create_dialog(g.strings["dangerous_research"])
