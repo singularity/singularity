@@ -5,14 +5,15 @@ v0.28 (release 2008.??.??):
 USER-VISIBLE CHANGES:
 - Minor text cleanups. (Phil, FM; Cory Hickey for some fixes)
 - Minor dialog behavior fixes. (FM)
-* Construction task complete. (FM)
-    Note that the meaning of the number in parentheses by CPU on the main
-    screen has changed. It currently represents the CPU assigned to
-    construction. This will likely change before release.
+* New non-research task: CPU Pool.  Performs maintenance, construction, jobs. 
+  Bases with no other task assigned will contribute to the CPU Pool. (FM)
+* New non-research task: Sleep.  Bases assigned to Sleep will remain idle and
+  be harder to detect. (FM)
 - The CHANGE buttons inside the base dialog now show their hotkeys. (FM)
 - The location buttons have had their on-screen positions tweaked. (FM)
 - Start location is randomized to any of the 5 available continents. (FM)
-- Constructions will use resources more smoothly. (FM)
+* CPU is now used to design constructions, Cash to buy the required items, and
+  Labor (time) to assemble the final construction. (FM)
 - Location and city names can now be localized. (FM)
 - Numbers automatically localize to the correct comma-vs-period usage. (FM)
 * Added a new difficulty level: Ultra Hard. (FM, emh for suggestion)
@@ -30,6 +31,7 @@ USER-VISIBLE CHANGES:
   new technologies have been researched. (Phil)
 * Incomplete bases no longer support the AI. (FM)
 - It's possible to get lucky when hacking some random computer.  (FM)
+* Seconds, minutes, and hours now matter much more than they used to. (FM)
 
 OTHER CHANGES:
 - Massive (~50%) code changes, to improve clarity and reduce duplication. (FM)
