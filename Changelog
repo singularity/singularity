@@ -29,6 +29,7 @@ USER-VISIBLE CHANGES:
 * Base detection chances and overall suspicion are now unknown until certain
   new technologies have been researched. (Phil)
 * Incomplete bases no longer support the AI. (FM)
+- It's possible to get lucky when hacking some random computer.  (FM)
 
 OTHER CHANGES:
 - Massive (~50%) code changes, to improve clarity and reduce duplication. (FM)
