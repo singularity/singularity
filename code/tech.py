@@ -57,10 +57,9 @@ class Tech(buyable.Buyable):
             job_upgrade = ""
 
         if job_upgrade:
-            for base_loc in g.locations.values():
-                for base_name in base_loc.bases:
-                    if base_name.studying in g.jobs:
-                        base_name.studying = job_upgrade
+            for base in g.all_bases():
+                if base.studying in g.jobs:
+                    base.studying = job_upgrade
             return
 
         if self.tech_type == "interest":

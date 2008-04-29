@@ -641,6 +641,14 @@ def to_time(raw_time):
     else:
         return str(raw_time) +" minutes"
 
+# Generator function for iterating through all bases.
+def all_bases(with_loc = False):
+    for base_loc in locations.values():
+        for base in base_loc.bases:
+            if with_loc:
+                yield (base, base_loc)
+            else:
+                yield base
 
 #
 #load/save

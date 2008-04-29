@@ -96,10 +96,9 @@ def display_cheat_list(menu_buttons):
             g.techs[fake_base.studying].finish()
         return
     elif selection == 2:  #Build all
-        for base_loc in g.locations.values():
-            for base_name in base_loc.bases:
-                if not base_name.done:
-                    base_name.finish()
+        for base in g.all_bases():
+            if not base_name.done:
+                base_name.finish()
         return
     elif selection == 3:  #Superspeed
         g.curr_speed = 864000

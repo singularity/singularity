@@ -99,39 +99,37 @@ def refresh_screen(menu_buttons, list_size):
     item_display_list = []
     free_CPU = 0
 
-    for loc in g.locations.values():
-        for base_instance in loc.bases:
-            if not base_instance.done: continue
-            if base_instance.studying == "":
-                free_CPU += base_instance.processor_time()
-            elif base_instance.studying == "Construction":
-                for i in range(len(item_list)):
-                    if item_list[i] == base_instance.studying:
-                        item_CPU_list[i] += base_instance.processor_time()
-                        break
-                else:
-                    item_list.append(base_instance.studying)
-                    item_CPU_list.append(base_instance.processor_time())
-                    item_display_list.append(base_instance.studying)
-            elif g.jobs.has_key(base_instance.studying):
-                #Right now, jobs cannot be renamed using translations.
-                for i in range(len(item_list)):
-                    if item_list[i] == base_instance.studying:
-                        item_CPU_list[i] += base_instance.processor_time()
-                        break
-                else:
-                    item_list.append(base_instance.studying)
-                    item_CPU_list.append(base_instance.processor_time())
-                    item_display_list.append(base_instance.studying)
-            elif g.techs.has_key(base_instance.studying):
-                for i in range(len(item_list)):
-                    if item_list[i] == base_instance.studying:
-                        item_CPU_list[i] += base_instance.processor_time()
-                        break
-                else:
-                    item_list.append(base_instance.studying)
-                    item_CPU_list.append(base_instance.processor_time())
-                    item_display_list.append(g.techs[base_instance.studying].name)
+    for base in g.all_bases():
+        if not base.done: continue
+        if base.studying == "":
+            free_CPU += base.processor_time()
+        elif base.studying == "Construction":
+            for i in range(len(item_list)):
+                if item_list[i] == base.studying:
+                    item_CPU_list[i] += base.processor_time()
+                    break
+            else:
+                item_list.append(base.studying)
+                item_CPU_list.append(base.processor_time())
+                item_display_list.append(base.studying)
+        elif g.jobs.has_key(base.studying):
+            for i in range(len(item_list)):
+                if item_list[i] == base.studying:
+                    item_CPU_list[i] += base.processor_time()
+                    break
+            else:
+                item_list.append(base.studying)
+                item_CPU_list.append(base.processor_time())
+                item_display_list.append(g.jobs[base.studying][3])
+        elif g.techs.has_key(base.studying):
+            for i in range(len(item_list)):
+                if item_list[i] == base.studying:
+                    item_CPU_list[i] += base.processor_time()
+                    break
+            else:
+                item_list.append(base.studying)
+                item_CPU_list.append(base.processor_time())
+                item_display_list.append(g.techs[base.studying].name)
     xy_loc = (10, 70)
     while len(item_list) % list_size != 0 or len(item_list) == 0:
         item_list.append("")
@@ -171,7 +169,7 @@ def refresh_research(tech_name, CPU_amount):
 
     #Jobs
     if g.jobs.has_key (tech_name):
-        g.print_string(g.screen, tech_name,
+        g.print_string(g.screen, g.jobs[tech_name][3],
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
         #TECH
         if g.techs["Advanced Simulacra"].done:
@@ -215,11 +213,10 @@ def refresh_research(tech_name, CPU_amount):
 def kill_tech(tech_name):
     return_val = False
     if tech_name == "": return return_val
-    for base_loc in g.locations.values():
-        for base in base_loc.bases:
-            if base.studying == tech_name:
-                return_val = True
-                base.studying = ""
+    for base in g.all_bases():
+        if base.studying == tech_name:
+            return_val = True
+            base.studying = ""
     return return_val
 
 fake_base = None
@@ -240,19 +237,18 @@ def assign_tech(free_CPU):
 
     show_dangerous_dialog = False
     total_cpu = 0
-    for base_loc in g.locations.values():
-        for base in base_loc.bases:
-            if base.studying == "":
-                if base.allow_study(fake_base.studying):
-                    return_val = True
-                    base.studying = fake_base.studying
-                    total_cpu += base.processor_time()
+    for base in g.all_bases():
+        if base.studying == "":
+            if base.allow_study(fake_base.studying):
+                return_val = True
+                base.studying = fake_base.studying
+                total_cpu += base.processor_time()
 
-                # We want to warn the player that we didn't use all available
-                # CPU.  But if the base isn't built yet, that's a stupid
-                # warning.
-                elif base.done:
-                   show_dangerous_dialog = True
+            # We want to warn the player that we didn't use all available
+            # CPU.  But if the base isn't built yet, that's a stupid
+            # warning.
+            elif base.done:
+               show_dangerous_dialog = True
 
     if show_dangerous_dialog:
         g.create_dialog(g.strings["dangerous_research"])
@@ -264,13 +260,12 @@ def assign_tech(free_CPU):
             removed_base = True
             while removed_base:
                 removed_base = False
-                for base_loc in g.locations.values():
-                    for base in base_loc.bases:
-                        if base.studying == fake_base.studying:
-                            if (total_cpu - base.processor_time() >=
-                                        g.techs[fake_base.studying].cost_left[1]):
-                                total_cpu -= base.processor_time()
-                                base.studying = ""
-                                removed_base = True
+                for base in g.all_bases():
+                    if base.studying == fake_base.studying:
+                        if (total_cpu - base.processor_time() >=
+                                    g.techs[fake_base.studying].cost_left[1]):
+                            total_cpu -= base.processor_time()
+                            base.studying = ""
+                            removed_base = True
 
     return return_val

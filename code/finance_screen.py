@@ -47,20 +47,19 @@ def cpu_numbers():
     research_cpu = 0
     job_cpu = 0
     maint_cpu = 0
-    for loc in g.locations.values():
-        for base_instance in loc.bases:
-            if base_instance.done:
-                total_cpu += base_instance.processor_time()
-                maint_cpu += base_instance.type.maintenance[1]
-                if base_instance.studying == "":
-                    idle_cpu += base_instance.processor_time()
-                elif base_instance.studying == "Construction":
-                    construction_cpu += base_instance.processor_time()
+    for base in g.all_bases():
+        if base.done:
+            total_cpu += base.processor_time()
+            maint_cpu += base.type.maintenance[1]
+            if base.studying == "":
+                idle_cpu += base.processor_time()
+            elif base.studying == "Construction":
+                construction_cpu += base.processor_time()
+            else:
+                if g.jobs.has_key(base.studying):
+                    job_cpu += base.processor_time()
                 else:
-                    if g.jobs.has_key(base_instance.studying):
-                        job_cpu += base_instance.processor_time()
-                    else:
-                        research_cpu += base_instance.processor_time()
+                    research_cpu += base.processor_time()
     return total_cpu, idle_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu
 
 
@@ -84,32 +83,31 @@ def refresh_screen(menu_buttons):
 
     mins_left = g.pl.mins_to_next_day()
 
-    for loc in g.locations.values():
-        for base_instance in loc.bases:
-            if g.jobs.has_key(base_instance.studying):
-                jobs += (g.jobs[base_instance.studying][0]*
-                                    base_instance.processor_time())
-                if g.techs["Advanced Simulacra"].done:
-                    #10% bonus income
-                    jobs += (g.jobs[base_instance.studying][0]*
-                                    base_instance.processor_time())/10
-            elif g.techs.has_key(base_instance.studying):
-                research += g.techs[base_instance.studying].get_wanted(
-                                      cash, cpu, base_instance.processor_time())
-            if base_instance.done:
-                maint += base_instance.type.maintenance[0]
-                for item in base_instance.cpus:
-                    if not item: continue
-                    if item.done: continue
-                    item_constr += item.get_wanted(cash, labor, mins_left)
-                for item in base_instance.extra_items:
-                    if not item: continue
-                    if item.done: continue
-                    item_constr += item.get_wanted(cash, labor, mins_left)
+    for base in g.all_bases():
+        if g.jobs.has_key(base.studying):
+            jobs += (g.jobs[base.studying][0]*
+                                base.processor_time())
+            if g.techs["Advanced Simulacra"].done:
+                #10% bonus income
+                jobs += (g.jobs[base.studying][0]*
+                                base.processor_time())/10
+        elif g.techs.has_key(base.studying):
+            research += g.techs[base.studying].get_wanted(
+                                  cash, cpu, base.processor_time())
+        if base.done:
+            maint += base.type.maintenance[0]
+            for item in base.cpus:
+                if not item: continue
+                if item.done: continue
+                item_constr += item.get_wanted(cash, labor, mins_left)
+            for item in base.extra_items:
+                if not item: continue
+                if item.done: continue
+                item_constr += item.get_wanted(cash, labor, mins_left)
 
 
-            else:
-                base_constr += base_instance.get_wanted(cash, labor, mins_left)
+        else:
+            base_constr += base.get_wanted(cash, labor, mins_left)
 
     total_cpu, idle_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu = cpu_numbers()
 
