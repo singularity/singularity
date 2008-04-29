@@ -34,11 +34,12 @@ MODE_LIST = ["update", "verify", "package"]
 # not they have a standalone file that defines certain things and the
 # prefix of the filename. 
 TRANSLATION_LIST = [
-    {"prefix": "bases", "standalone": True},
-    {"prefix": "events", "standalone": True},
-    {"prefix": "items", "standalone": True},
-    {"prefix": "strings", "standalone": False},
-    {"prefix": "techs", "standalone": False},
+    {"prefix": "bases", "has_standalone": True},
+    {"prefix": "events", "has_standalone": True},
+    {"prefix": "items", "has_standalone": True},
+    {"prefix": "strings", "has_standalone": False},
+    {"prefix": "techs", "has_standalone": True},
+    {"prefix": "locations", "has_standalone": True},
 ]
 
 def build_option_parser():
@@ -156,7 +157,7 @@ TODO: Describe better.
         if source:
             source_filename = prefix + "_" + source + ".dat"
 
-        dest_parser = ConfigParser.SafeConfigParser()
+        dest_parser = ConfigParser.RawConfigParser()
         dest_filepath = os.path.join(trans_path, dest_filename)
 
         # If we're not restarting, try to preload the translation with what's
@@ -204,7 +205,7 @@ TODO: Describe better.
             required = read_elem["required"]
 
             # Read the data from this translation file.
-            source_parser = ConfigParser.SafeConfigParser()
+            source_parser = ConfigParser.RawConfigParser()
             source_filepath = os.path.join(trans_path, filename)
             try:
                 if verbose:
