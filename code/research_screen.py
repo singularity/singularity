@@ -232,6 +232,7 @@ def assign_tech(free_CPU):
     init_fake_base()
     #use a fake base, in order to reuse the tech-changing code
     fake_base.cpus[0].type.item_qual = free_CPU
+    fake_base.studying = ""
     base_screen.change_tech(fake_base)
     if fake_base.studying == "": return False
 

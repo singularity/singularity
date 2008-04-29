@@ -91,6 +91,7 @@ def display_cheat_list(menu_buttons):
         #create a fake base, in order to reuse the tech-changing code
         research_screen.init_fake_base()
         from research_screen import fake_base
+        fake_base.studying = ""
         base_screen.change_tech(fake_base)
         if g.techs.has_key(fake_base.studying):
             g.techs[fake_base.studying].finish()
