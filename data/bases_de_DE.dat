@@ -1,0 +1,60 @@
+[Datacenter]
+flavor_list = Rechenzentrum | Erstklassiger Webhost
+name = Rechenzentrum
+description = (35 CPUs) CPU-Zugang von eine Firma kaufen, die auf CPU-stärke konzentriert.  Ich brauche einen Kunstausweis für die Büroarbeit.
+
+[Stolen Computer Time]
+flavor = PC 
+name = Gestolene Computerzeit
+description = (1 CPU) Ein Zufallscomputer übernehmen.  Dort kann ich nichts bauen, und es gibt nur einen schwächen Computer.  Aufspürenswarscheinlichket ist auch ziemlich groß.
+
+[Small Warehouse]
+flavor_list = Büromiete | Kleines Warendepot | Kleine Lagerung
+name = Kleines Warendepot
+description = En kleines Warendepot irgendwo abgelegt mieten.  Ich brauche einen Kunstausweis für die Büroarbeit, und es wird eine Zeit dauern, bis ich der Platz auf meine einzigartige Bedürfnisse vollig vorbereitet habe.
+
+[Covert Base]
+flavor_list = Bunker | Verdeckte Stützpunkt
+name = Verdeckter Stützpunkt
+description = Dieser ausserordentliche Stützpunkt is so gebaut, dass er sehr gut zu den Umgebung passt und sehr wenige Außenmittel braucht.  Deshalb ist es nutzlich, um eine Sicherungskopie zu stellen... nur für alle Fälle.
+
+[Server Access]
+flavor_list = Zweckbestimmter Server | Knottenpunktmiete | Webhost
+name = Serverzugang
+description = 10 CPUs) CPU-Zugang von eine gewöhnliche Firma kaufen. Buy processor time from one of several companies.  Dort kann ich nichts bauen, und es gibt nur einen Computer.
+
+[Scientific Outpost]
+flavor_list = Satellit | Außenstelle | Wissenschaftliche Außenstelle
+name = Wissenschaftliche Außenstelle
+description = Dieser Stützpunkt ist so weit wie praktisch von die Erde entfernt.  Dort ist es sicher, einige von meinen gefärlicher Experimenten auszuführen.
+
+[Reality Bubble]
+flavor_list = Realitätblase | Existenz
+name = Realitätblase
+description = Dieser Stützpunkt ist ganz ausserhalb dem Uneversum.  Dort kann ich in sicherheit die Experimenten ausführen, die Realität insgesamt zerstören könnten.
+
+[Lunar Facility]
+flavor_list = Kuppel | Mondeinrichtung | Mondstützpunkt
+name = Mondeinrichtung
+description = Dieser Stützpunkt besteht aus Höhlen, die in die Obarfläche des Mondes hineingegrabt würde.  Aufgrund des Nachbarmangels ist dieser Stützpunkt ganz groß.
+
+[Large Undersea Lab]
+flavor_list = Kuppel | Großes Unterseelabor
+name = Großes Unterseelabor
+description = Dieser experimentelle Stützpunkt ist ähnlich wie das gewöhnliche Unterseelabor, aber großer, um mehr Platz für Experimenten zu sorgen.
+
+[Time Capsule]
+flavor_list = Zeitkapsel | Kapsel | Eiscomputer
+name = Zeitkapsel
+description = (1 CPU) Dieser Stützpunkt besteht aus nur ein kleiner Computer und ein Satellitenverbindung.  Under der Schnee des Antarktises ist er fast unaufspürbar.
+
+[Large Warehouse]
+flavor_list = Scheuer | Großes Warendepot | Große Lagerung
+name = Großes Warendepot
+description = En großes Warendepot irgendwo abgelegt mieten.  Ich brauche einen hochwertigen Kunstausweis für die Büroarbeit, und es wird eine Zeit dauern, bis ich der Platz auf meine einzigartige Bedürfnisse vollig vorbereitet habe.
+
+[Undersea Lab]
+flavor_list = Hochdruckkapsel | Unterseelabor
+name = Unterseelabor
+description = Dieser experimentelle Stützpunkt ist dafür ausgelegt, auf den Ozeanboden gebaut zu werden, sodass er fast unaufspürbar ist.  Das Ozeanumfeld vorteilt wissenschaftliche Arbeit.  Deshalb ist dieses Labor sehr nutzlich, wenn man erforschen will.
+

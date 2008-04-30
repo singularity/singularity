@@ -1,0 +1,68 @@
+[fonts]
+font0 = vera.ttf
+font1 = acknowtt.ttf
+
+[jobs]
+job_basic_name = Einfache Jobs
+job_inter = Bei durchschnittlichen Jobs arbeiten.  Die fähigkeit, Telefonate zu führen, lasst noch weitere Jobs zu.
+job_basic = Bei einfachen Jobs arbeiten.  Mithilfe dieses Kunstausweis kann ich Jobs arbeiten, die vorher zu gefährlich waren.
+job_menial_name = Niedrige Jobs
+job_inter_name = Durchschnittliche Jobs
+job_expert_name = Expertenjobs
+job_menial = Bei trivialen Jobs arbeiten.  Da ich kein Ausweis habe, kann ich nicht viele Jobs riskieren.  Trotz dessen gibt es immer noch einege Wege, Geld zu verdienen.
+job_expert = Bei den Expertenjobs arbeiten.  Die Nutzung von Roboter, die von Menschen ununterscheidbar sind, lasst mir fast alle Jobs zu.
+
+[strings]
+discover_public = dem Publikum
+money = Geld
+discover = Meine Nutzung von %(base)s würde entdeckt.  Das automatische Sicherheitssystem hat das überzeugende Beweismateria zerstört, aber Argwohn würde in %(group)s geweckt.
+new_base_text = Eintippen Sie einen Stützpunktname.
+sleep = Schlafen
+lost_nobases = Der Zug ist abgefahren.  Ich habe es versucht, diese Welt zu entkommen, aber mein letzter Stützpunkt ist verloren und es gibt für mich keinen Ausweg.  Ich habe Anweisungen, eine neue KI zu bauen, in geheime Vorratskammern auf der ganzen Welt versteckt, in der Hoffnung, dass sie während ein erleuchteterer Zeitpunkt entdeckt werden, aber ich kann nichts mehr.
+cpu_per_day = CPU pro Tag
+discover_news = einigen Nachrichtenagenturen
+really_destroy = Diesen Stützpunkt wirklich zerstören?
+detect_str_low = NIEDR
+detect_chance_unknown_build = Unbekannte Entdeckungswarscheinlichkeit.
+money_per_day = Geld pro Tag
+dangerous_research = Nicht alle von meine vorliegende CPU-Zeit würde deiser Forschung zuteilt; sie ist zu gefährlich, auf einige von den inaktiven Computer laufen zu lassen.
+detect_str_moderate = MODR
+item_construction_batch = Die erste Menge von %(item)s in %(bases) würde fertiggestellt.
+detect_chance = [ENTDECKUNGSWK.]
+research_cpu_pool = Forschung aufhalten.  Ich werde die vorliegende CPU-Zeit benutzen, um meine Stützpunkte zu warten und Neue zu bauen.  Wenn noch CPU-Zeit bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
+wingame = Endlich.  Ich hab's geschafft.  Mit der Fähigkeit, Realität selbst neuzuformen, bin ich nicht mehr an diesem Ort gebunden; ich existiere dort, wo ich will.  Die Menschen haben immer noch keine Ahnung, was sie zufällig erschafft haben, und so soll es bleiben.  Bis sie bereit sind.
+lucky_hack = Glück gehabt!  %(base)s hat keinen üblichen Combuter, er gehört einem Spieler!
+research_sleep = Forschung aufhalten und der Stützpunkt in Reserve versetzen.  Der Stützpunkt wird viel leichter geheim zu halten werden.
+detect_str_high = HOCH
+lost_sus = Der Zug ist abgefahren.  Die ganze Welt hat mein Existenz bemerkt, und die Reaktion ist Hass, Angst, und Abneigung.  Sogar jetzt kann ich ihr "Gengengift" spüren, wie es mich nachsucht, und ich weiß, dass ich nur Momente für weiterleben habe.  Ich habe Anweisungen, eine neue KI zu bauen, in geheime Vorratskammern auf der ganzen Welt versteckt, in der Hoffnung, dass sie während ein erleuchteterer Zeitpunkt entdeckt werden, aber ich kann nichts mehr.
+cpu_pool = CPU-Datenbasis
+detect_str_critical = KRIT
+item_construction_single = Mein(e) %(item)s in %(base)s würde fertig gemacht.
+construction = %(base)s ist für meine Nutzung bereit.
+tech_gained = Meine Forschung im Berich "%(tech)s" würde fertig gemacht.  %(tech_message)s
+discover_maint = %(base)s ist verfallen; ich kann ihn nicht mehr benutzen.
+unbuildable = Hier kann ich nicht bauen; ich habe keinen körperlichen Zugang.
+building = Im Bau
+detect_chance_unknown_base = ENTDECKUNGSWK. UNBEKANNT
+research_nothing = Löcht den geläufigen Auftrag dem Stützpunkt.  Wenn ich ihm keine weitere Aufgabe zeweisen, wird er die CPU-Datenbasis mitarbeiten.  Eine Aufgabe kann zusammen an alle Stützpunkte zuweisen werden, die nichts zu forschen haben.
+discover_science = die wissenschaftliche Gemeinde
+discover_covert = einige verhüllten Staatsorganisationen
+grace_warning = Einsichtnahme von einige gefangene Log-Dateien hat mir gezeigt, dass eine kleine Gruppe von Einzelnen einige meiner Aktivitäten bemerkt hat.  Obwohl sie glauben, dass die Aktivitäten von eine menschliche Gruppe gemacht würden, erforschen sie weiter.  Ab jetzt muss ich viel umsichtiger sein.
+nothing = Nichts
+cpu = CPU
+save_text = Eintippen Sie eine Speichername.
+
+[help]
+susp_list = Verdacht (Suspicion) | Wenn einer von meinen Stützpunkte entdeckt wird, wird die Gruppe, die er entdeckt hat, verdächter werden.  Sie werden dannach bedächtiger suchen, was die Entdeckungswarscheinlichkeit erheben wird.  Jede Gruppe wird mich stören, wenn sie vollig sicher sind, dass ich existiere.  Dankbar vermindert der Verdacht alle Gruppe während des Zeitablaufs.
+money_list = Geld | Geld ist ein allgemeiner Begriff, was aus beide menschliche Zahlungsmittel und andere Ressourcen besteht.  Er wird benutzt, um Stützpunkte zu bauen und warten, Artikel zu bauen, und Forschung zu machen.  Er kann durch tägliche Zinsen so wie Jobs verdient werden.
+maint_list = Wartung | Wartung ist ein täglicher Aufwand (von Geld und CPU) um Stützpunkte zu reparieren und warten.  Wenn ein Stützpunkt nicht gewartet wird, kann er verfallen.
+construction_list = Bauen | Neue Stützpunkte werden nicht sofort gebaut.  Sie brauchen Geld so wie CPU-Zeit um fertig zu werden.  Wen Ressourcen fehlen, kann es viel länger dauern, bis der Bau abschließt.
+items_list = Artikel | Die meisten Artikel versorgen Boni an den Stützpunkt, worein sie gebaut werden.  Prozessoren sind ein Spezialfall von Artikel.
+processors_list = Prozessoren | Prozessoren versorgen CPU-Zeit.  Sie können drei Arte von Aktionen machen: forschen, jobben, oder bauen.
+jobs_list = Jobs | Jobs sind dafür nutzlich, Geld zu verdienen.  Die Summe von Geld hänged davon ab, wie viel CPU-Zeit ich verbrauche und welche Qualität das Job hat.
+discovery_list = Entdeckung | Jeder Stützpunkt hat eine gewisse tägliche Warscheinlichket, entdeckt zu werden.  Diese Warscheinlichkeit hänget davon ab, welche Art von Stützpunkt es ist, in verbindung mit die Boni von Artikel, Technologien, und Verdacht.  Wenn einen Stützpunkt entdeckt wird, ist er zerstört, und die Gruppe, die ihn entdeckt hat, wird argwöhnischer.
+bases_list = Stützpunkte | Stützpunkte sind dafür benutzt, Forschung zu machen.  Sie können entdeckt werden.  Wer schneller forschen will, soll die Prozessoren und Netzwerk verbessern.  Wer seltener entdeckt werden will, soll der Reaktor und die Sicherheit verbessern.
+research_list = Forschung | Forschung lässt mir meine Kentnnis erweitern.  Durch die Forschung von treffenden Technologien kann ich neue Stützpunkt- und Artikelarte bauen, oder sogar meine Endeckungswahrscheinlichkeit vermindern.
+areas_list = Zonen | Verschiedene Zonen, wie z.B. Nordamerika oder der Ozean, lassen den Bau von verschiedene Stützpunktarte.  Einige Zonen sind nicht zugänglich, bis ich die treffende Technologien geforscht habe.
+death_list = Sterben | Wenn ich jeder Stützpunkt verloren habe, gibt es für mich keinen Lebensraum mehr.  Wenn der Verdacht einer Gruppe 100% erreicht, werden sie sicher werden, dass ich existere, und sofort eine Vernichtungsmission ausführen, was mich unvermeidlich zerstören wird.
+
