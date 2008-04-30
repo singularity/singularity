@@ -35,6 +35,7 @@ USER-VISIBLE CHANGES:
 * Seconds, minutes, and hours now matter much more than they used to. (FM)
 - You can use the Enter on the numeric keypad like the regular Enter key.
   (Phil, gare for suggestion)
+* de_DE translation [currently partial] (FM)
 
 OTHER CHANGES:
 - Massive (~50%) code changes, to improve clarity and reduce duplication. (FM)

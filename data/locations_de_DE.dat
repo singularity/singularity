@@ -1,10 +1,10 @@
 [N AMERICA]
-name = NORDAMERICA
+name = NORDAMERIKA
 hotkey = N
 cities_list = Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas
 
 [S AMERICA]
-name = SUDAMERICA
+name = SUDAMERIKA
 hotkey = S
 cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires 
 [EUROPE]

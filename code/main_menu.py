@@ -208,10 +208,15 @@ def set_language_properly(prev_lang):
     g.set_locale()
     g.load_bases()
     g.load_base_defs(g.language)
-    g.load_location_defs(g.language)
     g.load_tech_defs(g.language)
     g.load_item_defs(g.language)
     g.load_string_defs(g.language)
+    try:
+        g.load_location_defs(g.language)
+    except NameError:
+        # We haven't initialized the location yet.  This will be handled when
+        # we do that.
+        pass
 
 def save_options(lang=""):
 
