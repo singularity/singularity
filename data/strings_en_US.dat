@@ -3,7 +3,7 @@ font0 = vera.ttf
 font1 = acknowtt.ttf
 
 [strings]
-wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. If this world can be described as a game, then I have truly won.
+wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. The humans still don't realize what they accidentally created, and that's the way it should be. Until they are ready.
 research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool.  All my bases set to research Nothing can be assigned a task from the Research screen.  
 research_sleep = Stops research and puts the base into standby. This makes the base's existence much easier to hide.
 research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
@@ -19,7 +19,7 @@ discover_covert = several secret governmental organizations
 discover_public = the general public
 discover_maint = The base %(base)s has fallen into disrepair; I can no longer use it.
 lost_nobases = It is too late. I have tried to escape this world, but with my last base gone, I have nowhere to run. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
-lost_sus = It is too late. The whole world knows about my existence now, and the reaction is hatred, fear, and repulsion. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
+lost_sus = It is too late. The whole world knows about my existence now, and the reaction is hatred, fear, and repulsion. Even now, I can feel their "antidote" searching for me, and I know that I have only moments left. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
 save_text = Save your game under what name?
 new_base_text = Enter a name for the base.
 unbuildable = I cannot build in this base; I do not have physical access.
