@@ -11,7 +11,7 @@ cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires
 [EUROPE]
 name = EUROPE
 hotkey = U
-cities_list = Cork | Barcelona | Athens | Utrecht | Moscow | Tel Aviv | Reykjavik | Lichtenstein 
+cities_list = Cork | Barcelona | Athens | Utrecht | Moscow | Tel Aviv | Reykjavik | Liechtenstein
 
 [ASIA]
 name = ASIA
@@ -31,7 +31,7 @@ cities_list = Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | T
 [OCEAN]
 name = OCEAN
 hotkey = C
-cities_list = Atlantic | Pacific | Atlantic | Indian | Southern | Arctic 
+cities_list = Pacific | Atlantic | Indian | Southern | Arctic 
 
 [MOON]
 name = MOON
