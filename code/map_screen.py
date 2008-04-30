@@ -289,14 +289,8 @@ def map_loop():
         g.colors["black"], g.colors["white"], g.font[1][font_size])
     menu_buttons[time_button] = void
 
-    def show_options():
-        g.play_sound("click")
-        selection = display_pause_menu()
-        result = handle_pause_menu(selection, menu_buttons)
-        return result
-
     menu_buttons[buttons.make_norm_button((0, 0), (100, 25),
-        "MENU", "M", g.font[1][20])] = show_options
+        "MENU", "M", g.font[1][20])] = exit
 
     def make_set_speed(speed):
         def set_speed():
@@ -491,7 +485,8 @@ def map_loop():
                             "tick_callback": on_tick},
                            -1)
         if result == -1:
-            result = show_options()
+            selection = display_pause_menu()
+            result = handle_pause_menu(selection, menu_buttons)
 
     return 0
 
