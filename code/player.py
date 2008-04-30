@@ -406,11 +406,21 @@ class player_class(object):
         if self.raw_day >= 23:
             return False
 
-        # Easy and Very Easy cop out here.
+        # Very Easy cops out here.
+        if self.difficulty < 3:
+            return True
+
+        # Have we built metric ton of bases?
+        if bases == None:
+            bases = len([base for base in g.all_bases() if base.done])
+        if bases > 100:
+            return False
+
+        # That's enough for Easy
         if self.difficulty < 5:
             return True
 
-        # Have we built a lot of bases?
+        # Have we built a bunch of bases?
         if bases == None:
             bases = len([base for base in g.all_bases() if base.done])
         if bases > 10:
