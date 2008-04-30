@@ -142,14 +142,26 @@ class Base(buyable.Buyable):
             compute_bonus = self.extra_items[1].type.item_qual
         return (comp_power * (10000+compute_bonus))/10000
 
+    def is_building(self):
+        for item in self.cpus + self.extra_items:
+            if item and not item.done:
+                return False
+        return True
+
     # Can the base study the given tech?
     def allow_study(self, tech_name):
         if not self.done:
             return False
         elif g.jobs.has_key(tech_name) \
-                or tech_name in ("Sleep", "CPU Pool", ""):
+                or tech_name in ("CPU Pool", ""):
             return True
+        elif tech_name = "Sleep":
+            return not self.is_building()
         else:
+            if self.location:
+                return self.location.safety >= g.techs[tech_name].danger
+
+            # Should only happen for the fake base.
             for region in self.type.regions:
                 if g.locations[region].safety >= g.techs[tech_name].danger:
                     return True
