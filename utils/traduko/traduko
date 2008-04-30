@@ -231,10 +231,6 @@ TODO: Describe better.
                         # New data!  Splice it into the new translation.
                         value = signal + source_parser.get(section, option) + signal
 
-                        # Unfortunately, OptionParser isn't smart enough to
-                        # reduplicate percent signs, so we have to do it by
-                        # hand.  Meh.
-                        value = value.replace("%", "%%")
                         if verbose:
                             verbout("Adding option %s with value %s." % (option, value))
 
