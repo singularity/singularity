@@ -62,18 +62,20 @@ if os.path.exists(save_loc):
 
         try:
             g.screen_size = (prefs.getint("Preferences", "xres"),
-             g.screen_size[1])
+            g.screen_size[1])
         except:
             sys.stderr.write("Invalid 'xres' resolution in preferences.\n")
 
         try:
             g.screen_size = (g.screen_size[0],
-             prefs.getint("Preferences", "yres"))
+            prefs.getint("Preferences", "yres"))
         except:
             sys.stderr.write("Invalid 'yres' resolution in preferences.\n")
 
+        #If language is unset, default to English.
+        try: desired_language = prefs.get("Preferences", "lang")
+        except: desired_language = "en_US"
         try:
-            desired_language = prefs.get("Preferences", "lang")
             if os.path.exists(g.data_loc + "strings_" + desired_language + ".dat"):
                 g.language = desired_language
                 g.set_locale()
