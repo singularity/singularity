@@ -209,7 +209,14 @@ def _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_
         event_refresh = False
         need_refresh = tick_callback(g.clock.tick(30))
         for event in pygame.event.get():
+            # Mouse motion handles its own refresh, so we don't want to set
+            # event_refresh.
+            if event.type == pygame.MOUSEMOTION:
+                sel_button = refresh_buttons(sel_button, buttons.keys(), event)
+                continue
+
             event_refresh = True
+
             if event.type == pygame.QUIT:
                 g.quit_game()
             elif event.type == pygame.KEYDOWN:
@@ -222,8 +229,5 @@ def _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_
                 maybe_return( click_callback(event) )
                 if event.button == 3:
                     maybe_return(-1) # Will return -1.
-            elif event.type == pygame.MOUSEMOTION:
-                event_refresh = False
-                sel_button = refresh_buttons(sel_button, buttons.keys(), event)
         if need_refresh or event_refresh:
             do_refresh()
