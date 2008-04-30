@@ -237,6 +237,8 @@ def build_item(this_base, item_type, location):
 
     def do_build(list_pos):
         actual_build(this_base, item_id_list[list_pos], item_type)
+        if this_base.studying == "Sleep" and this_base.is_building():
+            this_base.studying = ""
         return True
 
     menu_buttons = {}
@@ -328,8 +330,9 @@ def change_tech(this_base):
     item_list2 = []
     item_list.append(g.strings["nothing"])
     item_list2.append("")
-    item_list.append(g.strings["sleep"])
-    item_list2.append("Sleep")
+    if not this_base.is_building():
+        item_list.append(g.strings["sleep"])
+        item_list2.append("Sleep")
     item_list.append(g.strings["cpu_pool"])
     item_list2.append("CPU Pool")
     job_id = g.get_job_level()

@@ -145,8 +145,8 @@ class Base(buyable.Buyable):
     def is_building(self):
         for item in self.cpus + self.extra_items:
             if item and not item.done:
-                return False
-        return True
+                return True
+        return False
 
     # Can the base study the given tech?
     def allow_study(self, tech_name):
@@ -155,7 +155,7 @@ class Base(buyable.Buyable):
         elif g.jobs.has_key(tech_name) \
                 or tech_name in ("CPU Pool", ""):
             return True
-        elif tech_name = "Sleep":
+        elif tech_name == "Sleep":
             return not self.is_building()
         else:
             if self.location:

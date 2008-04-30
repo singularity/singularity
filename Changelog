@@ -8,7 +8,8 @@ USER-VISIBLE CHANGES:
 * New non-research task: CPU Pool.  Performs maintenance, construction, jobs. 
   Bases with no other task assigned will contribute to the CPU Pool. (FM)
 * New non-research task: Sleep.  Bases assigned to Sleep will remain idle and
-  be harder to detect. (FM)
+  be harder to detect.  Note that even a computer can't sleep through
+  construction. (FM)
 - The CHANGE buttons inside the base dialog now show their hotkeys. (FM)
 - The location buttons have had their on-screen positions tweaked. (FM)
 - Start location is randomized to any of the 5 available continents. (FM)
