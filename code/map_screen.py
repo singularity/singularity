@@ -296,7 +296,7 @@ def map_loop():
         return result
 
     menu_buttons[buttons.make_norm_button((0, 0), (100, 25),
-        "OPTIONS", "O", g.font[1][20])] = show_options
+        "MENU", "M", g.font[1][20])] = show_options
 
     def make_set_speed(speed):
         def set_speed():
