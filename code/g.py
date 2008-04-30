@@ -495,7 +495,7 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
     def on_key_down(event):
         key = event.key
         global cursor_loc, work_string
-        if key == pygame.K_RETURN:
+        if key in (pygame.K_RETURN, pygame.K_KP_ENTER):
             return work_string
         if key == pygame.K_ESCAPE:
             return ""

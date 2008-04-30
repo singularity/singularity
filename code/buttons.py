@@ -168,7 +168,7 @@ no_args = always( () )
 
 def simple_key_handler(exit_code):
     def key_handler(event):
-        if event.key in (pygame.K_ESCAPE, pygame.K_RETURN, pygame.K_q):
+        if event.key in (pygame.K_ESCAPE, pygame.K_RETURN, pygame.K_KP_ENTER, pygame.K_q):
             return exit_code
     return key_handler
 default_key_handler = simple_key_handler(-1)

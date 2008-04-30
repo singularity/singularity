@@ -197,7 +197,7 @@ def _show_listbox(list, buttons, **kwargs):
 
     def handle_key(event):
         key = event.key
-        if key == pygame.K_RETURN:
+        if key in (pygame.K_RETURN, pygame.K_KP_ENTER):
             maybe_return( kw.return_callback(kw.list_pos) )
         elif key in (pygame.K_ESCAPE, pygame.K_q):
             maybe_return( kw.escape_exit_code )
