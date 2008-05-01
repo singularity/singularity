@@ -449,7 +449,7 @@ def refresh_tech(this_base, tech_name, xy):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
 
-    string = g.add_commas(g.techs[tech_name].cost_left[1])+" "+g.strings["cpu"]
+    string = g.to_cpu(g.techs[tech_name].cost_left[1])+" "+g.strings["cpu"]
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+320, xy[1]+80), g.colors["white"])
 

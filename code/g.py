@@ -550,9 +550,26 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
 
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number):
-    if type(number) == str:
-        raise TypeError, "add_commas takes an int now."
-    return locale.format("%d", number, grouping=True)
+    int_with_commas = locale.format("%d", number, grouping=True)
+
+    # If we have a non-integer float...
+    if int(number) != number:
+        # Round to two decimal places, discard the whole part.
+        small_number = (int(number * 100) / 100.) % 1
+
+        # Pass it through locale.str to get it looking nice.
+        decimal_part = locale.str(small_number)
+
+        if len(decimal_part) <= 1:
+            pass
+        elif decimal_part[0] != locale.str(0) or decimal_part[1].isdigit():
+            print "This locale is weird.  '%s' doesn't appear to start with 0 and the decimal separator.  Please report this error."
+        else:
+            return int_with_commas + decimal_part[1:]
+
+    return int_with_commas
+
+    
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
@@ -587,9 +604,14 @@ def percent_to_detect_str(value):
     else:
         return strings["detect_str_critical"]
 
+# Most CPU costs have been multiplied by seconds_per_day.  This divides that
+# back out, then passes it to add_commas.
+def to_cpu(amount):
+    display_cpu = amount / float(seconds_per_day)
+    return add_commas(display_cpu)
+
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.
-
 def to_money(amount):
     to_return = ''
     abs_amount = abs(amount)

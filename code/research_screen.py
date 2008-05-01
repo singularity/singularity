@@ -209,7 +209,7 @@ def refresh_research(tech_name, CPU_amount):
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+5, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(g.techs[tech_name].cost_left[1])+" CPU"
+    string = g.to_cpu(g.techs[tech_name].cost_left[1])+" CPU"
     g.print_string(g.screen, string,
             g.font[0][20], -1, (xy[0]+165, xy[1]+50), g.colors["white"])
 

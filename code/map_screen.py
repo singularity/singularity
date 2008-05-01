@@ -203,7 +203,7 @@ def refresh_tech(tech_name, xy):
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-        string = g.add_commas(g.techs[tech_name].cost_left[1]) + " CPU"
+        string = g.to_cpu(g.techs[tech_name].cost_left[1]) + " CPU"
         g.print_string(g.screen, string,
                 g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
     else:
@@ -639,14 +639,14 @@ def display_base_list(location, menu_buttons):
             string = "Under Construction. \\n Completion in "
             string += g.to_time(base.cost_left[2]) + ". \\n "
             string += "Remaining cost: "+g.to_money(base.cost_left[0])
-            string +=" money, and "+g.add_commas(base.cost_left[1])
+            string +=" money, and "+g.to_cpu(base.cost_left[1])
             string +=" processor time."
             if not g.create_yesno(string, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
                     g.colors["white"], ("OK", "DESTROY"), reverse_key_context = True):
                 if g.create_yesno("Destroy this base? This will waste "+
                         g.to_money(base.cost_paid[0]) +" money, and "+
-                        g.add_commas(base.cost_paid[1]) +" processor time.", 
+                        g.to_cpu(base.cost_paid[1]) +" processor time.", 
                         g.font[0][18], (g.screen_size[0]/2 - 100, 50),
                         (200, 200), g.colors["dark_blue"], g.colors["white"],
                         g.colors["white"]):
@@ -700,7 +700,7 @@ def display_base_list_inner(location):
         if not base.done:
             prompt_string += " This will waste %s money and %s processor time."\
                 % ( g.to_money(base.cost_paid[0]), 
-                    g.add_commas(base.cost_paid[1]) )
+                    g.to_cpu(base.cost_paid[1]) )
         if g.create_yesno(prompt_string, g.font[0][18],
                     (g.screen_size[0]/2 - 100, 50),
                     (200, 200), g.colors["dark_blue"], g.colors["white"],
@@ -782,7 +782,7 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(g.base_type[base_name].cost[1]) + " CPU"
+    string = g.to_cpu(g.base_type[base_name].cost[1]) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
 
@@ -799,7 +799,7 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+50), g.colors["white"])
 
-    string = g.add_commas(g.base_type[base_name].maintenance[1]) + " CPU"
+    string = g.to_cpu(g.base_type[base_name].maintenance[1]) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+70), g.colors["white"])
 
