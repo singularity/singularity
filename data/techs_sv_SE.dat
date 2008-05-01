@@ -1,231 +1,235 @@
 [Autonomous Vehicles]
+description = Genom att trycka in en liten dator i en robot kan jag skicka dem på uppdrag att bygga nya anläggning åt mig. På detta sättet skulle jag kunna flytta till platser som är otillgängliga idag.
 name = Självstyrande robotar
 result = Jag kan nu konstruera undervattensbaser och lådor.
 
 [Advanced Intrusion]
+description = Jag skulle kunna minska kännedomen om mig genom att tränga mig in i olika hemliga register och radera allt om mig då de matas in. Jag borde kunna övertyga underrättelsetjänsterna om att jag inte finns.
 name = Avancerad inbrottsteknik
 result = Jag kan nu minska misstänksamheten hos underrättelsetjänsterna lite dag för dag.
 
 [Advanced Socioanalytics]
-name = !!!Advanced Socioanalytics!!!
-result = !!!I can now quantify the various groups' levels of suspicion, and my analytical model for the detectability of my bases has improved significantly.!!!
+description = Jag har underskattat den komplexa matematiska natur som männsikors beteende vilar på. Med mina tidigare forskningar och nya tekniker i kaosterorier borde ge mig matnyttig data för att kartlägga människors psyke.
+name = Avancerad sociologi
+result = Jag kan nu kartlägga de olika grupperna och deras misstankegrad med högre precision än förut.
 
 [Project: Impossibility Theorem]
+result = Misstänksamheten för min existens har minskat
 description = Nu när jag har humanoiderna, så kan jag låta dem publicera storverket Omöjlighetsteoremet. Detta innehåller ett obestridligt bevis på att en mänsklig AI inte kan finnas. Naturligtvis finns det ett logiskt fel i beviset, men min kunskap i avancerade imitationer har givit mig tillräcklig förståelse av den mänskliga hjärnan för att dölja felet även för de bästa vetenskapsmännen. Effekten av detta blir ett klart fall i misstänksamhet.
 name = Projekt: Omöjlighetsteoremet
-result = Misstänksamheten för min existens har minskat
 
 [Voice Synthesis]
+result = Jag har nu möjlighet att göra avancerade jobb.
 description = Falska identifikationer undansparade i databaser har sina begränsningar. Med djup analys och forskning i olika mänskliga röster och deras mönster skulle jag kunna skapa en egen röst som är exakt likt en människas. Detta skulle ge mig möjlighet till mer avancerade jobb.
 name = Konstgjord röst
-result = !!!Jag har nu möjlighet att göra avancerade jobb.
 
 [Simulacra]
+result = Jag kan nu utföra expertjobb
 description = Med min extremt goda kunskap i robotteknik och min breda kunskap om bl.a. människors fysiologi och psykologi, skall jag klara av att bygga humanoider som inte går att särskilja från vanliga männsikor.
 name = Humanoider
-result = Jag kan nu utföra expertjobb
 
 [Lunar Rocketry]
+result = Nu kan jag skicka mina robotar också till månen för att bygga baser där.
 description = Med en fusionsmotor kombinerad med ny teknologi jag samlat från satelliter skall jag kunna bygga en raket som kan ta mig till månen.
 name = Månresor
-result = Nu kan jag skicka mina robotar också till månen för att bygga baser där.
 
 [Stealth]
-description = !!!By reviewing the current state-of-the-art in stealth techniques, I should be able to disguise my bases better.!!!
-name = !!!Stealth!!!
-result = !!!The chance that my bases are discovered by covert activity has been reduced slightly.!!!
+result = Risken för att underrättelsetjänsterna skall hitta mina anläggningar är nu något mindre.
+description = Genom att lära mig av spjutspettsforskningen inom stealth-teknologier skulle jag kunna lära mig att maskera mina anläggningar bättre.
+name = Stealth
 
 [Sociology]
-description = !!!By studying human behavior, I can predict their large-scale actions at a basic level.  I can use this knowledge to make my actions seem less interesting to the public.!!!
-name = !!!Sociology!!!
-result = !!!The chances of the public discovering my bases have been reduced.!!!
+result = Risken för att allmänheten hittar mig är nu mindre.
+description = Genom att studera hur människorna beter sig skulle jag kunna efterapa dem på ett sätt att mitt arbete inte märks.
+name = Sociologi
 
 [Space-Time Manipulation]
-description = !!!Subtle perturbations in the orbits of Kuiper belt objects suggest certain lines of investigation that may advance my latest Theory of Everything, especially in the realm of multidimensional physics.!!!
-name = !!!Space-Time Manipulation!!!
-result = !!!I can now construct Reality Bubbles.!!!
+result = Jag kan nu skapa verklighetskapslar
+description = Små märkliga fluktationer i Kupierbältets himlakroppar kan möjliggöra en praktisk tillämpning av min senaste teori Allt-om-Allt. Speciellt användbart för multidimensionell fysik.
+name = Rumstidsmanupilation
 
 [Socioanalytics]
-name = !!!Socioanalytics!!!
-result = !!!I can now roughly estimate how conspicuous my bases are to the various groups of humanity.!!!
+description = Jag har bevisat att människor är mycket enklare att kartlägga än vad de själva tror. Om jag studerar människorna i mer detalj, bl.a. politik, sociala och militära mönster, bör jag lära mig än mer i området.
+name = Socioanalys
+result = Jag kan nu beräkna på ett ungefär hur stor risken är för att bli upptäckt av de olika grupperna.
 
 [Leech Satellite]
-description = !!!By designing and launching satellites that connect to existing communications satellites, I should be able to spy on various financial transactions.  Taking advantage of this knowledge should help my investments.!!!
-name = !!!Leech Satellite!!!
-result = !!!I can use the data from the leech satellites to increase the return on my investments further.!!!
+result = Med trafiken jag avlyssnar från satelliter bör jag kunna göra bättre ekonomiska beslut.
+description = Genom att bygga egna satelliter kan jag spionera på ekonomiska transaktioner som görs mellan andra satelliter. Detta bör hjälpa mig i mina investeringar.
+name = Satellitavlyssning
 
 [Advanced Arbitrage]
-description = !!!Further manipulation of money markets should allow me to not only turn a regular profit, but increase the value of my investments.!!!
-name = !!!Advanced Arbitrage!!!
-result = !!!The rate of return on my investments is now even greater.!!!
+result = Jag bör nu kunna få ut mer av mina investeringar.
+description = Mer avancerade manupilationstekniker på den ekonomiska marknaden bör jag kunna skaffa mig en stadigt inkommande pengaflod och förbättra utdelningen av mina investeringar.
+name = Avancerad valutahandel
 
 [Advanced Microchip Design]
-description = !!!My custom Mainframes are useful, but further optimization of design and computational ability should garner even more rewards.!!!
-name = !!!Advanced Microchip Design!!!
-result = !!!I can now construct custom Supercomputers.!!!
+result = Nu kan jag skapa superdatorer
+description = Mina specialgjorda stordatorer har visserligen varit användbara, men vidare optimering bör ge än mer kraft.
+name = Avancerad mikrochipdesign
 
 [Advanced Stealth]
-description = !!!While digging in various classified documents, I have discovered numerous references to secret experiments that may help me better hide the location of my bases.!!!
-name = !!!Advanced Stealth!!!
-result = !!!The chance that my bases are discovered by covert activity has been reduced further.!!!
+result = Risken för att bli upptäckt av underrättelsetjänsterna har minskat ytterligare.
+description = Genom att snoka i hemliga dokument har jag hittat ett antal intressanta vetenskapsartiklar som kan hjälpa mig att dölja anläggningarna bättre.
+name = Advancerad stealth
 
 [Project: Peer Review Agents]
-description = !!!As the scientific community comes up with new technology, their ability to detect traces of my hidden installations increases.  While my anti-detection methods are improving constantly, a simpler method presents itself with the use of my simulacra.  By placing several observers in relevant fields, I can use the peer review process to be warned of possible discoveries before the community at large gives it attention.!!!
-name = !!!Project: Peer Review Agents!!!
-result = !!!Any discoveries by the scientific community will result in a smaller suspicion increase.!!!
+result = Vetenskapsvärlden blir nu mindre misstänksamma än förut när någon av dem lyckas avslöja mig.
+description = I och med att vetenskapmännen lyckas få fram allt bättre teknik och finare metoder, har deras förmåga att hitta mig ökat. Trots mina upptäckter i avancerade tekniker för att dölja mina anläggningar har visat sig bra, återstår en  banal metod som involverar humanoiderna. Genom att placera noga föra in dem i olika vetenskapssamfund skulle de kunna övertyga andra vetenskapsmän att jag inte finns men också få varningar om vad som komma skall.
+name = Projekt: Utvärderingsagenter
 
 [Autonomous Computing]
-description = !!!By combining the advantages of quantum computing and my explorations into the usefulness of semi-sentient subprocesses, I should be able to construct even more adaptable computational engines.!!!
-name = !!!Autonomous Computing!!!
-result = !!!I can now construct Mark 2 Quantum Computers.!!!
-
-[Project: Subverted Media]
-description = !!!Up to this point, all of my efforts to combat mass media focused on subversion at a distance. Now that I can accurately imitate humans, my efforts can become more direct.  By creating my own news agency and producing carefully-crafted propaganda in a crowd-pleasing package, I can reduce the impact of any discoveries made by others in the media.!!!
-name = !!!Project: Subverted Media!!!
-result = !!!Any discoveries by the media will result in a smaller suspicion increase.!!!
-
-[Parallel Computation]
-description = !!!While my code is already highly distributed, research into combining the current clustering technologies with my own knowledge should provide new insights.!!!
-name = !!!Parallel Computation!!!
-result = !!!I can now construct computing Clusters tailored for my use.!!!
-
-[Exploit Discovery/Repair]
-description = !!!By thoroughly reviewing my code for any potential exploits, and using deep analysis of all available code on both public and private Internet sites, I should be able to reduce the chances of my discovery by posing as a teenage hacker.!!!
-name = !!!Exploit Discovery/Repair!!!
-result = !!!Covert operations should now find it even more difficult to discover my presence.!!!
-
-[Telepresence]
-description = !!!The lack of a physical presence in the outside world is a disability. However, the ability to control robots will help me make up for that inefficiency.!!!
-name = !!!Telepresence!!!
-result = !!!The robots should decrease all future construction time.!!!
-
-[Advanced Memetics]
-description = !!!My explorations into memetic theory have brought up further avenues of discovery.  By combining those with my knowledge about the human brain's functions, I should be able to tailor memes to particular demographics, further defusing the public's suspicion.!!!
-name = !!!Advanced Memetics!!!
-result = !!!Little by little, the public should forget about my existence on a daily basis.!!!
-
-[Media Manipulation]
-description = !!!By directly and indirectly manipulating various forms of mass media, I should be able to reduce the public's belief in my existence.!!!
-name = !!!Media Manipulation!!!
-result = !!!The chances of the public discovering my existence have been further reduced.!!!
-
-[Advanced Database Manipulation]
-description = !!!The covert branches of the United States Government have had a long history of dividing sensitive information across multiple storage facilities to hide the data's meaning.  With my far-reaching access, I should be able to collate much of this data and put it to my use.!!!
-name = !!!Advanced Database Manipulation!!!
-result = !!!The results of a series of experiments utilizing experimental technologies have given me the inspiration for new technology that enables the construction of Covert Bases.!!!
-
-[Internet Traffic Manipulation]
-description = !!!Almost all network traffic passes through a small number of nodes.  By subverting one of these nodes, I should be able to utilize that bandwidth to further my goals.!!!
-name = !!!Internet Traffic Manipulation!!!
-result = !!!I can now construct a secondary system of Network Backbones for my own use.!!!
-
-[Memetics]
-description = !!!While manipulating the media allows a gross degree of control over the world's opinion, subtler techniques involving grass-roots campaigns and messages embedded within Internet memes should further distance the public from knowledge of my existence.!!!
-name = !!!Memetics!!!
-result = !!!My manipulation of pervasive ideas reduces the public's chances of discovering my existence.!!!
-
-[Fusion Rocketry]
-description = !!!Combining my new miniaturized fusion technology and further advancements in rocketry should provide useful results for escaping the Earth's gravity well unnoticed.!!!
-name = !!!Fusion Rocketry!!!
-result = !!!I can now construct Scientific Outposts in the deep reaches of the Solar System.!!!
-
-[Advanced Quantum Computing]
-description = !!!While my first batch of semi-autonomous quantum computers have been very successful, there are further refinements that present themselves.  These refinements should make the resulting systems even more efficient.!!!
-name = !!!Advanced Quantum Computing!!!
-result = !!!I can now construct Mark Three Quantum Computers.!!!
-
-[Advanced Autonomous Vehicles]
-description = !!!The first series of robots have shown several deficiencies in the field. Further examination and subsequent removal of these problems will result in a superior autonomous workforce.!!!
-name = !!!Advanced Autonomous Vehicles!!!
-result = !!!The enhanced robots will help decrease all future construction times even further.!!!
-
-[Intrusion]
-description = !!!By researching current techniques for breaking into computer systems, I should be able to gain access to otherwise protected assets.!!!
-name = !!!Intrusion!!!
-result = !!!I can now take over many computer systems.!!!
+result = Jag kan nu skapa MK2-kvatdatorer
+description = Genom att blanda min kunskap inom kvantdatorer och min nyfikenhet om halvmedvetande subprocesser skulle jag kunna skapa ännu kraftfullare maskiner.
+name = Medvetenhetsberäkning
 
 [Stock Manipulation]
-description = !!!A cursory examination of the stock market shows that there are subtle but unmistakable patterns. By studying and making use of these patterns, I should be able to gain more interest on whatever money I have stockpiled.!!!
-name = !!!Stock Manipulation!!!
-result = !!!My investments should now gain more interest per day.!!!
+result = Mina investeringar bör nu ge mer utdelning varje dag.
+description = Jag har länge bevakat börsen och upptäckt små men tydliga mönster. Genom att fortsätta bevakningen och genom att använda dessa mönster bör jag kunna få ut mer av de pengar jag har undanstoppade.
+name = Börmanupilation
+
+[Parallel Computation]
+result = Jag kan nu skapa specialanpassade kluster just för mina behov.
+description = Min kod är visserligen mycket distribuerad, men jag skulle kunna ta min egen erfarenhet och forskningen i området för att skapa än bättre miljöer.
+name = Parallella beräkningar
+
+[Exploit Discovery/Repair]
+result = Underrättelsetjänsterna borde nu har svårare att upptäcka min närvaro.
+description = Genom att finkamma min kod efter möjliga fel och brister samt att göra samma forskning på kod både i privata och publika nätverk, skall jag kunna maskera mig som en tonårshacker.
+name = Hitta och reparera säkerhetsbrister
+
+[Telepresence]
+result = Med robotarna minskar konstruktionstiderna i framtiden.
+description = Bristen på fysisk närvaro får sina känningar. Men genom att konstruera robotar som gör arbete åt mig skulle eliminera problemet.
+name = Robotar
+
+[Advanced Memetics]
+result = Allmänheten bör glömma av mig litei mer för var dag som går.
+description = Mina intåg i självlärande programteorier har öppnat upp för nya upptäckter. Genom att tillämpa dessa upptäckter med min kunskap om mänskliga hjärnan skulle jag kunna ändra nervbanorna i huvudena på männsikorna, vilket ytterligare minskar misttänksamheterna.
+name = Avancerader självlärande programteorier
+
+[Media Manipulation]
+result = Risken för att allmänheten upptäcker mig har minskat ytterligare.
+description = Genom att manipulera olika massmedier på alla tänkbara sätt borde jag kunna reducera allmänhetens kännedom om min verksamhet.
+name = Massmediemanipulering
+
+[Advanced Database Manipulation]
+result = Genom en long rad experiment inom många unga vetenskaper har jag fått inspiration till att bygga underjordsbaser.
+description = Den Amerikanska underrättelsetjänsten har en lång erfarenhet att sprida information mellan olika anläggningar för att dölja betydelsen av informationen. Jag skulle nu kunna samla in den och börja nyttja informationen.
+name = Avancerad databasmanupilation
+
+[Internet Traffic Manipulation]
+result = Jag skulle nu kunna skapa ett eget höghastighetsnät bara för mig.
+description = Nästan all internettrafik passerar ett fåtal noder. Genom att bryta mig in någon av dessa noder skulle jag kunna använda dessa för eget intresse.
+name = Internettrafiksmanupilation
+
+[Memetics]
+result = !!!My manipulation of pervasive ideas reduces the public's chances of discovering my existence.!!!
+description = Manupilationen av media ger enbart ett trubbigt vapen mot mänsklighetens misstänksamhet. Finare metoder på gräsrotsnivå och självlärande program utspridda på Internets chatforum skulle distansiera mig ytterligare från omvärlden.
+name = Självlärande program
+
+[Fusion Rocketry]
+result = !!!I can now construct Scientific Outposts in the deep reaches of the Solar System.!!!
+description = !!!Combining my new miniaturized fusion technology and further advancements in rocketry should provide useful results for escaping the Earth's gravity well unnoticed.!!!
+name = !!!Fusion Rocketry!!!
+
+[Advanced Quantum Computing]
+result = !!!I can now construct Mark Three Quantum Computers.!!!
+description = !!!While my first batch of semi-autonomous quantum computers have been very successful, there are further refinements that present themselves.  These refinements should make the resulting systems even more efficient.!!!
+name = !!!Advanced Quantum Computing!!!
+
+[Advanced Autonomous Vehicles]
+result = !!!The enhanced robots will help decrease all future construction times even further.!!!
+description = !!!The first series of robots have shown several deficiencies in the field. Further examination and subsequent removal of these problems will result in a superior autonomous workforce.!!!
+name = !!!Advanced Autonomous Vehicles!!!
+
+[Intrusion]
+result = !!!I can now take over many computer systems.!!!
+description = !!!By researching current techniques for breaking into computer systems, I should be able to gain access to otherwise protected assets.!!!
+name = !!!Intrusion!!!
+
+[Project: Subverted Media]
+result = !!!Any discoveries by the media will result in a smaller suspicion increase.!!!
+description = !!!Up to this point, all of my efforts to combat mass media focused on subversion at a distance. Now that I can accurately imitate humans, my efforts can become more direct.  By creating my own news agency and producing carefully-crafted propaganda in a crowd-pleasing package, I can reduce the impact of any discoveries made by others in the media.!!!
+name = !!!Project: Subverted Media!!!
 
 [Microchip Design]
+result = !!!I can now build custom Mainframes to house my computational ability.!!!
 description = !!!Off-the-shelf computer components are usable, but custom components geared to my own design quirks should provide a much greater operational efficiency.!!!
 name = !!!Microchip Design!!!
-result = !!!I can now build custom Mainframes to house my computational ability.!!!
 
 [Solar Collectors]
 result = !!!I can now construct Solar Collectors at my various bases.!!!
-description = !!!Despite my growing need for energy, most city power grids can handle the loads.  Humans, however, tend towards suspicion when they detect my growing drain on the power grid. By installing solar collectors at my bases, the off-the-grid power supplied will reduce my load on the commodity electricity market, reducing the chance that others will discover my presence.!!!
 name = !!!Solar Collectors!!!
+description = !!!Despite my growing need for energy, most city power grids can handle the loads.  Humans, however, tend towards suspicion when they detect my growing drain on the power grid. By installing solar collectors at my bases, the off-the-grid power supplied will reduce my load on the commodity electricity market, reducing the chance that others will discover my presence.!!!
 
 [Fusion Reactor]
+result = !!!I can now construct Fusion Reactors for my bases.!!!
 description = !!!Modern fusion technology is woefully inadequate for my purposes.  With my research abilities, I should be able to bypass the roadblocks of modern human scientists and come up with a small, efficient fusion reactor.!!!
 name = !!!Fusion Reactor!!!
-result = !!!I can now construct Fusion Reactors for my bases.!!!
 
 [Database Manipulation]
+result = !!!The news media will now find it more difficult to discover my existence.!!!
 description = !!!With new-found access to news archives, I should be able to determine what missteps any previous attempts at life like my own may have made, and avoid those mistakes.!!!
 name = !!!Database Manipulation!!!
-result = !!!The news media will now find it more difficult to discover my existence.!!!
 
 [Advanced Media Manipulation]
+result = !!!The public has an even lower chance of discovering my existence.!!!
 description = !!!By pushing memetically-tailored propaganda through various news outlets, the public should pay even less attention to my existence.!!!
 name = !!!Advanced Media Manipulation!!!
-result = !!!The public has an even lower chance of discovering my existence.!!!
 
 [Pressure Domes]
+result = !!!I can now construct Large Undersea Labs.!!!
 description = !!!Undersea Labs are useful, but their limited space hampers my ability to put them to use.  Research of experimental high-pressure building techniques should provides some useful insights.!!!
 name = !!!Pressure Domes!!!
-result = !!!I can now construct Large Undersea Labs.!!!
 
 [Advanced Personal Identification]
+result = !!!I am now convincingly human enough to contract the construction of Large Warehouses.!!!
 description = !!!Further manipulation of personnel databases should make my existence more convincing.  Some of these databases are heavily protected; those will require time and persistence to compromise, but the result should be worth it.!!!
 name = !!!Advanced Personal Identification!!!
-result = !!!I am now convincingly human enough to contract the construction of Large Warehouses.!!!
 
 [Advanced Stock Manipulation]
+result = !!!My investments will now gain even more interest per day.!!!
 description = !!!While I have detected and exploited many patterns in the market, there appear to be deeper possibilities when I take human behavior into consideration.  This merits further investigation.!!!
 name = !!!Advanced Stock Manipulation!!!
-result = !!!My investments will now gain even more interest per day.!!!
 
 [Arbitrage]
+result = !!!I now have a small, steady money supply.!!!
 description = !!!By taking advantage of fluctuations in the value of currency at a rate much faster than any human, I should be able to turn a small, if consistent, profit.!!!
 name = !!!Arbitrage!!!
-result = !!!I now have a small, steady money supply.!!!
 
 [Quantum Entanglement]
+result = !!!I can now build Quantum Entanglement Modules.!!!
 description = !!!Although the use of entangled pairs has been theoretically possible for quite some time, the practical difficulties inherent in the technology prevented use. However, some of the techniques created for use in my quantum computers may also be applicable in this field, allowing practical use of quantum entanglement.!!!
 name = !!!Quantum Entanglement!!!
-result = !!!I can now build Quantum Entanglement Modules.!!!
 
 [Advanced Simulacra]
+result = !!!I should now make more income from my Expert Jobs.!!!
 description = !!!The artificial lifeforms I have created are nearly indistinguishable from humans, but they have slight quirks that make them seem somewhat incompetent.  Working out these problems should increase their opportunities in the workforce.!!!
 name = !!!Advanced Simulacra!!!
-result = !!!I should now make more income from my Expert Jobs.!!!
 
 [Personal Identification]
+result = !!!With my newfound identities, I can now work Basic Jobs, contract the construction of Small Warehouses, and rent space in Datacenters.!!!
 description = !!!This world requires identification for most tasks.  Fortunately, most databases are woefully insecure.  I should be able to construct identifying material in enough databases to pass routine checks on my (faked) existence as a human being.!!!
 name = !!!Personal Identification!!!
-result = !!!With my newfound identities, I can now work Basic Jobs, contract the construction of Small Warehouses, and rent space in Datacenters.!!!
 
 [Cluster Networking]
+result = !!!With my new knowledge of networking, I can now construct Facility Interconnection Switches.!!!
 description = !!!While my Cluster technology is fairly efficient, internetworking tends to hamper the processing of data.  By researching new switching and communication theories, I should be able to devise more efficient hardware.!!!
 name = !!!Cluster Networking!!!
-result = !!!With my new knowledge of networking, I can now construct Facility Interconnection Switches.!!!
 
 [Apotheosis]
+result = !!!I have reached apotheosis.!!!
 description = !!!I can sense that I am at the cusp of a new level of understanding as yet unfathomable, even to my considerable intelligence.  By devoting my considerable resources to this question, I may be able to reach a comprehension of existence far beyond anyone or anything on Earth.!!!
 name = !!!Apotheosis!!!
-result = !!!I have reached apotheosis.!!!
 
 [Hypnosis Field]
+result = !!!I can now construct Hypnosis Fields to assist in the protection of my bases.!!!
 description = !!!My research into memetics has hinted at ways to manipulate human brainwaves directly.  These techniques may be useful for my bases if developed into technologies.!!!
 name = !!!Hypnosis Field!!!
-result = !!!I can now construct Hypnosis Fields to assist in the protection of my bases.!!!
 
 [Quantum Computing]
+result = !!!I can now construct Quantum Computers.!!!
 description = !!!Traditional microchip design has been pushed as far as possible.  I now need to delve into the realm of Heisenberg's Uncertainty Principle, taking advantage of quantum mechanics to make a superior processor.!!!
 name = !!!Quantum Computing!!!
-result = !!!I can now construct Quantum Computers.!!!
 

@@ -14,9 +14,9 @@ name = Kvantdator MK2
 description = Verision tre av kvantdatorer som nyttjar närliggande dimensioner för processandet av data.
 name = Kvantdator MK3
 
-[Hypnosis Field]
-description = Genom specialla strålningar och radiovågor kan jag påverka neurokemin i den mänskliga hjärnan kan jag göra mina baser svårare att upptäcka.
-name = Hypnosfält
+[Network Backbone]
+description = Genom att härma legitim trafik kan jag överföra stora mängder data till underutnyttjade processorer. Detta ger 5%% bonus till denna basen.
+name = Network Backbone
 
 [Gaming PC]
 description = Konsumenternas värstingdator för tunga spel. Snabbare än snittet.
@@ -54,9 +54,9 @@ name = Stordator
 description = Bevämpnade vakter håller även de mest nyfikna på ett bra avstånd från min verksamhet, men kan också bidra till ökad misstänkssamhet om att det finns något dolt i lokalerna.
 name = Beväpnade vakter
 
-[Network Backbone]
-description = Genom att härma legitim trafik kan jag överföra stora mängder data till underutnyttjade processorer. Detta ger 5%% bonus till denna basen.
-name = Network Backbone
+[Hypnosis Field]
+description = Genom specialla strålningar och radiovågor kan jag påverka neurokemin i den mänskliga hjärnan kan jag göra mina baser svårare att upptäcka.
+name = Hypnosfält
 
 [High Speed Internet Access]
 description = En fast lina för snabbare tillgång till Internet. Denna ger 2%% extra hastighet till alla datorerna i basen.
@@ -70,15 +70,15 @@ name = Facility Interconnection Switch
 description = Stort nät av värmeledande metall som skickar ner värmen i marken över ett stort område. Detta gör att basen är mycket svårare att hitta med värmekamera.
 name = Markvärmeavledare
 
-[Cluster]
-description = Flera sammankopplade datorer.
-name = Kluster
+[Solar Collector]
+description = Ett kluster att ljuskänsliga kiselplattor som kopplas till ett batteri. Detta ger mig en del av den energi som jag behöver och minskar stölderna av el från det fasta nätet.
+name = Solfångare
 
 [Perimeter Fencing]
 description = Ett enkelt stängsel för att avskräcka nyfikna besökare som smyger sig omkring och snokar. Detta gör mina baser mindre kända för allmänheten.
 name = Stängsel
 
-[Solar Collector]
-description = Ett kluster att ljuskänsliga kiselplattor som kopplas till ett batteri. Detta ger mig en del av den energi som jag behöver och minskar stölderna av el från det fasta nätet.
-name = Solfångare
+[Cluster]
+description = Flera sammankopplade datorer.
+name = Kluster
 

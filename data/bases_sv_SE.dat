@@ -1,17 +1,12 @@
-[Large Warehouse]
-flavor_list = Stor lagerlokal | Centrallager
-description = Hyr ett centrallager någonstans långt bort. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
-name = Centrallager
-
 [Datacenter]
 flavor_list = Datacenter | Premium Hosting
 description = (35 CPUer) Köp råstyrka från en storgrossist med feta datorer. Jag kommer att behöva falsk-leg för pappersarbetet.
 name = Datacenter
 
-[Small Warehouse]
-flavor_list = Upplag | Liten lagerlokal | Förrådslokal
-description = Hyr en liten lagerlokal på en avsides plats. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
-name = Liten lagerlokal
+[Large Warehouse]
+flavor_list = Stor lagerlokal | Centrallager
+description = Hyr ett centrallager någonstans långt bort. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
+name = Centrallager
 
 [Covert Base]
 flavor_list = Bunker | Hemlig bas
@@ -37,6 +32,11 @@ name = Dimensionsreva
 flavor_list = Månbas | Rymdstation | Rymdanläggning
 description = Denna basen består av tak byggda över ett antal kratrar på månens baksida. Pga stor marktillgänglighet är den mycket stor.
 name = Månbas
+
+[Small Warehouse]
+flavor_list = Upplag | Liten lagerlokal | Förrådslokal
+description = Hyr en liten lagerlokal på en avsides plats. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
+name = Liten lagerlokal
 
 [Large Undersea Lab]
 flavor_list = Dom | Undervattenslaboratorium
