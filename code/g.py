@@ -343,7 +343,7 @@ def print_multiline(surface, string_to_print, font, width, xy, color):
         xy = (xy[0]+size[0], xy[1])
 
 #create dialog with OK button.
-def create_dialog(string_to_print, box_font = None, xy = None, size = (200,200),
+def create_dialog(string_to_print, box_font = None, xy = None, size = (250,250),
                   bg_color = None, out_color = None, text_color = None):
     # Defaults that reference other variables, which may not be initialized when
     # the function is defined.
