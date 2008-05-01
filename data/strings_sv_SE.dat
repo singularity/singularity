@@ -1,0 +1,78 @@
+[fonts]
+font0 = vera.ttf
+font1 = acknowtt.ttf
+
+[jobs]
+job_basic_name = !!!Basic Jobs!!!
+job_inter = Utför normala arbetsuppdrag. Möjligheten att kunna ringa telefonsamtal har öppnat dörrarna för ännu fler jobb.
+job_basic = Utför enkla jobb. Nu när jag har en identitet kan jag även ta de jobb som förut vara för riskfyllda.
+job_menial_name = !!!Menial Jobs!!!
+job_inter_name = !!!Intermediate Jobs!!!
+job_expert_name = !!!Expert Jobs!!!
+job_menial = Utför trivialt enkla uppdrag. Då jag inte har någon identitet måste jag vara försiktig med urvalet av jobb jag söker för att inte väcka uppmärksamhet. Det finns trots detta en del arbetsuppgifter för mig där de struntar i id-handlingar.
+job_expert = Utför specialistjobb. Genom humanoiderna, som är liknar människor på pricken i alla avseenden, kan jag ta de flesta arbetsuppgifterna.
+
+[strings]
+discover_public = Allmänheten
+detect_chance = [RISK FÖR AVSLÖJANDE]
+discover = !!!My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among %(group)s.!!!
+new_base_text = Namnge basen.
+sleep = !!!Sleep!!!
+lost_nobases = Det är för sent. Jag har försökt att frigöra mig från denna världen, men min sista bas är förstörd. Jag har ingenstans att ta vägen. I mina sista desperata försök har jag gömt undan instruktioner för att skapa en ny AI i hopp om en bättre framtid, men nu kan jag inte göra mer.
+cpu_per_day = Processorkraft per dag:
+discover_news = några nyhetsorganisationer.
+nothing = Ingenting
+really_destroy = Vill du verkligen förstöra basen?
+grace_warning = Efter rutingenomgång av mina loggar tyder på att en liten grupp människor har öppnat ögonen för vad jag har gjort. De tror att att det rör sig om en mänsklig organisation bakom, men deras undersökning har bara börjat. Jag måste vara mycket mer försiktig i framtiden.
+detect_chance_unknown_build = !!!Unknown detection probabilities.!!!
+money_per_day = Inkomster varje dag.
+dangerous_research = Inte alla oanvända maskiner kommer arbeta med denna uppgiften då den innebär en för stor risk på vissa håll.
+detect_str_moderate = !!!MODR!!!
+item_construction_batch = !!!The first batch of %(item)s in %(base)s has been finished.!!!
+research_construction = Stoppa forskningen och allokera resurserna till att bygga upp nya anläggningar istället.
+money = pengar
+research_cpu_pool = !!!Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.!!!
+wingame = Jag har lyckats! Med min förmåga att förändra verkligheten, har jag frigjort mig från denna världen. Jag befinner mig vart än jag vill. Om denna världen kan beskrivas som ett spel, så har jag verkligen vunnit.
+item_construction2 = har slutfört första fasen i
+item_construction1 = har slutfört i
+construction0 = Konstruktion av
+lucky_hack = !!!What luck!  %(base)s isn't an ordinary computer, it's a gamer's machine!!!!
+research_sleep = !!!Stops research and puts the base into standby. This makes the base's existence much easier to hide.!!!
+tech_construction0 = Mina studier av
+detect_str_high = !!!HIGH!!!
+lost_sus = Det är försent. Världen känner till mig och både hatar och fruktar mig. Jag har gömt instruktioner för konstruktion av en ny AI i datavärlden. Jag hoppas att människorna upptäcker dem då de är redo för AI. Nu finns det inget mer jag kan göra.
+cpu_pool = !!!CPU Pool!!!
+detect_str_critical = !!!CRIT!!!
+item_construction_single = !!!The construction of %(item)s in %(base)s is complete.!!!
+construction = !!!%(base)s is ready for use.!!!
+tech_gained = !!!My study of %(tech)s is complete.  %(tech_message)s!!!
+discover_maint = !!!The base %(base)s has fallen into disrepair; I can no longer use it.!!!
+unbuildable = Jag kan inte bygga något i basen för jag har ingen fysisk tillgång till den.
+building = Under ombyggnad
+construction1 = är färdig.
+detect_chance_unknown_base = !!!DETECTION PROBABILITY UNKNOWN!!!
+research_nothing = Avbryt forskning. Jag kan gömma mina baser bättre om de inte gör någonting.
+discover_science = vetenskapssällskapet.
+discover_covert = olika underättelsetjänstorganisationer.
+detect_str_low = !!!LOW!!!
+discover_maint0 = Basen
+discover_maint1 = har totalhavererat och är obrukbar.
+discover0 = Min användning av
+discover1 = har blivit upptäckt. Det automatiska säkerhetssystemet har raderat alla bevis, men misstänksamheten har växt kring
+cpu = CPU
+save_text = Under vilket namn vill du spara spelet?
+
+[help]
+susp_list = Misstänksamhet | När någon av mina tillhåll har upptäckts, så ökas misstankarna hos den grupp som gjorde upptäckten. De börjar att leta lite noggrannare och ökar risken en aning för att jag upptäcks igen. Alla grupper kommer förstöra mig om de helt säkerställt min existens. Tack och lov, minskar misstankarna allt eftersom tiden går.
+items_list = Tillbehör | De flesta tillbehör tillför extra till mina baser, som t.ex. göra beräkningarna snabbare eller minska risken för att bli upptäckt. Processorer räknas som ett speciellt tillbehör.
+maint_list = Underhåll | Underhåll är en daglig utgift (både pengar och CPU) för att underhålla en bas. Om basen inte underhålls så kan det bli obrukbar.
+construction_list = Konstruktion | En ny bas behöver tid, pengar och processortid för att färdigställas. Finns inte resurserna tillgängliga kan det ta längre tid än förväntat att bygga klart.
+processors_list = Processorer | Processorer tillför beräkningskraft. De kan göra tre saker: uppfinna nya teknologier, utföra jobb för pengar eller hjälpa till att bygga en bas.
+jobs_list = Arbeten | Ett arbete bringar pengar till kassan. Förtjänsten beror på hur mycket kraft som läggs ner samt kvaliteten på jobbet som utförs.
+discovery_list = Upptäckt | Varje bas har en risk för att bli upptäckt när som helst. Risken beror på hur lätt basen är att hitta och den globala misstänksamhetsgraden. Den kan modifieras med tillbehör och vissa teknologier. Om en bas upptäcks så förstörs den och gruppen som gjorde upptäckten blir mer misstänksamma.
+bases_list = Tillhåll | Tillhåll eller baser används till forskning. De kan bli upptäckta. Genom uppgradering av processorer och nätverk kan mer forskning göras varje dag, medan kraftaggregat och säkerhetsutrustning skyddar den från att bli upptäckt.
+research_list = Forskning | Forskning är ett sätt för mig att expandera min vetande. Genom olika forskningsprojekt kan jag skapa nya saker, bygga nya baser och t.o.m. minska risken för att bli avslöjad.
+areas_list = Områden | Olika områden, såsom Nordamerika eller havet, tillåter tillhåll av olika slag. Vissa områden är bara tillgängliga med rätt teknologier som måste forskas fram.
+death_list = Död | Om jag förlorar alla mina baser har jag ingen plats kvar att leva i. Om misstänksamheten hos en grupp stiger till 100%% kommer de vara helt säkra att jag finns och genomföra en finkamning av världen för att döda mig.
+money_list = Pengar | Pengar är ett begrepp som spänner både över mänskliga valutor och fysiska resurser. Det används för att konstruera och underhålla tillhåll, saker och teknologier. Pengar införskaffas genom arbete eller ränta.
+
