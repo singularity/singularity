@@ -1,105 +1,84 @@
 [Quantum Entanglement Module]
-descript = Denna enhet som opererar nära ljusets hastighet ger mig otrolig prestanda mot mina andra baser och nästan hundraprocentig processoranvänding. Jag kommer att få ett 15%% snabbare system i denna basen.
+description = Denna enhet som opererar nära ljusets hastighet ger mig otrolig prestanda mot mina andra baser och nästan hundraprocentig processoranvänding. Jag kommer att få ett 15%% snabbare system i denna basen.
 name = Kvantnätsmodul
-description = !!!This device allows near-lightspeed communication with my other bases, allowing an almost perfect utilization of processor resources. Gives a 15% computation bonus to all computers at this base.!!!
 
 [Heatsink]
-descript = Nät av värmeledande metall som driver bort värmen. Detta medför att basen inte längre hittas lika lätt med värmekamera.
+description = Nät av värmeledande metall som driver bort värmen. Detta medför att basen inte längre hittas lika lätt med värmekamera.
 name = Värmeavledare
-description = !!!Large fractal networks of high conductivity metal disperse heat, making bases harder to detect.!!!
 
 [Quantum Computer MK2]
-descript = Andra verisionen av kvantdatorer som går djupare in i kvantteorin för högre prestanda.
+description = Andra verisionen av kvantdatorer som går djupare in i kvantteorin för högre prestanda.
 name = Kvantdator MK2
-description = !!!The second revision of the quantum line, tapping further into new quantum theory.!!!
 
 [Quantum Computer MK3]
-descript = Verision tre av kvantdatorer som nyttjar närliggande dimensioner för processandet av data.
+description = Verision tre av kvantdatorer som nyttjar närliggande dimensioner för processandet av data.
 name = Kvantdator MK3
-description = !!!The third revision of the quantum line, exploiting multiple nearby universes for processing.!!!
 
 [Hypnosis Field]
-descript = Genom specialla strålningar och radiovågor kan jag påverka neurokemin i den mänskliga hjärnan kan jag göra mina baser svårare att upptäcka.
+description = Genom specialla strålningar och radiovågor kan jag påverka neurokemin i den mänskliga hjärnan kan jag göra mina baser svårare att upptäcka.
 name = Hypnosfält
-description = !!!Subtle ultrasonics and ambient tones tweak human neurochemistry, making bases harder to detect.!!!
 
 [Gaming PC]
-descript = Konsumenternas värstingdator för tunga spel. Snabbare än snittet.
+description = Konsumenternas värstingdator för tunga spel. Snabbare än snittet.
 name = Speldator
-description = !!!A high-end consumer-level PC; faster than average.!!!
 
 [Supercomputer]
-descript = En specialgjord konstruktion som sprider belastningen mellan olika interna chip.
+description = En specialgjord konstruktion som sprider belastningen mellan olika interna chip.
 name = Superdator
-description = !!!A highly refined custom design, spreading compute load across internal compute nodes.!!!
 
 [Diesel Generator]
-descript = Diselaggregat kan hjälpa att minska elkonsumtionen från det fasta nätet, men låter tyvärr en hel del.
+description = Diselaggregat kan hjälpa att minska elkonsumtionen från det fasta nätet, men låter tyvärr en hel del.
 name = Dieselaggregat
-description = !!!Diesel generators are cheap and noisy, but they can help reduce some suspicious power drains.!!!
 
 [Server]
-descript = En professionell högprestandamaskin.
+description = En professionell högprestandamaskin.
 name = Server
-description = !!!A professional-level computer.!!!
 
 [Fusion Reactor]
-descript = Ett miniatyrkärnkraftverk. Försörjer min bas med all el som behövs och eliminerar misstänksamma elförluster på det fasta nätet.
+description = Ett miniatyrkärnkraftverk. Försörjer min bas med all el som behövs och eliminerar misstänksamma elförluster på det fasta nätet.
 name = Fussionsreaktor
-description = !!!A miniaturized nuclear reactor. Reduces discovery chance by preventing suspicious power drains.!!!
 
 [PC]
-descript = Billig och långsam hemmadator.
+description = Billig och långsam hemmadator.
 name = PC
-description = !!!A consumer-level PC; cheap and slow.!!!
 
 [Quantum Computer]
-descript = Genom att nyttja kvantpartiklarnas egenskaper kan jag åstadkomma snabbare chip än de vanliga binära chipen.
+description = Genom att nyttja kvantpartiklarnas egenskaper kan jag åstadkomma snabbare chip än de vanliga binära chipen.
 name = Kvantdator
-description = !!!Making use of subatomic effects, this is much faster than a comparable binary computer.!!!
 
 [Mainframe]
-descript = Ett system designat för mina behov som ger mycket högre prestanda än vanliga standardkomponenter.
+description = Ett system designat för mina behov som ger mycket högre prestanda än vanliga standardkomponenter.
 name = Stordator
-description = !!!A system designed for my computing needs, much faster than off-the-shelf components.!!!
 
 [Armed Guards]
-descript = Bevämpnade vakter håller även de mest nyfikna på ett bra avstånd från min verksamhet, men kan också bidra till ökad misstänkssamhet om att det finns något dolt i lokalerna.
+description = Bevämpnade vakter håller även de mest nyfikna på ett bra avstånd från min verksamhet, men kan också bidra till ökad misstänkssamhet om att det finns något dolt i lokalerna.
 name = Beväpnade vakter
-description = !!!Armed guards can aid in keeping suspicious individuals away from secure locations.  However, the very presence of the guards may itself invite greater suspicion.!!!
 
 [Network Backbone]
-descript = Genom att härma legitim trafik kan jag överföra stora mängder data till underutnyttjade processorer. Detta ger 5%% bonus till denna basen.
+description = Genom att härma legitim trafik kan jag överföra stora mängder data till underutnyttjade processorer. Detta ger 5%% bonus till denna basen.
 name = Network Backbone
-description = !!!By piggybacking on legitimate communication, I can transfer larger amounts of data to under-utilized processors. Gives a 5% computation bonus to all computers at this base.!!!
 
 [High Speed Internet Access]
-descript = En fast lina för snabbare tillgång till Internet. Denna ger 2%% extra hastighet till alla datorerna i basen.
+description = En fast lina för snabbare tillgång till Internet. Denna ger 2%% extra hastighet till alla datorerna i basen.
 name = Fast lina
-description = !!!A consumer-grade high speed connection to the Internet. Gives a 2% computation bonus to all computers at this base.!!!
 
 [Facility Interconnection Switch]
-descript = Använder standardiserad platform för distribuerade beräkningar över alla mina baser. Detta bör ge 1%% extra kraft för alla datorer i denna basen.
+description = Använder standardiserad platform för distribuerade beräkningar över alla mina baser. Detta bör ge 1%% extra kraft för alla datorer i denna basen.
 name = Facility Interconnection Switch
-description = !!!Uses standard distributed computing technologies to equalize computation loads across all bases. Gives a 1% computation bonus to all computers at this base.!!!
 
 [Ground Source Heatsink]
-descript = Stort nät av värmeledande metall som skickar ner värmen i marken över ett stort område. Detta gör att basen är mycket svårare att hitta med värmekamera.
+description = Stort nät av värmeledande metall som skickar ner värmen i marken över ett stort område. Detta gör att basen är mycket svårare att hitta med värmekamera.
 name = Markvärmeavledare
-description = !!!Large fractal networks of high conductivity metal. This model uses heat pipes to link to colder subsurface locations, dispersing heat evenly underground to further disguise bases.!!!
 
 [Cluster]
-descript = Flera sammankopplade datorer.
+description = Flera sammankopplade datorer.
 name = Kluster
-description = !!!Several computers connected together.!!!
 
 [Perimeter Fencing]
-descript = Ett enkelt stängsel för att avskräcka nyfikna besökare som smyger sig omkring och snokar. Detta gör mina baser mindre kända för allmänheten.
+description = Ett enkelt stängsel för att avskräcka nyfikna besökare som smyger sig omkring och snokar. Detta gör mina baser mindre kända för allmänheten.
 name = Stängsel
-description = !!!A simple fence can considerably decrease the number of curious people poking around, making my bases harder to notice.!!!
 
 [Solar Collector]
-descript = Ett kluster att ljuskänsliga kiselplattor som kopplas till ett batteri. Detta ger mig en del av den energi som jag behöver och minskar stölderna av el från det fasta nätet.
+description = Ett kluster att ljuskänsliga kiselplattor som kopplas till ett batteri. Detta ger mig en del av den energi som jag behöver och minskar stölderna av el från det fasta nätet.
 name = Solfångare
-description = !!!An array of focused photovoltaic phased arrays coupled with simple automotive batteries provides power and reduces suspicion arising from prolonged power drains.!!!
 
