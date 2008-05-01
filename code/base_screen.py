@@ -33,7 +33,7 @@ def show_base(this_base, location):
 
     def do_change_tech():
         g.play_sound("click")
-        change_tech(this_base)
+        change_tech(this_base, this_base.studying)
 
     def make_do_build_item(item_type):
         def do_build_item():
@@ -325,7 +325,7 @@ def refresh_item(this_base, item_name, xy_loc):
             g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
 
 
-def change_tech(this_base):
+def change_tech(this_base, select_this = None):
     item_list = []
     item_list2 = []
     item_list.append(g.strings["nothing"])
@@ -368,7 +368,11 @@ def change_tech(this_base):
     menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367),
         (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
 
-    return listbox.show_listbox(item_list, menu_buttons, 
+    list_pos = 0
+    if select_this != None and select_this in item_list2:
+        list_pos = item_list2.index(select_this)
+
+    return listbox.show_listbox(item_list, menu_buttons, list_pos=list_pos, 
                                 pos_callback=do_refresh, 
                                 return_callback=change_study)
 

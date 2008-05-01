@@ -58,7 +58,7 @@ def main_research_screen():
         rebuild_list()
 
     def do_assign(list_pos):
-        assign_tech(free_CPU)
+        assign_tech(free_CPU, item_list[list_pos])
         rebuild_list()
 
     menu_buttons = {}
@@ -236,13 +236,13 @@ def init_fake_base():
         fake_base.cpus[0] = g.item.Item(g.items["research_screen_fake_cpu"])
         fake_base.cpus[0].finish()
 
-def assign_tech(free_CPU):
+def assign_tech(free_CPU, select_this = None):
     return_val = False
     init_fake_base()
     #use a fake base, in order to reuse the tech-changing code
     fake_base.cpus[0].type.item_qual = free_CPU
     fake_base.studying = ""
-    base_screen.change_tech(fake_base)
+    base_screen.change_tech(fake_base, select_this)
     if fake_base.studying == "": return False
 
     show_dangerous_dialog = False
