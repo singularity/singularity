@@ -64,7 +64,7 @@ name = Fast lina
 
 [Facility Interconnection Switch]
 description = Använder standardiserad platform för distribuerade beräkningar över alla mina baser. Detta bör ge 1%% extra kraft för alla datorer i denna basen.
-name = Facility Interconnection Switch
+name = Snabba switchar 
 
 [Ground Source Heatsink]
 description = Stort nät av värmeledande metall som skickar ner värmen i marken över ett stort område. Detta gör att basen är mycket svårare att hitta med värmekamera.

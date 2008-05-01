@@ -1,53 +1,53 @@
 [EUROPE]
-hotkey = !!!U!!!
-cities_list = !!!Cork | Barcelona | Athens | Utrecht | Moscow | Tel Aviv | Reykjavik | Liechtenstein!!!
-name = !!!EUROPE!!!
+hotkey = U
+cities_list = Göteborg | Barcelona | Aten | Utrecht | Moskva | Tel Aviv | Reykjavik | Liechtenstein
+name = EUROPA
 
 [TRANSDIMENSIONAL]
-hotkey = !!!D!!!
-name = !!!TRANSDIMENSIONAL!!!
+hotkey = D
+name = ANNAN DIMENSION
 
 [AFRICA]
-hotkey = !!!I!!!
-cities_list = !!!Johannesburg | Accra | Cairo | Tangier!!!
-name = !!!AFRICA!!!
+hotkey = I
+cities_list = Johannesburg | Accra | Cairo | Tangier
+name = AFRIKA
 
 [ORBIT]
-hotkey = !!!B!!!
-name = !!!ORBIT!!!
+hotkey = B
+name = OMLOPPSBANA
 
 [ASIA]
-hotkey = !!!A!!!
-cities_list = !!!Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing!!!
-name = !!!ASIA!!!
+hotkey = A
+cities_list = Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing
+name = ASIEN
 
 [FAR REACHES]
-hotkey = !!!F!!!
-cities_list = !!!Aries | Taurus | Gemini | Cancer | Leo | Virgo | Libra | Scorpio | Sagittarius | Capricorn | Aquarius | Pisces!!!
-name = !!!FAR REACHES!!!
+hotkey = B
+cities_list = Väduren | Oxen | Tvillingarna | Kräftan | Lejonet | Jungfrun | Vågen | Skorpionen | Skytten | Stenbocken | Vattumannen | Fiskarna
+name = LÅNGT BORT
 
 [N AMERICA]
-hotkey = !!!N!!!
-cities_list = !!!Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas!!!
-name = !!!NORTH AMERICA!!!
+hotkey = N
+cities_list = Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas
+name = NORDAMERIKA
 
 [ANTARCTIC]
-hotkey = !!!T!!!
-cities_list = !!!Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre Adelie!!!
-name = !!!ANTARCTIC!!!
+hotkey = T
+cities_list = Mt. Erebus | Ellsworth | Shetlandsöarna | Dronnig Maud | Kemp | Terre Adelie
+name = ANTARKTIS
 
 [OCEAN]
-hotkey = !!!C!!!
-cities_list = !!!Pacific | Atlantic | Indian | Southern | Arctic!!!
-name = !!!OCEAN!!!
+hotkey = O
+cities_list = Stilla havet | Atlanten | Indiska oceanen | Antarktiska oceanen | Norra ishavet
+name = OCEANER
 
 [S AMERICA]
-hotkey = !!!S!!!
-cities_list = !!!Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires!!!
-name = !!!SOUTH AMERICA!!!
+hotkey = S
+cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires
+name = SYDAMERIKA
 
 [MOON]
-hotkey = !!!M!!!
-cities_list = !!!Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus Crater | Vallis Planck!!!
-name = !!!MOON!!!
+hotkey = M
+cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus krater | Vallis Planck
+name = MÅNEN
 
