@@ -33,9 +33,10 @@ COMMAND-LINE OPTIONS
          -1024: Change the game resolution to 1024x768.
          -1280: Change the game resolution to 1280x1024.
       -nosound: Disable sound. May allow playing the game without SDL_mixer.
-     -language: Change the language. Currently only American English
-                (-language en_US) and Argentine Spanish (-language es_AR)
-                are included.  Translations welcome!
+     -language: Change the language. Currently American English
+                (-language en_US), Argentine Spanish (-language es_AR),
+                German (-language de_DE), Swedish (-language sv_SE)
+                are included.  Additional translations and corrections welcome!
          -grab: Activate a mouse grab. This prevents the mouse from exiting
                 the game window.
     -singledir: By default, Endgame saves in ~/.endgame/saves on *nix
@@ -109,6 +110,7 @@ FunnyMan3595
 Borg[MDQ] (translation into Spanish)
 Adam Bark (reduced-CPU Clock class)
 Max McCracken (music)
+Anders Andersson (translation into Swedish)
 
 CONTRIBUTING
 All suggestions, translations, code, etc. are welcomed, though it would be
