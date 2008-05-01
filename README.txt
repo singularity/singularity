@@ -4,20 +4,25 @@ Endgame: Singularity 0.28_pre
 REQUIREMENTS
 ============
 
+PREBUILT VERSIONS
+Pre-built versions of Endgame: Singularity are currently available for Windows
+and Mac OS X.
+
+RUNNING FROM SOURCE
 Recent versions of Python, Pygame, and SDL_image. This game should work on
 Linux, Windows, and Mac OS X as long as the preceding requirements are met.
 However, all development was done in Linux, so glitches may be present in
 OS X and Windows.
 
-WINDOWS PARTICULARS
+WINDOWS FROM SOURCE
 You will need to install Python (http://python.org/download/) and Pygame:
 (http://www.pygame.org/download.shtml). Once these are installed, double-click
-on singularity.py to start the game. Alternatively, use the Windows compile.
+on singularity.py to start the game.
 
-MAC OS X PARTICULARS
-Macintosh is completely unsupported, but it should work. You will need to
-install Python and Pygame first. Some fonts are incorrect, but the game itself
-should work properly.
+MAC OS X FROM SOURCE
+Macintosh is mostly unsupported, but it should work. You will need to install 
+Python and Pygame first, which can be tricky. Some fonts are incorrect, but the
+game itself should work properly.
 
 RUNNING THE GAME
 on Linux, running the shell script "Endgame_Linux" will start the game. On
@@ -35,7 +40,7 @@ COMMAND-LINE OPTIONS
       -nosound: Disable sound. May allow playing the game without SDL_mixer.
      -language: Change the language. Currently American English
                 (-language en_US), Argentine Spanish (-language es_AR),
-                German (-language de_DE), Swedish (-language sv_SE)
+                German (-language de_DE), and Swedish (-language sv_SE)
                 are included.  Additional translations and corrections welcome!
          -grab: Activate a mouse grab. This prevents the mouse from exiting
                 the game window.
