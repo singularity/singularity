@@ -505,7 +505,9 @@ def handle_pause_menu(selection, menu_buttons):
             return -1
         g.save_game(possible_name)
         refresh_map(menu_buttons)
-    elif selection == 2: return 0
+    elif selection == 2: #New
+        from main_menu import difficulty_select
+        difficulty_select()
     elif selection == 3: #Load
         load_return = main_menu.display_load_menu()
         if load_return == -1 or load_return == "":
