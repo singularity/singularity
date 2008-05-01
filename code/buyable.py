@@ -65,6 +65,7 @@ class Buyable_Class(object):
         cost = array(self._cost)
         cost[labor] *= g.minutes_per_day * g.pl.labor_bonus
         cost[labor] /= 10000
+        cost[cpu] *= g.seconds_per_day
         return cost
         
     cost = property(get_cost)

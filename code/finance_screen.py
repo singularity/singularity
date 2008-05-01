@@ -75,27 +75,16 @@ def refresh_screen(menu_buttons):
     text_mid = g.screen_size[0]/2
 
     income = g.pl.income
-    jobs = 0
     maint = 0
     research = 0
     base_constr = 0
     item_constr = 0
 
-    mins_left = g.pl.mins_to_next_day()
+    seconds_left = g.pl.seconds_to_next_day()
 
     for base in g.all_bases():
-        if g.pl.raw_sec % g.seconds_per_day == 0:
-            cpu_left = base.processor_time()
-        else:
-            cpu_left = g.current_share(base.processor_time(), g.seconds_per_day,
-                                       -g.pl.raw_sec % g.seconds_per_day)
-        if g.jobs.has_key(base.studying):
-            jobs += (g.jobs[base.studying][0] * cpu_left)
-            if g.techs["Advanced Simulacra"].done:
-                #10% bonus income
-                jobs += (g.jobs[base.studying][0] * cpu_left)/10
-        elif g.techs.has_key(base.studying):
-            research += g.techs[base.studying].get_wanted(cash, cpu, cpu_left)
+        cpu_left = base.processor_time() * seconds_left
+
         if base.done:
             maint += base.type.maintenance[0]
             for item in base.cpus:
@@ -106,6 +95,8 @@ def refresh_screen(menu_buttons):
                 if not item: continue
                 if item.done: continue
                 item_constr += item.get_wanted(cash, cpu, cpu_left)
+            if g.techs.has_key(base.studying):
+                research += g.techs[base.studying].get_wanted(cash,cpu,cpu_left)
 
 
         else:
@@ -113,12 +104,14 @@ def refresh_screen(menu_buttons):
 
     total_cpu, sleeping_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu = cpu_numbers()
 
+    jobs_cash, moldy_leftovers = g.pl.get_job_info(job_cpu * seconds_left)
+
     partial_sum = g.pl.cash-base_constr-item_constr
     interest = (g.pl.interest_rate * partial_sum) / 10000
     #Interest is actually unlikely to be exactly zero, but doing it the right
     #way is much harder.
     if interest < 0: interest = 0
-    complete_sum = partial_sum+interest+income+jobs-maint-research
+    complete_sum = partial_sum+interest+income+jobs_cash-maint-research
 
     #current
     g.print_string(g.screen, "Current Money:",
@@ -150,8 +143,8 @@ def refresh_screen(menu_buttons):
             g.font[0][22], -1, (text_mid-5, 90), g.colors["white"], 2)
 
     jobs_col = "white"
-    if jobs > 0: jobs_col = "green"
-    g.print_string(g.screen, g.to_money(jobs),
+    if jobs_cash > 0: jobs_col = "green"
+    g.print_string(g.screen, g.to_money(jobs_cash),
             g.font[0][22], -1, (text_mid+150, 90), g.colors[jobs_col], 2)
 
     #research

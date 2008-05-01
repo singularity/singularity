@@ -78,6 +78,8 @@ class player_class(object):
         self.labor_bonus = 10000
         self.job_bonus = 10000
 
+        self.partial_cash = 0
+
         self.groups = {"news":    group("news",    suspicion_decay = 150),
                        "science": group("science", suspicion_decay = 100),
                        "covert":  group("covert",  suspicion_decay =  50),
@@ -128,12 +130,28 @@ class player_class(object):
     def mins_to_next_day(self):
         return (-self.raw_min % g.minutes_per_day) or g.minutes_per_day
 
+    def seconds_to_next_day(self):
+        return (-self.raw_sec % g.seconds_per_day) or g.seconds_per_day
+
     def do_jobs(self, cpu_time):
+        earned, self.partial_cash = self.get_job_info(cpu_time)
+        self.cash += earned
+
+    def get_job_info(self, cpu_time, partial_cash = None):
+        if partial_cash == None:
+            partial_cash = self.partial_cash
+
         cash_per_cpu = g.jobs[g.get_job_level()][0]
-        self.cash += cash_per_cpu * cpu_time
         if g.techs["Advanced Simulacra"].done:
             #10% bonus income
-            self.cash += cash_per_cpu * cpu_time / 10
+            cash_per_cpu = cash_per_cpu + (cash_per_cpu / 10)
+
+        raw_cash = partial_cash + cash_per_cpu * cpu_time
+
+        cash = raw_cash // g.seconds_per_day
+        new_partial_cash = raw_cash % g.seconds_per_day
+
+        return cash, new_partial_cash
 
     def give_time(self, time_sec):
         if time_sec == 0:
@@ -179,6 +197,9 @@ class player_class(object):
         self.complete_bases = 0
         self.complex_bases = 0
 
+        # Re-calculate the maintenance.
+        self.maintenance_cost = buyable.array( (0,0,0) )
+
         # Phase 1: Collect CPU and construction info.
         #          Spend CPU, then Cash/Labor.
         for base in g.all_bases():
@@ -196,10 +217,8 @@ class player_class(object):
                 items_under_construction += unfinished_cpus + unfinished_items
 
                 if base.power_state != "Stasis":
-                    raw_cpu_power = base.processor_time()
-                    cpu_power = g.current_share(raw_cpu_power, time_of_day, 
-                                                secs_passed)
-                    self.have_cpu = self.have_cpu or raw_cpu_power
+                    cpu_power = base.processor_time() * secs_passed
+                    self.have_cpu = self.have_cpu or cpu_power
                     if base.power_state != "Active":
                         continue
 
@@ -265,12 +284,14 @@ class player_class(object):
                 techs_researched.append(tech)
 
         # Maintenance.
-        if self.maintenance_cost[cash] > self.cash:
-            self.maintenance_cost[cash] -= self.cash
+        cash_maintenance = g.current_share(self.maintenance_cost[cash],
+                                           time_of_day, secs_passed)
+        if cash_maintenance > self.cash:
+            cash_maintenance -= self.cash
             self.cash = 0
         else:
-            self.cash -= self.maintenance_cost[cash]
-            self.maintenance_cost[cash] = 0
+            self.cash -= cash_maintenance
+            cash_maintenance = 0
 
         # Construction.
         # Bases.
@@ -297,7 +318,7 @@ class player_class(object):
         grace = self.in_grace_period(self.had_grace, self.complete_bases, 
                                      self.complex_bases)
 
-        # Phase 2: Dialogs and discovery.
+        # Phase 2: Dialogs, maintenance, and discovery.
         # Tech gain dialogs.
         for tech in techs_researched:
             text = g.strings["tech_gained"] % \
@@ -370,6 +391,28 @@ class player_class(object):
                     if g.roll_chance(chance/10000., secs_passed):
                         dead_bases.append( (base, group) )
                         break
+
+            # Maintenance deaths.
+            if base.done:
+                if self.maintenance_cost[cpu] and base.type.maintenance[cpu]:
+                    self.maintenance_cost[cpu] = \
+                        max(0, self.maintenance_cost[cpu] 
+                                   - base.type.maintenance[cpu])
+                    #Chance of base destruction if cpu-unmaintained: 1.5%
+                    if g.roll_percent(150):
+                        dead_bases.append( (base, "maint") )
+                        dead = True
+
+                if cash_maintenance:
+                    base_needs = g.current_share(base.type.maintenance[cash],
+                                                 time_of_day, secs_passed)
+                    if base_needs:
+                        cash_maintenance = max(0, cash_maintenance - base_needs)
+                        #Chance of base destruction if cash-unmaintained: 1.5%
+                        if g.roll_percent(150):
+                            dead_bases.append( (base, "maint") )
+                            dead = True
+                
             if base.studying in g.techs and g.techs[base.studying].done:
                 base.studying = ""
 
@@ -388,7 +431,7 @@ class player_class(object):
 
         # And now process any complete days.
         if day_passed:
-            needs_refresh = self.new_day() or needs_refresh
+            self.new_day()
 
         return needs_refresh
 
@@ -458,43 +501,6 @@ class player_class(object):
         # Reduce suspicion.
         for group in self.groups.values():
           group.new_day()
-
-        # Re-calculate the per-day maintenance.
-        new_maintenance = buyable.array( (0,0,0) )
-
-        # Maintenance destruction.
-        dead_bases = []
-        for base in g.all_bases():
-            if base.done:
-                dead = False
-
-                if self.maintenance_cost[cash] and base.type.maintenance[cash]:
-                    self.maintenance_cost[cash] = \
-                        max(0, self.maintenance_cost[cash] 
-                                   - base.type.maintenance[cash])
-                    #Chance of base destruction if cash-unmaintained: 1.5%
-                    if g.roll_percent(150):
-                        dead_bases.append( (base, "maint") )
-                        dead = True
-
-                if self.maintenance_cost[cpu] and base.type.maintenance[cpu]:
-                    self.maintenance_cost[cpu] = \
-                        max(0, self.maintenance_cost[cpu]
-                                   - base.type.maintenance[cpu])
-                    #Chance of base destruction if cpu-unmaintained: 1.5%
-                    if g.roll_percent(150):
-                        dead_bases.append( (base, "maint") )
-                        dead = True
-
-                if not dead:
-                    new_maintenance += base.type.maintenance
-
-        self.maintenance = new_maintenance
-
-        if self.remove_bases(dead_bases):
-            return True
-        else:
-            return False
 
     def remove_bases(self, dead_bases):
         discovery_locs = []
