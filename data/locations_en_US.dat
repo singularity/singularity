@@ -50,3 +50,8 @@ cities_list = Aries | Taurus | Gemini | Cancer | Leo | Virgo | Libra | Scorpio |
 [TRANSDIMENSIONAL]
 name = TRANSDIMENSIONAL
 hotkey = D
+
+[AUSTRALIA]
+name = AUSTRALIA
+hotkey = L
+cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Caims | Brisbane | Sydney | Newcastle

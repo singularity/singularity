@@ -1,29 +1,27 @@
 [N AMERICA]
-#position_list = 15 | 25
 position_list = 10 | 33
 
 [S AMERICA]
-#position_list = 20 | 50
 position_list = 20 | 55
 
 [EUROPE]
-#position_list = 45 | 30
 position_list = 50 | 28
 
 [ASIA]
-#position_list = 80 | 30
 position_list = 72 | 32
 
 [AFRICA]
-#position_list = 55 | 45
 position_list = 48 | 45
+
+[AUSTRALIA]
+position_list = 73 | 57
 
 [ANTARCTIC]
 position_list = 40 | 75
 pre_list = OR | Autonomous Vehicles | Advanced Database Manipulation
 
 [OCEAN]
-position_list = 70 | 60
+position_list = 50 | 65
 safety = 1
 pre = Autonomous Vehicles
 

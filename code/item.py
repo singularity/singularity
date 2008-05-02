@@ -34,10 +34,10 @@ class Item_Class(buyable.Buyable_Class):
         if self.buildable == ["all"]:
             self.buildable = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
             "AFRICA", "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES",
-            "TRANSDIMENSIONAL"]
+            "TRANSDIMENSIONAL", "AUSTRALIA"]
         if self.buildable == ["pop"]:
             self.buildable = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
-            "AFRICA"]
+            "AFRICA", "AUSTRALIA"]
 
 class Item(buyable.Buyable):
     def __init__(self, item_type):
