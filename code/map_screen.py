@@ -35,6 +35,8 @@ import finance_screen
 from buttons import always, void, exit, Return
 from safety import safe_call
 
+intro_shown = True
+
 def display_generic_menu(xy_loc, titlelist):
     #Border
     g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200,
@@ -383,6 +385,13 @@ def map_loop():
             old_size = g.screen_size
 
         refresh_map(menu_buttons)
+
+        global intro_shown
+        if intro_shown:
+            return
+        else:
+            g.run_intro()
+            intro_shown = True
 
     def make_show_location(location):
         def show_location():

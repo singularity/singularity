@@ -326,7 +326,7 @@ def print_string(surface, string_to_print, font, underline_char, xy, color, alig
 #within a certain width.
 def print_multiline(surface, string_to_print, font, width, xy, color):
     start_xy = xy
-    string_array = string_to_print.split()
+    string_array = string_to_print.replace("\n", " \\n ").split(" ")
 
     for string in string_array:
         string += " "
@@ -382,9 +382,9 @@ def create_yesno(string_to_print, box_font, xy, size, bg_color, out_color,
         menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2+10,
                 xy[1]+size[1]+5), (100, 50), button_names[1], "N", font[1][30])] = always(False)
     else:
-        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2-110,
+        menu_buttons[buttons.make_norm_button((xy[0],
                 xy[1]+size[1]+5), -1, button_names[0], button_names[0][0], font[1][30])] = always(True)
-        menu_buttons[buttons.make_norm_button((xy[0]+size[0]/2+10,
+        menu_buttons[buttons.make_norm_button((xy[0]+size[0]-100,
                 xy[1]+size[1]+5), -1, button_names[1], button_names[1][0], font[1][30])] = always(False)
 
 
@@ -1471,6 +1471,31 @@ directory.
             font[0][i].set_bold(1)
         font[1][i] = pygame.font.Font(font1_file, i)
 
+def run_intro():
+    intro_file_name = data_loc+"intro_"+language+".dat"
+    if not os.path.exists(intro_file_name):
+        print "Intro is missing.  Skipping."
+        return
+
+    intro_file = open(intro_file_name)
+    raw_intro = intro_file.readlines() + [""]
+
+    segment = ""
+    while raw_intro:
+        line = raw_intro.pop(0)
+        if line and line[0] == "|":
+            segment += line[1:]
+        elif segment:
+            more = create_yesno(segment, font[0][20], 
+                                (screen_size[0]/2 - 175, 50), (350, 350),
+                                colors["dark_blue"], colors["white"],
+                                colors["white"], ("CONTINUE", "SKIP"),
+                                reverse_key_context = True)
+            if not more:
+                break
+            else:
+                segment = ""
+
 #difficulty=1 for very easy, to 9 for very hard. 5 for normal.
 def new_game(difficulty):
     global curr_speed
@@ -1535,6 +1560,9 @@ def new_game(difficulty):
         open[i].modifiers = modifier_sets[i]
         if debug:
             print "%s gets modifiers %s" % (open[i].name, modifier_sets[i])
+
+    import map_screen
+    map_screen.intro_shown = False
 
 def get_job_level():
     if techs["Simulacra"].done:
