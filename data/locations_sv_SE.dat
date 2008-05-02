@@ -37,7 +37,7 @@ cities_list = Mt. Erebus | Ellsworth | Shetlandsöarna | Dronnig Maud | Kemp | T
 name = ANTARKTIS
 
 [OCEAN]
-hotkey = O
+hotkey = C
 cities_list = Stilla havet | Atlanten | Indiska oceanen | Antarktiska oceanen | Norra ishavet
 name = OCEANER
 
@@ -47,7 +47,7 @@ cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires
 name = SYDAMERIKA
 
 [MOON]
-hotkey = M
+hotkey = O
 cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus krater | Vallis Planck
 name = MÅNEN
 

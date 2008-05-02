@@ -35,7 +35,7 @@ cities_list = Pacific | Atlantic | Indian | Southern | Arctic
 
 [MOON]
 name = MOON
-hotkey = M
+hotkey = O
 cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus Crater | Vallis Planck 
 
 [ORBIT]

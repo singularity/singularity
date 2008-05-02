@@ -34,7 +34,7 @@ cities_list = Pazifik | Atlantik | Indik | Südmeer | Nordpolarmeer
 
 [MOON]
 name = MOND
-hotkey = M
+hotkey = O
 cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicuskrater | Vallis Planck 
 
 [ORBIT]
