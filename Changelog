@@ -35,6 +35,8 @@ USER-VISIBLE CHANGES:
 * Seconds, minutes, and hours now matter much more than they used to. (FM)
 - You can use the Enter on the numeric keypad like the regular Enter key.
   (Phil, gare for suggestion)
+* Continents are no longer identical. (FM, Phil for suggestion)
+* New continent: Australia.  Ocean moved to make room. (FM)
 * de_DE translation [currently partial] (FM)
 * sv_SE translation (Anders Andersson)
 
