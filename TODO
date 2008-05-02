@@ -14,8 +14,6 @@ TODO:
     - Convert CPU usage into pools instead of per-base settings.
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
     - Make translations easier to do.  (Phil has good ideas on how to do this.)
-    - In general, differentiate locations (especially the starting continents)
-      more.
     - Arbitrary resolution, including non 4:3 scales.
     - Consistent use of stderr and print.
     - Make effects of construction class techs more obvious.
