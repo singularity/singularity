@@ -26,28 +26,43 @@ cash, cpu, labor = range(3)
 # List with element-wise math.  Similar to numpy.array.
 class array(list):
     def __add__(self, other):
+        self, other = coerce(self, other)
         return array([self[i] + other[i] for i in range(len(self))])
 
     def __sub__(self, other):
+        self, other = coerce(self, other)
         return array([self[i] - other[i] for i in range(len(self))])
 
     def __mul__(self, other):
+        self, other = coerce(self, other)
         return array([self[i] * other[i] for i in range(len(self))])
 
     def __divfloor__(self, other):
+        self, other = coerce(self, other)
         return array([self[i] // other[i] for i in range(len(self))])
 
     def __div__(self, other):
+        self, other = coerce(self, other)
         return array([self[i].__div__(other[i]) for i in range(len(self))])
 
     def __truediv__(self, other):
+        self, other = coerce(self, other)
         return array([self[i].__truediv__(other[i]) for i in range(len(self))])
+
+    def integer_part(self):
+        return array([int(self[i]) for i in range(len(self))])
 
     def __nonzero__(self):
         for element in self:
             if element > 0:
                 return True
         return False
+
+    def __coerce__(self, other):
+        if type(other) in (float, int):
+            return self, array([other] * len(self))
+        else:
+            return self, other
 
 class Buyable_Class(object):
     def __init__(self, id, description, cost, prerequisites, type = ""):

@@ -1520,10 +1520,21 @@ def new_game(difficulty):
     load_locations()
     load_bases()
     load_techs()
+
     #Starting base
-    open = [location for location in locations.values() if location.available()]
+    open = [loc for loc in locations.values() if loc.available()]
     random.choice(open).add_base(base.Base("University Computer",
                                  base_type["Stolen Computer Time"], built=True))
+
+    #Assign random properties to each starting location.
+    modifier_sets = location.modifier_sets
+    assert len(open) == len(modifier_sets)
+
+    random.shuffle(modifier_sets)
+    for i in range(len(open)):
+        open[i].modifiers = modifier_sets[i]
+        if debug:
+            print "%s gets modifiers %s" % (open[i].name, modifier_sets[i])
 
 def get_job_level():
     if techs["Simulacra"].done:

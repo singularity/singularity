@@ -50,7 +50,7 @@ def cpu_numbers():
     for base in g.all_bases():
         if base.done:
             total_cpu += base.processor_time()
-            maint_cpu += base.type.maintenance[1]
+            maint_cpu += base.maintenance[1]
             if base.studying == "Sleep":
                 sleeping_cpu += base.processor_time()
             elif base.studying in ("CPU Pool", ""):
@@ -86,7 +86,7 @@ def refresh_screen(menu_buttons):
         cpu_left = base.processor_time() * seconds_left
 
         if base.done:
-            maint += base.type.maintenance[0]
+            maint += base.maintenance[0]
             for item in base.cpus:
                 if not item: continue
                 if item.done: continue

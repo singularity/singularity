@@ -394,17 +394,17 @@ class player_class(object):
 
             # Maintenance deaths.
             if base.done:
-                if self.maintenance_cost[cpu] and base.type.maintenance[cpu]:
+                if self.maintenance_cost[cpu] and base.maintenance[cpu]:
                     self.maintenance_cost[cpu] = \
                         max(0, self.maintenance_cost[cpu] 
-                                   - base.type.maintenance[cpu])
+                                   - base.maintenance[cpu])
                     #Chance of base destruction if cpu-unmaintained: 1.5%
                     if g.roll_percent(150):
                         dead_bases.append( (base, "maint") )
                         dead = True
 
                 if cash_maintenance:
-                    base_needs = g.current_share(base.type.maintenance[cash],
+                    base_needs = g.current_share(base.maintenance[cash],
                                                  time_of_day, secs_passed)
                     if base_needs:
                         cash_maintenance = max(0, cash_maintenance - base_needs)

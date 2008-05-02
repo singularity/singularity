@@ -78,6 +78,8 @@ class Base(buyable.Buyable):
         self.power_state = "Active"
         self.grace_over = False
 
+        self.maintenance = buyable.array(self.type.maintenance)
+
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full
     # percent.
@@ -138,13 +140,23 @@ class Base(buyable.Buyable):
     #Return how many units of CPU the base can contribute each day.
     def processor_time(self):
         comp_power = 0
-        compute_bonus = 0
+        compute_bonus = 10000
         for item in self.cpus:
             if item and item.done:
                 comp_power += item.type.item_qual
+
+        if comp_power == 0:
+            return 0
+
+        # Network bonus
         if self.extra_items[1] and self.extra_items[1].done:
-            compute_bonus = self.extra_items[1].type.item_qual
-        return (comp_power * (10000+compute_bonus))/10000
+            compute_bonus += self.extra_items[1].type.item_qual
+
+        # Location modifier
+        if self.location and "cpu" in self.location.modifiers:
+            compute_bonus = int(compute_bonus * self.location.modifiers["cpu"])
+
+        return max( (comp_power * compute_bonus)/10000, 1)
 
     def is_building(self):
         for item in self.cpus + self.extra_items:

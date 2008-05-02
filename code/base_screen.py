@@ -261,22 +261,22 @@ def actual_build(this_base, item_name, item_type):
                 if this_base.cpus[i].type.id == \
                         g.items[item_name].id:
                     continue
-            this_base.cpus[i] = g.item.Item(g.items[item_name])
+            this_base.cpus[i] = g.item.Item(g.items[item_name], this_base)
     elif item_type == "react":
         if this_base.extra_items[0] != 0:
             if this_base.extra_items[0].type.id == g.items[item_name].id:
                 return
-        this_base.extra_items[0] = g.item.Item(g.items[item_name])
+        this_base.extra_items[0] = g.item.Item(g.items[item_name], this_base)
     elif item_type == "network":
         if this_base.extra_items[1] != 0:
             if this_base.extra_items[1].type.id == g.items[item_name].id:
                 return
-        this_base.extra_items[1] = g.item.Item(g.items[item_name])
+        this_base.extra_items[1] = g.item.Item(g.items[item_name], this_base)
     elif item_type == "security":
         if this_base.extra_items[2] != 0:
             if this_base.extra_items[2].type.id == g.items[item_name].id:
                 return
-        this_base.extra_items[2] = g.item.Item(g.items[item_name])
+        this_base.extra_items[2] = g.item.Item(g.items[item_name], this_base)
 
 def refresh_item(this_base, item_name, xy_loc):
     xy = (xy_loc[0]+150, xy_loc[1])

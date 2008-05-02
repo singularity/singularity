@@ -21,17 +21,47 @@
 import bisect
 import g
 import buyable
+from buyable import cash, cpu, labor
+
+# Currently, each one gets a 20% bonus or its inverse, a 16.6% penalty.
+# This will probably need to be adjusted later.
+bonus_levels = dict(cpu = 1.2, stealth = 1.2, thrift = 1.2, speed = 1.2)
+penalty_levels = dict((k,1/v) for k,v in bonus_levels.iteritems())
+
+# Here are the six modifier pairs that get assigned at random on game start.
+bonus, penalty = True, False
+modifier_sets = [dict(     cpu = bonus, stealth = penalty ),
+                 dict( stealth = bonus,     cpu = penalty ),
+                 dict(  thrift = bonus,   speed = penalty ),
+                 dict(   speed = bonus,  thrift = penalty ),
+                 dict(     cpu = bonus,  thrift = penalty ),
+                 dict(                                    ),]
+
+# Translate the shorthand above into the actual bonuses/penalties.
+for set in modifier_sets:
+    for attribute, is_bonus in set.iteritems():
+        if is_bonus:
+            set[attribute] = bonus_levels[attribute]
+        else:
+            set[attribute] = penalty_levels[attribute]
 
 # Location is a subclass of Buyable_Class so that it can use .available():
 class Location(buyable.Buyable_Class):
+    # The cities at this location.
+    cities = []
+
+    # The hotkey used to open this location.
+    hotkey = ""
+
+    # The bonuses and penalties of this location.
+    modifiers = dict()
+
     def __init__(self, id, position, safety, prerequisites):
         # Kinda hackish, but it works.
         super(Location, self).__init__(id, "", (0,0,0), prerequisites)
 
         self.y, self.x = position
         self.safety = safety
-        self.cities = []
-        self.hotkey = ""
 
         # A sorted list of the bases at this location.
         self.bases = []
@@ -45,7 +75,23 @@ class Location(buyable.Buyable_Class):
             discovery_bonus *= 1.2
         if self.had_prev_discovery:
             discovery_bonus *= 1.1
+        if "stealth" in self.modifiers:
+            discovery_bonus /= self.modifiers["stealth"]
         return int(discovery_bonus * 100)
+
+    def modify_cost(self, cost):
+        if "thrift" in self.modifiers:
+            mod = self.modifiers["thrift"]
+
+            # Invert it and apply to the CPU/cash cost.
+            cost[cash] = int(cost[cash] / mod)
+            cost[cpu] = int(cost[cpu] / mod)
+
+        if "speed" in self.modifiers:
+            mod = self.modifiers["speed"]
+
+            # Invert it and apply to the labor cost.
+            cost[labor] = int(cost[labor] / mod)
 
     def add_base(self, base):
         # We keep self.bases sorted by inserting at the correct position, thanks
@@ -54,10 +100,18 @@ class Location(buyable.Buyable_Class):
         self.bases.insert(where, base)
         base.location = self
 
+        self.modify_cost(base.total_cost)
+        self.modify_cost(base.cost_left)
+        if "thrift" in self.modifiers:
+            mod = self.modifiers["thrift"]
+
+            # And maintenance
+            base.maintenance = (base.maintenance * mod).integer_part()
+
         if len(self.bases) == 1:
-           # The rest wouldn't cause any harm... but it also wouldn't do 
-           # anything.
-           return
+            # The rest wouldn't cause any harm... but it also wouldn't do 
+            # anything.
+            return
 
         # Update the linked list.
         # ...going backwards.

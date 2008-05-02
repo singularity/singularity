@@ -40,6 +40,11 @@ class Item_Class(buyable.Buyable_Class):
             "AFRICA", "AUSTRALIA"]
 
 class Item(buyable.Buyable):
-    def __init__(self, item_type):
+    def __init__(self, item_type, base = None):
         super(Item, self).__init__(item_type)
         self.item_qual = item_type.item_qual
+
+        self.base = base
+        if base and base.location:
+            base.location.modify_cost(self.total_cost)
+            base.location.modify_cost(self.cost_left)
