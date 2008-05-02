@@ -37,6 +37,7 @@ USER-VISIBLE CHANGES:
   (Phil, gare for suggestion)
 * Continents are no longer identical. (FM, Phil for suggestion)
 * New continent: Australia.  Ocean moved to make room. (FM)
+* E:S now has an intro when you start a new game! (FM)
 * de_DE translation [currently partial] (FM)
 * sv_SE translation (Anders Andersson)
 
