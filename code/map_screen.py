@@ -390,8 +390,14 @@ def map_loop():
         if intro_shown:
             return
         else:
-            g.run_intro()
             intro_shown = True
+            on_tick(1000)
+            for button in menu_buttons:
+                 button.refresh_button(False)
+            g.run_intro()
+            refresh_map(menu_buttons)
+            for button in menu_buttons:
+                 button.refresh_button(False)
 
     def make_show_location(location):
         def show_location():
@@ -537,7 +543,6 @@ def refresh_map(menu_buttons):
                 (g.screen_size[0], g.screen_size[0]/2)),
                 (0, g.screen_size[1]/2-g.screen_size[0]/4))
     for button in menu_buttons:
-        button.stay_selected = 0
         if g.locations.has_key(button.button_id):
             #determine if building in a location is possible. If so, show the
             #button.
@@ -553,7 +558,8 @@ def refresh_map(menu_buttons):
                 button.text = new_text
                 button.xy = new_xy
                 button.remake_button()
-        button.refresh_button(0)
+        else:
+            button.refresh_button(False)
 
 significant_numbers = [
     '42',	# The Answer.

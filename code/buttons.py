@@ -110,6 +110,7 @@ class button:
             g.screen.blit(self.sel_button_surface, self.xy)
     def is_over(self, xy):
         if not self.visible: return False
+        if xy == (0, 0): return False
         if xy[0] >= self.xy[0] and xy[1] >= self.xy[1] and \
         xy[0] <= self.xy[0] + self.size[0] and xy[1] <= self.xy[1] + self.size[1]:
             return True
@@ -117,14 +118,19 @@ class button:
     #Returns 1 if the event should activate this button. Checks for keypresses
     #and button clicks.
     def was_activated(self, event):
-        if not self.visible: return 0
+        if not self.visible: return False
         if event.type == pygame.KEYDOWN and self.activate_key != "":
             if event.unicode.lower() == self.activate_key.lower():
-                return 1
-            return 0
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                return True
+            elif self.activate_key == ">" and event.key == pygame.K_RIGHT:
+                return True
+            elif self.activate_key == "<" and event.key == pygame.K_LEFT:
+                return True
+            else:
+                return False
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == True:
             return self.is_over(event.pos)
-        else: return 0
+        else: return False
 
 #refreshes a set of buttons. Takes an int for the current button,
 #references to the button set, and an event to use for checking mouseover on.
@@ -197,9 +203,10 @@ def _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_
                 maybe_return( button_callback(button) )
 
     def do_refresh():
+        mouse_pos = pygame.mouse.get_pos()
         refresh_callback()
         for button in buttons.keys():
-            button.refresh_button(False)
+            button.refresh_button(button.is_over(mouse_pos))
         pygame.display.flip()
 
     do_refresh()
