@@ -162,38 +162,44 @@ def refresh_research(tech_name, CPU_amount):
     if tech_name == "Sleep":
         g.print_string(g.screen, g.strings["sleep"],
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
+        g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
+            g.font[0][20], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
         string = g.strings["research_sleep"]
         g.print_multiline(g.screen, string,
-            g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
+            g.font[0][18], 290, (xy[0]+5, xy[1]+55), g.colors["white"])
         return
 
     #CPU Pool
     if tech_name == "CPU Pool":
         g.print_string(g.screen, g.strings["cpu_pool"],
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
+        g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
+            g.font[0][20], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
         string = g.strings["research_cpu_pool"]
         g.print_multiline(g.screen, string,
-            g.font[0][18], 290, (xy[0]+5, xy[1]+35), g.colors["white"])
+            g.font[0][18], 290, (xy[0]+5, xy[1]+55), g.colors["white"])
         return
 
     #Jobs
     if g.jobs.has_key (tech_name):
         g.print_string(g.screen, g.jobs[tech_name][3],
             g.font[0][22], -1, (xy[0]+5, xy[1]+5), g.colors["white"])
+        g.print_string(g.screen, "CPU per day: "+str(CPU_amount),
+            g.font[0][20], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
         #TECH
         if g.techs["Advanced Simulacra"].done:
             g.print_string(g.screen,
                 g.to_money(int(
                     (g.jobs[tech_name][0]*CPU_amount)*1.1))+
-                    " Money per day.", g.font[0][22], -1, (xy[0]+5, xy[1]+35),
+                    " Money per day.", g.font[0][22], -1, (xy[0]+5, xy[1]+55),
                     g.colors["white"])
         else:
             g.print_string(g.screen,
                 g.to_money(g.jobs[tech_name][0]*CPU_amount)+
                 " Money per day.",
-                g.font[0][22], -1, (xy[0]+5, xy[1]+35), g.colors["white"])
+                g.font[0][22], -1, (xy[0]+5, xy[1]+55), g.colors["white"])
         g.print_multiline(g.screen, g.jobs[tech_name][2],
-            g.font[0][18], 290, (xy[0]+5, xy[1]+65), g.colors["white"])
+            g.font[0][18], 290, (xy[0]+5, xy[1]+85), g.colors["white"])
         return
 
     #Real tech
