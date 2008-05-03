@@ -328,8 +328,18 @@ def refresh_item(this_base, item_name, xy_loc):
 def change_tech(this_base, select_this = None):
     item_list = []
     item_list2 = []
-    item_list.append(g.strings["nothing"])
+    #TECH
+    for tech_name in g.techs:
+        if not g.techs[tech_name].done and this_base.allow_study(tech_name):
+            if g.techs[tech_name].available():
+                item_list.append(g.techs[tech_name].name)
+                item_list2.append(tech_name)
+    #SPECIALS
+    item_list.append("---")
     item_list2.append("")
+    if this_base.location:
+        item_list.append(g.strings["nothing"])
+        item_list2.append("")
     if not this_base.is_building():
         item_list.append(g.strings["sleep"])
         item_list2.append("Sleep")
@@ -338,12 +348,6 @@ def change_tech(this_base, select_this = None):
     job_id = g.get_job_level()
     item_list.append(g.jobs[job_id][3])
     item_list2.append(job_id)
-    #TECH
-    for tech_name in g.techs:
-        if not g.techs[tech_name].done and this_base.allow_study(tech_name):
-            if g.techs[tech_name].available():
-                item_list.append(g.techs[tech_name].name)
-                item_list2.append(tech_name)
 
     listbox.resize_list(item_list2)
 
@@ -369,7 +373,7 @@ def change_tech(this_base, select_this = None):
         (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
 
     list_pos = 0
-    if select_this != None and select_this in item_list2:
+    if select_this and select_this in item_list2:
         list_pos = item_list2.index(select_this)
 
     return listbox.show_listbox(item_list, menu_buttons, list_pos=list_pos, 
