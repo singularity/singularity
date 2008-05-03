@@ -74,6 +74,10 @@ description = By piggybacking on legitimate communication, I can transfer larger
 name = Quantum Entanglement Module
 description = This device allows near-lightspeed communication with my other bases, allowing an almost perfect utilization of processor resources. Gives a 15% computation bonus to all computers at this base.
 
+[Warning Signs]
+name = Warning Signs
+description = Some simple warning signs put up around my base should deter casual investigation.
+
 [Perimeter Fencing]
 name = Perimeter Fencing
 description = A simple fence can considerably decrease the number of curious people poking around, making my bases harder to notice.

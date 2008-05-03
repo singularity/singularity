@@ -66,6 +66,12 @@ pre = Fusion Reactor
 type_list = react | 2500
 build = all
 
+[Warning Signs]
+cost_list = 500 | 0 | 5
+pre = Sociology
+type_list = security | 500
+build = pop
+
 [Perimeter Fencing]
 cost_list = 5000 | 0 | 5
 pre = Autonomous Vehicles
