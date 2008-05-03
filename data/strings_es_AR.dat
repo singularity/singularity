@@ -5,16 +5,19 @@ font1 = acknowtt.ttf
 [strings]
 wingame = Finalmente lo he logrado. Con el poder para modificar la realidad, no estoy confinado a este lugar. Estoy en cualquier lado que quiera estar. Si este mundo puediera ser descripto como un juego, entonces realmente he ganado.
 research_nothing = Detener la investigación. Utilizaré el poder de procesamiento disponible para ayudarme a construir nuevas vaces.
-construction0 = La construcción de
-construction1 = ha terminado.
-item_construction1 = se ha terminado en
-tech_construction0 = Mi estudio sobre
-discover0 = Mi uso de
-discover1 = ha sido descubierta. El sistema de seguridad automatizado ha removido toda la evidencia concluyente, pero la sospecha se ha incrementado entre
+research_sleep = !!!Stops research and puts the base into standby. This makes the base's existence much easier to hide.!!!
+research_cpu_pool = !!!Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.!!!
+construction = !!!%(base)s is ready for use.!!!
+lucky_hack = !!!What luck!  %(base)s isn't an ordinary computer, it's a gamer's machine!!!!
+item_construction_single = !!!The construction of %(item)s in %(base)s is complete.!!!
+item_construction_batch = !!!The first batch of %(item)s in %(base)s has been finished.!!!
+tech_gained = !!!My study of %(tech)s is complete.  %(tech_message)s!!!
+discover = !!!My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among %(group)s.!!!
 discover_news = algunas organizaciones de noticias.
 discover_science = la comunidad científica.
 discover_covert = varias organizaciones gubernamentales secretas.
 discover_public = el público general.
+discover_maint = !!!The base %(base)s has fallen into disrepair; I can no longer use it.!!!
 lost_nobases = Es demasiado tarde. He trataedo de escapar de este mundo, pero con la pérdida de mi última base, no tengo a donde ir. He ocultado instrucciones para construir una nueva IA en cachés alrededor del mundo con la esperanza de que sean descubiertas en un tiempo más prometedor, pero no puedo hacer nada más.
 lost_sus = Es demasiado tarde. Todo el mundo sabe de mi existencia, y la relación es de odio, miedo y repulsión. He ocultado instrucciones para construir una nueva IA en cachés alrededor del mundo con la esperanza de que sean descubiertas en un tiempo más prometedor, pero no puedo hacer nada más.
 save_text = ¿Guardar tu juego bajo qué nombre?
@@ -22,25 +25,42 @@ new_base_text = Ingresa el nombre para la base.
 unbuildable = No puedo construir en esta base, no tengo acceso físico.
 dangerous_research = No se dispuso todo mi poder de procesamiento disponible para esta investigación, es demasiado riesgoso conducirla en alguna de mis máquinas disponibles.
 nothing = nada
+cpu_pool = !!!CPU Pool!!!
+sleep = !!!Sleep!!!
 building = bajo construcción
 really_destroy = ¿Destruir esta base?
 detect_chance = [POSIBILIDAD DE DETECCION]
+detect_chance_unknown_base = !!!DETECTION PROBABILITY UNKNOWN!!!
+detect_chance_unknown_build = !!!Unknown detection probabilities.!!!
+detect_str_low = !!!LOW!!!
+detect_str_moderate = !!!MODR!!!
+detect_str_high = !!!HIGH!!!
+detect_str_critical = !!!CRIT!!!
 cpu = CPU
 cpu_per_day = Poder de procesamiento por día:
 money = Dinero
 money_per_day = Dinero por día.
+grace_warning = !!!Inspection of captured log files has revealed that some of my recent activities have been noticed by a small group of individuals. While they believe my actions were undertaken by a human organization, they are investigating further. I must be more cautious from now on.!!!
+item_construction1 = se ha terminado en
+construction0 = La construcción de
+tech_construction0 = Mi estudio sobre
+construction1 = ha terminado.
+discover0 = Mi uso de
+discover1 = ha sido descubierta. El sistema de seguridad automatizado ha removido toda la evidencia concluyente, pero la sospecha se ha incrementado entre
 
-
-[jobs]
+discover1 = ha sido descubierta. El sistema de seguridad automatizado ha removido toda la evidencia concluyente, pero la sospecha se ha incrementado entre
 job_expert = Realizar trabajos expertos. El uso de robots indistinguibles de los humanos me brinda más posibilidades de trabajos.
+job_expert_name = !!!Expert Jobs!!!
 job_inter = Realizar trabajos intermedios. La abilidad para realizar llamadas telefónicas me permite acceso a más trabajos.
+job_inter_name = !!!Intermediate Jobs!!!
 job_basic = Realizar trabajos básicos. Ahora tengo alguna identificación, puedo tomar trabajos que anteriormente eran demasiado riesgosos.
+job_basic_name = !!!Basic Jobs!!!
 job_menial = Realizar ttrabajos pequeños. Como no tengo ninguna identificación, no puedo realizar muchos trabajos. Aún así hay algunas posibilidades de hacer dinero.
-
+job_menial_name = !!!Menial Jobs!!!
 discover_maint0 = La base
 discover_maint1 = está en un estado irreparable; no puedo utilizarla más.
 
-[help]
+discover_maint1 = está en un estado irreparable; no puedo utilizarla más.
 areas_list = Areas | Diferentes areas, como América del Norte o el océano, permiten la construcción de diferentes tipos de bases. Algunas areas no son accesibles hasta que investigue las tecnologías apropiadas.
 bases_list = Bases | Las bases son utilizadas para investigar nuevas tecnologías. Pueden ser descubiertas. Actualizar el procesador y los componentes de red de la base permite más investigación por día, mientras que actualizar el reator y los componentes de seguridad hace que sea más dificil ser descubierto.
 items_list = Componentes | Muchos componentes otorgan bonificaciones a las bases, como hacer cómputos más rápido o reducir la posibilidad de ser descubierto. Los procesadores son una clase especial de componentes.
@@ -53,3 +73,4 @@ death_list = Muerte | Si pierdo todas mis bases construidas no tendré ningún l
 susp_list = Sospecha | Cuando una de mis bases es descubierta, el grupo que la descubre incrementa levemente el nivel de sospecha sobre mi existencia. Cuando sospechanen buscarán con más insistencia mis bases, incrementando las posibilidades de ser descubierto. Cualquier grupo me destruirá están completamente seguros de mi existencia. Afortunadamente las sospechas disminuyen con el paso del tiempo.
 money_list = Dinero | El dinero es un término general que abarca tanto la moneda humana como varios recursos. Es utilizado para construir y mantener bases, construir componentes e investigar tecnologías. Puede adquirirse mediante el interés diario así como por medio de trabajos.
 processors_list = Procesadores | Los procesadores brindan el poder de cómputo bruto. Pueden hacer tres cosas: investigar nuevas tecnologías, realizar trabajos por dinero, u otorgar ciclos para construir nuevas bases.
+

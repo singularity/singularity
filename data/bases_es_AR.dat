@@ -8,6 +8,11 @@ name = Acceso a Servidor
 description = (10 CPU) Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
 flavor_list = Servidor Dedicado | Alquiler de Nodo | Hosting
 
+[Datacenter]
+name = Centro de cómputos
+description = (35 CPU) Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
+flavor_list = Centro de cómputos | Centro de datos | Hosting
+
 [Small Warehouse]
 name = Almacén Pequeño
 description = Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
@@ -16,8 +21,6 @@ flavor_list = Oficina Alquilada | Almacén Pequeño | Depósito Pequeño
 [Large Warehouse]
 name = Almacén Grande
 description = Alquila un gran almacén en un lugar alejado. Necesitaré una buena identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
-# Commented out till we get cities done right.
-# flavor = Puerto de Embarque
 flavor_list = Almacén Grande | Depósito Grande
 
 [Covert Base]
@@ -55,7 +58,3 @@ name = Burbuja de Realidad
 description = Esta base se encuentra fuera del universo mismo, haciéndola segura para llevar a cabo experimentos que podrían destruir la realidad misma.
 flavor_list = Burbuja de Realidad | Existencia
 
-[Datacenter]
-name = Centro de cómputos
-description = (35 CPU) Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
-flavor_list = Centro de cómputos | Centro de datos | Hosting

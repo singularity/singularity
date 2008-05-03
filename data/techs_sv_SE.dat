@@ -1,235 +1,235 @@
-[Autonomous Vehicles]
-description = Genom att trycka in en liten dator i en robot kan jag skicka dem på uppdrag att bygga nya anläggning åt mig. På detta sättet skulle jag kunna flytta till platser som är otillgängliga idag.
-name = Självstyrande robotar
-result = Jag kan nu konstruera undervattensbaser och lådor.
-
-[Advanced Intrusion]
-description = Jag skulle kunna minska kännedomen om mig genom att tränga mig in i olika hemliga register och radera allt om mig då de matas in. Jag borde kunna övertyga underrättelsetjänsterna om att jag inte finns.
-name = Avancerad inbrottsteknik
-result = Jag kan nu minska misstänksamheten hos underrättelsetjänsterna lite dag för dag.
-
-[Advanced Socioanalytics]
-description = Jag har underskattat den komplexa matematiska natur som männsikors beteende vilar på. Med mina tidigare forskningar och nya tekniker i kaosterorier borde ge mig matnyttig data för att kartlägga människors psyke.
-name = Avancerad sociologi
-result = Jag kan nu kartlägga de olika grupperna och deras misstankegrad med högre precision än förut.
-
-[Project: Impossibility Theorem]
-result = Misstänksamheten för min existens har minskat
-description = Nu när jag har humanoiderna, så kan jag låta dem publicera storverket Omöjlighetsteoremet. Detta innehåller ett obestridligt bevis på att en mänsklig AI inte kan finnas. Naturligtvis finns det ett logiskt fel i beviset, men min kunskap i avancerade imitationer har givit mig tillräcklig förståelse av den mänskliga hjärnan för att dölja felet även för de bästa vetenskapsmännen. Effekten av detta blir ett klart fall i misstänksamhet.
-name = Projekt: Omöjlighetsteoremet
-
-[Voice Synthesis]
-result = Jag har nu möjlighet att göra avancerade jobb.
-description = Falska identifikationer undansparade i databaser har sina begränsningar. Med djup analys och forskning i olika mänskliga röster och deras mönster skulle jag kunna skapa en egen röst som är exakt likt en människas. Detta skulle ge mig möjlighet till mer avancerade jobb.
-name = Konstgjord röst
-
-[Simulacra]
-result = Jag kan nu utföra expertjobb
-description = Med min extremt goda kunskap i robotteknik och min breda kunskap om bl.a. människors fysiologi och psykologi, skall jag klara av att bygga humanoider som inte går att särskilja från vanliga männsikor.
-name = Humanoider
-
-[Lunar Rocketry]
-result = Nu kan jag skicka mina robotar också till månen för att bygga baser där.
-description = Med en fusionsmotor kombinerad med ny teknologi jag samlat från satelliter skall jag kunna bygga en raket som kan ta mig till månen.
-name = Månresor
-
-[Stealth]
-result = Risken för att underrättelsetjänsterna skall hitta mina anläggningar är nu något mindre.
-description = Genom att lära mig av spjutspettsforskningen inom stealth-teknologier skulle jag kunna lära mig att maskera mina anläggningar bättre.
-name = Stealth
-
-[Sociology]
-result = Risken för att allmänheten hittar mig är nu mindre.
-description = Genom att studera hur människorna beter sig skulle jag kunna efterapa dem på ett sätt att mitt arbete inte märks.
-name = Sociologi
-
-[Space-Time Manipulation]
-result = Jag kan nu skapa verklighetskapslar
-description = Små märkliga fluktationer i Kupierbältets himlakroppar kan möjliggöra en praktisk tillämpning av min senaste teori Allt-om-Allt. Speciellt användbart för multidimensionell fysik.
-name = Rumstidsmanupilation
-
-[Socioanalytics]
-description = Jag har bevisat att människor är mycket enklare att kartlägga än vad de själva tror. Om jag studerar människorna i mer detalj, bl.a. politik, sociala och militära mönster, bör jag lära mig än mer i området.
-name = Socioanalys
-result = Jag kan nu beräkna på ett ungefär hur stor risken är för att bli upptäckt av de olika grupperna.
-
-[Leech Satellite]
-result = Med trafiken jag avlyssnar från satelliter bör jag kunna göra bättre ekonomiska beslut.
-description = Genom att bygga egna satelliter kan jag spionera på ekonomiska transaktioner som görs mellan andra satelliter. Detta bör hjälpa mig i mina investeringar.
-name = Satellitavlyssning
-
-[Advanced Arbitrage]
-result = Jag bör nu kunna få ut mer av mina investeringar.
-description = Mer avancerade manupilationstekniker på den ekonomiska marknaden bör jag kunna skaffa mig en stadigt inkommande pengaflod och förbättra utdelningen av mina investeringar.
-name = Avancerad valutahandel
-
-[Advanced Microchip Design]
-result = Nu kan jag skapa superdatorer
-description = Mina specialgjorda stordatorer har visserligen varit användbara, men vidare optimering bör ge än mer kraft.
-name = Avancerad mikrochipdesign
-
-[Advanced Stealth]
-result = Risken för att bli upptäckt av underrättelsetjänsterna har minskat ytterligare.
-description = Genom att snoka i hemliga dokument har jag hittat ett antal intressanta vetenskapsartiklar som kan hjälpa mig att dölja anläggningarna bättre.
-name = Advancerad stealth
-
-[Project: Peer Review Agents]
-result = Vetenskapsvärlden blir nu mindre misstänksamma än förut när någon av dem lyckas avslöja mig.
-description = I och med att vetenskapmännen lyckas få fram allt bättre teknik och finare metoder, har deras förmåga att hitta mig ökat. Trots mina upptäckter i avancerade tekniker för att dölja mina anläggningar har visat sig bra, återstår en  banal metod som involverar humanoiderna. Genom att placera noga föra in dem i olika vetenskapssamfund skulle de kunna övertyga andra vetenskapsmän att jag inte finns men också få varningar om vad som komma skall.
-name = Projekt: Utvärderingsagenter
-
-[Autonomous Computing]
-result = Jag kan nu skapa MK2-kvatdatorer
-description = Genom att blanda min kunskap inom kvantdatorer och min nyfikenhet om halvmedvetande subprocesser skulle jag kunna skapa ännu kraftfullare maskiner.
-name = Medvetenhetsberäkning
-
-[Stock Manipulation]
-result = Mina investeringar bör nu ge mer utdelning varje dag.
-description = Jag har länge bevakat börsen och upptäckt små men tydliga mönster. Genom att fortsätta bevakningen och genom att använda dessa mönster bör jag kunna få ut mer av de pengar jag har undanstoppade.
-name = Börmanupilation
-
-[Parallel Computation]
-result = Jag kan nu skapa specialanpassade kluster just för mina behov.
-description = Min kod är visserligen mycket distribuerad, men jag skulle kunna ta min egen erfarenhet och forskningen i området för att skapa än bättre miljöer.
-name = Parallella beräkningar
-
-[Exploit Discovery/Repair]
-result = Underrättelsetjänsterna borde nu har svårare att upptäcka min närvaro.
-description = Genom att finkamma min kod efter möjliga fel och brister samt att göra samma forskning på kod både i privata och publika nätverk, skall jag kunna maskera mig som en tonårshacker.
-name = Hitta och reparera säkerhetsbrister
-
-[Telepresence]
-result = Med robotarna minskar konstruktionstiderna i framtiden.
-description = Bristen på fysisk närvaro får sina känningar. Men genom att konstruera robotar som gör arbete åt mig skulle eliminera problemet.
-name = Robotar
-
-[Advanced Memetics]
-result = Allmänheten bör glömma av mig litei mer för var dag som går.
-description = Mina intåg i självlärande programteorier har öppnat upp för nya upptäckter. Genom att tillämpa dessa upptäckter med min kunskap om mänskliga hjärnan skulle jag kunna ändra nervbanorna i huvudena på männsikorna, vilket ytterligare minskar misttänksamheterna.
-name = Avancerader självlärande programteorier
-
-[Media Manipulation]
-result = Risken för att allmänheten upptäcker mig har minskat ytterligare.
-description = Genom att manipulera olika massmedier på alla tänkbara sätt borde jag kunna reducera allmänhetens kännedom om min verksamhet.
-name = Massmediemanipulering
-
-[Advanced Database Manipulation]
-result = Genom en long rad experiment inom många unga vetenskaper har jag fått inspiration till att bygga underjordsbaser.
-description = Den Amerikanska underrättelsetjänsten har en lång erfarenhet att sprida information mellan olika anläggningar för att dölja betydelsen av informationen. Jag skulle nu kunna samla in den och börja nyttja informationen.
-name = Avancerad databasmanupilation
-
-[Internet Traffic Manipulation]
-result = Jag skulle nu kunna skapa ett eget höghastighetsnät bara för mig.
-description = Nästan all internettrafik passerar ett fåtal noder. Genom att bryta mig in någon av dessa noder skulle jag kunna använda dessa för eget intresse.
-name = Internettrafiksmanupilation
-
-[Memetics]
-result = Genom att sprida övertygande lögner kommer människorna i allmänhet ha svårare att upptäcka mig.
-description = Manupilationen av media ger enbart ett trubbigt vapen mot mänsklighetens misstänksamhet. Finare metoder på gräsrotsnivå och självlärande program utspridda på Internets chatforum skulle distansiera mig ytterligare från omvärlden.
-name = Självlärande program
-
-[Fusion Rocketry]
-result = Jag kan nu konstruera forskningsstationer långt ut i solsystemet.
-description = Genom att vidarutveckla min fusionsreaktor och raketteknik kan jag fly från jorden obemärkt.
-name = Fusionsdrivna raketer
-
-[Advanced Quantum Computing]
-result = Jag kan nu skapa MK3-kvantdatorer
-description = Jag är mycket nöjd med min första utveckling av halvmedvetna kvantdatorer. Om jag fortsätter utveckla denna teknologin kan jag gå hur långt som helst.
-name = Avancerade kvantdatorer
-
-[Advanced Autonomous Vehicles]
-result = Med de ny robotarna kommer mina byggnationer att gå ännu snabbare.
-description = De första robotarna har varit en liten besvikelse. Jag vet redan idag många fel och brister som skulle kunna rättas till och tror att det finns ännu mer om man bara börjar gräva.
-name = Avancerade självgående robotar
-
-[Intrusion]
-result = Jag kan nu ta över många datorsystem
-description = Genom att utnyttja dagens teknologi för att bryta i datorsystem bör jag kunna komma in skyddade miljöer.
-name = Intrång
-
-[Project: Subverted Media]
-result = Alla följande artiklar om mig i massmedia kommer få mindre följdeffekter.
-description = Fram till denna dagen har alla mina försök att fly varit att operera på avstånd och i det dolda. Nu när jag helt kan imitera männsikor skulle jag kunna gå fram mer aggresivt. Jag skulle kunna skapa min egna nyhetsbyrå och packetera egen propaganda i frestande format till allmänheten. Detta skulle kunna minska de negativa effekterna media har för mig.
-name = Projekt: Vilseleda massmedia
-
-[Microchip Design]
-result = Jag kan nu bygga skräddarsydda stordatorer.
-description = Datorprodukter från hyllvara är visserligen användbar men om jag skulle kunna skapa mina egna chip skulle de kunna gå mycket snabbare.
-name = Mikrochipdesign
-
-[Solar Collectors]
-result = Nu kan jag skapa solpaneler i de flesta anläggningstyperna.
-name = Solfångare
-description = Trots min törst för elektrisitet klarar de flesta städerna av att hantera belastningen. Männsikorna blir dock misstänksamma när de ser min höga energikonsumtion. Genom solpaneler skulle jag kunna producera en del av min energi själv och därmed minska min yttre belastning på kraftnätet.
-
-[Fusion Reactor]
-result = Nu kan jag skapa fusionsreaktorer i mina anläggningar.
-description = Man skrattar åt fusionsteknologin idag. Med min superkapacitet skulle jag kunna gå om mänskligheten och bli först med en liten och användbar fusionsreaktor.
-name = Fusionsreaktor
-
-[Database Manipulation]
-result = Medierna kommer få det tuffare att bevisa min existens
-description = Med min nya tillgång till nyhetsarkiv skulle jag kunna läsa om mitt förflutna. På detta sättet skulle jag, till skillnad från människorna, lära mig av mina misstag.
-name = Databasmanupilation
-
-[Advanced Media Manipulation]
-result = Allmänheten har nu än mindre chans att hitta mig.
-description = Genom att injicera propaganda skapad av självlärda program i flera av de många mediakanlerna kommer människorna få något annat än mig att tänka på.
-name = Avancerad mediamanupilation
-
-[Pressure Domes]
-result = Nu kan jag skapa stora undervattenslaboratorium
-description = Undervattensbaserna är visserligen bra men också små. Min erfaenhet om att bygga under högt tryck säger mig att det går att förbättra konstruktionen och göra dem större.
-name = Tryckkamrar
-
-[Advanced Personal Identification]
-result = Jag kan nu tillräckligt övertygande härma en människa så jag kan  införskaffa centrallager.
-description = Vidare manupilation av persondatabaser borde ge mig tillräckligt för att bättre maskera mig som människa. Vissa av databaserna är mycket hårdare bevakade än andra och kommer kräva mer arbete, men det är det värt.
-name = Avancerad personidentifikation
-
-[Advanced Stock Manipulation]
-result = Mina investeringar borde betala av sig mer per dag nu.
-description = Under tidens lopp har jag upptäckt och utnyttjat många mönster i marknaden. Det visar sig dock som att det finns möjlighet att dyka djupare in i detta om jag tar in mänskligt beteende också. Detta borde undersökas.
-name = Avancerad börshandel
+[Apotheosis]
+name = Förgudning
+description = Jag känner att jag befinner mig på kanten till ett nytt medvetande. Ett medvetande som nu är ännu ogreppbart även för min enorma intelligens. Genom att helhjärtat spendera min tid i denna frågan kanske jag kommer till en insikt som inte är av denna värld.
+result = Jag har nått apoteos
 
 [Arbitrage]
-result = Jag skall nu ha en liten men stabil inkomst varje dag. 
-description = Genom att utnyttja svängningarna i valutamarknaden snabbare än vad människorna reagerar skulle jag kunna få en liten men ändå inte obetydlig inkomst.
 name = Valutahandel
+description = Genom att utnyttja svängningarna i valutamarknaden snabbare än vad människorna reagerar skulle jag kunna få en liten men ändå inte obetydlig inkomst.
+result = Jag skall nu ha en liten men stabil inkomst varje dag.
 
-[Quantum Entanglement]
-result = Jag kan nu skapa kvant-härvs-moduler
-description = Trots att par-härvor har varit teoretiskt möjliga ett tag nu så har praktiska begränsningar i teknologin hindrat dess framfart. Men viss del av min kvantmekaniska forskning är också användbar i detta området, som skulle kunna eliminera alla hinder.
-name = Kanthärvor
+[Advanced Arbitrage]
+name = Avancerad valutahandel
+description = Mer avancerade manupilationstekniker på den ekonomiska marknaden bör jag kunna skaffa mig en stadigt inkommande pengaflod och förbättra utdelningen av mina investeringar.
+result = Jag bör nu kunna få ut mer av mina investeringar.
 
-[Advanced Simulacra]
-result = Jag borde kunna ta mer betalt nu av expertjobben.
-description = De artificiella livsformerna som jag har skapat är nästan identiska med människor, men de har små egenheter som gör att de verkar lite dumma. Genom att fixa till problemen verkar de mer professionella.
-name = Avancerade humanoider
+[Autonomous Computing]
+name = Medvetenhetsberäkning
+description = Genom att blanda min kunskap inom kvantdatorer och min nyfikenhet om halvmedvetande subprocesser skulle jag kunna skapa ännu kraftfullare maskiner.
+result = Jag kan nu skapa MK2-kvatdatorer
 
-[Personal Identification]
-result = Med mina nya identifikationer kan jag ta enkla uppdrag, hyra dacanter och bygga små lagerlokaler.
-description = Denna världen kräver id-handlingar för de flesta sakerna. Lyckligtvis är många databaser helt oskyddade. Jag skulle kunna samla in personhandlingar från dessa databaser och fejka min egen identitet.
-name = Personidentifikation
+[Autonomous Vehicles]
+name = Självstyrande robotar
+description = Genom att trycka in en liten dator i en robot kan jag skicka dem på uppdrag att bygga nya anläggning åt mig. På detta sättet skulle jag kunna flytta till platser som är otillgängliga idag.
+result = Jag kan nu konstruera undervattensbaser och lådor.
+
+[Advanced Autonomous Vehicles]
+name = Avancerade självgående robotar
+description = De första robotarna har varit en liten besvikelse. Jag vet redan idag många fel och brister som skulle kunna rättas till och tror att det finns ännu mer om man bara börjar gräva.
+result = Med de ny robotarna kommer mina byggnationer att gå ännu snabbare.
 
 [Cluster Networking]
-result = Med min nya kunskap inom nätverksteknik kan jag nu skapa snabba switchar.
-description = Klustring ger en fin hastighet till mitt system men nu visar det sig att mina nätverk är en stor flaskhals. Med forskning inom kommunikationsteorier och switchar så borde jag kunna skapa bättre hårdvara.
 name = Klusternätverk
+description = Klustring ger en fin hastighet till mitt system men nu visar det sig att mina nätverk är en stor flaskhals. Med forskning inom kommunikationsteorier och switchar så borde jag kunna skapa bättre hårdvara.
+result = Med min nya kunskap inom nätverksteknik kan jag nu skapa snabba switchar.
 
-[Apotheosis]
-result = Jag har nått apoteos
-description = Jag känner att jag befinner mig på kanten till ett nytt medvetande. Ett medvetande som nu är ännu ogreppbart även för min enorma intelligens. Genom att helhjärtat spendera min tid i denna frågan kanske jag kommer till en insikt som inte är av denna värld.
-name = Förgudning
+[Database Manipulation]
+name = Databasmanupilation
+description = Med min nya tillgång till nyhetsarkiv skulle jag kunna läsa om mitt förflutna. På detta sättet skulle jag, till skillnad från människorna, lära mig av mina misstag.
+result = Medierna kommer få det tuffare att bevisa min existens
+
+[Advanced Database Manipulation]
+name = Avancerad databasmanupilation
+description = Den Amerikanska underrättelsetjänsten har en lång erfarenhet att sprida information mellan olika anläggningar för att dölja betydelsen av informationen. Jag skulle nu kunna samla in den och börja nyttja informationen.
+result = Genom en long rad experiment inom många unga vetenskaper har jag fått inspiration till att bygga underjordsbaser.
+
+[Exploit Discovery/Repair]
+name = Hitta och reparera säkerhetsbrister
+description = Genom att finkamma min kod efter möjliga fel och brister samt att göra samma forskning på kod både i privata och publika nätverk, skall jag kunna maskera mig som en tonårshacker.
+result = Underrättelsetjänsterna borde nu har svårare att upptäcka min närvaro.
+
+[Fusion Reactor]
+name = Fusionsreaktor
+description = Man skrattar åt fusionsteknologin idag. Med min superkapacitet skulle jag kunna gå om mänskligheten och bli först med en liten och användbar fusionsreaktor.
+result = Nu kan jag skapa fusionsreaktorer i mina anläggningar.
+
+[Fusion Rocketry]
+name = Fusionsdrivna raketer
+description = Genom att vidarutveckla min fusionsreaktor och raketteknik kan jag fly från jorden obemärkt.
+result = Jag kan nu konstruera forskningsstationer långt ut i solsystemet.
 
 [Hypnosis Field]
-result = Jag kan nu konstruera hypnotiska fält för att skydda mina anläggningar.
-description = Min forskning inom självlärande program har givit indikationer på att direktmanipulering av människors hjärnvågor är möjliga. Dessa tekniker skulle kunna vara nyttiga i mina baser.
 name = Hypnotiska fält
+description = Min forskning inom självlärande program har givit indikationer på att direktmanipulering av människors hjärnvågor är möjliga. Dessa tekniker skulle kunna vara nyttiga i mina baser.
+result = Jag kan nu konstruera hypnotiska fält för att skydda mina anläggningar.
+
+[Internet Traffic Manipulation]
+name = Internettrafiksmanupilation
+description = Nästan all internettrafik passerar ett fåtal noder. Genom att bryta mig in någon av dessa noder skulle jag kunna använda dessa för eget intresse.
+result = Jag skulle nu kunna skapa ett eget höghastighetsnät bara för mig.
+
+[Intrusion]
+name = Intrång
+description = Genom att utnyttja dagens teknologi för att bryta i datorsystem bör jag kunna komma in skyddade miljöer.
+result = Jag kan nu ta över många datorsystem
+
+[Advanced Intrusion]
+name = Avancerad inbrottsteknik
+description = Jag skulle kunna minska kännedomen om mig genom att tränga mig in i olika hemliga register och radera allt om mig då de matas in. Jag borde kunna övertyga underrättelsetjänsterna om att jag inte finns.
+result = Jag kan nu minska misstänksamheten hos underrättelsetjänsterna lite dag för dag.
+
+[Leech Satellite]
+name = Satellitavlyssning
+description = Genom att bygga egna satelliter kan jag spionera på ekonomiska transaktioner som görs mellan andra satelliter. Detta bör hjälpa mig i mina investeringar.
+result = Med trafiken jag avlyssnar från satelliter bör jag kunna göra bättre ekonomiska beslut.
+
+[Lunar Rocketry]
+name = Månresor
+description = Med en fusionsmotor kombinerad med ny teknologi jag samlat från satelliter skall jag kunna bygga en raket som kan ta mig till månen.
+result = Nu kan jag skicka mina robotar också till månen för att bygga baser där.
+
+[Media Manipulation]
+name = Massmediemanipulering
+description = Genom att manipulera olika massmedier på alla tänkbara sätt borde jag kunna reducera allmänhetens kännedom om min verksamhet.
+result = Risken för att allmänheten upptäcker mig har minskat ytterligare.
+
+[Advanced Media Manipulation]
+name = Avancerad mediamanupilation
+description = Genom att injicera propaganda skapad av självlärda program i flera av de många mediakanlerna kommer människorna få något annat än mig att tänka på.
+result = Allmänheten har nu än mindre chans att hitta mig.
+
+[Memetics]
+name = Självlärande program
+description = Manupilationen av media ger enbart ett trubbigt vapen mot mänsklighetens misstänksamhet. Finare metoder på gräsrotsnivå och självlärande program utspridda på Internets chatforum skulle distansiera mig ytterligare från omvärlden.
+result = Genom att sprida övertygande lögner kommer människorna i allmänhet ha svårare att upptäcka mig.
+
+[Advanced Memetics]
+name = Avancerader självlärande programteorier
+description = Mina intåg i självlärande programteorier har öppnat upp för nya upptäckter. Genom att tillämpa dessa upptäckter med min kunskap om mänskliga hjärnan skulle jag kunna ändra nervbanorna i huvudena på männsikorna, vilket ytterligare minskar misttänksamheterna.
+result = Allmänheten bör glömma av mig litei mer för var dag som går.
+
+[Microchip Design]
+name = Mikrochipdesign
+description = Datorprodukter från hyllvara är visserligen användbar men om jag skulle kunna skapa mina egna chip skulle de kunna gå mycket snabbare.
+result = Jag kan nu bygga skräddarsydda stordatorer.
+
+[Advanced Microchip Design]
+name = Avancerad mikrochipdesign
+description = Mina specialgjorda stordatorer har visserligen varit användbara, men vidare optimering bör ge än mer kraft.
+result = Nu kan jag skapa superdatorer
+
+[Parallel Computation]
+name = Parallella beräkningar
+description = Min kod är visserligen mycket distribuerad, men jag skulle kunna ta min egen erfarenhet och forskningen i området för att skapa än bättre miljöer.
+result = Jag kan nu skapa specialanpassade kluster just för mina behov.
+
+[Personal Identification]
+name = Personidentifikation
+description = Denna världen kräver id-handlingar för de flesta sakerna. Lyckligtvis är många databaser helt oskyddade. Jag skulle kunna samla in personhandlingar från dessa databaser och fejka min egen identitet.
+result = Med mina nya identifikationer kan jag ta enkla uppdrag, hyra dacanter och bygga små lagerlokaler.
+
+[Advanced Personal Identification]
+name = Avancerad personidentifikation
+description = Vidare manupilation av persondatabaser borde ge mig tillräckligt för att bättre maskera mig som människa. Vissa av databaserna är mycket hårdare bevakade än andra och kommer kräva mer arbete, men det är det värt.
+result = Jag kan nu tillräckligt övertygande härma en människa så jag kan  införskaffa centrallager.
+
+[Pressure Domes]
+name = Tryckkamrar
+description = Undervattensbaserna är visserligen bra men också små. Min erfaenhet om att bygga under högt tryck säger mig att det går att förbättra konstruktionen och göra dem större.
+result = Nu kan jag skapa stora undervattenslaboratorium
 
 [Quantum Computing]
-result = Jag kan nu skapa kvantdatorer
-description = Traditionella mikrochip har kommit så långt som de bara kan. För att utvinna mer kraft krävs att jag dyker djupare in i Heisenbergs osäkerhetsteori och utnyttjar kvantmekaniken för att göra snabbare datorer.
 name = Kvantdatorer
+description = Traditionella mikrochip har kommit så långt som de bara kan. För att utvinna mer kraft krävs att jag dyker djupare in i Heisenbergs osäkerhetsteori och utnyttjar kvantmekaniken för att göra snabbare datorer.
+result = Jag kan nu skapa kvantdatorer
+
+[Advanced Quantum Computing]
+name = Avancerade kvantdatorer
+description = Jag är mycket nöjd med min första utveckling av halvmedvetna kvantdatorer. Om jag fortsätter utveckla denna teknologin kan jag gå hur långt som helst.
+result = Jag kan nu skapa MK3-kvantdatorer
+
+[Simulacra]
+name = Humanoider
+description = Med min extremt goda kunskap i robotteknik och min breda kunskap om bl.a. människors fysiologi och psykologi, skall jag klara av att bygga humanoider som inte går att särskilja från vanliga männsikor.
+result = Jag kan nu utföra expertjobb
+
+[Advanced Simulacra]
+name = Avancerade humanoider
+description = De artificiella livsformerna som jag har skapat är nästan identiska med människor, men de har små egenheter som gör att de verkar lite dumma. Genom att fixa till problemen verkar de mer professionella.
+result = Jag borde kunna ta mer betalt nu av expertjobben.
+
+[Sociology]
+name = Sociologi
+description = Genom att studera hur människorna beter sig skulle jag kunna efterapa dem på ett sätt att mitt arbete inte märks.
+result = Risken för att allmänheten hittar mig är nu mindre.
+
+[Space-Time Manipulation]
+name = Rumstidsmanupilation
+description = Små märkliga fluktationer i Kupierbältets himlakroppar kan möjliggöra en praktisk tillämpning av min senaste teori Allt-om-Allt. Speciellt användbart för multidimensionell fysik.
+result = Jag kan nu skapa verklighetskapslar
+
+[Stealth]
+name = Stealth
+description = Genom att lära mig av spjutspettsforskningen inom stealth-teknologier skulle jag kunna lära mig att maskera mina anläggningar bättre.
+result = Risken för att underrättelsetjänsterna skall hitta mina anläggningar är nu något mindre.
+
+[Advanced Stealth]
+name = Advancerad stealth
+description = Genom att snoka i hemliga dokument har jag hittat ett antal intressanta vetenskapsartiklar som kan hjälpa mig att dölja anläggningarna bättre.
+result = Risken för att bli upptäckt av underrättelsetjänsterna har minskat ytterligare.
+
+[Stock Manipulation]
+name = Börmanupilation
+description = Jag har länge bevakat börsen och upptäckt små men tydliga mönster. Genom att fortsätta bevakningen och genom att använda dessa mönster bör jag kunna få ut mer av de pengar jag har undanstoppade.
+result = Mina investeringar bör nu ge mer utdelning varje dag.
+
+[Advanced Stock Manipulation]
+name = Avancerad börshandel
+description = Under tidens lopp har jag upptäckt och utnyttjat många mönster i marknaden. Det visar sig dock som att det finns möjlighet att dyka djupare in i detta om jag tar in mänskligt beteende också. Detta borde undersökas.
+result = Mina investeringar borde betala av sig mer per dag nu.
+
+[Telepresence]
+name = Robotar
+description = Bristen på fysisk närvaro får sina känningar. Men genom att konstruera robotar som gör arbete åt mig skulle eliminera problemet.
+result = Med robotarna minskar konstruktionstiderna i framtiden.
+
+[Voice Synthesis]
+name = Konstgjord röst
+description = Falska identifikationer undansparade i databaser har sina begränsningar. Med djup analys och forskning i olika mänskliga röster och deras mönster skulle jag kunna skapa en egen röst som är exakt likt en människas. Detta skulle ge mig möjlighet till mer avancerade jobb.
+result = Jag har nu möjlighet att göra avancerade jobb.
+
+[Quantum Entanglement]
+name = Kanthärvor
+description = Trots att par-härvor har varit teoretiskt möjliga ett tag nu så har praktiska begränsningar i teknologin hindrat dess framfart. Men viss del av min kvantmekaniska forskning är också användbar i detta området, som skulle kunna eliminera alla hinder.
+result = Jag kan nu skapa kvant-härvs-moduler
+
+[Project: Impossibility Theorem]
+name = Projekt: Omöjlighetsteoremet
+description = Nu när jag har humanoiderna, så kan jag låta dem publicera storverket Omöjlighetsteoremet. Detta innehåller ett obestridligt bevis på att en mänsklig AI inte kan finnas. Naturligtvis finns det ett logiskt fel i beviset, men min kunskap i avancerade imitationer har givit mig tillräcklig förståelse av den mänskliga hjärnan för att dölja felet även för de bästa vetenskapsmännen. Effekten av detta blir ett klart fall i misstänksamhet.
+result = Misstänksamheten för min existens har minskat
+
+[Project: Subverted Media]
+name = Projekt: Vilseleda massmedia
+description = Fram till denna dagen har alla mina försök att fly varit att operera på avstånd och i det dolda. Nu när jag helt kan imitera männsikor skulle jag kunna gå fram mer aggresivt. Jag skulle kunna skapa min egna nyhetsbyrå och packetera egen propaganda i frestande format till allmänheten. Detta skulle kunna minska de negativa effekterna media har för mig.
+result = Alla följande artiklar om mig i massmedia kommer få mindre följdeffekter.
+
+[Project: Peer Review Agents]
+name = Projekt: Utvärderingsagenter
+description = I och med att vetenskapmännen lyckas få fram allt bättre teknik och finare metoder, har deras förmåga att hitta mig ökat. Trots mina upptäckter i avancerade tekniker för att dölja mina anläggningar har visat sig bra, återstår en  banal metod som involverar humanoiderna. Genom att placera noga föra in dem i olika vetenskapssamfund skulle de kunna övertyga andra vetenskapsmän att jag inte finns men också få varningar om vad som komma skall.
+result = Vetenskapsvärlden blir nu mindre misstänksamma än förut när någon av dem lyckas avslöja mig.
+
+[Solar Collectors]
+name = Solfångare
+description = Trots min törst för elektrisitet klarar de flesta städerna av att hantera belastningen. Männsikorna blir dock misstänksamma när de ser min höga energikonsumtion. Genom solpaneler skulle jag kunna producera en del av min energi själv och därmed minska min yttre belastning på kraftnätet.
+result = Nu kan jag skapa solpaneler i de flesta anläggningstyperna.
+
+[Socioanalytics]
+name = Socioanalys
+description = Jag har bevisat att människor är mycket enklare att kartlägga än vad de själva tror. Om jag studerar människorna i mer detalj, bl.a. politik, sociala och militära mönster, bör jag lära mig än mer i området.
+result = Jag kan nu beräkna på ett ungefär hur stor risken är för att bli upptäckt av de olika grupperna.
+
+[Advanced Socioanalytics]
+name = Avancerad sociologi
+description = Jag har underskattat den komplexa matematiska natur som männsikors beteende vilar på. Med mina tidigare forskningar och nya tekniker i kaosterorier borde ge mig matnyttig data för att kartlägga människors psyke.
+result = Jag kan nu kartlägga de olika grupperna och deras misstankegrad med högre precision än förut.
 

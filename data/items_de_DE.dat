@@ -1,10 +1,30 @@
-[Quantum Entanglement Module]
-name = Quantenverschränkungsmodul
-description = Dieses Gerät zulässt fast-Lichtgeschwindigkeit Kommunikation mit meine andere Stützpunkte.  Das zulässt fast perfekt Anwendung von meine CPU-Zeit.  Gibt den Computern dieses Stützpunktes eine 15% Rechnungsbonus.
+[PC]
+name = PC
+description = Ein Abnehmer-PC, billig aber schwach.
 
-[Heatsink]
-name = Wärmesenke
-description = Ein großes Netzwerk von Metal mit einer hohe Wärmleitfähigkeit, um der Stützpunkt zu verstecken.
+[Gaming PC]
+name = Spiel-PC
+description = Ein Spitzenabnehmer-PC; schneller als den Durschnitt.
+
+[Server]
+name = Server
+description = Ein Proficomputer.
+
+[Cluster]
+name = Cluster
+description = Mehrere Computer, zusammen verbunden.
+
+[Mainframe]
+name = Großrechner
+description = Ein Computer, der für mich entworfen würde.  Viel schneller als die CPUs direkt vom Regal.
+
+[Supercomputer]
+name = Supercomputer
+description = Ein sorgfältig entworfener Computer, dazu fähig, Beanspruchung unter mehrere Datenknoten zu verbreiten.
+
+[Quantum Computer]
+name = Quantencomputer
+description = Durch Nutzung von sobatomaren Effekte kann einen Quantencomputer viel schneller rechnen als einen normalen Computer.
 
 [Quantum Computer MK2]
 name = Quantencomputer MK2
@@ -14,71 +34,51 @@ description = Die zweite Version dem Quantencomputer, die kompliziertere Quanten
 name = Quantencomputer MK3
 description = Die zweite Version dem Quantencomputer, die nahe Paralleluniversen ausnutzt, um noch schneller zu rechnen.
 
-[Armed Guards]
-name = Bewaffnete Wächter
-description = Bewaffnete Wächter können damit helfen, verdächtige Leute von sichere Stellen fernzuhalten.  Leider kann die Präsenz von der Wächter an sich Verdacht erregen.
-
-[Gaming PC]
-name = Spiel-PC
-description = Ein Spitzenabnehmer-PC; schneller als den Durschnitt.
-
-[PC]
-name = PC
-description = Ein Abnehmer-PC, billig aber schwach.
-
-[Supercomputer]
-name = Supercomputer
-description = Ein sorgfältig entworfener Computer, dazu fähig, Beanspruchung unter mehrere Datenknoten zu verbreiten.
-
 [Diesel Generator]
 name = Dieselgenerator
 description = Dieselgenerator sind billig und laut, aber sie helfen damit, suspekte Leistungsabgaben zu vermindern.
-
-[Server]
-name = Server
-description = Ein Proficomputer.
-
-[Fusion Reactor]
-name = Fusionsreaktor
-description = Eine kleine Atomreaktor.  Vermindert Enteckungswahrscheinlichkeit durch die Abwendung von suspekte Leistungsabgaben.
-
-[Network Backbone]
-name = Netzwerkbackbone
-description = Durch zusätzlich Aufladung der rechtmäßigen Kommunikation, kann ich viele Daten auf unausgelastete CPUs überspielen.  Gibt den Computern dieses Stützpunktes eine 15% Rechnungsbonus.
-
-[Quantum Computer]
-name = Quantencomputer
-description = Durch Nutzung von sobatomaren Effekte kann einen Quantencomputer viel schneller rechnen als einen normalen Computer.
-
-[Mainframe]
-name = Großrechner
-description = Ein Computer, der für mich entworfen würde.  Viel schneller als die CPUs direkt vom Regal.
 
 [Solar Collector]
 name = Sonnenkollektor
 description = Ein Feld von photovoltaische Zelle in Verbindung mit einfachen Automobilbatterien, das Strom versorgt um Aufmerksamkeit aufgrund andauernden Leistungsabgaben zu vermeiden.
 
+[Fusion Reactor]
+name = Fusionsreaktor
+description = Eine kleine Atomreaktor.  Vermindert Enteckungswahrscheinlichkeit durch die Abwendung von suspekte Leistungsabgaben.
+
 [Hypnosis Field]
 name = Hypnosefeld
 description = Subtile Ultraschalle und Umgebungstöne justieren humane Neurochemie, um Stützpunkte zu verstecken.
 
-[High Speed Internet Access]
-name = Hochgeschwindigkeitsinternetzugang
-description = Ein verbrauchernaher hochgeschwindigkeitsinternetzugang.  Gibt den Computern dieses Stützpunktes eine 2% Rechnungsbonus.
-
-[Facility Interconnection Switch]
-name = Anlageverbindungsschalter
-description = Nutzt standardmäßige Methoden des verteiltes Computing um Beanspruchung unter alle Stützpunkte zu verbreiten.  description = Ein verbrauchernaher hochgeschwindigkeitsinternetzugang.  Gibt den Computern dieses Stützpunktes eine 1% Rechnungsbonus.
+[Heatsink]
+name = Wärmesenke
+description = Ein großes Netzwerk von Metal mit einer hohe Wärmleitfähigkeit, um der Stützpunkt zu verstecken.
 
 [Ground Source Heatsink]
 name = Tiefliegende Wärmesenke
 description = Ein großes Netzwerk von Metal mit einer hohe Wärmleitfähigkeit, um der Stützpunkt zu verstecken.  Dieses Modell benutzt Wärmerorh um mit kältere Untergrundpunkte zu verbinden, damit es Wärme untergrund zerlegt, um Stützpunkte noch besser zu verstecken.
 
+[Facility Interconnection Switch]
+name = Anlageverbindungsschalter
+description = Nutzt standardmäßige Methoden des verteiltes Computing um Beanspruchung unter alle Stützpunkte zu verbreiten.  description = Ein verbrauchernaher hochgeschwindigkeitsinternetzugang.  Gibt den Computern dieses Stützpunktes eine 1% Rechnungsbonus.
+
+[High Speed Internet Access]
+name = Hochgeschwindigkeitsinternetzugang
+description = Ein verbrauchernaher hochgeschwindigkeitsinternetzugang.  Gibt den Computern dieses Stützpunktes eine 2% Rechnungsbonus.
+
+[Network Backbone]
+name = Netzwerkbackbone
+description = Durch zusätzlich Aufladung der rechtmäßigen Kommunikation, kann ich viele Daten auf unausgelastete CPUs überspielen.  Gibt den Computern dieses Stützpunktes eine 15% Rechnungsbonus.
+
+[Quantum Entanglement Module]
+name = Quantenverschränkungsmodul
+description = Dieses Gerät zulässt fast-Lichtgeschwindigkeit Kommunikation mit meine andere Stützpunkte.  Das zulässt fast perfekt Anwendung von meine CPU-Zeit.  Gibt den Computern dieses Stützpunktes eine 15% Rechnungsbonus.
+
 [Perimeter Fencing]
 name = Einfassungszaun
 description = Eine einfache Einzäunung kann die Menge von Leute, die sich umsehen, dramatisch vermindern, was meine Stützpunkte schwehrer zu merken macht.
 
-[Cluster]
-name = Cluster
-description = Mehrere Computer, zusammen verbunden.
+[Armed Guards]
+name = Bewaffnete Wächter
+description = Bewaffnete Wächter können damit helfen, verdächtige Leute von sichere Stellen fernzuhalten.  Leider kann die Präsenz von der Wächter an sich Verdacht erregen.
 

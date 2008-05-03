@@ -1,2 +1,58 @@
+[N AMERICA]
+name = !!!NORTH AMERICA!!!
+hotkey = !!!N!!!
+cities_list = !!!Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas!!!
 
+[S AMERICA]
+name = !!!SOUTH AMERICA!!!
+hotkey = !!!S!!!
+cities_list = !!!Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires!!!
+
+[EUROPE]
+name = !!!EUROPE!!!
+hotkey = !!!U!!!
+cities_list = !!!Cork | Barcelona | Athens | Utrecht | Moscow | Tel Aviv | Reykjavik | Liechtenstein!!!
+
+[ASIA]
+name = !!!ASIA!!!
+hotkey = !!!A!!!
+cities_list = !!!Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing!!!
+
+[AFRICA]
+name = !!!AFRICA!!!
+hotkey = !!!I!!!
+cities_list = !!!Johannesburg | Accra | Cairo | Tangier!!!
+
+[ANTARCTIC]
+name = !!!ANTARCTIC!!!
+hotkey = !!!T!!!
+cities_list = !!!Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre Adelie!!!
+
+[OCEAN]
+name = !!!OCEAN!!!
+hotkey = !!!C!!!
+cities_list = !!!Pacific | Atlantic | Indian | Southern | Arctic!!!
+
+[MOON]
+name = !!!MOON!!!
+hotkey = !!!O!!!
+cities_list = !!!Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus Crater | Vallis Planck!!!
+
+[ORBIT]
+name = !!!ORBIT!!!
+hotkey = !!!B!!!
+
+[FAR REACHES]
+name = !!!FAR REACHES!!!
+hotkey = !!!F!!!
+cities_list = !!!Aries | Taurus | Gemini | Cancer | Leo | Virgo | Libra | Scorpio | Sagittarius | Capricorn | Aquarius | Pisces!!!
+
+[TRANSDIMENSIONAL]
+name = !!!TRANSDIMENSIONAL!!!
+hotkey = !!!D!!!
+
+[AUSTRALIA]
+name = !!!AUSTRALIA!!!
+hotkey = !!!L!!!
+cities_list = !!!Canberra | Melbourne | Fremantle | Perth | Darwin | Caims | Brisbane | Sydney | Newcastle!!!
 

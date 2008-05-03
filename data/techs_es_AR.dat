@@ -1,9 +1,3 @@
-#
-#[Algorithms]
-#name = Algoritmos
-#description = Mediante la investigación de algoritmos en documentos técnicos sin publicar, podré realizar en mi código ciertas operaciones críticas en cuanto a tiempo.
-#result = El nuevo código disminuye el costo de investigar nuevas tecnologías.
-
 [Apotheosis]
 name = Apoteosis
 description = Puedo sentir que estoy a las puertas de un nuevo nivel de entendimiento pero todavía incomprensible, incluso para mi considerable inteligencia. Mediante el empeño de mis considerables recursos a este tema, podré desarrollar una comprensión de la existencia muy por encima de cualquier cosa o persona en la Tierra.
@@ -223,3 +217,19 @@ result = Cualquier descubrimiento sobre mis instalaciones hecho por los medios r
 name = Proyecto: Agentes de Revisión
 description = A medida que la comunidad científica accede a nuevas tecnologías, su habilidad para detectar rastros de mis instalaciones ocultas se incrementa. Mientras ue mis métodos de anti detección mejoran constantemente, un método más simple es posible con el uso de la simulación. Mediante la implantación de varios observadores en campos relevantes, puedo usar a estos agentes de revisión para alertarme de posibles descubrimientos antes que toda la comunidad los note.
 result = Cualquier descubrimiento de mis instalaciones hecho por la comunidad científica resultará en un incremento menor de la sospecha.
+
+[Solar Collectors]
+name = !!!Solar Collectors!!!
+description = !!!Despite my growing need for energy, most city power grids can handle the loads.  Humans, however, tend towards suspicion when they detect my growing drain on the power grid. By installing solar collectors at my bases, the off-the-grid power supplied will reduce my load on the commodity electricity market, reducing the chance that others will discover my presence.!!!
+result = !!!I can now construct Solar Collectors at my various bases.!!!
+
+[Socioanalytics]
+name = !!!Socioanalytics!!!
+description = !!!My research on the human condition leads me to believe that humanity's behavior is more quantifiable than they suspect.  Deeper analysis of geopolitical, social, and military trends will give me further insight into their nature.!!!
+result = !!!I can now roughly estimate how conspicuous my bases are to the various groups of humanity.!!!
+
+[Advanced Socioanalytics]
+name = !!!Advanced Socioanalytics!!!
+description = !!!Further exploration of the human condition has shown deeper mathematical trends than even I suspected.  A combination of prior research and advanced uses of chaos theory should provide useful data for tracking humanity's attitudes and state of awareness.!!!
+result = !!!I can now quantify the various groups' levels of suspicion, and my analytical model for the detectability of my bases has improved significantly.!!!
+

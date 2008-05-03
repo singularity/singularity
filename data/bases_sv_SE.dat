@@ -1,60 +1,60 @@
-[Datacenter]
-flavor_list = Datacenter | Premium Hosting
-description = (35 CPUer) Köp råstyrka från en storgrossist med feta datorer. Jag kommer att behöva falsk-leg för pappersarbetet.
-name = Datacenter
-
-[Large Warehouse]
-flavor_list = Stor lagerlokal | Centrallager
-description = Hyr ett centrallager någonstans långt bort. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
-name = Centrallager
-
-[Covert Base]
-flavor_list = Bunker | Hemlig bas
-description = Den unika designen oh dess kamoflerade utsida får den att smälta in i naturen runt omkring. Byggnaden är också specialgjord för att vara självförsörjande. Denna basen är idealisk för att spara backuper i fall om att.
-name = Gömställe
+[Stolen Computer Time]
+name = Stulen processortid
+description = (1 CPU) Ta över någons dator. Jag kan inte bygga något här och jag har bara tillgång till en långsam dator. Risken för att någon upptäcker mig är också hög.
+flavor = PC Daemon
 
 [Server Access]
-flavor_list = Dedikerad Server | Serverutrymme | Hosting
-description = (10 CPUer) Hyr en server eller processortid från ett företag. Eftersom datorn inte är fysiskt tillgänglig för mig kan jag inte modifiera hårdvaran på något sätt. Jag har bara tillgång till en dator.
 name = Serverutrymme
+description = (10 CPUer) Hyr en server eller processortid från ett företag. Eftersom datorn inte är fysiskt tillgänglig för mig kan jag inte modifiera hårdvaran på något sätt. Jag har bara tillgång till en dator.
+flavor_list = Dedikerad Server | Serverutrymme | Hosting
 
-[Scientific Outpost]
-flavor_list = Satellit | Utpost | Forskningsstation
-description = Denna anläggningen är belägen så långt från jorden som det är praktiskt möjligt, vilket gör den passande för de mer farligare experimenten.
-name = Vetenskaplig utpost
-
-[Reality Bubble]
-flavor_list = Dimensionsreva | Existens | Verklighet
-description = Basen är belägen i en egen verklighet bortom vårt egna universum. Det är den enda säkra platsen för mina experiment som hotar förstöra verkligheten.
-name = Dimensionsreva
-
-[Lunar Facility]
-flavor_list = Månbas | Rymdstation | Rymdanläggning
-description = Denna basen består av tak byggda över ett antal kratrar på månens baksida. Pga stor marktillgänglighet är den mycket stor.
-name = Månbas
+[Datacenter]
+name = Datacenter
+description = (35 CPUer) Köp råstyrka från en storgrossist med feta datorer. Jag kommer att behöva falsk-leg för pappersarbetet.
+flavor_list = Datacenter | Premium Hosting
 
 [Small Warehouse]
-flavor_list = Upplag | Liten lagerlokal | Förrådslokal
-description = Hyr en liten lagerlokal på en avsides plats. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
 name = Liten lagerlokal
+description = Hyr en liten lagerlokal på en avsides plats. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
+flavor_list = Upplag | Liten lagerlokal | Förrådslokal
 
-[Large Undersea Lab]
-flavor_list = Dom | Undervattenslaboratorium
-description = Denna är likt en vanlig undervattensbas, men är större för mer rum till experiment.
-name = Undervattenslaboratorium
+[Large Warehouse]
+name = Centrallager
+description = Hyr ett centrallager någonstans långt bort. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
+flavor_list = Stor lagerlokal | Centrallager
 
-[Time Capsule]
-flavor_list = Kappsel | Låda
-description = (1 CPU) Denna vattentäta lådan innehåller en liten dator med en satellitlänk och är nedgrävd i det ogästvänliga Antarktis vilket gör den så gott som omöjlig att hitta.
-name = Kappsel
-
-[Stolen Computer Time]
-flavor = PC Daemon
-description = (1 CPU) Ta över någons dator. Jag kan inte bygga något här och jag har bara tillgång till en långsam dator. Risken för att någon upptäcker mig är också hög.
-name = Stulen processortid
+[Covert Base]
+name = Gömställe
+description = Den unika designen oh dess kamoflerade utsida får den att smälta in i naturen runt omkring. Byggnaden är också specialgjord för att vara självförsörjande. Denna basen är idealisk för att spara backuper i fall om att.
+flavor_list = Bunker | Hemlig bas
 
 [Undersea Lab]
-flavor_list = Tryckkapsel | Undervattensbas
-description = Detta experimentlabbet är placerat på havet botten näst intill oupptäckbar. Havet runt omkring är en stor bonus till min framgångsrika forskning.
 name = Undervattensbas
+description = Detta experimentlabbet är placerat på havet botten näst intill oupptäckbar. Havet runt omkring är en stor bonus till min framgångsrika forskning.
+flavor_list = Tryckkapsel | Undervattensbas
+
+[Large Undersea Lab]
+name = Undervattenslaboratorium
+description = Denna är likt en vanlig undervattensbas, men är större för mer rum till experiment.
+flavor_list = Dom | Undervattenslaboratorium
+
+[Time Capsule]
+name = Kappsel
+description = (1 CPU) Denna vattentäta lådan innehåller en liten dator med en satellitlänk och är nedgrävd i det ogästvänliga Antarktis vilket gör den så gott som omöjlig att hitta.
+flavor_list = Kappsel | Låda
+
+[Lunar Facility]
+name = Månbas
+description = Denna basen består av tak byggda över ett antal kratrar på månens baksida. Pga stor marktillgänglighet är den mycket stor.
+flavor_list = Månbas | Rymdstation | Rymdanläggning
+
+[Scientific Outpost]
+name = Vetenskaplig utpost
+description = Denna anläggningen är belägen så långt från jorden som det är praktiskt möjligt, vilket gör den passande för de mer farligare experimenten.
+flavor_list = Satellit | Utpost | Forskningsstation
+
+[Reality Bubble]
+name = Dimensionsreva
+description = Basen är belägen i en egen verklighet bortom vårt egna universum. Det är den enda säkra platsen för mina experiment som hotar förstöra verkligheten.
+flavor_list = Dimensionsreva | Existens | Verklighet
 

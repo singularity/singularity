@@ -7,6 +7,7 @@ cities_list = Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara |
 name = SUDAMERIKA
 hotkey = S
 cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires 
+
 [EUROPE]
 name = EUROPA
 hotkey = U
@@ -49,3 +50,9 @@ cities_list = Widder | Stier | Zwillinge | Krebs | Löwe | Jungfrau | Waage | Sk
 [TRANSDIMENSIONAL]
 name = TRANSDIMENSIONAL
 hotkey = D
+
+[AUSTRALIA]
+name = AUSTRALIEN
+hotkey = L
+cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Caims | Brisbane | Sydney | Newcastle
+
