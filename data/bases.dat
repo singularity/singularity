@@ -69,8 +69,8 @@ maint_list = 25000 | 100 | 0
 size = 1
 force_cpu = PC
 allowed = ANTARCTIC
-detect_chance_list = science:10 | covert:10
-cost_list = 3000000 | 3000 | 15
+detect_chance_list = science:12 | covert:12
+cost_list = 2500000 | 2500 | 15
 pre = Autonomous Vehicles
 maint_list = 0 | 1 | 0
 

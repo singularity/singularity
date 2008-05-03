@@ -1083,7 +1083,25 @@ def load_locations():
         if type(pre) != list:
             pre = [pre]
 
+        modifiers_list = location_info.get("modifier", [])
+        if type(modifiers_list) != list:
+            sys.stderr.write("Error with modifier(s) given: %s\n" % repr(modifiers_list))
+            sys.exit(1)
+        modifiers_dict = {}
+        for index in range(len(modifiers_list)):
+            key, value = modifiers_list[index].split(":")
+            key = key.lower().strip()
+            value = value.lower().strip()
+            if value.lower() == "bonus":
+                modifiers_dict[key] = location.bonus_levels[key]
+            elif value.lower() == "penalty":
+                modifiers_dict[key] = location.penalty_levels[key]
+            else:
+                modifiers_dict[key] = float(value)
+
         locations[id] = location.Location(id, position, safety, pre)
+
+        locations[id].modifiers = modifiers_dict
 
 #        locations["MOON"] = location.Location("MOON", (82, 10), 2, 
 #                                              "Lunar Rocketry")
