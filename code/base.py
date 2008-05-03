@@ -80,6 +80,12 @@ class Base(buyable.Buyable):
 
         self.maintenance = buyable.array(self.type.maintenance)
 
+    def convert_from(self, save_version):
+        super(Base, self).convert_from(save_version)
+        for item in self.cpus + self.extra_items:
+            if item:
+                item.convert_from(save_version)
+
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full
     # percent.

@@ -914,20 +914,12 @@ def load_game(loadgame_name):
     if load_version != savefile_translation[current_save_version]:
         if load_version <= 3.93: # <= r4_pre3
             pl.convert_from(load_version)
-        #if load_version <= 3.91: # <= r4_pre
-        #    for tech in tech.values():
-        #        tech.convert_from(load_version)
-        #    new_bases = {}
-        #    for loc_id, location in locations.iteritems():
-        #        if loc_id in bases:
-        #            for base in bases[location]:
-        #                base.convert_from(load_version)
-        #            new_bases[location] = bases[loc_id]
-        #        else:
-        #            new_bases[location] = []
-        #    bases = new_bases
-        #    for event in events.values():
-        #        event.convert_from(load_version)
+        if load_version <= 3:
+            for tech in techs.values():
+                tech.convert_from(load_version)
+            for location in locations.values():
+                for my_base in location.bases:
+                    my_base.convert_from(load_version)
 
     loadfile.close()
 

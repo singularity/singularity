@@ -137,6 +137,11 @@ class Buyable(object):
     # pickle.
     available = property(lambda self: self.type.available)
 
+    def convert_from(self, save_version):
+        if save_version <= 3:
+            if self.cost_left[cpu] < self.total_cost[cpu]:
+                self.cost_left[cpu] *= g.seconds_per_day
+
     def _work_on(self, cost_towards):
         self.cost_left -= array(cost_towards)
         if not self.cost_left:
