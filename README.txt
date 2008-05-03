@@ -116,6 +116,7 @@ Borg[MDQ] (translation into Spanish)
 Adam Bark (reduced-CPU Clock class)
 Max McCracken (music)
 Anders Andersson (translation into Swedish)
+Thomas (native-proofing of German translation)
 
 CONTRIBUTING
 All suggestions, translations, code, etc. are welcomed, though it would be
