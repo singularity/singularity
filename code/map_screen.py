@@ -787,7 +787,7 @@ def build_new_base_window(location):
 def refresh_new_base(base_name, xy, location):
     cost_factor = 1/location.modifiers.get("thrift", 1)
     time_factor = 1/location.modifiers.get("speed", 1)
-    cpu_factor = 1/location.modifiers.get("cpu", 1)
+    cpu_factor = location.modifiers.get("cpu", 1)
     detect_factor = 1/location.modifiers.get("stealth", 1)
 
     xy = (xy[0]+100, xy[1])
