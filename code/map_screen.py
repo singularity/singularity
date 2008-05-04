@@ -384,6 +384,48 @@ def map_loop():
 
             old_size = g.screen_size
 
+        time_string = "DAY %04d, %02d:%02d:%02d" % \
+              (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
+
+        time_button.text = time_string
+        time_button.remake_button()
+
+        result_cash = g.to_money(g.pl.future_cash())
+        cash_button.text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
+        cash_button.remake_button()
+
+        # What we display in the suspicion section depends on whether
+        # Advanced Socioanalytics has been researched.  If it has, we
+        # show the standard percentages.  If not, we display a short
+        # string that gives a range of 25% as to what the suspicions
+        # are.
+        suspicion_display_dict = {}
+        for group in ("news", "science", "covert", "public"):
+            if g.techs["Advanced Socioanalytics"].done:
+                suspicion_display_dict[group] = \
+                 g.to_percent(g.pl.groups[group].suspicion, True)
+            else:
+                suspicion_display_dict[group] = \
+                 g.percent_to_detect_str(g.pl.groups[group].suspicion)
+
+        suspicion_button.text = ("[SUSPICION]" + 
+            " NEWS: " + suspicion_display_dict["news"] +
+            "  SCIENCE: " + suspicion_display_dict["science"] +
+            "  COVERT: " + suspicion_display_dict["covert"] +
+            "  PUBLIC: " + suspicion_display_dict["public"])
+        suspicion_button.remake_button()
+
+        total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
+                finance_screen.cpu_numbers()
+
+        if construction_cpu < maint_cpu:
+            cpu_button.text_color = g.colors["red"]
+        else:
+            cpu_button.text_color = g.colors["white"]
+        cpu_button.text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(construction_cpu)+")"
+        cpu_button.remake_button()
+        cpu_button.refresh_button(0)
+
         refresh_map(menu_buttons)
 
         global intro_shown
@@ -391,13 +433,10 @@ def map_loop():
             return
         else:
             intro_shown = True
-            on_tick(1000)
             for button in menu_buttons:
                  button.refresh_button(False)
             g.run_intro()
             refresh_map(menu_buttons)
-            for button in menu_buttons:
-                 button.refresh_button(False)
 
     def make_show_location(location):
         def show_location():
@@ -447,48 +486,6 @@ def map_loop():
                 g.create_dialog(g.strings["lost_sus"])
                 raise Return, 0
             milli_clock %= 1000
-
-            time_string = "DAY %04d, %02d:%02d:%02d" % \
-                  (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
-
-            time_button.text = time_string
-            time_button.remake_button()
-
-            result_cash = g.to_money(g.pl.future_cash())
-            cash_button.text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
-            cash_button.remake_button()
-
-            # What we display in the suspicion section depends on whether
-            # Advanced Socioanalytics has been researched.  If it has, we
-            # show the standard percentages.  If not, we display a short
-            # string that gives a range of 25% as to what the suspicions
-            # are.
-            suspicion_display_dict = {}
-            for group in ("news", "science", "covert", "public"):
-                if g.techs["Advanced Socioanalytics"].done:
-                    suspicion_display_dict[group] = \
-                     g.to_percent(g.pl.groups[group].suspicion, True)
-                else:
-                    suspicion_display_dict[group] = \
-                     g.percent_to_detect_str(g.pl.groups[group].suspicion)
-
-            suspicion_button.text = ("[SUSPICION]" + 
-                " NEWS: " + suspicion_display_dict["news"] +
-                "  SCIENCE: " + suspicion_display_dict["science"] +
-                "  COVERT: " + suspicion_display_dict["covert"] +
-                "  PUBLIC: " + suspicion_display_dict["public"])
-            suspicion_button.remake_button()
-
-            total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
-                    finance_screen.cpu_numbers()
-
-            if construction_cpu < maint_cpu:
-                cpu_button.text_color = g.colors["red"]
-            else:
-                cpu_button.text_color = g.colors["white"]
-            cpu_button.text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(construction_cpu)+")"
-            cpu_button.remake_button()
-            cpu_button.refresh_button(0)
 
             return True
 
