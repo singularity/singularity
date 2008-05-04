@@ -1479,7 +1479,7 @@ def run_intro():
 
     segment = ""
     while raw_intro:
-        line = raw_intro.pop(0)
+        line = raw_intro.pop(0).decode("utf-8")
         if line and line[0] == "|":
             segment += line[1:]
         elif segment:
