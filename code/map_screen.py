@@ -432,7 +432,7 @@ def map_loop():
         milli_clock += tick_amt * g.curr_speed
         if milli_clock >= 1000:
             g.play_music()
-            need_refresh = g.pl.give_time(milli_clock/1000)
+            g.pl.give_time(milli_clock/1000)
             lost = g.pl.lost_game()
             if lost == 1:
                 if not g.nosound:

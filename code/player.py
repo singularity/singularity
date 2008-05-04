@@ -325,13 +325,13 @@ class player_class(object):
                    {"tech": tech.name, 
                     "tech_message": tech.result}
             g.create_dialog(text)
-            g.curr_speed = 1
+            g.curr_speed = 0
             needs_refresh = 1
 
         # Base complete dialogs.
         for base in bases_constructed:
             text = g.strings["construction"] % {"base": base.name}
-            g.curr_speed = 1
+            g.curr_speed = 0
             needs_refresh = 1
             g.create_dialog(text)
 
@@ -352,13 +352,13 @@ class player_class(object):
                 text = g.strings["item_construction_single"] % \
                        {"item": base.cpus[0].type.name, "base": base.name}
                 g.create_dialog(text)
-                g.curr_speed = 1
+                g.curr_speed = 0
                 needs_refresh = 1
             elif finished_cpus == new_cpus: # Finished the first batch of CPUs.
                 text = g.strings["item_construction_batch"] % \
                        {"item": base.cpus[0].type.name, "base": base.name}
                 g.create_dialog(text)
-                g.curr_speed = 1
+                g.curr_speed = 0
                 needs_refresh = 1
             else:
                 pass # No message unless we just finished the first or last CPU.
@@ -368,7 +368,7 @@ class player_class(object):
             text = g.strings["item_construction_single"] % \
                    {"item": item.type.name, "base": base.name}
             g.create_dialog(text)
-            g.curr_speed = 1
+            g.curr_speed = 0
             needs_refresh = 1
 
         # If we just lost grace, show the warning.
@@ -377,7 +377,7 @@ class player_class(object):
 
             g.create_dialog(g.strings["grace_warning"])
             needs_refresh = 1
-            g.curr_speed = 1
+            g.curr_speed = 0
 
         # Discovery, clear finished techs.
         dead_bases = []
@@ -526,7 +526,7 @@ class player_class(object):
                                 {"base": base_name, "group": "???"}
 
             g.create_dialog(dialog_string, text_color = g.colors["red"])
-            g.curr_speed = 1
+            g.curr_speed = 0
             base.destroy()
             needs_refresh = 1
 
