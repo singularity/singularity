@@ -33,6 +33,7 @@ USER-VISIBLE CHANGES:
 * Incomplete bases no longer support the AI. (FM)
 - It's possible to get lucky when hacking some random computer.  (FM)
 * Seconds, minutes, and hours now matter much more than they used to. (FM)
+- Major events cause the game to pause, instead of going to real-time. (FM)
 - You can use the Enter on the numeric keypad like the regular Enter key.
   (Phil, gare for suggestion)
 * Continents are no longer identical. (FM, Phil for suggestion)
