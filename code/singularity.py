@@ -169,14 +169,16 @@ while game_action != 2:
         ready = main_menu.difficulty_select()
         if ready:
             game_action = map_screen.map_loop()
-            pygame.mixer.music.stop()
+            if not g.nosound:
+                pygame.mixer.music.stop()
     if game_action == 1: #Load
         load_action = main_menu.display_load_menu()
         if load_action != -1 and load_action != "":
             load_okay = g.load_game(load_action)
             if load_okay != -1:
                 game_action = map_screen.map_loop()
-                pygame.mixer.music.stop()
+                if not g.nosound:
+                    pygame.mixer.music.stop()
     elif game_action == 2: #Quit
         g.quit_game()
     elif game_action == 3: #About

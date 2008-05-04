@@ -435,12 +435,14 @@ def map_loop():
             need_refresh = g.pl.give_time(milli_clock/1000)
             lost = g.pl.lost_game()
             if lost == 1:
-                pygame.mixer.music.stop()
+                if not g.nosound:
+                    pygame.mixer.music.stop()
                 g.play_music("lose")
                 g.create_dialog(g.strings["lost_nobases"])
                 raise Return, 0
             if lost == 2:
-                pygame.mixer.music.stop()
+                if not g.nosound:
+                    pygame.mixer.music.stop()
                 g.play_music("lose")
                 g.create_dialog(g.strings["lost_sus"])
                 raise Return, 0

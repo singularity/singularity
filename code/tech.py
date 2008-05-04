@@ -86,7 +86,8 @@ class Tech(buyable.Buyable):
             else:
                 print "Unknown group '%s' in tech %s." % (who, self.name)
         elif self.tech_type == "endgame_sing":
-            pygame.mixer.music.stop()
+            if not g.nosound:
+                pygame.mixer.music.stop()
             g.play_music("win")
             g.create_dialog(g.strings["wingame"])
             for group in g.pl.groups.values():
