@@ -194,12 +194,17 @@ class Buyable(object):
 
         # Cash depends on CPU.
         cash_wanted = self.get_wanted(cash, cpu, cpu_work)
-        cash_flow = min(cash_wanted, cash_available)
+        max_cash_flow = min(cash_wanted, cash_available)
 
         # Labor depends on CPU and Cash.
         labor_wanted = min( self.get_wanted(labor, cpu, cpu_work),
-                            self.get_wanted(labor, cash, cash_flow) )
+                            self.get_wanted(labor, cash, max_cash_flow) )
         time_spent = min(labor_wanted, time)
+
+        # We limit cash flow to a maximum buffer of 5%, to avoid slurping all
+        # the cash at the very start.
+        cash_flow = min(max_cash_flow, self.get_wanted(cash, labor, time_spent)
+                                       + int(.05 * self.total_cost[cash]))
 
         # Consume CPU and Cash.
         g.pl.cpu_pool -= cpu_work
