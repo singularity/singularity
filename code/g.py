@@ -153,9 +153,7 @@ defined in sounds/sounds.dat.
     if nosound:
        return
 
-    try:
-        pygame.mixer.init()
-    except:
+    if not pygame.mixer.get_init():
         sys.stderr.write("WARNING: Could not start the mixer, even though sound is requested!\n")
         nosound = 1
         return

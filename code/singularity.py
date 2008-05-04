@@ -32,6 +32,7 @@ A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 200
 
 Version 0.28_pre"""
 
+pygame.mixer.pre_init(48000, -16, 2)
 pygame.init()
 pygame.font.init()
 pygame.key.set_repeat(1000,50)
