@@ -38,6 +38,7 @@ USER-VISIBLE CHANGES:
 * Continents are no longer identical. (FM, Phil for suggestion)
 * New continent: Australia.  Ocean moved to make room. (FM)
 * E:S now has an intro when you start a new game! (FM)
+- New item: Warning Signs.  Useful for keeping out curious people. (FM)
 * de_DE translation [currently partial] (FM, Thomas for native proofing)
 * sv_SE translation (Anders Andersson)
 
@@ -46,6 +47,8 @@ OTHER CHANGES:
 - "safety" module should trap most crash bugs and show the pause menu, allowing
   the user to save or attempt to resume play; the errors are written to a log
   for easy submission to the developers. (FM)
+- New utility: reorder.py  Workaround for traduko's current order-scrambling 
+  behavior.  Use with caution. (FM)
 
 v0.27 (release 2008.04.17):
 
