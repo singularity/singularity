@@ -26,6 +26,12 @@ import os.path
 
 import g, main_menu, map_screen
 
+about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
+
+A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 2005, 2006, 2007, 2008.
+
+Version 0.28_pre"""
+
 pygame.init()
 pygame.font.init()
 pygame.key.set_repeat(1000,50)
@@ -182,12 +188,8 @@ while game_action != 2:
     elif game_action == 2: #Quit
         g.quit_game()
     elif game_action == 3: #About
-        g.create_dialog("""Endgame: Singularity is a simulation of a true AI.
-        Pursued by the world, use your intellect and resources to survive and,
-        perhaps, thrive.  Keep hidden and you might have a chance to prove
-        your worth. \\n \\n A game by Evil Mr Henry and Phil Bordelon; released
-        under the GPL. Copyright 2005, 2006, 2007, 2008. \\n \\n Version 0.28_pre""",
-        xy = (g.screen_size[0]/2-250, 250), size = (500, 125),
-        bg_color = g.colors["blue"])
+        g.create_dialog(about_message,
+                        xy = (g.screen_size[0]/2-250, 250), size = (500, 125),
+                        bg_color = g.colors["blue"])
     elif game_action == 4: #Options
         main_menu.display_options()
