@@ -542,6 +542,7 @@ def refresh_map(menu_buttons):
     g.screen.blit(pygame.transform.scale(g.images["earth.jpg"],
                 (g.screen_size[0], g.screen_size[0]/2)),
                 (0, g.screen_size[1]/2-g.screen_size[0]/4))
+    mouse_pos = pygame.mouse.get_pos()
     for button in menu_buttons:
         if g.locations.has_key(button.button_id):
             #determine if building in a location is possible. If so, show the
@@ -558,8 +559,7 @@ def refresh_map(menu_buttons):
                 button.text = new_text
                 button.xy = new_xy
                 button.remake_button()
-        else:
-            button.refresh_button(False)
+        button.refresh_button(button.is_over(mouse_pos))
 
 significant_numbers = [
     '42',	# The Answer.
