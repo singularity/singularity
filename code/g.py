@@ -556,7 +556,7 @@ def add_commas(number):
         if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
             return raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
         if locale_test[2] == locale.str(0) and locale_test[0] == locale.str(1):
-            return raw_with_commas.rstrip(locale_test[1]).rstrip(locale_test[1])
+            return raw_with_commas.lstrip(locale_test[1]).lstrip(locale_test[1])
 
     return raw_with_commas
 
