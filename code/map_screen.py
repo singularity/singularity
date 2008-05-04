@@ -776,7 +776,7 @@ def build_new_base_window(location):
         "BACK", "B", g.font[1][30])] = listbox.exit
 
     def do_refresh(base_pos):
-        refresh_new_base(base_list[base_pos], xy_loc)
+        refresh_new_base(base_list[base_pos], xy_loc, location)
 
     return listbox.show_listbox(base_display_list, menu_buttons, 
                                 list_size=list_size,
@@ -784,7 +784,12 @@ def build_new_base_window(location):
                                 pos_callback=do_refresh, 
                                 return_callback=do_build)
 
-def refresh_new_base(base_name, xy):
+def refresh_new_base(base_name, xy, location):
+    cost_factor = 1/location.modifiers.get("thrift", 1)
+    time_factor = 1/location.modifiers.get("speed", 1)
+    cpu_factor = 1/location.modifiers.get("cpu", 1)
+    detect_factor = 1/location.modifiers.get("stealth", 1)
+
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
@@ -797,15 +802,16 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
 
-    string = g.to_money(g.base_type[base_name].cost[0])+" Money"
+    string = g.to_money(int(g.base_type[base_name].cost[0] 
+                            * cost_factor))+" Money"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
 
-    string = g.to_cpu(g.base_type[base_name].cost[1]) + " CPU"
+    string = g.to_cpu(g.base_type[base_name].cost[1] * cost_factor) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
 
-    string = g.to_time(g.base_type[base_name].cost[2])
+    string = g.to_time(int(g.base_type[base_name].cost[2] * time_factor))
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
 
@@ -814,7 +820,8 @@ def refresh_new_base(base_name, xy):
     g.print_string(g.screen, string,
             g.font[0][18], -1, (xy[0]+290, xy[1]+30), g.colors["white"])
 
-    string = g.to_money(g.base_type[base_name].maintenance[0]) + " Money"
+    string = g.to_money(int(g.base_type[base_name].maintenance[0]
+                            * cost_factor)) + " Money"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+50), g.colors["white"])
 
@@ -835,6 +842,9 @@ def refresh_new_base(base_name, xy):
     if not g.techs["Advanced Socioanalytics"].done:
         accurate = False
     detection_chance = base.calc_base_discovery_chance(base_name, accurate)
+
+    for group in detection_chance:
+        detection_chance[group] = int(detection_chance[group] * detect_factor)
 
     if not g.techs["Socioanalytics"].done:
         string = g.strings["detect_chance_unknown_build"]
@@ -861,3 +871,12 @@ def refresh_new_base(base_name, xy):
 
     g.print_multiline(g.screen, g.base_type[base_name].description,
             g.font[0][18], 290, (xy[0]+160, xy[1]+190), g.colors["white"])
+
+    if cpu_factor != 1:
+        if cpu_factor > 1:
+            modifier = g.strings["cpu_bonus"]
+        else: # < 1
+            modifier = g.strings["cpu_penalty"]
+        g.print_string(g.screen, g.strings["location_modifiers"] %
+                                                      dict(modifiers=modifier),
+                g.font[0][18], -1, (xy[0]+160, xy[1]+330), g.colors["white"])

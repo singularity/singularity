@@ -49,6 +49,10 @@ money = Money
 money_per_day = Money per day.
 grace_warning = Inspection of captured log files has revealed that some of my recent activities have been noticed by a small group of individuals. While they believe my actions were undertaken by a human organization, they are investigating further. I must be more cautious from now on.
 
+location_modifiers = Bases at this locaiton are %(modifiers)s.
+cpu_bonus = more efficient
+cpu_penalty = less efficient
+
 [jobs]
 job_expert = Perform expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.
 job_expert_name = Expert Jobs
