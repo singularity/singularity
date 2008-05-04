@@ -24,6 +24,7 @@ save_text = Eintippen Sie eine Speichername.
 new_base_text = Eintippen Sie einen Stützpunktname.
 unbuildable = Hier kann ich nicht bauen; ich habe keinen körperlichen Zugang.
 dangerous_research = Nicht alle von meine vorliegende CPU-Zeit würde deiser Forschung zuteilt; sie ist zu gefährlich, auf einige von den inaktiven Computer laufen zu lassen.
+no_construction_sleep = Einige Stützpunkte sind zum Teil im Bau und können deshalb nicht einschlafen.
 nothing = Nichts
 cpu_pool = CPU-Datenbasis
 sleep = Schlafen

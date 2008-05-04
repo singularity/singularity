@@ -24,6 +24,7 @@ save_text = Save your game under what name?
 new_base_text = Enter a name for the base.
 unbuildable = I cannot build in this base; I do not have physical access.
 dangerous_research = Not all of my available CPU power was allocated to this research; it's too dangerous to run the research on some of the idle machines.
+no_construction_sleep = Some of my bases have active construction and cannot go to slep.
 nothing = Nothing
 cpu_pool = CPU Pool
 sleep = Sleep

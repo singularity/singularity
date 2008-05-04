@@ -270,6 +270,9 @@ def assign_tech(free_CPU, select_this = None):
                show_dangerous_dialog = True
 
     if show_dangerous_dialog:
-        g.create_dialog(g.strings["dangerous_research"])
+        if fake_base.studying == "Sleep":
+            g.create_dialog(g.strings["no_construction_sleep"])
+        else:
+            g.create_dialog(g.strings["dangerous_research"])
 
     return return_val
