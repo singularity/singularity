@@ -550,26 +550,15 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
 
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number):
-    int_with_commas = locale.format("%d", number, grouping=True)
+    raw_with_commas = locale.format("%0.2f", number, grouping=True)
+    locale_test = locale.format("%01.1f", 0.1)
+    if len(locale_test) == 3 and not locale_test[1].isdigit():
+        if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
+            return raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
+        if locale_test[2] == locale.str(0) and locale_test[0] == locale.str(1):
+            return raw_with_commas.rstrip(locale_test[1]).rstrip(locale_test[1])
 
-    # If we have a non-integer float...
-    if int(number) != number:
-        # Round to two decimal places, discard the whole part.
-        small_number = (int(number * 100) / 100.) % 1
-
-        # Pass it through locale.str to get it looking nice.
-        decimal_part = locale.str(small_number)
-
-        if len(decimal_part) <= 1:
-            pass
-        elif decimal_part[0] != locale.str(0) or decimal_part[1].isdigit():
-            print "This locale is weird.  '%s' doesn't appear to start with 0 and the decimal separator.  Please report this error."
-        else:
-            return int_with_commas + decimal_part[1:]
-
-    return int_with_commas
-
-    
+    return raw_with_commas
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
