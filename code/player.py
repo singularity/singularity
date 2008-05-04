@@ -464,8 +464,6 @@ class player_class(object):
             return True
 
         # Have we built a bunch of bases?
-        if bases == None:
-            bases = len([base for base in g.all_bases() if base.done])
         if bases > 10:
             return False
 
@@ -484,11 +482,14 @@ class player_class(object):
         if complex_bases > 0:
             return False
 
-        # I'd put something in for Impossible, but they're already incapable of
-        # building a second base until day 20, so it seems redundant.
+        # The sane people have left the building.
+        if self.difficulty <= 50:
+            return True
 
-        # Okay, so it's day 17 if they go for a Stolen Computer Time base,
-        # but in that case, they've already given themselves an extra challenge.
+        # Hey, hey, what do you know?  Impossible can get a useful number of
+        # bases before losing grace now.  *tsk, tsk*  We'll have to fix that.
+        if bases > 1:
+            return False
 
         return True
 
