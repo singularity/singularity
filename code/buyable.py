@@ -19,6 +19,7 @@
 #This file contains the item class.
 
 import pygame
+from operator import div, truediv
 import g
 
 cash, cpu, labor = range(3)
@@ -28,6 +29,9 @@ class array(list):
     def __add__(self, other):
         self, other = coerce(self, other)
         return array([self[i] + other[i] for i in range(len(self))])
+
+    def __iadd__(self, other):
+        return self + other
 
     def __sub__(self, other):
         self, other = coerce(self, other)
@@ -43,11 +47,11 @@ class array(list):
 
     def __div__(self, other):
         self, other = coerce(self, other)
-        return array([self[i].__div__(other[i]) for i in range(len(self))])
+        return array([div(self[i], other[i]) for i in range(len(self))])
 
     def __truediv__(self, other):
         self, other = coerce(self, other)
-        return array([self[i].__truediv__(other[i]) for i in range(len(self))])
+        return array([truediv(self[i], other[i]) for i in range(len(self))])
 
     def integer_part(self):
         return array([int(self[i]) for i in range(len(self))])
@@ -63,6 +67,9 @@ class array(list):
             return self, array([other] * len(self))
         else:
             return self, other
+
+    def __str__(self):
+        return "array(%s)" % super(array, self).__str__()
 
 class Buyable_Class(object):
     def __init__(self, id, description, cost, prerequisites, type = ""):

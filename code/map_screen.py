@@ -824,7 +824,7 @@ def refresh_new_base(base_name, xy, location):
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+50), g.colors["white"])
 
-    string = g.to_cpu(g.base_type[base_name].maintenance[1]) + " CPU"
+    string = g.add_commas(g.base_type[base_name].maintenance[1]) + " CPU"
     g.print_string(g.screen, string,
             g.font[0][16], -1, (xy[0]+290, xy[1]+70), g.colors["white"])
 

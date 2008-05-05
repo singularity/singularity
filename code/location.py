@@ -106,7 +106,7 @@ class Location(buyable.Buyable_Class):
             mod = self.modifiers["thrift"]
 
             # And maintenance
-            base.maintenance = (base.maintenance * mod).integer_part()
+            base.maintenance = (base.maintenance / mod).integer_part()
 
         if len(self.bases) == 1:
             # The rest wouldn't cause any harm... but it also wouldn't do 

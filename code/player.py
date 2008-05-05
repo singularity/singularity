@@ -216,6 +216,8 @@ class player_class(object):
                                                  if item and not item.done]
                 items_under_construction += unfinished_cpus + unfinished_items
 
+                self.maintenance_cost += base.maintenance
+
                 if base.power_state != "Stasis":
                     cpu_power = base.processor_time() * secs_passed
                     self.have_cpu = self.have_cpu or cpu_power
