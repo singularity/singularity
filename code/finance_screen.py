@@ -19,7 +19,6 @@
 #This file contains the screen to display finance information.
 
 
-import pygame
 import g
 import buttons
 from buyable import cash, cpu, labor
@@ -199,53 +198,53 @@ def refresh_screen(menu_buttons):
 
     #total cpu
     g.print_string(g.screen, "Total CPU:",
-            g.font[0][22], -1, (215, 300), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid-5, 300), g.colors["white"], 2)
 
     g.print_string(g.screen, g.to_money(total_cpu),
-            g.font[0][22], -1, (330, 300), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid+150, 300), g.colors["white"], 2)
 
     #sleeping cpu
     g.print_string(g.screen, "-Sleeping CPU:",
-            g.font[0][22], -1, (215, 320), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid-5, 320), g.colors["white"], 2)
 
     g.print_string(g.screen, g.to_money(sleeping_cpu),
-            g.font[0][22], -1, (330, 320), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid+150, 320), g.colors["white"], 2)
 
     #research cpu
-    g.print_string(g.screen, "-Research CPU:",
-            g.font[0][22], -1, (215, 340), g.colors["white"], 2)
+    g.print_string(g.screen, "- Research CPU:",
+            g.font[0][22], -1, (text_mid-5, 340), g.colors["white"], 2)
 
     g.print_string(g.screen, g.to_money(research_cpu),
-            g.font[0][22], -1, (330, 340), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid+150, 340), g.colors["white"], 2)
 
     #job cpu
-    g.print_string(g.screen, "-Job CPU:",
-            g.font[0][22], -1, (215, 360), g.colors["white"], 2)
+    g.print_string(g.screen, "- Job CPU:",
+            g.font[0][22], -1, (text_mid-5, 360), g.colors["white"], 2)
 
     g.print_string(g.screen, g.to_money(job_cpu),
-            g.font[0][22], -1, (330, 360), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid+150, 360), g.colors["white"], 2)
 
     #maint cpu
-    g.print_string(g.screen, "-Maint. CPU:",
-            g.font[0][22], -1, (215, 380), g.colors["white"], 2)
+    g.print_string(g.screen, "- Maint. CPU:",
+            g.font[0][22], -1, (text_mid-5, 380), g.colors["white"], 2)
 
     if construction_cpu < maint_cpu:
         g.print_string(g.screen, g.to_money(construction_cpu),
-                g.font[0][22], -1, (330, 380), g.colors["red"], 2)
+                g.font[0][22], -1, (text_mid+150, 380), g.colors["red"], 2)
         g.print_string(g.screen, g.to_money((-(construction_cpu - maint_cpu)))+" shortfall",
-                g.font[0][22], -1, (340, 380), g.colors["red"])
+                g.font[0][22], -1, (text_mid+160, 380), g.colors["red"])
     else:
         g.print_string(g.screen, g.to_money(maint_cpu),
-                g.font[0][22], -1, (330, 380), g.colors["white"], 2)
+                g.font[0][22], -1, (text_mid+150, 380), g.colors["white"], 2)
 
-    g.screen.fill(g.colors["white"], (130, 400, 200, 1))
+    g.screen.fill(g.colors["white"], (text_mid-50, 400, 200, 1))
     #construction cpu
     g.print_string(g.screen, "=R. CPU Pool:",
-            g.font[0][22], -1, (215, 405), g.colors["white"], 2)
+            g.font[0][22], -1, (text_mid-5, 405), g.colors["white"], 2)
 
     if construction_cpu < maint_cpu:
         g.print_string(g.screen, g.to_money(0),
-                g.font[0][22], -1, (330, 405), g.colors["red"], 2)
+                g.font[0][22], -1, (text_mid+150, 405), g.colors["red"], 2)
     else:
         g.print_string(g.screen, g.to_money(construction_cpu - maint_cpu),
-                g.font[0][22], -1, (330, 405), g.colors["white"], 2)
+                g.font[0][22], -1, (text_mid+150, 405), g.colors["white"], 2)
