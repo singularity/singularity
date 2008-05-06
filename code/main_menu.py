@@ -25,7 +25,6 @@ import pygame
 import g
 
 import buttons
-import scrollbar
 import listbox
 from buttons import void, exit, always
 
@@ -60,8 +59,8 @@ def difficulty_select():
     g.create_norm_box((g.screen_size[0]/2-xsize, g.screen_size[1]/2-ysize),
         (xsize*2, ysize*2))
 
-    xstart =g.screen_size[0]/2-xsize+5
-    ystart =g.screen_size[1]/2-ysize
+    xstart = g.screen_size[0]/2-xsize+5
+    ystart = g.screen_size[1]/2-ysize
 
     diff_buttons = {}
     button_souls = ( ("VERY EASY", 1), ("EASY", 3), ("NORMAL", 5), ("HARD", 7), 
@@ -204,7 +203,8 @@ def set_res():
 
 
 def set_language_properly(prev_lang):
-    if g.language == prev_lang: return
+    if g.language == prev_lang: 
+        return
     g.set_locale()
     g.load_bases()
     g.load_base_defs(g.language)
@@ -257,12 +257,14 @@ def refresh_options(menu_buttons):
 
     #fullscreen
     string = "No"
-    if g.fullscreen == 1: string = "Yes"
+    if g.fullscreen == 1: 
+        string = "Yes"
     g.print_string(g.screen, "Fullscreen: "+string,
             g.font[0][22], -1, (xstart+20, ystart+30), g.colors["white"])
     #sound
     string = "Yes"
-    if g.nosound == 1: string = "No"
+    if g.nosound == 1: 
+        string = "No"
     g.print_string(g.screen, "Sound: "+string,
             g.font[0][22], -1, (xstart+20, ystart+60), g.colors["white"])
 
@@ -271,7 +273,8 @@ def refresh_options(menu_buttons):
             g.font[0][22], -1, (xstart+240, ystart+60), g.colors["white"])
     #mouse grab
     string = "No"
-    if pygame.event.get_grab(): string = "Yes"
+    if pygame.event.get_grab(): 
+        string = "Yes"
     g.print_string(g.screen, "Mouse grab: "+string,
             g.font[0][22], -1, (xstart+20, ystart+90), g.colors["white"])
     #Resolution

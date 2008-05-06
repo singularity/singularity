@@ -20,10 +20,8 @@
 #This file contains the screen to display the base screen.
 
 
-import pygame
 import g
 import buttons
-import scrollbar
 import listbox
 
 from buttons import void, exit, always
@@ -155,8 +153,10 @@ def refresh_base(name_button, detect_button, study_button, this_base):
     g.screen.fill(g.colors["white"], (xstart, ystart, 300, g.screen_size[1]-150))
     g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 298, g.screen_size[1]-152))
 
-    if this_base.cpus[0] == 0: item_name = "None"
-    else: item_name = this_base.cpus[0].type.name+" x "+str(this_base.has_item())
+    if this_base.cpus[0] == 0: 
+        item_name = "None"
+    else: 
+        item_name = this_base.cpus[0].type.name+" x "+str(this_base.has_item())
     g.print_string(g.screen, "Processor: " + item_name,
         g.font[0][18], -1, (xstart+5, ystart+15), g.colors["white"])
     if this_base.cpus[len(this_base.cpus)-1] != 0:
@@ -216,8 +216,10 @@ def build_item(this_base, item_type, location):
         if g.items[item_name].item_type == item_type:
             if not g.items[item_name].available():
                 continue
-            try: g.items[item_name].buildable.index(location)
-            except ValueError: continue
+            try: 
+                g.items[item_name].buildable.index(location)
+            except ValueError: 
+                continue
             item_object_list.append(g.items[item_name])
 
     # ... then we sort that list.  Items sort by cost comparison.  We want to
@@ -254,7 +256,8 @@ def build_item(this_base, item_type, location):
                          pos_callback=do_refresh, return_callback=do_build)
 
 def actual_build(this_base, item_name, item_type):
-    if item_name == "": return
+    if item_name == "": 
+        return
     if item_type == "compute":
         for i in range(len(this_base.cpus)):
             if this_base.cpus[i] != 0:
@@ -320,7 +323,8 @@ def refresh_item(this_base, item_name, xy_loc):
             g.font[0][16], -1, (xy[0]+160, xy[1]+120), g.colors["white"])
 
     x_start = 120
-    if g.items[item_name].item_type == "compute": x_start = 140
+    if g.items[item_name].item_type == "compute": 
+        x_start = 140
     g.print_multiline(g.screen, g.items[item_name].description,
             g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
 

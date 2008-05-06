@@ -19,7 +19,6 @@
 
 #This file contains the player class.
 
-import pygame
 import random
 
 import g
@@ -503,7 +502,7 @@ class player_class(object):
 
         # Reduce suspicion.
         for group in self.groups.values():
-          group.new_day()
+            group.new_day()
 
     def remove_bases(self, dead_bases):
         discovery_locs = []
@@ -524,7 +523,7 @@ class player_class(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": detect_phrase}
             else:
-                print "Error: base destoyed for unknown reason: " + reason
+                print "Error: base destroyed for unknown reason: " + reason
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 

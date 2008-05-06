@@ -19,10 +19,8 @@
 #This file contains the global research screen.
 
 
-import pygame
 import g
 import buttons
-import scrollbar
 import listbox
 import base_screen
 
@@ -227,7 +225,8 @@ def refresh_research(tech_name, CPU_amount):
 
 def kill_tech(tech_name):
     return_val = False
-    if tech_name == "": return return_val
+    if tech_name == "": 
+        return return_val
     for base in g.all_bases():
         if base.studying == tech_name:
             return_val = True

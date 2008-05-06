@@ -18,7 +18,6 @@
 
 #This file contains the event class.
 
-import pygame
 import g
 #detection = (news, science, covert, person)
 

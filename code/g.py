@@ -151,7 +151,7 @@ defined in sounds/sounds.dat.
     global nosound
 
     if nosound:
-       return
+        return
 
     if not pygame.mixer.get_init():
         sys.stderr.write("WARNING: Could not start the mixer, even though sound is requested!\n")
@@ -210,7 +210,7 @@ play_sound() plays a sound from a particular class.
     # Play a random choice of sounds from the sound class.
     random_sound = random.choice(sounds[sound_class])
     if debug:
-       sys.stderr.write("D: Playing sound %s.\n" % random_sound["filename"])
+        sys.stderr.write("D: Playing sound %s.\n" % random_sound["filename"])
     random_sound["sound"].play()
 
 delay_time = 0
@@ -225,7 +225,7 @@ load_music() loads music for the game.  It looks in multiple locations:
 """
 
     if nosound:
-       return
+        return
     global music_dict
     music_dict = {}
 
@@ -346,15 +346,15 @@ def create_dialog(string_to_print, box_font = None, xy = None, size = (250,250),
     # Defaults that reference other variables, which may not be initialized when
     # the function is defined.
     if box_font == None:
-      box_font = font[0][18]
+        box_font = font[0][18]
     if xy == None:
-      xy = ( (screen_size[0] / 2) - 100, 50)
+        xy = ( (screen_size[0] / 2) - 100, 50)
     if bg_color == None:
-      bg_color = colors["dark_blue"]
+        bg_color = colors["dark_blue"]
     if out_color == None:
-      out_color = colors["white"]
+        out_color = colors["white"]
     if text_color == None:
-      text_color = colors["white"]
+        text_color = colors["white"]
 
     screen.fill(out_color, (xy[0], xy[1], size[0], size[1]))
     screen.fill(bg_color, (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
@@ -885,9 +885,9 @@ def load_game(loadgame_name):
         #Events
         if load_version > 2:
             for event in events:
-              event_id = pickle.load(loadfile)
-              event_triggered = pickle.load(loadfile)
-              events[event_id].triggered = event_triggered
+                event_id = pickle.load(loadfile)
+                event_triggered = pickle.load(loadfile)
+                events[event_id].triggered = event_triggered
 
     else: # > r4_pre
         # Changes to overall structure go here.
@@ -1153,9 +1153,9 @@ the type of object it is processing; this should be passed in via 'name'.
 """
 
     for field in fields:
-       if field not in dict:
-          sys.stderr.write("%s %s lacks key %s.\n" % (name, repr(dict), field))
-          sys.exit(1)
+        if field not in dict:
+            sys.stderr.write("%s %s lacks key %s.\n" % (name, repr(dict), field))
+            sys.exit(1)
 
 #Techs.
 

@@ -18,7 +18,6 @@
 
 #This file contains the item class.
 
-import pygame
 from operator import div, truediv
 import g
 
@@ -185,7 +184,7 @@ class Buyable(object):
 
     def work_on(self, cash_available = None, cpu_available = None, time = 0):
         if self.done:
-           return
+            return
 
         # cash_available defaults to all the player's cash.
         if cash_available == None:

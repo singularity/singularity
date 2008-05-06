@@ -38,7 +38,7 @@ Version 0.28_pre"""
 pygame.mixer.pre_init(48000, -16, 2)
 pygame.init()
 pygame.font.init()
-pygame.key.set_repeat(1000,50)
+pygame.key.set_repeat(1000, 50)
 g.fullscreen = 0
 
 #load prefs from file:

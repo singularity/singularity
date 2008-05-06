@@ -18,8 +18,6 @@
 
 #This file contains the item class.
 
-import pygame
-import g
 import buyable
 
 class Item_Class(buyable.Buyable_Class):

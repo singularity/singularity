@@ -114,11 +114,13 @@ class listbox:
 
         if input_array[cur_pos] == "" and (keycode == pygame.K_PAGEDOWN or
                 keycode == pygame.K_END):
-            for i in range(cur_pos,-1,-1):
+            for i in range(cur_pos, -1, -1):
                 cur_pos = i
-                if input_array[i] != "": break
+                if input_array[i] != "": 
+                    break
 
-        if lastpos != cur_pos: refresh = True
+        if lastpos != cur_pos: 
+            refresh = True
         return cur_pos, refresh
 
 
@@ -183,7 +185,7 @@ def show_listbox(*args, **kwargs):
 
 # Lets us access a dict d by creating an object a such that:
 # a.some_property == d["some_property"]
-# a.some_property = 0  ->  d["some_property"] = foo
+# a.some_property = 0  ->  d["some_property"] = 0
 class Args(object):
     def __init__(self, dict):
         self.__dict__ = dict

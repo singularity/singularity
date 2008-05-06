@@ -140,7 +140,7 @@ class Base(buyable.Buyable):
         num_items = 0
         for item in self.cpus:
             if item and item.done:
-              num_items += 1
+                num_items += 1
         return num_items
 
     #Return how many units of CPU the base can contribute each day.

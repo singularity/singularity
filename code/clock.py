@@ -27,6 +27,7 @@ class Clock:
     """
     def __init__(self):
         self.t = time.time()
+        self.rate = -1
 
     def tick(self, rate=-1):
         # rate=-1 will be caught by the except statement if no rate is specified
@@ -48,7 +49,7 @@ class Clock:
             # the math to be right.
             sleep_time = 1.0/self.rate - (time.time() - self.t)
             if sleep_time > 0:
-               time.sleep(sleep_time)
+                time.sleep(sleep_time)
         except IOError:
             # This will catch exceptions raised if the actual framerate is less
             # than self.rate or if no rate was passed to tick.

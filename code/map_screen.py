@@ -25,7 +25,6 @@ import base
 import random
 
 import buttons
-import scrollbar
 import listbox
 import main_menu
 import base_screen
@@ -52,7 +51,7 @@ def display_generic_menu(xy_loc, titlelist):
     return buttons.show_buttons(menu_buttons)
 
 def display_pause_menu():
-    button_array= []
+    button_array = []
     button_array.append(["NEW GAME", "N"])
     button_array.append(["SAVE GAME", "S"])
     button_array.append(["LOAD GAME", "L"])
@@ -72,7 +71,7 @@ def display_pause_menu():
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return
     g.play_sound("click")
-    button_array= []
+    button_array = []
     button_array.append(["GIVE MONEY", "M"])
     button_array.append(["GIVE TECH", "T"])
     button_array.append(["END CONSTR.", "E"])
@@ -114,7 +113,7 @@ def display_cheat_list(menu_buttons):
 
 def display_knowledge_list():
     g.play_sound("click")
-    button_array= []
+    button_array = []
     button_array.append(["TECHS", "T"])
     button_array.append(["ITEMS", "I"])
     button_array.append(["CONCEPTS", "C"])
@@ -191,7 +190,8 @@ def refresh_tech(tech_name, xy):
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if tech_name == "": return
+    if tech_name == "": 
+        return
     g.print_string(g.screen, g.techs[tech_name].name,
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
@@ -238,7 +238,8 @@ def refresh_items(item_name, xy):
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if item_name == "": return
+    if item_name == "": 
+        return
     g.print_string(g.screen, g.items[item_name].name,
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 
@@ -274,7 +275,8 @@ def refresh_concept(concept_name, xy):
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if concept_name == "": return
+    if concept_name == "": 
+        return
     g.print_string(g.screen, g.help_strings[concept_name][0],
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
     g.print_multiline(g.screen, g.help_strings[concept_name][1],
@@ -283,7 +285,8 @@ def refresh_concept(concept_name, xy):
 
 def map_loop():
     font_size = 20
-    if g.screen_size[0] == 640: font_size = 16
+    if g.screen_size[0] == 640: 
+        font_size = 16
 
     menu_buttons = {}
     time_button = buttons.button((100, -1), (200, 26),
@@ -357,9 +360,9 @@ def map_loop():
         global old_size
         if old_size != g.screen_size:
             if g.screen_size[0] == 640:
-              font_size = 18
+                font_size = 18
             else:
-              font_size = 20
+                font_size = 20
             #cash_button.xy = (435, -1)
             cash_button.size = (g.screen_size[0]-435, 26)
             cash_button.font = g.font[1][font_size]
@@ -445,9 +448,9 @@ def map_loop():
             # user is done mucking around with bases.
             done_base = False
             while done_base == False:
-               done_base = display_base_list(g.locations[location], 
+                done_base = display_base_list(g.locations[location], 
                                              menu_buttons)
-               do_refresh()
+                do_refresh()
         return show_location
 
     for location in g.locations.values():
@@ -792,7 +795,8 @@ def refresh_new_base(base_name, xy, location):
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if base_name == "": return
+    if base_name == "": 
+        return
     g.print_string(g.screen, g.base_type[base_name].base_name,
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
 

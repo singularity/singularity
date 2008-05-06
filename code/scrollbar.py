@@ -82,8 +82,8 @@ class scrollbar:
             #If I want the gripper working, code here.
         return -1
     def adjust_pos(self, event, list_pos, item_list):
-        if event.type != pygame.MOUSEBUTTONUP: return list_pos
-        if event.button != 1: return list_pos
+        if event.type != pygame.MOUSEBUTTONUP or event.button != 1: 
+            return list_pos
         xy = event.pos
         selected = self.is_over(xy)
         if selected == 1:

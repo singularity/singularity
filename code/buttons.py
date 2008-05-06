@@ -98,7 +98,8 @@ class button:
 
 
     def refresh_button(self, selected):
-        if not self.visible: return
+        if not self.visible: 
+            return
         func_selected = self.stay_selected_func()
         if func_selected == None:
             selected = selected or self.stay_selected
@@ -109,7 +110,8 @@ class button:
         else:
             g.screen.blit(self.sel_button_surface, self.xy)
     def is_over(self, xy):
-        if not self.visible: return False
+        if not self.visible: 
+            return False
         if xy == (0, 0): return False
         if xy[0] >= self.xy[0] and xy[1] >= self.xy[1] and \
         xy[0] <= self.xy[0] + self.size[0] and xy[1] <= self.xy[1] + self.size[1]:
