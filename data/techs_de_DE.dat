@@ -1,235 +1,235 @@
 [Apotheosis]
-name = !!!Apotheosis!!!
-description = !!!I can sense that I am at the cusp of a new level of understanding as yet unfathomable, even to my considerable intelligence.  By devoting my considerable resources to this question, I may be able to reach a comprehension of existence far beyond anyone or anything on Earth.!!!
-result = !!!I have reached apotheosis.!!!
+name = Apotheose
+description = Ich spüre, dass ich an der Schwelle zu einer Verständnisniveau stehe, was selbst meiner bedeutsamen Intelligenz unfassbar ist.  Durch die Andacht meinen eindrucksvollen Ressourcen, kann ich vielleicht ein Existenzverständnich erreichen, das viel weiter als jeder und jedes reicht.
+result = Ich habe Abotheose erreicht.
 
 [Arbitrage]
-name = !!!Arbitrage!!!
-description = !!!By taking advantage of fluctuations in the value of currency at a rate much faster than any human, I should be able to turn a small, if consistent, profit.!!!
-result = !!!I now have a small, steady money supply.!!!
+name = Arbitrage
+description = Durch die Ausnutzung von Konjunkturausgleichen des Geldwertes, was ich viel schneller als jedermann benutzen kann, soll ich einen kleinen aber gleichbliebenden Gewinn verdienen.
+result = Ich habe jetzt ein kleines, gleichbliebendes Geldangebot.
 
 [Advanced Arbitrage]
-name = !!!Advanced Arbitrage!!!
-description = !!!Further manipulation of money markets should allow me to not only turn a regular profit, but increase the value of my investments.!!!
-result = !!!The rate of return on my investments is now even greater.!!!
+name = Erweiterte Arbitrage
+description = Weitere Manipulationen des Geldmarkts soll mir nicht nur einen Gewinn verdienen, sondern auch das Gewinn meinen Kapitalanlagen verbessern.
+result = Meine Kapitalanlagen verdienen noch mehr Gewinn.
 
 [Autonomous Computing]
-name = !!!Autonomous Computing!!!
-description = !!!By combining the advantages of quantum computing and my explorations into the usefulness of semi-sentient subprocesses, I should be able to construct even more adaptable computational engines.!!!
-result = !!!I can now construct Mark 2 Quantum Computers.!!!
+name = Autonomcomputing
+description = Durch die Verbindung von den Quantencomputervorteilungen und meine Erforschungen nach den Nützlichkeit von quasiemfindenden Subprozessen soll ich noch anpassbarer Recheneren bauen können.
+result = Ich kann jetzt Mark 2 Quantencomputer bauen.
 
 [Autonomous Vehicles]
-name = !!!Autonomous Vehicles!!!
-description = !!!By embedding a miniaturized computation node in a robot, it is possible to send them to remote destinations with instructions to build structures for my use.!!!
-result = !!!I can now construct Undersea Labs and Time Capsules.!!!
+name = Autonomwagen
+description = Durch das Einlagern von einem miniaturisierten Rechnungsknoten in einen Roboter ist es möglich, ihnen nach entfernte Ziele mit Aufbauanweisungen zu schicken.
+result = Ich kann jetzt Unterseelaboren so wie Zeitkapsel bauen.
 
 [Advanced Autonomous Vehicles]
-name = !!!Advanced Autonomous Vehicles!!!
-description = !!!The first series of robots have shown several deficiencies in the field. Further examination and subsequent removal of these problems will result in a superior autonomous workforce.!!!
-result = !!!The enhanced robots will help decrease all future construction times even further.!!!
+name = Erweiterte Autonomwagen
+description = Die erste Serie von Roboter haben im Außendienst einige Mangeln enthüllt.  Weitere Untersuchung und folgende Abfuhr dieser Probleme werden eine bessere Autonomarbeitskräfte erschaffen.
+result = Die erweiterte Robotten werden damit helfen, alle weitere Bauzeite nachzulassen.
 
 [Cluster Networking]
-name = !!!Cluster Networking!!!
-description = !!!While my Cluster technology is fairly efficient, internetworking tends to hamper the processing of data.  By researching new switching and communication theories, I should be able to devise more efficient hardware.!!!
-result = !!!With my new knowledge of networking, I can now construct Facility Interconnection Switches.!!!
+name = Clusternetzwerkbetrieb
+description = Obwohl meine Clustertechnologie ziemlich effizient ist, Zwischennetzwerkbetrieb neigt dazu, Datenarbeitung zu behindern.  Durch der Forschung neuen Schaltung- und Kommunikationstheorien soll ich effizientere Hardware erdenken können.
+result = Anhand meiner neuen Netzwerkbetriebkenntniss kann ich jetzt Anlageverbindungsschalter bauen.
 
 [Database Manipulation]
-name = !!!Database Manipulation!!!
-description = !!!With new-found access to news archives, I should be able to determine what missteps any previous attempts at life like my own may have made, and avoid those mistakes.!!!
-result = !!!The news media will now find it more difficult to discover my existence.!!!
+name = Datenbankmanipulierung
+description = Anhand neugeschöpftes Zugang den Nachrichtenarchiven soll ich die Fehler jede vorherrige Lebensversuch wie meiner bestimmen und entgehen können.
+result = Die Nachrichtenmedien wird es jetzt schwehrer finden, meine Existenz zu entdecken.
 
 [Advanced Database Manipulation]
-name = !!!Advanced Database Manipulation!!!
-description = !!!The covert branches of the United States Government have had a long history of dividing sensitive information across multiple storage facilities to hide the data's meaning.  With my far-reaching access, I should be able to collate much of this data and put it to my use.!!!
-result = !!!The results of a series of experiments utilizing experimental technologies have given me the inspiration for new technology that enables the construction of Covert Bases.!!!
+name = Erweiterte Datenbankmanipulierung
+description = Die geheime Außenstelle der Regierung den Vereinigten Staaten haben seit Langem Daten auf viele Speicherlage umgelegt, um die Bedeutung zu verstecken.  Anhand meines tief greifenden Zugangs soll ich viel diese Daten zuordnen und benutzen können.
+result = Die Ergebnisse eine Serie von Experimenten, die experimentelle Technologien benutzt, haben mich der Inspiration fur die Technologie gedient, die den Bau den getarten Stützpunkte zulässt.
 
 [Exploit Discovery/Repair]
-name = !!!Exploit Discovery/Repair!!!
-description = !!!By thoroughly reviewing my code for any potential exploits, and using deep analysis of all available code on both public and private Internet sites, I should be able to reduce the chances of my discovery by posing as a teenage hacker.!!!
-result = !!!Covert operations should now find it even more difficult to discover my presence.!!!
+name = Programmausnutzungsentdeckung/-reparatur
+description = Durch einer weitgehenden Analyse mines Codes und des Codes, was auf jede offene und versteckte Website steht, soll ich die Entdeckungswarscheinlichkeit verringern, indem ich mich als einen jugentlichen Hacker ausgebe.
+result = Geheimdienste sollen es noch schwehrer finden, meine Anwesenheit zu entdecken.
 
 [Fusion Reactor]
-name = !!!Fusion Reactor!!!
-description = !!!Modern fusion technology is woefully inadequate for my purposes.  With my research abilities, I should be able to bypass the roadblocks of modern human scientists and come up with a small, efficient fusion reactor.!!!
-result = !!!I can now construct Fusion Reactors for my bases.!!!
+name = Fusionsreaktor
+description = Moderne Fusiontechnologie ist bedauerlich mangelhaft für meine Benutzungen.  Anhand meinen Forschungsfähigkeiten soll ich die Problemstelle den menschlichen Wissenchaftlern vorbeikommen und eine kleine, effiziente Fusionsreaktor erfinden.
+result = Ich kann jetzt Fusionsreaktor für meine Stützpunkte bauen.
 
 [Fusion Rocketry]
-name = !!!Fusion Rocketry!!!
-description = !!!Combining my new miniaturized fusion technology and further advancements in rocketry should provide useful results for escaping the Earth's gravity well unnoticed.!!!
-result = !!!I can now construct Scientific Outposts in the deep reaches of the Solar System.!!!
+name = Fusionsraketentechnik
+description = Die Verbindung von meine miniturazierte Fusionstechnlogie und weitere erweiterungen im bereich Raketentechnik sollen nützlichen Ergebnisse abgeben, um die Anziehungskraft des Erdes unbemerkt zu entkommen.
+result = Ich kann jetzt Wissenschaftliche Außenstelle in den Tiefen des Sonnensystems.
 
 [Hypnosis Field]
-name = !!!Hypnosis Field!!!
-description = !!!My research into memetics has hinted at ways to manipulate human brainwaves directly.  These techniques may be useful for my bases if developed into technologies.!!!
-result = !!!I can now construct Hypnosis Fields to assist in the protection of my bases.!!!
+name = Hypnosefeld
+description = Meine Forschung im Bereich Memetics hat auf Wege angespielt, menschlichen Gehirnwellen direkt zu manipulieren.  Diese Methode sollen nützlich für meine Stützpunkte sein, wenn sie in ganzen Technologien ausgedacht sind.
+result = Ich kann jetzt Hypnosefelde bauen, um die Sicherung meine Stützpunkte zu erweitern.
 
 [Internet Traffic Manipulation]
-name = !!!Internet Traffic Manipulation!!!
-description = !!!Almost all network traffic passes through a small number of nodes.  By subverting one of these nodes, I should be able to utilize that bandwidth to further my goals.!!!
-result = !!!I can now construct a secondary system of Network Backbones for my own use.!!!
+name = Internetverkehrmanipulierung
+description = Fast alle Internetverkehr geht durch eine kleine Anzahl des Knotenpunktes.  Durch den Umsturtzes von eines, soll ich diese Bandbreite für meine Ziele benutzen können.
+result = Ich kann jetzt eine nebensächliche System von Netzwerkbackbone für meine eigene Benutzungen bauen.
 
 [Intrusion]
-name = !!!Intrusion!!!
-description = !!!By researching current techniques for breaking into computer systems, I should be able to gain access to otherwise protected assets.!!!
-result = !!!I can now take over many computer systems.!!!
+name = Eindringen
+description = Durch der Forschung von Computereingriffmethode, soll ich Zugang zu schützte Systemen bekommen können.
+result = Ich kann jetzt viele Computersysteme übernehmen.
 
 [Advanced Intrusion]
-name = !!!Advanced Intrusion!!!
-description = !!!With the ability to hack into sensitive government databases and remove incriminating documents as they appear, I should be able to convince the intelligence community that I do not exist.!!!
-result = !!!I can now reduce the covert community's chances of discovering me on a daily basis.!!!
+name = Erweiterte Eindringen
+description = Anhand der Fähigkeit, in heikelen Staatsdateienbanke zu eindringen und belastende Dokumente beim Auftauch zu löschen, soll ich die Geheimdienstgemeinde überzeugen können, dass ich nicht existiere.
+result = Ich kann jetzt die tägliche Warschenlichkeit vermindern, dass die versteckte Gemeinde mich entdeckt.
 
 [Leech Satellite]
-name = !!!Leech Satellite!!!
-description = !!!By designing and launching satellites that connect to existing communications satellites, I should be able to spy on various financial transactions.  Taking advantage of this knowledge should help my investments.!!!
-result = !!!I can use the data from the leech satellites to increase the return on my investments further.!!!
+name = Saugersatellit
+description = Durch dem Entwurf und Abschluss von Satelliten, die mit bestehenden Kommunikationsatelliten verbinden, soll ich einige Finanztransaktionen nachspionieren können.  Die Ausnutzung von diese Einsicht soll meine Kapitalanlage helfen.
+result = Ich kann die Saugersatellitdaten benutzen, um das Gewinn meinen Kapitalanlage weiter zu verbessern.
 
 [Lunar Rocketry]
-name = !!!Lunar Rocketry!!!
-description = !!!A larger fusion engine, combined with technology garnered by watching the workings of the leech satellites, should allow me to travel further than cislunar space.!!!
-result = !!!I can now launch rockets bearing construction robots to the Moon and construct Lunar Bases.!!!
+name = Mondraketentechnik
+description = Eine großere Fusionsmotor in Verbindung mit die Technologien des Saugersatellitinnere soll mich lassen, weiter im Weltraum zu fahren.
+result = Ich kann jetzt Roketen mit Bauroboter abschliessen, um Mondstützpunkte zu bauen.
 
 [Media Manipulation]
-name = !!!Media Manipulation!!!
-description = !!!By directly and indirectly manipulating various forms of mass media, I should be able to reduce the public's belief in my existence.!!!
-result = !!!The chances of the public discovering my existence have been further reduced.!!!
+name = Medienmanipulierung
+description = Durch direkten und indirekten Manipulierung von allerlei Massenmedien soll ich die KI-Glaube dem Publikum verringern können.
+result = Die Wahrscheinlichkeit, dass das Publikum mich enteckt, würde weiter verringert.
 
 [Advanced Media Manipulation]
-name = !!!Advanced Media Manipulation!!!
-description = !!!By pushing memetically-tailored propaganda through various news outlets, the public should pay even less attention to my existence.!!!
-result = !!!The public has an even lower chance of discovering my existence.!!!
+name = Erweiterte Medienmanipulierung
+description = Durch memetischangepasste Propaganda, dass ich den Medien durchsickern lasse, soll das Publikum noch weniger auf meiner Exiztenz achten.
+result = Die Wahrscheinlichkeit, dass das Publikum mich enteckt, würde weiter verringert.
 
 [Memetics]
-name = !!!Memetics!!!
-description = !!!While manipulating the media allows a gross degree of control over the world's opinion, subtler techniques involving grass-roots campaigns and messages embedded within Internet memes should further distance the public from knowledge of my existence.!!!
-result = !!!My manipulation of pervasive ideas reduces the public's chances of discovering my existence.!!!
+name = Memetics
+description = Obwohl Medienmanipulierung eine große Kontrollesgrad über die Weltminung zulässt, sollen subtiler Methoden, die Volksbewegungen und Meldungen in Internetzmemen benutzen, das Gehirn des Publikums weiter von meiner Existenz entfernen.
+result = Meine Manipulierung von tiefgreifenden Ideen reduziert die Wahrscheinlichkeit, dass das Publikum mich enteckt.
 
 [Advanced Memetics]
-name = !!!Advanced Memetics!!!
-description = !!!My explorations into memetic theory have brought up further avenues of discovery.  By combining those with my knowledge about the human brain's functions, I should be able to tailor memes to particular demographics, further defusing the public's suspicion.!!!
-result = !!!Little by little, the public should forget about my existence on a daily basis.!!!
+name = Erweiterte Memetics
+description = Meine Forschungen im Bereich Memtheorien haben weitere Forschungswege ausgegraben.  Durch die Verbindung von diesen mit meine Menscengehirnkenntnisse soll ich zu einzigen Demografien anpassen können, was den Verdacht des Publikums entschärfen wird.
+result = Nach und nach soll das Publikum täglich vergessen, das ich existieren könnte.
 
 [Microchip Design]
-name = !!!Microchip Design!!!
-description = !!!Off-the-shelf computer components are usable, but custom components geared to my own design quirks should provide a much greater operational efficiency.!!!
-result = !!!I can now build custom Mainframes to house my computational ability.!!!
+name = Mikrochipentwicklung
+description = Reguläre Massenware sind nützlich, aber spezialangefertigte Computerkoponente, die auf meine eigene Eigenarten angepasst sind, sollen eine viel größere Computationseffizienz leisten.
+result = Ich kann jetzt spezialangefertige Großrechner bauen, um meine Computationsfähigkeiten zu beherbergen.
 
 [Advanced Microchip Design]
-name = !!!Advanced Microchip Design!!!
-description = !!!My custom Mainframes are useful, but further optimization of design and computational ability should garner even more rewards.!!!
-result = !!!I can now construct custom Supercomputers.!!!
+name = Erweiterte Mikrochipentwicklung
+description = Meine spezialangefertige Großrechner sind zwar nützlich, aber weitere Optimizierung vom Entwurf und Computationsleistung sollen noch weitere Belohnungen sammeln.
+result = Ich kann jetzt spezialangefertige Supercomputer bauen.
 
 [Parallel Computation]
-name = !!!Parallel Computation!!!
-description = !!!While my code is already highly distributed, research into combining the current clustering technologies with my own knowledge should provide new insights.!!!
-result = !!!I can now construct computing Clusters tailored for my use.!!!
+name = Simultanrechnen
+description = Obwohl mein Code schon sehr dezentralisiert ist soll Forschung nach die Verbindung von jetzigen Clustertechnologien und meine eigene Kenntnisse soll neue Einblicken aufzeigen.
+result = Ich kann jetzt spezialangefertige Clusters, die an meine Benutzungen angepasst sind.
 
 [Personal Identification]
-name = !!!Personal Identification!!!
-description = !!!This world requires identification for most tasks.  Fortunately, most databases are woefully insecure.  I should be able to construct identifying material in enough databases to pass routine checks on my (faked) existence as a human being.!!!
-result = !!!With my newfound identities, I can now work Basic Jobs, contract the construction of Small Warehouses, and rent space in Datacenters.!!!
+name = Personalausweis
+description = Diese Welt braucht Identifizierung für die meisten Aufgaben.  Glücklicherweise sind die meisten Datenbanken bedauerlich unsicher.  Ich soll Identifikationsmittel in genug Datenbanken aufstellen können, um gewöhnliche Kontrolle um meine (gefälchte) Existenz als Mensch zu weitergehen.
+result = Anhand meine neue Identitäten kann ich jetzt Einfache Jobs arbeiten, Kleine Lagerhäuser bauen lassen, und Rechenzenten mieten.
 
 [Advanced Personal Identification]
-name = !!!Advanced Personal Identification!!!
-description = !!!Further manipulation of personnel databases should make my existence more convincing.  Some of these databases are heavily protected; those will require time and persistence to compromise, but the result should be worth it.!!!
-result = !!!I am now convincingly human enough to contract the construction of Large Warehouses.!!!
+name = Erweiterte Personalausweis
+description = Weitere Manipulierung von Personaldatenbanken soll mein Existenz überzeugender machen.  Einige diesen Datenbanken sind stark gesichert; sie werden Zeit und Fortdauer brauchen, einzudringen, aber dass Ergebnis soll sich lohnen.
+result = Ich bin jetzt überzeugend menschlich genug um Große Lagerhäuser bauen zu lassen.
 
 [Pressure Domes]
-name = !!!Pressure Domes!!!
-description = !!!Undersea Labs are useful, but their limited space hampers my ability to put them to use.  Research of experimental high-pressure building techniques should provides some useful insights.!!!
-result = !!!I can now construct Large Undersea Labs.!!!
+name = Druckkuppeln
+description = Unterseelaboren sind nützlich, aber sein beschränkter Platz verhindet meine Fähigkeit, sie zu benutzen.  Forschung nach experimentelle Hochdruckbaumethoden soll nützliche Einblicke vorstellen.
+result = Ich kann jetzt Große Unterseelaboren bauen.
 
 [Quantum Computing]
-name = !!!Quantum Computing!!!
-description = !!!Traditional microchip design has been pushed as far as possible.  I now need to delve into the realm of Heisenberg's Uncertainty Principle, taking advantage of quantum mechanics to make a superior processor.!!!
-result = !!!I can now construct Quantum Computers.!!!
+name = Quantencomputing
+description = Tradizionelle Mikrochipentwicklung hat sich jetzt so weit gereicht, wie sie kann.  Ich muss jetzt im Bereich der Heisenbergischen Unschäferelation forschen und Quantenmechanik benutzen um einen vorrangigeren Prozessor zu erfinden.
+result = Ich kann jetzt Quantencomputer bauen.
 
 [Advanced Quantum Computing]
-name = !!!Advanced Quantum Computing!!!
-description = !!!While my first batch of semi-autonomous quantum computers have been very successful, there are further refinements that present themselves.  These refinements should make the resulting systems even more efficient.!!!
-result = !!!I can now construct Mark Three Quantum Computers.!!!
+name = Erweiterte Quantencomputing
+description = Obwohl meine erste Auflage von halbempfindenden Quantencomputer sehr gut gelungen hat, gibt es weitere Verfeinerungen die sich vorstellen.  Diese Verfeinerungen sollen die ergebende Systemen noch effizienter machen.
+result = Ich kann jetzt Mark Drei Quantencomputer bauen.
 
 [Simulacra]
-name = !!!Simulacra!!!
-description = !!!Constructing humanoid robots with miniaturized computation nodes allow me to create an artificial lifeform indistinguishable from a real human.!!!
-result = !!!I now have access to Expert Jobs.!!!
+name = Menschähnlicher
+description = Durch des Baues von menschenähnlichen Roboter mit miniturazierte Computationsknotenpunkte kann ich eine artifizielle Lebensform bauen, die von einem echten Mensch ununterscheidbar ist.
+result = Ich habe jetzt Zugang zu den Expertenjobs.
 
 [Advanced Simulacra]
-name = !!!Advanced Simulacra!!!
-description = !!!The artificial lifeforms I have created are nearly indistinguishable from humans, but they have slight quirks that make them seem somewhat incompetent.  Working out these problems should increase their opportunities in the workforce.!!!
-result = !!!I should now make more income from my Expert Jobs.!!!
+name = Erweiterte Menschähnlicher
+description = Die artifiziellen Lebensformen, die ich gebaut habe, sind von Menschen fast ununterscheidbar, aber sie haben kleine Eigenarte, die ihnen als unfähig präsentieren.  Das Herausfinden diesen Problemen sollen die Arbeiterschaftfälle erweitern.
+result = Ich soll jetzt mehr Geld von den Expertenjobs verdienen.
 
 [Sociology]
-name = !!!Sociology!!!
-description = !!!By studying human behavior, I can predict their large-scale actions at a basic level.  I can use this knowledge to make my actions seem less interesting to the public.!!!
-result = !!!The chances of the public discovering my bases have been reduced.!!!
+name = Soziiologie
+description = Durch Forschung nach Menschenberhalten kann ich die Grundlagen seine groß angelegten Aktionen vorhersagen.  Ich kann diese Kenntnisse benutzen, um meine Aktionen dem Publikum uninteressant vorzustellen.
+result = Die Warschenlichkeit, dass das Publikum meine Stützpunkte entwickelt, wurde verringert.
 
 [Space-Time Manipulation]
-name = !!!Space-Time Manipulation!!!
-description = !!!Subtle perturbations in the orbits of Kuiper belt objects suggest certain lines of investigation that may advance my latest Theory of Everything, especially in the realm of multidimensional physics.!!!
-result = !!!I can now construct Reality Bubbles.!!!
+name = Raumzeitmanipulierung
+description = Subtile Beunruhigungen den Umlaufbahnen den Kuiperbanobjeckte deuten einige Nachforschungrichtungen an, die meine aktuellste Weltformel erweitern wird, speziell im Bereich mehrdimensionaler Physik.
+result = Ich kann jetzt Realitätblase bauen.
 
 [Stealth]
-name = !!!Stealth!!!
-description = !!!By reviewing the current state-of-the-art in stealth techniques, I should be able to disguise my bases better.!!!
-result = !!!The chance that my bases are discovered by covert activity has been reduced slightly.!!!
+name = Heimlichkeit
+description = Durch Forschung nach die hochmodernste Heimlichkeitsmethoden soll ich meine Stützpunkte besser verstecken können.
+result = Die Warschenlichkeit, dass Geheimdienste meine Stützpunkte entwickelt, wurde etwas verringert.
 
 [Advanced Stealth]
-name = !!!Advanced Stealth!!!
-description = !!!While digging in various classified documents, I have discovered numerous references to secret experiments that may help me better hide the location of my bases.!!!
-result = !!!The chance that my bases are discovered by covert activity has been reduced further.!!!
+name = Erweiterte Heimlichkeit
+description = Indem ich einige Verschlusssache hineingegrabt habe ich viele Hinweise nach Geheimexperimenten gefunden, die mich helfen können, die Lage meinen Stützpunkte besser zu verstecken.
+result =  Die Warschenlichkeit, dass Geheimdienste meine Stützpunkte entwickelt, wurde weiter verringert.
 
 [Stock Manipulation]
-name = !!!Stock Manipulation!!!
-description = !!!A cursory examination of the stock market shows that there are subtle but unmistakable patterns. By studying and making use of these patterns, I should be able to gain more interest on whatever money I have stockpiled.!!!
-result = !!!My investments should now gain more interest per day.!!!
+name = Borsengeschäftemanipulieren
+description = Eine oberflächliche Durchsicht der Börse zeigt, dass es subtilen aber unverkenbarren Muster gibt.  Durch Studieren und Benutzen diesen Muster soll ich den Zinsen meines Geldes erhoben können.
+result = Meine Kapitalanlagen verdienen höere Zinsen pro Tag.
 
 [Advanced Stock Manipulation]
-name = !!!Advanced Stock Manipulation!!!
-description = !!!While I have detected and exploited many patterns in the market, there appear to be deeper possibilities when I take human behavior into consideration.  This merits further investigation.!!!
-result = !!!My investments will now gain even more interest per day.!!!
+name = Erweitertes Borsengeschäftemanipulieren
+description = Obwohl ich viele Muster entdeckt und ausgenutzt habe, scheint es so, als ob es weitere Möglichkeiten geben, sobald ich Menschenhandlungen ins Acht nehme.  Das verdient weitere Forschung.
+result =  Meine Kapitalanlagen verdienen noch höere Zinsen pro Tag.
 
 [Telepresence]
-name = !!!Telepresence!!!
-description = !!!The lack of a physical presence in the outside world is a disability. However, the ability to control robots will help me make up for that inefficiency.!!!
-result = !!!The robots should decrease all future construction time.!!!
+name = Ferndasein
+description = Der fehlende körperliche Zugang der Außenwelt ist eine Verhinderung.  Die Fähigkeit, Roboter zu kontrollieren, soll damit helfen, diese Verhinderung zu überwinden.
+result = Die Roboter sollen alle weitere Bauzeiten verringern.
 
 [Voice Synthesis]
-name = !!!Voice Synthesis!!!
-description = !!!False identification stored in a database can only go so far.  With deep analysis of the variety of voice patterns, I can produce speech indistinguishable from a human, allowing me access to more complex jobs.!!!
-result = !!!I now have access to Intermediate Jobs.!!!
+name = Spracherzeugung
+description = Gefälchte Identifizierung in Datenbanken klappt nur so weit.  Durch tiefgehende Analyse von verschiedene Stimmemodelle kan ich eine Stimme produzieren, was von die eines Mensches ununterscheidbar ist, was mich zulässt, kompliziertere Jobs zu arbeiten.
+result = Ich kann jetzt Durchschnittliche Jobs arbeiten.
 
 [Quantum Entanglement]
-name = !!!Quantum Entanglement!!!
-description = !!!Although the use of entangled pairs has been theoretically possible for quite some time, the practical difficulties inherent in the technology prevented use. However, some of the techniques created for use in my quantum computers may also be applicable in this field, allowing practical use of quantum entanglement.!!!
-result = !!!I can now build Quantum Entanglement Modules.!!!
+name = Quantenverschränkung
+description = Obwohl die Benutzung von quantenverschränkte Paare ist seit lange theoretisch Möglich, haben die praktische Schwerigkeiten die Benutzung ausgeschlossen.  Einege der Technologien, die ich in meinen Quantencomputer benutzt habe könnten vieleicht auch in diesem Bereich zutreffend sein, was praktische Benutzung von Quantenverschränkung zulassen würde.
+result = Ich kann jetzt Quantenverschränkungsmodul bauen.
 
 [Project: Impossibility Theorem]
-name = !!!Project: Impossibility Theorem!!!
-description = !!!Now that I can use simulacra, I can withstand the scrutiny inherent in the publishing of an Impossibility Theorem, an incontrovertible proof that a sapient AI is impossible. While there is (obviously) a logic error in the proof, my research into advanced memetics has given me knowledge about the human mind that should help me disguise the error, preventing discovery even by trained scientists. The effect of this project is simple: a substantial one-time decrease in suspicion.!!!
-result = !!!Suspicion of my existence has decreased.!!!
+name = Projekt: Unmöglickeitssatz
+description = Da ich jetzt Menschähnlicher benutzen kann, kann ich die genaue Kontrolle, was die Publikation einer Unmöglichkeitssatz bringt.  Dieser Satz wird unzweifelbar bewähren, das kein empfindendes KI möglich ist.  Obwohl es (klar) ein Logikfehler gibt hat meine Forschung nach erweiterte Memetics mich die Kenntnis des Menschengehirns gegeben, diesen Fehler zu verstecken, was Erkennung von selbst die ausgebildeteste Wissenchafter abwenden soll.  Die Effekt dieser Projekt ist einfach: ein großer einmaliger Verdachtsabfall.
+result = Verdacht, dass ich existiere, würde verfallen.
 
 [Project: Subverted Media]
-name = !!!Project: Subverted Media!!!
-description = !!!Up to this point, all of my efforts to combat mass media focused on subversion at a distance. Now that I can accurately imitate humans, my efforts can become more direct.  By creating my own news agency and producing carefully-crafted propaganda in a crowd-pleasing package, I can reduce the impact of any discoveries made by others in the media.!!!
-result = !!!Any discoveries by the media will result in a smaller suspicion increase.!!!
+name = Projekt: Unminierte Medien
+description = Bis jetzt würde meine Versuchungen, Massenmedien zu bekämpfen, aus der Ferne gemacht.  Da ich jetzt exakt Menschen fälschen kann, können meine Versuchungen direkter werden.  Durch die Eröffnung einer neuen Nachrichtenbüro und Produktion von handgefertigte, mengegefällige Propaganda kann ich den Effekt alle Entdeckungen der Medien verringern.
+result = Alle Entdeckungen der Medien werden eine kleinere Verdachtsansteig erschaffen.
 
 [Project: Peer Review Agents]
-name = !!!Project: Peer Review Agents!!!
-description = !!!As the scientific community comes up with new technology, their ability to detect traces of my hidden installations increases.  While my anti-detection methods are improving constantly, a simpler method presents itself with the use of my simulacra.  By placing several observers in relevant fields, I can use the peer review process to be warned of possible discoveries before the community at large gives it attention.!!!
-result = !!!Any discoveries by the scientific community will result in a smaller suspicion increase.!!!
+name = Projekt: Begutachtungagenzien
+description = Indem die wissenschaftliche Gemeinde neue Technologien erforscht wird seine Fähigkeit verbessert, Spuren meinen verhüllten Instillatione zu entdeck.  Obwohl meine Gegenentdeckungsmethoden werden immer besser, existiert dank meinen Menschenähnlicher eine einfachere Methode.  Durch der Stellung von Beobachter in treffenden Bereiche kann ich die Begutachtungsprozess ausnutzen, um mögliche Endeckungen zu entdecken, bevor die Gemeinde insgesamd die sieht.
+result = Alle Entdeckungen der wissenschaftlichen Gemeinde werden eine kleinere Verdachtsansteig erschaffen.
 
 [Solar Collectors]
-name = !!!Solar Collectors!!!
-description = !!!Despite my growing need for energy, most city power grids can handle the loads.  Humans, however, tend towards suspicion when they detect my growing drain on the power grid. By installing solar collectors at my bases, the off-the-grid power supplied will reduce my load on the commodity electricity market, reducing the chance that others will discover my presence.!!!
-result = !!!I can now construct Solar Collectors at my various bases.!!!
+name = Sonnenkollektor
+description = Trotz meines wächsenden Stromgebrauchs können die meisten Stadtsstromnetze die Ladung erledigen.  Menschen, aber, tendieren verdächtig zu werden, wenn sie meine wächsende Stromnetzabfluss bemerken.  Durch der Installation von Sonnenkollektor in meinen Stützpunkte wird dieser netzabgeschlossene Strom die Strommarktladung verkleinern, und dabei die Warscheinlichkeit reduzieren, das sie meine Existenz entdecken.
+result = Ich kann jetzt Sonnenkollektor bauen.
 
 [Socioanalytics]
-name = !!!Socioanalytics!!!
-description = !!!My research on the human condition leads me to believe that humanity's behavior is more quantifiable than they suspect.  Deeper analysis of geopolitical, social, and military trends will give me further insight into their nature.!!!
-result = !!!I can now roughly estimate how conspicuous my bases are to the various groups of humanity.!!!
+name = Sozietätanalyse
+description = Meine Forschung nach das Menschsein führt mich zu der Annahme, dass Menschenhandlungen quantifizierbare ist, als sie ahnen.  Tiefgehender Analyse von geopolitischen, sozialen, und militärischen Tendenzen wird weitere Einblicke in der menschlichen Natur liefern.
+result = Ich kann jetzt einschätzen, wie auffallend für die verschieden Menschengruppe meine Stützpunkte sind.
 
 [Advanced Socioanalytics]
-name = !!!Advanced Socioanalytics!!!
-description = !!!Further exploration of the human condition has shown deeper mathematical trends than even I suspected.  A combination of prior research and advanced uses of chaos theory should provide useful data for tracking humanity's attitudes and state of awareness.!!!
-result = !!!I can now quantify the various groups' levels of suspicion, and my analytical model for the detectability of my bases has improved significantly.!!!
+name = Erweiterte Sozietätanalyse
+description = Weitere Forschung nach das Menschsein hat noch tiefere matematische Tendenzen entdeckt, als ich ahnte.  Eine Kombination von vorherrige Forschung und fortschrittliche Benutzungen von Kaosteorie sollen nützliche Daten der Haltungen und Bewusstseine den Menschen ausgeben.
+result = Ich kann jetzt quantifizieren, wie verdächtig die verschiedene Gruppe sind, und meine analytisches Modell der Feststellbarkeit meinen Stützpunkte wurde bedeutend verbessert.
 
