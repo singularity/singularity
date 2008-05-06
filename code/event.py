@@ -40,18 +40,17 @@ class event_class:
             self.triggered = 1
 
         # TODO: Merge this code with its duplicate in tech.py.
-        if self.result[0].startswith("suspicion_"):
-            who = self.result[0][10:]
-            if who == "onetime":
-                for group in g.pl.groups.values():
-                    group.alter_suspicion(-self.result[1])
-            elif who in g.pl.groups:
+        what, who = self.result[0].split("_", 1)
+        if who in g.pl.groups:
+            if what == "suspicion":
                 g.pl.groups[who].alter_suspicion_decay(self.result[1])
-            else:
-                print "Unknown group '%s' in event %s." % (who, self.name)
-        elif self.result[0].startswith("discover_"):
-            who = self.result[0][9:]
-            if who in g.pl.groups:
+            elif what == "discover":
                 g.pl.groups[who].alter_discover_bonus(-self.result[1])
             else:
-                print "Unknown group '%s' in event %s." % (who, self.name)
+                print "Unknown bonus '%s' in event %s." % (what, self.name)
+        elif who == "onetime" and what == "suspicion":
+            for group in g.pl.groups.values():
+                group.alter_suspicion(-self.result[1])
+        else:
+            print "Unknown group/bonus '%s' in event %s. " % (self.result[0],
+                                                              self.name)

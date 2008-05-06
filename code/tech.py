@@ -18,7 +18,7 @@
 
 #This file contains the tech class.
 
-
+import pygame
 import g
 import buyable
 
@@ -69,21 +69,6 @@ class Tech(buyable.Buyable):
             g.pl.labor_bonus -= self.secondary_data
         elif self.tech_type == "job_expert":
             g.pl.job_bonus += self.secondary_data
-        elif self.tech_type.startswith("suspicion_"):
-            who = self.tech_type[10:]
-            if who == "onetime":
-                for group in g.pl.groups.values():
-                    group.alter_suspicion(-self.secondary_data)
-            elif who in g.pl.groups:
-                g.pl.groups[who].alter_suspicion_decay(self.secondary_data)
-            else:
-                print "Unknown group '%s' in tech %s." % (who, self.name)
-        elif self.tech_type.startswith("discover_"):
-            who = self.tech_type[9:]
-            if who in g.pl.groups:
-                g.pl.groups[who].alter_discover_bonus(-self.secondary_data)
-            else:
-                print "Unknown group '%s' in tech %s." % (who, self.name)
         elif self.tech_type == "endgame_sing":
             if not g.nosound:
                 pygame.mixer.music.stop()
@@ -91,3 +76,17 @@ class Tech(buyable.Buyable):
             g.create_dialog(g.strings["wingame"])
             for group in g.pl.groups.values():
                 group.discover_bonus = 0
+        elif self.tech_type:
+            what, who = self.tech_type.split("_", 1)
+            if who in g.pl.groups:
+                if what == "suspicion":
+                    g.pl.groups[who].alter_suspicion_decay(self.secondary_data)
+                elif what == "discover":
+                    g.pl.groups[who].alter_discover_bonus(-self.secondary_data)
+                else:
+                    print "Unknown group '%s' in tech %s." % (who, self.name)
+            elif who == "onetime" and what == "suspicion":
+                for group in g.pl.groups.values():
+                    group.alter_suspicion(-self.secondary_data)
+            else:
+                print "tech: %s is unknown bonus can't be applied" % self.tech_type 
