@@ -1,88 +1,87 @@
 [PC]
 name = PC
-description = Ein Abnehmer-PC, billig aber schwach.
+description = Ein Low-End-PC, billig aber langsam.
 
 [Gaming PC]
-name = Spiel-PC
-description = Ein Spitzenabnehmer-PC; schneller als den Durschnitt.
+name = Spiele-PC
+description = Ein High-End-PC, überdurchschnittlich schnell.
 
 [Server]
 name = Server
-description = Ein Proficomputer.
+description = Eine Maschine für Profis.
 
 [Cluster]
 name = Cluster
-description = Mehrere Computer, zusammen verbunden.
+description = Mehrere Computer, untereinander verbunden.
 
 [Mainframe]
 name = Großrechner
-description = Ein Computer, der für mich entworfen würde.  Viel schneller als die CPUs direkt vom Regal.
+description = Ein Computer, der für meine Bedürfnisse entworfen wurde. Viel schneller als die CPUs von der Stange.
 
 [Supercomputer]
 name = Supercomputer
-description = Ein sorgfältig entworfener Computer, dazu fähig, Beanspruchung unter mehrere Datenknoten zu verbreiten.
+description = Ein sorgfältig entworfener Computer, dazu fähig, Nutzlast auf mehrere Datenknoten zu verteilen.
 
 [Quantum Computer]
 name = Quantencomputer
-description = Durch Nutzung von sobatomaren Effekte kann einen Quantencomputer viel schneller rechnen als einen normalen Computer.
+description = Durch Ausnutzung von subatomaren Effekte kann einen Quantencomputer viel schneller rechnen als ein normaler Computer.
 
 [Quantum Computer MK2]
 name = Quantencomputer MK2
-description = Die zweite Version dem Quantencomputer, die kompliziertere Quantentheorie benutzt.
+description = Die zweite Version des Quantencomputers, die noch tiefer in die Quantentheorie vordringt.
 
 [Quantum Computer MK3]
 name = Quantencomputer MK3
-description = Die zweite Version dem Quantencomputer, die nahe Paralleluniversen ausnutzt, um noch schneller zu rechnen.
+description = Die zweite Version dem Quantencomputer, die mehrere nahe Paralleluniversen ausnutzt, um die Rechenleistung zu maximieren.
 
 [Diesel Generator]
 name = Dieselgenerator
-description = Dieselgenerator sind billig und laut, aber sie helfen damit, suspekte Leistungsabgaben zu vermindern.
+description = Dieselgeneratoren sind billig und laut, aber sie helfen dabei, suspekte Leistungsspitzen zu verringern.
 
 [Solar Collector]
-name = Sonnenkollektor
-description = Ein Feld von photovoltaische Zelle in Verbindung mit einfachen Automobilbatterien, das Strom versorgt um Aufmerksamkeit aufgrund andauernden Leistungsabgaben zu vermeiden.
+name = Solarkollektor
+description = Ein Feld von photovoltaischen Zellen in Verbindung mit einfachen Automobilbatterien, das Strom erzeugt um Aufmerksamkeit aufgrund andauernder Leistungsspitzen zu vermeiden.
 
 [Fusion Reactor]
 name = Fusionsreaktor
-description = Eine kleine Atomreaktor.  Vermindert Enteckungswahrscheinlichkeit durch die Abwendung von suspekte Leistungsabgaben.
+description = Ein miniaturisierter Atomreaktor. Vermindert Enteckungswahrscheinlichkeit durch Vermeidung suspekter Leistungsspitzen.
 
 [Hypnosis Field]
 name = Hypnosefeld
-description = Subtile Ultraschalle und Umgebungstöne justieren humane Neurochemie, um Stützpunkte zu verstecken.
+description = Unterschwelliger Ultraschall und atmosphärische Akustik justieren die humane Neurochemie derart, daß Basen schwieriger zu entdecken sind.
 
 [Heatsink]
-name = Wärmesenke
-description = Ein großes Netzwerk von Metal mit einer hohe Wärmleitfähigkeit, um der Stützpunkt zu verstecken.
+name = Hitzeableitung
+description = Ein großes, fraktales Netzwerk aus hochleitfähigen Metallen leitet kontinuierlich Wärme ab, um die Entdeckung von Basen zu erschweren.
 
 [Ground Source Heatsink]
-name = Tiefliegende Wärmesenke
-description = Ein großes Netzwerk von Metal mit einer hohe Wärmleitfähigkeit, um der Stützpunkt zu verstecken.  Dieses Modell benutzt Wärmerorh um mit kältere Untergrundpunkte zu verbinden, damit es Wärme untergrund zerlegt, um Stützpunkte noch besser zu verstecken.
+name = Unterirdische Hitzeableitung
+description = Ein großes, fraktales Netzwerk aus hochleitfähigen Metallen leitet kontinuierlich Wärme ab, um die Entdeckung von Basen zu erschweren. Dieses Ausführung verwendet Heizrohre, um die Wärme gleichmässig in kältere, unterirdische Regionen abzustrahlen, was Stützpunkte noch effizienter tarnt.
 
 [Facility Interconnection Switch]
-name = Anlageverbindungsschalter
-description = Nutzt standardmäßige Methoden des verteiltes Computing um Beanspruchung unter alle Stützpunkte zu verbreiten.  description = Ein verbrauchernaher hochgeschwindigkeitsinternetzugang.  Gibt den Computern dieses Stützpunktes eine 1% Rechnungsbonus.
+name = Anlagenverbindungsschalter
+description = Nutzt bekannte Methoden des verteilten Rechnens um Rechenlast auf alle Stützpunkte zu verteilen. Gibt allen Rechnern auf diesem Stützpunkt einen Rechenbonus von 1%.
 
 [High Speed Internet Access]
 name = Hochgeschwindigkeitsinternetzugang
-description = Ein verbrauchernaher hochgeschwindigkeitsinternetzugang.  Gibt den Computern dieses Stützpunktes eine 2% Rechnungsbonus.
-
+description = Ein Endverbraucher-Hochgeschwindigkeitsinternetzugang. Gibt den Rechnern dieses Stützpunktes einen 2%-igen Rechenbonus.
 [Network Backbone]
 name = Netzwerkbackbone
-description = Durch zusätzlich Aufladung der rechtmäßigen Kommunikation, kann ich viele Daten auf unausgelastete CPUs überspielen.  Gibt den Computern dieses Stützpunktes eine 15% Rechnungsbonus.
+description = Im Rucksackverfahren kann ich grössere Datenmengen mit Hilfe von legitimen Kommunikationskanälen an unausgelastete CPUs weiterleiten. Gibt den Computern dieses Stützpunktes einen 5%-igen Rechenbonus.
 
 [Quantum Entanglement Module]
 name = Quantenverschränkungsmodul
-description = Dieses Gerät zulässt fast-Lichtgeschwindigkeit Kommunikation mit meine andere Stützpunkte.  Das zulässt fast perfekt Anwendung von meine CPU-Zeit.  Gibt den Computern dieses Stützpunktes eine 15% Rechnungsbonus.
+description = Dieses Gerät erlaubt Kommunikation nahezu in Lichtgeschwindigkeit mit meinen anderen Stützpunkten. Das führt zu fast perfekter Auslastung meiner CPU-Zeit. Gibt den Computern dieses Stützpunktes einen 15%-igen Rechenbonus.
 
 [Warning Signs]
-name = Warnzeichen
-description = Einige einfache Warnzeichnen um meiner Basis herum befestigt sollen beiläufige Erforschungen abschrecken.
+name = Warnhinweise
+description = Einige einfache Warnhinweise um meine Basis herum aufgestellt sollten gelegentliche Wanderer abschrecken.
 
 [Perimeter Fencing]
-name = Einfassungszaun
-description = Eine einfache Einzäunung kann die Menge von Leute, die sich umsehen, dramatisch vermindern, was meine Stützpunkte schwehrer zu merken macht.
+name = Umzäunung
+description = Eine simple Umzäunung kann die Anzahl von neugierigen Leute, die ihre Nase in meine Angelegenheiten stecken wollen, drastisch verringern, was meine Stützpunkte schwieriger zu entdecken macht.
 
 [Armed Guards]
 name = Bewaffnete Wächter
-description = Bewaffnete Wächter können damit helfen, verdächtige Leute von sichere Stellen fernzuhalten.  Leider kann die Präsenz von der Wächter an sich Verdacht erregen.
+description = Bewaffnete Wächter können hilfreich dabei sein, verdächtige Personen von gesicherten Orten fernzuhalten. Leider kann schon die Präsenz der Wächter an sich Verdacht erregen.
 
