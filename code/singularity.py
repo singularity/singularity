@@ -30,6 +30,9 @@ about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued b
 
 A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 2005, 2006, 2007, 2008.
 
+Website: http://www.emhsoft.com/singularity/
+IRC Room: #singularity on irc.oftc.net (port 6667)
+
 Version 0.28_pre"""
 
 pygame.mixer.pre_init(48000, -16, 2)
@@ -190,7 +193,7 @@ while game_action != 2:
         g.quit_game()
     elif game_action == 3: #About
         g.create_dialog(about_message,
-                        xy = (g.screen_size[0]/2-250, 250), size = (500, 125),
+                        xy = (g.screen_size[0]/2-250, 250), size = (500, 165),
                         bg_color = g.colors["blue"])
     elif game_action == 4: #Options
         main_menu.display_options()
