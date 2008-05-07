@@ -40,6 +40,7 @@ USER-VISIBLE CHANGES:
 * New continent: Australia.  Ocean moved to make room. (FM)
 * E:S now has an intro when you start a new game! (FM)
 - New item: Warning Signs.  Useful for keeping out curious people. (FM)
+- CPU display on Finance screen centered (Jorge Vargas)
 * de_DE translation [currently partial] (FM, Thomas for native proofing)
 * sv_SE translation (Anders Andersson)
 
@@ -50,6 +51,8 @@ OTHER CHANGES:
   for easy submission to the developers. (FM)
 - New utility: reorder.py  Workaround for traduko's current order-scrambling 
   behavior.  Use with caution. (FM)
+- Various code formatting fixes, refactor of part of the technology(/event) 
+  result system. (Jorge Vargas)
 
 v0.27 (release 2008.04.17):
 
