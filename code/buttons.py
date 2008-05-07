@@ -211,6 +211,11 @@ def _show_buttons(buttons, key_callback, keyup_callback, click_callback, button_
             button.refresh_button(button.is_over(mouse_pos))
         pygame.display.flip()
 
+    surface = pygame.display.get_surface()
+    alpha = surface.convert_alpha()
+    alpha.fill((0,0,0,175))
+    surface.blit(alpha, (0,0))
+
     do_refresh()
 
     sel_button = -1
