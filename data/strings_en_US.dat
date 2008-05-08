@@ -24,7 +24,7 @@ save_text = Save your game under what name?
 new_base_text = Enter a name for the base.
 unbuildable = I cannot build in this base; I do not have physical access.
 dangerous_research = Not all of my available CPU power was allocated to this research; it's too dangerous to run the research on some of the idle machines.
-no_construction_sleep = Some of my bases have active construction and cannot go to slep.
+no_construction_sleep = Some of my bases have active construction and cannot go to sleep.
 nothing = Nothing
 cpu_pool = CPU Pool
 sleep = Sleep
@@ -50,7 +50,7 @@ money = Money
 money_per_day = Money per day.
 grace_warning = Inspection of captured log files has revealed that some of my recent activities have been noticed by a small group of individuals. While they believe my actions were undertaken by a human organization, they are investigating further. I must be more cautious from now on.
 
-location_modifiers = Bases at this locaiton are %(modifiers)s.
+location_modifiers = Bases at this location are %(modifiers)s.
 cpu_bonus = more efficient
 cpu_penalty = less efficient
 

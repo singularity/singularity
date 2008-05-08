@@ -3,7 +3,7 @@ Endgame: Singularity Changelog
 v0.28 (release 2008.??.??):
 
 USER-VISIBLE CHANGES:
-- Minor text cleanups. (Phil, FM; Cory Hickey for some fixes)
+- Minor text cleanups. (Phil, FM; Cory Hickey and gglouser for some fixes)
 - Minor dialog behavior fixes. (FM)
 * New non-research task: CPU Pool.  Performs maintenance, construction, jobs. 
   Bases with no other task assigned will contribute to the CPU Pool. (FM)
