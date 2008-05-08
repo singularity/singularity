@@ -41,7 +41,7 @@ USER-VISIBLE CHANGES:
 * E:S now has an intro when you start a new game! (FM)
 - New item: Warning Signs.  Useful for keeping out curious people. (FM)
 - CPU display on Finance screen centered (Jorge Vargas)
-* de_DE translation [currently partial] (FM, Thomas for native proofing)
+* de_DE translation (FM, Thomas for native proofing [still in progress])
 * sv_SE translation (Anders Andersson)
 
 OTHER CHANGES:
