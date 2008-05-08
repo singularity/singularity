@@ -68,8 +68,8 @@ maint_list = 25000 | 100 | 0
 [Time Capsule]
 size = 1
 force_cpu = PC
-allowed = ANTARCTIC
-detect_chance_list = science:12 | covert:12
+allowed_list = ANTARCTIC | MOON | FAR REACHES
+detect_chance_list = science:20 | covert:20
 cost_list = 2500000 | 2500 | 15
 pre = Autonomous Vehicles
 maint_list = 0 | 1 | 0
@@ -77,18 +77,18 @@ maint_list = 0 | 1 | 0
 [Lunar Facility]
 size = 600
 allowed = MOON
-detect_chance_list = news:50 | science:250 | covert:10
-cost_list = 800000000 | 300000 | 40
+detect_chance_list = news:33 | science:167 | covert:7
+cost_list = 400000000 | 150000 | 20
 pre = Lunar Rocketry
-maint_list = 1000000 | 100 | 0
+maint_list = 500000 | 50 | 0
 
 [Scientific Outpost]
 size = 225
 allowed = FAR REACHES
-detect_chance_list = news:10 | science:175
-cost_list = 10000000000 | 30000000 | 50
+detect_chance_list = news:20 | science:350
+cost_list = 1000000000 | 3000000 | 5
 pre = Fusion Rocketry
-maint_list = 9000000 | 3000 | 0
+maint_list = 900000 | 300 | 0
 
 [Reality Bubble]
 size = 50

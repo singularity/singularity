@@ -30,6 +30,7 @@ pre = Autonomous Vehicles
 [MOON]
 position_list = 82 | 10
 safety = 2
+modifier_list = stealth:1.5 | thrift:.5 | speed:.5
 pre = Lunar Rocketry
 
 [ORBIT]
@@ -39,6 +40,7 @@ pre = unknown_tech
 [FAR REACHES]
 position_list = 3 | 10
 safety = 3
+modifier_list = stealth:2 | thrift:.1 | speed:.1
 pre = Fusion Rocketry
 
 [TRANSDIMENSIONAL]
