@@ -1544,6 +1544,11 @@ def new_game(difficulty):
     load_bases()
     load_techs()
 
+    if difficulty < 5:
+        techs["Socioanalytics"].finish()
+    if difficulty < 3:
+        techs["Advanced Socioanalytics"].finish()
+
     #Starting base
     open = [loc for loc in locations.values() if loc.available()]
     random.choice(open).add_base(base.Base("University Computer",
