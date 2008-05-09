@@ -57,7 +57,7 @@ def display_pause_menu():
     button_array.append(["LOAD GAME", "L"])
     button_array.append(["OPTIONS", "O"])
     button_array.append(["QUIT", "Q"])
-    button_array.append(["RESUME", "R"])
+    button_array.append(["BACK", "B"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
     if selection == -1: return 0
@@ -77,7 +77,7 @@ def display_cheat_list(menu_buttons):
     button_array.append(["END CONSTR.", "E"])
     button_array.append(["SUPERSPEED", "S"])
     button_array.append(["KILL SUSP.", "K"])
-    button_array.append(["RESUME", "R"])
+    button_array.append(["BACK", "B"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
 
     if selection == -1: return
@@ -117,7 +117,7 @@ def display_knowledge_list():
     button_array.append(["TECHS", "T"])
     button_array.append(["ITEMS", "I"])
     button_array.append(["CONCEPTS", "C"])
-    button_array.append(["RESUME", "R"])
+    button_array.append(["BACK", "B"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
 
     if selection == -1: return
@@ -134,7 +134,7 @@ def display_itemtype_list():
     button_array.append(["REACTOR", "R"])
     button_array.append(["NETWORK", "N"])
     button_array.append(["SECURITY", "S"])
-    button_array.append(["RESUME", "E"])
+    button_array.append(["BACK", "B"])
     selection=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
 
     if selection == -1: return
