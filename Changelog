@@ -41,6 +41,8 @@ USER-VISIBLE CHANGES:
 * E:S now has an intro when you start a new game! (FM)
 - New item: Warning Signs.  Useful for keeping out curious people. (FM)
 - CPU display on Finance screen centered (Jorge Vargas)
+- Time capsules can now be built anywhere sufficiently remote, with varying 
+  degrees of stealth. (FM, emh for suggestion)
 * de_DE translation (FM, Thomas for native proofing [still in progress])
 * sv_SE translation (Anders Andersson)
 
@@ -53,6 +55,8 @@ OTHER CHANGES:
   behavior.  Use with caution. (FM)
 - Various code formatting fixes, refactor of part of the technology(/event) 
   result system. (Jorge Vargas)
+- setup.py updated to support mac .app building and cut filesize of the windows
+  .exe by about half. (FM)
 
 v0.27 (release 2008.04.17):
 
