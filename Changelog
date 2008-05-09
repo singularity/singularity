@@ -29,7 +29,8 @@ USER-VISIBLE CHANGES:
 - Locations with recently-discovered bases are now more likely to have other
   bases discovered. (FM)
 * Base detection chances and overall suspicion are now unknown until certain
-  new technologies have been researched. (Phil)
+  new technologies have been researched. (Phil)  
+  ...except on low difficulty. (FM)
 * Incomplete bases no longer support the AI. (FM)
 - It's possible to get lucky when hacking some random computer.  (FM)
 * Seconds, minutes, and hours now matter much more than they used to. (FM)
