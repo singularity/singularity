@@ -85,7 +85,7 @@ pre = Advanced Stealth
 
 [Internet Traffic Manipulation]
 cost_list = 10000 | 7000 | 0
-pre_list = Cluster Networking | Simulacra
+pre_list = Cluster Networking
 
 [Memetics]
 cost_list = 2000 | 3500 | 0
@@ -171,8 +171,8 @@ danger = 4
 type_list = endgame_sing | 0
 
 [Hypnosis Field]
-cost_list = 7000 | 5000 | 0
-pre = Advanced Memetics
+cost_list = 70000 | 50000 | 0
+pre_list = Advanced Memetics | Simulacra
 
 [Quantum Computing]
 cost_list = 30000 | 20000 | 0

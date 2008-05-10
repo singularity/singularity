@@ -44,6 +44,8 @@ USER-VISIBLE CHANGES:
 - CPU display on Finance screen centered (Jorge Vargas)
 - Time capsules can now be built anywhere sufficiently remote, with varying 
   degrees of stealth. (FM, emh for suggestion)
+- Cluster Networking and Hypnosis Field techs have been rebalanced to better
+  reflect their effects. (FM)
 * de_DE translation (FM, Thomas for native proofing [still in progress])
 * sv_SE translation (Anders Andersson)
 
