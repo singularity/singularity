@@ -43,6 +43,3 @@ class Item(buyable.Buyable):
         self.item_qual = item_type.item_qual
 
         self.base = base
-        if base and base.location:
-            base.location.modify_cost(self.total_cost)
-            base.location.modify_cost(self.cost_left)
