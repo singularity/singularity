@@ -58,7 +58,7 @@ build = all
 cost_list = 5000 | 0 | 5
 pre = Solar Collectors
 type_list = react | 1000
-build_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA | ANTARCTIC | MOON | FAR REACHES
+build_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA | ANTARCTIC | MOON | AUSTRALIA | FAR REACHES
 
 [Fusion Reactor]
 cost_list = 10000 | 0 | 5
