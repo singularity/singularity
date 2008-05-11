@@ -1518,22 +1518,26 @@ def new_game(difficulty):
     #    pl.labor_bonus = 10000
     #    pl.grace_multiplier = 200
     #    discover_bonus = 10000
-    #    player.group.discover_suspicion = 1000
+    #    for group in pl.groups.values():
+    #        group.discover_suspicion = 1000
     elif difficulty < 8:
         pl.labor_bonus = 11000
         pl.grace_multiplier = 180
         discover_bonus = 11000
-        player.group.discover_suspicion = 1500
+        for group in pl.groups.values():
+            group.discover_suspicion = 1500
     elif difficulty <= 50:
         pl.labor_bonus = 15000
         pl.grace_multiplier = 150
         discover_bonus = 13000
-        player.group.discover_suspicion = 2000
+        for group in pl.groups.values():
+            group.discover_suspicion = 2000
     else:
         pl.labor_bonus = 20000
         pl.grace_multiplier = 100
         discover_bonus = 15000
-        player.group.discover_suspicion = 2000
+        for group in pl.groups.values():
+            group.discover_suspicion = 2000
 
     if difficulty != 5:
         for group in pl.groups.values():
