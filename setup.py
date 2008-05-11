@@ -1,7 +1,7 @@
 # setup.py
 from distutils.core import setup
 
-versionnum="0.28_pre"
+versionnum="0.28"
 try:
     import py2exe
 except ImportError:

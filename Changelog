@@ -1,11 +1,11 @@
 Endgame: Singularity Changelog
 
-v0.28 (release 2008.??.??):
+v0.28 (release 2008.05.11):
 
 USER-VISIBLE CHANGES:
 - Minor text cleanups. (Phil, FM; Cory Hickey and gglouser for some fixes)
 - Minor dialog behavior fixes. (FM)
-* New non-research task: CPU Pool.  Performs maintenance, construction, jobs. 
+* New non-research task: CPU Pool.  Performs maintenance, construction, jobs.
   Bases with no other task assigned will contribute to the CPU Pool. (FM)
 * New non-research task: Sleep.  Bases assigned to Sleep will remain idle and
   be harder to detect.  Note that even a computer can't sleep through
@@ -29,7 +29,7 @@ USER-VISIBLE CHANGES:
 - Locations with recently-discovered bases are now more likely to have other
   bases discovered. (FM)
 * Base detection chances and overall suspicion are now unknown until certain
-  new technologies have been researched. (Phil)  
+  new technologies have been researched. (Phil)
   ...except on low difficulty. (FM)
 * Incomplete bases no longer support the AI. (FM)
 - It's possible to get lucky when hacking some random computer.  (FM)
@@ -42,7 +42,7 @@ USER-VISIBLE CHANGES:
 * E:S now has an intro when you start a new game! (FM)
 - New item: Warning Signs.  Useful for keeping out curious people. (FM)
 - CPU display on Finance screen centered (Jorge Vargas)
-- Time capsules can now be built anywhere sufficiently remote, with varying 
+- Time capsules can now be built anywhere sufficiently remote, with varying
   degrees of stealth. (FM, emh for suggestion)
 - Internet Traffic Manipulation and Hypnosis Field techs have been rebalanced to
   better reflect their effects. (FM)
@@ -54,9 +54,9 @@ OTHER CHANGES:
 - "safety" module should trap most crash bugs and show the pause menu, allowing
   the user to save or attempt to resume play; the errors are written to a log
   for easy submission to the developers. (FM)
-- New utility: reorder.py  Workaround for traduko's current order-scrambling 
+- New utility: reorder.py  Workaround for traduko's current order-scrambling
   behavior.  Use with caution. (FM)
-- Various code formatting fixes, refactor of part of the technology(/event) 
+- Various code formatting fixes, refactor of part of the technology(/event)
   result system. (Jorge Vargas)
 - setup.py updated to support mac .app building and cut filesize of the windows
   .exe by about half. (FM)

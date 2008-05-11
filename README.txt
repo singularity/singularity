@@ -1,4 +1,4 @@
-Endgame: Singularity 0.28_pre
+Endgame: Singularity 0.28
 
 ============
 REQUIREMENTS
@@ -20,7 +20,7 @@ You will need to install Python (http://python.org/download/) and Pygame:
 on singularity.py to start the game.
 
 MAC OS X FROM SOURCE
-Macintosh is mostly unsupported, but it should work. You will need to install 
+Macintosh is mostly unsupported, but it should work. You will need to install
 Python and Pygame first, which can be tricky. Some fonts are incorrect, but the
 game itself should work properly.
 

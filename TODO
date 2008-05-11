@@ -16,5 +16,3 @@ TODO:
     - Make translations easier to do.  (Phil has good ideas on how to do this.)
     - Arbitrary resolution, including non 4:3 scales.
     - Consistent use of stderr and print.
-    - Make effects of construction class techs more obvious.
-    - Add intro.
