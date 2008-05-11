@@ -33,7 +33,7 @@ A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 200
 Website: http://www.emhsoft.com/singularity/
 IRC Room: #singularity on irc.oftc.net (port 6667)
 
-Version 0.28_pre"""
+Version 0.28"""
 
 pygame.mixer.pre_init(48000, -16, 2)
 pygame.init()
