@@ -1,0 +1,11 @@
+Here is where you can place both the official music pack (available at:
+
+   http://endgame-singularity.googlecode.com
+   
+and linked to at the official website:
+
+   http://emhsoft.com/singularity
+
+While Pygame supports both Ogg Vorbis and MP3, its MP3 support is less
+stable.  If you encounter problems with the game, first remove any MP3s
+you may have placed here.
