@@ -1,4 +1,4 @@
-Endgame: Singularity 0.28a
+Endgame: Singularity 0.29_pre
 
 ============
 REQUIREMENTS
