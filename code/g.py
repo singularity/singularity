@@ -91,7 +91,7 @@ set_locale()
 default_savegame_name = "Default Save"
 
 #which fonts to use
-font0 = "vera.ttf"
+font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
 data_loc = "../data/"

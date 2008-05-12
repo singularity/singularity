@@ -9,6 +9,8 @@ USER-VISIBLE CHANGES:
 OTHER CHANGES:
 - Error logs are handled more sanely on *NIX systems. (Phil, kaol and FM for
   the idea)
+- Replaced Bitstream Vera Sans with DejaVu Sans to facilitate future
+  translations. (Phil)
 
 v0.28 (release 2008.05.11):
 
