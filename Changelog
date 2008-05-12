@@ -11,6 +11,8 @@ OTHER CHANGES:
   the idea)
 - Replaced Bitstream Vera Sans with DejaVu Sans to facilitate future
   translations. (Phil)
+- Localization fix for locales with non-ASCII number formats. (FM, 
+  Henrik Phil for bug report)
 
 v0.28 (release 2008.05.11):
 

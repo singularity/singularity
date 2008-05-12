@@ -73,11 +73,14 @@ force_single_dir = False
 language = "en_US"
 
 # Try a few locale settings.  First the selected language, then the user's 
-# default, then their default without specifying an encoding, then en_US.
+# default, then en_US.  Each one is tried with encoding UTF-8 first, then
+# the default encoding.
 #
 # If all of that fails, we hope locale magically does the right thing.
 def set_locale():
-    for attempt in [language, "", locale.getdefaultlocale()[0], "en_US"]:
+    for attempt in [language + ".UTF-8", language, 
+                    locale.getdefaultlocale()[0] + ".UTF-8", "", "en_US.UTF-8",
+                    "en_US"]:
         try:
             locale.setlocale(locale.LC_ALL, attempt)
             break
@@ -548,8 +551,10 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
 
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number):
-    raw_with_commas = locale.format("%0.2f", number, grouping=True)
-    locale_test = locale.format("%01.1f", 0.1)
+    locale_name, encoding = locale.getlocale()
+    raw_with_commas = locale.format("%0.2f", number, 
+                                    grouping=True    ).decode(encoding)
+    locale_test = locale.format("%01.1f", 0.1).decode(encoding)
     if len(locale_test) == 3 and not locale_test[1].isdigit():
         if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
             return raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
@@ -561,10 +566,11 @@ def add_commas(number):
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
 def to_percent(raw_percent, show_full = False):
+    locale_name, encoding = locale.getlocale()
     if raw_percent % 100 != 0 or show_full:
-        return locale.format("%.2f%%", raw_percent / 100.)
+        return locale.format("%.2f%%", raw_percent / 100.).decode(encoding)
     else:
-        return locale.format("%d%%", raw_percent // 100)
+        return locale.format("%d%%", raw_percent // 100).decode(encoding)
 
 # nearest_percent takes values in the internal representation and modifies
 # them so that they only represent the nearest percentage.
