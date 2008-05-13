@@ -73,14 +73,13 @@ force_single_dir = False
 language = "en_US"
 
 # Try a few locale settings.  First the selected language, then the user's 
-# default, then en_US.  Each one is tried with encoding UTF-8 first, then
-# the default encoding.
+# default, then en_US.  The selected lanugage and en_US are tried with encoding
+# UTF-8 first, then the default encoding.  The user's default encoding is not
+# paired with UTF-8.
 #
 # If all of that fails, we hope locale magically does the right thing.
 def set_locale():
-    for attempt in [language + ".UTF-8", language, 
-                    locale.getdefaultlocale()[0] + ".UTF-8", "", "en_US.UTF-8",
-                    "en_US"]:
+    for attempt in [language + ".UTF-8", language, "", "en_US.UTF-8", "en_US"]:
         try:
             locale.setlocale(locale.LC_ALL, attempt)
             break
