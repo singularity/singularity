@@ -380,18 +380,10 @@ class player_class(object):
             needs_refresh = 1
             g.curr_speed = 0
 
-        # Discovery, clear finished techs.
+        # Maintenance death, discovery, clear finished techs.
         dead_bases = []
         for base in g.all_bases():
-            if not grace and not base.has_grace():
-                detect_chance = base.get_detect_chance()
-                if g.debug:
-                    print "Chance of discovery for base %s: %s" % \
-                        (base.name, repr(detect_chance))
-                for group, chance in detect_chance.iteritems():
-                    if g.roll_chance(chance/10000., secs_passed):
-                        dead_bases.append( (base, group) )
-                        break
+            dead = False
 
             # Maintenance deaths.
             if base.done:
@@ -400,7 +392,7 @@ class player_class(object):
                         max(0, self.maintenance_cost[cpu] 
                                    - base.maintenance[cpu])
                     #Chance of base destruction if cpu-unmaintained: 1.5%
-                    if g.roll_percent(150):
+                    if not dead and g.roll_chance(.015, secs_passed):
                         dead_bases.append( (base, "maint") )
                         dead = True
 
@@ -410,10 +402,24 @@ class player_class(object):
                     if base_needs:
                         cash_maintenance = max(0, cash_maintenance - base_needs)
                         #Chance of base destruction if cash-unmaintained: 1.5%
-                        if g.roll_percent(150):
+                        if not dead and g.roll_chance(.015, secs_passed):
                             dead_bases.append( (base, "maint") )
                             dead = True
-                
+
+            # Discoveries
+            if not (grace or dead or base.has_grace()):
+                detect_chance = base.get_detect_chance()
+                if g.debug:
+                    print "Chance of discovery for base %s: %s" % \
+                        (base.name, repr(detect_chance))
+
+                for group, chance in detect_chance.iteritems():
+                    if g.roll_chance(chance/10000., secs_passed):
+                        dead_bases.append( (base, group) )
+                        dead = True
+                        break
+
+            # Clear finished techs
             if base.studying in g.techs and g.techs[base.studying].done:
                 base.studying = ""
 
