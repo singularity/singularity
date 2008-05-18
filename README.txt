@@ -198,8 +198,8 @@ Beyond the NASA Terms, the Visible Earth team requests, but does not require:
       (http://visibleearth.nasa.gov/) or to the page providing the link to the used image.
 
 FONT LICENSES
-The boxy font used is "Acknowledge", by Brian Kent, modified in order to have the
-numbers fixed-width.
+The boxy font used is "Acknowledge", by Brian Kent, modified in order to have 
+the numbers fixed-width and to register the correct height in pygame.
 http://www.aenigmafonts.com/fonts/fontsa.html
 
 Terms of use (quoted from an eMail from Brian Kent):
