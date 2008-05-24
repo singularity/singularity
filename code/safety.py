@@ -32,8 +32,9 @@ import os.path
 logpath = "error.log"
 if os.environ.has_key("HOME"):
     prefs_dir = os.path.expanduser("~/.endgame")
-    if os.path.isdir(prefs_dir):
-        logpath = os.path.join(prefs_dir, "error.log")
+    if not os.path.isdir(prefs_dir):
+        os.makedirs(prefs_dir)
+    logpath = os.path.join(prefs_dir, "error.log")
 
 logging.getLogger().addHandler(logging.FileHandler(logpath))
 
