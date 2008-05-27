@@ -252,7 +252,8 @@ class Base(buyable.Buyable):
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.  If
 # told to be inaccurate, it rounds the value to the nearest percent.
-def calc_base_discovery_chance(base_type_name, accurate = True):
+def calc_base_discovery_chance(base_type_name, accurate = True,
+                               extra_factor = 1):
 
     # Get the default settings for this base type.
     detect_chance = g.base_type[base_type_name].detect_chance.copy()
@@ -263,11 +264,15 @@ def calc_base_discovery_chance(base_type_name, accurate = True):
         detect_chance[group] *= 10000 + suspicion
         detect_chance[group] /= 10000
 
-    # ... and further adjust based on technology.
+    # ... and further adjust based on technology ...
     for group in detect_chance:
         discover_bonus = g.pl.groups[group].discover_bonus
         detect_chance[group] *= discover_bonus
         detect_chance[group] /= 10000
+
+    # ... and the given factor.
+    for group in detect_chance:
+        detect_chance[group] = int(detect_chance[group] * extra_factor)
 
     # Lastly, if we're told to be inaccurate, adjust the values to their
     # nearest percent.

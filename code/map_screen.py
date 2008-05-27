@@ -844,10 +844,11 @@ def refresh_new_base(base_name, xy, location):
     accurate = True
     if not g.techs["Advanced Socioanalytics"].done:
         accurate = False
-    detection_chance = base.calc_base_discovery_chance(base_name, accurate)
+    detection_chance = base.calc_base_discovery_chance(base_name, accurate,
+                                                       detect_factor)
 
     for group in detection_chance:
-        detection_chance[group] = int(detection_chance[group] * detect_factor)
+        detection_chance[group] = detection_chance[group]
 
     if not g.techs["Socioanalytics"].done:
         string = g.strings["detect_chance_unknown_build"]
