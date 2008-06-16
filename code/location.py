@@ -135,3 +135,12 @@ class Location(buyable.Buyable_Class):
             return cmp(self.id, other)
         else:
             return cmp(self.id, other.id)
+
+    def __setstate__(self, state):
+        self.__dict__ = state
+
+        # Rebuild the linked list.
+        for index, base in enumerate(self.bases):
+            prev = self.bases[index - 1] # Will correctly wrap to -1.
+            base.prev = prev
+            prev.next = base

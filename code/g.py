@@ -24,7 +24,7 @@ import ConfigParser
 import pygame
 import os
 import os.path
-import pickle
+import cPickle as pickle
 import random
 import sys
 

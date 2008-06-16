@@ -249,6 +249,14 @@ class Base(buyable.Buyable):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def __getstate__(self):
+        state_dict = self.__dict__.copy()
+
+        # Squash the linked list, to avoid overwhelming pickle.
+        del state_dict["next"]
+        del state_dict["prev"]
+        return state_dict
+
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.  If
 # told to be inaccurate, it rounds the value to the nearest percent.
