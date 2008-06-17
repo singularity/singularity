@@ -3,6 +3,11 @@ flavor_list = Datacenter | Premium Hosting
 name = Datacenter
 description = (35 CPU) Köp råstyrka från en storgrossist med feta datorer. Jag kommer att behöva falsk-leg för pappersarbetet.
 
+[Stolen Computer Time]
+flavor = PC Daemon
+name = Stulen processortid
+description = (1 CPU) Ta över någons dator. Jag kan inte bygga något här och jag har bara tillgång till en långsam dator. Risken för att någon upptäcker mig är också hög.
+
 [Small Warehouse]
 flavor_list = Upplag | Liten lagerlokal | Förrådslokal
 name = Liten lagerlokal
@@ -22,11 +27,6 @@ description = (10 CPU) Hyr en server eller processortid från ett företag. Efte
 flavor_list = Satellit | Utpost | Forskningsstation
 name = Vetenskaplig utpost
 description = Denna anläggningen är belägen så långt från jorden som det är praktiskt möjligt, vilket gör den passande för de mer farligare experimenten.
-
-[Large Warehouse]
-flavor_list = Stor lagerlokal | Centrallager
-name = Centrallager
-description = Hyr ett centrallager någonstans långt bort. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
 
 [Reality Bubble]
 flavor_list = Dimensionsreva | Existens | Verklighet
@@ -48,10 +48,10 @@ flavor_list = Kappsel | Låda
 name = Kappsel
 description = (1 CPU) Denna vattentäta lådan innehåller en liten dator med en satellitlänk och är nedgrävd i det ogästvänliga Antarktis vilket gör den så gott som omöjlig att hitta.
 
-[Stolen Computer Time]
-flavor = PC Daemon
-name = Stulen processortid
-description = (1 CPU) Ta över någons dator. Jag kan inte bygga något här och jag har bara tillgång till en långsam dator. Risken för att någon upptäcker mig är också hög.
+[Large Warehouse]
+flavor_list = Stor lagerlokal | Centrallager
+name = Centrallager
+description = Hyr ett centrallager någonstans långt bort. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
 
 [Undersea Lab]
 flavor_list = Tryckkapsel | Undervattensbas

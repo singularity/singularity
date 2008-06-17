@@ -3,11 +3,6 @@ hotkey = U
 cities_list = Göteborg | Barcelona | Aten | Utrecht | Moskva | Tel Aviv | Reykjavik | Liechtenstein
 name = EUROPA
 
-[FAR REACHES]
-hotkey = B
-cities_list = Väduren | Oxen | Tvillingarna | Kräftan | Lejonet | Jungfrun | Vågen | Skorpionen | Skytten | Stenbocken | Vattumannen | Fiskarna
-name = LÅNGT BORT
-
 [AUSTRALIA]
 hotkey = L
 cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Caims | Brisbane | Sydney | Newcastle
@@ -31,10 +26,10 @@ hotkey = A
 cities_list = Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing
 name = ASIEN
 
-[OCEAN]
-hotkey = C
-cities_list = Stilla havet | Atlanten | Indiska oceanen | Antarktiska oceanen | Norra ishavet
-name = OCEANER
+[FAR REACHES]
+hotkey = B
+cities_list = Väduren | Oxen | Tvillingarna | Kräftan | Lejonet | Jungfrun | Vågen | Skorpionen | Skytten | Stenbocken | Vattumannen | Fiskarna
+name = LÅNGT BORT
 
 [N AMERICA]
 hotkey = N
@@ -46,13 +41,18 @@ hotkey = T
 cities_list = Mt. Erebus | Ellsworth | Shetlandsöarna | Dronnig Maud | Kemp | Terre Adelie
 name = ANTARKTIS
 
-[MOON]
-hotkey = O
-cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus krater | Vallis Planck
-name = MÅNEN
+[OCEAN]
+hotkey = C
+cities_list = Stilla havet | Atlanten | Indiska oceanen | Antarktiska oceanen | Norra ishavet
+name = OCEANER
 
 [S AMERICA]
 hotkey = S
 cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires
 name = SYDAMERIKA
+
+[MOON]
+hotkey = O
+cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus krater | Vallis Planck
+name = MÅNEN
 

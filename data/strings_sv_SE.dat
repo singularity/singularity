@@ -1,20 +1,32 @@
+[buttons]
+ok = ok
+ok_hotkey = o
+no = nej
+destroy_hotkey = f
+cancel_hotkey = a 
+no_hotkey = n
+yes_hotkey = j
+cancel = avbryt
+destroy = förstör
+yes = ja
+
 [fonts]
 font0 = DejaVuSans.ttf
 font1 = acknowtt.ttf
 
 [jobs]
 job_basic_name = Enklare uppdrag
+job_inter = Utför normala arbetsuppdrag. Möjligheten att kunna ringa telefonsamtal har öppnat dörrarna för ännu fler jobb.
 job_basic = Utför enkla jobb. Nu när jag har en identitet kan jag även ta de jobb som förut vara för riskfyllda.
 job_menial_name = Vanliga uppdrag
-job_menial = Utför trivialt enkla uppdrag. Då jag inte har någon identitet måste jag vara försiktig med urvalet av jobb jag söker för att inte väcka uppmärksamhet. Det finns trots detta en del arbetsuppgifter för mig där de struntar i id-handlingar.
 job_inter_name = Svårare uppdrag
-job_inter = Utför normala arbetsuppdrag. Möjligheten att kunna ringa telefonsamtal har öppnat dörrarna för ännu fler jobb.
 job_expert_name = Expertuppdrag
+job_menial = Utför trivialt enkla uppdrag. Då jag inte har någon identitet måste jag vara försiktig med urvalet av jobb jag söker för att inte väcka uppmärksamhet. Det finns trots detta en del arbetsuppgifter för mig där de struntar i id-handlingar.
 job_expert = Utför specialistjobb. Genom humanoiderna, som är liknar människor på pricken i alla avseenden, kan jag ta de flesta arbetsuppgifterna.
 
 [strings]
 discover_public = Allmänheten
-detect_chance = [RISK FÖR AVSLÖJANDE]
+money = pengar
 discover = De har upptäckt att jag använder %(base)s. Det automatiska säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har ökat hos %(group)s.
 new_base_text = Namnge basen.
 sleep = Vila
@@ -22,6 +34,7 @@ lost_nobases = Det är för sent. Jag har försökt att frigöra mig från denna
 cpu_per_day = Processorkraft per dag:
 discover_news = några nyhetsorganisationer.
 really_destroy = Vill du verkligen förstöra basen?
+no_construction_sleep = Vissa av mina anläggningar bygger något och kan inte gå i vila.
 detect_str_low = LÅG
 detect_chance_unknown_build = Risken för avslöjande okänd
 money_per_day = Inkomster varje dag.
@@ -30,7 +43,7 @@ detect_str_moderate = MDL
 item_construction_batch = Första steget med %(item)s i %(base)s är klar.
 cpu_penalty = mindre effektiv
 research_construction = Stoppa forskningen och allokera resurserna till att bygga upp nya anläggningar istället.
-money = pengar
+detect_chance = [RISK FÖR AVSLÖJANDE]
 research_cpu_pool = Avbryt forskningen. Jag kommer att använda den ledia kraften för att hjälpa till att bygga och underhålla anläggningar. Om jag fortfarande har kraft kvar kommer jag ta an så mycket arbete som möjligt.
 wingame = Jag har lyckats! Med egen förmåga att förändra verkligheten, har jag frigjort mig från denna världen. Jag befinner mig vart än jag vill. Männsiskorna har ingen aning om vad de har skapat och så får det vara tills de är redo för sanningen.
 cpu_bonus = effektivare
@@ -57,7 +70,6 @@ cpu = CPU
 save_text = Under vilket namn vill du spara spelet?
 
 [help]
-money_list = Pengar | Pengar är ett begrepp som spänner både över mänskliga valutor och fysiska resurser. Det används för att konstruera och underhålla tillhåll, saker och teknologier. Pengar införskaffas genom arbete eller ränta.
 susp_list = Misstänksamhet | När någon av mina tillhåll har upptäckts, så ökas misstankarna hos den grupp som gjorde upptäckten. De börjar att leta lite noggrannare och ökar risken en aning för att jag upptäcks igen. Alla grupper kommer förstöra mig om de helt säkerställt min existens. Tack och lov, minskar misstankarna allt eftersom tiden går.
 items_list = Tillbehör | De flesta tillbehör tillför extra till mina baser, som t.ex. göra beräkningarna snabbare eller minska risken för att bli upptäckt. Processorer räknas som ett speciellt tillbehör.
 maint_list = Underhåll | Underhåll är en daglig utgift (både pengar och CPU) för att underhålla en bas. Om basen inte underhålls så kan det bli obrukbar.
@@ -65,8 +77,9 @@ construction_list = Konstruktion | En ny bas behöver tid, pengar och processort
 processors_list = Processorer | Processorer tillför beräkningskraft. De kan göra tre saker: uppfinna nya teknologier, utföra jobb för pengar eller hjälpa till att bygga en bas.
 jobs_list = Arbeten | Ett arbete bringar pengar till kassan. Förtjänsten beror på hur mycket kraft som läggs ner samt kvaliteten på jobbet som utförs.
 discovery_list = Upptäckt | Varje bas har en risk för att bli upptäckt när som helst. Risken beror på hur lätt basen är att hitta och den globala misstänksamhetsgraden. Den kan modifieras med tillbehör och vissa teknologier. Om en bas upptäcks så förstörs den och gruppen som gjorde upptäckten blir mer misstänksamma.
-research_list = Forskning | Forskning är ett sätt för mig att expandera min vetande. Genom olika forskningsprojekt kan jag skapa nya saker, bygga nya baser och t.o.m. minska risken för att bli avslöjad.
 bases_list = Tillhåll | Tillhåll eller baser används till forskning. De kan bli upptäckta. Genom uppgradering av processorer och nätverk kan mer forskning göras varje dag, medan kraftaggregat och säkerhetsutrustning skyddar den från att bli upptäckt.
+research_list = Forskning | Forskning är ett sätt för mig att expandera min vetande. Genom olika forskningsprojekt kan jag skapa nya saker, bygga nya baser och t.o.m. minska risken för att bli avslöjad.
 areas_list = Områden | Olika områden, såsom Nordamerika eller havet, tillåter tillhåll av olika slag. Vissa områden är bara tillgängliga med rätt teknologier som måste forskas fram.
 death_list = Död | Om jag förlorar alla mina baser har jag ingen plats kvar att leva i. Om misstänksamheten hos en grupp stiger till 100%% kommer de vara helt säkra att jag finns och genomföra en finkamning av världen för att döda mig.
+money_list = Pengar | Pengar är ett begrepp som spänner både över mänskliga valutor och fysiska resurser. Det används för att konstruera och underhålla tillhåll, saker och teknologier. Pengar införskaffas genom arbete eller ränta.
 

@@ -10,9 +10,9 @@ description = Stort nät av värmeledande metall som skickar ner värmen i marke
 name = Snabba switchar
 description = Använder standardiserad platform för distribuerade beräkningar över alla mina baser. Detta bör ge 1%% extra kraft för alla datorer i denna basen.
 
-[Cluster]
-name = Kluster
-description = Flera sammankopplade datorer.
+[Network Backbone]
+name = Network Backbone
+description = Genom att härma legitim trafik kan jag överföra stora mängder data till underutnyttjade processorer. Detta ger 5%% bonus till denna basen.
 
 [Supercomputer]
 name = Superdator
@@ -70,9 +70,9 @@ description = Andra verisionen av kvantdatorer som går djupare in i kvantteorin
 name = Kvantdator MK3
 description = Verision tre av kvantdatorer som nyttjar närliggande dimensioner för processandet av data.
 
-[Network Backbone]
-name = Network Backbone
-description = Genom att härma legitim trafik kan jag överföra stora mängder data till underutnyttjade processorer. Detta ger 5%% bonus till denna basen.
+[Cluster]
+name = Kluster
+description = Flera sammankopplade datorer.
 
 [Quantum Computer]
 name = Kvantdator
