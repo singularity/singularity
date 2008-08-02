@@ -18,6 +18,8 @@
 
 #This file contains the (non-editable) text widget AKA label.
 
+import pygame
+
 import widget
 import constants
 import g
@@ -82,19 +84,21 @@ def print_string(surface, string_to_print, xy, font, color, underline_char,
     if valign != constants.TOP:
         vsize = len(lines) * font.get_linesize()
         if vsize <= height:
+            excess_space = height - vsize
             if valign == constants.MID:
-                xy[1] += (height - vsize) // 2
+                xy[1] += excess_space // 2
             else: # valign == constants.BOTTOM
-                xy[1] += height - vsize
+                xy[1] += excess_space
     
     for line in lines:
         xy[0] = 2
         if align != constants.LEFT:
             width = font.size(line)[0]
+            excess_space = wrap_at - width
             if align == constants.CENTER:
-                xy[0] += (wrap_at - width) // 2
+                xy[0] += excess_space // 2
             else: # align == constants.RIGHT
-                xy[0] += wrap_at - width
+                xy[0] += excess_space
 
         if 0 <= underline_char < len(line):
             before = line[:underline_char]
@@ -156,7 +160,7 @@ class Text(widget.BorderedWidget):
                 width = dimensions[0] - 4
             else:
                 width = None
-            height = dimensions[1] - 4
+            height = dimensions[1]
 
             basic_line_count = self.text.count("\n") + 1
 
@@ -205,9 +209,127 @@ class Text(widget.BorderedWidget):
 
         if self.text:
             # Print the text itself
-            print_string(self.internal_surface, self.text, (3, 3), self.font, 
+            print_string(self.internal_surface, self.text, (2, 2), self.font, 
                          self.color, self.underline, self.align, self.valign,
                          self.real_size) 
+
+class EditableText(Text):
+    cursor_pos = widget.causes_rebuild("_cursor_pos")
+    def __init__(self, parent, *args, **kwargs):
+        super(EditableText, self).__init__(parent, *args, **kwargs)
+
+        self.cursor_pos = len(self.text)
+        if self.parent:
+            self.parent.add_handler(constants.KEYDOWN, self.handle_key, 150)
+            self.parent.add_handler(constants.CLICK, self.handle_click)
+
+    def handle_key(self, event):
+        assert event.type == pygame.KEYDOWN
+        if event.key == pygame.K_BACKSPACE:
+            if self.cursor_pos > 0:
+                self.text = self.text[:self.cursor_pos - 1] \
+                            + self.text[self.cursor_pos:]
+                self.cursor_pos -= 1
+        elif event.key == pygame.K_LEFT:
+            self.cursor_pos = max(0, self.cursor_pos - 1)
+        elif event.key == pygame.K_RIGHT:
+            self.cursor_pos = min(len(self.text), self.cursor_pos + 1)
+        elif event.key == pygame.K_UP:
+            self.cursor_pos = 0
+        elif event.key == pygame.K_DOWN:
+            self.cursor_pos = len(self.text)
+        elif event.unicode:
+            self.text = self.text[:self.cursor_pos] + event.unicode \
+                        + self.text[self.cursor_pos:]
+            self.cursor_pos += len(event.unicode)
+        else:
+            return
+
+        raise constants.Handled
+
+    def handle_click(self, event):
+        if not self.collision_rect.collidepoint(event.pos):
+            return
+
+        click_x = event.pos[0] - self.collision_rect[0]
+        click_y = event.pos[1] - self.collision_rect[1]
+
+        lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
+        line_size = self.font.get_linesize()
+        real_text_height = line_size * len(lines)
+
+        line_y = 2
+        if self.valign != constants.TOP \
+           and real_text_height <= self.collision_rect.height - 4:
+            excess_space = self.collision_rect.height - real_text_height
+            if self.valign == constants.MID:
+                line_y = excess_space // 2
+            else: # self.valign == constants.BOTTOM
+                line_y = excess_space
+
+        char_offset = 0
+        for line in lines:
+            line_y += line_size
+            if line_y < click_y:
+                char_offset += len(line)
+                continue
+
+            line_x = 2
+            if self.align != constants.LEFT:
+                line_width = self.font.size(line)[0]
+                excess_space = self.collision_rect.width - line_width
+                if self.align == constants.CENTER:
+                    line_x = excess_space // 2
+                else: # self.align == constants.LEFT
+                    line_x = excess_space
+
+            widths = [m[4] for m in self.font.metrics(line)]
+            for index, width in enumerate(widths):
+                if line_x + (width // 2) > click_x:
+                    line_x += width
+                else:
+                    break
+            self.cursor_pos = char_offset + index
+
+    def rebuild(self):
+        super(EditableText, self).rebuild()
+
+        lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
+        line_size = self.font.get_linesize()
+        real_text_height = line_size * len(lines)
+
+        line_y = 2
+        if self.valign != constants.TOP \
+           and real_text_height <= self.real_size[1] - 4:
+            excess_space = self.real_size[1] - real_text_height
+            if self.valign == constants.MID:
+                line_y = excess_space // 2
+            else: # self.valign == constants.BOTTOM
+                line_y = excess_space
+
+        char_offset = 0
+        for line in lines:
+            if char_offset + len(line) < self.cursor_pos:
+                char_offset += len(line)
+                line_y += line_size
+            else:
+                break
+
+        after_char = self.cursor_pos - char_offset
+
+        line_x = 2
+        if self.align != constants.LEFT:
+            line_width = self.font.size(line)[0]
+            excess_space = self.real_size[0] - line_width
+            if self.align == constants.CENTER:
+                line_x = excess_space // 2
+            else: # self.align == constants.LEFT
+                line_x = excess_space
+
+        line_x += self.font.size(line[:after_char])[0]
+
+        self.internal_surface.fill( self.color, 
+                                    (line_x, line_y, 1, line_size))
 
 
 class SelectableText(Text):
