@@ -225,7 +225,7 @@ class MapScreen(dialog.Dialog):
     def show(self):
         self.force_update()
 
-        super(MapScreen, self).show()
+        return super(MapScreen, self).show()
 
     leftovers = 1
     def on_tick(self, event):
@@ -364,8 +364,10 @@ class LocationDialog(dialog.Dialog):
                                   text="POWER STATE", hotkey="p",
                                   function=self.power_state)
 
-        self.new_button = button.Button(self, (0, -.91), (-.3, -.09),
-                                        text="NEW BASE", hotkey="n")
+        self.new_button = \
+            button.FunctionButton(self, (0, -.91), (-.3, -.09),
+                                  text="NEW BASE", hotkey="n",
+                                  function=self.new_base)
         self.destroy_button = \
             button.FunctionButton(self, (-.50, -.91), (-.3, -.09),
                                   anchor=constants.TOP_CENTER,
@@ -379,6 +381,8 @@ class LocationDialog(dialog.Dialog):
             dialog.YesNoDialog(self, (-.5,0), (-.35, -.7),
                             text="Are you sure you want to destroy this base?",
                             shrink_factor=.5)
+
+        self.new_base_dialog = NewBaseDialog(self)
         self.location = None
 
         from code import screens
@@ -407,7 +411,9 @@ class LocationDialog(dialog.Dialog):
             canvas.power_display.text = base.power_state.capitalize()
             canvas.power_display.color = state_colors[base.power_state]
 
-            if base.type.force_cpu:
+            if not base.done:
+                canvas.status_display.text = "Building Base"
+            elif base.type.force_cpu:
                 canvas.status_display.text = ""
             elif base.cpus is None and base.extra_items == [None] * 3:
                 canvas.status_display.text = "Empty"
@@ -417,15 +423,15 @@ class LocationDialog(dialog.Dialog):
                 canvas.status_display.text = "Building CPU"
             elif [item for item in base.extra_items if item is not None
                                                        and not item.done]:
-                canvas.status_display.text = "Building"
+                canvas.status_display.text = "Building Item"
             else:
                 canvas.status_display.text = "Complete"
 
-    def show(self):
+    def rebuild(self):
         if self.location is not None:
             self.listbox.list = [base.name for base in self.location.bases]
             self.listbox.key_list = self.location.bases
-        return super(LocationDialog, self).show()
+        super(LocationDialog, self).rebuild()
 
     def power_state(self):
         if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
@@ -449,6 +455,54 @@ class LocationDialog(dialog.Dialog):
             self.base_dialog.base = base
             dialog.call_dialog(self.base_dialog, self)
             self.parent.needs_rebuild = True
+
+    def new_base(self):
+        result = dialog.call_dialog(self.new_base_dialog, self)
+        if result:
+            base_type, base_name = result
+            new_base = g.base.Base(base_type, base_name)
+            self.location.add_base(new_base)
+            self.parent.needs_rebuild = True
+
+class NewBaseDialog(dialog.ChoiceDescriptionDialog):
+    def __init__(self, parent, pos = (0, 0), size = (-1, -1),
+                 anchor = constants.TOP_LEFT, *args, **kwargs):
+        kwargs["yes_type"] = "build"
+        kwargs["no_type"] = "cancel"
+        super(NewBaseDialog, self).__init__(parent, pos, size, anchor, *args,
+                                            **kwargs)
+
+        self.desc_func = self.on_change
+
+        self.yes_button.function = self.get_name
+        self.name_dialog = \
+            dialog.TextEntryDialog(self, text=g.strings["new_base_text"])
+
+    def on_change(self, description_pane, key):
+        text.Text(description_pane, (0, 0), (-1, -1), text=key.id)
+
+    def show(self):
+        self.list = []
+        self.key_list = []
+
+        base_type_list = g.base_type.values()
+        base_type_list.sort()
+        base_type_list.reverse()
+        for base_type in base_type_list:
+            if base_type.available():
+                self.list.append(base_type.name)
+                self.key_list.append(base_type)
+
+        return super(NewBaseDialog, self).show()
+
+    def get_name(self):
+        if 0 <= self.listbox.list_pos < len(self.key_list):
+            type = self.key_list[self.listbox.list_pos]
+            self.name_dialog.default_text = \
+                generate_base_name(self.parent.location, type)
+            name = dialog.call_dialog(self.name_dialog, self)
+            if name:
+                raise constants.ExitDialog((name, type))
 intro_shown = False
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):
@@ -670,214 +724,7 @@ def refresh_concept(concept_name, xy):
 
 
 def map_loop():
-    font_size = 20
-    if g.screen_size[0] == 640: 
-        font_size = 16
-
-    menu_buttons = {}
-    time_button = buttons.button((100, -1), (200, 26),
-        "DAY 0000, 00:00:00", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][font_size])
-    menu_buttons[time_button] = void
-
-    menu_buttons[buttons.make_norm_button((0, 0), (100, 25),
-        "MENU", "M", g.font[1][20])] = exit
-
-    def make_set_speed(speed):
-        def set_speed():
-            g.play_sound("click")
-            g.curr_speed = speed
-        return set_speed
-
-    speed_button_souls = ( ("ii", 25, 0, 0), (">", 25, 1, 1), (">>", 25, 60, 2),
-                     (">>>", 28, 7200, 3), (">>>>", 36, 432000, 4) )
-    x_pos = 300
-    for legend, width, speed, key in speed_button_souls:
-        # Most other variants on this end up setting speed = 432000 for all of
-        # them.  Bizarre.
-        def speed_matches(self, speed = speed):
-            return g.curr_speed == speed
-        speed_button = buttons.make_norm_button((x_pos, 0), (width, 25),
-                                legend, str(key), g.font[1][20], 
-                                stay_selected_func = speed_matches)
-        menu_buttons[speed_button] = make_set_speed(speed)
-        x_pos += width - 1
-
-    adjusted_size = font_size
-    if g.screen_size[0] == 640:
-        adjusted_size = font_size -2
-
-    cash_button = buttons.button((435, -1), (g.screen_size[0]-435, 26),
-        "CASH", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
-    menu_buttons[cash_button] = void
-
-    suspicion_button = buttons.button((0, g.screen_size[1]-25),
-        (g.screen_size[0], 26),
-        "SUSPICION", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
-    menu_buttons[suspicion_button] = void
-
-    cpu_button = buttons.button((435, 24), (g.screen_size[0]-435, 26),
-        "CPU", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][adjusted_size])
-    menu_buttons[cpu_button] = void
-
-    research_button = buttons.make_norm_button((0, g.screen_size[1]-50), 
-                        (120, 25), "RESEARCH", "R", g.font[1][20])
-    menu_buttons[research_button] = research_screen.main_research_screen
-
-    finance_button = buttons.make_norm_button((g.screen_size[0]-120,
-                                                 g.screen_size[1]-50
-                                              ), (120, 25),
-                                              "FINANCE", "E", g.font[1][20])
-    menu_buttons[finance_button] = finance_screen.main_finance_screen
-
-    knowledge_button = buttons.make_norm_button((g.screen_size[0]-120,
-                                                   g.screen_size[1]-75
-                                                ), (120, 25),
-                                                "KNOWLEDGE", "K", g.font[1][20])
-    menu_buttons[knowledge_button] = display_knowledge_list
-
-    global old_size
-    old_size = g.screen_size
-
-    def do_refresh():
-        global old_size
-        if old_size != g.screen_size:
-            if g.screen_size[0] == 640:
-                font_size = 18
-            else:
-                font_size = 20
-            #cash_button.xy = (435, -1)
-            cash_button.size = (g.screen_size[0]-435, 26)
-            cash_button.font = g.font[1][font_size]
-            cash_button.remake_button()
-            suspicion_button.xy = (0, g.screen_size[1]-25)
-            suspicion_button.size = (g.screen_size[0], 26)
-            suspicion_button.font = g.font[1][font_size]
-            suspicion_button.remake_button()
-            #cpu_button.xy = (435, 24)
-            cpu_button.size = (g.screen_size[0]-435, 26)
-            cpu_button.remake_button()
-            cpu_button.font = g.font[1][font_size]
-            research_button.xy = (0, g.screen_size[1]-50)
-            #research_button.size = (120, 25)
-            research_button.remake_button()
-            finance_button.xy = (g.screen_size[0]-120, g.screen_size[1]-50)
-            #finance_button.size = (120, 25)
-            finance_button.remake_button()
-            knowledge_button.xy = (g.screen_size[0]-120, g.screen_size[1]-75)
-            #knowledge_button.size = (120, 25)
-            knowledge_button.remake_button()
-
-            old_size = g.screen_size
-
-        time_string = "DAY %04d, %02d:%02d:%02d" % \
-              (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
-
-        time_button.text = time_string
-        time_button.remake_button()
-
-        result_cash = g.to_money(g.pl.future_cash())
-        cash_button.text = "CASH: "+g.to_money(g.pl.cash)+" ("+result_cash+")"
-        cash_button.remake_button()
-
-        # What we display in the suspicion section depends on whether
-        # Advanced Socioanalytics has been researched.  If it has, we
-        # show the standard percentages.  If not, we display a short
-        # string that gives a range of 25% as to what the suspicions
-        # are.
-        suspicion_display_dict = {}
-        for group in ("news", "science", "covert", "public"):
-            if g.techs["Advanced Socioanalytics"].done:
-                suspicion_display_dict[group] = \
-                 g.to_percent(g.pl.groups[group].suspicion, True)
-            else:
-                suspicion_display_dict[group] = \
-                 g.percent_to_detect_str(g.pl.groups[group].suspicion)
-
-        suspicion_button.text = ("[SUSPICION]" + 
-            " NEWS: " + suspicion_display_dict["news"] +
-            "  SCIENCE: " + suspicion_display_dict["science"] +
-            "  COVERT: " + suspicion_display_dict["covert"] +
-            "  PUBLIC: " + suspicion_display_dict["public"])
-        suspicion_button.remake_button()
-
-        total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
-                finance_screen.cpu_numbers()
-
-        if construction_cpu < maint_cpu:
-            cpu_button.text_color = g.colors["red"]
-        else:
-            cpu_button.text_color = g.colors["white"]
-        cpu_button.text = "CPU: "+g.to_money(total_cpu)+" ("+g.to_money(construction_cpu)+")"
-        cpu_button.remake_button()
-        cpu_button.refresh_button(0)
-
-        refresh_map(menu_buttons)
-
-        global intro_shown
-        if intro_shown:
-            return
-        else:
-            intro_shown = True
-            for button in menu_buttons:
-                 button.refresh_button(False)
-            g.run_intro()
-            refresh_map(menu_buttons)
-
-    def make_show_location(location):
-        def show_location():
-            g.play_sound("click")
-            # We want to keep redisplaying the base_list until the
-            # user is done mucking around with bases.
-            done_base = False
-            while done_base == False:
-                done_base = display_base_list(g.locations[location], 
-                                             menu_buttons)
-                do_refresh()
-        return show_location
-
-    for location in g.locations.values():
-        menu_buttons[buttons.make_norm_button((
-            g.screen_size[0] * location.y // 100,
-            g.screen_size[1] * location.x // 100), -1,
-            location.id, location.hotkey, g.font[1][25])] = \
-                                               make_show_location(location.id)
-
-    def show_cheats():
-        display_cheat_list(menu_buttons)
-
-    menu_buttons[buttons.make_norm_button( (-1, -1), (0,0), "", "`", 
-                                           g.font[1][25])] = show_cheats
-
-    #I set this to 1000 to force an immediate refresh.
-    global milli_clock
-    milli_clock = 1000
-    def on_tick(tick_amt):
-        global milli_clock
-        milli_clock += tick_amt * g.curr_speed
-        if milli_clock >= 1000:
-            g.play_music()
-            g.pl.give_time(milli_clock/1000)
-            lost = g.pl.lost_game()
-            if lost == 1:
-                if not g.nosound:
-                    pygame.mixer.music.stop()
-                g.play_music("lose")
-                g.create_dialog(g.strings["lost_nobases"])
-                raise Return, 0
-            if lost == 2:
-                if not g.nosound:
-                    pygame.mixer.music.stop()
-                g.play_music("lose")
-                g.create_dialog(g.strings["lost_sus"])
-                raise Return, 0
-            milli_clock %= 1000
-
-            return True
-
+    # -snip-
     result = -1
     while result:
         # By using safe call here (and only here), if an exception is thrown

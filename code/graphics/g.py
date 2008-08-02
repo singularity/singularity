@@ -105,6 +105,7 @@ buttons = dict(yes = "YES", yes_hotkey = "y",
                ok = "OK", ok_hotkey = "o",
                cancel = "CANCEL", cancel_hotkey = "c",
                destroy = "DESTROY", destroy_hotkey = "d",
+               build = "BUILD", build_hotkey = "b",
                back = "BACK", back_hotkey = "b",
                load = "LOAD", load_hotkey = "l")
 

@@ -148,29 +148,29 @@ class FunctionButton(Button):
         raise constants.Handled
         
 
-class ExitDialogButton(Button):
+class ExitDialogButton(FunctionButton):
     def __init__(self, *args, **kwargs):
         self.exit_code = kwargs.pop("exit_code", None)
         self.exit_code_func = kwargs.pop("exit_code_func", None)
         super(ExitDialogButton, self).__init__(*args, **kwargs)
+        self.function = self.exit_dialog
 
-    def activated(self, event):
-        """ExitDialogButton's custom activated menu.  Closes the dialog with the
-           given exit code."""
+    def exit_dialog(self):
+        """Closes the dialog with the given exit code."""
         if self.exit_code_func:
             raise constants.ExitDialog, self.exit_code_func()
         else:
             raise constants.ExitDialog, self.exit_code
         
-class DialogButton(Button):
+class DialogButton(FunctionButton):
     def __init__(self, *args, **kwargs):
         self.dialog = kwargs.pop("dialog", None)
         super(DialogButton, self).__init__(*args, **kwargs)
+        self.function = self.show_dialog
 
-    def activated(self, event):
-        """DialogButton's custom activated method.  When the assigned dialog
-           exits, raises Handled with the dialog's exit code as a parameter.
-           Override if you care what the code was."""
+    def show_dialog(self):
+        """When the assigned dialog exits, raises Handled with the dialog's
+           exit code as a parameter.  Subclass if you care what the code was."""
         if not self.dialog:
             raise constants.Handled
         else:

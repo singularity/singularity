@@ -43,13 +43,13 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         item_list.sort()
         item_list.reverse()
         for item in item_list:
-            if item.item_type == self.type:
+            if item.item_type == self.type and item.available():
                 self.list.append(item.name)
                 self.key_list.append(item.id)
 
         self.default = self.parent.get_current(self.type).type.id
 
-        super(BuildDialog, self).show()
+        return super(BuildDialog, self).show()
 
     def on_change(self, description_pane, key):
         text.Text(description_pane, (0, 0), (-1, -1), text = key)

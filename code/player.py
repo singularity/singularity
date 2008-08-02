@@ -458,10 +458,11 @@ class Player(object):
         self.available_cpus = array([0,0,0,0,0])
         self.sleeping_cpus = 0
         for base in g.all_bases():
-            if base.power_state in ["active", "overclocked", "suicide"]:
-                self.available_cpus[:base.location.safety+1] += base.cpu
-            elif base.power_state == "sleep":
-                self.sleeping_cpus += base.cpu
+            if base.done:
+                if base.power_state in ["active", "overclocked", "suicide"]:
+                    self.available_cpus[:base.location.safety+1] += base.cpu
+                elif base.power_state == "sleep":
+                    self.sleeping_cpus += base.cpu
 
     # Are we still in the grace period?
     # The number of complete bases and complex_bases can be passed in, if we

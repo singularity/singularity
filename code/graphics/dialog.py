@@ -101,6 +101,7 @@ class Dialog(text.Text):
         """Recreates the fade mask for this dialog.  Override if part of the 
            dialog should remain fully visible, even when not active."""
         mask = pygame.Surface(self.real_size, 0, g.ALPHA)
+        abs_pos = self.collision_rect[:2]
         descendants = self.children[:] # Copy to make it safely mutable.
         while descendants:
             child = descendants.pop()
@@ -108,8 +109,8 @@ class Dialog(text.Text):
                 continue
             elif not child.self_mask:
                 fill_rect = child.collision_rect[:] # As above.
-                fill_rect[0] -= self.real_pos[0]
-                fill_rect[1] -= self.real_pos[1]
+                fill_rect[0] -= abs_pos[0]
+                fill_rect[1] -= abs_pos[1]
                 mask.fill( (0,0,0,175), fill_rect)
             elif child.mask_children:
                 descendants += child.children
@@ -237,6 +238,8 @@ class Dialog(text.Text):
                 if event.unicode:
                     # Unicode-based keydown handlers for this particular key.
                     insort_all(handlers, self.key_handlers.get(event.unicode, []))
+                # Keycode-based handlers for this particular key.
+                insort_all(handlers, self.key_handlers.get(event.key, []))
 
                 # Begin repeating keys.
                 if self.key_down is not event:
@@ -251,11 +254,6 @@ class Dialog(text.Text):
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
 
-                # Unicode-based keyup handling not available.
-                # pygame doesn't bother defining .unicode on KEYUP events.
-
-            # Keycode-based handlers for this particular key.
-            insort_all(handlers, self.key_handlers.get(event.key, []))
         elif event.type == pygame.MOUSEBUTTONUP:
             # Mouse click handlers.
             handlers = self.handlers.get(constants.CLICK, [])

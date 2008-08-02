@@ -139,10 +139,12 @@ class Buyable(object):
         available = array([cash_available, cpu_available, time])
         pct_complete = truediv(was_complete + available, self.total_cost)
 
-        # Find the least-complete resource, and let the other two be up to
-        # 5 percentage points closer to completion.
-        max = pct_complete.min() + .05
-        pct_complete[pct_complete > max] = max
+        # Find the least-complete resource.
+        least_complete = pct_complete[self.total_cost > 0].min()
+
+        # Let the other two be up to 5 percentage points closer to completion.
+        complete_cap = min(1, least_complete + .05)
+        pct_complete[pct_complete > complete_cap] = complete_cap
 
         # Translate that back to the total amount complete.
         self.cost_paid = numpy.cast[int](pct_complete * self.total_cost)
