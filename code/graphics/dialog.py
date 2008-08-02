@@ -25,6 +25,8 @@ import pygame
 import constants
 import g
 import widget
+import text
+import button
 
 def causes_remask(data_member):
     """Creates a data member that sets needs_remask to True when changed."""
@@ -34,16 +36,18 @@ def insort_all(sorted_list, items):
     for item in items:
         bisect.insort(sorted_list, item)
 
-class Dialog(widget.Widget):
+class Dialog(text.Text):
     """A Dialog is a Widget that has its own event loop and can be faded out."""
 
     top = None # The top-level dialog.
 
     faded = widget.causes_redraw("_faded")
 
-    def __init__(self, parent, pos = (.5,.55), size = (1, .9), 
-                 anchor = constants.MID_CENTER):
-        super(Dialog, self).__init__(parent, pos, size, anchor)
+    _collision_rect = causes_remask("__collision_rect")
+
+    def __init__(self, parent, pos = (.5,.1), size = (1, .9), 
+                 anchor = constants.TOP_CENTER, **kwargs):
+        super(Dialog, self).__init__(parent, pos, size, anchor, **kwargs)
         self.visible = False
         self.faded = False
         self.has_mask = True
@@ -53,6 +57,9 @@ class Dialog(widget.Widget):
 
         self.handlers = {}
         self.key_handlers = {}
+
+        if self.parent == None and self.background_color == (0,0,0,0):
+            self.background_color = (0,0,0,255)
 
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
@@ -232,3 +239,81 @@ class Dialog(widget.Widget):
         # None of the handlers instructed the dialog to close, so we pass that
         # information back up to the event loop.
         return constants.NO_RESULT
+
+
+class TextDialog(Dialog):
+    def __init__(self, parent, pos = (.5,.1), size = (.5,.5),
+                 anchor = constants.TOP_CENTER, valign = constants.TOP,
+                 shrink_factor = .88, background_color = (0,0,0,128), **kwargs):
+
+        super(TextDialog, self).__init__(parent, pos, size, anchor, 
+                                         shrink_factor = shrink_factor,
+                                         background_color = background_color,
+                                         valign = valign, **kwargs)
+
+
+class YesNoDialog(TextDialog):
+    yes_type = widget.causes_rebuild("_yes_type")
+    no_type = widget.causes_rebuild("_no_type")
+    def __init__(self, parent, **kwargs):
+        self.parent = parent
+
+        self.yes_type = kwargs.pop("yes_type", "yes")
+        self.no_type = kwargs.pop("no_type", "no")
+        self.invert_enter = kwargs.pop("invert_enter", False)
+        self.invert_escape = kwargs.pop("invert_escape", False)
+
+        super(YesNoDialog, self).__init__(parent, **kwargs)
+
+        self.yes_button = button.ExitDialogButton(self, (.1,1), (.3,.1), 
+                                                 anchor = constants.BOTTOM_LEFT,
+                                                 exit_code = True)
+
+        self.no_button = button.ExitDialogButton(self, (.9,1), (.3,.1), 
+                                                anchor = constants.BOTTOM_RIGHT,
+                                                exit_code = False)
+
+        self.add_key_handler(pygame.K_RETURN, self.on_return)
+        self.add_key_handler(pygame.K_ESCAPE, self.on_escape)
+
+    def rebuild(self):
+        super(YesNoDialog, self).rebuild()
+
+        self.yes_button.text = g.buttons[self.yes_type]
+        self.yes_button.hotkey = g.buttons[self.yes_type + "_hotkey"]
+        self.no_button.text = g.buttons[self.no_type]
+        self.no_button.hotkey = g.buttons[self.no_type + "_hotkey"]
+
+    def on_return(self, event):
+        if self.invert_enter:
+            self.no_button.activated(event)
+        else:
+            self.yes_button.activated(event)
+
+    def on_escape(self, event):
+        if self.invert_escape:
+            self.yes_button.activated(event)
+        else:
+            self.no_button.activated(event)
+
+
+class MessageDialog(TextDialog):
+    ok_type = widget.causes_rebuild("_ok_type")
+    def __init__(self, parent, **kwargs):
+        self.parent = parent
+
+        self.ok_type = kwargs.pop("ok_type", "ok")
+
+        super(MessageDialog, self).__init__(parent, **kwargs)
+
+        self.ok_button = button.ExitDialogButton(self, (.5,1), (.3,.1), 
+                                               anchor = constants.BOTTOM_CENTER)
+
+        self.add_key_handler(pygame.K_RETURN, self.ok_button.activated)
+        self.add_key_handler(pygame.K_ESCAPE, self.ok_button.activated)
+
+    def rebuild(self):
+        super(MessageDialog, self).rebuild()
+
+        self.ok_button.text = g.buttons[self.ok_type]
+        self.ok_button.hotkey = g.buttons[self.ok_type + "_hotkey"]

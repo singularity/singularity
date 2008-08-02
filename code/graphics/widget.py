@@ -173,7 +173,6 @@ class Widget(object):
 
         if self.parent != None:
             self.surface = pygame.Surface(size, 0, g.ALPHA)
-            self.surface.fill( (0,0,0,0) )
         else:
             self.surface = pygame.display.set_mode(size)
 
@@ -210,7 +209,8 @@ class Widget(object):
             # Recalculate the widget's absolute position.
             self.collision_rect = self._make_collision_rect()
 
-            # Draw the widget's image.
+            # Clear the surface and draw the widget's image.
+            self.surface.fill( (0,0,0,0) )
             self.surface.blit( self.internal_surface, (0,0) )
 
             # Draw the widget's children who go below the dimming mask.

@@ -77,3 +77,15 @@ death_list = Death | If I lose all of my constructed bases, I have no place left
 susp_list = Suspicion | When one of my bases is discovered, the group that discovered it becomes slightly more suspicious. When suspicious, they will search harder for my bases, increasing the chances for discovery. Any group will destroy me if they become absolutely certain of my existence. Thankfully, the groups become less suspicious with the passage of time.
 money_list = Money | Money is a general term encompassing both human currency and various resources. It is used to construct and maintain bases, build items, and research technologies. It can be acquired through per-day interest as well as through jobs.
 processors_list = Processors | Processors provide raw computing power.  They can do three things: research new technologies, perform jobs for money, or provide cycles for building new bases.
+
+[buttons]
+yes = yes
+yes_hotkey = y
+no = no
+no_hotkey = n
+ok = ok
+ok_hotkey = o
+cancel = cancel
+cancel_hotkey = c
+destroy = destroy
+destroy_hotkey = d

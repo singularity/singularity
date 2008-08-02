@@ -22,9 +22,6 @@
 import os.path
 import pygame
 
-import buttons
-from buttons import always, void, exit
-
 #screen is the actual pygame display.
 global screen
 
@@ -299,6 +296,12 @@ load_images() loads all of the images in the data/images/ directory.
             images[image_filename].set_colorkey((255, 0, 255, 255),
              pygame.RLEACCEL)
 
+
+buttons = dict(yes = "yes", yes_hotkey = "y",
+               no = "no", no_hotkey = "n",
+               ok = "ok", ok_hotkey = "o",
+               cancel = "cancel", cancel_hotkey = "c",
+               destroy = "destroy", destroy_hotkey = "d")
 
 load_fonts()
 load_images()

@@ -49,7 +49,7 @@ def split_wrap(text, font, wrap_at):
                 if pos + word_size <= wrap_at:
                     line += word
                     pos += word_size
-                elif word_size < wrap_at / 2:
+                elif word_size < wrap_at:
                     lines.append(strip_to_null(line))
                     line = word
                     pos = word_size
@@ -131,7 +131,7 @@ class Text(widget.BorderedWidget):
     align = widget.causes_rebuild("_align")
     valign = widget.causes_rebuild("_valign")
 
-    bounding_rect = widget.set_on_change("_bounding_rect", "needs_refont")
+    collision_rect = widget.set_on_change("_collision_rect", "needs_refont")
     _base_font = widget.set_on_change("__base_font", "needs_refont")
     _text = widget.set_on_change("__text", "needs_refont")
     _shrink_factor = widget.set_on_change("__shrink_factor", "needs_refont")
