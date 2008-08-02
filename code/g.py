@@ -408,7 +408,7 @@ def get_save_folder(just_pref_dir=False):
         return save_dir
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_r4"
+current_save_version = "singularity_savefile_r5_pre"
 def save_game(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
@@ -441,6 +441,7 @@ savefile_translation = {
     "singularity_savefile_r4_pre3": 3.93,
     "singularity_savefile_r4_pre4": 3.94,
     "singularity_savefile_r4": 4,
+    "singularity_savefile_r5_pre": 4.91,
 }
 
 # For cPickle
