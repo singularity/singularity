@@ -47,6 +47,7 @@ class Dialog(text.Text):
 
     def __init__(self, parent, pos = (.5,.1), size = (1, .9), 
                  anchor = constants.TOP_CENTER, **kwargs):
+        kwargs.setdefault("background_color", (0,0,0,0))
         super(Dialog, self).__init__(parent, pos, size, anchor, **kwargs)
         self.visible = False
         self.faded = False
@@ -57,9 +58,6 @@ class Dialog(text.Text):
 
         self.handlers = {}
         self.key_handlers = {}
-
-        if self.parent == None and self.background_color == (0,0,0,0):
-            self.background_color = (0,0,0,255)
 
     def make_top(self):
         """Makes this dialog be the top-level dialog."""

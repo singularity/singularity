@@ -293,8 +293,8 @@ class BorderedWidget(Widget):
         super(BorderedWidget, self).__init__(parent, pos, size, anchor)
 
         self.borders = borders
-        self.border_color = border_color or g.colors["blue"]
-        self.background_color = background_color or (0,0,0,0)
+        self.border_color = border_color or g.colors["white"]
+        self.background_color = background_color or g.colors["blue"]
 
     def rebuild(self):
         super(BorderedWidget, self).rebuild()
