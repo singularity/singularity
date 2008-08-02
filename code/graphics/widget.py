@@ -55,6 +55,10 @@ def causes_redraw(data_member):
     """Creates a data member that sets needs_redraw to True when changed."""
     return set_on_change(data_member, "needs_redraw")
 
+def causes_full_redraw(data_member):
+    """Creates a data member that sets needs_redraw to True when changed."""
+    return set_on_change(data_member, "needs_full_redraw")
+
 class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
        children."""
@@ -68,14 +72,21 @@ class Widget(object):
 
     needs_redraw = call_on_change("_needs_redraw", _propogate_redraw)
 
+    def _propogate_full_redraw(self):
+        if self._needs_full_redraw and not getattr(self, "needs_redraw", 0):
+            self.needs_redraw = self._needs_full_redraw
+
+    needs_full_redraw = call_on_change("_needs_full_redraw", 
+                                       _propogate_full_redraw)
+
     def _propogate_rebuild(self):
         self.needs_redraw = self.needs_rebuild # Propagates if needed.
 
     needs_rebuild = call_on_change("_needs_rebuild", _propogate_rebuild)
 
-    pos = causes_redraw("_pos")
+    pos = causes_full_redraw("_pos")
     size = causes_rebuild("_size")
-    anchor = causes_redraw("_anchor")
+    anchor = causes_full_redraw("_anchor")
     children = causes_redraw("_children")
     visible = causes_redraw("_visible")
 
@@ -96,6 +107,7 @@ class Widget(object):
         # Set automatically by other properties.
         #self.needs_rebuild = True
         #self.needs_redraw = True
+        #self.needs_full_redraw = True
 
     def _parent_size(self):
         if self.parent == None:
@@ -225,6 +237,8 @@ class Widget(object):
             # Draw the widget's children who go below the dimming mask.
             above_mask = []
             for child in self.children:
+                if self.needs_full_redraw:
+                    child.needs_full_redraw = self.needs_full_redraw
                 if child.visible:
                     if child.has_mask:
                         above_mask.append(child)
@@ -246,6 +260,7 @@ class Widget(object):
             pygame.display.flip()
 
         self.needs_redraw = False
+        self.needs_full_redraw = False
 
     def add_handler(self, *args, **kwargs):
         """Handler pass-through."""
