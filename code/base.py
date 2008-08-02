@@ -143,7 +143,7 @@ class Base(buyable.Buyable):
                 detect_chance[group] /= 100
 
         # ... and its power state.
-        if self.done and self.power_state == "Sleep":
+        if self.done and self.power_state == "sleep":
             for group in detect_chance:
                 detect_chance[group] /= 2
 
@@ -155,16 +155,8 @@ class Base(buyable.Buyable):
 
         return detect_chance
 
-    #Return the number of units the given base has of a computer.
-    def has_item(self):
-        num_items = 0
-        for item in self.cpus:
-            if item and item.done:
-                num_items += 1
-        return num_items
-
     def is_building(self):
-        for item in self.cpus + self.extra_items:
+        for item in [self.cpus] + self.extra_items:
             if item and not item.done:
                 return True
         return False
