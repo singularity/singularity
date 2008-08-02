@@ -66,7 +66,7 @@ def split_wrap(text, font, wrap_at):
                             lines.append(strip_to_null(line))
                             line = char
                             pos = width
-            if line:
+            if line and line != " ":
                 lines.append(strip_to_null(line))
     return lines
 
