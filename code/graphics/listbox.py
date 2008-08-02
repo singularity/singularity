@@ -28,11 +28,13 @@ import scrollbar
 
 class Listbox(widget.FocusWidget, text.SelectableText):
     list = widget.causes_rebuild("_list")
-    list_pos = widget.causes_rebuild("_list_pos")
+    align = widget.causes_rebuild("_align")
     list_size = widget.causes_rebuild("_list_size")
+    list_pos = widget.causes_rebuild("_list_pos")
 
-    def __init__(self, parent, pos, size, anchor, list = None, list_pos = 0,
-                 list_size = -20, borders = constants.ALL, **kwargs):
+    def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
+                 list_pos=0, list_size=-20, borders=constants.ALL,
+                 align=constants.CENTER, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
         
@@ -40,6 +42,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.display_elements = []
         self.borders = borders
 
+        self.align = align
         self.list_size = list_size
         self.list_pos = list_pos
 

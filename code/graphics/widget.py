@@ -213,7 +213,10 @@ class Widget(object):
         return pygame.sprite.Rect(pos, self.real_size)
 
     def is_over(self, position):
-        return self.collision_rect.collidepoint(position)
+        if position != (0,0):
+            return self.collision_rect.collidepoint(position)
+        else:
+            return False
 
     def remake_surfaces(self):
         """Recreates the surfaces that this widget will draw on."""
@@ -223,7 +226,11 @@ class Widget(object):
             self.surface = pygame.Surface(size, 0, g.ALPHA)
             color = (0,0,0,0)
         else:
-            self.surface = pygame.display.set_mode(size, g.fullscreen)
+            if g.fullscreen:
+                flags = pygame.FULLSCREEN
+            else:
+                flags = 0
+            self.surface = pygame.display.set_mode(size, flags)
             color = (0,0,0,255)
 
         self.surface.fill( color )
@@ -248,6 +255,10 @@ class Widget(object):
     def redraw(self):
         """Handles redrawing a widget and its children.  Art specific to this 
            widget should be drawn by overriding rebuild, not redraw."""
+        # Recalculate the widget's absolute position, if needed.
+        if self.needs_rebuild or self.needs_redraw:
+            self.collision_rect = self._make_collision_rect()
+
         # If the widget's own image needs to be rebuilt, do it and mark the
         # widget as needing a redraw.
         if self.needs_rebuild:
@@ -255,9 +266,6 @@ class Widget(object):
 
         # Redraw the widget.
         if self.needs_redraw:
-            # Recalculate the widget's absolute position.
-            self.collision_rect = self._make_collision_rect()
-
             # Clear the surface and draw the widget's image.
             self.surface.fill( (0,0,0,0) )
             self.surface.blit( self.internal_surface, (0,0) )

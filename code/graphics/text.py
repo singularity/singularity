@@ -27,6 +27,8 @@ import g
 DEBUG = False
 
 def strip_to_null(a_string):
+    if not a_string:
+        return a_string
     if a_string[0] == " ":
         a_string = u"\uFEFF" + a_string[1:]
     if a_string[-1] == " ":
@@ -76,8 +78,10 @@ def _do_print(surface, text, xy, font, color):
     rendered_text = font.render(text, True, color)
     surface.blit(rendered_text, xy)
 
-def print_string(surface, string_to_print, xy, font, color, underline_char,
+def print_string(surface, string_to_print, xy_orig, font, color, underline_char,
                  align, valign, dimensions, wrap):
+    xy = list(xy_orig)
+
     width = dimensions[0] - 4
     height = dimensions[1] - 4
 
@@ -86,7 +90,6 @@ def print_string(surface, string_to_print, xy, font, color, underline_char,
     else:
         lines = split_wrap(string_to_print, font, 0)
 
-    xy = [2,2]
     if valign != constants.TOP:
         vsize = len(lines) * font.get_linesize()
         if vsize <= height:
@@ -97,7 +100,7 @@ def print_string(surface, string_to_print, xy, font, color, underline_char,
                 xy[1] += excess_space
     
     for line in lines:
-        xy[0] = 2
+        xy[0] = xy_orig[0]
         if align != constants.LEFT:
             hsize = font.size(line)[0]
             excess_space = width - hsize
@@ -333,7 +336,7 @@ class EditableText(widget.FocusWidget, Text):
         char_offset -= len(line)
 
         self.hitbox[1] = line_y - line_size
-        line_x = 2
+        line_x = 3
         if self.align != constants.LEFT:
             line_width = self.font.size(line)[0]
             excess_space = self.collision_rect.width - line_width
@@ -392,7 +395,7 @@ class EditableText(widget.FocusWidget, Text):
 
         after_char = self.cursor_pos - char_offset
 
-        line_x = 2
+        line_x = 3
         if self.align != constants.LEFT:
             line_width = self.font.size(line)[0]
             excess_space = self.real_size[0] - line_width

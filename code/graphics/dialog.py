@@ -69,7 +69,7 @@ class Dialog(text.Text):
 
     _collision_rect = causes_remask("__collision_rect")
 
-    def __init__(self, parent, pos = (.5,.1), size = (1, .9), 
+    def __init__(self, parent=None, pos = (.5,.1), size = (1, .9), 
                  anchor = constants.TOP_CENTER, **kwargs):
         kwargs.setdefault("background_color", (0,0,0,0))
         super(Dialog, self).__init__(parent, pos, size, anchor, **kwargs)
@@ -103,7 +103,9 @@ class Dialog(text.Text):
         descendants = self.children[:] # Copy to make it safely mutable.
         while descendants:
             child = descendants.pop()
-            if not child.self_mask:
+            if not child.visible:
+                continue
+            elif not child.self_mask:
                 fill_rect = child.collision_rect[:] # As above.
                 fill_rect[0] -= self.real_pos[0]
                 fill_rect[1] -= self.real_pos[1]
@@ -146,6 +148,18 @@ class Dialog(text.Text):
         self.visible = True
         self.key_down = None
         self.start_timer()
+
+        # Pretend to jiggle the mouse pointer, to force buttons to update their
+        # selected state.
+        Dialog.top.redraw()
+        self.fake_mouse()
+
+        # Force a timer tick at the start to make sure everything's initialized.
+        if self.needs_timer:
+            self.handle(pygame.event.Event(pygame.USEREVENT))
+            Dialog.top.redraw()
+            pygame.display.flip()
+
         while True:
             # Redraw handles rebuilding and redrawing all widgets, as needed.
             Dialog.top.redraw()
@@ -249,7 +263,15 @@ class Dialog(text.Text):
         else:
             handlers = []
 
+        return self.call_handlers(handlers, event)
 
+    def fake_mouse(self):
+        """Fakes a MOUSEMOTION event.  MOUSEMOTION handlers must be able to
+           handle a None event, in order to support this method."""
+        handlers = self.handlers.get(constants.MOUSEMOTION, [])[:]
+        self.call_handlers(handlers, event=None)
+
+    def call_handlers(self, handlers, event):
         # Feed the event to all the handlers, in priority order.
         for priority, handler in handlers:
             try:
@@ -333,10 +355,19 @@ class NullDialog(Dialog):
         pass
 
 
+class TopDialog(Dialog):
+    def __init__(self, *args, **kwargs):
+        super(TopDialog, self).__init__(*args, **kwargs)
+        self.size = (1, 1)
+        self.pos = (0, 0)
+        self.anchor = constants.TOP_LEFT
+        self.make_top()
+
+
 class TextDialog(Dialog):
-    def __init__(self, parent, pos = (.5,.1), size = (.5,.5),
-                 anchor = constants.TOP_CENTER, valign = constants.TOP,
-                 shrink_factor = .88, background_color = (0,0,0,128), **kwargs):
+    def __init__(self, parent, pos=(.5,.1), size=(.5,.5),
+                 anchor=constants.TOP_CENTER, valign=constants.TOP,
+                 shrink_factor=.88, background_color=(0,0,50,200), **kwargs):
 
         super(TextDialog, self).__init__(parent, pos, size, anchor, 
                                          shrink_factor = shrink_factor,
@@ -347,7 +378,7 @@ class TextDialog(Dialog):
 class YesNoDialog(TextDialog):
     yes_type = widget.causes_rebuild("_yes_type")
     no_type = widget.causes_rebuild("_no_type")
-    def __init__(self, parent, **kwargs):
+    def __init__(self, parent, *args, **kwargs):
         self.parent = parent
 
         self.yes_type = kwargs.pop("yes_type", "yes")
@@ -355,7 +386,7 @@ class YesNoDialog(TextDialog):
         self.invert_enter = kwargs.pop("invert_enter", False)
         self.invert_escape = kwargs.pop("invert_escape", False)
 
-        super(YesNoDialog, self).__init__(parent, **kwargs)
+        super(YesNoDialog, self).__init__(parent, *args, **kwargs)
 
         self.yes_button = button.ExitDialogButton(self, (-.1,-1), (-.3,-.1), 
                                                  anchor = constants.BOTTOM_LEFT,

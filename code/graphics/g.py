@@ -25,7 +25,7 @@ import pygame
 #size of the screen. This can be set via command-line option.
 screen_size = (800, 600)
 
-fullscreen = 0
+fullscreen = False
 
 #colors:
 colors = {}
@@ -45,6 +45,7 @@ def fill_colors():
     colors["light_red"] = (255, 50, 50, 255)
     colors["light_green"] = (50, 255, 50, 255)
     colors["light_blue"] = (50, 50, 255, 255)
+    colors["clear"] = (0, 0, 0, 0)
 
 #
 # Font functions.
