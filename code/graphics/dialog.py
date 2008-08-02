@@ -548,3 +548,35 @@ class ChoiceDescriptionDialog(ChoiceDialog):
 
     def handle_update(self, item):
         self.needs_rebuild = True
+
+
+class SimpleMenuDialog(Dialog):
+    def __init__(self, *args, **kwargs):
+        buttons = kwargs.pop("buttons")
+        super(SimpleMenuDialog, self).__init__(*args, **kwargs)
+
+        self.size = (-1, -1)
+        self.pos = (0, 0)
+        self.anchor = constants.TOP_LEFT
+
+        num_buttons = len(buttons)
+        height = (.06 * num_buttons) + .01
+        self.button_panel = \
+            widget.BorderedWidget(self, (-.5, -.5), (.22, height),
+                                  anchor=constants.MID_CENTER,
+                                  background_color=g.colors["dark_blue"],
+                                  border_color=g.colors["white"],
+                                  borders=constants.ALL)
+
+        y_pos = .01
+        for button in buttons:
+            if button.parent is not None:
+                button.remove_hooks()
+            button.parent = self.button_panel
+            button.add_hooks()
+
+            button.pos = (.01, y_pos)
+            button.size = (.20, .05)
+            button.text_shrink_factor=.70
+            
+            y_pos += .06

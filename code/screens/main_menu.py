@@ -29,7 +29,20 @@ import code.g as g
 class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)
-        self.difficulty_dialog = DifficultySelect(self)
+
+        difficulty_button_souls = (("VERY EASY", 1), ("EASY", 3), 
+                                   ("NORMAL", 5), ("HARD", 7),
+                                   ("ULTRA HARD", 10), ("IMPOSSIBLE", 100),
+                                   ("BACK", -1))
+        difficulty_buttons = []
+        for name, difficulty in difficulty_button_souls:
+            difficulty_buttons.append(
+                button.ExitDialogButton(None, None, None, text=name,
+                                        hotkey=name[0].lower(),
+                                        exit_code=difficulty)        )
+        self.difficulty_dialog = \
+            dialog.SimpleMenuDialog(self, buttons=difficulty_buttons)
+
         self.load_dialog = dialog.ChoiceDialog(self, (.5,.5), (.5,.5),
                                                anchor=constants.MID_CENTER,
                                                yes_type="load")
@@ -82,29 +95,6 @@ class MainMenu(dialog.TopDialog):
             save = save_names[index]
             g.load_game(save)
             dialog.call_dialog(self.map_screen, self)
-
-class DifficultySelect(dialog.Dialog):
-    def __init__(self, *args, **kwargs):
-        super(DifficultySelect, self).__init__(*args, **kwargs)
-
-        button_souls = (("VERY EASY", 1), ("EASY", 3), ("NORMAL", 5),
-                        ("HARD", 7), ("ULTRA HARD", 10), ("IMPOSSIBLE", 100),
-                        ("BACK", -1))
-        num_buttons = len(button_souls)
-        self.size = (.22, (.06 * num_buttons) + .01)
-        self.pos = (-.5, -.5)
-        self.anchor = constants.MID_CENTER
-        self.background_color = gg.colors["dark_blue"]
-        self.border_color = gg.colors["white"]
-        self.borders = constants.ALL
-
-        y_pos = .01
-        for name, difficulty in button_souls:
-            button.ExitDialogButton(self, (.01, y_pos), (.20, .05), text=name,
-                                    hotkey=name[0].lower(),
-                                    text_shrink_factor=.70,
-                                    exit_code=difficulty)
-            y_pos += .06
 
 
 about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
