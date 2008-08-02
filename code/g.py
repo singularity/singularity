@@ -740,11 +740,18 @@ def load_locations():
 
         id = location_info["id"]
         position = location_info["position"]
-        if type(position) != list or len(position) != 2:
+        if type(position) != list or len(position) not in [2,3]:
             sys.stderr.write("Error with position given: %s\n" % repr(position))
             sys.exit(1)
         try:
-            position = ( int(position[0]), int(position[1]) )
+            if len(position) == 2:
+                position = ( int(position[0]), int(position[1]) )
+                absolute = False
+            else:
+                if position[0] != "absolute":
+                    raise ValueError, "'%s' not understood." % position[0]
+                position = ( int(position[1]), int(position[2]) )
+                absolute = True
         except ValueError:
             sys.stderr.write("Error with position given: %s\n" % repr(position))
             sys.exit(1)
@@ -777,7 +784,7 @@ def load_locations():
             else:
                 modifiers_dict[key] = float(value)
 
-        locations[id] = location.Location(id, position, safety, pre)
+        locations[id] = location.Location(id, position, absolute, safety, pre)
 
         locations[id].modifiers = modifiers_dict
 

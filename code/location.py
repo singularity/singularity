@@ -56,11 +56,12 @@ class Location(buyable.Buyable_Class):
     # The bonuses and penalties of this location.
     modifiers = dict()
 
-    def __init__(self, id, position, safety, prerequisites):
+    def __init__(self, id, position, absolute, safety, prerequisites):
         # Kinda hackish, but it works.
         super(Location, self).__init__(id, "", (0,0,0), prerequisites)
 
-        self.y, self.x = position
+        self.x, self.y = position[0] / -100., position[1] / -100.
+        self.absolute = absolute
         self.safety = safety
 
         # A sorted list of the bases at this location.

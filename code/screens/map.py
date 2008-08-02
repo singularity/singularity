@@ -18,23 +18,43 @@
 
 #This file is used to display the World Map.
 
-
 import pygame
-import g
-import base
 import random
 
-import buttons
-import listbox
-import main_menu
-import base_screen
-import research_screen
-import finance_screen
+import g
+from graphics import dialog, constants, image, button, g as gg
 
-from buttons import always, void, exit, Return
+class MapDialog(dialog.Dialog):
+    def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
+                 anchor = constants.TOP_LEFT,  *args, **kwargs):
+        super(MapDialog, self).__init__(parent, pos, size, anchor,
+                                        *args, **kwargs)
+        if self.parent is None:
+            self.make_top()
+        i = image.Image(self, (.5,.5), (1,.667), constants.MID_CENTER, 
+                        gg.images['earth.jpg'])
+
+        for location in g.locations.values():
+            if location.absolute:
+                button_parent = self
+            else:
+                button_parent = i
+            button.ExitDialogButton(button_parent, (location.x, location.y),
+                                anchor = constants.MID_CENTER,
+                                text = location.name, hotkey = location.hotkey)
+
+import g
+import base
+
+import main_menu
+import base
+import research
+import finance
+
 from safety import safe_call
 
 intro_shown = True
+
 
 def display_generic_menu(xy_loc, titlelist):
     #Border
