@@ -40,8 +40,8 @@ class Tech(buyable.Buyable):
             # place.
             super(Tech, self).finish()
 
-    def finish(self, count=1):
-        super(Tech, self).finish(count)
+    def finish(self):
+        super(Tech, self).finish()
         self.gain_tech()
 
     def gain_tech(self):

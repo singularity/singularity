@@ -452,7 +452,8 @@ save_classes = dict(
     Player=player.Player,
     _reconstructor = copy_reg._reconstructor,
     object=object,
-    array=buyable.array,
+    array=list, # This is the old buyable.array.  We just treat it as a list
+                # for conversion purposes.
     list=list,
     Location=location.Location,
     Tech=tech.Tech,
