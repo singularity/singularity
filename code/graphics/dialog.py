@@ -19,6 +19,7 @@
 #This file contains the dialog class.
 
 import bisect
+import time
 import pygame
 
 import constants
@@ -131,6 +132,12 @@ class Dialog(widget.Widget):
         # copy of the first type's list, then insort_all to insert the elements
         # of the other lists in proper sorted order.
         if event.type == pygame.MOUSEMOTION:
+            # Compress multiple MOUSEMOTION events into one.
+            # Note that the pos will be wrong, so pygame.mouse.get_pos() must
+            # be used instead.
+            time.sleep(1 / 30.)
+            pygame.event.clear(pygame.MOUSEMOTION)
+
             # Generic mouse motion handlers.
             handlers = self.handlers.get(constants.MOUSEMOTION, [])[:]
 

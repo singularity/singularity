@@ -118,7 +118,8 @@ class Slider(button.Button):
             else:
                 dir = 1
 
-            rel = event.pos[dir] - self.start_pos[dir]
+            mouse_pos = pygame.mouse.get_pos()
+            rel = mouse_pos[dir] - self.start_pos[dir]
             unit = self._calc_length(1) * self.real_size[dir]
             movement = int( ( rel + (unit / 2.) ) // unit )
 
@@ -153,10 +154,11 @@ class Slider(button.Button):
 
 
 class UpdateSlider(Slider):
-    def on_update(self, value):
-        self.__slider_pos = value
-        self.update_func(value)
-    _slider_pos = property(lambda self: self.__slider_pos, on_update)
+    def _on_slider_move(self):
+        self.update_func(self.slider_pos)
+
+    _slider_pos = widget.call_on_change("__slider_pos", _on_slider_move)
+
     def __init__(self, *args, **kwargs):
         if "update_func" in kwargs:
             self.update_func = kwargs.pop("update_func")

@@ -22,7 +22,7 @@ import pygame
 import g
 import constants
 
-def set_on_change(data_member, set_me, set_value = True):
+def call_on_change(data_member, call_me, *args, **kwargs):
     """Creates a data member that sets another data member to a given value
        when changed."""
     def get(self):
@@ -36,9 +36,14 @@ def set_on_change(data_member, set_me, set_value = True):
 
         if change:
             setattr(self, data_member, my_value)
-            setattr(self, set_me, set_value)
+            call_me(self, *args, **kwargs)
 
     return property(get, set)
+
+def set_on_change(data_member, set_me, set_value = True):
+    """Creates a data member that sets another data member to a given value
+       when changed."""
+    return call_on_change(data_member, setattr, set_me, set_value)
 
 def causes_rebuild(data_member):
     """Creates a data member that sets needs_rebuild to True when changed."""
@@ -52,33 +57,19 @@ class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
        children."""
 
-    def _get_needs_redraw(self):
-        return self._needs_redraw
-
-    def _propogate_redraw(self, redraw):
-        if redraw:
+    def _propogate_redraw(self):
+        if self.needs_redraw:
             target = self.parent
             while target:
-                target._needs_redraw = redraw
+                target._needs_redraw = self.needs_redraw
                 target = target.parent
-        self._needs_redraw = redraw
 
-    needs_redraw = property(_get_needs_redraw, _propogate_redraw,
-                            doc = """Indicates if the widget needs a redraw.
-                                     Setting needs_redraw will propogate up to
-                                     the top-level dialog.""")
+    needs_redraw = call_on_change("_needs_redraw", _propogate_redraw)
 
-    def _get_needs_rebuild(self):
-        return self._needs_rebuild
+    def _propogate_rebuild(self):
+        self.needs_redraw = self.needs_rebuild # Propagates if needed.
 
-    def _propogate_rebuild(self, rebuild):
-        self.needs_redraw = rebuild # Propagates if true.
-        self._needs_rebuild = rebuild
-
-    needs_rebuild = property(_get_needs_rebuild, _propogate_rebuild,
-                            doc = """Indicates if the widget needs a rebuild.
-                                     Setting needs_rebuild will set needs_redraw
-                                     and propogate down to all descendants.""")
+    needs_rebuild = call_on_change("_needs_rebuild", _propogate_rebuild)
 
     pos = causes_redraw("_pos")
     size = causes_rebuild("_size")

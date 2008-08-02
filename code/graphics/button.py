@@ -91,7 +91,7 @@ class Button(text.SelectableText):
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEMOTION:
-            self.selected = self.is_over(event.pos)
+            self.selected = self.is_over(pygame.mouse.get_pos())
         elif event.type == pygame.MOUSEBUTTONUP:
             if self.is_over(event.pos):
                 self.activated(event)
