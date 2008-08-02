@@ -41,15 +41,14 @@ class Button(text.SelectableText):
 
     _hotkey = property(lambda self: self.__hotkey, _on_set_hotkey)
 
-    def __init__(self, parent, pos, size = (0, -.05),
-                 anchor = constants.TOP_LEFT, text = "", base_font = None,
-                 color = None, borders=(0,2,3,5), border_color = None,
-                 unselected_color = None, selected_color = None,
-                 hotkey = "", force_underline = None):
-        super(Button, self).__init__(parent, pos, size, anchor,
-                                     text, base_font, color, borders,
-                                     border_color, unselected_color,
-                                     selected_color)
+    def __init__(self, parent, pos, size = (0, -.05), base_font = None,
+                 borders = (0,2,3,5), hotkey = "", force_underline = None,
+                 text_shrink_factor = .825, **kwargs):
+        super(Button, self).__init__(parent, pos, size, **kwargs)
+
+        self.base_font = base_font or g.font[1]
+        self.borders = borders
+        self.shrink_factor = text_shrink_factor
 
         self.hotkey = hotkey
         self.force_underline = force_underline

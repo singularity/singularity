@@ -54,12 +54,13 @@ class Text(widget.Widget):
     borders = widget.causes_rebuild("_borders")
     border_color = widget.causes_rebuild("_border_color")
     background_color = widget.causes_rebuild("_background_color")
+    shrink_factor = widget.causes_rebuild("_shrink_factor")
     underline = widget.causes_rebuild("_underline")
 
     def __init__(self, parent, pos, size = (0, -.05), 
                  anchor = constants.TOP_LEFT, text = "", base_font = None,
                  color = None, borders=(), border_color = None, 
-                 background_color = None, underline = -1):
+                 background_color = None, shrink_factor = 1, underline = -1):
         super(Text, self).__init__(parent, pos, size, anchor)
         
         self.text = text
@@ -68,6 +69,7 @@ class Text(widget.Widget):
         self.borders = borders
         self.border_color = border_color or g.colors["blue"]
         self.background_color = background_color or (0,0,0,0)
+        self.shrink_factor = shrink_factor
         self.underline = underline
 
     def pick_font(self, height = 0):
@@ -101,7 +103,8 @@ class Text(widget.Widget):
             horiz_borders = (constants.LEFT in self.borders) \
                             + (constants.RIGHT in self.borders)
             horiz_offset = horiz_borders + 2
-            font = self.pick_font(base_size[1] - vert_offset)
+            height = int( (base_size[1] - vert_offset) * self.shrink_factor )
+            font = self.pick_font(height)
             base_size[0] = font.size(self.text)[0] + horiz_offset
         return tuple(base_size)
 
@@ -117,24 +120,23 @@ class Text(widget.Widget):
         horiz = (my_size[0], 1)
         vert = (1, my_size[0])
 
-        horiz_offset = 1
-        vert_offset = 1
-
         for edge in self.borders:
             if edge == constants.TOP:
-                vert_offset = 2
                 self.internal_surface.fill( self.border_color, (0,0,my_size[0],1))
             elif edge == constants.LEFT:
-                horiz_offset = 2
                 self.internal_surface.fill( self.border_color, (0,0,1,my_size[1]))
             elif edge == constants.RIGHT:
                 self.internal_surface.fill( self.border_color, (0,my_size[1]-1)+my_size)
             elif edge == constants.BOTTOM:
                 self.internal_surface.fill( self.border_color, (my_size[0]-1,0)+my_size)
 
+        text_size = self.font.size(self.text)
+        hgap = ( my_size[0] - text_size[0] ) // 2
+        vgap = ( my_size[1] - text_size[1] ) // 2
+
         # Print the text itself
         print_string(self.internal_surface, self.text, self.font, 
-                     self.underline, (horiz_offset, vert_offset), self.color)
+                     self.underline, (hgap, vgap), self.color)
 
 
 class SelectableText(Text):
@@ -142,12 +144,9 @@ class SelectableText(Text):
     selected_color = widget.causes_rebuild("_selected_color")
     unselected_color = widget.causes_rebuild("_unselected_color")
 
-    def __init__(self, parent, pos, size = (0, -.05),
-                 anchor = constants.TOP_LEFT, text = "", base_font = None,
-                 color = None, borders=(0,2,3,5), border_color = None,
-                 unselected_color = None, selected_color = None):
-        super(SelectableText, self).__init__(parent, pos, size, anchor,
-                                             text, base_font, color, borders)
+    def __init__(self, parent, pos, size, border_color = None,
+                 unselected_color = None, selected_color = None, **kwargs):
+        super(SelectableText, self).__init__(parent, pos, size, **kwargs)
 
         self.border_color = border_color or g.colors["white"]
         self.selected_color = selected_color or g.colors["light_blue"]

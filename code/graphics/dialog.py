@@ -162,6 +162,8 @@ class Dialog(widget.Widget):
         elif event.type == pygame.MOUSEBUTTONUP:
             # Mouse click handlers.
             handlers = self.handlers.get(constants.CLICK, [])
+        elif event.type == pygame.QUIT:
+            raise SystemExit
         else:
             handlers = []
 
