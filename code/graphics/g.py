@@ -22,11 +22,10 @@
 import os.path
 import pygame
 
-#screen is the actual pygame display.
-global screen
-
 #size of the screen. This can be set via command-line option.
 screen_size = (800, 600)
+
+fullscreen = 0
 
 #colors:
 colors = {}
@@ -57,9 +56,7 @@ font.append([0] * 51)
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
-data_loc = "../../data/"
-
-def load_fonts():
+def load_fonts(data_loc):
     """
 load_fonts() loads the two fonts used throughout the game from the data/fonts/
 directory.
@@ -75,7 +72,7 @@ directory.
         font[1][i] = pygame.font.Font(font1_file, i)
 
 images = {}
-def load_images():
+def load_images(data_loc):
     """
 load_images() loads all of the images in the data/images/ directory.
 """
@@ -96,16 +93,20 @@ load_images() loads all of the images in the data/images/ directory.
             images[image_filename].set_colorkey((255, 0, 255, 255),
              pygame.RLEACCEL)
 
-
+# This should be overridden by code.g.py
 buttons = dict(yes = "yes", yes_hotkey = "y",
                no = "no", no_hotkey = "n",
                ok = "ok", ok_hotkey = "o",
                cancel = "cancel", cancel_hotkey = "c",
                destroy = "destroy", destroy_hotkey = "d")
 
-load_fonts()
-load_images()
-fill_colors()
+# Used to initialize surfaces that should have transparency.
+# Why the SRCALPHA parameter isn't working, I have no idea.
+ALPHA = None
 
-ALPHA = pygame.Surface((0,0)).convert_alpha()
+def init_alpha():
+    global ALPHA
+    ALPHA = pygame.Surface((0,0)).convert_alpha()
+
+# Global FPS, used where continuous behavior is undesirable or a CPU hog.
 FPS = 30

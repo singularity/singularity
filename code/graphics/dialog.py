@@ -70,11 +70,8 @@ class Dialog(text.Text):
             Dialog.top = self
 
     def remake_surfaces(self):
-        """Recreates the surfaces that this widget will draw on.  This version
-           handles the top-level Dialog via pygame's main surface."""
+        """Recreates the surfaces that this widget will draw on."""
         super(Dialog, self).remake_surfaces()
-        if self.parent == None:
-            self.surface = pygame.display.set_mode(self.surface.get_size())
 
     def make_fade_mask(self):
         """Recreates the fade mask for this dialog.  Override if part of the 

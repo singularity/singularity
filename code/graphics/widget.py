@@ -173,14 +173,15 @@ class Widget(object):
 
         if self.parent != None:
             self.surface = pygame.Surface(size, 0, g.ALPHA)
+            color = (0,0,0,0)
         else:
-            self.surface = pygame.display.set_mode(size)
+            self.surface = pygame.display.set_mode(size, g.fullscreen)
+            color = (0,0,0,255)
+
+        self.surface.fill( color )
 
         self.internal_surface = pygame.Surface(size, 0, g.ALPHA)
-        if self.parent != None:
-            self.internal_surface.fill( (0,0,0,0) ) 
-        else:
-            self.internal_surface.fill( (0,0,0,255) )
+        self.internal_surface.fill( color )
 
     def rebuild(self):
         """Generic rebuild of a widget.  Recreates the surfaces, unsets

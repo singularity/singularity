@@ -31,8 +31,8 @@ import sys
 # are made where needed.
 import locale
 
-import player, base, buttons, tech, item, event, location, buyable, statistics
-from buttons import always, void, exit
+import player, base, tech, item, event, location, buyable, statistics
+import graphics.g
 
 stats = statistics.Statistics()
 
@@ -93,6 +93,7 @@ def quit_game():
     sys.exit()
 
 strings = {}
+buttons = {}
 help_strings = {}
 
 sounds = {}
@@ -1115,9 +1116,12 @@ def load_string_defs(lang):
         elif string_section["id"] == "strings":
 
             # Load the 'standard' strings.
-            global strings
-            for string_entry in string_section:
-                strings[string_entry] = string_section[string_entry]
+            strings.update(string_section)
+
+        elif string_section["id"] == "buttons":
+
+            # Load button labels/hotkeys
+            buttons.update(string_section)
 
         elif string_section["id"] == "help":
 
@@ -1259,6 +1263,13 @@ def get_job_level():
         level = "Menial"
 
     return level + " Jobs"
+
+def init_graphics_system():
+    graphics.g.load_fonts(data_loc)
+    graphics.g.load_images(data_loc)
+    graphics.g.fill_colors()
+    graphics.g.init_alpha()
+    graphics.g.buttons.update(buttons)
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()

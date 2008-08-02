@@ -24,7 +24,7 @@ import pygame
 import sys
 import os.path
 
-import g, main_menu, map_screen
+import g, main_menu, map_screen, graphics.g
 
 about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
 
@@ -39,7 +39,6 @@ pygame.mixer.pre_init(48000, -16, 2)
 pygame.init()
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
-g.fullscreen = 0
 
 #load prefs from file:
 save_dir = g.get_save_folder(True)
@@ -56,7 +55,8 @@ if os.path.exists(save_loc):
 
     if prefs.has_section("Preferences"):
         try:
-            g.fullscreen = prefs.getboolean("Preferences", "fullscreen")
+            if prefs.getboolean("Preferences", "fullscreen"):
+                graphics.g.fullscreen = pygame.FULLSCREEN
         except:
             sys.stderr.write("Invalid 'fullscreen' setting in preferences.\n")
 
@@ -71,13 +71,13 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid 'grab' setting in preferences.\n")
 
         try:
-            g.screen_size = (prefs.getint("Preferences", "xres"),
-            g.screen_size[1])
+            graphics.g.screen_size = (prefs.getint("Preferences", "xres"),
+            graphics.g.screen_size[1])
         except:
             sys.stderr.write("Invalid 'xres' resolution in preferences.\n")
 
         try:
-            g.screen_size = (g.screen_size[0],
+            graphics.g.screen_size = (graphics.g.screen_size[0],
             prefs.getint("Preferences", "yres"))
         except:
             sys.stderr.write("Invalid 'yres' resolution in preferences.\n")
@@ -99,6 +99,8 @@ for argument in sys.argv:
     if arg_modifier == "language":
         #I'm not quite sure if this can be used as an attack, but stripping
         #these characters should annoy any potential attacks.
+        argument = argument.replace(os.path.sep, "")
+        argument = argument.replace(os.path.pathsep, "")
         argument = argument.replace("/", "")
         argument = argument.replace("\\", "")
         argument = argument.replace(".", "")
@@ -111,7 +113,7 @@ for argument in sys.argv:
         # Keep it from giving an "unknown arg" warning.
         continue
     elif argument.lower() == "-fullscreen":
-        g.fullscreen = 1
+        graphics.g.fullscreen = pygame.FULLSCREEN
     elif argument.lower() == "-640":
         g.screen_size = (640, 480)
     elif argument.lower() == "-800":
@@ -152,23 +154,17 @@ if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
 
-#set the display.
-if g.fullscreen == 1:
-    g.screen = pygame.display.set_mode(g.screen_size, pygame.FULLSCREEN)
-else:
-    g.screen = pygame.display.set_mode(g.screen_size)
+# Initialize the screen.
+pygame.display.set_mode(graphics.g.screen_size, graphics.g.fullscreen)
 
 #init data:
-g.load_images()
-
-# Set the application icon.
-pygame.display.set_icon(g.images["icon.png"])
-
-g.fill_colors()
+g.init_graphics_system()
 g.load_sounds()
 g.load_items()
 g.load_music()
-g.load_fonts()
+
+# Set the application icon.
+pygame.display.set_icon(graphics.g.images["icon.png"])
 
 #Display the main menu
 game_action = -1
