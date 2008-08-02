@@ -56,51 +56,6 @@ font = []
 font.append([0] * 51)
 font.append([0] * 51)
 
-#given a surface, string, font, char to underline (int; -1 to len(string)),
-#xy coord, and color, print the string to the surface.
-#Align (0=left, 1=Center, 2=Right) changes the alignment of the text
-def print_string(surface, string_to_print, font, underline_char, xy, color, align=0):
-    if align != 0:
-        size = font.size(string_to_print)
-        if align == 1: xy = (xy[0] - size[0]/2, xy[1])
-        elif align == 2: xy = (xy[0] - size[0], xy[1])
-    if underline_char == -1 or underline_char >= len(string_to_print):
-        text = font.render(string_to_print, 1, color)
-        surface.blit(text, xy)
-    else:
-        text = font.render(string_to_print[:underline_char], 1, color)
-        surface.blit(text, xy)
-        size = font.size(string_to_print[:underline_char])
-        xy = (xy[0] + size[0], xy[1])
-        font.set_underline(1)
-        text = font.render(string_to_print[underline_char], 1, color)
-        surface.blit(text, xy)
-        font.set_underline(0)
-        size = font.size(string_to_print[underline_char])
-        xy = (xy[0] + size[0], xy[1])
-        text = font.render(string_to_print[underline_char+1:], 1, color)
-        surface.blit(text, xy)
-
-#Used to display descriptions and such. Automatically wraps the text to fit
-#within a certain width.
-def print_multiline(surface, string_to_print, font, width, xy, color):
-    start_xy = xy
-    string_array = string_to_print.replace("\n", " \\n ").split(" ")
-
-    for string in string_array:
-        string += " "
-        size = font.size(string)
-
-        if string == "\\n ":
-            xy = (start_xy[0], xy[1]+size[1])
-            continue
-        text = font.render(string, 1, color)
-
-        if (xy[0]-start_xy[0])+size[0] > width:
-            xy = (start_xy[0], xy[1]+size[1])
-        surface.blit(text, xy)
-        xy = (xy[0]+size[0], xy[1])
-
 #create dialog with OK button.
 def create_dialog(string_to_print, box_font = None, xy = None, size = (250,250),
                   bg_color = None, out_color = None, text_color = None):
@@ -300,11 +255,6 @@ def create_textbox(descript_text, starting_text, box_font, xy, size,
                                   key_callback=on_key_down,
                                   keyup_callback=on_key_up,
                                   refresh_callback=do_refresh)
-
-#creates a box, as used throughout the game.
-def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
-    screen.fill(colors[outline_color], (xy[0], xy[1], size[0], size[1]))
-    screen.fill(colors[inner_color], (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
 
 #which fonts to use
 font0 = "DejaVuSans.ttf"
