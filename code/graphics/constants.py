@@ -46,3 +46,8 @@ NO_RESULT = _NoResult()
 
 # Handler types.
 KEY, KEYDOWN, KEYUP, CLICK, MOUSEMOTION, DRAG = range(6)
+
+
+# Handler "errors", used to throw a return value up several levels.
+class Handled(Exception): pass
+class ExitDialog(Exception): pass

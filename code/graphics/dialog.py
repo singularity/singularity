@@ -18,14 +18,21 @@
 
 #This file contains the dialog class.
 
+import bisect
 import pygame
+
 import constants
+import g
+import widget
 
 def causes_remask(data_member):
     """Creates a data member that sets needs_remask to True when changed."""
     return widget.set_on_change(data_member, "needs_remask")
 
-import widget
+def insort_all(sorted_list, items):
+    for item in items:
+        bisect.insort(sorted_list, item)
+
 class Dialog(widget.Widget):
     """A Dialog is a Widget that has its own event loop and can be faded out."""
 
@@ -40,6 +47,9 @@ class Dialog(widget.Widget):
         self.faded = False
         self.has_mask = True
         self.needs_remask = True
+
+        self.handlers = {}
+        self.key_handlers = {}
 
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
@@ -59,9 +69,9 @@ class Dialog(widget.Widget):
     def make_fade_mask(self):
         """Recreates the fade mask for this dialog.  Override if part of the 
            dialog should remain fully visible, even when not active."""
-        mask = pygame.Surface(self.real_size(), pygame.SRCALPHA)
+        mask = pygame.Surface(self.real_size, 0, g.ALPHA)
         mask.fill( (0,0,0,175) )
-        self.fade_mask = mask
+        return mask
 
     def get_fade_mask(self):
         """If the dialog needs a remask, calls make_fade_mask.  Otherwise, 
@@ -81,12 +91,14 @@ class Dialog(widget.Widget):
 
     def show(self):
         """Shows the dialog and enters an event-handling loop."""
+        self.visible = True
         while True:
-            # Draw handles rebuilding and redrawing all widgets, as needed.
-            Dialog.top.draw()
+            # Redraw handles rebuilding and redrawing all widgets, as needed.
+            Dialog.top.redraw()
             event = pygame.event.wait()
             result = self.handle(event)
             if result != constants.NO_RESULT:
+                self.visible = False
                 return result
 
     def add_handler(self, type, handler, priority = 100):
@@ -104,12 +116,12 @@ class Dialog(widget.Widget):
         bisect.insort( self.key_handlers.setdefault(key, []), 
                        (priority, handler) )
 
-    def remove_handler(self, key, handler):
+    def remove_key_handler(self, key, handler):
         """Removes all instances of the given handler from the given key."""
         self.key_handlers[key] = [h for h in self.handlers.get(key, []) 
                                     if h[1] != handler]
 
-    def handle(event):
+    def handle(self, event):
         """Sends an event through all the applicable handlers, returning
            constants.NO_RESULT if the event goes unhandled or is handled without
            requesting the dialog to exit.  Otherwise, returns the value provided
@@ -120,38 +132,47 @@ class Dialog(widget.Widget):
         # of the other lists in proper sorted order.
         if event.type == pygame.MOUSEMOTION:
             # Generic mouse motion handlers.
-            handlers = self.handlers[constants.MOUSEMOTION][:]
+            handlers = self.handlers.get(constants.MOUSEMOTION, [])[:]
 
             # Drag handlers.
             if event.buttons[0]:
-                insort_all(handlers, self.handlers[constants.DRAG])
+                insort_all(handlers, self.handlers.get(constants.DRAG, []))
         elif event.type == pygame.USEREVENT:
             # Timer tick handlers.
-            handlers = self.handlers[constants.TICK]
+            handlers = self.handlers.get(constants.TICK, [])
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
             # Generic key event handlers.
-            handlers = self.handlers[constants.KEY][:]
+            handlers = self.handlers.get(constants.KEY, [])[:]
 
-            # Generic keydown/up handlers.
             if event.type == pygame.KEYDOWN:
-                insort_all(handlers, self.handlers[constants.KEYDOWN])
-            else: # event.type == pygame.KEYUP:
-                insort_all(handlers, self.handlers[constants.KEYUP])
+                # Generic keydown handlers.
+                insort_all(handlers, self.handlers.get(constants.KEYDOWN, []))
 
-            # Handlers for this particular key.
-            insort_all(handlers, self.key_handlers[event.key])
+                # Unicode-based keydown handlers for this particular key.
+                insort_all(handlers, self.key_handlers.get(event.unicode, []))
+            else: # event.type == pygame.KEYUP:
+                # Generic keyup handlers.
+                insort_all(handlers, self.handlers.get(constants.KEYUP, []))
+
+                # Unicode-based keyup handling not available.
+                # pygame doesn't bother defining .unicode on KEYUP events.
+
+            # Keycode-based handlers for this particular key.
+            insort_all(handlers, self.key_handlers.get(event.key, []))
         elif event.type == pygame.MOUSEBUTTONUP:
             # Mouse click handlers.
-            handlers = self.handlers[constants.CLICK]
+            handlers = self.handlers.get(constants.CLICK, [])
+        else:
+            handlers = []
 
 
         # Feed the event to all the handlers, in priority order.
         for priority, handler in handlers:
             try:
                 handler(event)
-            except Handled:
+            except constants.Handled:
                 break # If it's been handled, we leave the rest alone.
-            except ExitDialog, e:
+            except constants.ExitDialog, e:
                 # Exiting the dialog.
                 if e.args: 
                    # If we're given a return value, we pass it on.

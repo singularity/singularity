@@ -138,7 +138,7 @@ class Widget(object):
     real_size = property(get_real_size)
 
     def get_real_pos(self):
-        """Returns the real position of this widget."""
+        """Returns the real position of this widget on its parent."""
         vanchor, hanchor = self.anchor
         parent_size = self._parent_size()
         my_size = self.real_size
@@ -162,6 +162,19 @@ class Widget(object):
         return (hpos, vpos)
 
     real_pos = property(get_real_pos)
+
+    def get_abs_pos(self):
+        """Returns the absolute position of this widget on the screen."""
+        pos = list(self.real_pos)
+        target = self.parent
+        while target:
+            pos[0] += target.real_pos[0]
+            pos[1] += target.real_pos[1]
+            target = target.parent
+
+        return tuple(pos)
+
+    abs_pos =  property(get_abs_pos)
 
     def remake_surfaces(self):
         """Recreates the surfaces that this widget will draw on."""

@@ -54,6 +54,7 @@ class Text(widget.Widget):
     borders = widget.causes_rebuild("_borders")
     border_color = widget.causes_rebuild("_border_color")
     background_color = widget.causes_rebuild("_background_color")
+    underline = widget.causes_rebuild("_underline")
 
     def __init__(self, parent, pos, size = (0, -.05), 
                  anchor = constants.TOP_LEFT, text = "", base_font = None,
