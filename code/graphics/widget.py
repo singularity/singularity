@@ -126,6 +126,7 @@ class Widget(object):
 
     def add_hooks(self):
         self.parent.children.append(self)
+
         # Won't trigger on the call from __init__, since there are no children
         # yet, but add_hooks may be explicitly called elsewhere to undo
         # remove_hooks.
@@ -133,9 +134,12 @@ class Widget(object):
             child.add_hooks()
 
     def remove_hooks(self):
-        self.parent.children.remove(self)
-        for child in self.children:
+        # We copy the children list to avoid index corruption.
+        for child in self.children[:]:
             child.remove_hooks()
+
+        # Remove the children at the end, so that their own removals propogate.
+        self.parent.children.remove(self)
 
     def _parent_size(self):
         if self.parent == None:

@@ -110,6 +110,9 @@ class Slider(button.Button):
             self.button.borders = tuple(borders)
 
     def handle_drag(self, event):
+        if not self.visible:
+            return
+
         if self.drag_state == None:
             self.start_pos = tuple(event.pos[i]-event.rel[i] for i in range(2))
             self.start_slider_pos = self.slider_pos
@@ -145,7 +148,7 @@ class Slider(button.Button):
             self.drag_state = None
 
     def jump(self, lower):
-        jump_dist = self.slider_size - 1
+        jump_dist = max(1, self.slider_size - 1)
         if lower:
             self.slider_pos = self.safe_pos(self.slider_pos - jump_dist)
         else:

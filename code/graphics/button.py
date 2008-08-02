@@ -93,7 +93,7 @@ class Button(text.SelectableText):
 
     def watch_mouse(self, event):
         """Selects the button if the mouse is over it."""
-        if self.visible:
+        if self.visible and getattr(self, "collision_rect", None):
             # This gets called a lot, so it's been optimized.
             select_now = self.is_over(pygame.mouse.get_pos())
             if (self._selected ^ select_now): # If there's a change.
@@ -101,7 +101,7 @@ class Button(text.SelectableText):
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP:
-            if self.visible and self.is_over(event.pos):
+            if self.visible and getattr(self, "collision_rect", None) and self.is_over(event.pos):
                 self.activate_with_sound(event)
         elif event.type == pygame.KEYDOWN:
             if self.hotkey in (event.unicode, event.key):

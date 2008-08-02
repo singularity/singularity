@@ -82,6 +82,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             # ... and select it.
             self.list_pos = index + self.scrollbar.scroll_pos
 
+            raise constants.Handled
+
     def safe_pos(self, raw_pos):
         return max(0, min(len(self.list) - 1, raw_pos))
 
@@ -105,22 +107,32 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             self.scrollbar.scroll_to(self.list_pos)
             raise constants.Handled
 
-    def remake_elements(self):
+
+    def num_elements(self):
         # If self.list_size is negative, we interpret it as a minimum height
         # for each element and calculate the number of elements to show.
         list_size = self.list_size
         if list_size < 0:
             min_height = -list_size
             list_size = max(1, self._make_collision_rect().height // min_height)
+        return list_size
         
-        # Remove the old ones.
-        for child in self.display_elements:
-            self.children.remove(child)
+    def remake_elements(self):
+        list_size = self.num_elements()
+        current_size = len(self.display_elements)
 
-        # Create the new ones.
-        self.display_elements = []
-        for i in range(list_size):
-            self.display_elements.append(self.make_element())
+        if current_size > list_size:
+            # Remove the excess ones.
+            for child in self.display_elements[list_size:]:
+                child.remove_hooks()
+        elif current_size < list_size:
+            if current_size > 0:
+                self.display_elements[-1].borders = \
+                    (constants.LEFT, constants.TOP)
+
+            # Create the new ones.
+            for i in range(list_size - current_size):
+                self.display_elements.append(self.make_element())
 
         self.display_elements[-1].borders = (constants.TOP, constants.LEFT,
                                              constants.BOTTOM)
@@ -140,7 +152,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     def rebuild(self):
         super(Listbox, self).rebuild()
 
-        self.remake_elements()
+        if self.num_elements() != len(self.display_elements):
+            self.remake_elements()
 
         window_size = len(self.display_elements)
         list_size = len(self.list)

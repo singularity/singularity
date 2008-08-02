@@ -39,6 +39,7 @@ def call_dialog(dialog, parent=None):
         target = target.parent
 
     if parent_dialog:
+        parent_dialog.key_down = None
         parent_dialog.faded = True
         parent_dialog.stop_timer()
 

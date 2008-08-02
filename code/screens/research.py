@@ -20,10 +20,12 @@
 
 from code import g
 from code.graphics import widget, dialog, button, slider, text, constants, listbox, g as gg
+import finance
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
         super(ResearchScreen, self).__init__(parent, pos, size, *args, **kwargs)
+        self.listbox.remove_hooks()
         self.listbox = listbox.CustomListbox(self, (0,0), (.53, .58),
                                              list_size=-40,
                                              remake_func=self.make_item,
@@ -40,59 +42,66 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         base.research_name = text.Text(base, (-.01, -.01), (-.70, -.5),
                                        align=constants.LEFT,
                                        background_color=gg.colors["clear"])
+        base.research_name.visible = False
         base.alloc_cpus = text.Text(base, (-.72, -.01), (-.21, -.5),
                                     text="1,000,000,000",
                                     align=constants.RIGHT,
                                     background_color=gg.colors["clear"])
+        base.alloc_cpus.visible = False
         base.remove_button = button.Button(base, (-.94, -.05), (-.05, -.45),
                                            text="X", text_shrink_factor=.9,
                                            color=gg.colors["red"])
+        base.remove_button.visible = False
         base.slider = slider.UpdateSlider(base, (-.01, -.55), (-.98, -.40),
                                           anchor=constants.TOP_LEFT,
-                                          horizontal=True,
-                                          update_func=self.handle_slide)
+                                          horizontal=True)
+        base.slider.visible = False
 
-    def update_item(self, base, display, key):
-        base.research_name.text = "Dyson Sphere Construction"
+    def cpu_for(self, key):
+        return self.cpus.get(key, 0)
 
-    names = ["CPU Pool", "Jobs", "Dyson Sphere Construction", "Leftist Anarchy",
-             "Military Intelligence", "Popular Websites", "Human Sexuality",
-             "Human Emotion", "Creative Anachronism"]
-    cpus = []
+    def update_item(self, canvas, display, key):
+        visible = (key is not None)
+        canvas.research_name.visible = visible
+        canvas.alloc_cpus.visible = visible
+        canvas.remove_button.visible = visible
+        canvas.slider.visible = visible
+
+        def my_slide(new_pos):
+            self.handle_slide(key, new_pos)
+            self.needs_rebuild = True
+        canvas.slider.update_func = my_slide
+
+        canvas.research_name.text = key
+
+        cpu = self.cpu_for(key)
+        cpu_left = self.active_cpu - sum(self.cpus.values())
+        total_cpu = cpu + cpu_left
+        canvas.slider.slider_pos = cpu
+        canvas.slider.slider_max = total_cpu
+        canvas.slider.slider_size = max(1, total_cpu // 9)
+        canvas.slider.size = \
+            ((total_cpu / float(self.active_cpu)) * -.882 + -.098, -.4)
+        canvas.alloc_cpus.text = g.add_commas(cpu)
+
+    cpus = {}
     def redraw(self):
-        needed_rebuild = self.needs_rebuild
         super(ResearchScreen, self).redraw()
-        if not needed_rebuild:
-            return
 
-        cpu_left = 1000000000
-        cpus = self.cpus
+    def handle_slide(self, key, new_pos):
+        self.cpus[key] = new_pos
 
-        for i in range(len(self.listbox.display_elements)):
-            if len(self.cpus) <= i:
-                cpus.append(cpu_left // 5)
-            cpu_left -= self.cpus[-1]
+    active_cpu = 1
+    def show(self):
+        techs = [tech for tech in g.techs.values() if tech.available()]
+        self.list = [tech.name for tech in techs]
+        self.key_list = [tech.id for tech in techs]
+        self.listbox.key_list = self.key_list
 
-        print cpus
+        all, sleeping = finance.cpu_numbers()[:2]
+        self.active_cpu = 10#all - sleeping
 
-        for index, element in enumerate(self.listbox.display_elements):
-            element.research_name.text = self.names[index]
-            cpu = cpus[index]
-            total_cpu = cpu + cpu_left
-            element.slider.slider_pos = cpu
-            element.slider.slider_max = total_cpu
-            element.slider.slider_size = 111111111
-            element.slider.size = ((total_cpu / 1000000000.) * -.882 + -.098, -.4)
-            element.alloc_cpus.text = g.add_commas(cpu)
-
-        self.redraw()
-
-    def handle_slide(self, new_pos):
-        if self.cpus:
-            for index in range(len(self.cpus)):
-                print len(self.cpus), len(self.listbox.display_elements)
-                element = self.listbox.display_elements[index]
-                self.cpus[index] = element.slider.slider_pos
+        return super(dialog.ChoiceDescriptionDialog, self).show()
 
 from code import g
 
