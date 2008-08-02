@@ -296,6 +296,22 @@ class MapScreen(dialog.Dialog):
             button.text = "%s (%d)" % (location.name, len(location.bases))
             button.visible = location.available()
 
+
+        lost = g.pl.lost_game()
+        if lost == 1:
+            if not g.nosound:
+                pygame.mixer.music.stop()
+            g.play_music("lose")
+            self.show_message(g.strings["lost_nobases"])
+            raise constants.ExitDialog
+        if lost == 2:
+            if not g.nosound:
+                pygame.mixer.music.stop()
+            g.play_music("lose")
+            self.show_message(g.strings["lost_sus"])
+            raise constants.ExitDialog
+
+
     def load_game(self):
         save_names = g.get_save_names()
         self.load_dialog.list = save_names

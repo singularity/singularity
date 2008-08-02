@@ -214,9 +214,8 @@ class Base(buyable.Buyable):
             self.prev.next = self.next
             self.next.prev = self.prev
 
-        for cpu in self.cpus:
-            if cpu != 0:
-                cpu.destroy()
+        if self.cpus:
+            self.cpus.destroy()
 
         for item in self.extra_items:
             if item != 0:
