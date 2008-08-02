@@ -77,11 +77,59 @@ class MapScreen(dialog.Dialog):
                                 text="RESEARCH", hotkey="r",
                                 dialog=screens.research.ResearchScreen(self))
 
-        #XXX Should raise an in-game menu, not exit to the main menu.
-        self.menu_button = button.ExitDialogButton(self, (0, 0), 
-                                                   (0.13, 0.04),
-                                                   text = "MENU",
-                                                   hotkey = "m")
+        #XXX Functionality.
+        cheat_buttons = []
+        cheat_buttons.append(button.Button(None, None, None, text="GIVE MONEY",
+                                           hotkey="m"))
+        cheat_buttons.append(button.Button(None, None, None, text="GIVE TECH",
+                                           hotkey="t"))
+        cheat_buttons.append(button.Button(None, None, None, text="END CONSTR.",
+                                           hotkey="e"))
+        cheat_buttons.append(button.Button(None, None, None, text="SUPERSPEED",
+                                           hotkey="s"))
+        cheat_buttons.append(button.Button(None, None, None, text="KILL SUSP.",
+                                           hotkey="k"))
+        cheat_buttons.append(button.ExitDialogButton(None, None, None,
+                                                     text="BACK", hotkey="b"))
+
+        self.cheat_dialog = dialog.SimpleMenuDialog(self, buttons=cheat_buttons)
+
+        if g.cheater:
+            self.cheat_button = button.DialogButton(self, (2, 2), (0, 0),
+                                                    text="", hotkey="`",
+                                                    dialog=self.cheat_dialog)
+
+        #XXX Functionality.
+        menu_buttons = []
+        menu_buttons.append(button.Button(None, None, None, text="SAVE GAME",
+                                          hotkey="s"))
+        menu_buttons.append(button.FunctionButton(None, None, None,
+                                                  text="LOAD GAME", hotkey="l",
+                                                  function=self.load_game))
+        options_button = button.DialogButton(None, None, None, text="OPTIONS",
+                                             hotkey="o")
+        menu_buttons.append(options_button)
+        menu_buttons.append(button.ExitDialogButton(None, None, None,
+                                                    text="QUIT", hotkey="q",
+                                                    exit_code=True))
+        menu_buttons.append(button.ExitDialogButton(None, None, None,
+                                                    text="BACK", hotkey="b",
+                                                    exit_code=False))
+
+        self.menu_dialog = dialog.SimpleMenuDialog(self, buttons=menu_buttons)
+        from main_menu import OptionsDialog
+        options_button.dialog = OptionsDialog(self.menu_dialog)
+        def show_menu():
+            exit = dialog.call_dialog(self.menu_dialog, self)
+            if exit:
+                raise constants.ExitDialog
+        self.load_dialog = dialog.ChoiceDialog(self.menu_dialog, (.5,.5),
+                                               (.5,.5),
+                                               anchor=constants.MID_CENTER,
+                                               yes_type="load")
+        self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
+                                                 text="MENU", hotkey="m",
+                                                 function=show_menu)
 
         self.time_display = text.Text(self, (.14, 0), (0.23, 0.04),
                                       text = "DAY 0000, 00:00:00",
@@ -168,12 +216,15 @@ class MapScreen(dialog.Dialog):
                 sb.chosen_one()
                 break
 
-    def show(self):
+    def force_update(self):
         # Force a tick to update everything.
         self.leftovers = 1
         self.on_tick(None)
 
         self.find_speed_button()
+
+    def show(self):
+        self.force_update()
 
         super(MapScreen, self).show()
 
@@ -240,6 +291,16 @@ class MapScreen(dialog.Dialog):
             location = g.locations[id]
             button.text = "%s (%d)" % (location.name, len(location.bases))
             button.visible = location.available()
+
+    def load_game(self):
+        save_names = g.get_save_names()
+        self.load_dialog.list = save_names
+        index = dialog.call_dialog(self.load_dialog, self.menu_dialog)
+        if 0 <= index < len(save_names):
+            save = save_names[index]
+            g.load_game(save)
+            self.force_update()
+            raise ExitDialog, False
 
 intro_shown = False
 
