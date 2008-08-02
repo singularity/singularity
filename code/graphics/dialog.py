@@ -27,6 +27,7 @@ import g
 import widget
 import text
 import button
+import listbox
 
 def causes_remask(data_member):
     """Creates a data member that sets needs_remask to True when changed."""
@@ -246,6 +247,13 @@ class Dialog(text.Text):
         return constants.NO_RESULT
 
 
+class NullDialog(Dialog):
+    """NullDialog, for when you absolutely, positively need to do nothing at
+       all."""
+    def show(self):
+        pass
+
+
 class TextDialog(Dialog):
     def __init__(self, parent, pos = (.5,.1), size = (.5,.5),
                  anchor = constants.TOP_CENTER, valign = constants.TOP,
@@ -348,3 +356,71 @@ class TextEntryDialog(TextDialog):
 
     def return_text(self, event):
         raise constants.ExitDialog, self.text_field.text
+
+class ChoiceDescriptionDialog(Dialog):
+    list = widget.causes_rebuild("_list")
+    key_list = widget.causes_rebuild("_key_list")
+    def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
+        self.list = kwargs.pop("list", [])
+        self.key_list = kwargs.pop("key_list", None)
+        self.desc_func = kwargs.pop("desc_func", lambda pane, key: NullDialog)
+        self.default = kwargs.pop("default", None)
+
+        super(ChoiceDescriptionDialog, self).__init__(parent, *args, **kwargs)
+
+        self.listbox = listbox.UpdateListbox(self, (0, 0), (-.53, -.85),
+                                             anchor = constants.TOP_LEFT,
+                                             update_func = self.handle_update)
+
+        self.description_pane = \
+            widget.BorderedWidget(self, (-1, 0), (-.45, -.85),
+                                  anchor = constants.TOP_RIGHT)
+
+        self.ok_button = \
+            button.ExitDialogButton(self, (-.49, -1),
+                                    anchor = constants.BOTTOM_RIGHT,
+                                    text = g.buttons["ok"],
+                                    hotkey = g.buttons["ok_hotkey"],
+                                    exit_code_func = self.return_list_pos)
+
+        self.back_button = \
+            button.ExitDialogButton(self, (-.51, -1),
+                                    anchor = constants.BOTTOM_LEFT,
+                                    text = g.buttons["back"],
+                                    hotkey = g.buttons["back_hotkey"])
+
+    def return_list_pos(self):
+        return self.listbox.list_pos
+
+    def show(self):
+        if type(self.default) == int:
+            self.listbox.list_pos = self.default
+        elif type(self.default) == str and self.default in self.list:
+            self.listbox.list_pos = self.list.index(self.default)
+        else:
+            self.listbox.list_pos = 0
+        self.listbox.auto_scroll = True
+
+        super(ChoiceDescriptionDialog, self).show()
+
+    def rebuild(self):
+        self.listbox.list = self.list
+        list_pos = self.listbox.list_pos
+
+        if 0 <= list_pos < len(self.list):
+            if self.key_list:
+                assert len(self.list) <= len(self.key_list), \
+                       "Key list must be at least as long as display list."
+
+                key = self.key_list[self.listbox.list_pos]
+            else:
+                key = self.list[self.listbox.list_pos]
+
+            self.description_pane.children = []
+            self.desc_func(self.description_pane, key)
+
+        super(ChoiceDescriptionDialog, self).rebuild()
+
+    def handle_update(self, item):
+        self.needs_rebuild = True
