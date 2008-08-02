@@ -138,6 +138,8 @@ class Text(widget.BorderedWidget):
     valign = widget.causes_rebuild("_valign")
     wrap = widget.causes_rebuild("_wrap")
     _wrap = widget.set_on_change("__wrap", "needs_refont")
+    bold = widget.causes_rebuild("_bold")
+    _bold = widget.set_on_change("__bold", "needs_refont")
 
     collision_rect = widget.set_on_change("_collision_rect", "needs_refont")
     _base_font = widget.set_on_change("__base_font", "needs_refont")
@@ -148,7 +150,7 @@ class Text(widget.BorderedWidget):
                  anchor = constants.TOP_LEFT, text = None, base_font = None,
                  color = None, shrink_factor = 1, underline = -1,
                  align = constants.CENTER, valign = constants.MID, wrap = True,
-                 **kwargs):
+                 bold = False, **kwargs):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.needs_refont = True
@@ -161,6 +163,7 @@ class Text(widget.BorderedWidget):
         self.align = align
         self.valign = valign
         self.wrap = wrap
+        self.bold = bold
 
     def pick_font(self, dimensions = None):
         if dimensions and self.needs_refont:
@@ -182,6 +185,7 @@ class Text(widget.BorderedWidget):
             while left + 1 < right:
                 test_index = (left + right) // 2
                 test_font = self.base_font[test_index]
+                test_font.set_bold(self.bold)
 
                 if width:
                     too_wide = False
@@ -203,6 +207,8 @@ class Text(widget.BorderedWidget):
                     right = test_index
                 else:
                     left = test_index
+
+                test_font.set_bold(False)
 
             self._font = self.base_font[left]
 
@@ -229,10 +235,12 @@ class Text(widget.BorderedWidget):
         super(Text, self).rebuild()
 
         if self.text != None:
+            self.font.set_bold(self.bold)
             # Print the text itself
             print_string(self.internal_surface, self.text, (2, 2), self.font, 
                          self.color, self.underline, self.align, self.valign,
                          self.real_size, self.wrap) 
+            self.font.set_bold(False)
 
 class EditableText(Text):
     cursor_pos = widget.causes_rebuild("_cursor_pos")
