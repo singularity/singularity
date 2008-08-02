@@ -1312,6 +1312,30 @@ def init_graphics_system():
     graphics.g.init_alpha()
     graphics.g.buttons.update(buttons)
 
+soundbuf = 1024*2
+def reinit_mixer():
+    pygame.mixer.quit()
+    pygame.mixer.init(48000, -16, 2, soundbuf)
+
+def available_languages():
+    return [file_name[8:-4] for file_name in os.listdir(data_loc)
+                            if file_name.startswith("strings_")
+                               and file_name.endswith(".dat")  ]
+
+def get_save_names():
+    save_names = []
+    all_files = os.listdir(get_save_folder())
+    for file_name in all_files:
+        if file_name[0] != "." and file_name != "CVS":
+            # If it's a new-style save, trim the .sav bit.
+            if len (file_name) > 4 and file_name[-4:] == ".sav":
+                file_name = file_name[:-4]
+            if file_name not in save_names:
+                save_names.append(file_name)
+
+    return save_names
+
+
 # Demo code for safety.safe, runs on game start.
 #load_sounds()
 #from safety import safe

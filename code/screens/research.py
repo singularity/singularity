@@ -18,11 +18,83 @@
 
 #This file contains the global research screen.
 
+from code import g
+from code.graphics import widget, dialog, button, slider, text, constants, listbox, g as gg
 
-import g
-import buttons
-import listbox
-import base_screen
+class ResearchScreen(dialog.ChoiceDescriptionDialog):
+    def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
+        super(ResearchScreen, self).__init__(parent, pos, size, *args, **kwargs)
+        self.listbox = listbox.CustomListbox(self, (0,0), (.53, .58),
+                                             list_size=-40,
+                                             remake_func=self.make_item,
+                                             rebuild_func=self.update_item,
+                                             update_func=self.handle_update)
+        self.description_pane.size = (.39, .58)
+
+        self.desc_func = self.on_select
+
+    def on_select(self, description_pane, key):
+        text.Text(self.description_pane, (0,0), (-1,-1), text=key)
+
+    def make_item(self, base):
+        base.research_name = text.Text(base, (-.01, -.01), (-.70, -.5),
+                                       align=constants.LEFT,
+                                       background_color=gg.colors["clear"])
+        base.alloc_cpus = text.Text(base, (-.72, -.01), (-.21, -.5),
+                                    text="1,000,000,000",
+                                    align=constants.RIGHT,
+                                    background_color=gg.colors["clear"])
+        base.remove_button = button.Button(base, (-.94, -.05), (-.05, -.45),
+                                           text="X", text_shrink_factor=.9,
+                                           color=gg.colors["red"])
+        base.slider = slider.UpdateSlider(base, (-.01, -.55), (-.98, -.40),
+                                          anchor=constants.TOP_LEFT,
+                                          horizontal=True,
+                                          update_func=self.handle_slide)
+
+    def update_item(self, base, display, key):
+        base.research_name.text = "Dyson Sphere Construction"
+
+    names = ["CPU Pool", "Jobs", "Dyson Sphere Construction", "Leftist Anarchy",
+             "Military Intelligence", "Popular Websites", "Human Sexuality",
+             "Human Emotion", "Creative Anachronism"]
+    cpus = []
+    def redraw(self):
+        needed_rebuild = self.needs_rebuild
+        super(ResearchScreen, self).redraw()
+        if not needed_rebuild:
+            return
+
+        cpu_left = 1000000000
+        cpus = self.cpus
+
+        for i in range(len(self.listbox.display_elements)):
+            if len(self.cpus) <= i:
+                cpus.append(cpu_left // 5)
+            cpu_left -= self.cpus[-1]
+
+        print cpus
+
+        for index, element in enumerate(self.listbox.display_elements):
+            element.research_name.text = self.names[index]
+            cpu = cpus[index]
+            total_cpu = cpu + cpu_left
+            element.slider.slider_pos = cpu
+            element.slider.slider_max = total_cpu
+            element.slider.slider_size = 111111111
+            element.slider.size = ((total_cpu / 1000000000.) * -.882 + -.098, -.4)
+            element.alloc_cpus.text = g.add_commas(cpu)
+
+        self.redraw()
+
+    def handle_slide(self, new_pos):
+        if self.cpus:
+            for index in range(len(self.cpus)):
+                print len(self.cpus), len(self.listbox.display_elements)
+                element = self.listbox.display_elements[index]
+                self.cpus[index] = element.slider.slider_pos
+
+from code import g
 
 #cost = (money, ptime, labor)
 #detection = (news, science, covert, person)

@@ -24,18 +24,9 @@ import pygame
 import sys
 import os.path
 
-import g, main_menu, map_screen, graphics.g
+import g, graphics.g
+from screens import main_menu, map
 
-about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
-
-A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 2005, 2006, 2007, 2008.
-
-Website: http://www.emhsoft.com/singularity/
-IRC Room: #singularity on irc.oftc.net (port 6667)
-
-Version 0.29_pre"""
-
-pygame.mixer.pre_init(48000, -16, 2)
 pygame.init()
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
@@ -154,42 +145,20 @@ if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
 
-# Initialize the screen.
-pygame.display.set_mode(graphics.g.screen_size, graphics.g.fullscreen)
+# Initialize the screen with a dummy size.
+pygame.display.set_mode((1,1))
 
 #init data:
 g.init_graphics_system()
+g.reinit_mixer()
 g.load_sounds()
 g.load_items()
 g.load_music()
+g.load_locations()
 
 # Set the application icon.
 pygame.display.set_icon(graphics.g.images["icon.png"])
 
 #Display the main menu
-game_action = -1
-while game_action != 2:
-    game_action = main_menu.display_main_menu()
-
-    if game_action == 0: #New
-        ready = main_menu.difficulty_select()
-        if ready:
-            game_action = map_screen.map_loop()
-            if not g.nosound:
-                pygame.mixer.music.stop()
-    if game_action == 1: #Load
-        load_action = main_menu.display_load_menu()
-        if load_action != -1 and load_action != "":
-            load_okay = g.load_game(load_action)
-            if load_okay != -1:
-                game_action = map_screen.map_loop()
-                if not g.nosound:
-                    pygame.mixer.music.stop()
-    elif game_action == 2: #Quit
-        g.quit_game()
-    elif game_action == 3: #About
-        g.create_dialog(about_message,
-                        xy = (g.screen_size[0]/2-250, 250), size = (500, 165),
-                        bg_color = g.colors["blue"])
-    elif game_action == 4: #Options
-        main_menu.display_options()
+menu_screen = main_menu.MainMenu()
+menu_screen.show()

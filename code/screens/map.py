@@ -21,28 +21,36 @@
 import pygame
 import random
 
-import g
-from graphics import dialog, constants, image, button, text, widget, g as gg
+from code import g
+from code.graphics import g as gg
+from code.graphics import dialog, constants, image, button, text, widget
 
-class MapDialog(dialog.Dialog):
+class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
                  anchor = constants.TOP_LEFT,  *args, **kwargs):
-        super(MapDialog, self).__init__(parent, pos, size, anchor,
+        from code import screens
+
+        super(MapScreen, self).__init__(parent, pos, size, anchor,
                                         *args, **kwargs)
-        if self.parent is None:
-            self.make_top()
-        i = image.Image(self, (.5,.5), (1,.667), constants.MID_CENTER, 
-                        gg.images['earth.jpg'])
+
+        self.background_color = gg.colors["black"]
+        self.add_handler(constants.TICK, self.on_tick)
+
+        self.map = image.Image(self, (.5,.5), (1,.667), constants.MID_CENTER, 
+                               gg.images['earth.jpg'])
 
         self.location_buttons = {}
         for location in g.locations.values():
             if location.absolute:
                 button_parent = self
             else:
-                button_parent = i
-            b = button.DialogButton(button_parent, (location.x, location.y),
-                                    anchor=constants.MID_CENTER,
-                                    text=location.name, hotkey=location.hotkey)
+                button_parent = self.map
+            b = button.FunctionButton(button_parent, (location.x, location.y),
+                                      anchor=constants.MID_CENTER,
+                                      text=location.name,
+                                      hotkey=location.hotkey,
+                                      function=self.open_location,
+                                      args=(location.id,))
             self.location_buttons[location.id] = b
 
         self.suspicion_bar = text.Text(self, (0,.96), (1, .04),
@@ -54,22 +62,23 @@ class MapDialog(dialog.Dialog):
 
         self.finance_button = button.DialogButton(self, (0.85, 0.92), 
                                                   (0.15, 0.04),
-                                                  text = "finance",
+                                                  text = "FINANCE",
                                                   hotkey = "e")
 
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88), 
                                                     (0.15, 0.04),
-                                                    text = "knowledge",
+                                                    text = "KNOWLEDGE",
                                                     hotkey = "k")
 
-        self.research_button = button.DialogButton(self, (0, 0.92), 
-                                                   (0.15, 0.04),
-                                                   text = "research",
-                                                   hotkey = "r")
+        self.research_button = \
+            button.DialogButton(self, (0, 0.92), (0.15, 0.04),
+                                text="RESEARCH", hotkey="r",
+                                dialog=screens.research.ResearchScreen(self))
 
+        #XXX Should raise an in-game menu, not exit to the main menu.
         self.menu_button = button.ExitDialogButton(self, (0, 0), 
                                                    (0.13, 0.04),
-                                                   text = "menu",
+                                                   text = "MENU",
                                                    hotkey = "m")
 
         self.time_display = text.Text(self, (.14, 0), (0.23, 0.04),
@@ -79,18 +88,23 @@ class MapDialog(dialog.Dialog):
                                       border_color = gg.colors["dark_blue"],
                                       borders = constants.ALL)
 
-        time_button_souls = [ ("ii", .03, 0), (">", .03, 1), (">>", .03, 60), 
-                              (">>>", .04, 7200), (">>>>", .05, 432000) ]
+        bar = u"\u25AE"
+        arrow = u"\u25B6"
+        speed_button_souls = [ (bar * 2, .025, 0), (arrow, .024, 1),
+                              (arrow * 2, .033, 60), (arrow * 3, .044, 7200),
+                              (arrow * 4, .054, 432000) ]
 
-        self.time_buttons = []
+        self.speed_buttons = button.ButtonGroup()
         hpos = .38
-        for index, (text_, hsize, speed) in enumerate(time_button_souls):
+        for index, (text_, hsize, speed) in enumerate(speed_button_souls):
             hotkey = str(index)
-            b = button.FunctionButton(self, (hpos, 0), (hsize, .04),
-                                      text=text_, hotkey=hotkey,
-                                      base_font=gg.font[1],
-                                      function=self.set_speed, args=(speed,))
+            b = SpeedButton(self, (hpos, 0), (hsize, .04), 
+                            text=text_, hotkey=hotkey,
+                            base_font=gg.font[0], text_shrink_factor=.75,
+                            align=constants.CENTER,
+                            function=self.set_speed, args=(speed, False))
             hpos += hsize
+            self.speed_buttons.add(b)
 
         self.info_window = \
             widget.BorderedWidget(self, (.56, 0), (.44, .08),
@@ -114,21 +128,97 @@ class MapDialog(dialog.Dialog):
                       background_color=gg.colors["black"],
                       border_color=gg.colors["dark_blue"])
 
-    def set_speed(self, speed):
+    def set_speed(self, speed, find_button=True):
         g.curr_speed = speed
+        if speed == 0:
+            self.needs_timer = False
+            self.stop_timer()
+        else:
+            self.needs_timer = True
+            self.start_timer()
 
-import g
-import base
+        if find_button:
+            self.find_speed_button()
 
-import main_menu
-import base
-import research
-import finance
+    def open_location(self, location):
+        from code import screens
 
-from safety import safe_call
+        # XXX Should open the base list instead.
+        base_dialog = getattr(self, "base_dialog", None)
+        if base_dialog is None:
+            base_dialog = self.base_dialog = screens.base.BaseScreen(self)
+        dialog.call_dialog(base_dialog, self)
 
-intro_shown = True
+    def find_speed_button(self):
+        for sb in self.speed_buttons:
+            if sb.args[0] == g.curr_speed:
+                sb.chosen_one()
+                break
 
+    def show(self):
+        # Force a tick to update everything.
+        self.leftovers = 1
+        self.on_tick(None)
+
+        self.find_speed_button()
+
+        super(MapScreen, self).show()
+
+    leftovers = 1
+    def on_tick(self, event):
+        self.leftovers += g.curr_speed / float(gg.FPS)
+        if self.leftovers < 1:
+            return
+
+        secs = int(self.leftovers)
+        self.leftovers %= 1
+
+        g.pl.give_time(secs)
+
+        self.time_display.text = "DAY %04d, %02d:%02d:%02d" % \
+              (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
+        self.cash_display.text = "CASH: %s (%s)" % \
+              (g.to_money(g.pl.cash), g.to_money(g.pl.future_cash()))
+
+        import finance
+        total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
+                finance.cpu_numbers()
+        if construction_cpu < maint_cpu:
+            self.cpu_display.color = gg.colors["red"]
+        else:
+            self.cpu_display.color = gg.colors["white"]
+        self.cpu_display.text = "CPU: %s (%s)" % \
+              (g.to_money(total_cpu), g.to_money(construction_cpu))
+
+        # What we display in the suspicion section depends on whether
+        # Advanced Socioanalytics has been researched.  If it has, we
+        # show the standard percentages.  If not, we display a short
+        # string that gives a range of 25% as to what the suspicions
+        # are.
+        suspicion_display_dict = {}
+        for group in ("news", "science", "covert", "public"):
+            if g.techs["Advanced Socioanalytics"].done:
+                suspicion_display_dict[group] = \
+                 g.to_percent(g.pl.groups[group].suspicion, True)
+            else:
+                suspicion_display_dict[group] = \
+                 g.percent_to_detect_str(g.pl.groups[group].suspicion)
+
+        self.suspicion_bar.text = ("[SUSPICION]" + 
+            " NEWS: " + suspicion_display_dict["news"] +
+            "  SCIENCE: " + suspicion_display_dict["science"] +
+            "  COVERT: " + suspicion_display_dict["covert"] +
+            "  PUBLIC: " + suspicion_display_dict["public"])
+
+        for id, button in self.location_buttons.iteritems():
+            location = g.locations[id]
+            button.text = "%s (%d)" % (location.name, len(location.bases))
+            button.visible = location.available()
+
+intro_shown = False
+
+class SpeedButton(button.ToggleButton, button.FunctionButton):
+    pass
 
 def display_generic_menu(xy_loc, titlelist):
     #Border
