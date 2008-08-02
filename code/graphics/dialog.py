@@ -295,10 +295,10 @@ class Dialog(text.Text):
 
 class FocusDialog(Dialog):
     def __init__(self, *args, **kwargs):
-        super(FocusDialog, self).__init__(*args, **kwargs)
-
         self.focus_list = []
         self.current_focus = None
+
+        super(FocusDialog, self).__init__(*args, **kwargs)
 
         self.add_key_handler(pygame.K_TAB, self.change_focus, 0)
 

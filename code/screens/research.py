@@ -79,9 +79,10 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         total_cpu = cpu + cpu_left
         canvas.slider.slider_pos = cpu
         canvas.slider.slider_max = total_cpu
-        canvas.slider.slider_size = max(1, total_cpu // 9)
-        canvas.slider.size = \
-            ((total_cpu / float(self.active_cpu)) * -.882 + -.098, -.4)
+        canvas.slider.slider_size = ss = self.active_cpu // 10 + 1
+        full_size = -.98
+        size_fraction = (total_cpu + ss) / float(self.active_cpu + ss)
+        canvas.slider.size = (full_size * size_fraction, -.4)
         canvas.alloc_cpus.text = g.add_commas(cpu)
 
     cpus = {}
@@ -99,9 +100,9 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.listbox.key_list = self.key_list
 
         all, sleeping = finance.cpu_numbers()[:2]
-        self.active_cpu = 10#all - sleeping
+        self.active_cpu = 1000#all - sleeping
 
-        return super(dialog.ChoiceDescriptionDialog, self).show()
+        return super(ResearchScreen, self).show()
 
 from code import g
 

@@ -297,7 +297,9 @@ class EditableText(widget.FocusWidget, Text):
     hitbox = [0,0,0,0]
 
     def handle_click(self, event):
-        if not self.collision_rect.collidepoint(event.pos):
+        if getattr(self, "_collision_rect", None) is None:
+            return
+        elif not self.collision_rect.collidepoint(event.pos):
             return
 
         self.has_focus = True
