@@ -470,6 +470,7 @@ save_classes = dict(
     Item_Class=item.ItemClass,
     ItemClass=item.ItemClass,
     _reconstruct=numpy.core.multiarray._reconstruct,
+    scalar=numpy.core.multiarray.scalar,
     ndarray=numpy.ndarray,
     dtype=numpy.dtype,
 )

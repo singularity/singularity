@@ -601,7 +601,7 @@ class Player(object):
                 if not techs.has_key(base.studying):
                     result_cash -= g.techs[base.studying].cost_left[0]
                     techs[base.studying] = 1
-            if not base.cpus.done:
+            if base.cpus and not base.cpus.done:
                 result_cash -= base.cpus.cost_left[0]
             for item in base.extra_items:
                 if item: result_cash -= item.cost_left[0]

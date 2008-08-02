@@ -45,16 +45,19 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         for item in item_list:
             if item.item_type == self.type and item.available():
                 self.list.append(item.name)
-                self.key_list.append(item.id)
+                self.key_list.append(item)
 
-        self.default = self.parent.get_current(self.type).type.id
+        current = self.parent.get_current(self.type)
+        if current is None:
+            self.default = None
+        else:
+            self.default = self.parent.get_current(self.type).type.id
 
         return super(BuildDialog, self).show()
 
     def on_change(self, description_pane, key):
-        text.Text(description_pane, (0, 0), (-1, -1), text = key)
+        text.Text(description_pane, (0, 0), (-1, -1), text=key.id)
 
-# XXX Replace with the real data.
 type_names = dict(cpu = "Processor", reactor = "Reactor",
                   network = "Network", security = "Security")
 
@@ -195,11 +198,26 @@ class BaseScreen(dialog.Dialog):
         if target is not None:
             return target
 
+    def set_current(self, type, item_type):
+        if type == "cpu":
+            if self.base.cpus is None or self.base.cpus.type != item_type:
+                self.base.cpus = g.item.Item(item_type, base=self.base,
+                                             count=self.base.type.size)
+        else:
+            index = ["reactor", "network", "security"].index(type)
+            if self.base.extra_items[index] is None \
+                     or self.base.extra_items[index].type != item_type:
+                self.base.extra_items[index] = \
+                    g.item.Item(item_type, base=self.base,
+                                count=self.base.type.size)
+
     def build_item(self, type):
         self.build_dialog.type = type
         result = dialog.call_dialog(self.build_dialog, self)
-        if result:
-            self.do_build_item(type, result)
+        if 0 <= result < len(self.build_dialog.key_list):
+            item_type = self.build_dialog.key_list[result]
+            self.set_current(type, item_type)
+            self.needs_rebuild = True
 
     def switch_base(self, forwards):
         self.base = self.base.next_base(forwards)
