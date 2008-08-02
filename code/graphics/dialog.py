@@ -270,6 +270,62 @@ class Dialog(text.Text):
         return constants.NO_RESULT
 
 
+class FocusDialog(Dialog):
+    def __init__(self, *args, **kwargs):
+        super(FocusDialog, self).__init__(*args, **kwargs)
+
+        self.focus_list = []
+        self.current_focus = None
+
+        self.add_key_handler(pygame.K_TAB, self.change_focus, 0)
+
+    def add_focus_widget(self, widget):
+        self.focus_list.append(widget)
+
+    def remove_focus_widget(self, widget):
+        self.focus_list.remove(widget)
+
+    def took_focus(self, widget):
+        if self.current_focus is not None and self.current_focus is not widget:
+            self.current_focus.has_focus = False
+        self.current_focus = widget
+
+    def change_focus(self, event):
+        if event is not None and event.type != pygame.KEYDOWN:
+            return
+
+        if len(self.focus_list) == 0:
+            raise constants.Handled
+        elif len(self.focus_list) == 1:
+            self.focus_list[0].has_focus = True
+            self.current_focus = self.focus_list[0]
+            raise constants.Handled
+
+        backwards = bool(pygame.key.get_mods() & pygame.KMOD_SHIFT)
+
+        if self.current_focus is not None:
+            self.current_focus.has_focus = False
+
+        if self.current_focus not in self.focus_list:
+            if backwards:
+                index = -1
+            else:
+                index = 0
+        else:
+            old_index = self.focus_list.index(self.current_focus)
+            if backwards:
+                index = old_index - 1 # Correctly wraps to -1
+            else:
+                index = old_index + 1
+                if index == len(self.focus_list):
+                    index = 0
+
+        self.current_focus = self.focus_list[index]
+        self.current_focus.has_focus = True
+
+        raise constants.Handled
+
+
 class NullDialog(Dialog):
     """NullDialog, for when you absolutely, positively need to do nothing at
        all."""

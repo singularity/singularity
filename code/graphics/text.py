@@ -237,12 +237,12 @@ class Text(widget.BorderedWidget):
         if self.text != None:
             self.font.set_bold(self.bold)
             # Print the text itself
-            print_string(self.internal_surface, self.text, (2, 2), self.font, 
+            print_string(self.internal_surface, self.text, (3, 2), self.font, 
                          self.color, self.underline, self.align, self.valign,
                          self.real_size, self.wrap) 
             self.font.set_bold(False)
 
-class EditableText(Text):
+class EditableText(widget.FocusWidget, Text):
     cursor_pos = widget.causes_rebuild("_cursor_pos")
     def __init__(self, parent, *args, **kwargs):
         super(EditableText, self).__init__(parent, *args, **kwargs)
@@ -263,6 +263,8 @@ class EditableText(Text):
         self.parent.remove_handler(constants.CLICK, self.handle_click)
 
     def handle_key(self, event):
+        if not self.has_focus:
+            return
         assert event.type == pygame.KEYDOWN
         if event.key == pygame.K_BACKSPACE:
             if self.cursor_pos > 0:
@@ -294,6 +296,9 @@ class EditableText(Text):
     def handle_click(self, event):
         if not self.collision_rect.collidepoint(event.pos):
             return
+
+        self.has_focus = True
+        self.took_focus(self)
 
         self.font.set_bold(self.bold)
 
@@ -361,6 +366,9 @@ class EditableText(Text):
             lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
         else:
             lines = split_wrap(self.text, self.font, 0)
+
+        if not self.has_focus:
+            return
 
         line_size = self.font.get_linesize()
         real_text_height = line_size * len(lines)

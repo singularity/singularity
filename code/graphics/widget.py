@@ -310,6 +310,21 @@ class Widget(object):
         if self.parent:
             self.parent.remove_key_handler(*args, **kwargs)
 
+    def add_focus_widget(self, *args, **kwargs):
+        """Focus pass-through."""
+        if self.parent:
+            self.parent.add_focus_widget(*args, **kwargs)
+
+    def remove_focus_widget(self, *args, **kwargs):
+        """Focus pass-through."""
+        if self.parent:
+            self.parent.remove_focus_widget(*args, **kwargs)
+
+    def took_focus(self, *args, **kwargs):
+        """Focus pass-through."""
+        if self.parent:
+            self.parent.took_focus(*args, **kwargs)
+
 
 class BorderedWidget(Widget):
     borders = causes_rebuild("_borders")
@@ -348,3 +363,19 @@ class BorderedWidget(Widget):
             elif edge == constants.BOTTOM:
                 self.internal_surface.fill( self.border_color, 
                                             (0, my_size[1]-1) + my_size )
+
+
+class FocusWidget(Widget):
+    has_focus = causes_rebuild("_has_focus")
+    def __init__(self, *args, **kwargs):
+        super(FocusWidget, self).__init__(*args, **kwargs)
+        self.has_focus = True
+        self.took_focus(self)
+
+    def add_hooks(self):
+        super(FocusWidget, self).add_hooks()
+        self.parent.add_focus_widget(self)
+
+    def remove_hooks(self):
+        super(FocusWidget, self).remove_hooks()
+        self.parent.remove_focus_widget(self)

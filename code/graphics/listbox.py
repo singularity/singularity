@@ -26,7 +26,7 @@ import widget
 import text
 import scrollbar
 
-class Listbox(text.SelectableText):
+class Listbox(widget.FocusWidget, text.SelectableText):
     list = widget.causes_rebuild("_list")
     list_pos = widget.causes_rebuild("_list_pos")
     list_size = widget.causes_rebuild("_list_size")
@@ -68,6 +68,9 @@ class Listbox(text.SelectableText):
 
     def on_click(self, event):
         if self.collision_rect.collidepoint(event.pos):
+            self.has_focus = True
+            self.took_focus(self)
+            
             # Figure out which element was clicked...
             local_vert_abs = event.pos[1] - self.collision_rect[1]
             local_vert_pos = local_vert_abs / float(self.collision_rect.height)
@@ -80,6 +83,9 @@ class Listbox(text.SelectableText):
         return max(0, min(len(self.list) - 1, raw_pos))
 
     def got_key(self, event):
+        if not self.has_focus:
+            return
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 new_pos = self.list_pos - 1
