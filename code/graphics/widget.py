@@ -24,6 +24,18 @@ from Numeric import array
 import g
 import constants
 
+def unmask(widget):
+    """Causes the widget to exist above its parent's fade mask.  The widget's
+       children will still be masked, unless they are unmasked themselves."""
+    unmask_all(widget)
+    widget.mask_children = True
+
+def unmask_all(widget):
+    """Causes the widget to exist above its parent's fade mask.  The widget's
+       children will not be masked."""
+    widget.self_mask = True
+    widget.do_mask = lambda: None
+
 def call_on_change(data_member, call_me, *args, **kwargs):
     """Creates a data member that sets another data member to a given value
        when changed."""
@@ -101,7 +113,9 @@ class Widget(object):
             self.parent.children.append(self)
 
         self.children = []
-        self.has_mask = False
+        self.is_above_mask = False
+        self.self_mask = False
+        self.mask_children = False
         self.visible = True
 
         # Set automatically by other properties.
@@ -240,13 +254,13 @@ class Widget(object):
                 if self.needs_full_redraw:
                     child.needs_full_redraw = self.needs_full_redraw
                 if child.visible:
-                    if child.has_mask:
+                    if child.is_above_mask:
                         above_mask.append(child)
                     else:
                         child.redraw()
 
             # Draw the dimming mask, if needed.
-            if self.has_mask:
+            if self.self_mask:
                 self.do_mask()
 
             # Draw the widget's children who go above the dimming mask

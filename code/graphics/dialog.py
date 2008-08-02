@@ -51,7 +51,8 @@ class Dialog(text.Text):
         super(Dialog, self).__init__(parent, pos, size, anchor, **kwargs)
         self.visible = False
         self.faded = False
-        self.has_mask = True
+        self.is_above_mask = True
+        self.self_mask = True
         self.needs_remask = True
 
         self.needs_timer = None
@@ -75,7 +76,16 @@ class Dialog(text.Text):
         """Recreates the fade mask for this dialog.  Override if part of the 
            dialog should remain fully visible, even when not active."""
         mask = pygame.Surface(self.real_size, 0, g.ALPHA)
-        mask.fill( (0,0,0,175) )
+        descendants = self.children[:] # Copy to make it safely mutable.
+        while descendants:
+            child = descendants.pop()
+            if not child.self_mask:
+                fill_rect = child.collision_rect[:] # As above.
+                fill_rect[0] -= self.real_pos[0]
+                fill_rect[1] -= self.real_pos[1]
+                mask.fill( (0,0,0,175), fill_rect)
+            elif child.mask_children:
+                descendants += child.children
         return mask
 
     def get_fade_mask(self):
