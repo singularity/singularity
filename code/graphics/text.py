@@ -239,9 +239,12 @@ class EditableText(Text):
         elif event.key == pygame.K_DOWN:
             self.cursor_pos = len(self.text)
         elif event.unicode:
-            self.text = self.text[:self.cursor_pos] + event.unicode \
+            char = event.unicode
+            if char == "\r":
+                char = "\n"
+            self.text = self.text[:self.cursor_pos] + char \
                         + self.text[self.cursor_pos:]
-            self.cursor_pos += len(event.unicode)
+            self.cursor_pos += len(char)
         else:
             return
 
