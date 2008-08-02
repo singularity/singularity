@@ -324,7 +324,7 @@ class Player(object):
             text = g.strings["tech_gained"] % \
                    {"tech": tech.name, 
                     "tech_message": tech.result}
-            g.create_dialog(text)
+            g.map_screen.show_message(text)
             g.curr_speed = 0
             needs_refresh = 1
 
@@ -333,12 +333,12 @@ class Player(object):
             text = g.strings["construction"] % {"base": base.name}
             g.curr_speed = 0
             needs_refresh = 1
-            g.create_dialog(text)
+            g.map_screen.show_message(text)
 
             if base.type.id == "Stolen Computer Time" and \
                     base.cpus[0].type.id == "Gaming PC":
                 text = g.strings["lucky_hack"] % {"base": base.name}
-                g.create_dialog(text)
+                g.map_screen.show_message(text)
 
         # CPU complete dialogs.
         for base, new_cpus in cpus_constructed.iteritems():
@@ -351,13 +351,13 @@ class Player(object):
             if finished_cpus == len(base.cpus): # Finished all the CPUs.
                 text = g.strings["item_construction_single"] % \
                        {"item": base.cpus[0].type.name, "base": base.name}
-                g.create_dialog(text)
+                g.map_screen.show_message(text)
                 g.curr_speed = 0
                 needs_refresh = 1
             elif finished_cpus == new_cpus: # Finished the first batch of CPUs.
                 text = g.strings["item_construction_batch"] % \
                        {"item": base.cpus[0].type.name, "base": base.name}
-                g.create_dialog(text)
+                g.map_screen.show_message(text)
                 g.curr_speed = 0
                 needs_refresh = 1
             else:
@@ -367,7 +367,7 @@ class Player(object):
         for base, item in items_constructed:
             text = g.strings["item_construction_single"] % \
                    {"item": item.type.name, "base": base.name}
-            g.create_dialog(text)
+            g.map_screen.show_message(text)
             g.curr_speed = 0
             needs_refresh = 1
 
@@ -375,7 +375,7 @@ class Player(object):
         if self.had_grace and not grace:
             self.had_grace = False
 
-            g.create_dialog(g.strings["grace_warning"])
+            g.map_screen.show_message(g.strings["grace_warning"])
             needs_refresh = 1
             g.curr_speed = 0
 
@@ -532,7 +532,7 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 
-            g.create_dialog(dialog_string, text_color = g.colors["red"])
+            g.map_screen.show_message(dialog_string, color=g.colors["red"])
             g.curr_speed = 0
             base.destroy()
             needs_refresh = 1

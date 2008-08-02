@@ -1336,6 +1336,9 @@ def get_save_names():
     return save_names
 
 
+map_screen = None
+
+
 # Demo code for safety.safe, runs on game start.
 #load_sounds()
 #from safety import safe

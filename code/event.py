@@ -35,8 +35,7 @@ class Event(object):
         self.unique = unique
         self.triggered = 0
     def trigger(self):
-        g.create_dialog(self.description, g.font[0][18], (g.screen_size[0]/2 - 100, 50),
-            (200, 200), g.colors["dark_blue"], g.colors["white"], g.colors["white"])
+        g.map_screen.show_message(self.description)
 
         # If this is a unique event, mark it as triggered.
         if self.unique:

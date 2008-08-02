@@ -73,7 +73,7 @@ class Tech(buyable.Buyable):
             if not g.nosound:
                 pygame.mixer.music.stop()
             g.play_music("win")
-            g.create_dialog(g.strings["wingame"])
+            g.map_screen.show_message(g.strings["wingame"])
             for group in g.pl.groups.values():
                 group.discover_bonus = 0
         elif self.tech_type:

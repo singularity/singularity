@@ -33,6 +33,8 @@ class MapScreen(dialog.Dialog):
         super(MapScreen, self).__init__(parent, pos, size, anchor,
                                         *args, **kwargs)
 
+        g.map_screen = self
+
         self.background_color = gg.colors["black"]
         self.add_handler(constants.TICK, self.on_tick)
 
@@ -127,6 +129,17 @@ class MapScreen(dialog.Dialog):
                       text="CPU: 1 (0)", shrink_factor=.7,
                       background_color=gg.colors["black"],
                       border_color=gg.colors["dark_blue"])
+
+        self.message_dialog = dialog.MessageDialog(self, size=(.35, .4),
+                                     background_color=gg.colors["dark_blue"],
+                                     borders=constants.ALL)
+
+    def show_message(self, message, color=None):
+        self.message_dialog.text = message
+        if color == None:
+            color = gg.colors["white"]
+        self.message_dialog.color = color
+        dialog.call_dialog(self.message_dialog, self)
 
     def set_speed(self, speed, find_button=True):
         g.curr_speed = speed

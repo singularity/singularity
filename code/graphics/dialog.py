@@ -367,12 +367,13 @@ class TopDialog(Dialog):
 class TextDialog(Dialog):
     def __init__(self, parent, pos=(.5,.1), size=(.5,.5),
                  anchor=constants.TOP_CENTER, valign=constants.TOP,
+                 align=constants.LEFT,
                  shrink_factor=.88, background_color=(0,0,50,200), **kwargs):
 
         super(TextDialog, self).__init__(parent, pos, size, anchor, 
-                                         shrink_factor = shrink_factor,
-                                         background_color = background_color,
-                                         valign = valign, **kwargs)
+                                         shrink_factor=shrink_factor,
+                                         background_color=background_color,
+                                         valign=valign, align=align, **kwargs)
 
 
 class YesNoDialog(TextDialog):
@@ -388,11 +389,11 @@ class YesNoDialog(TextDialog):
 
         super(YesNoDialog, self).__init__(parent, *args, **kwargs)
 
-        self.yes_button = button.ExitDialogButton(self, (-.1,-1), (-.3,-.1), 
+        self.yes_button = button.ExitDialogButton(self, (-.1,-.99), (-.3,-.1), 
                                                  anchor = constants.BOTTOM_LEFT,
                                                  exit_code = True)
 
-        self.no_button = button.ExitDialogButton(self, (-.9,-1), (-.3,-.1), 
+        self.no_button = button.ExitDialogButton(self, (-.9,-.99), (-.3,-.1), 
                                                 anchor = constants.BOTTOM_RIGHT,
                                                 exit_code = False)
 
@@ -429,7 +430,7 @@ class MessageDialog(TextDialog):
 
         super(MessageDialog, self).__init__(parent, **kwargs)
 
-        self.ok_button = button.ExitDialogButton(self, (-.5,-1), (-.3,-.1), 
+        self.ok_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1), 
                                                anchor = constants.BOTTOM_CENTER)
 
         self.add_key_handler(pygame.K_RETURN, self.ok_button.activate_with_sound)
