@@ -108,11 +108,12 @@ class Widget(object):
         self.size = size
         self.anchor = anchor
 
+        self.children = []
+
         # "It's a widget!"
         if self.parent:
-            self.parent.children.append(self)
+            self.add_hooks()
 
-        self.children = []
         self.is_above_mask = False
         self.self_mask = False
         self.mask_children = False
@@ -122,6 +123,19 @@ class Widget(object):
         #self.needs_rebuild = True
         #self.needs_redraw = True
         #self.needs_full_redraw = True
+
+    def add_hooks(self):
+        self.parent.children.append(self)
+        # Won't trigger on the call from __init__, since there are no children
+        # yet, but add_hooks may be explicitly called elsewhere to undo
+        # remove_hooks.
+        for child in self.children:
+            child.add_hooks()
+
+    def remove_hooks(self):
+        self.parent.children.remove(self)
+        for child in self.children:
+            child.remove_hooks()
 
     def _parent_size(self):
         if self.parent == None:

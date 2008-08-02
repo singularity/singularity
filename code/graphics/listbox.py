@@ -47,12 +47,21 @@ class Listbox(text.SelectableText):
         self.scrollbar = scrollbar.UpdateScrollbar(self, 
                                                    update_func = self.on_scroll)
 
-        if self.parent:
-            self.parent.add_handler(constants.CLICK, self.on_click, 150)
-            self.parent.add_key_handler(pygame.K_UP, self.got_key)
-            self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
-            self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
-            self.parent.add_key_handler(pygame.K_PAGEDOWN, self.got_key)
+    def add_hooks(self):
+        super(Listbox, self).add_hooks()
+        self.parent.add_handler(constants.CLICK, self.on_click, 150)
+        self.parent.add_key_handler(pygame.K_UP, self.got_key)
+        self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
+        self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
+        self.parent.add_key_handler(pygame.K_PAGEDOWN, self.got_key)
+
+    def remove_hooks(self):
+        super(Listbox, self).remove_hooks()
+        self.parent.remove_handler(constants.CLICK, self.on_click)
+        self.parent.remove_key_handler(pygame.K_UP, self.got_key)
+        self.parent.remove_key_handler(pygame.K_DOWN, self.got_key)
+        self.parent.remove_key_handler(pygame.K_PAGEUP, self.got_key)
+        self.parent.remove_key_handler(pygame.K_PAGEDOWN, self.got_key)
 
     def on_scroll(self, scroll_pos):
         self.needs_rebuild = True

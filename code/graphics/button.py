@@ -45,24 +45,36 @@ class Button(text.SelectableText):
     def __init__(self, parent, pos, size = (0, .045), base_font = None,
                  borders = constants.ALL, hotkey = "", force_underline = None,
                  text_shrink_factor = .825, priority = 100, **kwargs):
+        self.parent = parent
+        self.hotkey = hotkey
+        self.priority = priority
+
         super(Button, self).__init__(parent, pos, size, **kwargs)
 
         self.base_font = base_font or g.font[1]
         self.borders = borders
         self.shrink_factor = text_shrink_factor
 
-        self.hotkey = hotkey
         self.force_underline = force_underline
 
         self.selected = False
 
-        if self.parent:
-            self.parent.add_handler(constants.MOUSEMOTION, self.watch_mouse,
-                                    priority)
-            self.parent.add_handler(constants.CLICK, self.handle_event,
-                                    priority)
-            if self.hotkey:
-                self.parent.add_key_handler(self.hotkey, self.handle_event)
+    def add_hooks(self):
+        super(Button, self).add_hooks()
+        self.parent.add_handler(constants.MOUSEMOTION, self.watch_mouse,
+                                self.priority)
+        self.parent.add_handler(constants.CLICK, self.handle_event, 
+                                self.priority)
+        if self.hotkey:
+            self.parent.add_key_handler(self.hotkey, self.handle_event,
+                                        self.priority)
+
+    def remove_hooks(self):
+        super(Button, self).remove_hooks()
+        self.parent.remove_handler(constants.MOUSEMOTION, self.watch_mouse)
+        self.parent.remove_handler(constants.CLICK, self.handle_event)
+        if self.hotkey:
+            self.parent.remove_key_handler(self.hotkey, self.handle_event)
 
     def rebuild(self):
         self.calc_underline()

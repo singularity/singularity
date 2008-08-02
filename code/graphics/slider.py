@@ -54,10 +54,6 @@ class Slider(button.Button):
         self.slider_size = slider_size
         self.horizontal = horizontal
 
-        if self.parent:
-            self.parent.add_handler(constants.DRAG, self.handle_drag)
-            self.parent.add_handler(constants.CLICK, self.handle_click, 50)
-
         self.drag_state = None
         self.button = button.Button(self, pos = None, size = None,
                                     anchor = constants.TOP_LEFT,
@@ -65,6 +61,16 @@ class Slider(button.Button):
                                     selected_color = self.slider_color,
                                     unselected_color = self.slider_color,
                                     priority = 75)
+
+    def add_hooks(self):
+        super(Slider, self).add_hooks()
+        self.parent.add_handler(constants.DRAG, self.handle_drag)
+        self.parent.add_handler(constants.CLICK, self.handle_click, 50)
+
+    def remove_hooks(self):
+        super(Slider, self).remove_hooks()
+        self.parent.remove_handler(constants.DRAG, self.handle_drag)
+        self.parent.remove_handler(constants.CLICK, self.handle_click)
 
     def _calc_length(self, items):
         if self.horizontal:

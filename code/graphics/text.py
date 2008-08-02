@@ -251,9 +251,16 @@ class EditableText(Text):
             self.text = ""
 
         self.cursor_pos = len(self.text)
-        if self.parent:
-            self.parent.add_handler(constants.KEYDOWN, self.handle_key, 150)
-            self.parent.add_handler(constants.CLICK, self.handle_click)
+
+    def add_hooks(self):
+        super(EditableText, self).add_hooks()
+        self.parent.add_handler(constants.KEYDOWN, self.handle_key, 150)
+        self.parent.add_handler(constants.CLICK, self.handle_click)
+
+    def remove_hooks(self):
+        super(EditableText, self).remove_hooks()
+        self.parent.remove_handler(constants.KEYDOWN, self.handle_key)
+        self.parent.remove_handler(constants.CLICK, self.handle_click)
 
     def handle_key(self, event):
         assert event.type == pygame.KEYDOWN
