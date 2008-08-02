@@ -26,7 +26,7 @@ import widget
 import button
 
 def calc_max(elements, size):
-    return elements - size
+    return max(elements - size, 0)
 
 class Slider(button.Button):
     slider_color = widget.causes_rebuild("_slider_color")
