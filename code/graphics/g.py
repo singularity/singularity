@@ -74,6 +74,9 @@ directory.
         font[0][i] = pygame.font.Font(font0_file, i)
         font[1][i] = pygame.font.Font(font1_file, i)
 
+    # Size 17 has a bad "R".
+    font[1][17] = font[1][18]
+
 images = {}
 def load_images(data_loc):
     """
@@ -97,12 +100,13 @@ load_images() loads all of the images in the data/images/ directory.
              pygame.RLEACCEL)
 
 # This should be overridden by code.g.py
-buttons = dict(yes = "yes", yes_hotkey = "y",
-               no = "no", no_hotkey = "n",
-               ok = "ok", ok_hotkey = "o",
-               cancel = "cancel", cancel_hotkey = "c",
-               destroy = "destroy", destroy_hotkey = "d",
-               back = "back", back_hotkey = "b")
+buttons = dict(yes = "YES", yes_hotkey = "y",
+               no = "NO", no_hotkey = "n",
+               ok = "OK", ok_hotkey = "o",
+               cancel = "CANCEL", cancel_hotkey = "c",
+               destroy = "DESTROY", destroy_hotkey = "d",
+               back = "BACK", back_hotkey = "b",
+               load = "LOAD", load_hotkey = "l")
 
 # Used to initialize surfaces that should have transparency.
 # Why the SRCALPHA parameter isn't working, I have no idea.

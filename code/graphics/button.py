@@ -83,9 +83,11 @@ class Button(text.SelectableText):
     def calc_underline(self):
         if self.force_underline != None:
             self.underline = self.force_underline
-        elif self.hotkey and type(self.hotkey) in (str, unicode) \
-                         and self.hotkey in self.text:
-            self.underline = self.text.index(self.hotkey)
+        elif self.hotkey and type(self.hotkey) in (str, unicode):
+            if self.hotkey in self.text:
+                self.underline = self.text.index(self.hotkey)
+            elif self.hotkey.lower() in self.text.lower():
+                self.underline = self.text.lower().index(self.hotkey.lower())
         else:
             self.underline = -1
 
