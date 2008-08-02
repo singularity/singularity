@@ -71,7 +71,7 @@ class Listbox(text.SelectableText):
         return max(0, min(len(self.list) - 1, raw_pos))
 
     def got_key(self, event):
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 new_pos = self.list_pos - 1
             elif event.key == pygame.K_DOWN:

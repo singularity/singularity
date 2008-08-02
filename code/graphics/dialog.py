@@ -92,18 +92,23 @@ class Dialog(widget.Widget):
         if self.faded:
             self.surface.blit( self.get_fade_mask(), (0,0) )
 
-    def start_timer(self):
+    def start_timer(self, force = False):
         if self.needs_timer == None:
             self.needs_timer = bool(self.handlers.get(constants.TICK, False))
-        if self.needs_timer:
+        if self.needs_timer or force:
             pygame.time.set_timer(pygame.USEREVENT, 1000 / g.FPS)
 
     def stop_timer(self):
         pygame.time.set_timer(pygame.USEREVENT, 0)
 
+    def reset_timer(self):
+        self.stop_timer()
+        self.start_timer()
+
     def show(self):
         """Shows the dialog and enters an event-handling loop."""
         self.visible = True
+        self.key_down = None
         self.start_timer()
         while True:
             # Redraw handles rebuilding and redrawing all widgets, as needed.
@@ -163,6 +168,13 @@ class Dialog(widget.Widget):
 
             # Timer tick handlers.
             handlers = self.handlers.get(constants.TICK, [])
+
+            # Generate repeated keys.
+            if self.key_down:
+                self.repeat_counter += 1
+                if self.repeat_counter >= 5:
+                    self.repeat_counter = 0
+                    self.handle(self.key_down)
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
             # Generic key event handlers.
             handlers = self.handlers.get(constants.KEY, [])[:]
@@ -171,9 +183,20 @@ class Dialog(widget.Widget):
                 # Generic keydown handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYDOWN, []))
 
-                # Unicode-based keydown handlers for this particular key.
-                insort_all(handlers, self.key_handlers.get(event.unicode, []))
+                if event.unicode:
+                    # Unicode-based keydown handlers for this particular key.
+                    insort_all(handlers, self.key_handlers.get(event.unicode, []))
+
+                # Begin repeating keys.
+                if self.key_down is not event:
+                    self.key_down = event
+                    self.repeat_counter = -10
+                    self.start_timer(force = True)
             else: # event.type == pygame.KEYUP:
+                # Stop repeating keys.
+                self.key_down = None
+                self.reset_timer()
+
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
 
