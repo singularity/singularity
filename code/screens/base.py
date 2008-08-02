@@ -19,100 +19,183 @@
 
 #This file contains the screen to display the base screen.
 
+import pygame
 
 import g
-import buttons
-import listbox
+from graphics import constants, widget, dialog, text, button, listbox, g as gg
 
-from buttons import void, exit, always
-def show_base(this_base, location):
-    #Border
-    g.screen.fill(g.colors["black"])
+class BuildDialog(dialog.ChoiceDescriptionDialog):
+    type = widget.causes_rebuild("_type")
+    def __init__(self, parent, pos = (0, 0), size = (-1, -1),
+                 anchor = constants.TOP_LEFT, *args, **kwargs):
+        super(BuildDialog, self).__init__(parent, pos, size, anchor, *args, 
+                                          **kwargs)
 
-    def do_change_tech():
-        g.play_sound("click")
-        change_tech(this_base, this_base.studying)
+        self.type = None
+        self.desc_func = self.on_change
 
-    def make_do_build_item(item_type):
-        def do_build_item():
-            g.play_sound("click")
-            build_item(this_base, item_type, location)
-        return do_build_item
+    def show(self):
+        self.list = []
+        self.key_list = []
 
-    prev_base = always(-1)
-    next_base = always(1)
+        item_list = g.items.values()
+        item_list.sort()
+        item_list.reverse()
+        for item in item_list:
+            if item.item_type == self.type:
+                self.list.append(item.name)
+                self.key_list.append(item.id)
 
-    def do_destroy():
-        g.play_sound("click")
-        if g.create_yesno(g.strings["really_destroy"], g.font[0][18], 
-                (100, 100), (150, 100), g.colors["blue"], g.colors["white"],
-                g.colors["white"]):
-            return -2
+        # XXX: Hook into the real value.
+        self.default = None#self.parent.base.getattr(self.type, 0)
 
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", "B", g.font[1][20])] = always(0)
+        super(BuildDialog, self).show()
 
-    detect_button = buttons.button((0, g.screen_size[1]-25),
-        (g.screen_size[0], 25), "DETECTION CHANCE", "",
-        g.colors["black"], g.colors["dark_blue"], g.colors["black"],
-        g.colors["white"], g.font[1][15])
-    menu_buttons[detect_button] = void
+    def on_change(self, description_pane, key):
+        text.Text(description_pane, (0, 0), (-1, -1), text = key)
 
-    menu_buttons[buttons.make_norm_button((0, g.screen_size[1]-50),
-        (170, 25), "CHANGE RESEARCH", "C", g.font[1][20])] = do_change_tech
+class ItemPane(widget.BorderedWidget):
+    type = widget.causes_rebuild("_type")
+    def __init__(self, parent, pos, size = (.48, .06), 
+                 anchor = constants.TOP_LEFT,
+                 type = "cpu", **kwargs):
 
-    study_button = buttons.button((0, 25),
-        (g.screen_size[0], 25),
-        "STUDYING:", "", g.colors["black"], g.colors["dark_blue"],
-        g.colors["black"], g.colors["white"], g.font[1][15])
-    menu_buttons[study_button] = void
+        kwargs.setdefault("background_color", gg.colors["dark_blue"])
 
-    menu_buttons[buttons.make_norm_button((320, 60), (90, 26),
-        "CHANGE (P)", "P", g.font[1][15])] = make_do_build_item("compute")
+        super(ItemPane, self).__init__(parent, pos, size, anchor = anchor,
+                                       **kwargs)
 
-    menu_buttons[buttons.make_norm_button((320, 110), (90, 26),
-        "CHANGE (R)", "R", g.font[1][15])] = make_do_build_item("react")
+        self.type = type
 
-    menu_buttons[buttons.make_norm_button((320, 160), (90, 26),
-        "CHANGE (N)", "N", g.font[1][15], force_underline = 8)] = \
-                                                   make_do_build_item("network")
+        # XXX Replace with the real data.
+        texts = dict(cpu = "Processor: Quantum Computer Mk3 x595",
+                     reactor = "Reactor: Fusion Reactor",
+                     network = "Network: High Speed Internet Access",
+                     security = "Security: Perimeter Fencing")
 
-    menu_buttons[buttons.make_norm_button((320, 210), (90, 26), 
-        "CHANGE (S)", "S", g.font[1][15])] = make_do_build_item("security")
+        p1 = text.Text(self, (0,0), (.36, .03), anchor = constants.TOP_LEFT,
+                       align = constants.LEFT,
+                       background_color = self.background_color,
+                       text = texts[type], bold = True)
 
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-40,
-        0), (20, 25), "<", "<", g.font[1][20])] = prev_base
+        p2 = text.Text(self, (0,.03), (.36, .03), anchor = constants.TOP_LEFT,
+                       align = constants.LEFT,
+                       background_color = self.background_color,
+                       text = "Completion in 15 hours.", bold = True)
 
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-20,
-        0), (20, 25), ">", ">", g.font[1][20])] = next_base
+        #TODO: Use information out of gg.buttons
+        change_text = "change"
+        hotkey_dict = dict(cpu = "p", reactor = "r", network = "n",
+                           security = "s")
+        hotkey = hotkey_dict[self.type]
+        button_text = "%s (%s)" % (change_text, hotkey)
 
-    menu_buttons[buttons.make_norm_button((g.screen_size[0]-90,
-        g.screen_size[1]-50), (90, 25), "DESTROY", "D", g.font[1][20])] = \
-                                                                     do_destroy
+        self.change_button = button.FunctionButton(self, (.37,.01), (.11, .04),
+                                                   anchor = constants.TOP_LEFT,
+                                                   text = button_text, 
+                                                   hotkey = hotkey,
+                                                   function =
+                                                self.parent.parent.build_item,
+                                                   kwargs = {"type": self.type})
 
-    name_button = buttons.button((70, -1), (g.screen_size[0]-145,
-        25), "BASE NAME", "", g.colors["black"], g.colors["black"],
-        g.colors["black"], g.colors["white"], g.font[1][15])
-    menu_buttons[name_button] = void
+        if hotkey in change_text:
+            hotkey_pos = len(change_text) + 2
+            self.change_button.force_underline = hotkey_pos
 
-    def do_refresh():
-        refresh_base(name_button, detect_button, study_button, this_base)
+class BaseScreen(dialog.Dialog):
+    base = widget.causes_rebuild("_base")
+    def __init__(self, *args, **kwargs):
+        if len(args) < 3:
+            kwargs.setdefault("size", (.75, .5))
+        base = kwargs.pop("base", None)
+        super(BaseScreen, self).__init__(*args, **kwargs)
 
-    return buttons.show_buttons(menu_buttons, refresh_callback=do_refresh,
-                                key_callback=buttons.simple_key_handler(0))
+        self.base = base
 
-def refresh_base(name_button, detect_button, study_button, this_base):
-    g.screen.fill(g.colors["black"])
-# 	xstart = g.screen_size[0]/2-this_base.this_type.size[0]*9
-# 	ystart = g.screen_size[1]/2-this_base.this_type.size[1]*9
-    xstart = 10
-    ystart = 50
+        self.build_dialog = BuildDialog(self)
+        self.build_dialog_button = button.DialogButton(self, (2,2), (0,0),
+                                                     dialog = self.build_dialog)
 
-    #base name display
-    name_button.text = this_base.name
-    name_button.remake_button()
+        self.header = widget.Widget(self, (0,0), (-1, .08), 
+                                    anchor = constants.TOP_LEFT)
 
+        self.name_display = text.Text(self.header, (-.5,0), (-1, -.5),
+                                      anchor = constants.TOP_CENTER,
+                                      borders = constants.ALL,
+                                      border_color = gg.colors["dark_blue"],
+                                      background_color = gg.colors["black"],
+                                      text="Omaha Area 42 (Fake Military Base)",
+                                      shrink_factor = .85, bold = True)
+
+        self.next_base_button = \
+            button.FunctionButton(self.name_display, (-1, 0), (.03, -1),
+                                  anchor = constants.TOP_RIGHT,
+                                  text = ">", hotkey = ">",
+                                  function = self.switch_base,
+                                  kwargs = {"forwards": True})
+        self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activated)
+
+        self.prev_base_button = \
+            button.FunctionButton(self.name_display, (0, 0), (.03, -1),
+                                  anchor = constants.TOP_LEFT,
+                                  text = "<", hotkey = "<",
+                                  function = self.switch_base,
+                                  kwargs = {"forwards": False})
+        self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activated)
+
+        self.state_display = text.Text(self.header, (-.5,-.5), (-1, -.5),
+                                       anchor = constants.TOP_CENTER,
+                                       borders =(constants.LEFT,constants.RIGHT,
+                                                 constants.BOTTOM),
+                                       border_color = gg.colors["dark_blue"],
+                                       background_color = gg.colors["black"],
+                                       color = gg.colors["yellow"],
+                                       text = "Sleep", shrink_factor = .8,
+                                       bold = True)
+
+        self.back_button = \
+            button.ExitDialogButton(self, (-.5,-1),
+                                    anchor = constants.BOTTOM_CENTER,
+                                    text = "back", hotkey = "b")
+
+        self.detect_frame = text.Text(self, (-1, .09), (.21, .33),
+                                      anchor = constants.TOP_RIGHT,
+                                      background_color = gg.colors["dark_blue"],
+                                      borders = constants.ALL,
+                                      text =
+"""DISCOVERY CHANCE:
+News: 0.67%
+Science: 0%
+Covert: 1.22%
+Public: 0.73%""",
+                                      wrap = False, bold = True,
+                                      align = constants.LEFT, 
+                                      valign = constants.TOP)
+
+        self.contents_frame = \
+            widget.BorderedWidget(self, (0, .09), (.50, .33),
+                                  anchor = constants.TOP_LEFT,
+                                  background_color = gg.colors["dark_blue"],
+                                  borders = range(6))
+
+        self.cpu_pane      = ItemPane(self.contents_frame, (.01, .01),
+                                      type = "cpu")
+        self.reactor_pane  = ItemPane(self.contents_frame, (.01, .09),
+                                      type = "reactor")
+        self.network_pane  = ItemPane(self.contents_frame, (.01, .17),
+                                      type = "network")
+        self.security_pane = ItemPane(self.contents_frame, (.01, .25),
+                                      type = "security")
+
+    def build_item(self, type):
+        self.build_dialog.type = type
+        result = self.build_dialog_button.activated(None)
+        self.do_build_item(type, result)
+
+    def switch_base(self, forwards):
+        self.base = self.base.next_base(forwards)
+
+def old_detection_chance():
     # Detection chance display.  If Socioanalytics hasn't been researched,
     # you get nothing; if it has, but not Advanced Socioanalytics, you get
     # an inaccurate value.
@@ -128,74 +211,8 @@ def refresh_base(name_button, detect_button, study_button, this_base):
             g.to_percent(detect_chance.get("science", 0))+"  COVERT: "+ \
             g.to_percent(detect_chance.get("covert", 0))+"  PUBLIC: "+ \
             g.to_percent(detect_chance.get("public", 0))
-    detect_button.remake_button()
 
-    #research display
-    if this_base.studying not in ("", "CPU Pool", "Sleep"):
-        if not g.jobs.has_key(this_base.studying):
-            if g.techs[this_base.studying].done: 
-                this_base.studying = ""
-
-    action_display_string = "STUDYING: "
-
-    study_display_string = this_base.studying
-    if study_display_string == "":
-        study_display_string = "NOTHING"
-    elif study_display_string == "Construction":
-        study_display_string = "CONSTRUCTION"
-    elif g.jobs.has_key(study_display_string):
-        action_display_string = "WORKING: "
-    elif g.techs.has_key(study_display_string):
-        study_display_string = g.techs[study_display_string].name
-    study_button.text = action_display_string + study_display_string
-    study_button.remake_button()
-    #Item display
-    g.screen.fill(g.colors["white"], (xstart, ystart, 300, g.screen_size[1]-150))
-    g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1, 298, g.screen_size[1]-152))
-
-    if this_base.cpus[0] == 0: 
-        item_name = "None"
-    else: 
-        item_name = this_base.cpus[0].type.name+" x "+str(this_base.has_item())
-    g.print_string(g.screen, "Processor: " + item_name,
-        g.font[0][18], -1, (xstart+5, ystart+15), g.colors["white"])
-    if this_base.cpus[len(this_base.cpus)-1] != 0:
-        if not this_base.cpus[len(this_base.cpus)-1].done:
-            g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.cpus[len(this_base.cpus)-1].cost_left[2]),
-                g.font[0][18], -1, (xstart+5, ystart+30), g.colors["white"])
-
-    if this_base.extra_items[0] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[0].type.name
-    g.print_string(g.screen, "Reactor: " + item_name,
-        g.font[0][18], -1, (xstart+5, ystart+65), g.colors["white"])
-    if this_base.extra_items[0] != 0:
-        if not this_base.extra_items[0].done:
-            g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[0].cost_left[2]),
-                g.font[0][18], -1, (xstart+5, ystart+80), g.colors["white"])
-
-    if this_base.extra_items[1] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[1].type.name
-    g.print_string(g.screen, "Network: " + item_name,
-        g.font[0][18], -1, (xstart+5, ystart+115), g.colors["white"])
-    if this_base.extra_items[1] != 0:
-        if not this_base.extra_items[1].done:
-            g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[1].cost_left[2]),
-                g.font[0][18], -1, (xstart+5, ystart+130), g.colors["white"])
-
-    if this_base.extra_items[2] == 0: item_name = "None"
-    else: item_name = this_base.extra_items[2].type.name
-    g.print_string(g.screen, "Security: " + item_name,
-        g.font[0][18], -1, (xstart+5, ystart+165), g.colors["white"])
-    if this_base.extra_items[2] != 0:
-        if not this_base.extra_items[2].done:
-            g.print_string(g.screen, "Completion in " +
-                g.to_time(this_base.extra_items[2].cost_left[2]),
-                g.font[0][18], -1, (xstart+5, ystart+190), g.colors["white"])
-
-def build_item(this_base, item_type, location):
+def old_build_item(this_base, item_type, location):
     if this_base.type.size == 1:
         g.create_dialog(g.strings["unbuildable"])
         return 0
@@ -279,55 +296,8 @@ def actual_build(this_base, item_name, item_type):
                 return
         this_base.extra_items[2] = g.item.Item(g.items[item_name], this_base)
 
-def refresh_item(this_base, item_name, xy_loc):
-    xy = (xy_loc[0]+150, xy_loc[1])
-    g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
-    g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
 
-    #Base info
-    g.print_string(g.screen, g.strings["money"]+": "+g.to_money(g.pl.cash)+" ("+
-        g.to_money(g.pl.future_cash())+")",
-        g.font[0][20], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
-
-    #item cost
-    if item_name == "": return
-    g.print_string(g.screen, g.items[item_name].name,
-            g.font[0][22], -1, (xy[0]+160, xy[1]+45), g.colors["white"])
-
-    string = "Item Cost:"
-    g.print_string(g.screen, string,
-            g.font[0][16], -1, (xy[0]+160, xy[1]+65), g.colors["white"])
-
-    string = g.to_money(g.items[item_name].cost[0])+" "+g.strings["money"]
-    if g.items[item_name].item_type == "compute":
-        string += " x"+str(this_base.type.size)+"="
-    g.print_string(g.screen, string,
-            g.font[0][16], -1, (xy[0]+160, xy[1]+80), g.colors["white"])
-
-    string = g.to_time(g.items[item_name].cost[2])
-    g.print_string(g.screen, string,
-            g.font[0][16], -1, (xy[0]+290, xy[1]+80), g.colors["white"])
-
-    if g.items[item_name].item_type == "compute":
-        string = g.to_money(g.items[item_name].cost[0]*this_base.type.size)+" "
-        string +=g.strings["money"]
-
-        g.print_string(g.screen, string,
-                g.font[0][16], -1, (xy[0]+160, xy[1]+100), g.colors["white"])
-
-        # Add CPU amount here...
-        string = "Total CPU available: " + g.add_commas(g.items[item_name].item_qual*this_base.type.size)
-        g.print_string(g.screen, string,
-            g.font[0][16], -1, (xy[0]+160, xy[1]+120), g.colors["white"])
-
-    x_start = 120
-    if g.items[item_name].item_type == "compute": 
-        x_start = 140
-    g.print_multiline(g.screen, g.items[item_name].description,
-            g.font[0][18], 290, (xy[0]+160, xy[1]+x_start), g.colors["white"])
-
-
-def change_tech(this_base, select_this = None):
+def old_change_tech(this_base, select_this = None):
     item_list = []
     item_list2 = []
     #TECH
@@ -384,7 +354,7 @@ def change_tech(this_base, select_this = None):
 
 
 
-def refresh_tech(this_base, tech_name, xy):
+def old_refresh_tech(this_base, tech_name, xy):
     xy = (xy[0]+140, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 310, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 308, 348))
