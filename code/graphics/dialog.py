@@ -148,7 +148,7 @@ class Dialog(widget.Widget):
             # Compress multiple MOUSEMOTION events into one.
             # Note that the pos will be wrong, so pygame.mouse.get_pos() must
             # be used instead.
-            time.sleep(1 / g.FPS)
+            time.sleep(1. / g.FPS)
             pygame.event.clear(pygame.MOUSEMOTION)
 
             # Generic mouse motion handlers.
