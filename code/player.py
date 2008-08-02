@@ -95,6 +95,7 @@ class Player(object):
 
         self.cpu_usage = {}
         self.available_cpus = [1, 0, 0, 0, 0]
+        self.sleeping_cpus = 0
 
     def convert_from(self, old_version):
          if old_version <= 3.94: # <= r4_pre4
@@ -180,6 +181,7 @@ class Player(object):
 
         time_of_day = g.pl.raw_sec % g.seconds_per_day
 
+        techs_in_progress = []
         techs_researched = []
         bases_constructed = []
         cpus_constructed = {}
@@ -252,6 +254,7 @@ class Player(object):
                     # the tech from pulling from the rest of the CPU pool.
                     tech_gained = g.techs[task].work_on(cash_available=0, 
                                                         cpu_available=real_cpu)
+                    techs_in_progress.append(g.techs[task])
                     if tech_gained:
                         techs_researched.append(g.techs[task])
         self.cpu_pool += cpu_left * secs_passed
@@ -292,7 +295,7 @@ class Player(object):
 
         # And now we get to spend cash and labor.
         # Research.
-        for tech in g.techs.values():
+        for tech in techs_in_progress:
             tech_gained = tech.work_on(time = mins_passed)
             if tech_gained:
                 techs_researched.append(tech)
@@ -448,10 +451,17 @@ class Player(object):
         if day_passed:
             self.new_day()
 
+        self.recalc_cpu()
+
+    def recalc_cpu(self):
         from numpy import array
         self.available_cpus = array([0,0,0,0,0])
+        self.sleeping_cpus = 0
         for base in g.all_bases():
-            self.available_cpus[:base.location.safety+1] += base.cpu
+            if base.power_state in ["active", "overclocked", "suicide"]:
+                self.available_cpus[:base.location.safety+1] += base.cpu
+            elif base.power_state == "sleep":
+                self.sleeping_cpus += base.cpu
 
     # Are we still in the grace period?
     # The number of complete bases and complex_bases can be passed in, if we
@@ -572,8 +582,7 @@ class Player(object):
 
         # Check to see if the player has at least one CPU left.  If not, they
         # lose due to having no (complete) bases.
-        # (.have_cpu is set in give_time)
-        if self.available_cpus[0] == 0:
+        if self.available_cpus[0] + self.sleeping_cpus == 0:
             # I have no usable bases left.
             return 1
 

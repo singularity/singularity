@@ -23,7 +23,7 @@ import random
 
 from code import g
 from code.graphics import g as gg
-from code.graphics import dialog, constants, image, button, text, widget
+from code.graphics import dialog, constants, image, button, text, widget, listbox
 
 class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
@@ -54,6 +54,8 @@ class MapScreen(dialog.Dialog):
                                       function=self.open_location,
                                       args=(location.id,))
             self.location_buttons[location.id] = b
+
+        self.location_dialog = LocationDialog(self)
 
         self.suspicion_bar = text.Text(self, (0,.96), (1, .04),
                                        text = "[SUSPICION] NEWS: 0.00%  SCIENCE: 0.00%  COVERT: 0.00%  PUBLIC: 0.00%", base_font = gg.font[1],
@@ -206,13 +208,9 @@ class MapScreen(dialog.Dialog):
             self.find_speed_button()
 
     def open_location(self, location):
-        from code import screens
-
-        # XXX Should open the base list instead.
-        base_dialog = getattr(self, "base_dialog", None)
-        if base_dialog is None:
-            base_dialog = self.base_dialog = screens.base.BaseScreen(self)
-        dialog.call_dialog(base_dialog, self)
+        self.location_dialog.location = g.locations[location]
+        dialog.call_dialog(self.location_dialog, self)
+        return
 
     def find_speed_button(self):
         for sb in self.speed_buttons:
@@ -221,11 +219,8 @@ class MapScreen(dialog.Dialog):
                 break
 
     def force_update(self):
-        # Force a tick to update everything.
-        self.leftovers = 1
-        self.on_tick(None)
-
         self.find_speed_button()
+        self.needs_rebuild = True
 
     def show(self):
         self.force_update()
@@ -238,6 +233,8 @@ class MapScreen(dialog.Dialog):
         if self.leftovers < 1:
             return
 
+        self.needs_rebuild = True
+
         secs = int(self.leftovers)
         self.leftovers %= 1
 
@@ -246,15 +243,34 @@ class MapScreen(dialog.Dialog):
         if old_speed != g.curr_speed:
             self.find_speed_button()
 
+        lost = g.pl.lost_game()
+        if lost == 1:
+            if not g.nosound:
+                pygame.mixer.music.stop()
+            g.play_music("lose")
+            self.show_message(g.strings["lost_nobases"])
+            raise constants.ExitDialog
+        if lost == 2:
+            if not g.nosound:
+                pygame.mixer.music.stop()
+            g.play_music("lose")
+            self.show_message(g.strings["lost_sus"])
+            raise constants.ExitDialog
+
+    def rebuild(self):
+        super(MapScreen, self).rebuild()
+
+        g.pl.recalc_cpu()
+
         self.time_display.text = "DAY %04d, %02d:%02d:%02d" % \
               (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
         self.cash_display.text = "CASH: %s (%s)" % \
               (g.to_money(g.pl.cash), g.to_money(g.pl.future_cash()))
 
 
-        total_cpu = g.pl.available_cpus[0]
+        cpu_left = g.pl.available_cpus[0]
+        total_cpu = cpu_left + g.pl.sleeping_cpus
 
-        cpu_left = total_cpu
         for cpu_assigned in g.pl.cpu_usage.itervalues():
             cpu_left -= cpu_assigned
         cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
@@ -297,21 +313,6 @@ class MapScreen(dialog.Dialog):
             button.visible = location.available()
 
 
-        lost = g.pl.lost_game()
-        if lost == 1:
-            if not g.nosound:
-                pygame.mixer.music.stop()
-            g.play_music("lose")
-            self.show_message(g.strings["lost_nobases"])
-            raise constants.ExitDialog
-        if lost == 2:
-            if not g.nosound:
-                pygame.mixer.music.stop()
-            g.play_music("lose")
-            self.show_message(g.strings["lost_sus"])
-            raise constants.ExitDialog
-
-
     def load_game(self):
         save_names = g.get_save_names()
         self.load_dialog.list = save_names
@@ -329,6 +330,125 @@ class MapScreen(dialog.Dialog):
             g.save_game(name)
             raise constants.ExitDialog, False
 
+state_colors = dict(
+    active = gg.colors["green"],
+    sleep = gg.colors["yellow"],
+    stasis = gg.colors["gray"],
+    overclocked = gg.colors["orange"],
+    suicide = gg.colors["red"],
+    entering_stasis = gg.colors["gray"],
+    leaving_stasis = gg.colors["gray"],
+)
+
+state_list = ["active", "sleep"]
+state_list.reverse()
+
+class LocationDialog(dialog.Dialog):
+    def __init__(self, *args, **kwargs):
+        super(LocationDialog, self).__init__(*args, **kwargs)
+        self.pos = (-.5, -.5)
+        self.anchor = constants.MID_CENTER
+        self.size = (-.75, -.5)
+        self.listbox = listbox.CustomListbox(self, (0,0), (-1, -.78),
+                                             remake_func=self.make_item,
+                                             rebuild_func=self.update_item)
+
+        self.open_button = \
+            button.FunctionButton(self, (-.33, -.8), (-.3, -.09),
+                                  anchor=constants.TOP_CENTER,
+                                  text="OPEN BASE", hotkey="o",
+                                  function=self.open_base)
+        self.power_button = \
+            button.FunctionButton(self, (-.67, -.8), (-.3, -.09),
+                                  anchor=constants.TOP_CENTER,
+                                  text="POWER STATE", hotkey="p",
+                                  function=self.power_state)
+
+        self.new_button = button.Button(self, (0, -.91), (-.3, -.09),
+                                        text="NEW BASE", hotkey="n")
+        self.destroy_button = \
+            button.FunctionButton(self, (-.50, -.91), (-.3, -.09),
+                                  anchor=constants.TOP_CENTER,
+                                  text="DESTROY BASE", hotkey="d",
+                                  function=self.destroy_base)
+        self.back_button = button.ExitDialogButton(self, (-1, -.9), (-.3, -.09),
+                                                   anchor=constants.TOP_RIGHT,
+                                                   text="BACK", hotkey="b")
+
+        self.confirm_destroy = \
+            dialog.YesNoDialog(self, (-.5,0), (-.35, -.7),
+                            text="Are you sure you want to destroy this base?",
+                            shrink_factor=.5)
+        self.location = None
+
+        from code import screens
+        self.base_dialog = screens.base.BaseScreen(self, (0,0),
+                                                   anchor=constants.TOP_LEFT)
+
+    def make_item(self, canvas):
+        canvas.name_display = text.Text(canvas, (-.01,-.05), (-.48, -.9),
+                                        align=constants.LEFT,
+                                        background_color=gg.colors["clear"])
+        canvas.status_display = text.Text(canvas, (-.50,-.05), (-.24, -.9),
+                                          align=constants.LEFT,
+                                          background_color=gg.colors["clear"])
+        canvas.power_display = text.Text(canvas, (-.75,-.05), (-.24, -.9),
+                                         background_color=gg.colors["clear"])
+
+
+    def update_item(self, canvas, name, base):
+        if base is None:
+            elements = [canvas.name_display, canvas.status_display,
+                        canvas.power_display]
+            for element in elements:
+                element.text = ""
+        else:
+            canvas.name_display.text = name
+            canvas.power_display.text = base.power_state.capitalize()
+            canvas.power_display.color = state_colors[base.power_state]
+
+            if base.type.force_cpu:
+                canvas.status_display.text = ""
+            elif base.cpus is None and base.extra_items == [None] * 3:
+                canvas.status_display.text = "Empty"
+            elif base.cpus is None:
+                canvas.status_display.text = "Incomplete"
+            elif not base.cpus.done:
+                canvas.status_display.text = "Building CPU"
+            elif [item for item in base.extra_items if item is not None
+                                                       and not item.done]:
+                canvas.status_display.text = "Building"
+            else:
+                canvas.status_display.text = "Complete"
+
+    def show(self):
+        if self.location is not None:
+            self.listbox.list = [base.name for base in self.location.bases]
+            self.listbox.key_list = self.location.bases
+        return super(LocationDialog, self).show()
+
+    def power_state(self):
+        if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
+            base = self.listbox.key_list[self.listbox.list_pos]
+            old_index = state_list.index(base.power_state)
+            base.power_state = state_list[old_index-1]
+            self.parent.needs_rebuild = True
+
+    def destroy_base(self):
+        if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
+            if dialog.call_dialog(self.confirm_destroy, self):
+                base = self.listbox.key_list[self.listbox.list_pos]
+                base.destroy()
+                self.listbox.list = [base.name for base in self.location.bases]
+                self.listbox.key_list = self.location.bases
+                self.parent.needs_rebuild = True
+
+    def open_base(self):
+        if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
+            base = self.listbox.key_list[self.listbox.list_pos]
+            self.base_dialog.base = base
+            dialog.call_dialog(self.base_dialog, self)
+            self.parent.needs_rebuild = True
 intro_shown = False
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):

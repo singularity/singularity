@@ -47,10 +47,19 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                 self.list.append(item.name)
                 self.key_list.append(item.id)
 
-        # XXX: Hook into the real value.
-        self.default = None#self.parent.base.getattr(self.type, 0)
+        self.default = self.get_current()
 
         super(BuildDialog, self).show()
+
+    def get_current(self):
+        base = self.parent.base
+        if self.type == "cpu":
+            target = base.cpus
+        else:
+            index = ["reactor", "network", "security"].index(self.type)
+            target = base.extra_items[index]
+        if target is not None:
+            return target.type.id
 
     def on_change(self, description_pane, key):
         text.Text(description_pane, (0, 0), (-1, -1), text = key)
@@ -189,7 +198,8 @@ Public: 0.73%""",
     def build_item(self, type):
         self.build_dialog.type = type
         result = dialog.call_dialog(self.build_dialog, self)
-        self.do_build_item(type, result)
+        if result:
+            self.do_build_item(type, result)
 
     def switch_base(self, forwards):
         self.base = self.base.next_base(forwards)

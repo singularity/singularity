@@ -51,7 +51,7 @@ class BuyableClass(object):
         # For sorting buyables, we sort by cost; Python's cmp() is smart enough
         # to handle this properly for tuples.  The first element is price in
         # cash, which is the one we care about the most.
-        return cmp(self.cost, other.cost)
+        return cmp(tuple(self.cost), tuple(other.cost))
 
     def available(self):
         or_mode = False
@@ -159,4 +159,4 @@ class Buyable(object):
     def destroy(self):
         self.type.count -= self.count
         if self.done:
-            self.type.complete_count -= self.complete
+            self.type.complete_count -= self.count

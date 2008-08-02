@@ -39,25 +39,25 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def on_select(self, description_pane, key):
         text.Text(self.description_pane, (0,0), (-1,-1), text=key)
 
-    def make_item(self, base):
-        base.research_name = text.Text(base, (-.01, -.01), (-.70, -.5),
-                                       align=constants.LEFT,
-                                       background_color=gg.colors["clear"])
-        base.research_name.visible = False
-        base.alloc_cpus = text.Text(base, (-.99, -.01), (-.21, -.5),
-                                    anchor=constants.TOP_RIGHT,
-                                    text="1,000,000,000",
-                                    align=constants.RIGHT,
-                                    background_color=gg.colors["clear"])
-        base.alloc_cpus.visible = False
-        #base.remove_button = button.Button(base, (-.94, -.05), (-.05, -.45),
+    def make_item(self, canvas):
+        canvas.research_name = text.Text(canvas, (-.01, -.01), (-.70, -.5),
+                                         align=constants.LEFT,
+                                         background_color=gg.colors["clear"])
+        canvas.research_name.visible = False
+        canvas.alloc_cpus = text.Text(canvas, (-.99, -.01), (-.21, -.5),
+                                      anchor=constants.TOP_RIGHT,
+                                      text="1,000,000,000",
+                                      align=constants.RIGHT,
+                                      background_color=gg.colors["clear"])
+        canvas.alloc_cpus.visible = False
+        #canvas.remove_button = button.Button(canvas, (-.94, -.05), (-.05, -.45),
         #                                   text="X", text_shrink_factor=.9,
         #                                   color=gg.colors["red"])
-        #base.remove_button.visible = False
-        base.slider = slider.UpdateSlider(base, (-.01, -.55), (-.98, -.40),
-                                          anchor=constants.TOP_LEFT,
-                                          horizontal=True)
-        base.slider.visible = False
+        #canvas.remove_button.visible = False
+        canvas.slider = slider.UpdateSlider(canvas, (-.01, -.55), (-.98, -.40),
+                                            anchor=constants.TOP_LEFT,
+                                            horizontal=True)
+        canvas.slider.visible = False
 
     def cpu_for(self, key):
         return g.pl.cpu_usage.get(key, 0)

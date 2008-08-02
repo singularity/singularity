@@ -62,7 +62,7 @@ class Base(buyable.Buyable):
         self.cpu = 0
 
         #Reactor, network, security.
-        self.extra_items = [0] * 3
+        self.extra_items = [None] * 3
 
         self.cpus = None
         if self.type.force_cpu:
@@ -80,7 +80,7 @@ class Base(buyable.Buyable):
         if built:
             self.finish()
 
-        self.power_state = "Active"
+        self.power_state = "active"
         self.grace_over = False
 
         self.maintenance = buyable.array(self.type.maintenance)
@@ -214,11 +214,11 @@ class Base(buyable.Buyable):
             self.prev.next = self.next
             self.next.prev = self.prev
 
-        if self.cpus:
+        if self.cpus is not None:
             self.cpus.destroy()
 
         for item in self.extra_items:
-            if item != 0:
+            if item is not None:
                 item.destroy()
 
     def next_base(self, forwards):
