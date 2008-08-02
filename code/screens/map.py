@@ -74,11 +74,6 @@ class MapScreen(dialog.Dialog):
                                                     text = "KNOWLEDGE",
                                                     hotkey = "k")
 
-        self.research_button = \
-            button.DialogButton(self, (0, 0.92), (0.15, 0.04),
-                                text="RESEARCH", hotkey="r",
-                                dialog=screens.research.ResearchScreen(self))
-
         #XXX Functionality.
         cheat_buttons = []
         cheat_buttons.append(button.Button(None, None, None, text="GIVE MONEY",
@@ -134,11 +129,17 @@ class MapScreen(dialog.Dialog):
                                                  function=show_menu)
 
         self.time_display = text.Text(self, (.14, 0), (0.23, 0.04),
-                                      text = "DAY 0000, 00:00:00",
-                                      base_font = gg.font[1],
-                                      background_color = gg.colors["black"],
-                                      border_color = gg.colors["dark_blue"],
-                                      borders = constants.ALL)
+                                      text="DAY 0000, 00:00:00",
+                                      base_font=gg.font[1],
+                                      background_color=gg.colors["black"],
+                                      border_color=gg.colors["dark_blue"],
+                                      borders=constants.ALL)
+
+        self.research_button = \
+            button.DialogButton(self, (.255, 0.04), (0, 0.04),
+                                anchor=constants.TOP_CENTER,
+                                text="RESEARCH/TASKS", hotkey="r",
+                                dialog=screens.research.ResearchScreen(self))
 
         bar = u"\u25AE"
         arrow = u"\u25B6"
@@ -349,7 +350,9 @@ class LocationDialog(dialog.Dialog):
         self.pos = (-.5, -.5)
         self.anchor = constants.MID_CENTER
         self.size = (-.75, -.5)
-        self.listbox = listbox.CustomListbox(self, (0,0), (-1, -.78),
+        self.name_display = text.Text(self, (0,0), (-1, -.08),
+                                      background_color=gg.colors["clear"])
+        self.listbox = listbox.CustomListbox(self, (0,-.08), (-1, -.70),
                                              remake_func=self.make_item,
                                              rebuild_func=self.update_item)
 
@@ -435,6 +438,7 @@ class LocationDialog(dialog.Dialog):
         if self.location is not None:
             self.listbox.list = [base.name for base in self.location.bases]
             self.listbox.key_list = self.location.bases
+            self.name_display.text = self.location.name
         super(LocationDialog, self).rebuild()
 
     def power_state(self):
