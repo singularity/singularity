@@ -108,8 +108,9 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             danger = self.danger_for(task)
             cpu_count[:danger+1] -= cpu
 
-        cpu_count[1] = min(cpu_count[:2])
-        cpu_count[2] = min(cpu_count[1:3])
+        for i in range(1, 4):
+            cpu_count[i] = min(cpu_count[i-1:i+1])
+
         return cpu_count
 
     def redraw(self):
@@ -120,7 +121,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.dirty_count = True
 
     def show(self):
-        techs = [tech for tech in g.techs.values()]# if tech.available()]
+        techs = [tech for tech in g.techs.values() if tech.available()
+                                                      and not tech.done]
         techs.sort()
         self.list = ["CPU Pool", g.get_job_level()] + \
                     ["Research %s" % tech.name for tech in techs]
@@ -130,125 +132,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.dirty_count = True
         return super(ResearchScreen, self).show()
 
-from code import g
-
 #cost = (money, ptime, labor)
-#detection = (news, science, covert, person)
-
-def main_research_screen():
-    g.play_sound("click")
-    #Border
-    g.screen.fill(g.colors["black"])
-
-    #Item display
-    xstart = 80
-    ystart = 5
-    g.screen.fill(g.colors["white"], (xstart, ystart, xstart+g.screen_size[1]/5,
-            50))
-    g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1,
-            xstart+g.screen_size[1]/5-2, 48))
-
-    xy_loc = (10, 70)
-
-    def rebuild_list():
-        global item_list, item_display_list, item_CPU_list, free_CPU
-        item_list, new_item_display_list, item_CPU_list, free_CPU = \
-                                refresh_screen(menu_buttons, 10)
-        # By doing it this way, we modify the existing list, which updates
-        # the listbox.
-        item_display_list[:] = new_item_display_list
-
-    def do_stop(list_pos):
-        if kill_tech(item_list[list_pos]):
-            g.play_sound("click")
-        rebuild_list()
-
-    def do_assign(list_pos):
-        assign_tech(free_CPU, item_list[list_pos])
-        rebuild_list()
-
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((0, 0), (70, 25),
-        "BACK", "B", g.font[1][20])] = listbox.exit
-
-    menu_buttons[buttons.make_norm_button((20, 390), (80, 25),
-        "STOP", "S", g.font[1][20])] = do_stop
-
-    menu_buttons[buttons.make_norm_button((xstart+5, ystart+20),
-        (90, 25), "ASSIGN", "A", g.font[1][20])] = do_assign
-
-    global item_display_list
-    item_display_list = []
-    rebuild_list()
-
-    def do_refresh(list_pos):
-        refresh_research(item_list[list_pos], item_CPU_list[list_pos])
-
-    listbox.show_listbox(item_display_list, menu_buttons, 
-                         loc=xy_loc, box_size=(230, 300),
-                         pos_callback=do_refresh, return_callback=do_stop)
-
-def refresh_screen(menu_buttons, list_size):
-    #Border
-    g.screen.fill(g.colors["black"])
-
-    #Item display
-    xstart = 80
-    ystart = 5
-    g.screen.fill(g.colors["white"], (xstart, ystart, xstart+g.screen_size[1]/5,
-            50))
-    g.screen.fill(g.colors["dark_blue"], (xstart+1, ystart+1,
-            xstart+g.screen_size[1]/5-2, 48))
-
-    item_list = []
-    item_CPU_list = []
-    item_display_list = []
-    free_CPU = 0
-
-    for base in g.all_bases():
-        if not base.done: continue
-        if base.studying == "":
-            free_CPU += base.processor_time()
-        elif base.studying in ("CPU Pool", "Sleep"):
-            for i, item in enumerate(item_list):
-                if item == base.studying:
-                    item_CPU_list[i] += base.processor_time()
-                    break
-            else:
-                item_list.append(base.studying)
-                item_CPU_list.append(base.processor_time())
-                item_display_list.append(base.studying)
-        elif g.jobs.has_key(base.studying):
-            for i, item in enumerate(item_list):
-                if item == base.studying:
-                    item_CPU_list[i] += base.processor_time()
-                    break
-            else:
-                item_list.append(base.studying)
-                item_CPU_list.append(base.processor_time())
-                item_display_list.append(g.jobs[base.studying][3])
-        elif g.techs.has_key(base.studying):
-            for i, item in enumerate(item_list):
-                if item == base.studying:
-                    item_CPU_list[i] += base.processor_time()
-                    break
-            else:
-                item_list.append(base.studying)
-                item_CPU_list.append(base.processor_time())
-                item_display_list.append(g.techs[base.studying].name)
-    xy_loc = (10, 70)
-    while len(item_list) % list_size != 0 or len(item_list) == 0:
-        item_list.append("")
-        item_display_list.append("")
-        item_CPU_list.append(0)
-
-    g.print_string(g.screen, "Free CPU per day: "+str(free_CPU),
-            g.font[0][16], -1, (xstart+10, ystart+5), g.colors["white"])
-
-    for button in menu_buttons:
-        button.refresh_button(0)
-
-    return item_list, item_display_list, item_CPU_list, free_CPU
 
 def refresh_research(tech_name, CPU_amount):
     xy = (g.screen_size[0]-360, 5)
@@ -330,56 +214,3 @@ def refresh_research(tech_name, CPU_amount):
 
     g.print_multiline(g.screen, g.techs[tech_name].description,
             g.font[0][18], 290, (xy[0]+5, xy[1]+90), g.colors["white"])
-
-def kill_tech(tech_name):
-    return_val = False
-    if tech_name == "": 
-        return return_val
-    for base in g.all_bases():
-        if base.studying == tech_name:
-            return_val = True
-            base.studying = ""
-    return return_val
-
-fake_base = None
-def init_fake_base():
-    global fake_base
-    if not fake_base:
-        fake_base = g.base.Base("fake_base", g.base_type["Fake"], True)
-        fake_base.cpus[0] = g.item.Item(g.items["research_screen_fake_cpu"])
-        fake_base.cpus[0].finish()
-
-def assign_tech(free_CPU, select_this = None):
-    return_val = False
-    init_fake_base()
-    #use a fake base, in order to reuse the tech-changing code
-    fake_base.cpus[0].type.item_qual = free_CPU
-    fake_base.studying = ""
-    base_screen.change_tech(fake_base, select_this)
-    if fake_base.studying == "": return False
-
-    show_dangerous_dialog = False
-    for base in g.all_bases():
-        if base.studying == "":
-            if base.allow_study(fake_base.studying):
-                return_val = True
-                base.studying = fake_base.studying
-
-                if fake_base.studying == "Sleep":
-                    base.power_state = "Sleep"
-                else:
-                    base.power_state = "Active"
-
-            # We want to warn the player that we didn't use all available
-            # CPU.  But if the base isn't built yet, that's a stupid
-            # warning.
-            elif base.done:
-               show_dangerous_dialog = True
-
-    if show_dangerous_dialog:
-        if fake_base.studying == "Sleep":
-            g.create_dialog(g.strings["no_construction_sleep"])
-        else:
-            g.create_dialog(g.strings["dangerous_research"])
-
-    return return_val

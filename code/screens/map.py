@@ -193,15 +193,25 @@ class MapScreen(dialog.Dialog):
         self.cash_display.text = "CASH: %s (%s)" % \
               (g.to_money(g.pl.cash), g.to_money(g.pl.future_cash()))
 
-        import finance
-        total_cpu, idle_cpu, construction_cpu, unused, unused, maint_cpu = \
-                finance.cpu_numbers()
-        if construction_cpu < maint_cpu:
+
+        total_cpu = g.pl.available_cpus[0]
+
+        cpu_left = total_cpu
+        for cpu_assigned in g.pl.cpu_usage.itervalues():
+            cpu_left -= cpu_assigned
+        cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
+
+        maint_cpu = 0
+        for base in g.all_bases():
+            if base.done:
+                maint_cpu += base.maintenance[1]
+
+        if cpu_pool < maint_cpu:
             self.cpu_display.color = gg.colors["red"]
         else:
             self.cpu_display.color = gg.colors["white"]
         self.cpu_display.text = "CPU: %s (%s)" % \
-              (g.to_money(total_cpu), g.to_money(construction_cpu))
+              (g.to_money(total_cpu), g.to_money(cpu_pool))
 
         # What we display in the suspicion section depends on whether
         # Advanced Socioanalytics has been researched.  If it has, we

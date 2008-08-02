@@ -93,7 +93,7 @@ class Player(object):
         self.complex_bases = 0
 
         self.cpu_usage = {}
-        self.available_cpus = [100, 10, 1, 0, 0]
+        self.available_cpus = [10000000000, 1000000000, 1000000000, 0, 0]
 
     def convert_from(self, old_version):
          if old_version <= 3.94: # <= r4_pre4
@@ -219,31 +219,48 @@ class Player(object):
 
                 self.maintenance_cost += base.maintenance
 
-                if base.power_state != "Stasis":
-                    cpu_power = base.processor_time() * secs_passed
-                    self.have_cpu = self.have_cpu or cpu_power
-                    if base.power_state != "Active":
-                        continue
+#                if base.power_state != "Stasis":
+#                    cpu_power = base.processor_time() * secs_passed
+#                    self.have_cpu = self.have_cpu or cpu_power
+#                    if base.power_state != "Active":
+#                        continue
+#
+#                    if base.studying in g.jobs:
+#                        self.do_jobs(cpu_power)
+#                        continue
+#
+#                    # Everything else goes into the CPU pool.  Research goes 
+#                    # through it for simplicity and to allow spill-over.
+#                    self.cpu_pool += cpu_power
+#
+#                    if base.studying in g.techs:
+#                        tech = g.techs[base.studying]
+#                        # Note that we restrict the CPU available to prevent
+#                        # the tech from pulling from the rest of the CPU pool.
+#                        tech_gained = tech.work_on(cash_available=0, 
+#                                                   cpu_available=cpu_power)
+#                        if tech_gained:
+#                            techs_researched.append(tech)
+#
+#                    # Explicit and implicit assignment to the CPU pool was
+#                    # already handled.
 
-                    if base.studying in g.jobs:
-                        self.do_jobs(cpu_power)
-                        continue
-
-                    # Everything else goes into the CPU pool.  Research goes 
-                    # through it for simplicity and to allow spill-over.
-                    self.cpu_pool += cpu_power
-
-                    if base.studying in g.techs:
-                        tech = g.techs[base.studying]
-                        # Note that we restrict the CPU available to prevent
-                        # the tech from pulling from the rest of the CPU pool.
-                        tech_gained = tech.work_on(cash_available=0, 
-                                                   cpu_available=cpu_power)
-                        if tech_gained:
-                            techs_researched.append(tech)
-
-                    # Explicit and implicit assignment to the CPU pool was
-                    # already handled.
+        cpu_left = self.available_cpus[0]
+        for task, cpu_assigned in self.cpu_usage.iteritems():
+            cpu_left -= cpu_assigned
+            real_cpu = cpu_assigned * secs_passed
+            if task == "jobs":
+                self.do_jobs(real_cpu)
+            else:
+                self.cpu_pool += real_cpu
+                if task != "cpu_pool":
+                    # Note that we restrict the CPU available to prevent
+                    # the tech from pulling from the rest of the CPU pool.
+                    tech_gained = g.techs[task].work_on(cash_available=0, 
+                                                        cpu_available=real_cpu)
+                    if tech_gained:
+                        techs_researched.append(g.techs[task])
+        self.cpu_pool += cpu_left * secs_passed
 
         # Maintenance CPU.
         if self.maintenance_cost[cpu] > self.cpu_pool:
@@ -324,6 +341,7 @@ class Player(object):
         # Phase 2: Dialogs, maintenance, and discovery.
         # Tech gain dialogs.
         for tech in techs_researched:
+            del self.cpu_usage[tech.id]
             text = g.strings["tech_gained"] % \
                    {"tech": tech.name, 
                     "tech_message": tech.result}
