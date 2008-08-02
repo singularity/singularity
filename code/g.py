@@ -1169,26 +1169,6 @@ def load_strings():
     load_string_defs("en_US")
     load_string_defs(language)
 
-def load_fonts():
-    """
-load_fonts() loads the two fonts used throughout the game from the data/fonts/
-directory.
-"""
-
-    global font
-
-    font_dir = os.path.join(data_loc, "fonts")
-    font0_file = os.path.join(font_dir, font0)
-    font1_file = os.path.join(font_dir, font1)
-    for i in range(8, 51):
-        if i % 2 == 0 and i < 34:
-
-            # We reduce the size of font 0  and bold it to make it the
-            # "right" size.  Yes, this is a hack.
-            font[0][i] = pygame.font.Font(font0_file, i - 7)
-            font[0][i].set_bold(1)
-        font[1][i] = pygame.font.Font(font1_file, i)
-
 def run_intro():
     intro_file_name = data_loc+"intro_"+language+".dat"
     if not os.path.exists(intro_file_name):

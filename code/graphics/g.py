@@ -304,4 +304,31 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
     screen.fill(colors[outline_color], (xy[0], xy[1], size[0], size[1]))
     screen.fill(colors[inner_color], (xy[0]+1, xy[1]+1, size[0]-2, size[1]-2))
 
+#which fonts to use
+font0 = "DejaVuSans.ttf"
+font1 = "acknowtt.ttf"
 
+data_loc = "../data/"
+
+def load_fonts():
+    """
+load_fonts() loads the two fonts used throughout the game from the data/fonts/
+directory.
+"""
+
+    global font
+    import os.path
+
+    font_dir = os.path.join(data_loc, "fonts")
+    font0_file = os.path.join(font_dir, font0)
+    font1_file = os.path.join(font_dir, font1)
+    for i in range(8, 51):
+        if i % 2 == 0 and i < 34:
+
+            # We reduce the size of font 0  and bold it to make it the
+            # "right" size.  Yes, this is a hack.
+            font[0][i] = pygame.font.Font(font0_file, i - 7)
+            font[0][i].set_bold(1)
+        font[1][i] = pygame.font.Font(font1_file, i)
+
+load_fonts()

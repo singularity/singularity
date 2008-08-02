@@ -112,8 +112,14 @@ class Widget(object):
 
            Override to create a dynamically-sized widget."""
         parent_size = self._parent_size()
+        size = list(parent_size)
+        for i in range(2):
+            if size[i] > 0:
+                size[i] *= parent_size[i]
+            elif size[i] < 0:
+                size[i] *= -(g.screen_size[i])
 
-        return tuple(int(parent_size[i] * self.size[i]) for i in range(2))
+        return tuple(size)
 
     def get_real_size(self):
         """Returns the real size of this widget.
