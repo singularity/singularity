@@ -1,6 +1,5 @@
 #file: dialog.py
-#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
-#                        and FunnyMan3595
+#Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -20,34 +19,42 @@
 #This file contains the dialog class.
 
 import pygame
-from code import g
 import constants
 
-def causes_rebuild(data_member):
-    def get(self):
-        return self.__dict__[data_member]
-    def set(self, value):
-        self.__dict__[data_member] = value
-        self.needs_rebuild = True
-
-    return property(get, set)
+def causes_remask(data_member):
+    """Creates a data member that sets needs_remask to True when changed."""
+    return widget.set_on_change(data_member, "needs_remask")
 
 import widget
 class Dialog(widget.Widget):
     """A Dialog is a Widget that has its own event loop and can be faded out."""
-    def __init__(self, pos = (.5,.55), size = (1, .9), 
-                 anchor = constants.MID_CENTER, parent):
-        super(Dialog, self).__init__(pos, size, anchor, parent)
+
+    top = None # The top-level dialog.
+
+    faded = widget.causes_redraw("_faded")
+
+    def __init__(self, parent, pos = (.5,.55), size = (1, .9), 
+                 anchor = constants.MID_CENTER):
+        super(Dialog, self).__init__(pos, parent, size, anchor)
         self.visible = False
         self.faded = False
+        self.has_mask = True
         self.needs_remask = True
 
-    def remake_surface(self):
-        """Recreates the surface that this widget will draw on.  This version
-           handles the top-level Dialog by resizing pygame's main surface."""
+    def make_top(self):
+        """Makes this dialog be the top-level dialog."""
+        if self.parent != None:
+            raise ValueError, \
+                  "Dialogs with parents cannot be the top-level dialog."
+        else:
+            Dialog.top = self
+
+    def remake_surfaces(self):
+        """Recreates the surfaces that this widget will draw on.  This version
+           handles the top-level Dialog via pygame's main surface."""
+        super(Dialog, self).remake_surfaces()
         if self.parent == None:
-            pygame.display.set_mode(self.real_size())
-        super(Dialog, self).remake_surface()
+            self.surface = pygame.display.set_mode(self.surface.get_size())
 
     def make_fade_mask(self):
         """Recreates the fade mask for this dialog.  Override if part of the 
@@ -60,29 +67,23 @@ class Dialog(widget.Widget):
         """If the dialog needs a remask, calls make_fade_mask.  Otherwise, 
            returns the pre-made fade mask."""
         if self.needs_remask:
-            self.fade_mask = self.make_fade_mask()
+            self._fade_mask = self.make_fade_mask()
             self.needs_remask = False
-        return self.fade_mask
+        return self._fade_mask
 
-    def fade(self):
-        """Greys out the dialog, to make it clear that it's not active."""
-        if not self.faded:
-            self.unfaded_surface = self.surface.copy()
-            self.surface.blit( self.get_fade_mask(), (0,0) )
-            self.faded = True
+    fade_mask = property(get_fade_mask)
 
-    def unfade(self):
-        """Un-greys-out the dialog."""
+    def do_mask(self):
+        """Greys out the dialog when faded, to make it clear that it's not 
+           active."""
         if self.faded:
-            self.surface = self.unfaded_surface
-            self.faded = False
+            self.surface.blit( self.get_fade_mask(), (0,0) )
 
     def show(self):
         """Shows the dialog and enters an event-handling loop."""
         while True:
-            # Draw handles rebuilding and redrawing this widget, its parent, and
-            # all of its children, if needed.
-            self.draw()
+            # Draw handles rebuilding and redrawing all widgets, as needed.
+            Dialog.top.draw()
             event in pygame.event.wait():
             result = self.handle(event)
             if result != constants.NO_RESULT:
@@ -90,12 +91,23 @@ class Dialog(widget.Widget):
 
     def add_handler(self, type, handler, priority = 100):
         """Adds a handler of the given type, with the given priority."""
-        bisect.insort( self.handlers[type], (priority, handler) )
+        bisect.insort( self.handlers.setdefault(type, []), 
+                       (priority, handler) )
 
     def remove_handler(self, type, handler):
         """Removes all instances of the given handler from the given type."""
-        self.handlers[type] = [h for h in self.handlers[type] 
+        self.handlers[type] = [h for h in self.handlers.get(type, [])
                                  if h[1] != handler]
+
+    def add_key_handler(self, key, handler, priority = 100):
+        """Adds a key handler to the given key, with the given priority."""
+        bisect.insort( self.key_handlers.setdefault(key, []), 
+                       (priority, handler) )
+
+    def remove_handler(self, key, handler):
+        """Removes all instances of the given handler from the given key."""
+        self.key_handlers[key] = [h for h in self.handlers.get(key, []) 
+                                    if h[1] != handler]
 
     def handle(event):
         """Sends an event through all the applicable handlers, returning
