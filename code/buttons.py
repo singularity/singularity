@@ -36,12 +36,7 @@ class button:
         self.sel_color = sel_color
         self.text_color = text_color
         self.activate_key = activate_key
-        if force_underline != None:
-            self.underline_char = force_underline
-        elif activate_key and activate_key in text:
-            self.underline_char = text.index(activate_key)
-        else:
-            self.underline_char = -1
+        self.force_underline = force_underline
         self.font = font
         self.button_id = button_id
         self.stay_selected = 0
@@ -63,7 +58,18 @@ class button:
         self.sel_button_surface = pygame.Surface(self.size)
 
         self.remake_button()
+
+    def redo_underline(self):
+        if self.force_underline != None:
+            self.underline_char = self.force_underline
+        elif self.activate_key and self.activate_key in self.text:
+            self.underline_char = self.text.index(self.activate_key)
+        else:
+            self.underline_char = -1
+
     def remake_button(self):
+        self.redo_underline()
+
         new_size = self.font.size(self.text)
         if self.autosize == 1:
             self.size = (new_size[0]+4, new_size[1]+3)
@@ -90,12 +96,6 @@ class button:
         offsets = ((self.size[0] - new_size[0])/2, (self.size[1] - new_size[1])/2)
         g.print_string(self.sel_button_surface, self.text, self.font, self.underline_char,
                     offsets, self.text_color)
-
-        #Recheck the activate key in case the text was changed.
-        if self.underline_char != -1:
-            self.activate_key = self.text[self.underline_char]
-
-
 
     def refresh_button(self, selected):
         if not self.visible: 
