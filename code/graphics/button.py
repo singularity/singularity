@@ -125,12 +125,16 @@ class FunctionButton(Button):
 class ExitDialogButton(Button):
     def __init__(self, *args, **kwargs):
         self.exit_code = kwargs.pop("exit_code", None)
+        self.exit_code_func = kwargs.pop("exit_code_func", None)
         super(ExitDialogButton, self).__init__(*args, **kwargs)
 
     def activated(self, event):
         """ExitDialogButton's custom activated menu.  Closes the dialog with the
            given exit code."""
-        raise constants.ExitDialog, self.exit_code
+        if self.exit_code_func:
+            raise constants.ExitDialog, self.exit_code_func()
+        else:
+            raise constants.ExitDialog, self.exit_code
         
 class DialogButton(Button):
     def __init__(self, *args, **kwargs):
