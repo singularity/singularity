@@ -95,28 +95,6 @@ def quit_game():
 strings = {}
 help_strings = {}
 
-images = {}
-def load_images():
-    """
-load_images() loads all of the images in the data/images/ directory.
-"""
-    global images
-
-    image_dir = os.path.join(data_loc, "images")
-    image_list = os.listdir(image_dir)
-    for image_filename in image_list:
-
-        # We only want JPGs and PNGs.
-        if len(image_filename) > 4 and (image_filename[-4:] == ".png" or
-         image_filename[-4:] == ".jpg"):
-
-            # We need to convert the image to a Pygame image surface and
-            # set the proper color key for the game.
-            images[image_filename] = pygame.image.load(
-             os.path.join(image_dir, image_filename)).convert()
-            images[image_filename].set_colorkey((255, 0, 255, 255),
-             pygame.RLEACCEL)
-
 sounds = {}
 def load_sounds():
     """

@@ -19,7 +19,9 @@
 
 #This file contains all global objects.
 
+import os.path
 import pygame
+
 import buttons
 from buttons import always, void, exit
 
@@ -308,7 +310,7 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
-data_loc = "../data/"
+data_loc = "../../data/"
 
 def load_fonts():
     """
@@ -317,7 +319,6 @@ directory.
 """
 
     global font
-    import os.path
 
     font_dir = os.path.join(data_loc, "fonts")
     font0_file = os.path.join(font_dir, font0)
@@ -326,7 +327,31 @@ directory.
         font[0][i] = pygame.font.Font(font0_file, i)
         font[1][i] = pygame.font.Font(font1_file, i)
 
+images = {}
+def load_images():
+    """
+load_images() loads all of the images in the data/images/ directory.
+"""
+    global images
+
+    image_dir = os.path.join(data_loc, "images")
+    image_list = os.listdir(image_dir)
+    for image_filename in image_list:
+
+        # We only want JPGs and PNGs.
+        if len(image_filename) > 4 and (image_filename[-4:] == ".png" or
+         image_filename[-4:] == ".jpg"):
+
+            # We need to convert the image to a Pygame image surface and
+            # set the proper color key for the game.
+            images[image_filename] = pygame.image.load(
+             os.path.join(image_dir, image_filename)).convert()
+            images[image_filename].set_colorkey((255, 0, 255, 255),
+             pygame.RLEACCEL)
+
+
 load_fonts()
+load_images()
 fill_colors()
 
 ALPHA = pygame.Surface((0,0)).convert_alpha()
