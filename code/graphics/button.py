@@ -42,7 +42,7 @@ class Button(text.SelectableText):
 
     _hotkey = property(lambda self: self.__hotkey, _on_set_hotkey)
 
-    def __init__(self, parent, pos, size = (0, .05), base_font = None,
+    def __init__(self, parent, pos, size = (0, .045), base_font = None,
                  borders = constants.ALL, hotkey = "", force_underline = None,
                  text_shrink_factor = .825, priority = 100, **kwargs):
         super(Button, self).__init__(parent, pos, size, **kwargs)
