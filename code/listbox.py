@@ -23,7 +23,7 @@ import g
 import scrollbar
 from buttons import void, exit, always, Return, maybe_return, show_buttons
 
-class listbox:
+class listbox(object):
     def __init__(self, xy, size, viewable_items, lines_per_item, bg_color,
                     sel_color, out_color, font_color, font):
         self.xy = xy

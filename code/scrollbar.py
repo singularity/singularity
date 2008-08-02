@@ -21,7 +21,7 @@
 import pygame
 import g
 
-class scrollbar:
+class scrollbar(object):
     def __init__(self, xy, size, viewable_items, bg_color,
                     fore_color, out_color):
         self.xy = xy

@@ -22,7 +22,7 @@ import pygame
 import g
 from new import instancemethod
 
-class button:
+class button(object):
     def __init__(self, xy, size, text, activate_key, bg_color, out_color,
                                 sel_color, text_color, font, button_id="",
                                 force_underline = None, 

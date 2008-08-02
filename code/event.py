@@ -21,7 +21,7 @@
 import g
 #detection = (news, science, covert, person)
 
-class event_class:
+class event_class(object):
     def __init__(self, name, description, event_type, result, chance, unique):
         self.name = name
         self.event_id = name
