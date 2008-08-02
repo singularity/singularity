@@ -148,3 +148,14 @@ class Listbox(text.SelectableText):
                 element.text = self.list[list_index]
             else:
                 element.text = ""
+
+
+class UpdateListbox(Listbox):
+    def _on_selection_change(self):
+        self.update_func(self.list_pos)
+
+    _list_pos = widget.call_on_change("__list_pos", _on_selection_change)
+
+    def __init__(self, *args, **kwargs):
+        self.update_func = kwargs.pop("update_func", lambda value: None)
+        super(UpdateListbox, self).__init__(*args, **kwargs)
