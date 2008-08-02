@@ -102,7 +102,7 @@ class Widget(object):
     children = causes_redraw("_children")
     visible = causes_redraw("_visible")
 
-    def __init__(self, parent, pos, size, anchor = constants.MID_CENTER):
+    def __init__(self, parent, pos, size, anchor = constants.TOP_LEFT):
         self.parent = parent
         self.pos = pos
         self.size = size
@@ -302,13 +302,13 @@ class BorderedWidget(Widget):
     border_color = causes_rebuild("_border_color")
     background_color = causes_rebuild("_background_color")
 
-    def __init__(self, parent, pos, size, anchor, borders = (),
-                 border_color = None, background_color = None):
-        super(BorderedWidget, self).__init__(parent, pos, size, anchor)
+    def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
+        self.borders = kwargs.pop("borders", ())
+        self.border_color = kwargs.pop("border_color", g.colors["white"])
+        self.background_color = kwargs.pop("background_color", g.colors["blue"])
 
-        self.borders = borders
-        self.border_color = border_color or g.colors["white"]
-        self.background_color = background_color or g.colors["blue"]
+        super(BorderedWidget, self).__init__(parent, *args, **kwargs)
 
     def rebuild(self):
         super(BorderedWidget, self).rebuild()
