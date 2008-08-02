@@ -136,7 +136,11 @@ class Widget(object):
         parent_size = self._parent_size()
         my_size = self.real_size
 
-        hpos = int(self.pos[0] * parent_size[0])
+        if self.pos[0] >= 0:
+            hpos = int(self.pos[0] * parent_size[0])
+        else:
+            hpos = - int(self.pos[0] * g.sreen_size[0])
+
         if hanchor == constants.LEFT:
             pass
         elif hanchor == constants.CENTER:
@@ -144,7 +148,11 @@ class Widget(object):
         elif hanchor == constants.RIGHT:
             hpos -= my_size[0]
 
-        vpos = int(self.pos[1] * parent_size[1])
+        if self.pos[1] >= 0:
+            vpos = int(self.pos[1] * parent_size[1])
+        else:
+            vpos = - int(self.pos[1] * g.sreen_size[1])
+
         if vanchor == constants.TOP:
             pass
         elif vanchor == constants.MID:
