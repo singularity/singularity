@@ -427,6 +427,10 @@ class LocationDialog(dialog.Dialog):
             else:
                 canvas.status_display.text = "Complete"
 
+    def show(self):
+        self.needs_rebuild = True
+        return super(LocationDialog, self).show()
+
     def rebuild(self):
         if self.location is not None:
             self.listbox.list = [base.name for base in self.location.bases]

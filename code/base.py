@@ -225,8 +225,9 @@ class Base(buyable.Buyable):
         return base
 
     def sort_tuple(self):
-        # We sort based on size (descending), then name (ascending).
-        return (-self.type.size, self.name)
+        # We sort based on size (descending), CPU (descending),
+        # then name (ascending).
+        return (-self.type.size, -self.cpu, self.name)
 
     def __cmp__(self, other):
         return cmp(self.sort_tuple(), other.sort_tuple())
