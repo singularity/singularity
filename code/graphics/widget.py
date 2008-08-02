@@ -92,6 +92,10 @@ class Widget(object):
         self.size = size
         self.anchor = anchor
 
+        # "It's a widget!"
+        if self.parent:
+            self.parent.children.append(self)
+
         self.children = []
         self.has_mask = False
         self.visible = True
@@ -164,12 +168,12 @@ class Widget(object):
         size = self.real_size
 
         if self.parent != None:
-            self.surface = pygame.Surface(size, pygame.SRCALPHA)
+            self.surface = pygame.Surface(size, 0, g.ALPHA)
             self.surface.fill( (0,0,0,0) )
         else:
             self.surface = pygame.display.set_mode(size)
 
-        self.internal_surface = pygame.Surface(size, pygame.SRCALPHA)
+        self.internal_surface = pygame.Surface(size, 0, g.ALPHA)
         self.internal_surface.fill( (0,0,0,0) ) 
 
     def rebuild(self):
@@ -220,7 +224,6 @@ class Widget(object):
 
         # Copy the entire image onto the widget's parent.
         if self.parent:
-            print "Blitting %r onto %r." % (self.surface, self.parent.surface)
             self.parent.surface.blit(self.surface, self.real_pos)
         else:
             pygame.display.flip()

@@ -308,7 +308,7 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
-data_loc = "../../data/"
+data_loc = "../data/"
 
 def load_fonts():
     """
@@ -323,13 +323,10 @@ directory.
     font0_file = os.path.join(font_dir, font0)
     font1_file = os.path.join(font_dir, font1)
     for i in range(8, 51):
-        if i % 2 == 0 and i < 34:
-
-            # We reduce the size of font 0  and bold it to make it the
-            # "right" size.  Yes, this is a hack.
-            font[0][i] = pygame.font.Font(font0_file, i - 7)
-            font[0][i].set_bold(1)
+        font[0][i] = pygame.font.Font(font0_file, i)
         font[1][i] = pygame.font.Font(font1_file, i)
 
 load_fonts()
 fill_colors()
+
+ALPHA = pygame.Surface((0,0)).convert_alpha()
