@@ -19,7 +19,6 @@
 
 #This file contains all global objects.
 
-import clock as sing_clock
 import pygame
 import buttons
 from buttons import always, void, exit
@@ -29,8 +28,6 @@ global screen
 
 #size of the screen. This can be set via command-line option.
 screen_size = (800, 600)
-
-clock = sing_clock.Clock()
 
 #colors:
 colors = {}

@@ -35,7 +35,7 @@ class Dialog(widget.Widget):
 
     def __init__(self, parent, pos = (.5,.55), size = (1, .9), 
                  anchor = constants.MID_CENTER):
-        super(Dialog, self).__init__(pos, parent, size, anchor)
+        super(Dialog, self).__init__(parent, pos, size, anchor)
         self.visible = False
         self.faded = False
         self.has_mask = True
@@ -84,7 +84,7 @@ class Dialog(widget.Widget):
         while True:
             # Draw handles rebuilding and redrawing all widgets, as needed.
             Dialog.top.draw()
-            event in pygame.event.wait():
+            event = pygame.event.wait()
             result = self.handle(event)
             if result != constants.NO_RESULT:
                 return result

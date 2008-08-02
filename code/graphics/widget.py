@@ -53,15 +53,15 @@ class Widget(object):
        children."""
 
     def _get_needs_redraw(self):
-        return self.__dict__["needs_redraw"]
+        return self._needs_redraw
 
     def _propogate_redraw(self, redraw):
         if redraw:
             target = self.parent
             while target:
-                target.__dict__["needs_redraw"] = redraw
+                target._needs_redraw = redraw
                 target = target.parent
-        self.__dict__["needs_redraw"] = redraw
+        self._needs_redraw = redraw
 
     needs_redraw = property(_get_needs_redraw, _propogate_redraw,
                             doc = """Indicates if the widget needs a redraw.
@@ -69,11 +69,11 @@ class Widget(object):
                                      the top-level dialog.""")
 
     def _get_needs_rebuild(self):
-        return self.needs_rebuild
+        return self._needs_rebuild
 
     def _propogate_rebuild(self, rebuild):
         self.needs_redraw = rebuild # Propagates if true.
-        self.__dict__["needs_rebuild"] = rebuild
+        self._needs_rebuild = rebuild
 
     needs_rebuild = property(_get_needs_rebuild, _propogate_rebuild,
                             doc = """Indicates if the widget needs a rebuild.
@@ -100,7 +100,7 @@ class Widget(object):
         #self.needs_rebuild = True
         #self.needs_redraw = True
 
-    def _parent_size(self)
+    def _parent_size(self):
         if self.parent == None:
             return g.screen_size
         else:
@@ -113,14 +113,14 @@ class Widget(object):
            Override to create a dynamically-sized widget."""
         parent_size = self._parent_size()
 
-        return (int(parent_size[i] * self.size[i]) for i in range(2))
+        return tuple(int(parent_size[i] * self.size[i]) for i in range(2))
 
     def get_real_size(self):
         """Returns the real size of this widget.
 
            To implement a dynamically-sized widget, override _calc_size, which
            will be called whenever the widget is rebuilt."""
-        if needs_rebuild:
+        if self.needs_rebuild:
             self._real_size = self._calc_size()
 
         return self._real_size
@@ -134,19 +134,19 @@ class Widget(object):
         my_size = self.real_size
 
         hpos = int(self.pos[0] * parent_size[0])
-        if hanchor = constants.LEFT:
+        if hanchor == constants.LEFT:
             pass
-        elif hanchor = constants.CENTER:
+        elif hanchor == constants.CENTER:
             hpos -= my_size[0] // 2
-        elif hanchor = constants.RIGHT:
+        elif hanchor == constants.RIGHT:
             hpos -= my_size[0]
 
         vpos = int(self.pos[1] * parent_size[1])
-        if vanchor = constants.TOP:
+        if vanchor == constants.TOP:
             pass
-        elif vanchor = constants.MID:
+        elif vanchor == constants.MID:
             vpos -= my_size[1] // 2
-        elif vanchor = constants.BOTTOM:
+        elif vanchor == constants.BOTTOM:
             vpos -= my_size[1]
 
         return (hpos, vpos)
@@ -161,7 +161,7 @@ class Widget(object):
             self.surface = pygame.Surface(size, pygame.SRCALPHA)
             self.surface.fill( (0,0,0,0) )
         else:
-            self.surface = pygame.display.set_mode(self.surface.get_size())
+            self.surface = pygame.display.set_mode(size)
 
         self.internal_surface = pygame.Surface(size, pygame.SRCALPHA)
         self.internal_surface.fill( (0,0,0,0) ) 
@@ -210,4 +210,5 @@ class Widget(object):
                 child.redraw()
 
         # Copy the entire image onto the widget's parent.
-        self.parent.surface.blit(self.surface, self.real_pos)
+        if self.parent:
+            self.parent.surface.blit(self.surface, self.real_pos)
