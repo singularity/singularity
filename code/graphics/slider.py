@@ -25,28 +25,33 @@ import g
 import widget
 import button
 
-class Slider(widget.BorderedWidget):
+def calc_max(elements, size):
+    return elements - size
+
+class Slider(button.Button):
     slider_color = widget.causes_rebuild("_slider_color")
     slider_pos = widget.causes_rebuild("_slider_pos")
     slider_max = widget.causes_rebuild("_slider_max")
-    overlap = widget.causes_rebuild("_overlap")
+    slider_size = widget.causes_rebuild("_slider_size")
     horizontal = widget.causes_rebuild("_horizontal")
 
     def __init__(self, parent, pos = (1,0), size = (.1, 1),
                  anchor = constants.TOP_RIGHT, borders = constants.ALL,
                  border_color=None, background_color=None, slider_color=None,
-                 slider_pos=0, slider_max=9, overlap=4, horizontal=False,
+                 slider_pos=0, slider_max=10, slider_size=5, horizontal=False,
                  **kwargs):
-        super(Slider, self).__init__(parent, pos, size, anchor, **kwargs)
+        super(Slider, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
         self.borders = borders
         self.border_color = border_color or g.colors["white"]
         self.background_color = background_color or g.colors["dark_blue"]
+        self.selected_color = self.background_color
+        self.unselected_color = self.background_color
         self.slider_color = slider_color or g.colors["light_blue"]
 
         self.slider_pos = slider_pos
         self.slider_max = slider_max
-        self.overlap = overlap
+        self.slider_size = slider_size
         self.horizontal = horizontal
 
         if self.parent:
@@ -58,7 +63,8 @@ class Slider(widget.BorderedWidget):
                                     anchor = constants.TOP_LEFT,
                                     border_color = self.border_color,
                                     selected_color = self.slider_color,
-                                    unselected_color = self.slider_color)
+                                    unselected_color = self.slider_color,
+                                    priority = 75)
 
     def _calc_length(self, items):
         if self.horizontal:
@@ -66,13 +72,13 @@ class Slider(widget.BorderedWidget):
         else:
             total_length = self.real_size[1] - 2
 
-        return items / float(self.overlap + self.slider_max + 1)
+        return items / float(self.slider_size + self.slider_max)
 
     def rebuild(self):
         super(Slider, self).rebuild()
 
         bar_start = self._calc_length(self.slider_pos)
-        bar_length = self._calc_length(self.overlap + 1)
+        bar_length = self._calc_length(self.slider_size)
 
         if self.horizontal:
             self.button.pos = (bar_start, 0)
@@ -116,10 +122,13 @@ class Slider(widget.BorderedWidget):
             unit = self._calc_length(1) * self.real_size[dir]
             movement = int( ( rel + (unit / 2.) ) // unit )
 
-            new_pos = max(0, min(self.slider_max, self.start_slider_pos + movement))
+            new_pos = self.safe_pos(self.start_slider_pos + movement)
             self.slider_pos = new_pos
 
             raise constants.Handled
+
+    def safe_pos(self, value):
+        return max(0, min(self.slider_max, value))
 
     def handle_click(self, event):
         if self.drag_state == True:
@@ -127,3 +136,30 @@ class Slider(widget.BorderedWidget):
             raise constants.Handled
         else:
             self.drag_state = None
+
+    def jump(self, lower):
+        jump_dist = self.slider_size - 1
+        if lower:
+            self.slider_pos = self.safe_pos(self.slider_pos - jump_dist)
+        else:
+            self.slider_pos = self.safe_pos(self.slider_pos + jump_dist)
+
+    def activated(self, event):
+        assert event.type == pygame.MOUSEBUTTONUP
+        if self.horizontal:
+            self.jump(lower = event.pos[0] < self.button.abs_pos[0])
+        else:
+            self.jump(lower = event.pos[1] < self.button.abs_pos[1])
+
+
+class UpdateSlider(Slider):
+    def on_update(self, value):
+        self.__slider_pos = value
+        self.update_func(value)
+    _slider_pos = property(lambda self: self.__slider_pos, on_update)
+    def __init__(self, *args, **kwargs):
+        if "update_func" in kwargs:
+            self.update_func = kwargs.pop("update_func")
+        else:
+            self.update_func = lambda value: None
+        super(UpdateSlider, self).__init__(*args, **kwargs)

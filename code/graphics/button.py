@@ -24,6 +24,7 @@ import constants
 import g
 import widget
 import text
+import image
 
 class Button(text.SelectableText):
     hotkey = widget.causes_rebuild("_hotkey")
@@ -43,7 +44,7 @@ class Button(text.SelectableText):
 
     def __init__(self, parent, pos, size = (0, -.05), base_font = None,
                  borders = constants.ALL, hotkey = "", force_underline = None,
-                 text_shrink_factor = .825, **kwargs):
+                 text_shrink_factor = .825, priority = 100, **kwargs):
         super(Button, self).__init__(parent, pos, size, **kwargs)
 
         self.base_font = base_font or g.font[1]
@@ -56,8 +57,10 @@ class Button(text.SelectableText):
         self.selected = False
 
         if self.parent:
-            self.parent.add_handler(constants.MOUSEMOTION, self.handle_event)
-            self.parent.add_handler(constants.CLICK, self.handle_event)
+            self.parent.add_handler(constants.MOUSEMOTION, self.handle_event,
+                                    priority)
+            self.parent.add_handler(constants.CLICK, self.handle_event,
+                                    priority)
             if self.hotkey:
                 self.parent.add_key_handler(self.hotkey, self.handle_event)
 
@@ -91,14 +94,28 @@ class Button(text.SelectableText):
             self.selected = self.is_over(event.pos)
         elif event.type == pygame.MOUSEBUTTONUP:
             if self.is_over(event.pos):
-                self.activated()
+                self.activated(event)
         elif event.type == pygame.KEYDOWN:
             if event.unicode == self.hotkey:
-                self.activated()
+                self.activated(event)
 
-    def activated(self):
+    def activated(self, event):
         """Called when the button is pressed or otherwise triggered."""
         raise constants.Handled
+
+
+class ImageButton(Button):
+    def __init__(self, *args, **kwargs):
+        if "image" in kwargs:
+            image_surface = kwargs.pop("image")
+        else:
+            image_surface = None
+
+        super(ImageButton, self).__init__(*args, **kwargs)
+
+        self.image = image.Image(self, (.5, .5), (.9, .9), 
+                                 anchor = constants.MID_CENTER,
+                                 image = image_surface)
 
 
 class ExitDialogButton(Button):
@@ -109,7 +126,7 @@ class ExitDialogButton(Button):
             self.exit_code = None
         super(ExitDialogButton, self).__init__(*args, **kwargs)
 
-    def activated(self):
+    def activated(self, event):
         """ExitDialogButton's custom activated menu.  Closes the dialog with the
            given exit code."""
         raise constants.ExitDialog, self.exit_code
@@ -122,7 +139,7 @@ class DialogButton(Button):
             self.dialog = None
         super(DialogButton, self).__init__(*args, **kwargs)
 
-    def activated(self):
+    def activated(self, event):
         """DialogButton's custom activated method.  When the assigned dialog
            exits, raises Handled with the dialog's exit code as a parameter.
            Override if you care what the code was."""

@@ -31,7 +31,7 @@ class Image(widget.Widget):
                  anchor = constants.TOP_LEFT, image = None):
         super(Image, self).__init__(parent, pos, size, anchor)
         
-        self.image = image
+        self.image = image.convert_alpha()
 
     def _calc_size(self):
         size = list( super(Image, self)._calc_size() )
@@ -49,5 +49,5 @@ class Image(widget.Widget):
 
     def rebuild(self):
         super(Image, self).rebuild()
-        scaled_image = pygame.transform.scale(self.image, self.real_size)
+        scaled_image = pygame.transform.smoothscale(self.image, self.real_size)
         self.internal_surface.blit(scaled_image, (0,0))
