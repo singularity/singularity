@@ -18,7 +18,7 @@
 
 #This file contains GUI constants.
 
-# Anchor positions.
+# Anchor positions, border sided.
 TOP, MID, BOTTOM = range(3)
 LEFT, CENTER, RIGHT = range(3,6)
 TOP_LEFT = (TOP, LEFT)
@@ -30,6 +30,9 @@ MID_RIGHT = (MID, RIGHT)
 BOTTOM_LEFT = (BOTTOM, LEFT)
 BOTTOM_CENTER = (BOTTOM, CENTER)
 BOTTOM_RIGHT = (BOTTOM, RIGHT)
+
+# All border sides
+ALL = (TOP, BOTTOM, LEFT, RIGHT)
 
 
 # Used when an unambiguous "No Result" return is required.  (None may have a

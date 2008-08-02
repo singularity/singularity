@@ -42,7 +42,7 @@ class Button(text.SelectableText):
     _hotkey = property(lambda self: self.__hotkey, _on_set_hotkey)
 
     def __init__(self, parent, pos, size = (0, -.05), base_font = None,
-                 borders = (0,2,3,5), hotkey = "", force_underline = None,
+                 borders = constants.ALL, hotkey = "", force_underline = None,
                  text_shrink_factor = .825, **kwargs):
         super(Button, self).__init__(parent, pos, size, **kwargs)
 
@@ -98,9 +98,22 @@ class Button(text.SelectableText):
 
     def activated(self):
         """Called when the button is pressed or otherwise triggered."""
-        raise constants.ExitDialog
+        raise constants.Handled
 
 
+class ExitDialogButton(Button):
+    def __init__(self, *args, **kwargs):
+        if "exit_code" in kwargs:
+            self.exit_code = kwargs.pop("exit_code")
+        else:
+            self.exit_code = None
+        super(ExitDialogButton, self).__init__(*args, **kwargs)
+
+    def activated(self):
+        """ExitDialogButton's custom activated menu.  Closes the dialog with the
+           given exit code."""
+        raise constants.ExitDialog, self.exit_code
+        
 class DialogButton(Button):
     def __init__(self, *args, **kwargs):
         if "dialog" in kwargs:

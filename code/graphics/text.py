@@ -47,28 +47,21 @@ def print_string(surface, string_to_print, font, underline_char, xy, color, alig
         text = font.render(string_to_print[underline_char+1:], 1, color)
         surface.blit(text, xy)
 
-class Text(widget.Widget):
+class Text(widget.BorderedWidget):
     text = widget.causes_rebuild("_text")
     base_font = widget.causes_rebuild("_base_font")
     color = widget.causes_rebuild("_color")
-    borders = widget.causes_rebuild("_borders")
-    border_color = widget.causes_rebuild("_border_color")
-    background_color = widget.causes_rebuild("_background_color")
     shrink_factor = widget.causes_rebuild("_shrink_factor")
     underline = widget.causes_rebuild("_underline")
 
     def __init__(self, parent, pos, size = (0, -.05), 
                  anchor = constants.TOP_LEFT, text = "", base_font = None,
-                 color = None, borders=(), border_color = None, 
-                 background_color = None, shrink_factor = 1, underline = -1):
-        super(Text, self).__init__(parent, pos, size, anchor)
+                 color = None, shrink_factor = 1, underline = -1, **kwargs):
+        super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
         
         self.text = text
         self.base_font = base_font or g.font[0]
         self.color = color or g.colors["white"]
-        self.borders = borders
-        self.border_color = border_color or g.colors["blue"]
-        self.background_color = background_color or (0,0,0,0)
         self.shrink_factor = shrink_factor
         self.underline = underline
 
@@ -96,43 +89,30 @@ class Text(widget.Widget):
 
     def _calc_size(self):
         base_size = list(super(Text, self)._calc_size())
+
+        # Calculate the font height.
+        vert_borders = (constants.TOP in self.borders) \
+                       + (constants.BOTTOM in self.borders)
+        vert_offset = vert_borders + 2
+        height = int( (base_size[1] - vert_offset) * self.shrink_factor )
+
+        # Pick a font based on that height.
+        font = self.pick_font(height)
+
+        # If the width is unspecified, calculate it from the font and text.
         if base_size[0] == 0:
-            vert_borders = (constants.TOP in self.borders) \
-                           + (constants.BOTTOM in self.borders)
-            vert_offset = vert_borders + 2
             horiz_borders = (constants.LEFT in self.borders) \
                             + (constants.RIGHT in self.borders)
             horiz_offset = horiz_borders + 2
-            height = int( (base_size[1] - vert_offset) * self.shrink_factor )
-            font = self.pick_font(height)
             base_size[0] = font.size(self.text)[0] + horiz_offset
         return tuple(base_size)
 
     def rebuild(self):
         super(Text, self).rebuild()
 
-        # Fill the background.
-        self.internal_surface.fill( self.background_color )
-
-        # Draw borders
-        my_size = self.surface.get_size()
-        n = w = 0
-        horiz = (my_size[0], 1)
-        vert = (1, my_size[0])
-
-        for edge in self.borders:
-            if edge == constants.TOP:
-                self.internal_surface.fill( self.border_color, (0,0,my_size[0],1))
-            elif edge == constants.LEFT:
-                self.internal_surface.fill( self.border_color, (0,0,1,my_size[1]))
-            elif edge == constants.RIGHT:
-                self.internal_surface.fill( self.border_color, (0,my_size[1]-1)+my_size)
-            elif edge == constants.BOTTOM:
-                self.internal_surface.fill( self.border_color, (my_size[0]-1,0)+my_size)
-
         text_size = self.font.size(self.text)
-        hgap = ( my_size[0] - text_size[0] ) // 2
-        vgap = ( my_size[1] - text_size[1] ) // 2
+        hgap = ( self.real_size[0] - text_size[0] ) // 2
+        vgap = ( self.real_size[1] - text_size[1] ) // 2
 
         # Print the text itself
         print_string(self.internal_surface, self.text, self.font, 

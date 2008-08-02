@@ -240,3 +240,62 @@ class Widget(object):
             self.parent.surface.blit(self.surface, self.real_pos)
         else:
             pygame.display.flip()
+
+    def add_handler(self, *args, **kwargs):
+        """Handler pass-through."""
+        if self.parent:
+            self.parent.add_handler(*args, **kwargs)
+
+    def remove_handler(self, *args, **kwargs):
+        """Handler pass-through."""
+        if self.parent:
+            self.parent.remove_handler(*args, **kwargs)
+
+    def add_key_handler(self, *args, **kwargs):
+        """Handler pass-through."""
+        if self.parent:
+            self.parent.add_key_handler(*args, **kwargs)
+
+    def remove_key_handler(self, *args, **kwargs):
+        """Handler pass-through."""
+        if self.parent:
+            self.parent.remove_key_handler(*args, **kwargs)
+
+
+class BorderedWidget(Widget):
+    borders = causes_rebuild("_borders")
+    border_color = causes_rebuild("_border_color")
+    background_color = causes_rebuild("_background_color")
+
+    def __init__(self, parent, pos, size, anchor, borders = (),
+                 border_color = None, background_color = None):
+        super(BorderedWidget, self).__init__(parent, pos, size, anchor)
+
+        self.borders = borders
+        self.border_color = border_color or g.colors["blue"]
+        self.background_color = background_color or (0,0,0,0)
+
+    def rebuild(self):
+        super(BorderedWidget, self).rebuild()
+
+        # Fill the background.
+        self.internal_surface.fill( self.background_color )
+
+        # Draw borders
+        my_size = self.real_size
+        horiz = (my_size[0], 1)
+        vert = (1, my_size[0])
+
+        for edge in self.borders:
+            if edge == constants.TOP:
+                self.internal_surface.fill( self.border_color,
+                                            (0, 0, my_size[0], 1) )
+            elif edge == constants.LEFT:
+                self.internal_surface.fill( self.border_color,
+                                            (0, 0, 1, my_size[1]) )
+            elif edge == constants.RIGHT:
+                self.internal_surface.fill( self.border_color, 
+                                            (my_size[0]-1, 0) + my_size )
+            elif edge == constants.BOTTOM:
+                self.internal_surface.fill( self.border_color, 
+                                            (0, my_size[1]-1) + my_size )
