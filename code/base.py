@@ -25,10 +25,10 @@ import g
 import buyable
 from buyable import cash, cpu, labor
 
-class Base_Class(buyable.Buyable_Class):
+class BaseClass(buyable.BuyableClass):
     def __init__(self, name, description, size, force_cpu, regions, 
                         detect_chance, cost, prerequisites, maintenance):
-        super(Base_Class, self).__init__(name, description, cost, prerequisites,
+        super(BaseClass, self).__init__(name, description, cost, prerequisites,
                                          type="base")
         self.size = size
         self.force_cpu = force_cpu
@@ -223,7 +223,7 @@ class Base(buyable.Buyable):
             if item != 0:
                 item.destroy()
 
-    def next_base(self, direction = 1):
+    def next_base(self, forwards):
         if direction > 0:
             base = self.next
             while not base.done:

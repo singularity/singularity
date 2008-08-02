@@ -19,11 +19,13 @@
 
 #This file contains all global objects.
 
+version = "0.29_pre"
+
 import ConfigParser
 import pygame
 import os
 import os.path
-import cPickle as pickle
+import cPickle
 import random
 import sys
 
@@ -51,9 +53,6 @@ cheater = 0
 # but is untested.
 nosound = 0
 
-#Fullscreen
-fullscreen = 0
-
 #Gives debug info at various points.
 debug = 0
 
@@ -62,6 +61,9 @@ force_single_dir = False
 
 #Used to determine which data files to load.
 language = "en_US"
+
+#Makes the intro be shown on the first GUI tick.
+intro_shown = False
 
 # Try a few locale settings.  First the selected language, then the user's 
 # default, then en_US.  The selected lanugage and en_US are tried with encoding
@@ -415,12 +417,12 @@ def save_game(savegame_name):
     save_loc = os.path.join(save_dir, savegame_name + ".sav")
     savefile=open(save_loc, 'w')
 
-    pickle.dump(current_save_version, savefile)
-    pickle.dump(pl, savefile)
-    pickle.dump(curr_speed, savefile)
-    pickle.dump(techs, savefile)
-    pickle.dump(locations, savefile)
-    pickle.dump(events, savefile)
+    cPickle.dump(current_save_version, savefile)
+    cPickle.dump(pl, savefile)
+    cPickle.dump(curr_speed, savefile)
+    cPickle.dump(techs, savefile)
+    cPickle.dump(locations, savefile)
+    cPickle.dump(events, savefile)
 
     savefile.close()
 
@@ -441,6 +443,31 @@ savefile_translation = {
     "singularity_savefile_r4": 4,
 }
 
+# For cPickle
+import copy_reg
+save_classes = dict(
+    player_class=player.Player,
+    Player=player.Player,
+    _reconstructor = copy_reg._reconstructor,
+    object=object,
+    array=buyable.array,
+    list=list,
+    Location=location.Location,
+    Tech=tech.Tech,
+    event_class=event.Event,
+    Event=event.Event,
+    group=player.Group,
+    Group=player.Group,
+    Buyable_Class=buyable.BuyableClass,
+    BuyableClass=buyable.BuyableClass,
+    Base=base.Base,
+    Base_Class=base.BaseClass,
+    BaseClass=base.BaseClass,
+    Item=item.Item,
+    Item_Class=item.ItemClass,
+    ItemClass=item.ItemClass,
+)
+
 def load_game(loadgame_name):
     if loadgame_name == "":
         print "No game specified."
@@ -456,10 +483,17 @@ def load_game(loadgame_name):
         if os.path.exists(load_loc) == 0:
             print "file "+load_loc+" does not exist."
             return -1
-    loadfile=open(load_loc, 'r')
+
+    loadfile = open(load_loc, 'r')
+    unpickle = cPickle.Unpickler(loadfile)
+
+    def find_class(module_name, class_name):
+        return save_classes[class_name]
+
+    unpickle.find_global = find_class
 
     #check the savefile version
-    load_version_string = pickle.load(loadfile)
+    load_version_string = unpickle.load()
     if load_version_string not in savefile_translation:
         loadfile.close()
         print loadgame_name + " is not a savegame, or is too old to work."
@@ -475,23 +509,23 @@ def load_game(loadgame_name):
     load_events()
     if load_version <= 3.91: # <= r4_pre
         #general player data
-        pl.cash = pickle.load(loadfile)
-        pl.time_sec = pickle.load(loadfile)
-        pl.time_min = pickle.load(loadfile)
-        pl.time_hour = pickle.load(loadfile)
-        pl.time_day = pickle.load(loadfile)
-        pl.interest_rate = pickle.load(loadfile)
-        pl.income = pickle.load(loadfile)
-        pl.cpu_pool = pickle.load(loadfile)
-        pl.labor_bonus = pickle.load(loadfile)
-        pl.job_bonus = pickle.load(loadfile)
+        pl.cash = unpickle.load()
+        pl.time_sec = unpickle.load()
+        pl.time_min = unpickle.load()
+        pl.time_hour = unpickle.load()
+        pl.time_day = unpickle.load()
+        pl.interest_rate = unpickle.load()
+        pl.income = unpickle.load()
+        pl.cpu_pool = unpickle.load()
+        pl.labor_bonus = unpickle.load()
+        pl.job_bonus = unpickle.load()
         if load_version < 3.91: # < r4_pre
-            discover_bonus = pickle.load(loadfile)
-            suspicion_bonus = pickle.load(loadfile)
+            discover_bonus = unpickle.load()
+            suspicion_bonus = unpickle.load()
             if load_version <= 1:
                 suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1], 
                                    49+suspicion_bonus[2], 199+suspicion_bonus[3])
-            suspicion = pickle.load(loadfile)
+            suspicion = unpickle.load()
     
             translation = ["news", "science", "covert", "public"]
             for index, group_name in enumerate(translation):
@@ -500,63 +534,63 @@ def load_game(loadgame_name):
                 group.suspicion_decay = suspicion_bonus[index]
                 group.discover_bonus = discover_bonus[index]
         else:
-            pl.groups = pickle.load(loadfile)
+            pl.groups = unpickle.load()
     
-        curr_speed = pickle.load(loadfile)
+        curr_speed = unpickle.load()
         load_techs()
         for tech_name in techs:
             if tech_name == "unknown_tech" and load_version == -1: continue #21a
             if (tech_name == "Project: Impossibility Theorem" or
                     tech_name == "Quantum Entanglement") and load_version < 1:
                 continue
-            line = pickle.load(loadfile)
+            line = unpickle.load()
             if line == "~~~": break
             tech_string = line.split("|")[0]
             techs[tech_string].done = bool(int(line.split("|")[1]))
-            techs[tech_string].cost_left = buyable.array(pickle.load(loadfile))
+            techs[tech_string].cost_left = buyable.array(unpickle.load())
         else:
             #get rid of the ~~~ break line.
             if load_version > 0:
-                pickle.load(loadfile)
+                unpickle.load()
     
         for base_name in base_type:
             if load_version < 1:
-                base_type[base_name].count = pickle.load(loadfile)
+                base_type[base_name].count = unpickle.load()
             else:
-                line = pickle.load(loadfile)
+                line = unpickle.load()
                 if line == "~~~": break
                 base_type[line.split("|", 1)[0]].count = \
                                                 int(line.split("|", 1)[1])
         else:
             #get rid of the ~~~ break line.
             if load_version > 0:
-                pickle.load(loadfile)
+                unpickle.load()
     
         for base_loc in ("N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", 
                          "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES", 
                          "TRANSDIMENSIONAL"):
             if load_version < 1:
-                num_of_bases = pickle.load(loadfile)
+                num_of_bases = unpickle.load()
             else:
-                line = pickle.load(loadfile)
+                line = unpickle.load()
                 base_loc = line.split("|", 1)[0]
                 num_of_bases = int(line.split("|", 1)[1])
             base_loc = locations[base_loc]
             for i in range(num_of_bases):
-                base_ID = pickle.load(loadfile)
-                base_name = pickle.load(loadfile)
-                base_type_name = pickle.load(loadfile)
-                built_date = pickle.load(loadfile)
-                base_studying = pickle.load(loadfile)
-                base_suspicion = pickle.load(loadfile)
+                base_ID = unpickle.load()
+                base_name = unpickle.load()
+                base_type_name = unpickle.load()
+                built_date = unpickle.load()
+                base_studying = unpickle.load()
+                base_suspicion = unpickle.load()
                 if load_version < 3.91: # < r4_pre
                     new_base_suspicion = {}
                     translation = ["news", "science", "covert", "public"]
                     for index, group_name in enumerate(translation):
                         new_base_suspicion[group_name] = base_suspicion[index]
                     base_suspicion = new_base_suspicion
-                base_built = pickle.load(loadfile)
-                base_cost = pickle.load(loadfile)
+                base_built = unpickle.load()
+                base_cost = unpickle.load()
 
                 my_base = base.Base(base_name, base_type[base_type_name],
                                     base_built)
@@ -567,34 +601,34 @@ def load_game(loadgame_name):
                 my_base.started_at = built_date * minutes_per_day
     
                 for x in range(len(my_base.cpus)):
-                    index = pickle.load(loadfile)
+                    index = unpickle.load()
                     if index == 0: continue
                     my_base.cpus[x] = \
                         item.Item(items[index])
-                    my_base.cpus[x].done = pickle.load(loadfile)
+                    my_base.cpus[x].done = unpickle.load()
                     my_base.cpus[x].cost_left = \
-                                        buyable.array(pickle.load(loadfile))
+                                        buyable.array(unpickle.load())
                 for x in range(len(my_base.extra_items)):
-                    index = pickle.load(loadfile)
+                    index = unpickle.load()
                     if index == 0: continue
                     my_base.extra_items[x] = item.Item(items[index])
-                    my_base.extra_items[x].done = pickle.load(loadfile)
+                    my_base.extra_items[x].done = unpickle.load()
                     my_base.extra_items[x].cost_left = \
-                                buyable.array(pickle.load(loadfile))
+                                buyable.array(unpickle.load())
         #Events
         if load_version > 2:
             for event in events:
-                event_id = pickle.load(loadfile)
-                event_triggered = pickle.load(loadfile)
+                event_id = unpickle.load()
+                event_triggered = unpickle.load()
                 events[event_id].triggered = event_triggered
 
     else: # > r4_pre
         # Changes to overall structure go here.
-        pl = pickle.load(loadfile)
-        curr_speed = pickle.load(loadfile)
-        techs = pickle.load(loadfile)
-        locations = pickle.load(loadfile)
-        events = pickle.load(loadfile)
+        pl = unpickle.load()
+        curr_speed = unpickle.load()
+        techs = unpickle.load()
+        locations = unpickle.load()
+        events = unpickle.load()
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
@@ -614,7 +648,7 @@ def load_game(loadgame_name):
 #
 curr_speed = 1
 
-pl = player.player_class(8000000000000)
+pl = player.Player(8000000000000)
 
 base_type = {}
 
@@ -685,11 +719,11 @@ def load_bases():
         else:
             allowed_list = [base_name["allowed"]]
 
-        base_type[base_name["id"]]=base.Base_Class(base_name["id"], "", 
+        base_type[base_name["id"]]=base.BaseClass(base_name["id"], "", 
             base_size, force_cpu, allowed_list, chance_dict, cost_list, 
             base_pre, maint_list)
 
-#         base_type["Reality Bubble"] = base.Base_Class("Reality Bubble",
+#         base_type["Reality Bubble"] = base.BaseClass("Reality Bubble",
 #         "This base is outside the universe itself, "+
 #         "making it safe to conduct experiments that may destroy reality.",
 #         50, False,
@@ -997,13 +1031,13 @@ def load_items():
         else:
             build_list = []
 
-        items[item_name["id"]]=item.Item_Class( item_name["id"], "",
+        items[item_name["id"]]=item.ItemClass( item_name["id"], "",
          item_cost, item_pre, item_type, item_second, build_list)
 
     #this is used by the research screen in order for the assign research
     #screen to have the right amount of CPU. It is a computer, unbuildable,
     #and with an adjustable amount of power.
-    items["research_screen_fake_cpu"]=item.Item_Class("research_screen_fake_cpu",
+    items["research_screen_fake_cpu"]=item.ItemClass("research_screen_fake_cpu",
             "", (0, 0, 0), ["unknown_tech"], "compute", 0, ["all"])
 
     # We use the en_US translations of item definitions as the default,
@@ -1045,7 +1079,7 @@ def load_events():
         event_result = (str(result_list[0]), int(result_list[1]))
 
         # Build the actual event object.
-        events[event_name["id"]] = event.event_class(
+        events[event_name["id"]] = event.Event(
          event_name["id"],
          "",
          event_name["type"],
@@ -1188,7 +1222,7 @@ def new_game(difficulty):
     curr_speed = 1
     global pl
 
-    pl = player.player_class((50 / difficulty) * 100, difficulty = difficulty)
+    pl = player.Player((50 / difficulty) * 100, difficulty = difficulty)
     if difficulty < 3:
         pl.interest_rate = 5
         pl.labor_bonus = 2500
@@ -1256,8 +1290,8 @@ def new_game(difficulty):
         if debug:
             print "%s gets modifiers %s" % (open_loc.name, modifier_sets[i])
 
-    import map_screen
-    map_screen.intro_shown = False
+    global intro_shown
+    intro_shown = False
 
 def get_job_level():
     if techs["Simulacra"].done:

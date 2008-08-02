@@ -70,7 +70,7 @@ class array(list):
     def __str__(self):
         return "array(%s)" % super(array, self).__str__()
 
-class Buyable_Class(object):
+class BuyableClass(object):
     def __init__(self, id, description, cost, prerequisites, type = ""):
         self.name = self.id = id
         self.description = description
@@ -122,7 +122,7 @@ for stat in ("count", "complete_count", "total_count",
         return g.stats.set_statistic(self.prefix + self.id + "_" + stat, value)
 
     stat_prop = property(get, set)
-    setattr(Buyable_Class, stat, stat_prop)
+    setattr(BuyableClass, stat, stat_prop)
 
 class Buyable(object):
     def __init__(self, type):

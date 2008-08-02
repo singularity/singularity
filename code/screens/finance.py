@@ -19,11 +19,11 @@
 #This file contains the screen to display finance information.
 
 
-import g
-import buttons
-from buyable import cash, cpu, labor
+import code.g as g
+#import buttons
+from code.buyable import cash, cpu, labor
 
-from buttons import exit
+#from buttons import exit
 def main_finance_screen():
     g.play_sound("click")
     #Border

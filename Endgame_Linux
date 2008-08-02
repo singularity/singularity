@@ -1,4 +1,4 @@
 #!/bin/sh
-tempname=`dirname "$0"`
-cd "$tempname/code"
+my_dir=`dirname "$0"`
+cd "$my_dir"
 exec python singularity.py "$@"

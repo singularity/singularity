@@ -21,8 +21,9 @@
 
 import pygame
 
-import g
-from graphics import constants, widget, dialog, text, button, listbox, g as gg
+import code.g as g
+import code.graphics.g as gg
+from code.graphics import constants, widget, dialog, text, button, listbox
 
 class BuildDialog(dialog.ChoiceDescriptionDialog):
     type = widget.causes_rebuild("_type")
@@ -73,24 +74,24 @@ class ItemPane(widget.BorderedWidget):
                      network = "Network: High Speed Internet Access",
                      security = "Security: Perimeter Fencing")
 
-        p1 = text.Text(self, (0,0), (.36, .03), anchor = constants.TOP_LEFT,
+        p1 = text.Text(self, (0,0), (.35, .03), anchor = constants.TOP_LEFT,
                        align = constants.LEFT,
                        background_color = self.background_color,
                        text = texts[type], bold = True)
 
-        p2 = text.Text(self, (0,.03), (.36, .03), anchor = constants.TOP_LEFT,
+        p2 = text.Text(self, (0,.03), (.35, .03), anchor = constants.TOP_LEFT,
                        align = constants.LEFT,
                        background_color = self.background_color,
                        text = "Completion in 15 hours.", bold = True)
 
         #TODO: Use information out of gg.buttons
-        change_text = "change"
+        change_text = "CHANGE"
         hotkey_dict = dict(cpu = "p", reactor = "r", network = "n",
                            security = "s")
         hotkey = hotkey_dict[self.type]
-        button_text = "%s (%s)" % (change_text, hotkey)
+        button_text = "%s (%s)" % (change_text, hotkey.upper())
 
-        self.change_button = button.FunctionButton(self, (.37,.01), (.11, .04),
+        self.change_button = button.FunctionButton(self, (.36,.01), (.12, .04),
                                                    anchor = constants.TOP_LEFT,
                                                    text = button_text, 
                                                    hotkey = hotkey,
@@ -98,7 +99,7 @@ class ItemPane(widget.BorderedWidget):
                                                 self.parent.parent.build_item,
                                                    kwargs = {"type": self.type})
 
-        if hotkey in change_text:
+        if hotkey.upper() in change_text:
             hotkey_pos = len(change_text) + 2
             self.change_button.force_underline = hotkey_pos
 
@@ -113,8 +114,6 @@ class BaseScreen(dialog.Dialog):
         self.base = base
 
         self.build_dialog = BuildDialog(self)
-        self.build_dialog_button = button.DialogButton(self, (2,2), (0,0),
-                                                     dialog = self.build_dialog)
 
         self.header = widget.Widget(self, (0,0), (-1, .08), 
                                     anchor = constants.TOP_LEFT)
@@ -133,7 +132,7 @@ class BaseScreen(dialog.Dialog):
                                   text = ">", hotkey = ">",
                                   function = self.switch_base,
                                   kwargs = {"forwards": True})
-        self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activated)
+        self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activate_with_sound)
 
         self.prev_base_button = \
             button.FunctionButton(self.name_display, (0, 0), (.03, -1),
@@ -141,7 +140,7 @@ class BaseScreen(dialog.Dialog):
                                   text = "<", hotkey = "<",
                                   function = self.switch_base,
                                   kwargs = {"forwards": False})
-        self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activated)
+        self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activate_with_sound)
 
         self.state_display = text.Text(self.header, (-.5,-.5), (-1, -.5),
                                        anchor = constants.TOP_CENTER,
@@ -189,7 +188,7 @@ Public: 0.73%""",
 
     def build_item(self, type):
         self.build_dialog.type = type
-        result = self.build_dialog_button.activated(None)
+        result = dialog.call_dialog(self.build_dialog, self)
         self.do_build_item(type, result)
 
     def switch_base(self, forwards):

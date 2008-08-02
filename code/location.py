@@ -45,8 +45,8 @@ for set in modifier_sets:
         else:
             set[attribute] = penalty_levels[attribute]
 
-# Location is a subclass of Buyable_Class so that it can use .available():
-class Location(buyable.Buyable_Class):
+# Location is a subclass of BuyableClass so that it can use .available():
+class Location(buyable.BuyableClass):
     # The cities at this location.
     cities = []
 

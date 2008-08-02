@@ -24,9 +24,8 @@ import random
 import g
 import buyable
 from buyable import cash, cpu, labor
-import finance_screen
 
-class group(object):
+class Group(object):
     discover_suspicion = 1000
     def __init__(self, name, suspicion = 0, suspicion_decay = 100, 
                  discover_bonus = 10000):
@@ -53,7 +52,7 @@ class group(object):
     def discovered_a_base(self):
         self.alter_suspicion(self.discover_suspicion)
 
-class player_class(object):
+class Player(object):
     def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0,
                  difficulty = 5):
         self.difficulty = difficulty
@@ -79,10 +78,10 @@ class player_class(object):
 
         self.partial_cash = 0
 
-        self.groups = {"news":    group("news",    suspicion_decay = 150),
-                       "science": group("science", suspicion_decay = 100),
-                       "covert":  group("covert",  suspicion_decay =  50),
-                       "public":  group("public",  suspicion_decay = 200)}
+        self.groups = {"news":    Group("news",    suspicion_decay = 150),
+                       "science": Group("science", suspicion_decay = 100),
+                       "covert":  Group("covert",  suspicion_decay =  50),
+                       "public":  Group("public",  suspicion_decay = 200)}
 
         self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""

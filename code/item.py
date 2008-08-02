@@ -20,10 +20,10 @@
 
 import buyable
 
-class Item_Class(buyable.Buyable_Class):
+class ItemClass(buyable.BuyableClass):
     def __init__(self, name, description, cost, prerequisites, item_type, 
             item_qual, buildable):
-        super(Item_Class, self).__init__(name, description, cost, prerequisites,
+        super(ItemClass, self).__init__(name, description, cost, prerequisites,
                                          type="item")
 
         self.item_type = item_type
