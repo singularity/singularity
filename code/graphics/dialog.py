@@ -461,7 +461,7 @@ class TextEntryDialog(TextDialog):
     def show(self):
         self.text_field.text = self.default_text
         self.text_field.cursor_pos = len(self.default_text)
-        super(TextEntryDialog, self).show()
+        return super(TextEntryDialog, self).show()
 
     def return_nothing(self, event):
         raise constants.ExitDialog, ""

@@ -99,10 +99,10 @@ class MapScreen(dialog.Dialog):
                                                     text="", hotkey="`",
                                                     dialog=self.cheat_dialog)
 
-        #XXX Functionality.
         menu_buttons = []
-        menu_buttons.append(button.Button(None, None, None, text="SAVE GAME",
-                                          hotkey="s"))
+        menu_buttons.append(button.FunctionButton(None, None, None,
+                                                  text="SAVE GAME", hotkey="s",
+                                                  function=self.save_game))
         menu_buttons.append(button.FunctionButton(None, None, None,
                                                   text="LOAD GAME", hotkey="l",
                                                   function=self.load_game))
@@ -181,6 +181,10 @@ class MapScreen(dialog.Dialog):
         self.message_dialog = dialog.MessageDialog(self, size=(.35, .4),
                                      background_color=gg.colors["dark_blue"],
                                      borders=constants.ALL)
+
+        self.savename_dialog = \
+            dialog.TextEntryDialog(self.menu_dialog,
+                                   text="Enter a name for this save.")
 
     def show_message(self, message, color=None):
         self.message_dialog.text = message
@@ -300,44 +304,19 @@ class MapScreen(dialog.Dialog):
             save = save_names[index]
             g.load_game(save)
             self.force_update()
-            raise ExitDialog, False
+            raise constants.ExitDialog, False
+
+    def save_game(self):
+        self.savename_dialog.default_text = g.default_savegame_name
+        name = dialog.call_dialog(self.savename_dialog, self.menu_dialog)
+        if name:
+            g.save_game(name)
+            raise constants.ExitDialog, False
 
 intro_shown = False
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):
     pass
-
-def display_generic_menu(xy_loc, titlelist):
-    #Border
-    g.screen.fill(g.colors["white"], (xy_loc[0], xy_loc[1], 200,
-            len(titlelist)*70))
-    g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198,
-            len(titlelist)*70-2))
-    menu_buttons = {}
-    for i, title in enumerate(titlelist):
-        menu_buttons[buttons.make_norm_button((xy_loc[0]+10,
-            xy_loc[1]+10+i*70), (180, 50), title[0], title[1],
-            g.font[1][30])] = always(i)
-
-    return buttons.show_buttons(menu_buttons)
-
-def display_pause_menu():
-    button_array = []
-    button_array.append(["NEW GAME", "N"])
-    button_array.append(["SAVE GAME", "S"])
-    button_array.append(["LOAD GAME", "L"])
-    button_array.append(["OPTIONS", "O"])
-    button_array.append(["QUIT", "Q"])
-    button_array.append(["BACK", "B"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
-
-    if selection == -1: return 0
-    elif selection == 0: return 2 #New
-    elif selection == 1: return 1 #Save
-    elif selection == 2: return 3 #Load
-    elif selection == 3: return 5 #Options
-    elif selection == 4: return 4 #Quit
-    elif selection == 5: return 0
 
 def display_cheat_list(menu_buttons):
     if g.cheater == 0: return

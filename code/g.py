@@ -446,6 +446,7 @@ savefile_translation = {
 
 # For cPickle
 import copy_reg
+import numpy.core.multiarray
 save_classes = dict(
     player_class=player.Player,
     Player=player.Player,
@@ -467,6 +468,9 @@ save_classes = dict(
     Item=item.Item,
     Item_Class=item.ItemClass,
     ItemClass=item.ItemClass,
+    _reconstruct=numpy.core.multiarray._reconstruct,
+    ndarray=numpy.ndarray,
+    dtype=numpy.dtype,
 )
 
 def load_game(loadgame_name):
@@ -489,7 +493,10 @@ def load_game(loadgame_name):
     unpickle = cPickle.Unpickler(loadfile)
 
     def find_class(module_name, class_name):
-        return save_classes[class_name]
+        if class_name in save_classes:
+            return save_classes[class_name]
+        else:
+            raise SystemExit, (module_name, class_name)
 
     unpickle.find_global = find_class
 
