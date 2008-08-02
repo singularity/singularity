@@ -1,54 +1,54 @@
 [N AMERICA]
-position_list = 10 | 33
+position_list = 10 | 25
 
 [S AMERICA]
-position_list = 20 | 55
+position_list = 20 | 58
 
 [EUROPE]
-position_list = 50 | 28
+position_list = 50 | 18
 
 [ASIA]
-position_list = 72 | 32
+position_list = 72 | 25
 
 [AFRICA]
-position_list = 48 | 45
+position_list = 48 | 43
 
 [AUSTRALIA]
-position_list = 73 | 57
+position_list = 73 | 61
 
 [ANTARCTIC]
-position_list = 40 | 75
+position_list = 40 | 88
 modifier_list = stealth:bonus | thrift:penalty
 pre_list = OR | Autonomous Vehicles | Advanced Database Manipulation
 
 [OCEAN]
-position_list = 50 | 65
+position_list = 50 | 73
 safety = 1
 modifier_list = cpu:bonus
 pre = Autonomous Vehicles
 
 [MOON]
-position_list = 82 | 10
+position_list = absolute | 82 | 10
 safety = 2
 modifier_list = stealth:1.5 | thrift:.5 | speed:.5
 pre = Lunar Rocketry
 
 [ORBIT]
-position_list = 43 | 10
+position_list = absolute | 43 | 10
 pre = unknown_tech
 
 [FAR REACHES]
-position_list = 3 | 10
+position_list = absolute | 3 | 10
 safety = 3
 modifier_list = stealth:2 | thrift:.1 | speed:.1
 pre = Fusion Rocketry
 
 [TRANSDIMENSIONAL]
-position_list = 35 | 85
+position_list = absolute | 35 | 85
 safety = 4
 pre = Space-Time Manipulation
 
 [NOWHERE]
-position_list = -100 | -100
+position_list = absolute | -100 | -100
 safety = 100
 pre = unknown_tech
