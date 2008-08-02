@@ -28,9 +28,9 @@ DEBUG = False
 
 def strip_to_null(a_string):
     if a_string[0] == " ":
-        a_string = "\0" + a_string[1:]
+        a_string = u"\uFEFF" + a_string[1:]
     if a_string[-1] == " ":
-        a_string =  a_string[:-1] + "\0"
+        a_string =  a_string[:-1] + u"\uFEFF"
     return a_string
 
 # Splits a string into lines based on newline and word wrapping.
@@ -40,7 +40,7 @@ def split_wrap(text, font, wrap_at):
 
     for raw_line in raw_lines:
         if font.size(raw_line)[0] <= wrap_at or wrap_at == 0:
-            lines.append(raw_line + "\0")
+            lines.append(raw_line + u"\uFEFF")
         else:
             words = raw_line.split(" ")
             pos = 0
@@ -109,7 +109,7 @@ def print_string(surface, string_to_print, xy, font, color, underline_char,
         if 0 <= underline_char < len(line):
             before = line[:underline_char]
             at = line[underline_char]
-            if at == '\0':
+            if at == u"\uFEFF":
                 at = " "
             after = line[underline_char+1:]
 
