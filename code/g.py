@@ -1317,7 +1317,6 @@ def get_job_level():
 def init_graphics_system():
     graphics.g.load_fonts(data_loc)
     graphics.g.load_images(data_loc)
-    graphics.g.fill_colors()
     graphics.g.init_alpha()
     graphics.g.buttons.update(buttons)
 

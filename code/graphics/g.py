@@ -28,24 +28,23 @@ screen_size = (800, 600)
 fullscreen = False
 
 #colors:
-colors = {}
-
-def fill_colors():
-    colors["white"] = (255, 255, 255, 255)
-    colors["black"] = (0, 0, 0, 255)
-    colors["red"] = (255, 0, 0, 255)
-    colors["green"] = (0, 255, 0, 255)
-    colors["blue"] = (0, 0, 255, 255)
-    colors["yellow"] = (255, 255, 0, 255)
-    colors["orange"] = (255, 125, 0, 255)
-    colors["gray"] = (125, 125, 125, 255)
-    colors["dark_red"] = (125, 0, 0, 255)
-    colors["dark_green"] = (0, 125, 0, 255)
-    colors["dark_blue"] = (0, 0, 125, 255)
-    colors["light_red"] = (255, 50, 50, 255)
-    colors["light_green"] = (50, 255, 50, 255)
-    colors["light_blue"] = (50, 50, 255, 255)
-    colors["clear"] = (0, 0, 0, 0)
+colors = dict(
+    white = (255, 255, 255, 255),
+    black = (0, 0, 0, 255),
+    red = (255, 0, 0, 255),
+    green = (0, 255, 0, 255),
+    blue = (0, 0, 255, 255),
+    yellow = (255, 255, 0, 255),
+    orange = (255, 125, 0, 255),
+    gray = (125, 125, 125, 255),
+    dark_red = (125, 0, 0, 255),
+    dark_green = (0, 125, 0, 255),
+    dark_blue = (0, 0, 125, 255),
+    light_red = (255, 50, 50, 255),
+    light_green = (50, 255, 50, 255),
+    light_blue = (50, 50, 255, 255),
+    clear = (0, 0, 0, 0),
+)
 
 #
 # Font functions.
