@@ -157,11 +157,13 @@ class DialogButton(Button):
 
         if parent_dialog:
             parent_dialog.faded = True
+            parent_dialog.stop_timer()
 
         retval = self.dialog.show()
 
         if parent_dialog:
             parent_dialog.faded = False
+            parent_dialog.start_timer()
 
         self.selected = self.is_over( pygame.mouse.get_pos() )
 

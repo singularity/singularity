@@ -49,6 +49,8 @@ class Dialog(widget.Widget):
         self.has_mask = True
         self.needs_remask = True
 
+        self.needs_timer = None
+
         self.handlers = {}
         self.key_handlers = {}
 
@@ -90,9 +92,19 @@ class Dialog(widget.Widget):
         if self.faded:
             self.surface.blit( self.get_fade_mask(), (0,0) )
 
+    def start_timer(self):
+        if self.needs_timer == None:
+            self.needs_timer = bool(self.handlers.get(constants.TICK, False))
+        if self.needs_timer:
+            pygame.time.set_timer(pygame.USEREVENT, 1000 / g.FPS)
+
+    def stop_timer(self):
+        pygame.time.set_timer(pygame.USEREVENT, 0)
+
     def show(self):
         """Shows the dialog and enters an event-handling loop."""
         self.visible = True
+        self.start_timer()
         while True:
             # Redraw handles rebuilding and redrawing all widgets, as needed.
             Dialog.top.redraw()
@@ -101,6 +113,7 @@ class Dialog(widget.Widget):
             if result != constants.NO_RESULT:
                 self.visible = False
                 return result
+        self.stop_timer()
 
     def add_handler(self, type, handler, priority = 100):
         """Adds a handler of the given type, with the given priority."""
@@ -135,7 +148,7 @@ class Dialog(widget.Widget):
             # Compress multiple MOUSEMOTION events into one.
             # Note that the pos will be wrong, so pygame.mouse.get_pos() must
             # be used instead.
-            time.sleep(1 / 30.)
+            time.sleep(1 / g.FPS)
             pygame.event.clear(pygame.MOUSEMOTION)
 
             # Generic mouse motion handlers.

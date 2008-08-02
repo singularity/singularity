@@ -355,3 +355,4 @@ load_images()
 fill_colors()
 
 ALPHA = pygame.Surface((0,0)).convert_alpha()
+FPS = 30
