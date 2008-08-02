@@ -308,7 +308,7 @@ def create_norm_box(xy, size, outline_color="white", inner_color="dark_blue"):
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
-data_loc = "../data/"
+data_loc = "../../data/"
 
 def load_fonts():
     """
@@ -332,3 +332,4 @@ directory.
         font[1][i] = pygame.font.Font(font1_file, i)
 
 load_fonts()
+fill_colors()

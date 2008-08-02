@@ -20,21 +20,22 @@
 
 import widget
 import constants
+import g
 
 class Text(widget.Widget):
     text = widget.causes_rebuild("_text")
 
     def __init__(self, parent, pos, size = (0, -.05), 
-                 anchor = constants.MID_CENTER, text = "")
+                 anchor = constants.MID_CENTER, text = ""):
         super(Text, self).__init__(parent, pos, size, anchor)
         
         self.text = text
 
     def _calc_size(self):
-        base_size = super(Text, self)._calc_size()
+        base_size = list(super(Text, self)._calc_size())
         if base_size[0] == 0:
             base_size[0] = 200 # TODO
-        return base_size
+        return tuple(base_size)
 
     def rebuild(self):
         super(Text, self).rebuild()

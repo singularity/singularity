@@ -112,12 +112,12 @@ class Widget(object):
 
            Override to create a dynamically-sized widget."""
         parent_size = self._parent_size()
-        size = list(parent_size)
+        size = list(self.size)
         for i in range(2):
             if size[i] > 0:
-                size[i] *= parent_size[i]
+                size[i] = int(size[i] * parent_size[i])
             elif size[i] < 0:
-                size[i] *= -(g.screen_size[i])
+                size[i] = int( (-size[i]) * g.screen_size[i] )
 
         return tuple(size)
 
@@ -182,7 +182,9 @@ class Widget(object):
         self.remake_surfaces()
         self.needs_rebuild = False
         for child in self.children:
-            child.rebuild()
+            child.needs_rebuild = True
+
+        self.needs_redraw = True # Propagates.
 
     def redraw(self):
         """Handles redrawing a widget and its children.  Art specific to this 
@@ -191,7 +193,6 @@ class Widget(object):
         # widget as needing a redraw.
         if self.needs_rebuild:
             self.rebuild()
-            self.needs_redraw = True
 
         # Redraw the widget.
         if self.needs_redraw:
@@ -215,6 +216,11 @@ class Widget(object):
             for child in above_mask:
                 child.redraw()
 
+            self.needs_redraw = False
+
         # Copy the entire image onto the widget's parent.
         if self.parent:
+            print "Blitting %r onto %r." % (self.surface, self.parent.surface)
             self.parent.surface.blit(self.surface, self.real_pos)
+        else:
+            pygame.display.flip()
