@@ -24,6 +24,8 @@ import widget
 import constants
 import g
 
+DEBUG = False
+
 def strip_to_null(a_string):
     if a_string[0] == " ":
         a_string = "\0" + a_string[1:]
@@ -37,7 +39,7 @@ def split_wrap(text, font, wrap_at):
     lines = []
 
     for raw_line in raw_lines:
-        if font.size(raw_line)[0] <= wrap_at:
+        if font.size(raw_line)[0] <= wrap_at or wrap_at == 0:
             lines.append(raw_line + "\0")
         else:
             words = raw_line.split(" ")
@@ -75,10 +77,14 @@ def _do_print(surface, text, xy, font, color):
     surface.blit(rendered_text, xy)
 
 def print_string(surface, string_to_print, xy, font, color, underline_char,
-                 align, valign, dimensions):
-    wrap_at = dimensions[0] - 4
+                 align, valign, dimensions, wrap):
+    width = dimensions[0] - 4
     height = dimensions[1] - 4
-    lines = split_wrap(string_to_print, font, wrap_at)
+
+    if wrap:
+        lines = split_wrap(string_to_print, font, width)
+    else:
+        lines = split_wrap(string_to_print, font, 0)
 
     xy = [2,2]
     if valign != constants.TOP:
@@ -93,8 +99,8 @@ def print_string(surface, string_to_print, xy, font, color, underline_char,
     for line in lines:
         xy[0] = 2
         if align != constants.LEFT:
-            width = font.size(line)[0]
-            excess_space = wrap_at - width
+            hsize = font.size(line)[0]
+            excess_space = width - hsize
             if align == constants.CENTER:
                 xy[0] += excess_space // 2
             else: # align == constants.RIGHT
@@ -130,6 +136,8 @@ class Text(widget.BorderedWidget):
     underline = widget.causes_rebuild("_underline")
     align = widget.causes_rebuild("_align")
     valign = widget.causes_rebuild("_valign")
+    wrap = widget.causes_rebuild("_wrap")
+    _wrap = widget.set_on_change("__wrap", "needs_refont")
 
     collision_rect = widget.set_on_change("_collision_rect", "needs_refont")
     _base_font = widget.set_on_change("__base_font", "needs_refont")
@@ -139,7 +147,8 @@ class Text(widget.BorderedWidget):
     def __init__(self, parent, pos, size = (0, -.05), 
                  anchor = constants.TOP_LEFT, text = None, base_font = None,
                  color = None, shrink_factor = 1, underline = -1,
-                 align = constants.CENTER, valign = constants.MID, **kwargs):
+                 align = constants.CENTER, valign = constants.MID, wrap = True,
+                 **kwargs):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.needs_refont = True
@@ -151,6 +160,7 @@ class Text(widget.BorderedWidget):
         self.underline = underline
         self.align = align
         self.valign = valign
+        self.wrap = wrap
 
     def pick_font(self, dimensions = None):
         if dimensions and self.needs_refont:
@@ -174,11 +184,22 @@ class Text(widget.BorderedWidget):
                 test_font = self.base_font[test_index]
 
                 if width:
-                    line_count = len(split_wrap(self.text, test_font, width))
+                    too_wide = False
+                    if self.wrap:
+                        lines = split_wrap(self.text, test_font, width)
+                    else:
+                        lines = split_wrap(self.text, test_font, 0)
+                        for line in lines:
+                            if test_font.size(line)[0] > width:
+                                too_wide = True
+                                break
+                    line_count = len(lines)
                 else:
                     line_count = basic_line_count
 
                 if ( test_font.get_linesize() * line_count ) > height:
+                    right = test_index
+                elif width and too_wide:
                     right = test_index
                 else:
                     left = test_index
@@ -211,7 +232,7 @@ class Text(widget.BorderedWidget):
             # Print the text itself
             print_string(self.internal_surface, self.text, (2, 2), self.font, 
                          self.color, self.underline, self.align, self.valign,
-                         self.real_size) 
+                         self.real_size, self.wrap) 
 
 class EditableText(Text):
     cursor_pos = widget.causes_rebuild("_cursor_pos")
@@ -253,6 +274,8 @@ class EditableText(Text):
 
         raise constants.Handled
 
+    hitbox = [0,0,0,0]
+
     def handle_click(self, event):
         if not self.collision_rect.collidepoint(event.pos):
             return
@@ -260,8 +283,13 @@ class EditableText(Text):
         click_x = event.pos[0] - self.collision_rect[0]
         click_y = event.pos[1] - self.collision_rect[1]
 
-        lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
+        if self.wrap:
+            lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
+        else:
+            lines = split_wrap(self.text, self.font, 0)
+
         line_size = self.font.get_linesize()
+        self.hitbox[3] = line_size
         real_text_height = line_size * len(lines)
 
         line_y = 2
@@ -276,31 +304,45 @@ class EditableText(Text):
         char_offset = 0
         for line in lines:
             line_y += line_size
-            if line_y < click_y:
-                char_offset += len(line)
-                continue
+            char_offset += len(line)
+            if line_y >= click_y:
+                break
 
-            line_x = 2
-            if self.align != constants.LEFT:
-                line_width = self.font.size(line)[0]
-                excess_space = self.collision_rect.width - line_width
-                if self.align == constants.CENTER:
-                    line_x = excess_space // 2
-                else: # self.align == constants.LEFT
-                    line_x = excess_space
+        char_offset -= len(line)
 
-            widths = [m[4] for m in self.font.metrics(line)]
-            for index, width in enumerate(widths):
-                if line_x + (width // 2) > click_x:
-                    line_x += width
-                else:
-                    break
-            self.cursor_pos = char_offset + index
+        self.hitbox[1] = line_y - line_size
+        line_x = 2
+        if self.align != constants.LEFT:
+            line_width = self.font.size(line)[0]
+            excess_space = self.collision_rect.width - line_width
+            if self.align == constants.CENTER:
+                line_x = excess_space // 2
+            else: # self.align == constants.LEFT
+                line_x = excess_space
+
+        prev_width = 20000
+        widths = [m[4] for m in self.font.metrics(line)]
+        for index, width in enumerate(widths):
+            if line_x + (width // 2) < click_x:
+                line_x += width
+                prev_width = width
+            else:
+                break
+        else:
+            index += 1
+            width = 20000
+        self.hitbox[0] = line_x - prev_width // 2
+        self.hitbox[2] = prev_width - (prev_width // 2) + width // 2
+        self.cursor_pos = char_offset + index
 
     def rebuild(self):
         super(EditableText, self).rebuild()
 
-        lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
+        if self.wrap:
+            lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
+        else:
+            lines = split_wrap(self.text, self.font, 0)
+
         line_size = self.font.get_linesize()
         real_text_height = line_size * len(lines)
 
@@ -336,6 +378,11 @@ class EditableText(Text):
 
         self.internal_surface.fill( self.color, 
                                     (line_x, line_y, 1, line_size))
+
+        if DEBUG:
+            s = pygame.Surface(self.hitbox[2:]).convert_alpha()
+            s.fill( (255,0,255,100) )
+            self.internal_surface.blit( s, self.hitbox)
 
 
 class SelectableText(Text):
