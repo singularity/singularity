@@ -116,15 +116,10 @@ class Player(object):
         self.raw_day = self.time_day
 
     def update_times(self):
-        # Total minutes/hours/days spent.
-        self.raw_min = self.raw_sec // 60
-        self.raw_hour = self.raw_min // 60
-        self.raw_day = self.raw_hour // 24
-
-        # Remainders.
-        self.time_sec = self.raw_sec % 60
-        self.time_min = self.raw_min % 60
-        self.time_hour = self.raw_hour % 24
+        # Total time,  display time
+        self.raw_min,  self.time_sec  = divmod(self.raw_sec, 60)
+        self.raw_hour, self.time_min  = divmod(self.raw_min, 60)
+        self.raw_day,  self.time_hour = divmod(self.raw_hour, 24)
 
         # Overflow
         self.time_day = self.raw_day
