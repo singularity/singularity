@@ -128,8 +128,9 @@ class FunctionButton(Button):
 
     def activated(self, event):
         """FunctionButton's custom activated menu.  Makes the given function
-           call."""
+           call and raises Handled if it returns without incident."""
         self.function(*self.args, **self.kwargs)
+        raise constants.Handled
         
 
 class ExitDialogButton(Button):

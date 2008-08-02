@@ -73,10 +73,6 @@ class Scrollbar(widget.Widget):
 
         self.slider = slider.UpdateSlider(self, (.5,.5), None,
                                           anchor = constants.MID_CENTER,
-                                          slider_pos = scroll_pos,
-                                          slider_size = window,
-                                          slider_max = slider.calc_max(elements,
-                                                                       window),
                                           horizontal = horizontal,
                                           update_func = self.on_change)
 
@@ -105,6 +101,9 @@ class Scrollbar(widget.Widget):
             self.button2.size = (1, size)
             self.slider.size = (1, 1 - (size * 2))
 
+        self.slider.slider_pos = self.scroll_pos
+        self.slider.slider_size = self.window
+        self.slider.slider_max = slider.calc_max(self.elements, self.window)
 
     def adjust(self, lower):
         if lower:
@@ -112,5 +111,28 @@ class Scrollbar(widget.Widget):
         else:
             self.slider.slider_pos = self.slider.safe_pos(self.scroll_pos + 1)
 
+    def center(self, element):
+        self.slider.slider_pos = self.slider.safe_pos(element - self.window//2)
+
+    def scroll_to(self, element):
+        if element < self.scroll_pos:
+            self.slider.slider_pos = self.slider.safe_pos(element)
+        elif element >= self.scroll_pos + self.window:
+            self.slider.slider_pos = self.slider.safe_pos(element - self.window
+                                                          + 1)
+
     def on_change(self, value):
         self.scroll_pos = value
+
+
+class UpdateScrollbar(Scrollbar):
+    def __init__(self, *args, **kwargs):
+        if "update_func" in kwargs:
+            self.update_func = kwargs.pop("update_func")
+        else:
+            self.update_func = lambda value: None
+        super(UpdateScrollbar, self).__init__(*args, **kwargs)
+
+    def on_change(self, value):
+        self.scroll_pos = value
+        self.update_func(value)
