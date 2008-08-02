@@ -436,38 +436,26 @@ class TextEntryDialog(TextDialog):
     def return_text(self, event):
         raise constants.ExitDialog, self.text_field.text
 
-class ChoiceDescriptionDialog(Dialog):
+class ChoiceDialog(YesNoDialog):
     list = widget.causes_rebuild("_list")
-    key_list = widget.causes_rebuild("_key_list")
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
         self.list = kwargs.pop("list", [])
-        self.key_list = kwargs.pop("key_list", None)
-        self.desc_func = kwargs.pop("desc_func", lambda pane, key: NullDialog)
         self.default = kwargs.pop("default", None)
+        kwargs.setdefault("yes_type", "ok")
+        kwargs.setdefault("no_type", "back")
+        kwargs.setdefault("background_color", g.colors["clear"])
 
-        super(ChoiceDescriptionDialog, self).__init__(parent, *args, **kwargs)
+        super(ChoiceDialog, self).__init__(parent, *args, **kwargs)
 
-        self.listbox = listbox.UpdateListbox(self, (0, 0), (-.53, -.85),
-                                             anchor = constants.TOP_LEFT,
-                                             update_func = self.handle_update)
+        self.listbox = self.make_listbox()
 
-        self.description_pane = \
-            widget.BorderedWidget(self, (-1, 0), (-.45, -.85),
-                                  anchor = constants.TOP_RIGHT)
+        self.yes_button.exit_code_func = self.return_list_pos
+        self.no_button.exit_code = None
 
-        self.ok_button = \
-            button.ExitDialogButton(self, (-.49, -1),
-                                    anchor = constants.BOTTOM_RIGHT,
-                                    text = g.buttons["ok"],
-                                    hotkey = g.buttons["ok_hotkey"],
-                                    exit_code_func = self.return_list_pos)
-
-        self.back_button = \
-            button.ExitDialogButton(self, (-.51, -1),
-                                    anchor = constants.BOTTOM_LEFT,
-                                    text = g.buttons["back"],
-                                    hotkey = g.buttons["back_hotkey"])
+    def make_listbox(self):
+        return listbox.Listbox(self, (0, 0), (-1, -.85), 
+                               anchor=constants.TOP_LEFT)
 
     def return_list_pos(self):
         return self.listbox.list_pos
@@ -481,10 +469,34 @@ class ChoiceDescriptionDialog(Dialog):
             self.listbox.list_pos = 0
         self.listbox.auto_scroll = True
 
-        super(ChoiceDescriptionDialog, self).show()
+        return super(ChoiceDialog, self).show()
 
     def rebuild(self):
         self.listbox.list = self.list
+        super(ChoiceDialog, self).rebuild()
+
+
+class ChoiceDescriptionDialog(ChoiceDialog):
+    key_list = widget.causes_rebuild("_key_list")
+
+    def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
+        self.key_list = kwargs.pop("key_list", None)
+        self.desc_func = kwargs.pop("desc_func", lambda pane, key: NullDialog)
+
+        super(ChoiceDescriptionDialog, self).__init__(parent, *args, **kwargs)
+
+        self.description_pane = \
+            widget.BorderedWidget(self, (-1, 0), (-.45, -.85),
+                                  anchor = constants.TOP_RIGHT)
+
+
+    def make_listbox(self):
+        return listbox.UpdateListbox(self, (0, 0), (-.53, -.85),
+                                     anchor=constants.TOP_LEFT,
+                                     update_func=self.handle_update)
+
+    def rebuild(self):
         list_pos = self.listbox.list_pos
 
         if 0 <= list_pos < len(self.list):

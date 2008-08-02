@@ -117,15 +117,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         # Create the new ones.
         self.display_elements = []
         for i in range(list_size):
-            element = text.SelectableText(self, None, None,
-                                          anchor = constants.TOP_LEFT,
-                                          borders = (constants.TOP,
-                                                     constants.LEFT),
-                                          border_color = self.border_color,
-                                          selected_color = self.selected_color,
-                                          unselected_color =
-                                                          self.unselected_color)
-            self.display_elements.append(element)
+            self.display_elements.append(self.make_element())
 
         self.display_elements[-1].borders = (constants.TOP, constants.LEFT,
                                              constants.BOTTOM)
@@ -133,6 +125,14 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         # Move the scrollbar to the end so that it gets drawn on top.
         self.children.remove(self.scrollbar)
         self.children.append(self.scrollbar)
+
+    def make_element(self):
+        return text.SelectableText(self, None, None, anchor=constants.TOP_LEFT,
+                                   borders=(constants.TOP, constants.LEFT),
+                                   border_color=self.border_color,
+                                   selected_color=self.selected_color,
+                                   unselected_color=self.unselected_color,
+                                   align=self.align)
 
     def rebuild(self):
         super(Listbox, self).rebuild()
@@ -149,20 +149,27 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             self.auto_scroll = False
             self.scrollbar.center(self.list_pos)
 
+        scrollbar_width = self.scrollbar.real_size[0]
+        my_width = self.real_size[0]
+        scrollbar_rel_width = scrollbar_width / float(my_width)
+
         offset = self.scrollbar.scroll_pos
         for index, element in enumerate(self.display_elements):
             list_index = index + offset
 
             # Position and size the element.
             element.pos = (0, -index / float(window_size))
-            element.size = (-.9, -1 / float(window_size))
+            element.size = (-1 + scrollbar_rel_width, -1 / float(window_size))
 
             # Set up the element contents.
             element.selected = (list_index == self.list_pos)
-            if list_index < list_size:
-                element.text = self.list[list_index]
-            else:
-                element.text = ""
+            self.update_element(element, list_index)
+
+    def update_element(self, element, list_index):
+        if 0 <= list_index < len(self.list):
+            element.text = self.list[list_index]
+        else:
+            element.text = ""
 
 
 class UpdateListbox(Listbox):
@@ -174,3 +181,25 @@ class UpdateListbox(Listbox):
     def __init__(self, *args, **kwargs):
         self.update_func = kwargs.pop("update_func", lambda value: None)
         super(UpdateListbox, self).__init__(*args, **kwargs)
+
+
+class CustomListbox(UpdateListbox):
+    remake_func = widget.causes_rebuild("_remake_func")
+    rebuild_func = widget.causes_rebuild("_rebuild_func")
+    def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
+        self.remake_func = kwargs.pop("remake_func", lambda value: None)
+        self.rebuild_func = kwargs.pop("rebuild_func", lambda value: None)
+        super(CustomListbox, self).__init__(parent, *args, **kwargs)
+
+    def make_element(self):
+        base = super(CustomListbox, self).make_element()
+        self.remake_func(base)
+        return base
+
+    def update_element(self, element, list_index):
+        if 0 <= list_index < len(self.list):
+            self.rebuild_func(element, self.list[list_index],
+                              self.key_list[list_index])
+        else:
+            self.rebuild_func(element, None, None)
