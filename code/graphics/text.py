@@ -135,3 +135,29 @@ class Text(widget.Widget):
         # Print the text itself
         print_string(self.internal_surface, self.text, self.font, 
                      self.underline, (horiz_offset, vert_offset), self.color)
+
+
+class SelectableText(Text):
+    selected = widget.causes_rebuild("_selected")
+    selected_color = widget.causes_rebuild("_selected_color")
+    unselected_color = widget.causes_rebuild("_unselected_color")
+
+    def __init__(self, parent, pos, size = (0, -.05),
+                 anchor = constants.TOP_LEFT, text = "", base_font = None,
+                 color = None, borders=(0,2,3,5), border_color = None,
+                 unselected_color = None, selected_color = None):
+        super(SelectableText, self).__init__(parent, pos, size, anchor,
+                                             text, base_font, color, borders)
+
+        self.border_color = border_color or g.colors["white"]
+        self.selected_color = selected_color or g.colors["light_blue"]
+        self.unselected_color = unselected_color or g.colors["dark_blue"]
+
+        self.selected = False
+
+    def rebuild(self):
+        if self.selected:
+            self.background_color = self.selected_color
+        else:
+            self.background_color = self.unselected_color
+        super(SelectableText, self).rebuild()

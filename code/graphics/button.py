@@ -25,11 +25,9 @@ import g
 import widget
 import text
 
-class Button(text.Text):
-    select_color = widget.causes_rebuild("_select_color")
+class Button(text.SelectableText):
     hotkey = widget.causes_rebuild("_hotkey")
     force_underline = widget.causes_rebuild("_force_underline")
-    selected = widget.causes_rebuild("_selected")
 
     # A second layer of property wraps .hotkey, to update key handlers.
     __hotkey = ""
@@ -49,11 +47,10 @@ class Button(text.Text):
                  unselected_color = None, selected_color = None,
                  hotkey = "", force_underline = None):
         super(Button, self).__init__(parent, pos, size, anchor,
-                                     text, base_font, color, borders)
+                                     text, base_font, color, borders,
+                                     border_color, unselected_color,
+                                     selected_color)
 
-        self.border_color = border_color or g.colors["white"]
-        self.selected_color = selected_color or g.colors["light_blue"]
-        self.unselected_color = unselected_color or g.colors["dark_blue"]
         self.hotkey = hotkey
         self.force_underline = force_underline
 
@@ -66,10 +63,6 @@ class Button(text.Text):
                 self.parent.add_key_handler(self.hotkey, self.handle_event)
 
     def rebuild(self):
-        if self.selected:
-            self.background_color = self.selected_color
-        else:
-            self.background_color = self.unselected_color
         self.calc_underline()
         super(Button, self).rebuild()
 
@@ -107,3 +100,40 @@ class Button(text.Text):
     def activated(self):
         """Called when the button is pressed or otherwise triggered."""
         raise constants.ExitDialog
+
+
+class DialogButton(Button):
+    def __init__(self, *args, **kwargs):
+        if "dialog" in kwargs:
+            self.dialog = kwargs.pop("dialog")
+        else:
+            self.dialog = None
+        super(DialogButton, self).__init__(*args, **kwargs)
+
+    def activated(self):
+        """DialogButton's custom activated method.  When the assigned dialog
+           exits, raises Handled with the dialog's exit code as a parameter.
+           Override if you care what the code was."""
+        import dialog
+        if not self.dialog:
+            raise constants.Handled
+
+        parent_dialog = None
+        target = self.parent
+        while target:
+            if isinstance(target, dialog.Dialog):
+                parent_dialog = target
+                break
+            target = target.parent
+
+        if parent_dialog:
+            parent_dialog.faded = True
+
+        retval = self.dialog.show()
+
+        if parent_dialog:
+            parent_dialog.faded = False
+
+        self.selected = self.is_over( pygame.mouse.get_pos() )
+
+        raise constants.Handled, retval
