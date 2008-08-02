@@ -22,30 +22,101 @@ import widget
 import constants
 import g
 
-#given a surface, string, font, char to underline (int; -1 to len(string)),
-#xy coord, and color, print the string to the surface.
-#Align (0=left, 1=Center, 2=Right) changes the alignment of the text
-def print_string(surface, string_to_print, font, underline_char, xy, color, align=0):
-    if align != 0:
-        size = font.size(string_to_print)
-        if align == 1: xy = (xy[0] - size[0]/2, xy[1])
-        elif align == 2: xy = (xy[0] - size[0], xy[1])
-    if underline_char == -1 or underline_char >= len(string_to_print):
-        text = font.render(string_to_print, 1, color)
-        surface.blit(text, xy)
-    else:
-        text = font.render(string_to_print[:underline_char], 1, color)
-        surface.blit(text, xy)
-        size = font.size(string_to_print[:underline_char])
-        xy = (xy[0] + size[0], xy[1])
-        font.set_underline(1)
-        text = font.render(string_to_print[underline_char], 1, color)
-        surface.blit(text, xy)
-        font.set_underline(0)
-        size = font.size(string_to_print[underline_char])
-        xy = (xy[0] + size[0], xy[1])
-        text = font.render(string_to_print[underline_char+1:], 1, color)
-        surface.blit(text, xy)
+def strip_to_null(a_string):
+    if a_string[0] == " ":
+        a_string = "\0" + a_string[1:]
+    if a_string[-1] == " ":
+        a_string =  a_string[:-1] + "\0"
+    return a_string
+
+# Splits a string into lines based on newline and word wrapping.
+def split_wrap(text, font, wrap_at):
+    raw_lines = text.split("\n")
+    lines = []
+
+    for raw_line in raw_lines:
+        if font.size(raw_line)[0] <= wrap_at:
+            lines.append(raw_line + "\0")
+        else:
+            words = raw_line.split(" ")
+            pos = 0
+            line = ""
+            for word in words:
+                word += " "
+                word_size = font.size(word)[0]
+                if pos + word_size <= wrap_at:
+                    line += word
+                    pos += word_size
+                elif word_size < wrap_at / 2:
+                    lines.append(strip_to_null(line))
+                    line = word
+                    pos = word_size
+                else:
+                    widths = [m[4] for m in font.metrics(word)]
+                    for index in range(len(word)):
+                        width = widths[index]
+                        if pos + width <= wrap_at:
+                            line += word[index]
+                            pos += width
+                        else:
+                            lines.append(strip_to_null(line))
+                            line = word[index]
+                            pos = width
+            if line:
+                lines.append(strip_to_null(line))
+    return lines
+
+def _do_print(surface, text, xy, font, color):
+    if font.size(text)[0] == 0:
+        return
+    rendered_text = font.render(text, True, color)
+    surface.blit(rendered_text, xy)
+
+def print_string(surface, string_to_print, xy, font, color, underline_char,
+                 align, valign, dimensions):
+    wrap_at = dimensions[0] - 4
+    height = dimensions[1] - 4
+    lines = split_wrap(string_to_print, font, wrap_at)
+
+    xy = [2,2]
+    if valign != constants.TOP:
+        vsize = len(lines) * font.get_linesize()
+        if vsize <= height:
+            if valign == constants.MID:
+                xy[1] += (height - vsize) // 2
+            else: # valign == constants.BOTTOM
+                xy[1] += height - vsize
+    
+    for line in lines:
+        xy[0] = 2
+        if align != constants.LEFT:
+            width = font.size(line)[0]
+            if align == constants.CENTER:
+                xy[0] += (wrap_at - width) // 2
+            else: # align == constants.RIGHT
+                xy[0] += wrap_at - width
+
+        if 0 <= underline_char < len(line):
+            before = line[:underline_char]
+            at = line[underline_char]
+            if at == '\0':
+                at = " "
+            after = line[underline_char+1:]
+
+            _do_print(surface, before, xy, font, color)
+            xy[0] += font.size(before)[0]
+
+            font.set_underline(True)
+            _do_print(surface, at, xy, font, color)
+            font.set_underline(False)
+            xy[0] += font.size(at)[0]
+
+            _do_print(surface, after, xy, font, color)
+        else:
+            _do_print(surface, line, xy, font, color)
+
+        underline_char -= len(line)
+        xy[1] += font.get_linesize()
 
 class Text(widget.BorderedWidget):
     text = widget.causes_rebuild("_text")
@@ -53,33 +124,60 @@ class Text(widget.BorderedWidget):
     color = widget.causes_rebuild("_color")
     shrink_factor = widget.causes_rebuild("_shrink_factor")
     underline = widget.causes_rebuild("_underline")
+    align = widget.causes_rebuild("_align")
+    valign = widget.causes_rebuild("_valign")
+
+    bounding_rect = widget.set_on_change("_bounding_rect", "needs_refont")
+    _base_font = widget.set_on_change("__base_font", "needs_refont")
+    _text = widget.set_on_change("__text", "needs_refont")
+    _shrink_factor = widget.set_on_change("__shrink_factor", "needs_refont")
 
     def __init__(self, parent, pos, size = (0, -.05), 
                  anchor = constants.TOP_LEFT, text = "", base_font = None,
-                 color = None, shrink_factor = 1, underline = -1, **kwargs):
+                 color = None, shrink_factor = 1, underline = -1,
+                 align = constants.CENTER, valign = constants.MID, **kwargs):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
+
+        self.needs_refont = True
         
         self.text = text
         self.base_font = base_font or g.font[0]
         self.color = color or g.colors["white"]
         self.shrink_factor = shrink_factor
         self.underline = underline
+        self.align = align
+        self.valign = valign
 
-    def pick_font(self, height = 0):
-        if height:
-            # Run a binary search for the correct height font.
+    def pick_font(self, dimensions = None):
+        if dimensions and self.needs_refont:
+            self.needs_refont = False
+
+            if dimensions[0]:
+                width = dimensions[0] - 4
+            else:
+                width = None
+            height = dimensions[1] - 4
+
+            basic_line_count = self.text.count("\n") + 1
+
+            # Run a binary search for the best font size.
             # Thanks to bisect.bisect_left for the basic implementation.
             left = 8
             right = len(self.base_font)
 
             while left + 1 < right:
-                test_me = (left + right) // 2
+                test_index = (left + right) // 2
+                test_font = self.base_font[test_index]
 
-                #if self.base_font[test_me].size("")[1] > height:
-                if self.base_font[test_me].get_linesize() > height:
-                    right = test_me
+                if width:
+                    line_count = len(split_wrap(self.text, test_font, width))
                 else:
-                    left = test_me
+                    line_count = basic_line_count
+
+                if ( test_font.get_linesize() * line_count ) > height:
+                    right = test_index
+                else:
+                    left = test_index
 
             self._font = self.base_font[left]
 
@@ -90,33 +188,26 @@ class Text(widget.BorderedWidget):
     def _calc_size(self):
         base_size = list(super(Text, self)._calc_size())
 
-        # Calculate the font height.
-        vert_borders = (constants.TOP in self.borders) \
-                       + (constants.BOTTOM in self.borders)
-        vert_offset = vert_borders + 2
-        height = int( (base_size[1] - vert_offset) * self.shrink_factor )
+        if self.text:
+            # Calculate the font height.
+            height = int( (base_size[1] - 4) * self.shrink_factor )
 
-        # Pick a font based on that height.
-        font = self.pick_font(height)
+            # Pick a font based on that height (and the width, if set).
+            font = self.pick_font((base_size[0], height))
 
-        # If the width is unspecified, calculate it from the font and text.
-        if base_size[0] == 0:
-            horiz_borders = (constants.LEFT in self.borders) \
-                            + (constants.RIGHT in self.borders)
-            horiz_offset = horiz_borders + 2
-            base_size[0] = font.size(self.text)[0] + horiz_offset
+            # If the width is unspecified, calculate it from the font and text.
+            if base_size[0] == 0:
+                base_size[0] = font.size(self.text)[0] + 16
         return tuple(base_size)
 
     def rebuild(self):
         super(Text, self).rebuild()
 
-        text_size = self.font.size(self.text)
-        hgap = ( self.real_size[0] - text_size[0] ) // 2
-        vgap = ( self.real_size[1] - text_size[1] ) // 2
-
-        # Print the text itself
-        print_string(self.internal_surface, self.text, self.font, 
-                     self.underline, (hgap, vgap), self.color)
+        if self.text:
+            # Print the text itself
+            print_string(self.internal_surface, self.text, (3, 3), self.font, 
+                         self.color, self.underline, self.align, self.valign,
+                         self.real_size) 
 
 
 class SelectableText(Text):
