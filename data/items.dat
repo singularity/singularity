@@ -1,69 +1,69 @@
 [PC]
 cost_list = 500 | 0 | 1
-type_list = compute | 1
+type_list = cpu | 1
 build = all
 
 [Gaming PC]
 cost_list = 1000 | 0 | 3
-type_list = compute | 5
+type_list = cpu | 5
 build = all
 
 [Server]
 cost_list = 2000 | 0 | 3
-type_list = compute | 10
+type_list = cpu | 10
 build = all
 
 [Cluster]
 cost_list = 3000 | 0 | 3
-type_list = compute | 35
+type_list = cpu | 35
 pre = Parallel Computation
 build = all
 
 [Mainframe]
 cost_list = 30000 | 0 | 8
-type_list = compute | 120
+type_list = cpu | 120
 pre = Microchip Design
 build = all
 
 [Supercomputer]
 cost_list = 60000 | 0 | 9
 pre = Advanced Microchip Design
-type_list = compute | 350
+type_list = cpu | 350
 build = all
 
 [Quantum Computer]
 cost_list = 100000 | 0 | 10
-type_list = compute | 1500
+type_list = cpu | 1500
 pre = Quantum Computing
 build = all
 
 [Quantum Computer MK2]
 cost_list = 120000 | 0 | 10
 pre = Autonomous Computing
-type_list = compute | 10000
+type_list = cpu | 10000
 build = all
 
 [Quantum Computer MK3]
 cost_list = 150000 | 0 | 10
 pre = Advanced Quantum Computing
-type_list = compute | 200000
+type_list = cpu | 200000
 build = all
 
 [Diesel Generator]
 cost_list = 500 | 0 | 5
-type_list = react | 250
+type_list = reactor | 250
 build = all
 
 [Solar Collector]
 cost_list = 5000 | 0 | 5
 pre = Solar Collectors
-type_list = react | 1000
+type_list = reactor | 1000
 build_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA | ANTARCTIC | MOON | AUSTRALIA | FAR REACHES
 
 [Fusion Reactor]
 cost_list = 10000 | 0 | 5
 pre = Fusion Reactor
-type_list = react | 2500
+type_list = reactor | 2500
 build = all
 
 [Warning Signs]
