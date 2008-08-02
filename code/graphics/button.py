@@ -93,18 +93,30 @@ class Button(text.SelectableText):
 
     def watch_mouse(self, event):
         """Selects the button if the mouse is over it."""
-        # This gets called a lot, so it's been optimized.
-        select_now = self.is_over(pygame.mouse.get_pos())
-        if (self._selected ^ select_now): # If there's a change.
-            self.selected = select_now
+        if self.visible:
+            # This gets called a lot, so it's been optimized.
+            select_now = self.is_over(pygame.mouse.get_pos())
+            if (self._selected ^ select_now): # If there's a change.
+                self.selected = select_now
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP:
-            if self.is_over(event.pos):
-                self.activated(event)
+            if self.visible and self.is_over(event.pos):
+                self.activate_with_sound(event)
         elif event.type == pygame.KEYDOWN:
             if self.hotkey in (event.unicode, event.key):
-                self.activated(event)
+                self.activate_with_sound(event)
+
+    def activate_with_sound(self, event):
+        """Called when the button is pressed or otherwise triggered.
+
+           This method is called directly by the GUI handler, and should be
+           overwrited only to remove the click it plays."""
+
+        from code.g import play_sound
+        play_sound("click")
+        self.activated(event)
+        
 
     def activated(self, event):
         """Called when the button is pressed or otherwise triggered."""

@@ -299,15 +299,15 @@ class YesNoDialog(TextDialog):
 
     def on_return(self, event):
         if self.invert_enter:
-            self.no_button.activated(event)
+            self.no_button.activate_with_sound(event)
         else:
-            self.yes_button.activated(event)
+            self.yes_button.activate_with_sound(event)
 
     def on_escape(self, event):
         if self.invert_escape:
-            self.yes_button.activated(event)
+            self.yes_button.activate_with_sound(event)
         else:
-            self.no_button.activated(event)
+            self.no_button.activate_with_sound(event)
 
 
 class MessageDialog(TextDialog):
@@ -322,8 +322,8 @@ class MessageDialog(TextDialog):
         self.ok_button = button.ExitDialogButton(self, (-.5,-1), (-.3,-.1), 
                                                anchor = constants.BOTTOM_CENTER)
 
-        self.add_key_handler(pygame.K_RETURN, self.ok_button.activated)
-        self.add_key_handler(pygame.K_ESCAPE, self.ok_button.activated)
+        self.add_key_handler(pygame.K_RETURN, self.ok_button.activate_with_sound)
+        self.add_key_handler(pygame.K_ESCAPE, self.ok_button.activate_with_sound)
 
     def rebuild(self):
         super(MessageDialog, self).rebuild()
