@@ -101,7 +101,8 @@ buttons = dict(yes = "yes", yes_hotkey = "y",
                no = "no", no_hotkey = "n",
                ok = "ok", ok_hotkey = "o",
                cancel = "cancel", cancel_hotkey = "c",
-               destroy = "destroy", destroy_hotkey = "d")
+               destroy = "destroy", destroy_hotkey = "d",
+               back = "back", back_hotkey = "b")
 
 # Used to initialize surfaces that should have transparency.
 # Why the SRCALPHA parameter isn't working, I have no idea.
