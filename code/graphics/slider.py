@@ -35,7 +35,7 @@ class Slider(button.Button):
     slider_size = widget.causes_rebuild("_slider_size")
     horizontal = widget.causes_rebuild("_horizontal")
 
-    def __init__(self, parent, pos = (1,0), size = (.1, 1),
+    def __init__(self, parent, pos = (-1,0), size = (-.1, -1),
                  anchor = constants.TOP_RIGHT, borders = constants.ALL,
                  border_color=None, background_color=None, slider_color=None,
                  slider_pos=0, slider_max=10, slider_size=5, horizontal=False,
@@ -81,8 +81,8 @@ class Slider(button.Button):
         bar_length = self._calc_length(self.slider_size)
 
         if self.horizontal:
-            self.button.pos = (bar_start, 0)
-            self.button.size = (bar_length, 1)
+            self.button.pos = (-bar_start, 0)
+            self.button.size = (-bar_length, -1)
             borders = [constants.TOP, constants.BOTTOM]
             real_pos = self.button.real_pos[0]
             real_size = self.button.real_size[0]
@@ -92,8 +92,8 @@ class Slider(button.Button):
                 borders.append(constants.RIGHT)
             self.button.borders = tuple(borders)
         else:
-            self.button.pos = (0, bar_start)
-            self.button.size = (1, bar_length)
+            self.button.pos = (0, -bar_start)
+            self.button.size = (-1, -bar_length)
             borders = [constants.LEFT, constants.RIGHT]
             real_pos = self.button.real_pos[1]
             real_size = self.button.real_size[1]

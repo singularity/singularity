@@ -262,11 +262,11 @@ class YesNoDialog(TextDialog):
 
         super(YesNoDialog, self).__init__(parent, **kwargs)
 
-        self.yes_button = button.ExitDialogButton(self, (.1,1), (.3,.1), 
+        self.yes_button = button.ExitDialogButton(self, (-.1,-1), (-.3,-.1), 
                                                  anchor = constants.BOTTOM_LEFT,
                                                  exit_code = True)
 
-        self.no_button = button.ExitDialogButton(self, (.9,1), (.3,.1), 
+        self.no_button = button.ExitDialogButton(self, (-.9,-1), (-.3,-.1), 
                                                 anchor = constants.BOTTOM_RIGHT,
                                                 exit_code = False)
 
@@ -303,7 +303,7 @@ class MessageDialog(TextDialog):
 
         super(MessageDialog, self).__init__(parent, **kwargs)
 
-        self.ok_button = button.ExitDialogButton(self, (.5,1), (.3,.1), 
+        self.ok_button = button.ExitDialogButton(self, (-.5,-1), (-.3,-.1), 
                                                anchor = constants.BOTTOM_CENTER)
 
         self.add_key_handler(pygame.K_RETURN, self.ok_button.activated)
@@ -322,7 +322,7 @@ class TextEntryDialog(TextDialog):
 
         super(TextEntryDialog, self).__init__(parent, size = size, **kwargs)
 
-        self.text_field = text.EditableText(self, (.5,1), (1,.5),
+        self.text_field = text.EditableText(self, (-.5,-1), (-1,-.5),
                                             borders = constants.ALL, 
                                             base_font = g.font[0],
                                             anchor = constants.BOTTOM_CENTER)

@@ -144,7 +144,7 @@ class Text(widget.BorderedWidget):
     _text = widget.set_on_change("__text", "needs_refont")
     _shrink_factor = widget.set_on_change("__shrink_factor", "needs_refont")
 
-    def __init__(self, parent, pos, size = (0, -.05), 
+    def __init__(self, parent, pos, size = (0, .05), 
                  anchor = constants.TOP_LEFT, text = None, base_font = None,
                  color = None, shrink_factor = 1, underline = -1,
                  align = constants.CENTER, valign = constants.MID, wrap = True,

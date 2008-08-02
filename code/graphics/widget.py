@@ -112,9 +112,9 @@ class Widget(object):
         size = list(self.size)
         for i in range(2):
             if size[i] > 0:
-                size[i] = int(size[i] * parent_size[i])
+                size[i] = int(size[i] * g.screen_size[i])
             elif size[i] < 0:
-                size[i] = int( (-size[i]) * g.screen_size[i] )
+                size[i] = int( (-size[i]) * parent_size[i] )
 
         return tuple(size)
 
@@ -137,9 +137,9 @@ class Widget(object):
         my_size = self.real_size
 
         if self.pos[0] >= 0:
-            hpos = int(self.pos[0] * parent_size[0])
+            hpos = int(self.pos[0] * g.screen_size[0])
         else:
-            hpos = - int(self.pos[0] * g.sreen_size[0])
+            hpos = - int(self.pos[0] * parent_size[0])
 
         if hanchor == constants.LEFT:
             pass
@@ -149,9 +149,9 @@ class Widget(object):
             hpos -= my_size[0]
 
         if self.pos[1] >= 0:
-            vpos = int(self.pos[1] * parent_size[1])
+            vpos = int(self.pos[1] * g.screen_size[1])
         else:
-            vpos = - int(self.pos[1] * g.sreen_size[1])
+            vpos = - int(self.pos[1] * parent_size[1])
 
         if vanchor == constants.TOP:
             pass

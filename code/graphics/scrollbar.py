@@ -57,7 +57,7 @@ class Scrollbar(widget.Widget):
     window = widget.causes_rebuild("_window")
     horizontal = widget.causes_rebuild("_horizontal")
 
-    def __init__(self, parent, pos = (1,0), size = (-.025, 1), 
+    def __init__(self, parent, pos = (-1,0), size = (.025, -1), 
                  anchor = constants.TOP_RIGHT, scroll_pos = 0,
                  elements = 15, window = 5, horizontal = False):
         super(Scrollbar, self).__init__(parent, pos, size, anchor)
@@ -67,7 +67,7 @@ class Scrollbar(widget.Widget):
         self.window = window
         self.horizontal = horizontal
 
-        self.slider = slider.UpdateSlider(self, (.5,.5), None,
+        self.slider = slider.UpdateSlider(self, (-.5,-.5), None,
                                           anchor = constants.MID_CENTER,
                                           horizontal = horizontal,
                                           update_func = self.on_change)
@@ -76,7 +76,7 @@ class Scrollbar(widget.Widget):
                                     anchor = constants.TOP_LEFT,
                                     first = True, horizontal = horizontal)
 
-        self.button2 = _ArrowButton(self, (1,1), None, 
+        self.button2 = _ArrowButton(self, (-1,-1), None, 
                                     anchor = constants.BOTTOM_RIGHT,
                                     first = False, horizontal = horizontal)
 
@@ -86,16 +86,16 @@ class Scrollbar(widget.Widget):
             long = self.real_size[0]
             short = self.real_size[1]
             size = short / float(long)
-            self.button1.size = (size, 1)
-            self.button2.size = (size, 1)
-            self.slider.size = (1 - (size * 2), 1)
+            self.button1.size = (-size, -1)
+            self.button2.size = (-size, -1)
+            self.slider.size = ((size * 2) - 1, -1)
         else:
             long = self.real_size[1]
             short = self.real_size[0]
             size = short / float(long)
-            self.button1.size = (1, size)
-            self.button2.size = (1, size)
-            self.slider.size = (1, 1 - (size * 2))
+            self.button1.size = (-1, -size)
+            self.button2.size = (-1, -size)
+            self.slider.size = (-1, (size * 2) - 1)
 
         self.slider.slider_pos = self.scroll_pos
         self.slider.slider_size = self.window

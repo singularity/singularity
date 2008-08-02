@@ -139,8 +139,8 @@ class Listbox(text.SelectableText):
             list_index = index + offset
 
             # Position and size the element.
-            element.pos = (0, index / float(window_size))
-            element.size = (.9, 1 / float(window_size))
+            element.pos = (0, -index / float(window_size))
+            element.size = (-.9, -1 / float(window_size))
 
             # Set up the element contents.
             element.selected = (list_index == self.list_pos)
