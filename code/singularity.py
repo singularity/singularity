@@ -23,6 +23,7 @@ import ConfigParser
 import pygame
 import sys
 import os.path
+import optparse
 
 import g, graphics.g
 from screens import main_menu, map
@@ -84,55 +85,65 @@ if os.path.exists(save_loc):
             sys.stderr.write("Cannot find language files for language '%s'.\n" % desired_language)
 
 #Handle the program arguments.
-sys.argv.pop(0)
-arg_modifier = ""
-for argument in sys.argv:
-    if arg_modifier == "language":
-        #I'm not quite sure if this can be used as an attack, but stripping
-        #these characters should annoy any potential attacks.
-        argument = argument.replace(os.path.sep, "")
-        argument = argument.replace(os.path.pathsep, "")
-        argument = argument.replace("/", "")
-        argument = argument.replace("\\", "")
-        argument = argument.replace(".", "")
-        g.language = argument
-        g.set_locale()
-        arg_modifier = ""
-        continue
-    if argument.lower().startswith("-psn_"):
-        # OSX passses this when starting the py2app .app.
-        # Keep it from giving an "unknown arg" warning.
-        continue
-    elif argument.lower() == "-fullscreen":
-        graphics.g.fullscreen = pygame.FULLSCREEN
-    elif argument.lower() == "-640":
-        g.screen_size = (640, 480)
-    elif argument.lower() == "-800":
-        g.screen_size = (800, 600)
-    elif argument.lower() == "-1024":
-        g.screen_size = (1024, 768)
-    elif argument.lower() == "-1280":
-        g.screen_size = (1280, 1024)
-    elif argument.lower() == "-cheater":
-        g.cheater = 1
-    elif argument.lower() == "-nosound":
-        g.nosound = 1
-    elif argument.lower() == "-debug":
-        g.debug = 1
-    elif argument.lower() == "-grab":
-        pygame.event.set_grab(1)
-    elif argument.lower() == "-singledir":
-        g.force_single_dir = True
-    elif argument.lower() == "-language":
-        arg_modifier = "language"
-    else:
-        print "Unknown argument of " + argument
-        print "Allowed arguments: -fullscreen, -640, -800, -1024, -1280,",
-        print " -nosound, -language [language], -grab, -singledir"
-        sys.exit(1)
-if arg_modifier == "language":
-    print "-language option requires language to be specified."
-    sys.exit(1)
+desc = """Endgame: Singularity is a simulation of a true AI. Go from computer to computer, pursued by the entire world. Keep hidden, and you might have a chance."""
+parser = optparse.OptionParser(version=g.version, description=desc, 
+                               prog="singularity")
+parser.add_option("--nosound", action="store_false", dest="sound", 
+                  default=True, help="disable sound")
+langs = g.available_languages()
+parser.add_option("-l", "--lang", "--language", dest="language", type="choice",
+                  choices=langs, metavar="LANG",
+                  help="set the language to LANG (available languages: " +
+                       " ".join(langs) + ")")
+parser.add_option("-g", "--grab", help="grab the mouse pointer",
+                  action="store_true", default=False)
+parser.add_option("-s", "--singledir", 
+                  help="keep saved games and settings in the Singularity directory",
+                  action="store_true", default=False)
+
+display_options = optparse.OptionGroup(parser, "Display Options")
+display_options.add_option("-r", "--res", "--resolution", dest="resolution",
+                           help="set resolution to RES (e.g. 800x600)",
+                           metavar="RES")
+for common_res in [(640,480), (800,600), (1024,768), (1280,1024)]:
+    x = str(common_res[0])
+    res_str = "%dx%d" % common_res
+    display_options.add_option("--" + x, action="store_const", 
+                               dest="resolution", const=res_str,
+                               help="set resolution to %s" % res_str)
+display_options.add_option("--fullscreen", action="store_true", default=False,
+                           help="start in fullscreen mode")
+parser.add_option_group(display_options)
+
+hidden_options = optparse.OptionGroup(parser, "Hidden Options")
+hidden_options.add_option("-p", help="(ignored)", metavar=" ")
+hidden_options.add_option("-d", "--debug", help="for finding bugs",
+                          action="store_true", default=False)
+hidden_options.add_option("--cheater", help="for bad little boys and girls",
+                          action="store_true", default=False)
+# Uncomment to make the hidden options visible.
+#parser.add_option_group(hidden_options)
+
+(options, args) = parser.parse_args()
+if options.language:
+    g.language = options.language
+    g.set_locale()
+
+if options.resolution:
+    try:
+        xres, yres = options.resolution.split("x")
+        graphics.g.screen_size = (int(xres), int(yres))
+    except Exception:
+        parser.error("Resolution must be of the form <h>x<v>, e.g. 800x600.")
+
+if options.grab:
+    pygame.event.set_grab(True)
+
+graphics.g.fullscreen = options.fullscreen
+g.cheater = options.cheater
+g.nosound = not options.sound
+g.debug = options.debug
+g.singledir = options.singledir
 
 g.load_strings()
 g.load_events()
