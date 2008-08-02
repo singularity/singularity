@@ -317,3 +317,29 @@ class MessageDialog(TextDialog):
 
         self.ok_button.text = g.buttons[self.ok_type]
         self.ok_button.hotkey = g.buttons[self.ok_type + "_hotkey"]
+
+
+class TextEntryDialog(TextDialog):
+    def __init__(self, parent, size = (.2, .1), **kwargs):
+        self.default_text = kwargs.pop("default_text", "")
+
+        super(TextEntryDialog, self).__init__(parent, size = size, **kwargs)
+
+        self.text_field = text.EditableText(self, (.5,1), (1,.5),
+                                            borders = constants.ALL, 
+                                            base_font = g.font[0],
+                                            anchor = constants.BOTTOM_CENTER)
+
+        self.add_key_handler(pygame.K_RETURN, self.return_text)
+        self.add_key_handler(pygame.K_ESCAPE, self.return_nothing)
+
+    def show(self):
+        self.text_field.text = self.default_text
+        self.text_field.cursor_pos = len(self.default_text)
+        super(TextEntryDialog, self).show()
+
+    def return_nothing(self, event):
+        raise constants.ExitDialog, ""
+
+    def return_text(self, event):
+        raise constants.ExitDialog, self.text_field.text

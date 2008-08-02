@@ -137,7 +137,7 @@ class Text(widget.BorderedWidget):
     _shrink_factor = widget.set_on_change("__shrink_factor", "needs_refont")
 
     def __init__(self, parent, pos, size = (0, -.05), 
-                 anchor = constants.TOP_LEFT, text = "", base_font = None,
+                 anchor = constants.TOP_LEFT, text = None, base_font = None,
                  color = None, shrink_factor = 1, underline = -1,
                  align = constants.CENTER, valign = constants.MID, **kwargs):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
@@ -192,7 +192,7 @@ class Text(widget.BorderedWidget):
     def _calc_size(self):
         base_size = list(super(Text, self)._calc_size())
 
-        if self.text:
+        if self.text != None:
             # Calculate the font height.
             height = int( (base_size[1] - 4) * self.shrink_factor )
 
@@ -207,7 +207,7 @@ class Text(widget.BorderedWidget):
     def rebuild(self):
         super(Text, self).rebuild()
 
-        if self.text:
+        if self.text != None:
             # Print the text itself
             print_string(self.internal_surface, self.text, (2, 2), self.font, 
                          self.color, self.underline, self.align, self.valign,
@@ -217,6 +217,9 @@ class EditableText(Text):
     cursor_pos = widget.causes_rebuild("_cursor_pos")
     def __init__(self, parent, *args, **kwargs):
         super(EditableText, self).__init__(parent, *args, **kwargs)
+
+        if self.text == None:
+            self.text = ""
 
         self.cursor_pos = len(self.text)
         if self.parent:
