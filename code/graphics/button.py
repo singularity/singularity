@@ -71,7 +71,8 @@ class Button(text.SelectableText):
     def calc_underline(self):
         if self.force_underline != None:
             self.underline = self.force_underline
-        elif self.hotkey and self.hotkey in self.text:
+        elif self.hotkey and type(self.hotkey) in (str, unicode) \
+                         and self.hotkey in self.text:
             self.underline = self.text.index(self.hotkey)
         else:
             self.underline = -1
@@ -88,7 +89,7 @@ class Button(text.SelectableText):
             if self.is_over(event.pos):
                 self.activated(event)
         elif event.type == pygame.KEYDOWN:
-            if event.unicode == self.hotkey:
+            if self.hotkey in (event.unicode, event.key):
                 self.activated(event)
 
     def activated(self, event):
