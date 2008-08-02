@@ -178,7 +178,10 @@ class Widget(object):
             self.surface = pygame.display.set_mode(size)
 
         self.internal_surface = pygame.Surface(size, 0, g.ALPHA)
-        self.internal_surface.fill( (0,0,0,0) ) 
+        if self.parent != None:
+            self.internal_surface.fill( (0,0,0,0) ) 
+        else:
+            self.internal_surface.fill( (0,0,0,255) )
 
     def rebuild(self):
         """Generic rebuild of a widget.  Recreates the surfaces, unsets
