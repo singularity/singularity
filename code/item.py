@@ -38,8 +38,13 @@ class ItemClass(buyable.BuyableClass):
             "AFRICA", "AUSTRALIA"]
 
 class Item(buyable.Buyable):
-    def __init__(self, item_type, base = None):
-        super(Item, self).__init__(item_type)
+    def __init__(self, item_type, base=None, count=1):
+        super(Item, self).__init__(item_type, count)
         self.item_qual = item_type.item_qual
-
         self.base = base
+
+    def finish(self, count=1):
+        super(Item, self).finish(count)
+        if self.type.item_type == "cpu" and self.base:
+            self.base.raw_cpu += self.item_qual * count
+            self.base.recalc_cpu()

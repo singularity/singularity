@@ -125,18 +125,22 @@ for stat in ("count", "complete_count", "total_count",
     setattr(BuyableClass, stat, stat_prop)
 
 class Buyable(object):
-    def __init__(self, type):
+    def __init__(self, type, count=1):
         self.type = type
-        type.count += 1
-        type.total_count += 1
+        type.count += count
+        type.total_count += count
 
         self.name = self.id = type.id
         self.description = type.description
         self.prerequisites = type.prerequisites
 
-        self.total_cost = type.cost
+        #XXX Temporary hack (probably)
+        self.total_cost = type.cost * count
+        self.total_cost[labor] //= count
         self.cost_left = array(self.total_cost)
 
+        self.count = count
+        self.complete = 0
         self.done = False
 
     # Note that this is a method, handled by a property to avoid confusing
@@ -155,12 +159,15 @@ class Buyable(object):
             return True
         return False
 
-    def finish(self):
+    def finish(self, count=1):
         if not self.done:
-            self.cost_left = array([0,0,0])
-            self.done = True
-            self.type.complete_count += 1
-            self.type.total_complete_count += 1
+            self.type.complete_count += count
+            self.type.total_complete_count += count
+            self.complete += count
+
+            if self.complete == self.count:
+                self.cost_left = array([0,0,0])
+                self.done = True
 
     cost_paid = property(lambda self: self.total_cost - self.cost_left)
 
@@ -219,6 +226,6 @@ class Buyable(object):
         return self._work_on([cash_flow, cpu_work, time_spent])
 
     def destroy(self):
-        self.type.count -= 1
+        self.type.count -= self.count
         if self.done:
-            self.type.complete_count -= 1
+            self.type.complete_count -= self.complete

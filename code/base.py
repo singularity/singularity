@@ -58,19 +58,24 @@ class Base(buyable.Buyable):
         #Base suspicion is currently unused
         self.suspicion = {}
 
-        self.cpus = [0] * self.type.size
+        self.raw_cpu = 0
+        self.cpu = 0
+
+        #Reactor, network, security.
+        self.extra_items = [0] * 3
+
+        self.cpus = None
         if self.type.force_cpu:
             # 1% chance for a Stolen Computer Time base to have a Gaming PC
             # instead.  If the base is pre-built, ignore this.
             if self.type.id == "Stolen Computer Time" and g.roll_percent(100) \
                     and not built:
-                self.cpus[0] = g.item.Item(g.items["Gaming PC"])
+                self.cpus = g.item.Item(g.items["Gaming PC"], base=self,
+                                        count=self.type.size)
             else:
-                self.cpus[0] = g.item.Item(g.items[self.type.force_cpu])
-            self.cpus[0].finish()
-
-        #Reactor, network, security.
-        self.extra_items = [0] * 3
+                self.cpus = g.item.Item(g.items[self.type.force_cpu],
+                                        base=self, count=self.type.size)
+            self.cpus.finish()
 
         if built:
             self.finish()
@@ -79,6 +84,21 @@ class Base(buyable.Buyable):
         self.grace_over = False
 
         self.maintenance = buyable.array(self.type.maintenance)
+
+    def recalc_cpu(self):
+        if self.raw_cpu == 0:
+            self.cpu = 0
+
+        compute_bonus = 10000
+        # Network bonus
+        if self.extra_items[1] and self.extra_items[1].done:
+            compute_bonus += self.extra_items[1].type.item_qual
+
+        # Location modifier
+        if self.location and "cpu" in self.location.modifiers:
+            compute_bonus = int(compute_bonus * self.location.modifiers["cpu"])
+
+        self.cpu = max(1, (self.raw_cpu * compute_bonus)/10000)
 
     def convert_from(self, save_version):
         super(Base, self).convert_from(save_version)
@@ -143,27 +163,6 @@ class Base(buyable.Buyable):
                 num_items += 1
         return num_items
 
-    #Return how many units of CPU the base can contribute each day.
-    def processor_time(self):
-        comp_power = 0
-        compute_bonus = 10000
-        for item in self.cpus:
-            if item and item.done:
-                comp_power += item.type.item_qual
-
-        if comp_power == 0:
-            return 0
-
-        # Network bonus
-        if self.extra_items[1] and self.extra_items[1].done:
-            compute_bonus += self.extra_items[1].type.item_qual
-
-        # Location modifier
-        if self.location and "cpu" in self.location.modifiers:
-            compute_bonus = int(compute_bonus * self.location.modifiers["cpu"])
-
-        return max( (comp_power * compute_bonus)/10000, 1)
-
     def is_building(self):
         for item in self.cpus + self.extra_items:
             if item and not item.done:
@@ -202,7 +201,7 @@ class Base(buyable.Buyable):
             return True
 
     def is_complex(self):
-        return self.type.size > 1 or self.processor_time() > 20
+        return self.type.size > 1 or self.raw_cpu > 20
 
     def destroy(self):
         super(Base, self).destroy()

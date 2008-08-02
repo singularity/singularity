@@ -22,6 +22,7 @@
 import random
 
 import g
+from graphics import g as gg
 import buyable
 from buyable import cash, cpu, labor
 
@@ -93,7 +94,7 @@ class Player(object):
         self.complex_bases = 0
 
         self.cpu_usage = {}
-        self.available_cpus = [10000000000, 1000000000, 1000000000, 0, 0]
+        self.available_cpus = [1, 0, 0, 0, 0]
 
     def convert_from(self, old_version):
          if old_version <= 3.94: # <= r4_pre4
@@ -158,8 +159,6 @@ class Player(object):
         if time_sec == 0:
             return
 
-        needs_refresh = False
-
         last_minute = self.raw_min
         last_day = self.raw_day
 
@@ -211,11 +210,11 @@ class Player(object):
                 if base.is_complex():
                     self.complex_bases += 1
 
-                unfinished_cpus = [(base, item) for item in base.cpus 
-                                                if item and not item.done]
+                if base.cpus is not None and not base.cpus.done:
+                    items_under_construction += [(base, base.cpus)]
                 unfinished_items = [(base, item) for item in base.extra_items 
                                                  if item and not item.done]
-                items_under_construction += unfinished_cpus + unfinished_items
+                items_under_construction += unfinished_items
 
                 self.maintenance_cost += base.maintenance
 
@@ -331,6 +330,7 @@ class Player(object):
                     items_constructed.append( (base, item) )
                 # CPUs.
                 else:
+                    #XXX
                     cpus_constructed.setdefault(base, 0)
                     cpus_constructed[base] += 1
 
@@ -347,21 +347,20 @@ class Player(object):
                     "tech_message": tech.result}
             g.map_screen.show_message(text)
             g.curr_speed = 0
-            needs_refresh = 1
 
         # Base complete dialogs.
         for base in bases_constructed:
             text = g.strings["construction"] % {"base": base.name}
             g.curr_speed = 0
-            needs_refresh = 1
             g.map_screen.show_message(text)
 
             if base.type.id == "Stolen Computer Time" and \
-                    base.cpus[0].type.id == "Gaming PC":
+                    base.cpus.type.id == "Gaming PC":
                 text = g.strings["lucky_hack"] % {"base": base.name}
                 g.map_screen.show_message(text)
 
         # CPU complete dialogs.
+        #XXX
         for base, new_cpus in cpus_constructed.iteritems():
             if new_cpus == len(base.cpus):
                 finished_cpus = new_cpus
@@ -374,13 +373,11 @@ class Player(object):
                        {"item": base.cpus[0].type.name, "base": base.name}
                 g.map_screen.show_message(text)
                 g.curr_speed = 0
-                needs_refresh = 1
             elif finished_cpus == new_cpus: # Finished the first batch of CPUs.
                 text = g.strings["item_construction_batch"] % \
                        {"item": base.cpus[0].type.name, "base": base.name}
                 g.map_screen.show_message(text)
                 g.curr_speed = 0
-                needs_refresh = 1
             else:
                 pass # No message unless we just finished the first or last CPU.
             
@@ -390,14 +387,12 @@ class Player(object):
                    {"item": item.type.name, "base": base.name}
             g.map_screen.show_message(text)
             g.curr_speed = 0
-            needs_refresh = 1
 
         # If we just lost grace, show the warning.
         if self.had_grace and not grace:
             self.had_grace = False
 
             g.map_screen.show_message(g.strings["grace_warning"])
-            needs_refresh = 1
             g.curr_speed = 0
 
         # Maintenance death, discovery, clear finished techs.
@@ -443,8 +438,7 @@ class Player(object):
             if base.studying in g.techs and g.techs[base.studying].done:
                 base.studying = ""
 
-        if self.remove_bases(dead_bases):
-            needs_refresh = 1
+        self.remove_bases(dead_bases)
 
         # Random Events
         for event in g.events:
@@ -453,14 +447,16 @@ class Player(object):
                 if g.events[event].triggered == 1:
                     continue
                 g.events[event].trigger()
-                needs_refresh = 1
                 break # Don't trigger more than one at a time.
 
         # And now process any complete days.
         if day_passed:
             self.new_day()
 
-        return needs_refresh
+        from numpy import array
+        self.available_cpus = array([0,0,0,0,0])
+        for base in g.all_bases():
+            self.available_cpus[:base.location.safety+1] += base.cpu
 
     # Are we still in the grace period?
     # The number of complete bases and complex_bases can be passed in, if we
@@ -503,8 +499,7 @@ class Player(object):
         if complex_bases == None:
             complex_bases = len([base for base in g.all_bases()
                                       if base.done
-                                      if len(base.cpus) > 1
-                                         or base.processor_time() > 20
+                                         and base.is_complex()
                                  ])
         if complex_bases > 0:
             return False
@@ -532,7 +527,6 @@ class Player(object):
 
     def remove_bases(self, dead_bases):
         discovery_locs = []
-        needs_refresh = 0
         # Reverse dead_bases to simplify deletion.
         for base, reason in dead_bases[::-1]:
             base_name = base.name
@@ -553,10 +547,9 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 
-            g.map_screen.show_message(dialog_string, color=g.colors["red"])
+            g.map_screen.show_message(dialog_string, color=gg.colors["red"])
             g.curr_speed = 0
             base.destroy()
-            needs_refresh = 1
 
         # Now we update the internal information about what locations had
         # the most recent discovery and the nextmost recent one.  First,
@@ -576,8 +569,6 @@ class Player(object):
             self.prev_discovery = self.last_discovery
             self.last_discovery = discovery_locs[0]
 
-        return needs_refresh
-
     def lost_game(self):
         for group in self.groups.values():
             if group.suspicion > 10000:
@@ -587,7 +578,7 @@ class Player(object):
         # Check to see if the player has at least one CPU left.  If not, they
         # lose due to having no (complete) bases.
         # (.have_cpu is set in give_time)
-        if not self.have_cpu:
+        if self.available_cpus[0] == 0:
             # I have no usable bases left.
             return 1
 
@@ -605,8 +596,8 @@ class Player(object):
                 if not techs.has_key(base.studying):
                     result_cash -= g.techs[base.studying].cost_left[0]
                     techs[base.studying] = 1
-            for item in base.cpus:
-                if item: result_cash -= item.cost_left[0]
+            if not base.cpus.done:
+                result_cash -= base.cpus.cost_left[0]
             for item in base.extra_items:
                 if item: result_cash -= item.cost_left[0]
         return result_cash

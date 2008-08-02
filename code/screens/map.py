@@ -186,7 +186,10 @@ class MapScreen(dialog.Dialog):
         secs = int(self.leftovers)
         self.leftovers %= 1
 
+        old_speed = g.curr_speed
         g.pl.give_time(secs)
+        if old_speed != g.curr_speed:
+            self.find_speed_button()
 
         self.time_display.text = "DAY %04d, %02d:%02d:%02d" % \
               (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
