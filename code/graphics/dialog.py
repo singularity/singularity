@@ -29,6 +29,29 @@ import text
 import button
 import listbox
 
+def call_dialog(dialog, parent=None):
+    parent_dialog = None
+    target = parent
+    while target:
+        if isinstance(target, Dialog):
+            parent_dialog = target
+            break
+        target = target.parent
+
+    if parent_dialog:
+        parent_dialog.faded = True
+        parent_dialog.stop_timer()
+
+    retval = dialog.show()
+
+    if parent_dialog:
+        parent_dialog.faded = False
+        parent_dialog.start_timer()
+
+    parent_dialog.fake_mouse()
+
+    return retval
+
 def causes_remask(data_member):
     """Creates a data member that sets needs_remask to True when changed."""
     return widget.set_on_change(data_member, "needs_remask")

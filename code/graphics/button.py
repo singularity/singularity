@@ -171,28 +171,56 @@ class DialogButton(Button):
         """DialogButton's custom activated method.  When the assigned dialog
            exits, raises Handled with the dialog's exit code as a parameter.
            Override if you care what the code was."""
-        import dialog
         if not self.dialog:
             raise constants.Handled
+        else:
+            import dialog
+            raise constants.Handled, dialog.call_dialog(self.dialog, self)
 
-        parent_dialog = None
-        target = self.parent
-        while target:
-            if isinstance(target, dialog.Dialog):
-                parent_dialog = target
-                break
-            target = target.parent
+TOGGLE_VALUE = object()
+class ToggleButton(Button):
+    active = False
+    button_group = None
 
-        if parent_dialog:
-            parent_dialog.faded = True
-            parent_dialog.stop_timer()
+    def replace_toggle(self, value):
+        if value is TOGGLE_VALUE:
+            return self.active
+        else:
+            return value
+    def get_args(self):
+        return tuple(self.replace_toggle(value) for value in self._args)
+    def set_args(self, args):
+        self._args = args
+    args = property(get_args, set_args)
 
-        retval = self.dialog.show()
+    def chosen_one(self):
+        if self.button_group is not None:
+            for button in self.button_group:
+                button.set_active(False)
+            self.set_active(True)
+        else:
+            self.set_active(not self.active)
 
-        if parent_dialog:
-            parent_dialog.faded = False
-            parent_dialog.start_timer()
+    def set_active(self, active):
+        self.active = active
+        self.selected = active
+        if hasattr(self, "_collision_rect"):
+            self.watch_mouse(None)
 
-        self.selected = self.is_over( pygame.mouse.get_pos() )
+    def activated(self, event):
+        self.chosen_one()
+        super(ToggleButton, self).activated(event)
 
-        raise constants.Handled, retval
+    def watch_mouse(self, event):
+        if not self.active:
+            super(ToggleButton, self).watch_mouse(event)
+
+class ButtonGroup(list):
+    def add(self, button):
+        button.button_group = self
+        super(ButtonGroup, self).append(button)
+
+    def remove(self, button):
+        button.button_group = None
+        super(ButtonGroup, self).remove(button)
+
