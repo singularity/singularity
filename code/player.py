@@ -92,6 +92,9 @@ class Player(object):
         self.complete_bases = 1
         self.complex_bases = 0
 
+        self.cpu_usage = {}
+        self.available_cpus = [100, 10, 1, 0, 0]
+
     def convert_from(self, old_version):
          if old_version <= 3.94: # <= r4_pre4
              # We don't know what the difficulty was, and techs have fooled with

@@ -63,7 +63,7 @@ force_single_dir = False
 language = "en_US"
 
 #Makes the intro be shown on the first GUI tick.
-intro_shown = False
+intro_shown = True
 
 # Try a few locale settings.  First the selected language, then the user's 
 # default, then en_US.  The selected lanugage and en_US are tried with encoding

@@ -24,14 +24,15 @@ import finance
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
+        self.dirty_count = True
         super(ResearchScreen, self).__init__(parent, pos, size, *args, **kwargs)
         self.listbox.remove_hooks()
-        self.listbox = listbox.CustomListbox(self, (0,0), (.53, .58),
+        self.listbox = listbox.CustomListbox(self, (0,0), (.53, .55),
                                              list_size=-40,
                                              remake_func=self.make_item,
                                              rebuild_func=self.update_item,
                                              update_func=self.handle_update)
-        self.description_pane.size = (.39, .58)
+        self.description_pane.size = (.39, .55)
 
         self.desc_func = self.on_select
 
@@ -43,65 +44,90 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
                                        align=constants.LEFT,
                                        background_color=gg.colors["clear"])
         base.research_name.visible = False
-        base.alloc_cpus = text.Text(base, (-.72, -.01), (-.21, -.5),
+        base.alloc_cpus = text.Text(base, (-.99, -.01), (-.21, -.5),
+                                    anchor=constants.TOP_RIGHT,
                                     text="1,000,000,000",
                                     align=constants.RIGHT,
                                     background_color=gg.colors["clear"])
         base.alloc_cpus.visible = False
-        base.remove_button = button.Button(base, (-.94, -.05), (-.05, -.45),
-                                           text="X", text_shrink_factor=.9,
-                                           color=gg.colors["red"])
-        base.remove_button.visible = False
+        #base.remove_button = button.Button(base, (-.94, -.05), (-.05, -.45),
+        #                                   text="X", text_shrink_factor=.9,
+        #                                   color=gg.colors["red"])
+        #base.remove_button.visible = False
         base.slider = slider.UpdateSlider(base, (-.01, -.55), (-.98, -.40),
                                           anchor=constants.TOP_LEFT,
                                           horizontal=True)
         base.slider.visible = False
 
     def cpu_for(self, key):
-        return self.cpus.get(key, 0)
+        return g.pl.cpu_usage.get(key, 0)
 
-    def update_item(self, canvas, display, key):
+    def danger_for(self, key):
+        if key in ["jobs", "cpu_pool"]:
+            return 0
+        else:
+            return g.techs[key].danger
+
+    def update_item(self, canvas, name, key):
         visible = (key is not None)
         canvas.research_name.visible = visible
         canvas.alloc_cpus.visible = visible
-        canvas.remove_button.visible = visible
+        #canvas.remove_button.visible = visible
         canvas.slider.visible = visible
+
+        if not visible:
+            return
 
         def my_slide(new_pos):
             self.handle_slide(key, new_pos)
             self.needs_rebuild = True
         canvas.slider.update_func = my_slide
 
-        canvas.research_name.text = key
+        canvas.research_name.text = name
 
+        if self.dirty_count:
+            self.cpu_left = self.calc_cpu_left()
+            self.dirty_count = False
+
+        danger = self.danger_for(key)
         cpu = self.cpu_for(key)
-        cpu_left = self.active_cpu - sum(self.cpus.values())
+        cpu_left = self.cpu_left[danger]
         total_cpu = cpu + cpu_left
         canvas.slider.slider_pos = cpu
         canvas.slider.slider_max = total_cpu
-        canvas.slider.slider_size = ss = self.active_cpu // 10 + 1
+        canvas.slider.slider_size = ss = g.pl.available_cpus[0] // 10 + 1
         full_size = -.98
-        size_fraction = (total_cpu + ss) / float(self.active_cpu + ss)
+        size_fraction = (total_cpu + ss) / float(g.pl.available_cpus[0] + ss)
         canvas.slider.size = (full_size * size_fraction, -.4)
         canvas.alloc_cpus.text = g.add_commas(cpu)
 
-    cpus = {}
+    def calc_cpu_left(self):
+        from numpy import array
+        cpu_count = array(g.pl.available_cpus)
+        for task, cpu in g.pl.cpu_usage.iteritems():
+            danger = self.danger_for(task)
+            cpu_count[:danger+1] -= cpu
+
+        cpu_count[1] = min(cpu_count[:2])
+        cpu_count[2] = min(cpu_count[1:3])
+        return cpu_count
+
     def redraw(self):
         super(ResearchScreen, self).redraw()
 
     def handle_slide(self, key, new_pos):
-        self.cpus[key] = new_pos
+        g.pl.cpu_usage[key] = new_pos
+        self.dirty_count = True
 
-    active_cpu = 1
     def show(self):
-        techs = [tech for tech in g.techs.values() if tech.available()]
-        self.list = [tech.name for tech in techs]
-        self.key_list = [tech.id for tech in techs]
+        techs = [tech for tech in g.techs.values()]# if tech.available()]
+        techs.sort()
+        self.list = ["CPU Pool", g.get_job_level()] + \
+                    ["Research %s" % tech.name for tech in techs]
+        self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]
         self.listbox.key_list = self.key_list
 
-        all, sleeping = finance.cpu_numbers()[:2]
-        self.active_cpu = 1000#all - sleeping
-
+        self.dirty_count = True
         return super(ResearchScreen, self).show()
 
 from code import g
