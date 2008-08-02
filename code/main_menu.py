@@ -151,17 +151,12 @@ def display_options():
     menu_buttons[buttons.make_norm_button((380, 190), (70, 35),
         "1280x1024", "2", g.font[1][16], "1280")] = make_do_res( (1280, 1024) )
 
-    lang_array = listdir(g.data_loc)
-    for i in range(len(lang_array)-1, -1, -1):
-        if lang_array[i][:8] != "strings_":
-            lang_array.pop(i)
-        else: lang_array[i] = lang_array[i][8:-4]
-
-    xy_loc = (140, 270)
-    lang_pos = 0
-    for i in range(len(lang_array)):
-        if lang_array[i] == g.language:
-            lang_pos = i
+    lang_array = [file_name[8:-4] for file_name in listdir(g.data_loc)
+                                  if file_name.startswith("strings_")]
+    try:
+        lang_pos = lang_array.index(g.language)
+    except ValueError: # Not in the array.  Er...  Pick the first one, I guess.
+        lang_pos = 0
 
     def set_language(lang_pos):
         if lang_array[lang_pos] != "":
@@ -175,7 +170,7 @@ def display_options():
     listbox.show_listbox(lang_array, menu_buttons, 
 
                          list_pos=lang_pos, list_size=5, 
-                         loc=xy_loc, box_size=(150,150), 
+                         loc=(140, 270), box_size=(150,150), 
                          font=g.font[0][20],
 
                          pos_callback=set_language, 

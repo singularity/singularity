@@ -43,9 +43,9 @@ def display_generic_menu(xy_loc, titlelist):
     g.screen.fill(g.colors["black"], (xy_loc[0]+1, xy_loc[1]+1, 198,
             len(titlelist)*70-2))
     menu_buttons = {}
-    for i in range(len(titlelist)):
+    for i, title in enumerate(titlelist):
         menu_buttons[buttons.make_norm_button((xy_loc[0]+10,
-            xy_loc[1]+10+i*70), (180, 50), titlelist[i][0], titlelist[i][1],
+            xy_loc[1]+10+i*70), (180, 50), title[0], title[1],
             g.font[1][30])] = always(i)
 
     return buttons.show_buttons(menu_buttons)

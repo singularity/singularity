@@ -259,11 +259,9 @@ def actual_build(this_base, item_name, item_type):
     if item_name == "": 
         return
     if item_type == "compute":
-        for i in range(len(this_base.cpus)):
-            if this_base.cpus[i] != 0:
-                if this_base.cpus[i].type.id == \
-                        g.items[item_name].id:
-                    continue
+        for i, cpu in enumerate(this_base.cpus):
+            if cpu != 0 and cpu.type.id == g.items[item_name].id:
+                continue
             this_base.cpus[i] = g.item.Item(g.items[item_name], this_base)
     elif item_type == "react":
         if this_base.extra_items[0] != 0:

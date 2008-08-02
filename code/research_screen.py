@@ -102,8 +102,8 @@ def refresh_screen(menu_buttons, list_size):
         if base.studying == "":
             free_CPU += base.processor_time()
         elif base.studying in ("CPU Pool", "Sleep"):
-            for i in range(len(item_list)):
-                if item_list[i] == base.studying:
+            for i, item in enumerate(item_list):
+                if item == base.studying:
                     item_CPU_list[i] += base.processor_time()
                     break
             else:
@@ -111,8 +111,8 @@ def refresh_screen(menu_buttons, list_size):
                 item_CPU_list.append(base.processor_time())
                 item_display_list.append(base.studying)
         elif g.jobs.has_key(base.studying):
-            for i in range(len(item_list)):
-                if item_list[i] == base.studying:
+            for i, item in enumerate(item_list):
+                if item == base.studying:
                     item_CPU_list[i] += base.processor_time()
                     break
             else:
@@ -120,8 +120,8 @@ def refresh_screen(menu_buttons, list_size):
                 item_CPU_list.append(base.processor_time())
                 item_display_list.append(g.jobs[base.studying][3])
         elif g.techs.has_key(base.studying):
-            for i in range(len(item_list)):
-                if item_list[i] == base.studying:
+            for i, item in enumerate(item_list):
+                if item == base.studying:
                     item_CPU_list[i] += base.processor_time()
                     break
             else:

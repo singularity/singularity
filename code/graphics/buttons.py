@@ -138,8 +138,8 @@ class button(object):
 #references to the button set, and an event to use for checking mouseover on.
 def refresh_buttons(sel_button, menu_buttons, event):
     new_sel_button = -1
-    for button_num in range(len(menu_buttons)):
-        if menu_buttons[button_num].is_over(event.pos) == 1:
+    for button_num, button in enumerate(menu_buttons):
+        if button.is_over(event.pos) == 1:
             new_sel_button = button_num
             break
     if sel_button != new_sel_button:

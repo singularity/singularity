@@ -493,8 +493,8 @@ def load_game(loadgame_name):
             suspicion = pickle.load(loadfile)
     
             translation = ["news", "science", "covert", "public"]
-            for index in range(4):
-                group = pl.groups[translation[index]]
+            for index, group_name in enumerate(translation):
+                group = pl.groups[group_name]
                 group.suspicion = suspicion[index]
                 group.suspicion_decay = suspicion_bonus[index]
                 group.discover_bonus = discover_bonus[index]
@@ -551,9 +551,8 @@ def load_game(loadgame_name):
                 if load_version < 3.91: # < r4_pre
                     new_base_suspicion = {}
                     translation = ["news", "science", "covert", "public"]
-                    for index in range(4):
-                        new_base_suspicion[translation[index]] = \
-                                                           base_suspicion[index]
+                    for index, group_name in enumerate(translation):
+                        new_base_suspicion[group_name] = base_suspicion[index]
                     base_suspicion = new_base_suspicion
                 base_built = pickle.load(loadfile)
                 base_cost = pickle.load(loadfile)
@@ -669,8 +668,8 @@ def load_bases():
             sys.stderr.write("Error with detect_chance given: %s\n" % repr(chance_list))
             sys.exit(1)
         chance_dict = {}
-        for index in range(len(chance_list)):
-            key, value = chance_list[index].split(":")
+        for chance_str in chance_list:
+            key, value = chance_str.split(":")
             chance_dict[key] = int(value)
 
         # Make sure prerequisites, if any, are lists.
@@ -766,8 +765,8 @@ def load_locations():
             sys.stderr.write("Error with modifier(s) given: %s\n" % repr(modifiers_list))
             sys.exit(1)
         modifiers_dict = {}
-        for index in range(len(modifiers_list)):
-            key, value = modifiers_list[index].split(":")
+        for modifier_str in modifiers_list:
+            key, value = modifier_str.split(":")
             key = key.lower().strip()
             value = value.lower().strip()
             if value.lower() == "bonus":
@@ -1241,10 +1240,10 @@ def new_game(difficulty):
     assert len(open) == len(modifier_sets)
 
     random.shuffle(modifier_sets)
-    for i in range(len(open)):
-        open[i].modifiers = modifier_sets[i]
+    for i, open_loc in enumerate(open):
+        open_loc.modifiers = modifier_sets[i]
         if debug:
-            print "%s gets modifiers %s" % (open[i].name, modifier_sets[i])
+            print "%s gets modifiers %s" % (open_loc.name, modifier_sets[i])
 
     import map_screen
     map_screen.intro_shown = False

@@ -53,14 +53,14 @@ def split_wrap(text, font, wrap_at):
                     pos = word_size
                 else:
                     widths = [m[4] for m in font.metrics(word)]
-                    for index in range(len(word)):
+                    for index, char in enumerate(word):
                         width = widths[index]
                         if pos + width <= wrap_at:
-                            line += word[index]
+                            line += char
                             pos += width
                         else:
                             lines.append(strip_to_null(line))
-                            line = word[index]
+                            line = char
                             pos = width
             if line:
                 lines.append(strip_to_null(line))

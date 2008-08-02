@@ -135,8 +135,7 @@ class Listbox(text.SelectableText):
             self.scrollbar.center(self.list_pos)
 
         offset = self.scrollbar.scroll_pos
-        for index in range(window_size):
-            element = self.display_elements[index]
+        for index, element in enumerate(self.display_elements):
             list_index = index + offset
 
             # Position and size the element.
