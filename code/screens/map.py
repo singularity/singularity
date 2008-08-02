@@ -22,7 +22,7 @@ import pygame
 import random
 
 import g
-from graphics import dialog, constants, image, button, g as gg
+from graphics import dialog, constants, image, button, text, widget, g as gg
 
 class MapDialog(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
@@ -34,14 +34,88 @@ class MapDialog(dialog.Dialog):
         i = image.Image(self, (.5,.5), (1,.667), constants.MID_CENTER, 
                         gg.images['earth.jpg'])
 
+        self.location_buttons = {}
         for location in g.locations.values():
             if location.absolute:
                 button_parent = self
             else:
                 button_parent = i
-            button.ExitDialogButton(button_parent, (location.x, location.y),
-                                anchor = constants.MID_CENTER,
-                                text = location.name, hotkey = location.hotkey)
+            b = button.DialogButton(button_parent, (location.x, location.y),
+                                    anchor=constants.MID_CENTER,
+                                    text=location.name, hotkey=location.hotkey)
+            self.location_buttons[location.id] = b
+
+        self.suspicion_bar = text.Text(self, (0,.96), (1, .04),
+                                       text = "[SUSPICION] NEWS: 0.00%  SCIENCE: 0.00%  COVERT: 0.00%  PUBLIC: 0.00%", base_font = gg.font[1],
+                                       background_color = gg.colors["black"],
+                                       border_color = gg.colors["dark_blue"],
+                                       borders = constants.ALL)
+        widget.unmask_all(self.suspicion_bar)
+
+        self.finance_button = button.DialogButton(self, (0.85, 0.92), 
+                                                  (0.15, 0.04),
+                                                  text = "finance",
+                                                  hotkey = "e")
+
+        self.knowledge_button = button.DialogButton(self, (0.85, 0.88), 
+                                                    (0.15, 0.04),
+                                                    text = "knowledge",
+                                                    hotkey = "k")
+
+        self.research_button = button.DialogButton(self, (0, 0.92), 
+                                                   (0.15, 0.04),
+                                                   text = "research",
+                                                   hotkey = "r")
+
+        self.menu_button = button.ExitDialogButton(self, (0, 0), 
+                                                   (0.13, 0.04),
+                                                   text = "menu",
+                                                   hotkey = "m")
+
+        self.time_display = text.Text(self, (.14, 0), (0.23, 0.04),
+                                      text = "DAY 0000, 00:00:00",
+                                      base_font = gg.font[1],
+                                      background_color = gg.colors["black"],
+                                      border_color = gg.colors["dark_blue"],
+                                      borders = constants.ALL)
+
+        time_button_souls = [ ("ii", .03, 0), (">", .03, 1), (">>", .03, 60), 
+                              (">>>", .04, 7200), (">>>>", .05, 432000) ]
+
+        self.time_buttons = []
+        hpos = .38
+        for index, (text_, hsize, speed) in enumerate(time_button_souls):
+            hotkey = str(index)
+            b = button.FunctionButton(self, (hpos, 0), (hsize, .04),
+                                      text=text_, hotkey=hotkey,
+                                      base_font=gg.font[1],
+                                      function=self.set_speed, args=(speed,))
+            hpos += hsize
+
+        self.info_window = \
+            widget.BorderedWidget(self, (.56, 0), (.44, .08),
+                                  background_color=gg.colors["black"],
+                                  border_color=gg.colors["dark_blue"],
+                                  borders=constants.ALL)
+        widget.unmask_all(self.info_window)
+
+        self.cash_display = \
+            text.Text(self.info_window, (0,0), (-1, -.5), base_font=gg.font[1],
+                      text="CASH: 5,000 (4,900)", borders=constants.ALL,
+                      shrink_factor = .7,
+                      background_color=gg.colors["black"],
+                      border_color=gg.colors["dark_blue"])
+
+        self.cpu_display = \
+            text.Text(self.info_window, (0,-.5), (-1, -.5),
+                      base_font=gg.font[1], borders = (constants.LEFT,
+                                            constants.RIGHT, constants.BOTTOM),
+                      text="CPU: 1 (0)", shrink_factor=.7,
+                      background_color=gg.colors["black"],
+                      border_color=gg.colors["dark_blue"])
+
+    def set_speed(self, speed):
+        g.curr_speed = speed
 
 import g
 import base
