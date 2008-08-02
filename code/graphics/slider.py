@@ -160,8 +160,5 @@ class UpdateSlider(Slider):
     _slider_pos = widget.call_on_change("__slider_pos", _on_slider_move)
 
     def __init__(self, *args, **kwargs):
-        if "update_func" in kwargs:
-            self.update_func = kwargs.pop("update_func")
-        else:
-            self.update_func = lambda value: None
+        self.update_func = kwargs.pop("update_func", lambda value: None)
         super(UpdateSlider, self).__init__(*args, **kwargs)

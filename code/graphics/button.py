@@ -98,10 +98,7 @@ class Button(text.SelectableText):
 
 class ImageButton(Button):
     def __init__(self, *args, **kwargs):
-        if "image" in kwargs:
-            image_surface = kwargs.pop("image")
-        else:
-            image_surface = None
+        image_surface = kwargs.pop("image", None)
 
         super(ImageButton, self).__init__(*args, **kwargs)
 
@@ -112,18 +109,9 @@ class ImageButton(Button):
 
 class FunctionButton(Button):
     def __init__(self, *args, **kwargs):
-        if "function" in kwargs:
-            self.function = kwargs.pop("function")
-        else:
-            self.function = None
-        if "args" in kwargs:
-            self.args = kwargs.pop("args")
-        else:
-            self.args = ()
-        if "kwargs" in kwargs:
-            self.kwargs = kwargs.pop("kwargs")
-        else:
-            self.kwargs = {}
+        self.function = kwargs.pop("function", lambda *args, **kwargs: None)
+        self.args = kwargs.pop("args", ())
+        self.kwargs = kwargs.pop("kwargs", {})
         super(FunctionButton, self).__init__(*args, **kwargs)
 
     def activated(self, event):
@@ -135,10 +123,7 @@ class FunctionButton(Button):
 
 class ExitDialogButton(Button):
     def __init__(self, *args, **kwargs):
-        if "exit_code" in kwargs:
-            self.exit_code = kwargs.pop("exit_code")
-        else:
-            self.exit_code = None
+        self.exit_code = kwargs.pop("exit_code", None)
         super(ExitDialogButton, self).__init__(*args, **kwargs)
 
     def activated(self, event):
@@ -148,10 +133,7 @@ class ExitDialogButton(Button):
         
 class DialogButton(Button):
     def __init__(self, *args, **kwargs):
-        if "dialog" in kwargs:
-            self.dialog = kwargs.pop("dialog")
-        else:
-            self.dialog = None
+        self.dialog = kwargs.pop("dialog", None)
         super(DialogButton, self).__init__(*args, **kwargs)
 
     def activated(self, event):

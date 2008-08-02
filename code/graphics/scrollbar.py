@@ -28,12 +28,8 @@ import slider
 
 class _ArrowButton(button.FunctionButton, button.ImageButton):
     def __init__(self, parent, *args, **kwargs):
-        assert "first" in kwargs
-        self.first = kwargs.pop("first")
-        if "horizontal" in kwargs:
-            self.horizontal = kwargs.pop("horizontal")
-        else:
-            self.horizontal = False
+        self.first = kwargs.pop("first", True)
+        self.horizontal = kwargs.pop("horizontal", False)
 
         kwargs["function"] = parent.adjust
         kwargs["args"] = (self.first,)
@@ -127,10 +123,7 @@ class Scrollbar(widget.Widget):
 
 class UpdateScrollbar(Scrollbar):
     def __init__(self, *args, **kwargs):
-        if "update_func" in kwargs:
-            self.update_func = kwargs.pop("update_func")
-        else:
-            self.update_func = lambda value: None
+        self.update_func = kwargs.pop("update_func", lambda value: None)
         super(UpdateScrollbar, self).__init__(*args, **kwargs)
 
     def on_change(self, value):
