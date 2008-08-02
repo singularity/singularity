@@ -288,6 +288,8 @@ class EditableText(Text):
         if not self.collision_rect.collidepoint(event.pos):
             return
 
+        self.font.set_bold(self.bold)
+
         click_x = event.pos[0] - self.collision_rect[0]
         click_y = event.pos[1] - self.collision_rect[1]
 
@@ -342,6 +344,8 @@ class EditableText(Text):
         self.hitbox[0] = line_x - prev_width // 2
         self.hitbox[2] = prev_width - (prev_width // 2) + width // 2
         self.cursor_pos = char_offset + index
+
+        self.font.set_bold(False)
 
     def rebuild(self):
         super(EditableText, self).rebuild()
