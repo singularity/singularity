@@ -214,7 +214,7 @@ class Base(buyable.Buyable):
                 item.destroy()
 
     def next_base(self, forwards):
-        if direction > 0:
+        if forwards > 0:
             base = self.next
             while not base.done:
                 base = base.next

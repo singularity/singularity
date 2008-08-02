@@ -86,7 +86,8 @@ class Buyable(object):
         type.count += count
         type.total_count += count
 
-        self.name = self.id = type.id
+        self.name = type.name
+        self.id = type.id
         self.description = type.description
         self.prerequisites = type.prerequisites
 

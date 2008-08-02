@@ -47,22 +47,16 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                 self.list.append(item.name)
                 self.key_list.append(item.id)
 
-        self.default = self.get_current()
+        self.default = self.parent.get_current(self.type).type.id
 
         super(BuildDialog, self).show()
 
-    def get_current(self):
-        base = self.parent.base
-        if self.type == "cpu":
-            target = base.cpus
-        else:
-            index = ["reactor", "network", "security"].index(self.type)
-            target = base.extra_items[index]
-        if target is not None:
-            return target.type.id
-
     def on_change(self, description_pane, key):
         text.Text(description_pane, (0, 0), (-1, -1), text = key)
+
+# XXX Replace with the real data.
+type_names = dict(cpu = "Processor", reactor = "Reactor",
+                  network = "Network", security = "Security")
 
 class ItemPane(widget.BorderedWidget):
     type = widget.causes_rebuild("_type")
@@ -77,21 +71,17 @@ class ItemPane(widget.BorderedWidget):
 
         self.type = type
 
-        # XXX Replace with the real data.
-        texts = dict(cpu = "Processor: Quantum Computer Mk3 x595",
-                     reactor = "Reactor: Fusion Reactor",
-                     network = "Network: High Speed Internet Access",
-                     security = "Security: Perimeter Fencing")
+        self.name_panel = text.Text(self, (0,0), (.35, .03),
+                                    anchor=constants.TOP_LEFT,
+                                    align=constants.LEFT,
+                                    background_color=self.background_color,
+                                    bold=True)
 
-        p1 = text.Text(self, (0,0), (.35, .03), anchor = constants.TOP_LEFT,
-                       align = constants.LEFT,
-                       background_color = self.background_color,
-                       text = texts[type], bold = True)
-
-        p2 = text.Text(self, (0,.03), (.35, .03), anchor = constants.TOP_LEFT,
-                       align = constants.LEFT,
-                       background_color = self.background_color,
-                       text = "Completion in 15 hours.", bold = True)
+        self.build_panel = text.Text(self, (0,.03), (.35, .03),
+                                     anchor=constants.TOP_LEFT,
+                                     align=constants.LEFT,
+                                     background_color=self.background_color,
+                                     text="Completion in 15 hours.", bold=True)
 
         #TODO: Use information out of gg.buttons
         change_text = "CHANGE"
@@ -111,6 +101,16 @@ class ItemPane(widget.BorderedWidget):
         if hotkey.upper() in change_text:
             hotkey_pos = len(change_text) + 2
             self.change_button.force_underline = hotkey_pos
+
+state_colors = dict(
+    active = gg.colors["green"],
+    sleep = gg.colors["yellow"],
+    stasis = gg.colors["gray"],
+    overclocked = gg.colors["orange"],
+    suicide = gg.colors["red"],
+    entering_stasis = gg.colors["gray"],
+    leaving_stasis = gg.colors["gray"],
+)
 
 class BaseScreen(dialog.Dialog):
     base = widget.causes_rebuild("_base")
@@ -132,7 +132,6 @@ class BaseScreen(dialog.Dialog):
                                       borders = constants.ALL,
                                       border_color = gg.colors["dark_blue"],
                                       background_color = gg.colors["black"],
-                                      text="Omaha Area 42 (Fake Military Base)",
                                       shrink_factor = .85, bold = True)
 
         self.next_base_button = \
@@ -157,9 +156,7 @@ class BaseScreen(dialog.Dialog):
                                                  constants.BOTTOM),
                                        border_color = gg.colors["dark_blue"],
                                        background_color = gg.colors["black"],
-                                       color = gg.colors["yellow"],
-                                       text = "Sleep", shrink_factor = .8,
-                                       bold = True)
+                                       shrink_factor = .8, bold = True)
 
         self.back_button = \
             button.ExitDialogButton(self, (-.5,-1),
@@ -170,12 +167,6 @@ class BaseScreen(dialog.Dialog):
                                       anchor = constants.TOP_RIGHT,
                                       background_color = gg.colors["dark_blue"],
                                       borders = constants.ALL,
-                                      text =
-"""DISCOVERY CHANCE:
-News: 0.67%
-Science: 0%
-Covert: 1.22%
-Public: 0.73%""",
                                       wrap = False, bold = True,
                                       align = constants.LEFT, 
                                       valign = constants.TOP)
@@ -195,6 +186,15 @@ Public: 0.73%""",
         self.security_pane = ItemPane(self.contents_frame, (.01, .25),
                                       type = "security")
 
+    def get_current(self, type):
+        if type == "cpu":
+            target = self.base.cpus
+        else:
+            index = ["reactor", "network", "security"].index(type)
+            target = self.base.extra_items[index]
+        if target is not None:
+            return target
+
     def build_item(self, type):
         self.build_dialog.type = type
         result = dialog.call_dialog(self.build_dialog, self)
@@ -203,6 +203,52 @@ Public: 0.73%""",
 
     def switch_base(self, forwards):
         self.base = self.base.next_base(forwards)
+        self.needs_rebuild = True
+
+    def rebuild(self):
+        self.name_display.text="%s (%s)" % (self.base.name, self.base.type.name)
+        discovery_template = \
+"""DISCOVERY CHANCE:
+News: %s
+Science: %s
+Covert: %s
+Public: %s"""
+        self.state_display.color = state_colors[self.base.power_state]
+        self.state_display.text = self.base.power_state.capitalize()
+
+        mutable = not self.base.type.force_cpu
+        for item in ["cpu", "reactor", "network", "security"]:
+            pane = getattr(self, item + "_pane")
+            pane.change_button.visible = mutable
+            current = self.get_current(item)
+            if current is None:
+                current_name = "None"
+                current_build = ""
+            else:
+                current_name = current.name
+                if current.done:
+                    current_build = ""
+                else:
+                    current_build = "Completion in %s." % \
+                        g.to_time(current.cost_left[2])
+            pane.name_panel.text = "%s: %s" % (type_names[item], current_name)
+            pane.build_panel.text = current_build
+
+        # Detection chance display.  If Socioanalytics hasn't been researched,
+        # you get nothing; if it has, but not Advanced Socioanalytics, you get
+        # an inaccurate value.
+        if not g.techs["Socioanalytics"].done:
+            self.detect_frame.text = \
+                g.strings["detect_chance_unknown_base"].replace(" ", "\n")
+        else: 
+            accurate = g.techs["Advanced Socioanalytics"].done
+            chance = self.base.get_detect_chance(accurate)
+            def get_chance(group):
+                return g.to_percent(chance.get(group, 0))
+            self.detect_frame.text = discovery_template % \
+                (get_chance("news"), get_chance("science"),
+                 get_chance("covert"), get_chance("public"))
+        super(BaseScreen, self).rebuild()
 
 def old_detection_chance():
     # Detection chance display.  If Socioanalytics hasn't been researched,
