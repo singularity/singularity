@@ -57,7 +57,7 @@ class Button(text.SelectableText):
         self.selected = False
 
         if self.parent:
-            self.parent.add_handler(constants.MOUSEMOTION, self.handle_event,
+            self.parent.add_handler(constants.MOUSEMOTION, self.watch_mouse,
                                     priority)
             self.parent.add_handler(constants.CLICK, self.handle_event,
                                     priority)
@@ -76,23 +76,15 @@ class Button(text.SelectableText):
         else:
             self.underline = -1
 
-    def is_over(self, position):
-        pos = self.abs_pos
-        if position == (0,0): # Special case, for when the mouse hasn't been
-            return False      # initialized properly yet.
-        elif position[0] < pos[0] or position[1] < pos[1]:
-            return False # Above/left of the button
-        elif position[0] >= pos[0] + self.real_size[0]:
-            return False # Right of the button.
-        elif position[1] >= pos[1] + self.real_size[1]:
-            return False # Below the button.
-        else:
-            return True # Right on the button
+    def watch_mouse(self, event):
+        """Selects the button if the mouse is over it."""
+        # This gets called a lot, so it's been optimized.
+        select_now = self.is_over(pygame.mouse.get_pos())
+        if (self._selected ^ select_now): # If there's a change.
+            self.selected = select_now
 
     def handle_event(self, event):
-        if event.type == pygame.MOUSEMOTION:
-            self.selected = self.is_over(pygame.mouse.get_pos())
-        elif event.type == pygame.MOUSEBUTTONUP:
+        if event.type == pygame.MOUSEBUTTONUP:
             if self.is_over(event.pos):
                 self.activated(event)
         elif event.type == pygame.KEYDOWN:
@@ -117,6 +109,28 @@ class ImageButton(Button):
                                  anchor = constants.MID_CENTER,
                                  image = image_surface)
 
+
+class FunctionButton(Button):
+    def __init__(self, *args, **kwargs):
+        if "function" in kwargs:
+            self.function = kwargs.pop("function")
+        else:
+            self.function = None
+        if "args" in kwargs:
+            self.args = kwargs.pop("args")
+        else:
+            self.args = ()
+        if "kwargs" in kwargs:
+            self.kwargs = kwargs.pop("kwargs")
+        else:
+            self.kwargs = {}
+        super(FunctionButton, self).__init__(*args, **kwargs)
+
+    def activated(self, event):
+        """FunctionButton's custom activated menu.  Makes the given function
+           call."""
+        self.function(*self.args, **self.kwargs)
+        
 
 class ExitDialogButton(Button):
     def __init__(self, *args, **kwargs):

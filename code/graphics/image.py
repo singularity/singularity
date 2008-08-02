@@ -31,7 +31,8 @@ class Image(widget.Widget):
                  anchor = constants.TOP_LEFT, image = None):
         super(Image, self).__init__(parent, pos, size, anchor)
         
-        self.image = image.convert_alpha()
+        if image:
+            self.image = image.convert_alpha()
 
     def _calc_size(self):
         size = list( super(Image, self)._calc_size() )

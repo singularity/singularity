@@ -19,6 +19,8 @@
 #This file contains the widget class.
 
 import pygame
+from Numeric import array
+
 import g
 import constants
 
@@ -154,18 +156,16 @@ class Widget(object):
 
     real_pos = property(get_real_pos)
 
-    def get_abs_pos(self):
-        """Returns the absolute position of this widget on the screen."""
-        pos = list(self.real_pos)
-        target = self.parent
-        while target:
-            pos[0] += target.real_pos[0]
-            pos[1] += target.real_pos[1]
-            target = target.parent
+    def _make_collision_rect(self):
+        """Creates and returns a collision rect for this widget."""
+        pos = array(self.real_pos)
+        if self.parent:
+            pos += self.parent.collision_rect[:2]
 
-        return tuple(pos)
+        return pygame.sprite.Rect(pos, self.real_size)
 
-    abs_pos =  property(get_abs_pos)
+    def is_over(self, position):
+        return self.collision_rect.collidepoint(position)
 
     def remake_surfaces(self):
         """Recreates the surfaces that this widget will draw on."""
@@ -204,6 +204,9 @@ class Widget(object):
 
         # Redraw the widget.
         if self.needs_redraw:
+            # Recalculate the widget's absolute position.
+            self.collision_rect = self._make_collision_rect()
+
             # Draw the widget's image.
             self.surface.blit( self.internal_surface, (0,0) )
 
@@ -224,13 +227,13 @@ class Widget(object):
             for child in above_mask:
                 child.redraw()
 
-            self.needs_redraw = False
-
         # Copy the entire image onto the widget's parent.
         if self.parent:
             self.parent.surface.blit(self.surface, self.real_pos)
-        else:
+        elif self.needs_redraw:
             pygame.display.flip()
+
+        self.needs_redraw = False
 
     def add_handler(self, *args, **kwargs):
         """Handler pass-through."""

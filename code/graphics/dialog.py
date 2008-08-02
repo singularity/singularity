@@ -158,6 +158,9 @@ class Dialog(widget.Widget):
             if event.buttons[0]:
                 insort_all(handlers, self.handlers.get(constants.DRAG, []))
         elif event.type == pygame.USEREVENT:
+            # Clear excess timer ticks.
+            pygame.event.clear(pygame.USEREVENT)
+
             # Timer tick handlers.
             handlers = self.handlers.get(constants.TICK, [])
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
