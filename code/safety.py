@@ -53,7 +53,7 @@ def log_error(error_message):
     logging.getLogger().error(error_message)
     sys.stderr.write(error_message + "\n")
 
-def safe_call(func, args, kwargs, on_error):
+def safe_call(func, args=(), kwargs={}, on_error=None):
     try:
         return func(*args, **kwargs)
     except Exception, e:

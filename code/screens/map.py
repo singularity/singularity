@@ -226,7 +226,19 @@ class MapScreen(dialog.Dialog):
     def show(self):
         self.force_update()
 
-        return super(MapScreen, self).show()
+        from code.safety import safe_call
+        # By using safe call here (and only here), if an error is raised
+        # during the game, it will drop back out of all the menus, without
+        # doing anything, and open the pause dialog, so that the player can
+        # save or quit even if the error occurs every game tick.
+        while safe_call(super(MapScreen, self).show, on_error=True):
+            exit = dialog.call_dialog(self.menu_dialog, self)
+            if exit:
+                self.visible = False
+                return
+            for child in self.children:
+                if isinstance(child, dialog.Dialog):
+                    child.visible = False
 
     leftovers = 1
     def on_tick(self, event):
