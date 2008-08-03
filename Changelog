@@ -6,6 +6,7 @@ USER-VISIBLE CHANGES:
 - Fix to de_DE intro text. (booiiing)
 
 OTHER CHANGES:
+- Removed a redundant tech requirement. (Phil, Xombie for bug report)
 
 v0.28a (release 2008.05.12):
 

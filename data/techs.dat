@@ -1,7 +1,7 @@
 
 [Autonomous Vehicles]
 cost_list = 40000 | 1000 | 0
-pre_list = Microchip Design | Telepresence
+pre_list = Microchip Design
 
 [Sociology]
 cost_list = 10 | 500 | 0
