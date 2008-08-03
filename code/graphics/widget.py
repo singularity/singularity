@@ -19,7 +19,7 @@
 #This file contains the widget class.
 
 import pygame
-from Numeric import array
+from numpy import array
 
 import g
 import constants
