@@ -230,15 +230,10 @@ class Base(buyable.Buyable):
         return (-self.type.size, -self.cpu, self.name)
 
     def __cmp__(self, other):
-        return cmp(self.sort_tuple(), other.sort_tuple())
-
-    def __eq__(self, other):
-        if type(other) != Base:
-            return False
-        return cmp(self, other) != 0
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
+        if isinstance(other, Base):
+            return cmp(self.sort_tuple(), other.sort_tuple())
+        else:
+            return -1
 
     def __getstate__(self):
         state_dict = self.__dict__.copy()

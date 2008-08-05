@@ -27,8 +27,8 @@ from code.graphics import constants, widget, dialog, text, button, listbox
 
 class BuildDialog(dialog.ChoiceDescriptionDialog):
     type = widget.causes_rebuild("_type")
-    def __init__(self, parent, pos = (0, 0), size = (-1, -1),
-                 anchor = constants.TOP_LEFT, *args, **kwargs):
+    def __init__(self, parent, pos=(0, 0), size=(-1, -1),
+                 anchor=constants.TOP_LEFT, *args, **kwargs):
         super(BuildDialog, self).__init__(parent, pos, size, anchor, *args, 
                                           **kwargs)
 
@@ -58,18 +58,17 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
     def on_change(self, description_pane, key):
         text.Text(description_pane, (0, 0), (-1, -1), text=key.id)
 
-type_names = dict(cpu = "Processor", reactor = "Reactor",
-                  network = "Network", security = "Security")
+type_names = dict(cpu="Processor", reactor="Reactor",
+                  network="Network", security="Security")
 
 class ItemPane(widget.BorderedWidget):
     type = widget.causes_rebuild("_type")
-    def __init__(self, parent, pos, size = (.48, .06), 
-                 anchor = constants.TOP_LEFT,
-                 type = "cpu", **kwargs):
+    def __init__(self, parent, pos, size=(.48, .06), anchor=constants.TOP_LEFT,
+                 type="cpu", **kwargs):
 
         kwargs.setdefault("background_color", gg.colors["dark_blue"])
 
-        super(ItemPane, self).__init__(parent, pos, size, anchor = anchor,
+        super(ItemPane, self).__init__(parent, pos, size, anchor=anchor,
                                        **kwargs)
 
         self.type = type
@@ -88,31 +87,30 @@ class ItemPane(widget.BorderedWidget):
 
         #TODO: Use information out of gg.buttons
         change_text = "CHANGE"
-        hotkey_dict = dict(cpu = "p", reactor = "r", network = "n",
-                           security = "s")
+        hotkey_dict = dict(cpu="p", reactor="r", network="n", security="s")
         hotkey = hotkey_dict[self.type]
         button_text = "%s (%s)" % (change_text, hotkey.upper())
 
         self.change_button = button.FunctionButton(self, (.36,.01), (.12, .04),
-                                                   anchor = constants.TOP_LEFT,
-                                                   text = button_text, 
-                                                   hotkey = hotkey,
-                                                   function =
+                                                   anchor=constants.TOP_LEFT,
+                                                   text=button_text, 
+                                                   hotkey=hotkey,
+                                                   function=
                                                 self.parent.parent.build_item,
-                                                   kwargs = {"type": self.type})
+                                                   kwargs={"type": self.type})
 
         if hotkey.upper() in change_text:
             hotkey_pos = len(change_text) + 2
             self.change_button.force_underline = hotkey_pos
 
 state_colors = dict(
-    active = gg.colors["green"],
-    sleep = gg.colors["yellow"],
-    stasis = gg.colors["gray"],
-    overclocked = gg.colors["orange"],
-    suicide = gg.colors["red"],
+    active          = gg.colors["green"],
+    sleep           = gg.colors["yellow"],
+    overclocked     = gg.colors["orange"],
+    suicide         = gg.colors["red"],
+    stasis          = gg.colors["gray"],
     entering_stasis = gg.colors["gray"],
-    leaving_stasis = gg.colors["gray"],
+    leaving_stasis  = gg.colors["gray"],
 )
 
 class BaseScreen(dialog.Dialog):
@@ -128,66 +126,66 @@ class BaseScreen(dialog.Dialog):
         self.build_dialog = BuildDialog(self)
 
         self.header = widget.Widget(self, (0,0), (-1, .08), 
-                                    anchor = constants.TOP_LEFT)
+                                    anchor=constants.TOP_LEFT)
 
         self.name_display = text.Text(self.header, (-.5,0), (-1, -.5),
-                                      anchor = constants.TOP_CENTER,
-                                      borders = constants.ALL,
-                                      border_color = gg.colors["dark_blue"],
-                                      background_color = gg.colors["black"],
-                                      shrink_factor = .85, bold = True)
+                                      anchor=constants.TOP_CENTER,
+                                      borders=constants.ALL,
+                                      border_color=gg.colors["dark_blue"],
+                                      background_color=gg.colors["black"],
+                                      shrink_factor=.85, bold=True)
 
         self.next_base_button = \
             button.FunctionButton(self.name_display, (-1, 0), (.03, -1),
-                                  anchor = constants.TOP_RIGHT,
-                                  text = ">", hotkey = ">",
-                                  function = self.switch_base,
-                                  kwargs = {"forwards": True})
+                                  anchor=constants.TOP_RIGHT,
+                                  text=">", hotkey=">",
+                                  function=self.switch_base,
+                                  kwargs={"forwards": True})
         self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activate_with_sound)
 
         self.prev_base_button = \
             button.FunctionButton(self.name_display, (0, 0), (.03, -1),
-                                  anchor = constants.TOP_LEFT,
-                                  text = "<", hotkey = "<",
-                                  function = self.switch_base,
-                                  kwargs = {"forwards": False})
+                                  anchor=constants.TOP_LEFT,
+                                  text="<", hotkey="<",
+                                  function=self.switch_base,
+                                  kwargs={"forwards": False})
         self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activate_with_sound)
 
         self.state_display = text.Text(self.header, (-.5,-.5), (-1, -.5),
-                                       anchor = constants.TOP_CENTER,
-                                       borders =(constants.LEFT,constants.RIGHT,
-                                                 constants.BOTTOM),
-                                       border_color = gg.colors["dark_blue"],
-                                       background_color = gg.colors["black"],
-                                       shrink_factor = .8, bold = True)
+                                       anchor=constants.TOP_CENTER,
+                                       borders=(constants.LEFT,constants.RIGHT,
+                                                constants.BOTTOM),
+                                       border_color=gg.colors["dark_blue"],
+                                       background_color=gg.colors["black"],
+                                       shrink_factor=.8, bold=True)
 
         self.back_button = \
             button.ExitDialogButton(self, (-.5,-1),
                                     anchor = constants.BOTTOM_CENTER,
-                                    text = "back", hotkey = "b")
+                                    text="BACK", hotkey="b")
 
         self.detect_frame = text.Text(self, (-1, .09), (.21, .33),
-                                      anchor = constants.TOP_RIGHT,
-                                      background_color = gg.colors["dark_blue"],
-                                      borders = constants.ALL,
-                                      wrap = False, bold = True,
-                                      align = constants.LEFT, 
-                                      valign = constants.TOP)
+                                      anchor=constants.TOP_RIGHT,
+                                      background_color=gg.colors["dark_blue"],
+                                      borders=constants.ALL,
+                                      bold=True,
+                                      align=constants.LEFT, 
+                                      valign=constants.TOP)
 
         self.contents_frame = \
             widget.BorderedWidget(self, (0, .09), (.50, .33),
-                                  anchor = constants.TOP_LEFT,
-                                  background_color = gg.colors["dark_blue"],
-                                  borders = range(6))
+                                  anchor=constants.TOP_LEFT,
+                                  background_color=gg.colors["dark_blue"],
+                                  borders=range(6))
 
         self.cpu_pane      = ItemPane(self.contents_frame, (.01, .01),
-                                      type = "cpu")
+                                      type="cpu")
         self.reactor_pane  = ItemPane(self.contents_frame, (.01, .09),
-                                      type = "reactor")
+                                      type="reactor")
         self.network_pane  = ItemPane(self.contents_frame, (.01, .17),
-                                      type = "network")
+                                      type="network")
         self.security_pane = ItemPane(self.contents_frame, (.01, .25),
-                                      type = "security")
+                                      type="security")
 
     def get_current(self, type):
         if type == "cpu":
