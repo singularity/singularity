@@ -232,13 +232,13 @@ class MapScreen(dialog.Dialog):
         # doing anything, and open the pause dialog, so that the player can
         # save or quit even if the error occurs every game tick.
         while safe_call(super(MapScreen, self).show, on_error=True):
+            for child in self.children:
+                if isinstance(child, dialog.Dialog):
+                    child.visible = False
             exit = dialog.call_dialog(self.menu_dialog, self)
             if exit:
                 self.visible = False
                 return
-            for child in self.children:
-                if isinstance(child, dialog.Dialog):
-                    child.visible = False
 
     leftovers = 1
     def on_tick(self, event):
