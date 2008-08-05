@@ -116,6 +116,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def handle_slide(self, key, new_pos):
         g.pl.cpu_usage[key] = new_pos
         self.dirty_count = True
+        self.needs_rebuild = True
+        self.parent.needs_rebuild = True
 
     def show(self):
         techs = [tech for tech in g.techs.values() if tech.available()

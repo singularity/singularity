@@ -54,9 +54,12 @@ class Image(widget.Widget):
         self.scaled_image = \
             pygame.transform.smoothscale(self.image, self.real_size)
 
-    def rebuild(self):
-        super(Image, self).rebuild()
+    def resize(self):
+        super(Image, self).resize()
         if self.real_size != self.old_size:
             self.rescale()
             self.old_size = self.real_size
-        self.internal_surface.blit(self.scaled_image, (0,0))
+
+    def redraw(self):
+        super(Image, self).redraw()
+        self.surface.blit(self.scaled_image, (0,0))

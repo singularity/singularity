@@ -185,7 +185,7 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
             text.EditableText(self, (.333, .15), (.12, .05), text="1400",
                               borders=constants.ALL, 
                               border_color=gg.colors["white"],
-                              background_color=gg.colors["clear"])
+                              background_color=(0,0,50,255))
 
         self.resolution_custom_X = text.Text(self, (.46, .15), (.03, .05),
                                              text="X", base_font=gg.font[1],
@@ -195,7 +195,7 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
             text.EditableText(self, (.496, .15), (.12, .05), text="1050",
                               borders=constants.ALL, 
                               border_color=gg.colors["white"],
-                              background_color=gg.colors["clear"])
+                              background_color=(0,0,50,255))
 
         self.resolution_apply = \
             button.FunctionButton(self, (.66, .15), (.12, .05),

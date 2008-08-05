@@ -92,7 +92,7 @@ class MapScreen(dialog.Dialog):
         self.cheat_dialog = dialog.SimpleMenuDialog(self, buttons=cheat_buttons)
 
         if g.cheater:
-            self.cheat_button = button.DialogButton(self, (2, 2), (0, 0),
+            self.cheat_button = button.DialogButton(self, (0, 0), (0, 0),
                                                     text="", hotkey="`",
                                                     dialog=self.cheat_dialog)
 

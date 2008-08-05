@@ -28,7 +28,7 @@ import scrollbar
 
 class Listbox(widget.FocusWidget, text.SelectableText):
     list = widget.causes_rebuild("_list")
-    align = widget.causes_rebuild("_align")
+    align = widget.causes_redraw("_align")
     list_size = widget.causes_rebuild("_list_size")
     list_pos = widget.causes_rebuild("_list_pos")
 
@@ -151,6 +151,10 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
     def rebuild(self):
         super(Listbox, self).rebuild()
+        self.needs_resize = True
+
+    def resize(self):
+        super(Listbox, self).resize()
 
         if self.num_elements() != len(self.display_elements):
             self.remake_elements()
@@ -165,6 +169,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             self.auto_scroll = False
             self.scrollbar.center(self.list_pos)
 
+        self.scrollbar.resize()
         scrollbar_width = self.scrollbar.real_size[0]
         my_width = self.real_size[0]
         scrollbar_rel_width = scrollbar_width / float(my_width)

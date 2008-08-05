@@ -77,7 +77,11 @@ class Button(text.SelectableText):
             self.parent.remove_key_handler(self.hotkey, self.handle_event)
 
     def rebuild(self):
+        old_underline = self.underline
         self.calc_underline()
+        if self.underline != old_underline:
+            self.needs_redraw = True
+
         super(Button, self).rebuild()
 
     def calc_underline(self):

@@ -131,25 +131,22 @@ def print_string(surface, string_to_print, xy_orig, font, color, underline_char,
         underline_char -= len(line)
         xy[1] += font.get_linesize()
 
-class Text(widget.BorderedWidget):
-    text = widget.causes_rebuild("_text")
-    base_font = widget.causes_rebuild("_base_font")
-    color = widget.causes_rebuild("_color")
-    shrink_factor = widget.causes_rebuild("_shrink_factor")
-    underline = widget.causes_rebuild("_underline")
-    align = widget.causes_rebuild("_align")
-    valign = widget.causes_rebuild("_valign")
-    wrap = widget.causes_rebuild("_wrap")
-    _wrap = widget.set_on_change("__wrap", "needs_refont")
-    bold = widget.causes_rebuild("_bold")
-    _bold = widget.set_on_change("__bold", "needs_refont")
-    oversize = widget.causes_rebuild("_oversize")
-    _oversize = widget.set_on_change("__oversize", "needs_refont")
+def causes_refont(data_member):
+    return widget.set_on_change(data_member, "needs_refont")
 
-    collision_rect = widget.set_on_change("_collision_rect", "needs_refont")
-    _base_font = widget.set_on_change("__base_font", "needs_refont")
-    _text = widget.set_on_change("__text", "needs_refont")
-    _shrink_factor = widget.set_on_change("__shrink_factor", "needs_refont")
+class Text(widget.BorderedWidget):
+    text = causes_refont("_text")
+    base_font = causes_refont("_base_font")
+    color = widget.causes_redraw("_color")
+    shrink_factor = causes_refont("_shrink_factor")
+    underline = causes_refont("_underline")
+    align = widget.causes_redraw("_align")
+    valign = widget.causes_redraw("_valign")
+    wrap = causes_refont("_wrap")
+    bold = causes_refont("_bold")
+    oversize = causes_refont("_oversize")
+
+    needs_refont = widget.causes_redraw("_refont")
 
     lorem_ipsum = {}
 
@@ -243,13 +240,21 @@ class Text(widget.BorderedWidget):
                 base_size[0] = font.size(self.text)[0] + 16
         return tuple(base_size)
 
+    def resize(self):
+        super(Text, self).resize()
+        self.needs_refont = True
+
     def rebuild(self):
         super(Text, self).rebuild()
+        self.needs_refont = True
+
+    def redraw(self):
+        super(Text, self).redraw()
 
         if self.text != None:
             self.font.set_bold(self.bold)
             # Print the text itself
-            print_string(self.internal_surface, self.text, (3, 2), self.font, 
+            print_string(self.surface, self.text, (3, 2), self.font, 
                          self.color, self.underline, self.align, self.valign,
                          self.real_size, self.wrap) 
             self.font.set_bold(False)
@@ -268,7 +273,7 @@ class _LoremIpsum(Text):
 
     def get_font_size(self):
         if self.last_resolution != g.screen_size:
-            self._font_size = self.pick_font_size(self.real_size)
+            self._font_size = self.pick_font_size(self._calc_size())
             self.last_resolution = g.screen_size
         return self._font_size
 
@@ -276,7 +281,8 @@ class _LoremIpsum(Text):
 
 class FastText(Text):
     """Reduces font searches by assuming a monospace font and single-line text."""
-    _text = widget.set_on_change("__text", "maybe_needs_refont")
+    text = widget.set_on_change("_text", "maybe_needs_refont")
+    _text = widget.causes_redraw("__text")
     old_text = ""
     maybe_needs_refont = False
 
@@ -290,7 +296,7 @@ class FastText(Text):
         return super(FastText, self).pick_font(dimensions)
 
 class EditableText(widget.FocusWidget, Text):
-    cursor_pos = widget.causes_rebuild("_cursor_pos")
+    cursor_pos = widget.causes_redraw("_cursor_pos")
     def __init__(self, parent, *args, **kwargs):
         super(EditableText, self).__init__(parent, *args, **kwargs)
 
@@ -341,7 +347,7 @@ class EditableText(widget.FocusWidget, Text):
     hitbox = [0,0,0,0]
 
     def handle_click(self, event):
-        if getattr(self, "_collision_rect", None) is None:
+        if getattr(self, "collision_rect", None) is None:
             return
         elif not self.collision_rect.collidepoint(event.pos):
             return
@@ -408,8 +414,8 @@ class EditableText(widget.FocusWidget, Text):
 
         self.font.set_bold(False)
 
-    def rebuild(self):
-        super(EditableText, self).rebuild()
+    def redraw(self):
+        super(EditableText, self).redraw()
 
         if self.wrap:
             lines = split_wrap(self.text, self.font, self.real_size[0] - 4)
@@ -452,19 +458,18 @@ class EditableText(widget.FocusWidget, Text):
 
         line_x += self.font.size(line[:after_char])[0]
 
-        self.internal_surface.fill( self.color, 
-                                    (line_x, line_y, 1, line_size))
+        self.surface.fill( self.color, (line_x, line_y, 1, line_size))
 
         if DEBUG:
             s = pygame.Surface(self.hitbox[2:]).convert_alpha()
             s.fill( (255,0,255,100) )
-            self.internal_surface.blit( s, self.hitbox)
+            self.surface.blit( s, self.hitbox)
 
 
 class SelectableText(Text):
-    selected = widget.causes_rebuild("_selected")
-    selected_color = widget.causes_rebuild("_selected_color")
-    unselected_color = widget.causes_rebuild("_unselected_color")
+    selected = widget.causes_redraw("_selected")
+    selected_color = widget.causes_redraw("_selected_color")
+    unselected_color = widget.causes_redraw("_unselected_color")
 
     def __init__(self, parent, pos, size, border_color = None,
                  unselected_color = None, selected_color = None, **kwargs):
@@ -476,9 +481,9 @@ class SelectableText(Text):
 
         self.selected = False
 
-    def rebuild(self):
+    def redraw(self):
         if self.selected:
             self.background_color = self.selected_color
         else:
             self.background_color = self.unselected_color
-        super(SelectableText, self).rebuild()
+        super(SelectableText, self).redraw()

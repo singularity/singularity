@@ -67,48 +67,73 @@ def causes_redraw(data_member):
     """Creates a data member that sets needs_redraw to True when changed."""
     return set_on_change(data_member, "needs_redraw")
 
-def causes_full_redraw(data_member):
-    """Creates a data member that sets needs_redraw to True when changed."""
-    return set_on_change(data_member, "needs_full_redraw")
+def causes_resize(data_member):
+    """Creates a data member that sets needs_resize to True when changed."""
+    return set_on_change(data_member, "needs_resize")
+
+def causes_reposition(data_member):
+    """Creates a data member that sets needs_reposition to True when changed."""
+    return set_on_change(data_member, "needs_reposition")
+
+def causes_update(data_member):
+    """Creates a data member that sets needs_update to True when changed."""
+    return set_on_change(data_member, "needs_update")
+
+def propogate_need(data_member):
+    """Creates a function that can be passed to call_on_change.  When the
+       data member changes to True, needs_update is set, and the True value
+       is passed to all descendants."""
+    def do_propogate(self):
+        if getattr(self, data_member, False):
+            self.needs_update = True
+
+            descendants = self.children[:]
+            while descendants:
+                child = descendants.pop()
+                # Propogate to this child and its descendants, if needed.
+                if not getattr(child, data_member, False):
+                   setattr(child, data_member, True)
+                   child._needs_update = True
+                   descendants += child.children
+
+    return do_propogate
 
 class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
        children."""
 
-    def _propogate_redraw(self):
-        if self.needs_redraw:
+    needs_redraw = call_on_change("_needs_redraw",
+                                  propogate_need("_needs_redraw"))
+
+    needs_resize = call_on_change("_needs_resize",
+                                  propogate_need("_needs_resize"))
+
+    needs_reposition = call_on_change("_needs_reposition",
+                                      propogate_need("_needs_reposition"))
+
+    needs_rebuild = causes_update("_needs_rebuild")
+
+    def _propogate_update(self):
+        if self._needs_update:
             target = self.parent
-            while target:
-                target._needs_redraw = self.needs_redraw
+            while target and not target._needs_update:
+                target._needs_update = True
                 target = target.parent
 
-    needs_redraw = call_on_change("_needs_redraw", _propogate_redraw)
+    needs_update = call_on_change("_needs_update", _propogate_update)
 
-    def _propogate_full_redraw(self):
-        if self._needs_full_redraw and not getattr(self, "needs_redraw", 0):
-            self.needs_redraw = self._needs_full_redraw
-
-    needs_full_redraw = call_on_change("_needs_full_redraw", 
-                                       _propogate_full_redraw)
-
-    def _propogate_rebuild(self):
-        self.needs_redraw = self.needs_rebuild # Propagates if needed.
-
-    needs_rebuild = call_on_change("_needs_rebuild", _propogate_rebuild)
-
-    pos = causes_full_redraw("_pos")
-    size = causes_rebuild("_size")
-    anchor = causes_full_redraw("_anchor")
-    children = causes_redraw("_children")
+    pos = causes_reposition("_pos")
+    size = causes_resize("_size")
+    anchor = causes_reposition("_anchor")
     visible = causes_redraw("_visible")
 
     def __init__(self, parent, pos, size, anchor = constants.TOP_LEFT):
         self.parent = parent
+        self.children = []
+
         self.pos = pos
         self.size = size
         self.anchor = anchor
-
-        self.children = []
 
         # "It's a widget!"
         if self.parent:
@@ -119,8 +144,10 @@ class Widget(object):
         self.mask_children = False
         self.visible = True
 
+        self.needs_rebuild = True
+        self.collision_rect = None
+
         # Set automatically by other properties.
-        #self.needs_rebuild = True
         #self.needs_redraw = True
         #self.needs_full_redraw = True
 
@@ -166,10 +193,8 @@ class Widget(object):
         """Returns the real size of this widget.
 
            To implement a dynamically-sized widget, override _calc_size, which
-           will be called whenever the widget is rebuilt."""
-        if self.needs_rebuild:
-            self._real_size = self._calc_size()
-
+           will be called whenever the widget is resized, and set needs_resize
+           when appropriate."""
         return self._real_size
 
     real_size = property(get_real_size)
@@ -225,82 +250,119 @@ class Widget(object):
     def remake_surfaces(self):
         """Recreates the surfaces that this widget will draw on."""
         size = self.real_size
+        pos = self.real_pos
 
         if self.parent != None:
-            self.surface = pygame.Surface(size, 0, g.ALPHA)
-            color = (0,0,0,0)
+            self.surface = self.parent.surface.subsurface(pos + size)
         else:
             if g.fullscreen:
                 flags = pygame.FULLSCREEN
             else:
                 flags = 0
             self.surface = pygame.display.set_mode(size, flags)
-            color = (0,0,0,255)
+            self.surface.fill( (0,0,0,255) )
 
-        self.surface.fill( color )
+            g.fade_mask = pygame.Surface(size, 0, g.ALPHA)
+            g.fade_mask.fill( (0,0,0,175) )
 
-        self.internal_surface = pygame.Surface(size, 0, g.ALPHA)
-        self.internal_surface.fill( color )
-
-    def rebuild(self):
-        """Generic rebuild of a widget.  Recreates the surfaces, unsets
-           needs_rebuild, and passes the rebuild on to the widget's
-           children.
-
-           Override to draw custom art for this widget.  Call this at the
-           beginning of the overrided method."""
-        self.remake_surfaces()
-        self.needs_rebuild = False
-        for child in self.children:
-            child.needs_rebuild = True
-
-        self.needs_redraw = True # Propagates.
-
-    def redraw(self):
-        """Handles redrawing a widget and its children.  Art specific to this 
-           widget should be drawn by overriding rebuild, not redraw."""
-        # Recalculate the widget's absolute position, if needed.
-        if self.needs_rebuild or self.needs_redraw:
-            self.collision_rect = self._make_collision_rect()
-
-        # If the widget's own image needs to be rebuilt, do it and mark the
-        # widget as needing a redraw.
+    def prepare_for_redraw(self):
+        # First we handle any substance changes.
         if self.needs_rebuild:
             self.rebuild()
 
-        # Redraw the widget.
-        if self.needs_redraw:
-            # Clear the surface and draw the widget's image.
-            self.surface.fill( (0,0,0,0) )
-            self.surface.blit( self.internal_surface, (0,0) )
+        # Then size changes.
+        if self.needs_resize:
+            self.resize()
 
-            # Draw the widget's children who go below the dimming mask.
-            above_mask = []
-            for child in self.children:
-                if self.needs_full_redraw:
-                    child.needs_full_redraw = self.needs_full_redraw
-                if child.visible:
-                    if child.is_above_mask:
-                        above_mask.append(child)
-                    else:
-                        child.redraw()
+        # Then position changes.
+        if self.needs_reposition:
+            self.reposition()
 
-            # Draw the dimming mask, if needed.
-            if self.self_mask:
-                self.do_mask()
+        # And finally we recurse to our descendants.
+        for child in self.children:
+            if child.needs_update and child.visible:
+                child.prepare_for_redraw()
 
-            # Draw the widget's children who go above the dimming mask
-            for child in above_mask:
-                child.redraw()
+    def maybe_update(self):
+        if self.needs_update:
+            self.update()
 
-        # Copy the entire image onto the widget's parent.
-        if self.parent:
-            self.parent.surface.blit(self.surface, self.real_pos)
-        elif self.needs_redraw:
+    def update(self):
+        # First we prepare everything for its redraw (if needed).
+        self.prepare_for_redraw()
+
+        self._update()
+
+        # Oh, and if this is the top-level widget, we should flip the display.
+        if not self.parent:
             pygame.display.flip()
 
+    def _update(self):
+        redrew_self = self.needs_redraw
+        if self.needs_redraw:
+            self.redraw()
+
+        # Then we update any children below our fade mask.
+        check_mask = []
+        above_mask = []
+        for child in self.children:
+            if child.needs_update and child.visible:
+                if child.is_above_mask:
+                    above_mask.append(child)
+                else:
+                    check_mask += child._update()
+
+        # Next, we handle the fade mask.
+        if getattr(self, "faded", False):
+            while check_mask:
+                child = check_mask.pop()
+                if not child.self_mask:
+                    child.surface.blit(g.fade_mask, (0,0))
+                elif child.mask_children:
+                    check_mask += child.children
+
+        # And finally we update any children above the fade mask.
+        for child in above_mask:
+            child._update()
+
+        # Update complete.
+        self.needs_update = False
+
+        # Any descendants we didn't check for masking get passed upwards.
+        if redrew_self:
+            # If we redrew this widget, we tell our parent to consider it
+            # instead.  The parent will recurse down to any descendants if
+            # needed, and redraw already propogated down to them.
+            check_mask = [self]
+
+        return check_mask
+
+    def rebuild(self):
+        self.needs_rebuild = False
+
+    def resize(self):
+        self.needs_resize = False
+        self._real_size = self._calc_size()
+        self.needs_reposition = True
+        self.needs_redraw = True
+
+    def reposition(self):
+        self.needs_reposition = False
+        old_rect = self.collision_rect
+        self.collision_rect = self._make_collision_rect()
+
+        if self.parent and (old_rect is None
+                            or not self.collision_rect.contains(old_rect)):
+            self.remake_surfaces()
+            self.parent.needs_redraw = True
+        elif old_rect != self.collision_rect:
+            self.remake_surfaces()
+            self.needs_redraw = True
+
+    def redraw(self):
         self.needs_redraw = False
-        self.needs_full_redraw = False
+        if self.parent is None:
+            self.surface.fill((0,0,0,255))
 
     def add_handler(self, *args, **kwargs):
         """Handler pass-through."""
@@ -339,12 +401,13 @@ class Widget(object):
 
 
 class BorderedWidget(Widget):
-    borders = causes_rebuild("_borders")
-    border_color = causes_rebuild("_border_color")
-    background_color = causes_rebuild("_background_color")
+    borders = causes_redraw("_borders")
+    border_color = causes_redraw("_border_color")
+    background_color = causes_redraw("_background_color")
 
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
+        self.children = []
         self.borders = kwargs.pop("borders", ())
         self.border_color = kwargs.pop("border_color", g.colors["white"])
         self.background_color = kwargs.pop("background_color", g.colors["blue"])
@@ -353,9 +416,20 @@ class BorderedWidget(Widget):
 
     def rebuild(self):
         super(BorderedWidget, self).rebuild()
+        if self.parent and self.background_color == g.colors["clear"]:
+            self.parent.needs_redraw = True
+
+    def reposition(self):
+        super(BorderedWidget, self).reposition()
+        if self.parent and self.background_color == g.colors["clear"]:
+            self.parent.needs_redraw = True
+
+    def redraw(self):
+        super(BorderedWidget, self).redraw()
 
         # Fill the background.
-        self.internal_surface.fill( self.background_color )
+        if self.background_color != g.colors["clear"]:
+            self.surface.fill( self.background_color )
 
         # Draw borders
         my_size = self.real_size
@@ -364,21 +438,19 @@ class BorderedWidget(Widget):
 
         for edge in self.borders:
             if edge == constants.TOP:
-                self.internal_surface.fill( self.border_color,
-                                            (0, 0, my_size[0], 1) )
+                self.surface.fill(self.border_color, (0, 0, my_size[0], 1) )
             elif edge == constants.LEFT:
-                self.internal_surface.fill( self.border_color,
-                                            (0, 0, 1, my_size[1]) )
+                self.surface.fill(self.border_color, (0, 0, 1, my_size[1]) )
             elif edge == constants.RIGHT:
-                self.internal_surface.fill( self.border_color, 
-                                            (my_size[0]-1, 0) + my_size )
+                self.surface.fill(self.border_color, 
+                                  (my_size[0]-1, 0) + my_size)
             elif edge == constants.BOTTOM:
-                self.internal_surface.fill( self.border_color, 
-                                            (0, my_size[1]-1) + my_size )
+                self.surface.fill(self.border_color, 
+                                  (0, my_size[1]-1) + my_size)
 
 
 class FocusWidget(Widget):
-    has_focus = causes_rebuild("_has_focus")
+    has_focus = causes_redraw("_has_focus")
     def __init__(self, *args, **kwargs):
         super(FocusWidget, self).__init__(*args, **kwargs)
         self.has_focus = True

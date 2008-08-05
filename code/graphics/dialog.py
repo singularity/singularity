@@ -50,12 +50,9 @@ def call_dialog(dialog, parent=None):
         parent_dialog.start_timer()
 
     parent_dialog.fake_mouse()
+    Dialog.top.needs_redraw = True
 
     return retval
-
-def causes_remask(data_member):
-    """Creates a data member that sets needs_remask to True when changed."""
-    return widget.set_on_change(data_member, "needs_remask")
 
 def insort_all(sorted_list, items):
     for item in items:
@@ -67,8 +64,6 @@ class Dialog(text.Text):
     top = None # The top-level dialog.
 
     faded = widget.causes_redraw("_faded")
-
-    _collision_rect = causes_remask("__collision_rect")
 
     def __init__(self, parent=None, pos = (.5,.1), size = (1, .9), 
                  anchor = constants.TOP_CENTER, **kwargs):
@@ -97,41 +92,6 @@ class Dialog(text.Text):
         """Recreates the surfaces that this widget will draw on."""
         super(Dialog, self).remake_surfaces()
 
-    def make_fade_mask(self):
-        """Recreates the fade mask for this dialog.  Override if part of the 
-           dialog should remain fully visible, even when not active."""
-        mask = pygame.Surface(self.real_size, 0, g.ALPHA)
-        abs_pos = self.collision_rect[:2]
-        descendants = self.children[:] # Copy to make it safely mutable.
-        while descendants:
-            child = descendants.pop()
-            if not child.visible:
-                continue
-            elif not child.self_mask:
-                fill_rect = child.collision_rect[:] # As above.
-                fill_rect[0] -= abs_pos[0]
-                fill_rect[1] -= abs_pos[1]
-                mask.fill( (0,0,0,175), fill_rect)
-            elif child.mask_children:
-                descendants += child.children
-        return mask
-
-    def get_fade_mask(self):
-        """If the dialog needs a remask, calls make_fade_mask.  Otherwise, 
-           returns the pre-made fade mask."""
-        if self.needs_remask:
-            self._fade_mask = self.make_fade_mask()
-            self.needs_remask = False
-        return self._fade_mask
-
-    fade_mask = property(get_fade_mask)
-
-    def do_mask(self):
-        """Greys out the dialog when faded, to make it clear that it's not 
-           active."""
-        if self.faded:
-            self.surface.blit( self.get_fade_mask(), (0,0) )
-
     def start_timer(self, force = False):
         if self.needs_timer == None:
             self.needs_timer = bool(self.handlers.get(constants.TICK, False))
@@ -153,18 +113,18 @@ class Dialog(text.Text):
 
         # Pretend to jiggle the mouse pointer, to force buttons to update their
         # selected state.
-        Dialog.top.redraw()
+        Dialog.top.maybe_update()
         self.fake_mouse()
 
         # Force a timer tick at the start to make sure everything's initialized.
         if self.needs_timer:
             self.handle(pygame.event.Event(pygame.USEREVENT))
-            Dialog.top.redraw()
+            Dialog.top.maybe_update()
             pygame.display.flip()
 
         while True:
-            # Redraw handles rebuilding and redrawing all widgets, as needed.
-            Dialog.top.redraw()
+            # Update handles updates of all kinds to all widgets, as needed.
+            Dialog.top.maybe_update()
             event = pygame.event.wait()
             result = self.handle(event)
             if result != constants.NO_RESULT:
@@ -367,7 +327,7 @@ class TextDialog(Dialog):
     def __init__(self, parent, pos=(.5,.1), size=(.5,.5),
                  anchor=constants.TOP_CENTER, valign=constants.TOP,
                  align=constants.LEFT,
-                 shrink_factor=.88, background_color=(0,0,50,200), **kwargs):
+                 shrink_factor=.88, background_color=(0,0,50,255), **kwargs):
 
         super(TextDialog, self).__init__(parent, pos, size, anchor, 
                                          shrink_factor=shrink_factor,
@@ -528,6 +488,7 @@ class ChoiceDescriptionDialog(ChoiceDialog):
                                      update_func=self.handle_update)
 
     def rebuild(self):
+        self.listbox.needs_rebuild = True
         list_pos = self.listbox.list_pos
 
         if 0 <= list_pos < len(self.list):
@@ -539,7 +500,11 @@ class ChoiceDescriptionDialog(ChoiceDialog):
             else:
                 key = self.list[self.listbox.list_pos]
 
+            # Safely clear all the description pane's children.
+            self.description_pane.remove_hooks()
             self.description_pane.children = []
+            self.description_pane.add_hooks()
+
             self.desc_func(self.description_pane, key)
 
         super(ChoiceDescriptionDialog, self).rebuild()

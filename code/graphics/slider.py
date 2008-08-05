@@ -29,7 +29,7 @@ def calc_max(elements, size):
     return max(elements - size, 0)
 
 class Slider(button.Button):
-    slider_color = widget.causes_rebuild("_slider_color")
+    slider_color = widget.causes_redraw("_slider_color")
     slider_pos = widget.causes_rebuild("_slider_pos")
     slider_max = widget.causes_rebuild("_slider_max")
     slider_size = widget.causes_rebuild("_slider_size")
@@ -62,6 +62,11 @@ class Slider(button.Button):
                                     unselected_color = self.slider_color,
                                     priority = 75)
 
+    def redraw(self):
+        super(Slider, self).redraw()
+        self.button.selected_color = self.slider_color
+        self.button.unselected_color = self.slider_color
+
     def add_hooks(self):
         super(Slider, self).add_hooks()
         self.parent.add_handler(constants.DRAG, self.handle_drag)
@@ -82,7 +87,10 @@ class Slider(button.Button):
 
     def rebuild(self):
         super(Slider, self).rebuild()
+        self.needs_resize = True
 
+    def resize(self):
+        super(Slider, self).resize()
         bar_start = self._calc_length(self.slider_pos)
         bar_length = self._calc_length(self.slider_size)
 
@@ -90,6 +98,8 @@ class Slider(button.Button):
             self.button.pos = (-bar_start, 0)
             self.button.size = (-bar_length, -1)
             borders = [constants.TOP, constants.BOTTOM]
+
+            self.button.resize()
             real_pos = self.button.real_pos[0]
             real_size = self.button.real_size[0]
             if real_pos == 0:
@@ -101,6 +111,8 @@ class Slider(button.Button):
             self.button.pos = (0, -bar_start)
             self.button.size = (-1, -bar_length)
             borders = [constants.LEFT, constants.RIGHT]
+
+            self.button.resize()
             real_pos = self.button.real_pos[1]
             real_size = self.button.real_size[1]
             if real_pos == 0:
