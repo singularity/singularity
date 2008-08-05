@@ -113,9 +113,6 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
         return cpu_count
 
-    def redraw(self):
-        super(ResearchScreen, self).redraw()
-
     def handle_slide(self, key, new_pos):
         g.pl.cpu_usage[key] = new_pos
         self.dirty_count = True
