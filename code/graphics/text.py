@@ -143,17 +143,20 @@ class Text(widget.BorderedWidget):
     _wrap = widget.set_on_change("__wrap", "needs_refont")
     bold = widget.causes_rebuild("_bold")
     _bold = widget.set_on_change("__bold", "needs_refont")
+    oversize = widget.causes_rebuild("_oversize")
+    _oversize = widget.set_on_change("__oversize", "needs_refont")
 
     collision_rect = widget.set_on_change("_collision_rect", "needs_refont")
     _base_font = widget.set_on_change("__base_font", "needs_refont")
     _text = widget.set_on_change("__text", "needs_refont")
     _shrink_factor = widget.set_on_change("__shrink_factor", "needs_refont")
 
-    def __init__(self, parent, pos, size = (0, .05), 
-                 anchor = constants.TOP_LEFT, text = None, base_font = None,
-                 color = None, shrink_factor = 1, underline = -1,
-                 align = constants.CENTER, valign = constants.MID, wrap = True,
-                 bold = False, **kwargs):
+    lorem_ipsum = {}
+
+    def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
+                 text=None, base_font=None, shrink_factor=1,
+                 color=None, align=constants.CENTER, valign=constants.MID,
+                 underline=-1, wrap=True, bold=False, oversize=False, **kwargs):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.needs_refont = True
@@ -167,57 +170,63 @@ class Text(widget.BorderedWidget):
         self.valign = valign
         self.wrap = wrap
         self.bold = bold
+        self.oversize = oversize
 
     def pick_font(self, dimensions = None):
         if dimensions and self.needs_refont:
             self.needs_refont = False
-
-            if dimensions[0]:
-                width = dimensions[0] - 4
-            else:
-                width = None
-            height = dimensions[1]
-
-            basic_line_count = self.text.count("\n") + 1
-
-            # Run a binary search for the best font size.
-            # Thanks to bisect.bisect_left for the basic implementation.
-            left = 8
-            right = len(self.base_font)
-
-            while left + 1 < right:
-                test_index = (left + right) // 2
-                test_font = self.base_font[test_index]
-                test_font.set_bold(self.bold)
-
-                if width:
-                    too_wide = False
-                    if self.wrap:
-                        lines = split_wrap(self.text, test_font, width)
-                    else:
-                        lines = split_wrap(self.text, test_font, 0)
-                        for line in lines:
-                            if test_font.size(line)[0] > width:
-                                too_wide = True
-                                break
-                    line_count = len(lines)
-                else:
-                    line_count = basic_line_count
-
-                if ( test_font.get_linesize() * line_count ) > height:
-                    right = test_index
-                elif width and too_wide:
-                    right = test_index
-                else:
-                    left = test_index
-
-                test_font.set_bold(False)
-
-            self._font = self.base_font[left]
+            size = self.pick_font_size(dimensions)
+            self._font = self.base_font[size]
 
         return self._font
 
     font = property(pick_font)
+
+    def pick_font_size(self, dimensions):
+        if dimensions[0]:
+            width = dimensions[0] - 4
+        else:
+            width = None
+        height = dimensions[1]
+
+        basic_line_count = self.text.count("\n") + 1
+
+        # Run a binary search for the best font size.
+        # Thanks to bisect.bisect_left for the basic implementation.
+        left = 8
+        if self.oversize or self.base_font[0] not in Text.lorem_ipsum:
+            right = len(self.base_font)
+        else:
+            right = Text.lorem_ipsum[self.base_font[0]].font_size
+
+        while left + 1 < right:
+            test_index = (left + right) // 2
+            test_font = self.base_font[test_index]
+            test_font.set_bold(self.bold)
+
+            too_wide = False
+            if width:
+                if self.wrap:
+                    lines = split_wrap(self.text, test_font, width)
+                else:
+                    lines = split_wrap(self.text, test_font, 0)
+                    for line in lines:
+                        if test_font.size(line)[0] > width:
+                            too_wide = True
+                            break
+                line_count = len(lines)
+            else:
+                line_count = basic_line_count
+
+            too_tall = (test_font.get_linesize() * line_count) > height
+            if too_tall or too_wide:
+                right = test_index
+            else:
+                left = test_index
+
+            test_font.set_bold(False)
+
+        return left
 
     def _calc_size(self):
         base_size = list(super(Text, self)._calc_size())
@@ -244,6 +253,25 @@ class Text(widget.BorderedWidget):
                          self.color, self.underline, self.align, self.valign,
                          self.real_size, self.wrap) 
             self.font.set_bold(False)
+
+_lorem_ipsum = '''Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'''
+class _LoremIpsum(Text):
+    def __init__(self, base_font):
+        super(_LoremIpsum, self).__init__(None, (0,0), (.35, .4),
+                                          base_font=base_font,
+                                          text=_lorem_ipsum, oversize=True)
+        Text.lorem_ipsum[base_font[0]] = self
+        self.last_resolution = None
+
+    _calc_size = widget.Widget._calc_size
+
+    def get_font_size(self):
+        if self.last_resolution != g.screen_size:
+            self._font_size = self.pick_font_size(self.real_size)
+        return self._font_size
+
+    font_size = property(get_font_size)
 
 class EditableText(widget.FocusWidget, Text):
     cursor_pos = widget.causes_rebuild("_cursor_pos")

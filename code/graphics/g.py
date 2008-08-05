@@ -52,8 +52,8 @@ colors = dict(
 
 #Normal and Acknowledge fonts.
 font = []
-font.append([0] * 51)
-font.append([0] * 51)
+font.append([0] * 100)
+font.append([0] * 100)
 
 #which fonts to use
 font0 = "DejaVuSans.ttf"
@@ -70,12 +70,18 @@ directory.
     font_dir = os.path.join(data_loc, "fonts")
     font0_file = os.path.join(font_dir, font0)
     font1_file = os.path.join(font_dir, font1)
-    for i in range(8, 51):
+    font[0][0] = font0
+    font[1][0] = font1
+    for i in range(8, 100):
         font[0][i] = pygame.font.Font(font0_file, i)
         font[1][i] = pygame.font.Font(font1_file, i)
 
     # Size 17 has a bad "R".
     font[1][17] = font[1][18]
+
+    import text
+    text._LoremIpsum(font[0])
+    text._LoremIpsum(font[1])
 
 images = {}
 def load_images(data_loc):
