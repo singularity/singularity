@@ -269,9 +269,25 @@ class _LoremIpsum(Text):
     def get_font_size(self):
         if self.last_resolution != g.screen_size:
             self._font_size = self.pick_font_size(self.real_size)
+            self.last_resolution = g.screen_size
         return self._font_size
 
     font_size = property(get_font_size)
+
+class FastText(Text):
+    """Reduces font searches by assuming a monospace font and single-line text."""
+    _text = widget.set_on_change("__text", "maybe_needs_refont")
+    old_text = ""
+    maybe_needs_refont = False
+
+    def pick_font(self, dimensions = None):
+        if self.maybe_needs_refont and not self.needs_refont:
+            if len(self.old_text) != len(self.text):
+                self.old_text = self.text
+                self.needs_refont = True
+        self.maybe_needs_refont = False
+
+        return super(FastText, self).pick_font(dimensions)
 
 class EditableText(widget.FocusWidget, Text):
     cursor_pos = widget.causes_rebuild("_cursor_pos")

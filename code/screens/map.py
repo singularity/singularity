@@ -128,7 +128,7 @@ class MapScreen(dialog.Dialog):
                                                  text="MENU", hotkey="m",
                                                  function=show_menu)
 
-        self.time_display = text.Text(self, (.14, 0), (0.23, 0.04),
+        self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
                                       text="DAY 0000, 00:00:00",
                                       base_font=gg.font[1],
                                       background_color=gg.colors["black"],
@@ -167,14 +167,14 @@ class MapScreen(dialog.Dialog):
         widget.unmask_all(self.info_window)
 
         self.cash_display = \
-            text.Text(self.info_window, (0,0), (-1, -.5), base_font=gg.font[1],
+            text.FastText(self.info_window, (0,0), (-1, -.5), base_font=gg.font[1],
                       text="CASH: 5,000 (4,900)", borders=constants.ALL,
                       shrink_factor = .7,
                       background_color=gg.colors["black"],
                       border_color=gg.colors["dark_blue"])
 
         self.cpu_display = \
-            text.Text(self.info_window, (0,-.5), (-1, -.5),
+            text.FastText(self.info_window, (0,-.5), (-1, -.5),
                       base_font=gg.font[1], borders = (constants.LEFT,
                                             constants.RIGHT, constants.BOTTOM),
                       text="CPU: 1 (0)", shrink_factor=.7,
