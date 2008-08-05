@@ -30,6 +30,8 @@ class Image(widget.Widget):
     def __init__(self, parent, pos, size = (1, 1), 
                  anchor = constants.TOP_LEFT, image = None):
         super(Image, self).__init__(parent, pos, size, anchor)
+
+        self.old_size = None
         
         if image:
             self.image = image.convert_alpha()
@@ -48,7 +50,13 @@ class Image(widget.Widget):
 
         return tuple(size)
 
+    def rescale(self):
+        self.scaled_image = \
+            pygame.transform.smoothscale(self.image, self.real_size)
+
     def rebuild(self):
         super(Image, self).rebuild()
-        scaled_image = pygame.transform.smoothscale(self.image, self.real_size)
-        self.internal_surface.blit(scaled_image, (0,0))
+        if self.real_size != self.old_size:
+            self.rescale()
+            self.old_size = self.real_size
+        self.internal_surface.blit(self.scaled_image, (0,0))
