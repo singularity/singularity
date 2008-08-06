@@ -24,6 +24,8 @@ import constants
 import g
 import widget
 
+scale = getattr(pygame.transform, "smoothscale", pygame.transform.scale)
+
 class Image(widget.Widget):
     image = widget.causes_rebuild("_image")
 
@@ -51,8 +53,7 @@ class Image(widget.Widget):
         return tuple(size)
 
     def rescale(self):
-        self.scaled_image = \
-            pygame.transform.smoothscale(self.image, self.real_size)
+        self.scaled_image = scale(self.image, self.real_size)
 
     def resize(self):
         super(Image, self).resize()

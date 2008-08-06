@@ -239,7 +239,7 @@ class Widget(object):
         if self.parent:
             pos += self.parent.collision_rect[:2]
 
-        return pygame.sprite.Rect(pos, self.real_size)
+        return pygame.Rect(pos, self.real_size)
 
     def is_over(self, position):
         if position != (0,0):

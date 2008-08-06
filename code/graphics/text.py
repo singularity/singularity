@@ -26,6 +26,12 @@ import g
 
 DEBUG = False
 
+def get_widths(font, text):
+    if hasattr(font, "metrics"):
+        return [m[4] for m in font.metrics(text)]
+    else:
+        return [font.size(c)[0] for c in text]
+
 def strip_to_null(a_string):
     if not a_string:
         return a_string
@@ -58,7 +64,7 @@ def split_wrap(text, font, wrap_at):
                     line = word
                     pos = word_size
                 else:
-                    widths = [m[4] for m in font.metrics(word)]
+                    widths = get_widths(font, word)
                     for index, char in enumerate(word):
                         width = widths[index]
                         if pos + width <= wrap_at:
@@ -398,7 +404,7 @@ class EditableText(widget.FocusWidget, Text):
                 line_x = excess_space
 
         prev_width = 20000
-        widths = [m[4] for m in self.font.metrics(line)]
+        widths = get_widths(font, line)
         for index, width in enumerate(widths):
             if line_x + (width // 2) < click_x:
                 line_x += width
