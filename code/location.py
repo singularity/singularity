@@ -128,6 +128,9 @@ class Location(buyable.BuyableClass):
         next.prev = base
         base.next = next
 
+        # Make sure the location's CPU modifier is applied.
+        base.recalc_cpu()
+
     def __hash__(self):
         return hash(self.id)
 
