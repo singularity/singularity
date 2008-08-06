@@ -177,7 +177,7 @@ if pygame.image.get_extended() == 0:
     sys.exit(1)
 
 # Initialize the screen with a dummy size.
-pygame.display.set_mode((1,1))
+pygame.display.set_mode(graphics.g.screen_size)
 
 #init data:
 g.init_graphics_system()
