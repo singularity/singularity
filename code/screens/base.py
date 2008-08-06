@@ -215,10 +215,15 @@ class BaseScreen(dialog.Dialog):
             item_type = self.build_dialog.key_list[result]
             self.set_current(type, item_type)
             self.needs_rebuild = True
+            self.parent.parent.needs_rebuild = True
 
     def switch_base(self, forwards):
         self.base = self.base.next_base(forwards)
         self.needs_rebuild = True
+
+    def show(self):
+        self.needs_rebuild = True
+        return super(BaseScreen, self).show()
 
     def rebuild(self):
         self.name_display.text="%s (%s)" % (self.base.name, self.base.type.name)
