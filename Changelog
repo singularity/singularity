@@ -3,10 +3,13 @@ Endgame: Singularity Changelog
 v0.29 (release 2008.??.??):
 
 USER-VISIBLE CHANGES:
+* Complete rewrite of the graphics system, shiny new dialogs.  Arbitrary
+  resolutions now supported. (FM)
 - Fix to de_DE intro text. (booiiing)
 
 OTHER CHANGES:
 - Removed a redundant tech requirement. (Phil, Xombie for bug report)
+- Major efficiency improvements. (FM)
 
 v0.28a (release 2008.05.12):
 
