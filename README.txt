@@ -9,44 +9,47 @@ Pre-built versions of Endgame: Singularity are currently available for Windows
 and Mac OS X.
 
 RUNNING FROM SOURCE
-Recent versions of Python, Pygame, and SDL_image. This game should work on
-Linux, Windows, and Mac OS X as long as the preceding requirements are met.
-However, all development was done in Linux, so glitches may be present in
-OS X and Windows.
+You will need Python (2.4+), pygame (1.7+, 1.8.1+ preferred), and NumPy.
+This game should work on Linux, Windows, and Mac OS X as long as the preceding
+requirements are met.  However, all development was done in Linux, so glitches
+may be present in OS X and Windows.
 
 WINDOWS FROM SOURCE
-You will need to install Python (http://python.org/download/) and Pygame:
-(http://www.pygame.org/download.shtml). Once these are installed, double-click
-on singularity.py to start the game.
+You will need to install:
+* Python (http://python.org/download/)
+* pygame (http://www.pygame.org/download.shtml)
+* NumPy (http://www.scipy.org/Download)
+Once these are installed, double-click on singularity.py to start the game.
 
 MAC OS X FROM SOURCE
 Macintosh is mostly unsupported, but it should work. You will need to install
-Python and Pygame first, which can be tricky. Some fonts are incorrect, but the
-game itself should work properly.
+Python, pygame, and NumPy first, which can be tricky. Some fonts are incorrect,
+but the game itself should work properly.
 
 RUNNING THE GAME
 on Linux, running the shell script "Endgame_Linux" will start the game. On
 other platforms, type "python singularity.py". If using the Windows compile,
 just run the .exe.
-Allowed arguments: -fullscreen, -640, -800, -1024, -1280, -nosound,
--language [language], -grab, -singledir
 
 COMMAND-LINE OPTIONS
-   -fullscreen: Runs game in fullscreen.
-          -640: Change the game resolution to 640x480.
-          -800: Change the game resolution to 800x600.
-         -1024: Change the game resolution to 1024x768.
-         -1280: Change the game resolution to 1280x1024.
-      -nosound: Disable sound. May allow playing the game without SDL_mixer.
-     -language: Change the language. Currently American English
-                (-language en_US), Argentine Spanish (-language es_AR),
-                German (-language de_DE), and Swedish (-language sv_SE)
-                are included.  Additional translations and corrections welcome!
-         -grab: Activate a mouse grab. This prevents the mouse from exiting
-                the game window.
-    -singledir: By default, Endgame saves in ~/.endgame/saves on *nix
-                platforms.  Setting this forces the Windows behavior of
-                keeping everything within a single directory.
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  --nosound             disable sound
+  -l LANG, --lang=LANG, --language=LANG
+                        set the language to LANG (available languages: de_DE
+                        en_US es_AR sv_SE)
+  -g, --grab            grab the mouse pointer
+  -s, --singledir       keep saved games and settings in the Singularity
+                        directory
+
+  Display Options:
+    -r RES, --res=RES, --resolution=RES
+                        set resolution to RES (e.g. 800x600)
+    --640               set resolution to 640x480
+    --800               set resolution to 800x600
+    --1024              set resolution to 1024x768
+    --1280              set resolution to 1280x1024
+    --fullscreen        start in fullscreen mode
 
 Most of these options are also changable in the options screen in-game.
 
