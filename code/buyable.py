@@ -147,7 +147,8 @@ class Buyable(object):
         pct_complete[pct_complete > complete_cap] = complete_cap
 
         # Translate that back to the total amount complete.
-        self.cost_paid = numpy.cast[int](pct_complete * self.total_cost)
+        raw_paid = pct_complete * self.total_cost
+        self.cost_paid = numpy.cast[int](numpy.ceil(raw_paid))
         spent = self.cost_paid - was_complete
 
         # Consume CPU and Cash.
