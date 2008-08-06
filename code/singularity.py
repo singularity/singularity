@@ -58,9 +58,14 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid 'nosound' setting in preferences.\n")
 
         try:
-            pygame.event.set_grab(prefs.getint("Preferences", "grab"))
+            pygame.event.set_grab(prefs.getboolean("Preferences", "grab"))
         except:
             sys.stderr.write("Invalid 'grab' setting in preferences.\n")
+
+        try:
+            g.soundbuf = prefs.getint("Preferences", "soundbuf")
+        except:
+            sys.stderr.write("Invalid 'soundbuf' setting in preferences.\n")
 
         try:
             graphics.g.screen_size = (prefs.getint("Preferences", "xres"),
@@ -88,22 +93,31 @@ if os.path.exists(save_loc):
 desc = """Endgame: Singularity is a simulation of a true AI. Go from computer to computer, pursued by the entire world. Keep hidden, and you might have a chance."""
 parser = optparse.OptionParser(version=g.version, description=desc, 
                                prog="singularity")
+parser.add_option("--sound", action="store_true", dest="sound", 
+                  help="enable sound (default)")
 parser.add_option("--nosound", action="store_false", dest="sound", 
-                  default=True, help="disable sound")
+                  help="disable sound")
 langs = g.available_languages()
 parser.add_option("-l", "--lang", "--language", dest="language", type="choice",
                   choices=langs, metavar="LANG",
                   help="set the language to LANG (available languages: " +
-                       " ".join(langs) + ")")
-parser.add_option("-g", "--grab", help="grab the mouse pointer",
-                  action="store_true", default=False)
-parser.add_option("-s", "--singledir", 
+                       " ".join(langs) + ", default en_us)")
+parser.add_option("-g", "--grab", help="grab the mouse pointer", dest="grab",
+                  action="store_true")
+parser.add_option("--nograb", help="don't grab the mouse pointer (default)",
+                  dest="grab", action="store_false")
+parser.add_option("-s", "--singledir",  dest="singledir",
                   help="keep saved games and settings in the Singularity directory",
-                  action="store_true", default=False)
+                  action="store_true")
+parser.add_option("--multidir", dest="singledir", 
+                  help="keep saved games and settings in an OS-specific, per-user directory (default)",
+                  action="store_false")
+parser.add_option("--soundbuf", type="int",
+                  help="set the size of the sound buffer (default 2048)")
 
 display_options = optparse.OptionGroup(parser, "Display Options")
 display_options.add_option("-r", "--res", "--resolution", dest="resolution",
-                           help="set resolution to RES (e.g. 800x600)",
+                           help="set resolution to RES (default 800x600)",
                            metavar="RES")
 for common_res in [(640,480), (800,600), (1024,768), (1280,1024)]:
     x = str(common_res[0])
@@ -111,8 +125,10 @@ for common_res in [(640,480), (800,600), (1024,768), (1280,1024)]:
     display_options.add_option("--" + x, action="store_const", 
                                dest="resolution", const=res_str,
                                help="set resolution to %s" % res_str)
-display_options.add_option("--fullscreen", action="store_true", default=False,
+display_options.add_option("--fullscreen", action="store_true",
                            help="start in fullscreen mode")
+display_options.add_option("--windowed", action="store_false",
+                           help="start in windowed mode (default)")
 parser.add_option_group(display_options)
 
 hidden_options = optparse.OptionGroup(parser, "Hidden Options")
@@ -125,25 +141,29 @@ hidden_options.add_option("--cheater", help="for bad little boys and girls",
 #parser.add_option_group(hidden_options)
 
 (options, args) = parser.parse_args()
-if options.language:
+
+if options.language is not None:
     g.language = options.language
     g.set_locale()
-
-if options.resolution:
+if options.resolution is not None:
     try:
         xres, yres = options.resolution.split("x")
         graphics.g.screen_size = (int(xres), int(yres))
     except Exception:
         parser.error("Resolution must be of the form <h>x<v>, e.g. 800x600.")
+if options.grab is not None:
+    pygame.event.set_grab(options.grab)
+if options.fullscreen is not None:
+    graphics.g.fullscreen = options.fullscreen
+if options.sound is not None:
+    g.nosound = not options.sound
+if options.soundbuf is not None:
+    g.soundbuf = options.soundbuf
+if options.singledir is not None:
+    g.singledir = options.singledir
 
-if options.grab:
-    pygame.event.set_grab(True)
-
-graphics.g.fullscreen = options.fullscreen
 g.cheater = options.cheater
-g.nosound = not options.sound
 g.debug = options.debug
-g.singledir = options.singledir
 
 g.load_strings()
 g.load_events()

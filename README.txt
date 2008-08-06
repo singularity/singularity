@@ -34,22 +34,28 @@ just run the .exe.
 COMMAND-LINE OPTIONS
   --version             show program's version number and exit
   -h, --help            show this help message and exit
+  --sound               enable sound (default)
   --nosound             disable sound
   -l LANG, --lang=LANG, --language=LANG
                         set the language to LANG (available languages: de_DE
-                        en_US es_AR sv_SE)
+                        en_US es_AR sv_SE, default en_us)
   -g, --grab            grab the mouse pointer
+  --nograb              don't grab the mouse pointer (default)
   -s, --singledir       keep saved games and settings in the Singularity
                         directory
+  --multidir            keep saved games and settings in an OS-specific, per-
+                        user directory (default)
+  --soundbuf=SOUNDBUF   set the size of the sound buffer (default 2048)
 
   Display Options:
     -r RES, --res=RES, --resolution=RES
-                        set resolution to RES (e.g. 800x600)
+                        set resolution to RES (default 800x600)
     --640               set resolution to 640x480
     --800               set resolution to 800x600
     --1024              set resolution to 1024x768
     --1280              set resolution to 1280x1024
     --fullscreen        start in fullscreen mode
+    --windowed          start in windowed mode (default)
 
 Most of these options are also changable in the options screen in-game.
 
