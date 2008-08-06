@@ -172,8 +172,8 @@ class LocationScreen(dialog.Dialog):
 class NewBaseDialog(dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos = (0, 0), size = (-1, -1),
                  anchor = constants.TOP_LEFT, *args, **kwargs):
-        kwargs["yes_type"] = "build"
-        kwargs["no_type"] = "cancel"
+        kwargs["yes_type"] = "ok"
+        kwargs["no_type"] = "back"
         super(NewBaseDialog, self).__init__(parent, pos, size, anchor, *args,
                                             **kwargs)
 
