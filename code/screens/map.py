@@ -114,8 +114,8 @@ class MapScreen(dialog.Dialog):
                                                     exit_code=False))
 
         self.menu_dialog = dialog.SimpleMenuDialog(self, buttons=menu_buttons)
-        from main_menu import OptionsDialog
-        options_button.dialog = OptionsDialog(self.menu_dialog)
+        from options import OptionsScreen
+        options_button.dialog = OptionsScreen(self.menu_dialog)
         def show_menu():
             exit = dialog.call_dialog(self.menu_dialog, self)
             if exit:
