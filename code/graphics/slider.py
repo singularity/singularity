@@ -159,9 +159,14 @@ class Slider(button.Button):
         else:
             self.drag_state = None
 
-    def jump(self, lower):
-        jump_dist = max(1, self.slider_size - 1)
-        if lower:
+    def jump(self, go_lower, big_jump=False, tiny_jump=False):
+        if big_jump:
+            jump_dist = max(1, self.slider_max // 2)
+        elif tiny_jump:
+            jump_dist = max(1, self.slider_max // 100)
+        else:
+            jump_dist = max(1, self.slider_size - 1)
+        if go_lower:
             self.slider_pos = self.safe_pos(self.slider_pos - jump_dist)
         else:
             self.slider_pos = self.safe_pos(self.slider_pos + jump_dist)

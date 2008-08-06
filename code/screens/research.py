@@ -18,6 +18,8 @@
 
 #This file contains the global research screen.
 
+import pygame
+
 from code import g
 from code.graphics import widget, dialog, button, slider, text, constants, listbox, g as gg
 import finance
@@ -35,6 +37,18 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.description_pane.size = (.39, .55)
 
         self.desc_func = self.on_select
+
+        self.add_key_handler(pygame.K_LEFT, self.adjust_slider)
+        self.add_key_handler(pygame.K_RIGHT, self.adjust_slider)
+
+    def adjust_slider(self, event):
+        if 0 <= self.listbox.list_pos < len(self.listbox.list):
+            go_lower = (event.key == pygame.K_LEFT)
+            big_jump = (event.mod & pygame.KMOD_SHIFT)
+            tiny_jump = (event.mod & pygame.KMOD_CTRL)
+
+            canvas = self.listbox.display_elements[self.listbox.list_pos]
+            canvas.slider.jump(go_lower, big_jump, tiny_jump)
 
     def on_select(self, description_pane, key):
         text.Text(self.description_pane, (0,0), (-1,-1), text=key)
