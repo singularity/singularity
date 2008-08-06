@@ -40,6 +40,12 @@ class Tech(buyable.Buyable):
             # place.
             super(Tech, self).finish()
 
+    def __cmp__(self, other):
+        if not isinstance(other, Tech):
+            return -1
+        else:
+            return cmp(self.type, other.type)
+
     def finish(self):
         super(Tech, self).finish()
         self.gain_tech()
