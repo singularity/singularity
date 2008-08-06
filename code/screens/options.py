@@ -173,6 +173,13 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         for soundbuf_button in self.soundbuf_group:
             soundbuf_button.set_active(soundbuf_button.args == (g.soundbuf,))
 
+        lang_array = self.language_choice.list
+        lang_pos = 0
+        for i in range(len(lang_array)):
+            if lang_array[i] == g.language:
+                lang_pos = i
+        self.language_choice.list_pos = lang_pos
+
         retval = super(OptionsScreen, self).show()
 
         if self.resolution_custom.active:
@@ -262,6 +269,8 @@ def set_language_properly():
         # We haven't initialized the location yet.  This will be handled when
         # we do that.
         pass
+
+    dialog.Dialog.top.map_screen.needs_rebuild = True
 
 def save_options():
     # Build a ConfigParser for writing the various preferences out.
