@@ -221,6 +221,12 @@ class MapScreen(dialog.Dialog):
 
     def force_update(self):
         self.find_speed_button()
+        if g.curr_speed:
+            self.needs_timer = True
+            self.start_timer()
+        else:
+            self.needs_timer = False
+            self.stop_timer()
         self.needs_rebuild = True
 
     def show(self):
