@@ -351,13 +351,20 @@ class Widget(object):
         old_rect = self.collision_rect
         self.collision_rect = self._make_collision_rect()
 
-        if self.parent and (old_rect is None
-                            or not self.collision_rect.contains(old_rect)):
-            self.remake_surfaces()
-            self.parent.needs_redraw = True
-        elif old_rect != self.collision_rect:
+        if not self.parent:
             self.remake_surfaces()
             self.needs_redraw = True
+        elif (   (getattr(self, "surface", None) is None)
+              or (old_rect is None)
+              or (self.surface.get_parent() is not self.parent.surface)
+              or (not self.collision_rect.contains(old_rect))
+             ):
+            self.remake_surfaces()
+            self.parent.needs_redraw = True
+        elif self.collision_rect != old_rect:
+            self.remake_surfaces()
+            self.needs_redraw = True
+
 
     def redraw(self):
         self.needs_redraw = False
