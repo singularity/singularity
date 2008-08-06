@@ -244,7 +244,7 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
     def show(self):
         self.set_fullscreen(gg.fullscreen, resize=False)
         self.fullscreen_toggle.set_active(gg.fullscreen)
-        self.set_sound(not g.nosound)
+        self.set_sound(not g.nosound, reset=False)
         self.sound_toggle.set_active(not g.nosound)
         self.set_grab(pygame.event.get_grab())
         self.grab_toggle.set_active(pygame.event.get_grab())
@@ -293,13 +293,13 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
         if resize:
             dialog.Dialog.top.needs_resize = True
 
-    def set_sound(self, value):
+    def set_sound(self, value, reset=True):
         if value:
             self.sound_toggle.text = "YES"
         else:
             self.sound_toggle.text = "NO"
         g.nosound = not value
-        if not g.nosound:
+        if reset and not g.nosound:
             g.reinit_mixer()
             g.play_sound("click")
 

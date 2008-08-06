@@ -171,7 +171,7 @@ play_sound() plays a sound from a particular class.
         sys.stderr.write("D: Playing sound %s.\n" % random_sound["filename"])
     random_sound["sound"].play()
 
-delay_time = 0
+delay_time = 1
 music_dict = {}
 
 def load_music():

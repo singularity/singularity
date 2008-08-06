@@ -107,6 +107,8 @@ class Dialog(text.Text):
 
     def show(self):
         """Shows the dialog and enters an event-handling loop."""
+        from code.g import play_music
+
         self.visible = True
         self.key_down = None
         self.start_timer()
@@ -125,6 +127,7 @@ class Dialog(text.Text):
         while True:
             # Update handles updates of all kinds to all widgets, as needed.
             Dialog.top.maybe_update()
+            play_music()
             event = pygame.event.wait()
             result = self.handle(event)
             if result != constants.NO_RESULT:
