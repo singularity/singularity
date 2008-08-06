@@ -456,6 +456,7 @@ class LocationDialog(dialog.Dialog):
         if self.location is not None:
             self.listbox.list = [base.name for base in self.location.bases]
             self.listbox.key_list = self.location.bases
+            self.listbox.needs_rebuild = True
             self.name_display.text = self.location.name
         super(LocationDialog, self).rebuild()
 
@@ -464,6 +465,7 @@ class LocationDialog(dialog.Dialog):
             base = self.listbox.key_list[self.listbox.list_pos]
             old_index = state_list.index(base.power_state)
             base.power_state = state_list[old_index-1]
+            self.needs_rebuild = True
             self.parent.needs_rebuild = True
 
     def destroy_base(self):
@@ -473,6 +475,7 @@ class LocationDialog(dialog.Dialog):
                 base.destroy()
                 self.listbox.list = [base.name for base in self.location.bases]
                 self.listbox.key_list = self.location.bases
+                self.needs_rebuild = True
                 self.parent.needs_rebuild = True
 
     def open_base(self):
@@ -480,6 +483,7 @@ class LocationDialog(dialog.Dialog):
             base = self.listbox.key_list[self.listbox.list_pos]
             self.base_dialog.base = base
             dialog.call_dialog(self.base_dialog, self)
+            self.needs_rebuild = True
             self.parent.needs_rebuild = True
 
     def new_base(self):
@@ -488,6 +492,7 @@ class LocationDialog(dialog.Dialog):
             base_type, base_name = result
             new_base = g.base.Base(base_type, base_name)
             self.location.add_base(new_base)
+            self.needs_rebuild = True
             self.parent.needs_rebuild = True
 
 class NewBaseDialog(dialog.ChoiceDescriptionDialog):
