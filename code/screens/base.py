@@ -206,8 +206,7 @@ class BaseScreen(dialog.Dialog):
             if self.base.extra_items[index] is None \
                      or self.base.extra_items[index].type != item_type:
                 self.base.extra_items[index] = \
-                    g.item.Item(item_type, base=self.base,
-                                count=self.base.type.size)
+                    g.item.Item(item_type, base=self.base)
 
     def build_item(self, type):
         self.build_dialog.type = type
