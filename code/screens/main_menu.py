@@ -242,7 +242,7 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
                                                  function=save_options)
 
     def show(self):
-        self.set_fullscreen(gg.fullscreen, rebuild=False)
+        self.set_fullscreen(gg.fullscreen, resize=False)
         self.fullscreen_toggle.set_active(gg.fullscreen)
         self.set_sound(not g.nosound)
         self.sound_toggle.set_active(not g.nosound)
@@ -268,7 +268,7 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
                 gg.screen_size = (int(self.resolution_custom_horiz.text),
                                   int(self.resolution_custom_vert.text))
                 if gg.screen_size != old_size:
-                    dialog.Dialog.top.needs_rebuild = True
+                    dialog.Dialog.top.needs_resize = True
             except ValueError:
                 pass
 
@@ -284,14 +284,14 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
         if g.language != prev_lang:
             set_language_properly()
 
-    def set_fullscreen(self, value, rebuild=True):
+    def set_fullscreen(self, value, resize=True):
         if value:
             self.fullscreen_toggle.text = "YES"
         else:
             self.fullscreen_toggle.text = "NO"
         gg.fullscreen = value
-        if rebuild:
-            dialog.Dialog.top.needs_rebuild = True
+        if resize:
+            dialog.Dialog.top.needs_resize = True
 
     def set_sound(self, value):
         if value:
@@ -312,7 +312,7 @@ class OptionsDialog(dialog.FocusDialog, dialog.MessageDialog):
 
     def set_resolution(self, value):
         gg.screen_size = value
-        dialog.Dialog.top.needs_rebuild = True
+        dialog.Dialog.top.needs_resize = True
 
     def set_resolution_custom(self):
         self.resolution_custom.chosen_one()
