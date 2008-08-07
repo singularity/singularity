@@ -174,7 +174,7 @@ class Slider(button.Button):
     def activated(self, event):
         assert event.type == pygame.MOUSEBUTTONUP
         if self.horizontal:
-            self.jump(lower = event.pos[0] < self.button.collision_rect[0])
+            self.jump(go_lower=(event.pos[0] < self.button.collision_rect[0]))
         else:
             self.jump(lower = event.pos[1] < self.button.collision_rect[1])
 
