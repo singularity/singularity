@@ -20,6 +20,7 @@
 #This file contains the player class.
 
 import random
+from operator import truediv
 
 import g
 from graphics import g as gg
@@ -138,6 +139,8 @@ class Player(object):
     def get_job_info(self, cpu_time, partial_cash = None):
         if partial_cash == None:
             partial_cash = self.partial_cash
+
+        assert partial_cash >= 0
 
         cash_per_cpu = g.jobs[g.get_job_level()][0]
         if g.techs["Advanced Simulacra"].done:
@@ -440,6 +443,14 @@ class Player(object):
                 base.studying = ""
 
         self.remove_bases(dead_bases)
+
+        needed_cpu = sum(self.cpu_usage.values())
+        if needed_cpu > self.available_cpus[0]:
+            pct_left = truediv(self.available_cpus[0], needed_cpu)
+            for task, cpu_assigned in self.cpu_usage.iteritems():
+                self.cpu_usage[task] = int(cpu_assigned * pct_left)
+            g.map_screen.needs_rebuild = True
+
 
         # Random Events
         for event in g.events:

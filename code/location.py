@@ -18,7 +18,6 @@
 
 #This file contains the Location class.
 
-import bisect
 import g
 import buyable
 from buyable import cash, cpu, labor
@@ -64,7 +63,7 @@ class Location(buyable.BuyableClass):
         self.absolute = absolute
         self.safety = safety
 
-        # A sorted list of the bases at this location.
+        # A list of the bases at this location.  Often sorted for the GUI.
         self.bases = []
 
     had_last_discovery = property(lambda self: g.pl.last_discovery == self)
@@ -103,34 +102,12 @@ class Location(buyable.BuyableClass):
             maintenance[cash] = int(maintenance[cash] / mod)
 
     def add_base(self, base):
-        # We keep self.bases sorted by inserting at the correct position, thanks
-        # to bisect.
-        where = bisect.bisect(self.bases, base)
-        self.bases.insert(where, base)
+        self.bases.append(base)
         base.location = self
 
         self.modify_cost(base.total_cost)
         self.modify_cost(base.cost_left)
         self.modify_maintenance(base.maintenance)
-
-        if len(self.bases) == 1:
-            # The rest wouldn't cause any harm... but it also wouldn't do 
-            # anything.
-            return
-
-        # Update the linked list.
-        # ...going backwards.
-        prev = self.bases[where-1] # Will correctly wrap to -1.
-        prev.next = base
-        base.prev = prev
-
-        # ... and going forwards.
-        if where < len(self.bases)-1:
-            next = self.bases[where+1]
-        else:
-            next = self.bases[0]
-        next.prev = base
-        base.next = next
 
         # Make sure the location's CPU modifier is applied.
         base.recalc_cpu()
@@ -143,12 +120,3 @@ class Location(buyable.BuyableClass):
             return cmp(self.id, other)
         else:
             return cmp(self.id, other.id)
-
-    def __setstate__(self, state):
-        self.__dict__ = state
-
-        # Rebuild the linked list.
-        for index, base in enumerate(self.bases):
-            prev = self.bases[index - 1] # Will correctly wrap to -1.
-            base.prev = prev
-            prev.next = base

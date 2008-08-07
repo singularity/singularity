@@ -117,10 +117,6 @@ class Base(buyable.Buyable):
         self.started_at = g.pl.raw_min
         self.studying = ""
 
-        # All the bases in a location form a circular, doubly-linked list via
-        # self.next and self.prev.  Since we start off with no location, we
-        # link both next and prev to ourself.
-        self.next = self.prev = self
         self.location = None
 
         #Base suspicion is currently unused
@@ -267,12 +263,7 @@ class Base(buyable.Buyable):
         super(Base, self).destroy()
 
         if self.location:
-            # bisect_left gets us the location of this base in the (sorted)
-            # array.  From there, we update the doubly-linked list.
-            pos = bisect.bisect_left(self.location.bases, self)
-            del self.location.bases[pos]
-            self.prev.next = self.next
-            self.next.prev = self.prev
+            self.location.bases.remove(self)
 
         if self.cpus is not None:
             self.cpus.destroy()
@@ -282,15 +273,17 @@ class Base(buyable.Buyable):
                 item.destroy()
 
     def next_base(self, forwards):
+        index = self.location.bases.index(self)
         if forwards > 0:
-            base = self.next
-            while not base.done:
-                base = base.next
+            increment = 1
         else:
-            base = self.prev
-            while not base.done:
-                base = base.prev
-        return base
+            increment = -1
+
+        while True:
+            index += increment
+            base = self.location.bases[index]
+            if base.done:
+                return base
 
     def sort_tuple(self):
         # We sort based on size (descending), CPU (descending),
@@ -302,14 +295,6 @@ class Base(buyable.Buyable):
             return cmp(self.sort_tuple(), other.sort_tuple())
         else:
             return -1
-
-    def __getstate__(self):
-        state_dict = self.__dict__.copy()
-
-        # Squash the linked list, to avoid overwhelming pickle.
-        del state_dict["next"]
-        del state_dict["prev"]
-        return state_dict
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.  If

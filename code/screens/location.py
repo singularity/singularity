@@ -128,10 +128,15 @@ class LocationScreen(dialog.Dialog):
 
     def rebuild(self):
         if self.location is not None:
+            self.location.bases.sort()
+
             self.listbox.list = [base.name for base in self.location.bases]
             self.listbox.key_list = self.location.bases
-            self.listbox.needs_rebuild = True
+
             self.name_display.text = self.location.name
+
+            self.listbox.needs_rebuild = True
+
         super(LocationScreen, self).rebuild()
 
     def power_state(self):
