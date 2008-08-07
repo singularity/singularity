@@ -556,9 +556,11 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 
-            g.map_screen.show_message(dialog_string, color=gg.colors["red"])
             g.curr_speed = 0
             base.destroy()
+            g.map_screen.find_speed_button()
+            g.map_screen.needs_rebuild = True
+            g.map_screen.show_message(dialog_string, color=gg.colors["red"])
 
         # Now we update the internal information about what locations had
         # the most recent discovery and the nextmost recent one.  First,

@@ -149,27 +149,35 @@ class Listbox(widget.FocusWidget, text.SelectableText):
                                    unselected_color=self.unselected_color,
                                    align=self.align)
 
-    def rebuild(self):
-        super(Listbox, self).rebuild()
-        self.needs_resize = True
-
     def resize(self):
         super(Listbox, self).resize()
 
         if self.num_elements() != len(self.display_elements):
             self.remake_elements()
 
+        self.scrollbar.resize()
+
+        self.rebuild()
+
+    def rebuild(self):
+        self.list_pos = self.safe_pos(self.list_pos)
+
+        if self.needs_resize:
+            self.resize()
+            return
+
         window_size = len(self.display_elements)
         list_size = len(self.list)
 
-        self.scrollbar.window = window_size
+        self.scrollbar.window = len(self.display_elements)
         self.scrollbar.elements = list_size
 
         if self.auto_scroll:
             self.auto_scroll = False
             self.scrollbar.center(self.list_pos)
 
-        self.scrollbar.resize()
+        self.scrollbar.rebuild()
+
         scrollbar_width = self.scrollbar.real_size[0]
         my_width = self.real_size[0]
         scrollbar_rel_width = scrollbar_width / float(my_width)
@@ -185,6 +193,9 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             # Set up the element contents.
             element.selected = (list_index == self.list_pos)
             self.update_element(element, list_index)
+
+        self.needs_redraw = True
+        super(Listbox, self).rebuild()
 
     def update_element(self, element, list_index):
         if 0 <= list_index < len(self.list):

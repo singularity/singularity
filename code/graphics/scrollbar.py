@@ -80,8 +80,8 @@ class Scrollbar(widget.Widget):
                                     anchor = constants.BOTTOM_RIGHT,
                                     first = False, horizontal = horizontal)
 
-    def rebuild(self):
-        super(Scrollbar, self).rebuild()
+    def resize(self):
+        super(Scrollbar, self).resize()
         if self.horizontal:
             long = self.real_size[0]
             short = self.real_size[1]
@@ -97,9 +97,14 @@ class Scrollbar(widget.Widget):
             self.button2.size = (-1, -size)
             self.slider.size = (-1, (size * 2) - 1)
 
+    def rebuild(self):
+        self.slider.slider_max = slider.calc_max(self.elements, self.window)
+        self.scroll_pos = min(self.scroll_pos, self.slider.slider_max)
         self.slider.slider_pos = self.scroll_pos
         self.slider.slider_size = self.window
-        self.slider.slider_max = slider.calc_max(self.elements, self.window)
+
+        self.needs_redraw = True
+        super(Scrollbar, self).rebuild()
 
     def adjust(self, lower):
         if lower:
