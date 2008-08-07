@@ -56,7 +56,10 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         return super(BuildDialog, self).show()
 
     def on_change(self, description_pane, key):
-        text.Text(description_pane, (0, 0), (-1, -1), text=key.id)
+        text.Text(description_pane, (0, 0), (-1, -1), text=key.get_info(),
+                  background_color=gg.colors["dark_blue"],
+                  align=constants.LEFT, valign=constants.TOP,
+                  borders=constants.ALL)
 
 type_names = dict(cpu="Processor", reactor="Reactor",
                   network="Network", security="Security")
@@ -253,6 +256,21 @@ Public: %s"""
                         g.to_time(current.cost_left[2])
             pane.name_panel.text = "%s: %s" % (type_names[item], current_name)
             pane.build_panel.text = current_build
+
+        count = ""
+        if self.base.type.size > 1:
+            current = getattr(self.base.cpus, "count", 0)
+
+            size = self.base.type.size
+
+            if size == current:
+                count = " x%d (max)" % current
+            elif current == 0:
+                count = " (room for %d)" % size
+            else:
+                count = " x%d (room for %d more)" % size
+                
+        self.cpu_pane.name_panel.text += count
 
         # Detection chance display.  If Socioanalytics hasn't been researched,
         # you get nothing; if it has, but not Advanced Socioanalytics, you get

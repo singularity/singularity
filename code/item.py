@@ -37,6 +37,14 @@ class ItemClass(buyable.BuyableClass):
             self.buildable = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
             "AFRICA", "AUSTRALIA"]
 
+    def get_info(self):
+        import g
+        basic_text = super(ItemClass, self).get_info()
+        if self.item_type == "cpu":
+            return basic_text.replace("---", "Generates %s CPU.\n---" % 
+                                              g.add_commas(self.item_qual))
+        return basic_text
+
 class Item(buyable.Buyable):
     def __init__(self, item_type, base=None, count=1):
         super(Item, self).__init__(item_type, count)
