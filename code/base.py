@@ -85,11 +85,11 @@ class BaseClass(buyable.BuyableClass):
     def get_info(self, location):
         raw_cost = self.cost[:]
         location.modify_cost(raw_cost)
-        cost = self.describe_cost(raw_cost).replace(" ", u"\xA0").replace(u",\xA0", ", ")
+        cost = self.describe_cost(raw_cost)
 
         raw_maintenance = self.maintenance[:]
         location.modify_maintenance(raw_maintenance)
-        maint = self.describe_cost(raw_maintenance, True).replace(" ", u"\xA0").replace(u",\xA0", ", ")
+        maint = self.describe_cost(raw_maintenance, True)
 
         detect = self.get_detect_info(location)
 
@@ -106,7 +106,7 @@ class BaseClass(buyable.BuyableClass):
             location_message = "\n\n" + \
                 g.strings["location_modifiers"] % dict(modifiers=modifier)
 
-        template = u"%s\nBuild cost:\xA0%s\nMaintenance:\xA0%s\n%s%s\n---\n%s%s"
+        template = u"%s\nBuild\xA0cost:\xA0%s\nMaintenance:\xA0%s\n%s%s\n---\n%s%s"
         return template % (self.name, cost, maint, detect, size, self.description, location_message)
 
 class Base(buyable.Buyable):

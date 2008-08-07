@@ -46,6 +46,12 @@ class Tech(buyable.Buyable):
         else:
             return cmp(self.type, other.type)
 
+    def get_info(self):
+        cost = self.type.describe_cost(self.total_cost, True)
+        left = self.type.describe_cost(self.cost_left, True)
+        template = """%s\nTotal cost: %s\nCost left: %s\n---\n%s"""
+        return template % (self.name, cost, left, self.description)
+
     def finish(self):
         super(Tech, self).finish()
         self.gain_tech()

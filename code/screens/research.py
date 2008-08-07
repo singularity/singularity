@@ -51,7 +51,15 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             canvas.slider.jump(go_lower, big_jump, tiny_jump)
 
     def on_select(self, description_pane, key):
-        text.Text(self.description_pane, (0,0), (-1,-1), text=key)
+        if key in g.techs:
+            description = g.techs[key].get_info()
+        else:
+            description = ""
+
+        text.Text(self.description_pane, (0,0), (-1,-1), text=description,
+                  background_color=gg.colors["dark_blue"],
+                  align=constants.LEFT, valign=constants.TOP,
+                  borders=constants.ALL)
 
     def make_item(self, canvas):
         canvas.research_name = text.Text(canvas, (-.01, -.01), (-.70, -.5),

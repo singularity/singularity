@@ -52,8 +52,8 @@ class BuyableClass(object):
         cash_cost = g.to_money(cost[cash])
         labor_cost = ""
         if not hide_time:
-            labor_cost = ", %s" % g.to_time(cost[labor])
-        return "%s CPU, %s money%s" % (cpu_cost, cash_cost, labor_cost)
+            labor_cost = ", %s" % g.to_time(cost[labor]).replace(" ", u"\xA0")
+        return u"%s\xA0CPU, %s\xA0money%s" % (cpu_cost, cash_cost, labor_cost)
 
     def get_info(self):
         cost_str = self.describe_cost(self.cost)
