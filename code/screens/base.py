@@ -258,8 +258,7 @@ Public: %s"""
         # you get nothing; if it has, but not Advanced Socioanalytics, you get
         # an inaccurate value.
         if not g.techs["Socioanalytics"].done:
-            self.detect_frame.text = \
-                g.strings["detect_chance_unknown_base"].replace(" ", "\n")
+            self.detect_frame.text = g.strings["detect_chance_unknown_base"]
         else: 
             accurate = g.techs["Advanced Socioanalytics"].done
             chance = self.base.get_detect_chance(accurate)

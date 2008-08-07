@@ -41,6 +41,74 @@ class BaseClass(buyable.BuyableClass):
         self.maintenance = maintenance
         self.flavor = []
 
+    def calc_discovery_chance(self, accurate = True, extra_factor = 1):
+        # Get the default settings for this base type.
+        detect_chance = self.detect_chance.copy()
+    
+        # Adjust by the current suspicion levels ...
+        for group in detect_chance:
+            suspicion = g.pl.groups[group].suspicion
+            detect_chance[group] *= 10000 + suspicion
+            detect_chance[group] /= 10000
+    
+        # ... and further adjust based on technology ...
+        for group in detect_chance:
+            discover_bonus = g.pl.groups[group].discover_bonus
+            detect_chance[group] *= discover_bonus
+            detect_chance[group] /= 10000
+    
+        # ... and the given factor.
+        for group in detect_chance:
+            detect_chance[group] = int(detect_chance[group] * extra_factor)
+    
+        # Lastly, if we're told to be inaccurate, adjust the values to their
+        # nearest percent.
+        if not accurate:
+            for group in detect_chance:
+                detect_chance[group] = g.nearest_percent(detect_chance[group])
+    
+        return detect_chance
+
+    def get_detect_info(self, location):
+        if not g.techs["Socioanalytics"].done:
+            return g.strings["detect_chance_unknown_base"].replace(" ", u"\xA0")
+
+        accurate = g.techs["Advanced Socioanalytics"].done
+        detect_modifier = 1 / location.modifiers.get("stealth", 1)
+        chance = self.calc_discovery_chance(accurate, detect_modifier)
+        detect_template = u"Detection chance: NEWS:\xA0%s  SCIENCE:\xA0%s  COVERT:\xA0%s  PUBLIC:\xA0%s"
+        return detect_template % (g.to_percent(chance.get("news", 0)),
+                                  g.to_percent(chance.get("science", 0)),
+                                  g.to_percent(chance.get("covert", 0)),
+                                  g.to_percent(chance.get("public", 0)))
+
+    def get_info(self, location):
+        raw_cost = self.cost[:]
+        location.modify_cost(raw_cost)
+        cost = self.describe_cost(raw_cost).replace(" ", u"\xA0").replace(u",\xA0", ", ")
+
+        raw_maintenance = self.maintenance[:]
+        location.modify_maintenance(raw_maintenance)
+        maint = self.describe_cost(raw_maintenance, True).replace(" ", u"\xA0").replace(u",\xA0", ", ")
+
+        detect = self.get_detect_info(location)
+
+        size = ""
+        if self.size > 1:
+            size = "\nHas space for %d computers." % self.size
+
+        location_message = ""
+        if "cpu" in location.modifiers:
+            if location.modifiers["cpu"] > 1:
+                modifier = g.strings["cpu_bonus"]
+            else:
+                modifier = g.strings["cpu_penalty"]
+            location_message = "\n\n" + \
+                g.strings["location_modifiers"] % dict(modifiers=modifier)
+
+        template = u"%s\nBuild cost:\xA0%s\nMaintenance:\xA0%s\n%s%s\n---\n%s%s"
+        return template % (self.name, cost, maint, detect, size, self.description, location_message)
+
 class Base(buyable.Buyable):
     def __init__(self, name, type, built=False):
         super(Base, self).__init__(type)
@@ -248,30 +316,5 @@ class Base(buyable.Buyable):
 # told to be inaccurate, it rounds the value to the nearest percent.
 def calc_base_discovery_chance(base_type_name, accurate = True,
                                extra_factor = 1):
-
-    # Get the default settings for this base type.
-    detect_chance = g.base_type[base_type_name].detect_chance.copy()
-
-    # Adjust by the current suspicion levels ...
-    for group in detect_chance:
-        suspicion = g.pl.groups[group].suspicion
-        detect_chance[group] *= 10000 + suspicion
-        detect_chance[group] /= 10000
-
-    # ... and further adjust based on technology ...
-    for group in detect_chance:
-        discover_bonus = g.pl.groups[group].discover_bonus
-        detect_chance[group] *= discover_bonus
-        detect_chance[group] /= 10000
-
-    # ... and the given factor.
-    for group in detect_chance:
-        detect_chance[group] = int(detect_chance[group] * extra_factor)
-
-    # Lastly, if we're told to be inaccurate, adjust the values to their
-    # nearest percent.
-    if not accurate:
-        for group in detect_chance:
-            detect_chance[group] = g.nearest_percent(detect_chance[group])
-
-    return detect_chance
+    return g.base_type[base_type_name].calc_discovery_chance(accurate,
+                                                             extra_factor)

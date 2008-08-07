@@ -47,6 +47,19 @@ class BuyableClass(object):
         
     cost = property(get_cost)
 
+    def describe_cost(self, cost, hide_time=False):
+        cpu_cost = g.to_cpu(cost[cpu])
+        cash_cost = g.to_money(cost[cash])
+        labor_cost = ""
+        if not hide_time:
+            labor_cost = ", %s" % g.to_time(cost[labor])
+        return "%s CPU, %s money%s" % (cpu_cost, cash_cost, labor_cost)
+
+    def get_info(self):
+        cost_str = self.describe_cost(self.cost)
+        template = """%s\nCost: %s\n---\n%s"""
+        return template % (self.name, cost_str, self.description)
+
     def __cmp__(self, other):
         # For sorting buyables, we sort by cost; Python's cmp() is smart enough
         # to handle this properly for tuples.  The first element is price in

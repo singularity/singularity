@@ -94,6 +94,14 @@ class Location(buyable.BuyableClass):
             # Invert it and apply to the labor cost.
             cost[labor] = int(cost[labor] / mod)
 
+
+    def modify_maintenance(self, maintenance):
+        if "thrift" in self.modifiers:
+            mod = self.modifiers["thrift"]
+
+            # Invert it and apply to the cash maintenance.  CPU is not changed.
+            maintenance[cash] = int(maintenance[cash] / mod)
+
     def add_base(self, base):
         # We keep self.bases sorted by inserting at the correct position, thanks
         # to bisect.
@@ -103,11 +111,7 @@ class Location(buyable.BuyableClass):
 
         self.modify_cost(base.total_cost)
         self.modify_cost(base.cost_left)
-        if "thrift" in self.modifiers:
-            mod = self.modifiers["thrift"]
-
-            # And maintenance
-            base.maintenance[cash] = int(base.maintenance[cash] / mod)
+        self.modify_maintenance(base.maintenance)
 
         if len(self.bases) == 1:
             # The rest wouldn't cause any harm... but it also wouldn't do 

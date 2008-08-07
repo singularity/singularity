@@ -183,8 +183,12 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         self.name_dialog = \
             dialog.TextEntryDialog(self, text=g.strings["new_base_text"])
 
-    def on_change(self, description_pane, key):
-        text.Text(description_pane, (0, 0), (-1, -1), text=key.id)
+    def on_change(self, description_pane, base_type):
+        base_info = base_type.get_info(self.parent.location)
+        text.Text(description_pane, (0, 0), (-1, -1), text=base_info,
+                  background_color=gg.colors["dark_blue"],
+                  align=constants.LEFT, valign=constants.TOP,
+                  borders=constants.ALL)
 
     def show(self):
         self.list = []

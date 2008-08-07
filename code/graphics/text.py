@@ -41,8 +41,10 @@ def strip_to_null(a_string):
         a_string =  a_string[:-1] + u"\uFEFF"
     return a_string
 
+class WrapError(Exception): pass
+
 # Splits a string into lines based on newline and word wrapping.
-def split_wrap(text, font, wrap_at):
+def split_wrap(text, font, wrap_at, break_words=True):
     raw_lines = text.split("\n")
     lines = []
 
@@ -64,6 +66,9 @@ def split_wrap(text, font, wrap_at):
                     line = word
                     pos = word_size
                 else:
+                    if not break_words:
+                        message = "'%s' is too wide and can't be broken"
+                        raise WrapError, message % word
                     widths = get_widths(font, word)
                     for index, char in enumerate(word):
                         width = widths[index]
@@ -178,14 +183,20 @@ class Text(widget.BorderedWidget):
     def pick_font(self, dimensions = None):
         if dimensions and self.needs_refont:
             self.needs_refont = False
-            size = self.pick_font_size(dimensions)
+            nice_size = self.pick_font_size(dimensions, False)
+            mean_size = self.pick_font_size(dimensions)
+            if nice_size > mean_size - 5:
+                size = nice_size
+            else:
+                size = mean_size
+                print nice_size, mean_size, self.text
             self._font = self.base_font[size]
 
         return self._font
 
     font = property(pick_font)
 
-    def pick_font_size(self, dimensions):
+    def pick_font_size(self, dimensions, break_words=True):
         if dimensions[0]:
             width = dimensions[0] - 4
         else:
@@ -210,7 +221,12 @@ class Text(widget.BorderedWidget):
             too_wide = False
             if width:
                 if self.wrap:
-                    lines = split_wrap(self.text, test_font, width)
+                    try:
+                        lines = split_wrap(self.text, test_font, width,
+                                           break_words)
+                    except WrapError:
+                        lines = []
+                        too_wide = True
                 else:
                     lines = split_wrap(self.text, test_font, 0)
                     for line in lines:
