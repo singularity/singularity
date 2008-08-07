@@ -243,6 +243,9 @@ class Player(object):
 
         cpu_left = self.available_cpus[0]
         for task, cpu_assigned in self.cpu_usage.iteritems():
+            if cpu_assigned == 0:
+                continue
+
             cpu_left -= cpu_assigned
             real_cpu = cpu_assigned * secs_passed
             if task == "jobs":
