@@ -53,13 +53,15 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         else:
             self.default = self.parent.get_current(self.type).type.id
 
+        self.needs_rebuild = True
         return super(BuildDialog, self).show()
 
-    def on_change(self, description_pane, key):
-        text.Text(description_pane, (0, 0), (-1, -1), text=key.get_info(),
-                  background_color=gg.colors["dark_blue"],
-                  align=constants.LEFT, valign=constants.TOP,
-                  borders=constants.ALL)
+    def on_change(self, description_pane, item):
+        if item is not None:
+            text.Text(description_pane, (0, 0), (-1, -1), text=item.get_info(),
+                      background_color=gg.colors["dark_blue"],
+                      align=constants.LEFT, valign=constants.TOP,
+                      borders=constants.ALL)
 
 type_names = dict(cpu="Processor", reactor="Reactor",
                   network="Network", security="Security")

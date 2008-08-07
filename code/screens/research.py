@@ -53,6 +53,15 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def on_select(self, description_pane, key):
         if key in g.techs:
             description = g.techs[key].get_info()
+        elif key == "cpu_pool":
+            description = g.strings["cpu_pool"] + "\n---\n" + g.strings["research_cpu_pool"]
+        elif key == "jobs":
+            template = "%s\n%s money per CPU per day.\n---\n%s"
+            job = g.jobs[g.get_job_level()]
+            profit = job[0]
+            if g.techs["Advanced Simulacra"].done:
+                profit = int(profit * 1.1)
+            description = template % (job[3], profit, job[2])
         else:
             description = ""
 

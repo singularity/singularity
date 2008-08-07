@@ -502,13 +502,15 @@ class ChoiceDescriptionDialog(ChoiceDialog):
                 key = self.key_list[self.listbox.list_pos]
             else:
                 key = self.list[self.listbox.list_pos]
+        else:
+            key = None
 
-            # Safely clear all the description pane's children.
-            self.description_pane.remove_hooks()
-            self.description_pane.children = []
-            self.description_pane.add_hooks()
+        # Safely clear all the description pane's children.
+        self.description_pane.remove_hooks()
+        self.description_pane.children = []
+        self.description_pane.add_hooks()
 
-            self.desc_func(self.description_pane, key)
+        self.desc_func(self.description_pane, key)
 
         super(ChoiceDescriptionDialog, self).rebuild()
 
