@@ -160,6 +160,8 @@ class LocationScreen(dialog.Dialog):
     def open_base(self):
         if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
             base = self.listbox.key_list[self.listbox.list_pos]
+            if not base.done:
+                return
             self.base_dialog.base = base
             dialog.call_dialog(self.base_dialog, self)
             self.needs_rebuild = True
@@ -204,7 +206,8 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         base_type_list.sort()
         base_type_list.reverse()
         for base_type in base_type_list:
-            if base_type.available():
+            if base_type.available() \
+                    and self.parent.location.id in base_type.regions:
                 self.list.append(base_type.name)
                 self.key_list.append(base_type)
 

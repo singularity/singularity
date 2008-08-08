@@ -39,7 +39,7 @@ class BuyableClass(object):
             self.prefix = ""
 
     def get_cost(self):
-        cost = array(self._cost)
+        cost = array(self._cost, long)
         cost[labor] *= g.minutes_per_day * g.pl.labor_bonus
         cost[labor] /= 10000
         cost[cpu] *= g.seconds_per_day
@@ -106,7 +106,7 @@ class Buyable(object):
 
         self.total_cost = type.cost * count
         self.total_cost[labor] //= count
-        self.cost_left = array(self.total_cost)
+        self.cost_left = array(self.total_cost, long)
 
         self.count = count
         self.done = False
@@ -124,7 +124,7 @@ class Buyable(object):
         if not self.done:
             self.type.complete_count += self.count
             self.type.total_complete_count += self.count
-            self.cost_left = array([0,0,0])
+            self.cost_left = array([0,0,0], long)
             self.done = True
 
     def get_cost_paid(self):
@@ -149,7 +149,7 @@ class Buyable(object):
 
         # Figure out how much we could complete.
         was_complete = self.cost_paid
-        available = array([cash_available, cpu_available, time])
+        available = array([cash_available, cpu_available, time], long)
         pct_complete = truediv(was_complete + available, self.total_cost)
 
         # Find the least-complete resource.
@@ -161,12 +161,14 @@ class Buyable(object):
 
         # Translate that back to the total amount complete.
         raw_paid = pct_complete * self.total_cost
-        self.cost_paid = numpy.cast[int](numpy.ceil(raw_paid))
+        self.cost_paid = numpy.cast[numpy.int64](numpy.ceil(raw_paid))
         spent = self.cost_paid - was_complete
 
         # Consume CPU and Cash.
-        g.pl.cpu_pool -= spent[cpu]
-        g.pl.cash -= spent[cash]
+        # Note the cast from <type 'numpy.int64'> to <type 'int'> to avoid
+        # poisoning other calculations (like, say, g.pl.do_jobs).
+        g.pl.cpu_pool -= int(spent[cpu])
+        g.pl.cash -= int(spent[cash])
 
         if (self.cost_left <= 0).all():
             self.finish()

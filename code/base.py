@@ -147,7 +147,7 @@ class Base(buyable.Buyable):
         self.power_state = "active"
         self.grace_over = False
 
-        self.maintenance = buyable.array(self.type.maintenance)
+        self.maintenance = buyable.array(self.type.maintenance, long)
 
     def recalc_cpu(self):
         if self.raw_cpu == 0:
@@ -281,6 +281,7 @@ class Base(buyable.Buyable):
 
         while True:
             index += increment
+            index %= len(self.location.bases)
             base = self.location.bases[index]
             if base.done:
                 return base

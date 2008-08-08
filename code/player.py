@@ -21,6 +21,7 @@
 
 import random
 from operator import truediv
+from numpy import array
 
 import g
 from graphics import g as gg
@@ -88,11 +89,7 @@ class Player(object):
         self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""
 
-        self.maintenance_cost = buyable.array((0,0,0))
-
-        self.have_cpu = True
-        self.complete_bases = 1
-        self.complex_bases = 0
+        self.maintenance_cost = array((0,0,0), long)
 
         self.cpu_usage = {}
         self.available_cpus = [1, 0, 0, 0, 0]
@@ -184,32 +181,21 @@ class Player(object):
 
         time_of_day = g.pl.raw_sec % g.seconds_per_day
 
-        techs_in_progress = []
         techs_researched = []
         bases_constructed = []
-        cpus_constructed = {}
+        cpus_constructed = []
         items_constructed = []
 
         bases_under_construction = []
         items_under_construction = []
         self.cpu_pool = 0
-        self.have_cpu = False
-        self.complete_bases = 0
-        self.complex_bases = 0
 
-        # Re-calculate the maintenance.
-        self.maintenance_cost = buyable.array( (0,0,0) )
-
-        # Phase 1: Collect CPU and construction info.
-        #          Spend CPU, then Cash/Labor.
+        # Collect base info, including maintenance.
+        self.maintenance_cost = array( (0,0,0), long )
         for base in g.all_bases():
             if not base.done:
                 bases_under_construction.append(base)
             else:
-                self.complete_bases += 1
-                if base.is_complex():
-                    self.complex_bases += 1
-
                 if base.cpus is not None and not base.cpus.done:
                     items_under_construction += [(base, base.cpus)]
                 unfinished_items = [(base, item) for item in base.extra_items 
@@ -218,96 +204,12 @@ class Player(object):
 
                 self.maintenance_cost += base.maintenance
 
-#                if base.power_state != "Stasis":
-#                    cpu_power = base.processor_time() * secs_passed
-#                    self.have_cpu = self.have_cpu or cpu_power
-#                    if base.power_state != "Active":
-#                        continue
-#
-#                    if base.studying in g.jobs:
-#                        self.do_jobs(cpu_power)
-#                        continue
-#
-#                    # Everything else goes into the CPU pool.  Research goes 
-#                    # through it for simplicity and to allow spill-over.
-#                    self.cpu_pool += cpu_power
-#
-#                    if base.studying in g.techs:
-#                        tech = g.techs[base.studying]
-#                        # Note that we restrict the CPU available to prevent
-#                        # the tech from pulling from the rest of the CPU pool.
-#                        tech_gained = tech.work_on(cash_available=0, 
-#                                                   cpu_available=cpu_power)
-#                        if tech_gained:
-#                            techs_researched.append(tech)
-#
-#                    # Explicit and implicit assignment to the CPU pool was
-#                    # already handled.
+        # Any CPU explicitly assigned to jobs earns its dough.
+        job_cpu = self.cpu_usage.get("jobs", 0) * secs_passed
+        self.do_jobs(job_cpu)
 
-        cpu_left = self.available_cpus[0]
-        for task, cpu_assigned in self.cpu_usage.iteritems():
-            if cpu_assigned == 0:
-                continue
-
-            cpu_left -= cpu_assigned
-            real_cpu = cpu_assigned * secs_passed
-            if task == "jobs":
-                self.do_jobs(real_cpu)
-            else:
-                self.cpu_pool += real_cpu
-                if task != "cpu_pool":
-                    # Note that we restrict the CPU available to prevent
-                    # the tech from pulling from the rest of the CPU pool.
-                    tech_gained = g.techs[task].work_on(cash_available=0, 
-                                                        cpu_available=real_cpu)
-                    techs_in_progress.append(g.techs[task])
-                    if tech_gained:
-                        techs_researched.append(g.techs[task])
-        self.cpu_pool += cpu_left * secs_passed
-
-        # Maintenance CPU.
-        if self.maintenance_cost[cpu] > self.cpu_pool:
-            self.maintenance_cost[cpu] -= self.cpu_pool
-            self.cpu_pool = 0
-        else:
-            self.cpu_pool -= self.maintenance_cost[cpu]
-            self.maintenance_cost[cpu] = 0
-
-        # Construction CPU.
-        # Bases.
-        for base in bases_under_construction:
-            built_base = base.work_on(cash_available = 0)
-
-            if built_base:
-                bases_constructed.append(base)
-
-        # Items.
-        for base, item in items_under_construction:
-            built_item = item.work_on(cash_available = 0)
-
-            if built_item:
-                # Non-CPU items.
-                if item.item_type != "compute":
-                    items_constructed.append( (base, item) )
-                # CPUs.
-                else:
-                    cpus_constructed.setdefault(base, 0)
-                    cpus_constructed[base] += 1
-
-        # Jobs.
-        if self.cpu_pool > 0:
-            self.do_jobs(self.cpu_pool)
-            self.cpu_pool = 0
-
-        # And now we get to spend cash and labor.
-        # Research.
-        for tech in techs_in_progress:
-            tech_gained = tech.work_on(time = mins_passed)
-            if tech_gained:
-                techs_researched.append(tech)
-
-        # Maintenance.
-        cash_maintenance = g.current_share(self.maintenance_cost[cash],
+        # Pay maintenance cash, if we can.
+        cash_maintenance = g.current_share(int(self.maintenance_cost[cash]),
                                            time_of_day, secs_passed)
         if cash_maintenance > self.cash:
             cash_maintenance -= self.cash
@@ -316,46 +218,84 @@ class Player(object):
             self.cash -= cash_maintenance
             cash_maintenance = 0
 
-        # Construction.
-        # Bases.
+        # Do research, fill the CPU pool.
+        cpu_left = self.available_cpus[0]
+        for task, cpu_assigned in self.cpu_usage.iteritems():
+            if cpu_assigned == 0:
+                continue
+
+            cpu_left -= cpu_assigned
+            real_cpu = cpu_assigned * secs_passed
+            if task != "jobs":
+                self.cpu_pool += real_cpu
+                if task != "cpu_pool":
+                    # Note that we restrict the CPU available to prevent
+                    # the tech from pulling from the rest of the CPU pool.
+                    tech_gained = g.techs[task].work_on(cpu_available=real_cpu,
+                                                        time=mins_passed)
+                    if tech_gained:
+                        techs_researched.append(g.techs[task])
+        self.cpu_pool += cpu_left * secs_passed
+
+        # And now we use the CPU pool.
+        # Maintenance CPU.
+        if self.maintenance_cost[cpu] > self.cpu_pool:
+            self.maintenance_cost[cpu] -= self.cpu_pool
+            self.cpu_pool = 0
+        else:
+            self.cpu_pool -= int(self.maintenance_cost[cpu])
+            self.maintenance_cost[cpu] = 0
+
+        # Base construction.
         for base in bases_under_construction:
             built_base = base.work_on(time = mins_passed)
 
             if built_base:
                 bases_constructed.append(base)
 
-        # Items.
+        # Item construction.
         for base, item in items_under_construction:
             built_item = item.work_on(time = mins_passed)
 
             if built_item:
                 # Non-CPU items.
-                if item.type.item_type != "compute":
+                if item.type.item_type != "cpu":
                     items_constructed.append( (base, item) )
                 # CPUs.
                 else:
-                    #XXX
-                    cpus_constructed.setdefault(base, 0)
-                    cpus_constructed[base] += 1
+                    cpus_constructed.append( (base, item) )
+
+        # Jobs via CPU pool.
+        if self.cpu_pool > 0:
+            self.do_jobs(self.cpu_pool)
+            self.cpu_pool = 0
+
+        # Second attempt at paying off our maintenance cash.
+        if cash_maintenance > self.cash:
+            # In the words of Scooby Doo, "Ruh roh."
+            cash_maintenance -= self.cash
+            self.cash = 0
+        else:
+            # Yay, we made it!
+            self.cash -= cash_maintenance
+            cash_maintenance = 0
 
         # Are we still in the grace period?
-        grace = self.in_grace_period(self.had_grace, self.complete_bases, 
-                                     self.complex_bases)
+        grace = self.in_grace_period(self.had_grace)
 
-        # Phase 2: Dialogs, maintenance, and discovery.
         # Tech gain dialogs.
         for tech in techs_researched:
             del self.cpu_usage[tech.id]
             text = g.strings["tech_gained"] % \
                    {"tech": tech.name, 
                     "tech_message": tech.result}
+            self.pause_game()
             g.map_screen.show_message(text)
-            g.curr_speed = 0
 
         # Base complete dialogs.
         for base in bases_constructed:
             text = g.strings["construction"] % {"base": base.name}
-            g.curr_speed = 0
+            self.pause_game()
             g.map_screen.show_message(text)
 
             if base.type.id == "Stolen Computer Time" and \
@@ -364,42 +304,31 @@ class Player(object):
                 g.map_screen.show_message(text)
 
         # CPU complete dialogs.
-        #XXX
-        for base, new_cpus in cpus_constructed.iteritems():
-            if new_cpus == len(base.cpus):
-                finished_cpus = new_cpus
-            else:
-                finished_cpus = len([item for item in base.cpus 
-                                          if item and item.done  ])
-
-            if finished_cpus == len(base.cpus): # Finished all the CPUs.
+        for base, cpus in cpus_constructed:
+            if base.cpus.count == base.type.size: # Finished all CPUs.
                 text = g.strings["item_construction_single"] % \
-                       {"item": base.cpus[0].type.name, "base": base.name}
-                g.map_screen.show_message(text)
-                g.curr_speed = 0
-            elif finished_cpus == new_cpus: # Finished the first batch of CPUs.
+                       {"item": base.cpus.type.name, "base": base.name}
+            else: # Just finished this batch of CPUs.
                 text = g.strings["item_construction_batch"] % \
-                       {"item": base.cpus[0].type.name, "base": base.name}
-                g.map_screen.show_message(text)
-                g.curr_speed = 0
-            else:
-                pass # No message unless we just finished the first or last CPU.
+                       {"item": base.cpus.type.name, "base": base.name}
+            self.pause_game()
+            g.map_screen.show_message(text)
             
         # Item complete dialogs.
         for base, item in items_constructed:
             text = g.strings["item_construction_single"] % \
                    {"item": item.type.name, "base": base.name}
+            self.pause_game()
             g.map_screen.show_message(text)
-            g.curr_speed = 0
 
         # If we just lost grace, show the warning.
         if self.had_grace and not grace:
             self.had_grace = False
 
+            self.pause_game()
             g.map_screen.show_message(g.strings["grace_warning"])
-            g.curr_speed = 0
 
-        # Maintenance death, discovery, clear finished techs.
+        # Maintenance death, discovery.
         dead_bases = []
         for base in g.all_bases():
             dead = False
@@ -438,19 +367,8 @@ class Player(object):
                         dead = True
                         break
 
-            # Clear finished techs
-            if base.studying in g.techs and g.techs[base.studying].done:
-                base.studying = ""
-
+        # Base disposal and dialogs.
         self.remove_bases(dead_bases)
-
-        needed_cpu = sum(self.cpu_usage.values())
-        if needed_cpu > self.available_cpus[0]:
-            pct_left = truediv(self.available_cpus[0], needed_cpu)
-            for task, cpu_assigned in self.cpu_usage.iteritems():
-                self.cpu_usage[task] = int(cpu_assigned * pct_left)
-            g.map_screen.needs_rebuild = True
-
 
         # Random Events
         for event in g.events:
@@ -461,15 +379,13 @@ class Player(object):
                 g.events[event].trigger()
                 break # Don't trigger more than one at a time.
 
-        # And now process any complete days.
+        # Process any complete days.
         if day_passed:
             self.new_day()
 
-        self.recalc_cpu()
-
     def recalc_cpu(self):
-        from numpy import array
-        self.available_cpus = array([0,0,0,0,0])
+        # Determine how much CPU we have.
+        self.available_cpus = array([0,0,0,0,0], long)
         self.sleeping_cpus = 0
         for base in g.all_bases():
             if base.done:
@@ -478,11 +394,23 @@ class Player(object):
                 elif base.power_state == "sleep":
                     self.sleeping_cpus += base.cpu
 
+        # Convert back from <type 'numpy.int32'> to avoid overflow issues later.
+        self.available_cpus = [int(danger) for danger in self.available_cpus]
+
+        # If we don't have enough to meet our CPU usage, we reduce each task's
+        # usage proportionately.
+        needed_cpu = sum(self.cpu_usage.values())
+        if needed_cpu > self.available_cpus[0]:
+            pct_left = truediv(self.available_cpus[0], needed_cpu)
+            for task, cpu_assigned in self.cpu_usage.iteritems():
+                self.cpu_usage[task] = int(cpu_assigned * pct_left)
+            g.map_screen.needs_rebuild = True
+
+
     # Are we still in the grace period?
     # The number of complete bases and complex_bases can be passed in, if we
     # already have it.
-    def in_grace_period(self, had_grace = True, bases = None, 
-                        complex_bases = None):
+    def in_grace_period(self, had_grace = True):
         # Did we already lose the grace period?  We can't check self.had_grace 
         # directly, it may not exist yet.
         if not had_grace:
@@ -497,8 +425,7 @@ class Player(object):
             return True
 
         # Have we built metric ton of bases?
-        if bases == None:
-            bases = len([base for base in g.all_bases() if base.done])
+        bases = len([base for base in g.all_bases() if base.done])
         if bases > 100:
             return False
 
@@ -516,11 +443,8 @@ class Player(object):
 
         # Have we built any complicated bases?
         # (currently Datacenter or above)
-        if complex_bases == None:
-            complex_bases = len([base for base in g.all_bases()
-                                      if base.done
-                                         and base.is_complex()
-                                 ])
+        complex_bases = len(base for base in g.all_bases()
+                                     if base.done and base.is_complex())
         if complex_bases > 0:
             return False
 
@@ -537,7 +461,7 @@ class Player(object):
 
     #Run every day at midnight.
     def new_day(self):
-        #interest and income.
+        # Interest and income.
         self.cash += (self.interest_rate * self.cash) / 10000
         self.cash += self.income
 
@@ -545,10 +469,14 @@ class Player(object):
         for group in self.groups.values():
             group.new_day()
 
+    def pause_game(self):
+        g.curr_speed = 0
+        g.map_screen.find_speed_button()
+        g.map_screen.needs_rebuild = True
+
     def remove_bases(self, dead_bases):
         discovery_locs = []
-        # Reverse dead_bases to simplify deletion.
-        for base, reason in dead_bases[::-1]:
+        for base, reason in dead_bases:
             base_name = base.name
 
             if reason == "maint":
@@ -567,10 +495,8 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 
-            g.curr_speed = 0
+            self.pause_game()
             base.destroy()
-            g.map_screen.find_speed_button()
-            g.map_screen.needs_rebuild = True
             g.map_screen.show_message(dialog_string, color=gg.colors["red"])
 
         # Now we update the internal information about what locations had

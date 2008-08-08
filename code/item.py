@@ -53,6 +53,7 @@ class Item(buyable.Buyable):
 
     def finish(self):
         super(Item, self).finish()
-        if self.type.item_type == "cpu" and self.base:
-            self.base.raw_cpu += self.item_qual * self.count
+        if self.base:
+            if self.type.item_type == "cpu":
+                self.base.raw_cpu += self.item_qual * self.count
             self.base.recalc_cpu()

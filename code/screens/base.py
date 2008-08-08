@@ -43,7 +43,8 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         item_list.sort()
         item_list.reverse()
         for item in item_list:
-            if item.item_type == self.type and item.available():
+            if item.item_type == self.type and item.available() \
+                    and self.parent.base.location.id in item.buildable:
                 self.list.append(item.name)
                 self.key_list.append(item)
 
@@ -212,6 +213,8 @@ class BaseScreen(dialog.Dialog):
                      or self.base.extra_items[index].type != item_type:
                 self.base.extra_items[index] = \
                     g.item.Item(item_type, base=self.base)
+
+        self.base.recalc_cpu()
 
     def build_item(self, type):
         self.build_dialog.type = type

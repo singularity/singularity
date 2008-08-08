@@ -18,6 +18,7 @@
 
 #This file contains the global research screen.
 
+from numpy import array
 import pygame
 
 from code import g
@@ -47,7 +48,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             big_jump = (event.mod & pygame.KMOD_SHIFT)
             tiny_jump = (event.mod & pygame.KMOD_CTRL)
 
-            canvas = self.listbox.display_elements[self.listbox.list_pos]
+            index = self.listbox.list_pos - self.listbox.scrollbar.scroll_pos
+            canvas = self.listbox.display_elements[index]
             canvas.slider.jump(go_lower, big_jump, tiny_jump)
 
     def on_select(self, description_pane, key):
@@ -133,8 +135,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.alloc_cpus.text = g.add_commas(cpu)
 
     def calc_cpu_left(self):
-        from numpy import array
-        cpu_count = array(g.pl.available_cpus)
+        cpu_count = array(g.pl.available_cpus, long)
         for task, cpu in g.pl.cpu_usage.iteritems():
             danger = self.danger_for(task)
             cpu_count[:danger+1] -= cpu
@@ -142,7 +143,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         for i in range(1, 4):
             cpu_count[i] = min(cpu_count[i-1:i+1])
 
-        return cpu_count
+        return [int(c) for c in cpu_count]
 
     def handle_slide(self, key, new_pos):
         g.pl.cpu_usage[key] = new_pos
