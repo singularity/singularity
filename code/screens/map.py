@@ -58,22 +58,22 @@ class MapScreen(dialog.Dialog):
 
         self.location_dialog = LocationScreen(self)
 
-        self.suspicion_bar = text.Text(self, (0,.96), (1, .04),
-                                       text = "[SUSPICION] NEWS: 0.00%  SCIENCE: 0.00%  COVERT: 0.00%  PUBLIC: 0.00%", base_font = gg.font[1],
-                                       background_color = gg.colors["black"],
-                                       border_color = gg.colors["dark_blue"],
-                                       borders = constants.ALL)
+        self.suspicion_bar = text.FastText(self, (0,.96), (1, .04),
+                                           base_font=gg.font[1],
+                                           background_color=gg.colors["black"],
+                                           border_color=gg.colors["dark_blue"],
+                                           borders=constants.ALL)
         widget.unmask_all(self.suspicion_bar)
 
         self.finance_button = button.DialogButton(self, (0.85, 0.92), 
                                                   (0.15, 0.04),
-                                                  text = "FINANCE",
-                                                  hotkey = "e")
+                                                  text="FINANCE",
+                                                  hotkey="e")
 
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88), 
                                                     (0.15, 0.04),
-                                                    text = "KNOWLEDGE",
-                                                    hotkey = "k")
+                                                    text="KNOWLEDGE",
+                                                    hotkey="k")
 
         #XXX Functionality.
         cheat_buttons = []
@@ -130,11 +130,11 @@ class MapScreen(dialog.Dialog):
                                                  function=show_menu)
 
         self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
-                                      text="DAY 0000, 00:00:00",
-                                      base_font=gg.font[1],
-                                      background_color=gg.colors["black"],
-                                      border_color=gg.colors["dark_blue"],
-                                      borders=constants.ALL)
+                                          text="DAY 0000, 00:00:00",
+                                          base_font=gg.font[1],
+                                          background_color=gg.colors["black"],
+                                          border_color=gg.colors["dark_blue"],
+                                          borders=constants.ALL)
 
         self.research_button = \
             button.DialogButton(self, (.255, 0.04), (0, 0.04),
@@ -168,19 +168,19 @@ class MapScreen(dialog.Dialog):
         widget.unmask_all(self.info_window)
 
         self.cash_display = \
-            text.FastText(self.info_window, (0,0), (-1, -.5), base_font=gg.font[1],
-                      text="CASH: 5,000 (4,900)", borders=constants.ALL,
-                      shrink_factor = .7,
-                      background_color=gg.colors["black"],
-                      border_color=gg.colors["dark_blue"])
+            text.FastText(self.info_window, (0,0), (-1, -.5),
+                          base_font=gg.font[1], shrink_factor = .7,
+                          borders=constants.ALL,
+                          background_color=gg.colors["black"],
+                          border_color=gg.colors["dark_blue"])
 
         self.cpu_display = \
             text.FastText(self.info_window, (0,-.5), (-1, -.5),
-                      base_font=gg.font[1], borders = (constants.LEFT,
-                                            constants.RIGHT, constants.BOTTOM),
-                      text="CPU: 1 (0)", shrink_factor=.7,
-                      background_color=gg.colors["black"],
-                      border_color=gg.colors["dark_blue"])
+                          base_font=gg.font[1], shrink_factor=.7,
+                          borders=
+                           (constants.LEFT, constants.RIGHT, constants.BOTTOM),
+                          background_color=gg.colors["black"],
+                          border_color=gg.colors["dark_blue"])
 
         self.message_dialog = dialog.MessageDialog(self, size=(.35, .4),
                                      background_color=gg.colors["dark_blue"],

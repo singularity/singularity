@@ -157,7 +157,7 @@ class Text(widget.BorderedWidget):
     bold = causes_refont("_bold")
     oversize = causes_refont("_oversize")
 
-    needs_refont = widget.causes_redraw("_refont")
+    needs_refont = widget.causes_resize("_needs_refont")
 
     lorem_ipsum = {}
 
@@ -180,17 +180,18 @@ class Text(widget.BorderedWidget):
         self.bold = bold
         self.oversize = oversize
 
-    def pick_font(self, dimensions = None):
+    def pick_font(self, dimensions=None):
         if dimensions and self.needs_refont:
-            self.needs_refont = False
             nice_size = self.pick_font_size(dimensions, False)
             mean_size = self.pick_font_size(dimensions)
+
             if nice_size > mean_size - 5:
                 size = nice_size
             else:
                 size = mean_size
-                print nice_size, mean_size, self.text
             self._font = self.base_font[size]
+
+            self.needs_refont = False
 
         return self._font
 
@@ -255,20 +256,13 @@ class Text(widget.BorderedWidget):
             height = int( (base_size[1] - 4) * self.shrink_factor )
 
             # Pick a font based on that height (and the width, if set).
+            self.needs_refont = True
             font = self.pick_font((base_size[0], height))
 
             # If the width is unspecified, calculate it from the font and text.
             if base_size[0] == 0:
                 base_size[0] = font.size(self.text)[0] + 16
         return tuple(base_size)
-
-    def resize(self):
-        super(Text, self).resize()
-        self.needs_refont = True
-
-    def rebuild(self):
-        super(Text, self).rebuild()
-        self.needs_refont = True
 
     def redraw(self):
         super(Text, self).redraw()
@@ -302,13 +296,18 @@ class _LoremIpsum(Text):
     font_size = property(get_font_size)
 
 class FastText(Text):
-    """Reduces font searches by assuming a monospace font and single-line text."""
+    """Reduces font searches by assuming a monospace font, single-line text,
+       and a fixed widget width."""
     text = widget.set_on_change("_text", "maybe_needs_refont")
     _text = widget.causes_redraw("__text")
     old_text = ""
     maybe_needs_refont = False
 
-    def pick_font(self, dimensions = None):
+    def redraw(self):
+        self.pick_font(self._real_size)
+        super(FastText, self).redraw()
+
+    def pick_font(self, dimensions=None):
         if self.maybe_needs_refont and not self.needs_refont:
             if len(self.old_text) != len(self.text):
                 self.old_text = self.text

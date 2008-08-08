@@ -341,8 +341,8 @@ class Widget(object):
         self.needs_rebuild = False
 
     def resize(self):
-        self.needs_resize = False
         self._real_size = self._calc_size()
+        self.needs_resize = False
         self.needs_reposition = True
         self.needs_redraw = True
 
