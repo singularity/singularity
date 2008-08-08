@@ -42,6 +42,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.add_key_handler(pygame.K_LEFT, self.adjust_slider)
         self.add_key_handler(pygame.K_RIGHT, self.adjust_slider)
 
+        self.help_dialog = dialog.MessageDialog(self)
+
     def adjust_slider(self, event):
         if 0 <= self.listbox.list_pos < len(self.listbox.list):
             go_lower = (event.key == pygame.K_LEFT)
@@ -83,14 +85,16 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
                                       align=constants.RIGHT,
                                       background_color=gg.colors["clear"])
         canvas.alloc_cpus.visible = False
-        #canvas.remove_button = button.Button(canvas, (-.94, -.05), (-.05, -.45),
-        #                                   text="X", text_shrink_factor=.9,
-        #                                   color=gg.colors["red"])
-        #canvas.remove_button.visible = False
         canvas.slider = slider.UpdateSlider(canvas, (-.01, -.55), (-.98, -.40),
                                             anchor=constants.TOP_LEFT,
                                             horizontal=True)
         canvas.slider.visible = False
+
+        canvas.help_button = button.FunctionButton(canvas, (-.11, -.55),
+                                                   (0, -.40), text="?",
+                                                   text_shrink_factor=1,
+                                                   base_font=gg.font[0],
+                                                   function=self.show_help)
 
     def cpu_for(self, key):
         return g.pl.cpu_usage.get(key, 0)
@@ -105,11 +109,16 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         visible = (key is not None)
         canvas.research_name.visible = visible
         canvas.alloc_cpus.visible = visible
-        #canvas.remove_button.visible = visible
         canvas.slider.visible = visible
+        canvas.help_button.visible = False
 
         if not visible:
             return
+
+        danger = self.danger_for(key)
+        if danger > 0 and g.pl.available_cpus[danger] == 0:
+            canvas.help_button.visible = True
+            canvas.help_button.args = (danger,)
 
         def my_slide(new_pos):
             self.handle_slide(key, new_pos)
@@ -122,7 +131,6 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             self.cpu_left = self.calc_cpu_left()
             self.dirty_count = False
 
-        danger = self.danger_for(key)
         cpu = self.cpu_for(key)
         cpu_left = self.cpu_left[danger]
         total_cpu = cpu + cpu_left
@@ -150,6 +158,11 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.dirty_count = True
         self.needs_rebuild = True
         self.parent.needs_rebuild = True
+
+    def show_help(self, danger_level):
+        self.help_dialog.text = g.strings["danger_common"] % \
+                                         g.strings["danger_%d" % danger_level]
+        dialog.call_dialog(self.help_dialog, self)
 
     def show(self):
         techs = [tech for tech in g.techs.values() if tech.available()
