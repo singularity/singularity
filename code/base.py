@@ -290,7 +290,9 @@ class Base(buyable.Buyable):
     def sort_tuple(self):
         # We sort based on size (descending), CPU (descending),
         # then name (ascending).
-        return (-self.type.size, -self.cpu, self.name)
+        # id(self) is thrown in at the end to make sure identical-looking
+        # bases aren't considered equal.
+        return (-self.type.size, -self.cpu, self.name, id(self))
 
     def __cmp__(self, other):
         if isinstance(other, Base):
