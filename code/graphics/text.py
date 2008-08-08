@@ -508,3 +508,20 @@ class SelectableText(Text):
         else:
             self.background_color = self.unselected_color
         super(SelectableText, self).redraw()
+
+
+class ProgressText(SelectableText):
+    progress = widget.causes_redraw("_progress")
+    progress_color = widget.causes_redraw("_progress_color")
+    def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
+        self.progress = kwargs.pop("progress", 0)
+        self.progress_color = kwargs.pop("progress", g.colors["blue"])
+        super(ProgressText, self).__init__(parent, pos, size, **kwargs)
+
+    def redraw(self):
+        super(ProgressText, self).redraw()
+        width, height = self.real_size
+        self.surface.fill(self.progress_color,
+                          (0, 0, width * self.progress, height))
+        self.draw_borders()

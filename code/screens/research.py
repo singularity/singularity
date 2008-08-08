@@ -75,6 +75,11 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
                   borders=constants.ALL)
 
     def make_item(self, canvas):
+        # Dirty, underhanded trick to make the canvas into a progress bar.
+        canvas.__class__ = text.ProgressText
+        canvas.progress = 0
+        canvas.progress_color = gg.colors["blue"]
+
         canvas.research_name = text.Text(canvas, (-.01, -.01), (-.70, -.5),
                                          align=constants.LEFT,
                                          background_color=gg.colors["clear"])
@@ -110,7 +115,9 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.research_name.visible = visible
         canvas.alloc_cpus.visible = visible
         canvas.slider.visible = visible
+
         canvas.help_button.visible = False
+        canvas.progress = 0
 
         if not visible:
             return
@@ -119,6 +126,9 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         if danger > 0 and g.pl.available_cpus[danger] == 0:
             canvas.help_button.visible = True
             canvas.help_button.args = (danger,)
+
+        if key in g.techs:
+            canvas.progress = g.techs[key].percent_complete().min()
 
         def my_slide(new_pos):
             self.handle_slide(key, new_pos)

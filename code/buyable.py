@@ -135,6 +135,16 @@ class Buyable(object):
 
     cost_paid = property(get_cost_paid, set_cost_paid)
 
+    def _percent_complete(self, available=(0,0,0)):
+        available_array = array(available, long)
+        return truediv(self.cost_paid + available_array, self.total_cost)
+
+    def min_valid(self, complete):
+        return complete[self.total_cost > 0].min()
+
+    def percent_complete(self):
+        return self.min_valid(self._percent_complete())
+
     def work_on(self, cash_available = None, cpu_available = None, time = 0):
         if self.done:
             return
@@ -148,12 +158,11 @@ class Buyable(object):
             cpu_available = g.pl.cpu_pool
 
         # Figure out how much we could complete.
-        was_complete = self.cost_paid
-        available = array([cash_available, cpu_available, time], long)
-        pct_complete = truediv(was_complete + available, self.total_cost)
+        pct_complete = self._percent_complete([cash_available, cpu_available,
+                                               time])
 
         # Find the least-complete resource.
-        least_complete = pct_complete[self.total_cost > 0].min()
+        least_complete = self.min_valid(pct_complete)
 
         # Let the other two be up to 5 percentage points closer to completion.
         complete_cap = min(1, least_complete + .05)
@@ -161,6 +170,9 @@ class Buyable(object):
 
         # Translate that back to the total amount complete.
         raw_paid = pct_complete * self.total_cost
+
+        # And apply it.
+        was_complete = self.cost_paid
         self.cost_paid = numpy.cast[numpy.int64](numpy.ceil(raw_paid))
         spent = self.cost_paid - was_complete
 

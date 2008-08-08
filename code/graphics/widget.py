@@ -438,6 +438,9 @@ class BorderedWidget(Widget):
         if self.background_color != g.colors["clear"]:
             self.surface.fill( self.background_color )
 
+        self.draw_borders()
+
+    def draw_borders(self):
         # Draw borders
         my_size = self.real_size
         horiz = (my_size[0], 1)
