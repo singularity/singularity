@@ -152,6 +152,7 @@ class Base(buyable.Buyable):
     def recalc_cpu(self):
         if self.raw_cpu == 0:
             self.cpu = 0
+            return
 
         compute_bonus = 10000
         # Network bonus
