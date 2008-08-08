@@ -3,9 +3,14 @@ Endgame: Singularity Changelog
 v0.29 (release 2008.??.??):
 
 USER-VISIBLE CHANGES:
-* Complete rewrite of the graphics system, shiny new dialogs.  Arbitrary
-  resolutions now supported. (FM)
+* Complete rewrite of the graphics system, shiny new widgets and dialogs.
+  Arbitrary resolutions now supported. (FM)
 - Fix to de_DE intro text. (booiiing)
+* Individual bases no longer have their own tasks, only a power state.
+  The research dialog has been substantially improved to compensate. (FM)
+* When building or researching, CPU, cash, and labor (time) must be spent in
+  approximately equivalent amounts. (FM)
+
 
 OTHER CHANGES:
 - Removed a redundant tech requirement. (Phil, Xombie for bug report)
