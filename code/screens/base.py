@@ -207,12 +207,14 @@ class BaseScreen(dialog.Dialog):
             if self.base.cpus is None or self.base.cpus.type != item_type:
                 self.base.cpus = g.item.Item(item_type, base=self.base,
                                              count=self.base.type.size)
+                self.base.check_power()
         else:
             index = ["reactor", "network", "security"].index(type)
             if self.base.extra_items[index] is None \
                      or self.base.extra_items[index].type != item_type:
                 self.base.extra_items[index] = \
                     g.item.Item(item_type, base=self.base)
+                self.base.check_power()
 
         self.base.recalc_cpu()
 

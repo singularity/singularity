@@ -149,6 +149,15 @@ class Base(buyable.Buyable):
 
         self.maintenance = buyable.array(self.type.maintenance, long)
 
+    def check_power(self):
+        if self.power_state == "sleep":
+            if self.done:
+                for item in [self.cpus,] + self.extra_items:
+                    if item is not None and not item.done:
+                        self.power_state = "active"
+            else:
+                self.power_state = "active"
+
     def recalc_cpu(self):
         if self.raw_cpu == 0:
             self.cpu = 0

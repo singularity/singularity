@@ -144,6 +144,7 @@ class LocationScreen(dialog.Dialog):
             base = self.listbox.key_list[self.listbox.list_pos]
             old_index = state_list.index(base.power_state)
             base.power_state = state_list[old_index-1]
+            base.check_power()
             self.needs_rebuild = True
             self.parent.needs_rebuild = True
 
