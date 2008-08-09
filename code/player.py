@@ -443,8 +443,8 @@ class Player(object):
 
         # Have we built any complicated bases?
         # (currently Datacenter or above)
-        complex_bases = len(base for base in g.all_bases()
-                                     if base.done and base.is_complex())
+        complex_bases = len([base for base in g.all_bases()
+                                      if base.done and base.is_complex()])
         if complex_bases > 0:
             return False
 
