@@ -248,16 +248,26 @@ class Text(widget.BorderedWidget):
 
         return left
 
+    def calc_text_size(self, dimensions=None):
+        if dimensions == None:
+            dimensions = self.real_size
+
+        # Calculate the text height.
+        height = int( (dimensions[1] - 4) * self.shrink_factor )
+        width = dimensions[0]
+
+        return width, height
+
     def _calc_size(self):
         base_size = list(super(Text, self)._calc_size())
 
         if self.text != None:
-            # Calculate the font height.
-            height = int( (base_size[1] - 4) * self.shrink_factor )
+            # Determine the true size of the text area.
+            text_size = self.calc_text_size(base_size)
 
-            # Pick a font based on that height (and the width, if set).
+            # Pick a font based on that size.
             self.needs_refont = True
-            font = self.pick_font((base_size[0], height))
+            font = self.pick_font(text_size)
 
             # If the width is unspecified, calculate it from the font and text.
             if base_size[0] == 0:
@@ -304,7 +314,7 @@ class FastText(Text):
     maybe_needs_refont = False
 
     def redraw(self):
-        self.pick_font(self._real_size)
+        self.pick_font(self.calc_text_size(self._real_size))
         super(FastText, self).redraw()
 
     def pick_font(self, dimensions=None):
