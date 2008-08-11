@@ -178,8 +178,8 @@ class LocationScreen(dialog.Dialog):
             self.parent.needs_rebuild = True
 
 class NewBaseDialog(dialog.ChoiceDescriptionDialog):
-    def __init__(self, parent, pos = (0, 0), size = (-1, -1),
-                 anchor = constants.TOP_LEFT, *args, **kwargs):
+    def __init__(self, parent, pos=(0, 0), size = (-1, -1),
+                 anchor=constants.TOP_LEFT, *args, **kwargs):
         kwargs["yes_type"] = "ok"
         kwargs["no_type"] = "back"
         super(NewBaseDialog, self).__init__(parent, pos, size, anchor, *args,
@@ -189,7 +189,9 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
 
         self.yes_button.function = self.get_name
         self.name_dialog = \
-            dialog.TextEntryDialog(self, text=g.strings["new_base_text"])
+            dialog.TextEntryDialog(self, pos=(-.5,-.25),
+                                   text=g.strings["new_base_text"],
+                                   anchor=constants.MID_CENTER)
 
     def on_change(self, description_pane, base_type):
         if base_type is not None:
