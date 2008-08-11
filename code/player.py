@@ -212,6 +212,9 @@ class Player(object):
         items_under_construction = []
         self.cpu_pool = 0
 
+        # Are we still in the grace period?
+        grace = self.in_grace_period(self.had_grace)
+
         # Collect base info, including maintenance.
         self.maintenance_cost = array( (0,0,0), long )
         for base in g.all_bases():
@@ -301,9 +304,6 @@ class Player(object):
             # Yay, we made it!
             self.cash -= cash_maintenance
             cash_maintenance = 0
-
-        # Are we still in the grace period?
-        grace = self.in_grace_period(self.had_grace)
 
         # Tech gain dialogs.
         for tech in techs_researched:
