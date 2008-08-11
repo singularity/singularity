@@ -290,20 +290,23 @@ class Text(widget.BorderedWidget):
         super(Text, self).redraw()
 
         if self.text != None:
-            # Mark the character to be underlined (if any).
-            no_underline = [self.color, None, False]
-            underline = [self.color, None, True]
-            styles = [no_underline + [0]]
-            if 0 <= self.underline < len(self.text):
-                styles.insert(0, underline + [self.underline + 1])
-                if self.underline != 0:
-                    styles.insert(0, no_underline + [self.underline])
+            self.print_text()
 
-            self.font.set_bold(self.bold)
-            # Print the string itself.
-            print_string(self.surface, self.text, (3, 2), self.font, styles,
-                         self.align, self.valign, self.real_size, self.wrap)
-            self.font.set_bold(False)
+    def print_text(self):
+        # Mark the character to be underlined (if any).
+        no_underline = [self.color, None, False]
+        underline = [self.color, None, True]
+        styles = [no_underline + [0]]
+        if 0 <= self.underline < len(self.text):
+            styles.insert(0, underline + [self.underline + 1])
+            if self.underline != 0:
+                styles.insert(0, no_underline + [self.underline])
+
+        self.font.set_bold(self.bold)
+        # Print the string itself.
+        print_string(self.surface, self.text, (3, 2), self.font, styles,
+                     self.align, self.valign, self.real_size, self.wrap)
+        self.font.set_bold(False)
 
 _lorem_ipsum = '''Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'''
@@ -555,3 +558,33 @@ class ProgressText(SelectableText):
         self.surface.fill(self.progress_color,
                           (0, 0, width * self.progress, height))
         self.draw_borders()
+
+
+class StyledText(Text):
+    def update_text(self):
+        self.text = "".join(self.chunks)
+
+    chunks = widget.call_on_change("_chunks", update_text)
+    styles = widget.causes_redraw("_styles")
+
+    def __init__(self, *args, **kwargs):
+        chunks = kwargs.pop("chunks", ())
+        styles = kwargs.pop("styles", ())
+        super(StyledText, self).__init__(*args, **kwargs)
+
+        self.chunks = chunks
+        self.styles = styles
+
+    def print_text(self):
+        offset = 0
+        styles = []
+        for chunk, style in zip(self.chunks, self.styles):
+            offset += len(chunk)
+            styles.append(list(style) + [offset])
+        styles[-1][-1] = 0
+
+        print_string(self.surface, self.text, (3, 2), self.font, styles,
+                     self.align, self.valign, self.real_size, self.wrap)
+
+class FastStyledText(FastText, StyledText):
+    pass
