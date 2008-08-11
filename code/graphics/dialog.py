@@ -406,15 +406,19 @@ class MessageDialog(TextDialog):
 
 
 class TextEntryDialog(TextDialog):
-    def __init__(self, parent, size = (.2, .1), **kwargs):
+    def __init__(self, parent, size=(.25, .1), **kwargs):
         self.default_text = kwargs.pop("default_text", "")
 
         super(TextEntryDialog, self).__init__(parent, size = size, **kwargs)
 
-        self.text_field = text.EditableText(self, (-.5,-1), (-1,-.5),
-                                            borders = constants.ALL,
-                                            base_font = g.font[0],
-                                            anchor = constants.BOTTOM_CENTER)
+        self.shrink_factor = .5
+        self.text_field = text.EditableText(self, (0, -.5), (-.8, -.5),
+                                            borders=constants.ALL,
+                                            base_font=g.font[0])
+
+        self.ok_button = button.FunctionButton(self, (-.82, -.5), (-.18, -.5),
+                                               text=g.buttons["ok"],
+                                               function=self.return_text)
 
         self.add_key_handler(pygame.K_RETURN, self.return_text)
         self.add_key_handler(pygame.K_ESCAPE, self.return_nothing)
@@ -427,7 +431,7 @@ class TextEntryDialog(TextDialog):
     def return_nothing(self, event):
         raise constants.ExitDialog, ""
 
-    def return_text(self, event):
+    def return_text(self, event=None):
         raise constants.ExitDialog, self.text_field.text
 
 class ChoiceDialog(YesNoDialog):
