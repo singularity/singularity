@@ -276,21 +276,30 @@ def nearest_percent(value):
     else:
         return value + (100 - sub_percent)
 
+danger_colors = ((0, 0, 255), (85, 0, 170), (170, 0, 85), (255, 0, 0))
+
+detect_string_names = ("detect_str_low", "detect_str_moderate",
+                       "detect_str_high", "detect_str_critical")
 # percent_to_detect_str takes a percent and renders it to a short (four
 # characters or less) string representing whether it is low, moderate, high,
 # or critically high.
-def percent_to_detect_str(value):
+def suspicion_to_detect_str(suspicion):
+    return danger_level_to_detect_str(suspicion_to_danger_level(suspicion))
 
-    global strings
+def danger_level_to_detect_str(danger):
+    return strings[detect_string_names[danger]]
 
-    if value < 2500:
-        return strings["detect_str_low"]
-    elif value < 5000:
-        return strings["detect_str_moderate"]
-    elif value < 7500:
-        return strings["detect_str_high"]
+# percent_to_danger_level takes a suspicion level and returns an int in range(5)
+# that represents whether it is low, moderate, high, or critically high.
+def suspicion_to_danger_level(suspicion):
+    if suspicion < 2500:
+        return 0
+    elif suspicion < 5000:
+        return 1
+    elif suspicion < 7500:
+        return 2
     else:
-        return strings["detect_str_critical"]
+        return 3
 
 # Most CPU costs have been multiplied by seconds_per_day.  This divides that
 # back out, then passes it to add_commas.
@@ -537,8 +546,7 @@ def load_game(loadgame_name):
                                    49+suspicion_bonus[2], 199+suspicion_bonus[3])
             suspicion = unpickle.load()
 
-            translation = ["news", "science", "covert", "public"]
-            for index, group_name in enumerate(translation):
+            for index, group_name in enumerate(player.group_list):
                 group = pl.groups[group_name]
                 group.suspicion = suspicion[index]
                 group.suspicion_decay = suspicion_bonus[index]
@@ -595,8 +603,7 @@ def load_game(loadgame_name):
                 base_suspicion = unpickle.load()
                 if load_version < 3.91: # < r4_pre
                     new_base_suspicion = {}
-                    translation = ["news", "science", "covert", "public"]
-                    for index, group_name in enumerate(translation):
+                    for index, group_name in enumerate(player.group_list):
                         new_base_suspicion[group_name] = base_suspicion[index]
                     base_suspicion = new_base_suspicion
                 base_built = unpickle.load()

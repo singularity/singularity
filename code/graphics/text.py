@@ -576,15 +576,18 @@ class StyledText(Text):
         self.styles = styles
 
     def print_text(self):
-        offset = 0
-        styles = []
-        for chunk, style in zip(self.chunks, self.styles):
-            offset += len(chunk)
-            styles.append(list(style) + [offset])
-        styles[-1][-1] = 0
+        if self.styles:
+            offset = 0
+            styles = []
+            for chunk, style in zip(self.chunks, self.styles):
+                offset += len(chunk)
+                styles.append(list(style) + [offset])
+            styles[-1][-1] = 0
 
-        print_string(self.surface, self.text, (3, 2), self.font, styles,
-                     self.align, self.valign, self.real_size, self.wrap)
+            print_string(self.surface, self.text, (3, 2), self.font, styles,
+                         self.align, self.valign, self.real_size, self.wrap)
+        else:
+            super(StyledText, self).print_text()
 
 class FastStyledText(FastText, StyledText):
     pass

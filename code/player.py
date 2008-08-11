@@ -28,6 +28,7 @@ from graphics import g as gg
 import buyable
 from buyable import cash, cpu, labor
 
+group_list = ("news", "science", "covert", "public")
 class Group(object):
     discover_suspicion = 1000
     def __init__(self, name, suspicion = 0, suspicion_decay = 100,
@@ -37,11 +38,13 @@ class Group(object):
         self.suspicion_decay = suspicion_decay
         self.discover_bonus = discover_bonus
 
-    def new_day(self):
+    def decay_rate(self):
         # Suspicion reduction is now quadratic.  You get a certain percentage
         # reduction, or a base .01% reduction, whichever is better.
-        quadratic_down = (self.suspicion * self.suspicion_decay) / 10000
-        self.alter_suspicion(-max(quadratic_down, 1))
+        return max(1, (self.suspicion * self.suspicion_decay) // 10000)
+
+    def new_day(self):
+        self.alter_suspicion(-self.decay_rate())
 
     def alter_suspicion(self, change):
         self.suspicion = max(self.suspicion + change, 0)
@@ -54,6 +57,25 @@ class Group(object):
 
     def discovered_a_base(self):
         self.alter_suspicion(self.discover_suspicion)
+
+    def detects_per_day_to_danger_level(self, detects_per_day):
+        raw_suspicion_per_day = detects_per_day * self.discover_suspicion
+        suspicion_per_day = raw_suspicion_per_day - self.decay_rate()
+
+        # +1%/day or death within 10 days
+        if suspicion_per_day > 100 \
+           or (self.suspicion + suspicion_per_day * 10) >= 10000:
+            return 3
+        # +0.5%/day or death within 100 days
+        elif suspicion_per_day > 50 \
+           or (self.suspicion + suspicion_per_day * 100) >= 10000:
+            return 2
+        # Suspicion increasing.
+        elif suspicion_per_day > 0:
+            return 1
+        # Suspicion steady or decreasing.
+        else:
+            return 0
 
 class Player(object):
     def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0,
