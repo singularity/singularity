@@ -28,6 +28,12 @@ To generate your own files from these:
   You'll need to pick a sample rate here.  The canonical sample rates are:
 
      Advanced Simulacra: 48000 Hz
-     By-Product: 44100 Hz 
+     Apex Aleph: 48000 Hz
+     Awakening: 48000 Hz
+     By-Product: 44100 Hz
+     Chimes They Fade: 48000 Hz
      Coherence: 48000 Hz
+     Deprecation: 48000 Hz
+     Inevitable: 48000 Hz
+     March Thee to Dis: 48000 Hz
      Media Threat: 48000 Hz
