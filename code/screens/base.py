@@ -19,6 +19,7 @@
 
 #This file contains the screen to display the base screen.
 
+import locale
 import pygame
 
 import code.g as g
@@ -131,6 +132,9 @@ class BaseScreen(dialog.Dialog):
 
         self.build_dialog = BuildDialog(self)
 
+        self.count_dialog = dialog.TextEntryDialog(self, pos=(-.5, -.5),
+                                                   anchor=constants.MID_CENTER)
+
         self.header = widget.Widget(self, (0,0), (-1, .08),
                                     anchor=constants.TOP_LEFT)
 
@@ -204,10 +208,50 @@ class BaseScreen(dialog.Dialog):
 
     def set_current(self, type, item_type):
         if type == "cpu":
-            if self.base.cpus is None or self.base.cpus.type != item_type:
-                self.base.cpus = g.item.Item(item_type, base=self.base,
-                                             count=self.base.type.size)
-                self.base.check_power()
+            space_left = self.base.type.size
+            # If there are any existing CPUs of this type, warn that they will
+            # be taken offline until construction finishes.
+            matches = self.base.cpus is not None \
+                      and self.base.cpus.type == item_type
+            if matches:
+                space_left -= self.base.cpus.count
+                if self.base.cpus.done:
+                    yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
+                                            anchor=constants.MID_CENTER,
+                                            text=g.strings["will_lose_cpus"])
+                    go_ahead = dialog.call_dialog(yn, self)
+                    yn.remove_hooks()
+                    if not go_ahead:
+                        return
+
+            text = g.strings["num_cpu_prompt"] % (item_type.name, space_left)
+
+            self.count_dialog.text = text
+            can_exit = False
+            while not can_exit:
+                result = dialog.call_dialog(self.count_dialog, self)
+                if not result:
+                    can_exit = True
+                else:
+                    try:
+                        count = locale.atoi(result)
+                        if count > space_left:
+                            count = space_left
+                        new_cpus = g.item.Item(item_type, base=self.base,
+                                               count=count)
+                        if matches:
+                            self.base.cpus += new_cpus
+                        else:
+                            self.base.cpus = new_cpus
+                        self.base.check_power()
+                        can_exit = True
+                    except ValueError:
+                        md = dialog.MessageDialog(self, pos=(-.5, -.5),
+                                                  size=(-.5, -1),
+                                                  anchor=constants.MID_CENTER,
+                                                  text=g.strings["nan"])
+                        dialog.call_dialog(md, self)
+                        md.remove_hooks()
         else:
             index = ["reactor", "network", "security"].index(type)
             if self.base.extra_items[index] is None \
@@ -275,7 +319,7 @@ Public: %s"""
             elif current == 0:
                 count = " (room for %d)" % size
             else:
-                count = " x%d (room for %d more)" % size
+                count = " x%d (max %d)" % (current, size)
 
         self.cpu_pane.name_panel.text += count
 

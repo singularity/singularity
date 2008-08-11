@@ -31,6 +31,9 @@ sleep = Sleep
 building = Under Construction
 really_destroy = Really destroy this base?
 detect_chance = [DETECTION CHANCE]
+num_cpu_prompt = Enter a number of %s to build. (max %d)
+will_lose_cpus = I'll need to take the existing processors offline while I install the new ones.  Continue anyway?
+nan = That doesn't seem to be a valid number.
 
 # Until a certain technology is researched, the chance of bases being detected
 # is unknown.
