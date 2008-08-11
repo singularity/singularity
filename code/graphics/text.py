@@ -429,7 +429,7 @@ class EditableText(widget.FocusWidget, Text):
                 line_x = excess_space
 
         prev_width = 20000
-        widths = get_widths(font, line)
+        widths = get_widths(self.font, line)
         for index, width in enumerate(widths):
             if line_x + (width // 2) < click_x:
                 line_x += width
