@@ -10,6 +10,9 @@ USER-VISIBLE CHANGES:
   The research dialog has been substantially improved to compensate. (FM)
 * When building or researching, CPU, cash, and labor (time) must be spent in
   approximately equivalent amounts. (FM)
+* The AI has learned to estimate how quickly its bases are detected. (FM)
+- The AI pays no attention to the humans until they notice his actions. (FM)
+- Color-coding has been added to the AI's global estimates. (FM)
 
 
 OTHER CHANGES:
