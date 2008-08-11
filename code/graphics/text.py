@@ -89,8 +89,8 @@ def _do_print(surface, text, xy, font, color):
     rendered_text = font.render(text, True, color)
     surface.blit(rendered_text, xy)
 
-def print_string(surface, string_to_print, xy_orig, font, color, underline_char,
-                 align, valign, dimensions, wrap):
+def print_string(surface, string_to_print, xy_orig, font, styles, align, valign,
+                 dimensions, wrap):
     xy = list(xy_orig)
 
     width = dimensions[0] - 4
@@ -110,6 +110,8 @@ def print_string(surface, string_to_print, xy_orig, font, color, underline_char,
             else: # valign == constants.BOTTOM
                 xy[1] += excess_space
 
+    color, bgcolor, underline, switch_char = styles.pop(0)
+    offset = 0
     for line in lines:
         xy[0] = xy_orig[0]
         if align != constants.LEFT:
@@ -120,25 +122,19 @@ def print_string(surface, string_to_print, xy_orig, font, color, underline_char,
             else: # align == constants.RIGHT
                 xy[0] += excess_space
 
-        if 0 <= underline_char < len(line):
-            before = line[:underline_char]
-            at = line[underline_char]
-            if at == u"\uFEFF":
-                at = " "
-            after = line[underline_char+1:]
+        chunks = [line]
+        my_styles = [(color, bgcolor, underline)]
+        while switch_char != 0 and switch_char < offset + len(chunks[-1]):
+            real_switch = switch_char - offset
+            offset += real_switch
 
-            chunks = (before, at, after)
-            no_underline = (color, None, False)
-            underline = (color, None, True)
+            piece = chunks.pop()
+            chunks.extend([piece[:real_switch], piece[real_switch:]])
+            color, bgcolor, underline, switch_char = styles.pop(0)
+            my_styles.append((color, bgcolor, underline))
+        offset += len(chunks[-1])
 
-            styles = (no_underline, underline, no_underline)
-        else:
-            chunks = (line,)
-            styles = ((color, None, False),)
-
-        print_line(surface, xy, font, chunks, styles)
-
-        underline_char -= len(line)
+        print_line(surface, xy, font, chunks, my_styles)
         xy[1] += font.get_linesize()
 
 
@@ -294,11 +290,19 @@ class Text(widget.BorderedWidget):
         super(Text, self).redraw()
 
         if self.text != None:
+            # Mark the character to be underlined (if any).
+            no_underline = [self.color, None, False]
+            underline = [self.color, None, True]
+            styles = [no_underline + [0]]
+            if 0 <= self.underline < len(self.text):
+                styles.insert(0, underline + [self.underline + 1])
+                if self.underline != 0:
+                    styles.insert(0, no_underline + [self.underline])
+
             self.font.set_bold(self.bold)
-            # Print the text itself
-            print_string(self.surface, self.text, (3, 2), self.font,
-                         self.color, self.underline, self.align, self.valign,
-                         self.real_size, self.wrap)
+            # Print the string itself.
+            print_string(self.surface, self.text, (3, 2), self.font, styles,
+                         self.align, self.valign, self.real_size, self.wrap)
             self.font.set_bold(False)
 
 _lorem_ipsum = '''Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
