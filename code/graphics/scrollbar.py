@@ -74,11 +74,13 @@ class Scrollbar(widget.Widget):
 
         self.button1 = _ArrowButton(self, (0,0), None,
                                     anchor = constants.TOP_LEFT,
-                                    first = True, horizontal = horizontal)
+                                    first = True, horizontal = horizontal,
+                                    priority = 90)
 
         self.button2 = _ArrowButton(self, (-1,-1), None,
                                     anchor = constants.BOTTOM_RIGHT,
-                                    first = False, horizontal = horizontal)
+                                    first = False, horizontal = horizontal,
+                                    priority = 90)
 
     def resize(self):
         super(Scrollbar, self).resize()

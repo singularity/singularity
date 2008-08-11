@@ -52,7 +52,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
     def add_hooks(self):
         super(Listbox, self).add_hooks()
-        self.parent.add_handler(constants.CLICK, self.on_click, 150)
+        self.parent.add_handler(constants.CLICK, self.on_click, 90)
         self.parent.add_key_handler(pygame.K_UP, self.got_key)
         self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
         self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
@@ -81,8 +81,6 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
             # ... and select it.
             self.list_pos = index + self.scrollbar.scroll_pos
-
-            raise constants.Handled
 
     def safe_pos(self, raw_pos):
         return max(0, min(len(self.list) - 1, raw_pos))
