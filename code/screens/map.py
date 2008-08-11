@@ -346,7 +346,7 @@ class MapScreen(dialog.Dialog):
 
             if g.techs["Advanced Socioanalytics"].done:
                 suspicion_display_dict[group] = g.to_percent(suspicion, True)
-                danger_display_dict[group] = locale.format("%.2f", detects)
+                danger_display_dict[group] = g.to_percent(detects*10000, True)
             else:
                 suspicion_display_dict[group] = \
                     g.suspicion_to_detect_str(suspicion)
