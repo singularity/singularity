@@ -324,7 +324,6 @@ class MapScreen(dialog.Dialog):
         # string that gives a range of 25% as to what the suspicions
         # are.
         # A similar system applies to the danger levels shown.
-        import locale
         suspicion_display_dict = {}
         danger_display_dict = {}
         normal = (self.suspicion_bar.color, None, False)

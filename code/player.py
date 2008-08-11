@@ -539,6 +539,9 @@ class Player(object):
             self.prev_discovery = self.last_discovery
             self.last_discovery = discovery_locs[0]
 
+            # Update the detection chance display.
+            g.map_screen.needs_rebuild = True
+
     def lost_game(self):
         for group in self.groups.values():
             if group.suspicion > 10000:
