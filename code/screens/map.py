@@ -58,11 +58,11 @@ class MapScreen(dialog.Dialog):
 
         self.location_dialog = LocationScreen(self)
 
-        self.suspicion_bar = text.FastText(self, (0,.96), (1, .04),
-                                           base_font=gg.font[1],
-                                           background_color=gg.colors["black"],
-                                           border_color=gg.colors["dark_blue"],
-                                           borders=constants.ALL)
+        self.suspicion_bar = \
+            text.FastStyledText(self, (0,.96), (1, .04), base_font=gg.font[1],
+                                background_color=gg.colors["black"],
+                                border_color=gg.colors["dark_blue"],
+                                borders=constants.ALL)
         widget.unmask_all(self.suspicion_bar)
 
         self.finance_button = button.DialogButton(self, (0.85, 0.92),
@@ -313,19 +313,34 @@ class MapScreen(dialog.Dialog):
         # string that gives a range of 25% as to what the suspicions
         # are.
         suspicion_display_dict = {}
+        normal = (self.suspicion_bar.color, None, False)
+        styles = [normal]
         for group in ("news", "science", "covert", "public"):
+            styles.append(normal)
+            suspicion = g.pl.groups[group].suspicion
+            if suspicion < 2500:
+                color = (0, 0, 255)
+            elif suspicion < 5000:
+                color = (85, 0, 170)
+            elif suspicion < 7500:
+                color = (170, 0, 85)
+            else:
+                color = (255, 0, 0)
+            styles.append( (color, None, False) )
+
             if g.techs["Advanced Socioanalytics"].done:
                 suspicion_display_dict[group] = \
-                 g.to_percent(g.pl.groups[group].suspicion, True)
+                    g.to_percent(suspicion, True)
             else:
                 suspicion_display_dict[group] = \
-                 g.percent_to_detect_str(g.pl.groups[group].suspicion)
+                    g.percent_to_detect_str(suspicion)
 
-        self.suspicion_bar.text = ("[SUSPICION]" +
-            " NEWS: " + suspicion_display_dict["news"] +
-            "  SCIENCE: " + suspicion_display_dict["science"] +
-            "  COVERT: " + suspicion_display_dict["covert"] +
-            "  PUBLIC: " + suspicion_display_dict["public"])
+        self.suspicion_bar.chunks = ("[SUSPICION]",
+            u" NEWS:\xA0", suspicion_display_dict["news"],
+            u"  SCIENCE:\xA0", suspicion_display_dict["science"],
+            u"  COVERT:\xA0", suspicion_display_dict["covert"],
+            u"  PUBLIC:\xA0", suspicion_display_dict["public"])
+        self.suspicion_bar.styles = tuple(styles)
 
         for id, button in self.location_buttons.iteritems():
             location = g.locations[id]
