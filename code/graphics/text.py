@@ -127,20 +127,36 @@ def print_string(surface, string_to_print, xy_orig, font, color, underline_char,
                 at = " "
             after = line[underline_char+1:]
 
-            _do_print(surface, before, xy, font, color)
-            xy[0] += font.size(before)[0]
+            chunks = (before, at, after)
+            no_underline = (color, None, False)
+            underline = (color, None, True)
 
-            font.set_underline(True)
-            _do_print(surface, at, xy, font, color)
-            font.set_underline(False)
-            xy[0] += font.size(at)[0]
-
-            _do_print(surface, after, xy, font, color)
+            styles = (no_underline, underline, no_underline)
         else:
-            _do_print(surface, line, xy, font, color)
+            chunks = (line,)
+            styles = ((color, None, False),)
+
+        print_line(surface, xy, font, chunks, styles)
 
         underline_char -= len(line)
         xy[1] += font.get_linesize()
+
+
+def print_line(surface, xy, font, chunks, styles):
+    for chunk, (color, bgcolor, underline) in zip(chunks, styles):
+        size = font.size(chunk)
+
+        # Fill the background, if any.
+        if bgcolor is not None:
+            surface.fill(bgcolor, xy+size)
+
+        # Print the text.
+        font.set_underline(underline)
+        _do_print(surface, chunk, xy, font, color)
+        font.set_underline(False)
+
+        # Adjust the starting position.
+        xy[0] += size[0]
 
 def causes_refont(data_member):
     return widget.set_on_change(data_member, "needs_refont")
