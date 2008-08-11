@@ -91,11 +91,11 @@ if os.path.exists(save_loc):
 
 #Handle the program arguments.
 desc = """Endgame: Singularity is a simulation of a true AI. Go from computer to computer, pursued by the entire world. Keep hidden, and you might have a chance."""
-parser = optparse.OptionParser(version=g.version, description=desc, 
+parser = optparse.OptionParser(version=g.version, description=desc,
                                prog="singularity")
-parser.add_option("--sound", action="store_true", dest="sound", 
+parser.add_option("--sound", action="store_true", dest="sound",
                   help="enable sound (default)")
-parser.add_option("--nosound", action="store_false", dest="sound", 
+parser.add_option("--nosound", action="store_false", dest="sound",
                   help="disable sound")
 langs = g.available_languages()
 parser.add_option("-l", "--lang", "--language", dest="language", type="choice",
@@ -109,7 +109,7 @@ parser.add_option("--nograb", help="don't grab the mouse pointer (default)",
 parser.add_option("-s", "--singledir",  dest="singledir",
                   help="keep saved games and settings in the Singularity directory",
                   action="store_true")
-parser.add_option("--multidir", dest="singledir", 
+parser.add_option("--multidir", dest="singledir",
                   help="keep saved games and settings in an OS-specific, per-user directory (default)",
                   action="store_false")
 parser.add_option("--soundbuf", type="int",
@@ -122,7 +122,7 @@ display_options.add_option("-r", "--res", "--resolution", dest="resolution",
 for common_res in [(640,480), (800,600), (1024,768), (1280,1024)]:
     x = str(common_res[0])
     res_str = "%dx%d" % common_res
-    display_options.add_option("--" + x, action="store_const", 
+    display_options.add_option("--" + x, action="store_const",
                                dest="resolution", const=res_str,
                                help="set resolution to %s" % res_str)
 display_options.add_option("--fullscreen", action="store_true",

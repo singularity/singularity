@@ -44,7 +44,7 @@ class BuyableClass(object):
         cost[labor] /= 10000
         cost[cpu] *= g.seconds_per_day
         return cost
-        
+
     cost = property(get_cost)
 
     def describe_cost(self, cost, hide_time=False):
@@ -82,7 +82,7 @@ class BuyableClass(object):
         # didn't meet any of the OR prerequisites.
         return not or_mode
 
-for stat in ("count", "complete_count", "total_count", 
+for stat in ("count", "complete_count", "total_count",
              "total_complete_count"):
     # Ugly syntax, but it seems to be the Right Way to do it.
     def get(self, stat=stat):

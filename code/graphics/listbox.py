@@ -37,7 +37,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
                  align=constants.CENTER, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
-        
+
         self.list = list or []
         self.display_elements = []
         self.borders = borders
@@ -47,7 +47,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.list_pos = list_pos
 
         self.auto_scroll = True
-        self.scrollbar = scrollbar.UpdateScrollbar(self, 
+        self.scrollbar = scrollbar.UpdateScrollbar(self,
                                                    update_func = self.on_scroll)
 
     def add_hooks(self):
@@ -73,7 +73,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         if self.collision_rect.collidepoint(event.pos):
             self.has_focus = True
             self.took_focus(self)
-            
+
             # Figure out which element was clicked...
             local_vert_abs = event.pos[1] - self.collision_rect[1]
             local_vert_pos = local_vert_abs / float(self.collision_rect.height)
@@ -116,7 +116,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             min_height = -list_size
             list_size = max(1, self._make_collision_rect().height // min_height)
         return list_size
-        
+
     def remake_elements(self):
         list_size = self.num_elements()
         current_size = len(self.display_elements)

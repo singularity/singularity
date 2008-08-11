@@ -96,7 +96,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
 
         self.resolution_custom_horiz = \
             text.EditableText(self, (.333, .15), (.12, .05), text="1400",
-                              borders=constants.ALL, 
+                              borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0,0,50,255))
 
@@ -106,7 +106,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
 
         self.resolution_custom_vert = \
             text.EditableText(self, (.496, .15), (.12, .05), text="1050",
-                              borders=constants.ALL, 
+                              borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0,0,50,255))
 

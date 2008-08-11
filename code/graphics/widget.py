@@ -452,10 +452,10 @@ class BorderedWidget(Widget):
             elif edge == constants.LEFT:
                 self.surface.fill(self.border_color, (0, 0, 1, my_size[1]) )
             elif edge == constants.RIGHT:
-                self.surface.fill(self.border_color, 
+                self.surface.fill(self.border_color,
                                   (my_size[0]-1, 0) + my_size)
             elif edge == constants.BOTTOM:
-                self.surface.fill(self.border_color, 
+                self.surface.fill(self.border_color,
                                   (0, my_size[1]-1) + my_size)
 
 

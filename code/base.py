@@ -26,7 +26,7 @@ import buyable
 from buyable import cash, cpu, labor
 
 class BaseClass(buyable.BuyableClass):
-    def __init__(self, name, description, size, force_cpu, regions, 
+    def __init__(self, name, description, size, force_cpu, regions,
                         detect_chance, cost, prerequisites, maintenance):
         super(BaseClass, self).__init__(name, description, cost, prerequisites,
                                          type="base")
@@ -44,29 +44,29 @@ class BaseClass(buyable.BuyableClass):
     def calc_discovery_chance(self, accurate = True, extra_factor = 1):
         # Get the default settings for this base type.
         detect_chance = self.detect_chance.copy()
-    
+
         # Adjust by the current suspicion levels ...
         for group in detect_chance:
             suspicion = g.pl.groups[group].suspicion
             detect_chance[group] *= 10000 + suspicion
             detect_chance[group] /= 10000
-    
+
         # ... and further adjust based on technology ...
         for group in detect_chance:
             discover_bonus = g.pl.groups[group].discover_bonus
             detect_chance[group] *= discover_bonus
             detect_chance[group] /= 10000
-    
+
         # ... and the given factor.
         for group in detect_chance:
             detect_chance[group] = int(detect_chance[group] * extra_factor)
-    
+
         # Lastly, if we're told to be inaccurate, adjust the values to their
         # nearest percent.
         if not accurate:
             for group in detect_chance:
                 detect_chance[group] = g.nearest_percent(detect_chance[group])
-    
+
         return detect_chance
 
     def get_detect_info(self, location):
@@ -195,7 +195,7 @@ class Base(buyable.Buyable):
             detect_chance[group] *= 10000 + suspicion
             detect_chance[group] /= 10000
 
-        # ... any reactors built ... 
+        # ... any reactors built ...
         if self.extra_items[0] and self.extra_items[0].done:
             item_qual = self.extra_items[0].item_qual
             for group in detect_chance:

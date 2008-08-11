@@ -39,7 +39,7 @@ class MapScreen(dialog.Dialog):
         self.background_color = gg.colors["black"]
         self.add_handler(constants.TICK, self.on_tick)
 
-        self.map = image.Image(self, (.5,.5), (1,.667), constants.MID_CENTER, 
+        self.map = image.Image(self, (.5,.5), (1,.667), constants.MID_CENTER,
                                gg.images['earth.jpg'])
 
         self.location_buttons = {}
@@ -65,12 +65,12 @@ class MapScreen(dialog.Dialog):
                                            borders=constants.ALL)
         widget.unmask_all(self.suspicion_bar)
 
-        self.finance_button = button.DialogButton(self, (0.85, 0.92), 
+        self.finance_button = button.DialogButton(self, (0.85, 0.92),
                                                   (0.15, 0.04),
                                                   text="FINANCE",
                                                   hotkey="e")
 
-        self.knowledge_button = button.DialogButton(self, (0.85, 0.88), 
+        self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
                                                     (0.15, 0.04),
                                                     text="KNOWLEDGE",
                                                     hotkey="k")
@@ -152,7 +152,7 @@ class MapScreen(dialog.Dialog):
         hpos = .38
         for index, (text_, hsize, speed) in enumerate(speed_button_souls):
             hotkey = str(index)
-            b = SpeedButton(self, (hpos, 0), (hsize, .04), 
+            b = SpeedButton(self, (hpos, 0), (hsize, .04),
                             text=text_, hotkey=hotkey,
                             base_font=gg.font[0], text_shrink_factor=.75,
                             align=constants.CENTER,
@@ -321,7 +321,7 @@ class MapScreen(dialog.Dialog):
                 suspicion_display_dict[group] = \
                  g.percent_to_detect_str(g.pl.groups[group].suspicion)
 
-        self.suspicion_bar.text = ("[SUSPICION]" + 
+        self.suspicion_bar.text = ("[SUSPICION]" +
             " NEWS: " + suspicion_display_dict["news"] +
             "  SCIENCE: " + suspicion_display_dict["science"] +
             "  COVERT: " + suspicion_display_dict["covert"] +
@@ -442,7 +442,7 @@ def display_items(item_type):
         items = [ [item[1][0], item[0]] for item in g.help_strings.items()]
         items.sort()
     else:
-        items = [item for item in g.items.values() 
+        items = [item for item in g.items.values()
                       if item.item_type == item_type and item.available()]
 
     if item_type != "concept":
@@ -467,9 +467,9 @@ def display_items(item_type):
         else:
             refresh_items(list[item_pos], xy_loc)
 
-    listbox.show_listbox(display_list, menu_buttons, 
+    listbox.show_listbox(display_list, menu_buttons,
                          list_size=list_size,
-                         loc=xy_loc, box_size=(230, 350), 
+                         loc=xy_loc, box_size=(230, 350),
                          pos_callback=do_refresh, return_callback=listbox.exit)
     #details screen
 
@@ -477,7 +477,7 @@ def refresh_tech(tech_name, xy):
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if tech_name == "": 
+    if tech_name == "":
         return
     g.print_string(g.screen, g.techs[tech_name].name,
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
@@ -525,7 +525,7 @@ def refresh_items(item_name, xy):
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if item_name == "": 
+    if item_name == "":
         return
     g.print_string(g.screen, g.items[item_name].name,
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
@@ -562,7 +562,7 @@ def refresh_concept(concept_name, xy):
     xy = (xy[0]+100, xy[1])
     g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
     g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if concept_name == "": 
+    if concept_name == "":
         return
     g.print_string(g.screen, g.help_strings[concept_name][0],
             g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])

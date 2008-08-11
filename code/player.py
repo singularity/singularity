@@ -30,7 +30,7 @@ from buyable import cash, cpu, labor
 
 class Group(object):
     discover_suspicion = 1000
-    def __init__(self, name, suspicion = 0, suspicion_decay = 100, 
+    def __init__(self, name, suspicion = 0, suspicion_decay = 100,
                  discover_bonus = 10000):
         self.name = name
         self.suspicion = suspicion
@@ -98,7 +98,7 @@ class Player(object):
     def convert_from(self, old_version):
          if old_version <= 3.94: # <= r4_pre4
              # We don't know what the difficulty was, and techs have fooled with
-             # any values that would help (not to mention the headache of 
+             # any values that would help (not to mention the headache of
              # different versions.  So we set it to Very Easy, which means that
              # they shouldn't be hurt by any new mechanics.
              self.difficulty = 1
@@ -198,7 +198,7 @@ class Player(object):
             else:
                 if base.cpus is not None and not base.cpus.done:
                     items_under_construction += [(base, base.cpus)]
-                unfinished_items = [(base, item) for item in base.extra_items 
+                unfinished_items = [(base, item) for item in base.extra_items
                                                  if item and not item.done]
                 items_under_construction += unfinished_items
 
@@ -287,7 +287,7 @@ class Player(object):
         for tech in techs_researched:
             del self.cpu_usage[tech.id]
             text = g.strings["tech_gained"] % \
-                   {"tech": tech.name, 
+                   {"tech": tech.name,
                     "tech_message": tech.result}
             self.pause_game()
             g.map_screen.show_message(text)
@@ -313,7 +313,7 @@ class Player(object):
                        {"item": base.cpus.type.name, "base": base.name}
             self.pause_game()
             g.map_screen.show_message(text)
-            
+
         # Item complete dialogs.
         for base, item in items_constructed:
             text = g.strings["item_construction_single"] % \
@@ -337,7 +337,7 @@ class Player(object):
             if base.done:
                 if self.maintenance_cost[cpu] and base.maintenance[cpu]:
                     self.maintenance_cost[cpu] = \
-                        max(0, self.maintenance_cost[cpu] 
+                        max(0, self.maintenance_cost[cpu]
                                    - base.maintenance[cpu])
                     #Chance of base destruction if cpu-unmaintained: 1.5%
                     if not dead and g.roll_chance(.015, secs_passed):
@@ -411,11 +411,11 @@ class Player(object):
     # The number of complete bases and complex_bases can be passed in, if we
     # already have it.
     def in_grace_period(self, had_grace = True):
-        # Did we already lose the grace period?  We can't check self.had_grace 
+        # Did we already lose the grace period?  We can't check self.had_grace
         # directly, it may not exist yet.
         if not had_grace:
             return False
-        
+
         # Is it day 23 yet?
         if self.raw_day >= 23:
             return False

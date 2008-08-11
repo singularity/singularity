@@ -109,7 +109,7 @@ def print_string(surface, string_to_print, xy_orig, font, color, underline_char,
                 xy[1] += excess_space // 2
             else: # valign == constants.BOTTOM
                 xy[1] += excess_space
-    
+
     for line in lines:
         xy[0] = xy_orig[0]
         if align != constants.LEFT:
@@ -168,7 +168,7 @@ class Text(widget.BorderedWidget):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.needs_refont = True
-        
+
         self.text = text
         self.base_font = base_font or g.font[0]
         self.color = color or g.colors["white"]
@@ -280,9 +280,9 @@ class Text(widget.BorderedWidget):
         if self.text != None:
             self.font.set_bold(self.bold)
             # Print the text itself
-            print_string(self.surface, self.text, (3, 2), self.font, 
+            print_string(self.surface, self.text, (3, 2), self.font,
                          self.color, self.underline, self.align, self.valign,
-                         self.real_size, self.wrap) 
+                         self.real_size, self.wrap)
             self.font.set_bold(False)
 
 _lorem_ipsum = '''Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

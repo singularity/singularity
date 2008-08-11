@@ -29,7 +29,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
     type = widget.causes_rebuild("_type")
     def __init__(self, parent, pos=(0, 0), size=(-1, -1),
                  anchor=constants.TOP_LEFT, *args, **kwargs):
-        super(BuildDialog, self).__init__(parent, pos, size, anchor, *args, 
+        super(BuildDialog, self).__init__(parent, pos, size, anchor, *args,
                                           **kwargs)
 
         self.type = None
@@ -99,7 +99,7 @@ class ItemPane(widget.BorderedWidget):
 
         self.change_button = button.FunctionButton(self, (.36,.01), (.12, .04),
                                                    anchor=constants.TOP_LEFT,
-                                                   text=button_text, 
+                                                   text=button_text,
                                                    hotkey=hotkey,
                                                    function=
                                                 self.parent.parent.build_item,
@@ -131,7 +131,7 @@ class BaseScreen(dialog.Dialog):
 
         self.build_dialog = BuildDialog(self)
 
-        self.header = widget.Widget(self, (0,0), (-1, .08), 
+        self.header = widget.Widget(self, (0,0), (-1, .08),
                                     anchor=constants.TOP_LEFT)
 
         self.name_display = text.Text(self.header, (-.5,0), (-1, -.5),
@@ -175,7 +175,7 @@ class BaseScreen(dialog.Dialog):
                                       background_color=gg.colors["dark_blue"],
                                       borders=constants.ALL,
                                       bold=True,
-                                      align=constants.LEFT, 
+                                      align=constants.LEFT,
                                       valign=constants.TOP)
 
         self.contents_frame = \
@@ -276,7 +276,7 @@ Public: %s"""
                 count = " (room for %d)" % size
             else:
                 count = " x%d (room for %d more)" % size
-                
+
         self.cpu_pane.name_panel.text += count
 
         # Detection chance display.  If Socioanalytics hasn't been researched,
@@ -284,7 +284,7 @@ Public: %s"""
         # an inaccurate value.
         if not g.techs["Socioanalytics"].done:
             self.detect_frame.text = g.strings["detect_chance_unknown_base"]
-        else: 
+        else:
             accurate = g.techs["Advanced Socioanalytics"].done
             chance = self.base.get_detect_chance(accurate)
             def get_chance(group):

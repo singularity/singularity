@@ -30,7 +30,7 @@ class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)
 
-        difficulty_button_souls = (("VERY EASY", 1), ("EASY", 3), 
+        difficulty_button_souls = (("VERY EASY", 1), ("EASY", 3),
                                    ("NORMAL", 5), ("HARD", 7),
                                    ("ULTRA HARD", 10), ("IMPOSSIBLE", 100),
                                    ("BACK", -1))

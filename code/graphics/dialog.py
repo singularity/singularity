@@ -65,7 +65,7 @@ class Dialog(text.Text):
 
     faded = widget.causes_redraw("_faded")
 
-    def __init__(self, parent=None, pos = (.5,.1), size = (1, .9), 
+    def __init__(self, parent=None, pos = (.5,.1), size = (1, .9),
                  anchor = constants.TOP_CENTER, **kwargs):
         kwargs.setdefault("background_color", (0,0,0,0))
         super(Dialog, self).__init__(parent, pos, size, anchor, **kwargs)
@@ -137,7 +137,7 @@ class Dialog(text.Text):
 
     def add_handler(self, type, handler, priority = 100):
         """Adds a handler of the given type, with the given priority."""
-        bisect.insort( self.handlers.setdefault(type, []), 
+        bisect.insort( self.handlers.setdefault(type, []),
                        (priority, handler) )
 
     def remove_handler(self, type, handler):
@@ -147,12 +147,12 @@ class Dialog(text.Text):
 
     def add_key_handler(self, key, handler, priority = 100):
         """Adds a key handler to the given key, with the given priority."""
-        bisect.insort( self.key_handlers.setdefault(key, []), 
+        bisect.insort( self.key_handlers.setdefault(key, []),
                        (priority, handler) )
 
     def remove_key_handler(self, key, handler):
         """Removes all instances of the given handler from the given key."""
-        self.key_handlers[key] = [h for h in self.handlers.get(key, []) 
+        self.key_handlers[key] = [h for h in self.handlers.get(key, [])
                                     if h[1] != handler]
 
     def handle(self, event):
@@ -161,7 +161,7 @@ class Dialog(text.Text):
            requesting the dialog to exit.  Otherwise, returns the value provided
            by the handler."""
         # Get the applicable handlers.  The handlers lists are all sorted.
-        # If more than one handler type is applicable, we use [:] to make a 
+        # If more than one handler type is applicable, we use [:] to make a
         # copy of the first type's list, then insort_all to insert the elements
         # of the other lists in proper sorted order.
         if event.type == pygame.MOUSEMOTION:
@@ -242,13 +242,13 @@ class Dialog(text.Text):
                 break # If it's been handled, we leave the rest alone.
             except constants.ExitDialog, e:
                 # Exiting the dialog.
-                if e.args: 
+                if e.args:
                    # If we're given a return value, we pass it on.
                    return e.args[0]
                 else:
                    # Otherwise, exit with a return value of None.
-                   return 
-    
+                   return
+
         # None of the handlers instructed the dialog to close, so we pass that
         # information back up to the event loop.
         return constants.NO_RESULT
@@ -332,7 +332,7 @@ class TextDialog(Dialog):
                  align=constants.LEFT,
                  shrink_factor=.88, background_color=(0,0,50,255), **kwargs):
 
-        super(TextDialog, self).__init__(parent, pos, size, anchor, 
+        super(TextDialog, self).__init__(parent, pos, size, anchor,
                                          shrink_factor=shrink_factor,
                                          background_color=background_color,
                                          valign=valign, align=align, **kwargs)
@@ -351,11 +351,11 @@ class YesNoDialog(TextDialog):
 
         super(YesNoDialog, self).__init__(parent, *args, **kwargs)
 
-        self.yes_button = button.ExitDialogButton(self, (-.1,-.99), (-.3,-.1), 
+        self.yes_button = button.ExitDialogButton(self, (-.1,-.99), (-.3,-.1),
                                                  anchor = constants.BOTTOM_LEFT,
                                                  exit_code = True)
 
-        self.no_button = button.ExitDialogButton(self, (-.9,-.99), (-.3,-.1), 
+        self.no_button = button.ExitDialogButton(self, (-.9,-.99), (-.3,-.1),
                                                 anchor = constants.BOTTOM_RIGHT,
                                                 exit_code = False)
 
@@ -392,7 +392,7 @@ class MessageDialog(TextDialog):
 
         super(MessageDialog, self).__init__(parent, **kwargs)
 
-        self.ok_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1), 
+        self.ok_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
                                                anchor = constants.BOTTOM_CENTER)
 
         self.add_key_handler(pygame.K_RETURN, self.ok_button.activate_with_sound)
@@ -412,7 +412,7 @@ class TextEntryDialog(TextDialog):
         super(TextEntryDialog, self).__init__(parent, size = size, **kwargs)
 
         self.text_field = text.EditableText(self, (-.5,-1), (-1,-.5),
-                                            borders = constants.ALL, 
+                                            borders = constants.ALL,
                                             base_font = g.font[0],
                                             anchor = constants.BOTTOM_CENTER)
 
@@ -448,7 +448,7 @@ class ChoiceDialog(YesNoDialog):
         self.no_button.exit_code = None
 
     def make_listbox(self):
-        return listbox.Listbox(self, (0, 0), (-1, -.85), 
+        return listbox.Listbox(self, (0, 0), (-1, -.85),
                                anchor=constants.TOP_LEFT)
 
     def return_list_pos(self):
@@ -546,5 +546,5 @@ class SimpleMenuDialog(Dialog):
             button.pos = (.01, y_pos)
             button.size = (.20, .05)
             button.text_shrink_factor=.70
-            
+
             y_pos += .06

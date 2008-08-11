@@ -29,12 +29,12 @@ scale = getattr(pygame.transform, "smoothscale", pygame.transform.scale)
 class Image(widget.Widget):
     image = widget.causes_rebuild("_image")
 
-    def __init__(self, parent, pos, size = (1, 1), 
+    def __init__(self, parent, pos, size = (1, 1),
                  anchor = constants.TOP_LEFT, image = None):
         super(Image, self).__init__(parent, pos, size, anchor)
 
         self.old_size = None
-        
+
         if image:
             self.image = image.convert_alpha()
 

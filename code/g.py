@@ -65,7 +65,7 @@ language = "en_US"
 #Makes the intro be shown on the first GUI tick.
 intro_shown = True
 
-# Try a few locale settings.  First the selected language, then the user's 
+# Try a few locale settings.  First the selected language, then the user's
 # default, then en_US.  The selected lanugage and en_US are tried with encoding
 # UTF-8 first, then the default encoding.  The user's default encoding is not
 # paired with UTF-8.
@@ -247,7 +247,7 @@ def play_music(musicdir="music"):
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number):
     locale_name, encoding = locale.getlocale()
-    raw_with_commas = locale.format("%0.2f", number, 
+    raw_with_commas = locale.format("%0.2f", number,
                                     grouping=True    ).decode(encoding)
     locale_test = locale.format("%01.1f", 0.1).decode(encoding)
     if len(locale_test) == 3 and not locale_test[1].isdigit():
@@ -347,7 +347,7 @@ def roll_chance(chance_per_day, seconds = seconds_per_day):
 def current_share(num_per_day, time_of_day, seconds_passed):
     last_time = time_of_day - seconds_passed
     if last_time < 0:
-        share_yesterday = current_share(num_per_day, seconds_per_day, 
+        share_yesterday = current_share(num_per_day, seconds_per_day,
                                         -last_time)
         last_time = 0
     else:
@@ -533,10 +533,10 @@ def load_game(loadgame_name):
             discover_bonus = unpickle.load()
             suspicion_bonus = unpickle.load()
             if load_version <= 1:
-                suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1], 
+                suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1],
                                    49+suspicion_bonus[2], 199+suspicion_bonus[3])
             suspicion = unpickle.load()
-    
+
             translation = ["news", "science", "covert", "public"]
             for index, group_name in enumerate(translation):
                 group = pl.groups[group_name]
@@ -545,7 +545,7 @@ def load_game(loadgame_name):
                 group.discover_bonus = discover_bonus[index]
         else:
             pl.groups = unpickle.load()
-    
+
         curr_speed = unpickle.load()
         load_techs()
         for tech_name in techs:
@@ -562,7 +562,7 @@ def load_game(loadgame_name):
             #get rid of the ~~~ break line.
             if load_version > 0:
                 unpickle.load()
-    
+
         for base_name in base_type:
             if load_version < 1:
                 base_type[base_name].count = unpickle.load()
@@ -575,9 +575,9 @@ def load_game(loadgame_name):
             #get rid of the ~~~ break line.
             if load_version > 0:
                 unpickle.load()
-    
-        for base_loc in ("N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA", 
-                         "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES", 
+
+        for base_loc in ("N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA",
+                         "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES",
                          "TRANSDIMENSIONAL"):
             if load_version < 1:
                 num_of_bases = unpickle.load()
@@ -609,7 +609,7 @@ def load_game(loadgame_name):
                 my_base.suspicion = base_suspicion
                 my_base.cost_left = buyable.array(base_cost)
                 my_base.started_at = built_date * minutes_per_day
-    
+
                 for x in range(len(my_base.cpus)):
                     index = unpickle.load()
                     if index == 0: continue
@@ -729,8 +729,8 @@ def load_bases():
         else:
             allowed_list = [base_name["allowed"]]
 
-        base_type[base_name["id"]]=base.BaseClass(base_name["id"], "", 
-            base_size, force_cpu, allowed_list, chance_dict, cost_list, 
+        base_type[base_name["id"]]=base.BaseClass(base_name["id"], "",
+            base_size, force_cpu, allowed_list, chance_dict, cost_list,
             base_pre, maint_list)
 
 #         base_type["Reality Bubble"] = base.BaseClass("Reality Bubble",
@@ -806,7 +806,7 @@ def load_locations():
         except ValueError:
             sys.stderr.write("Error with safety given: %s\n" % repr(safety))
             sys.exit(1)
-        
+
         # Make sure prerequisites, if any, are lists.
         pre = location_info.get("pre", [])
         if type(pre) != list:
@@ -832,7 +832,7 @@ def load_locations():
 
         locations[id].modifiers = modifiers_dict
 
-#        locations["MOON"] = location.Location("MOON", (82, 10), 2, 
+#        locations["MOON"] = location.Location("MOON", (82, 10), 2,
 #                                              "Lunar Rocketry")
 
     # We use the en_US definitions as fallbacks, in case strings haven't been
@@ -1216,7 +1216,7 @@ def run_intro():
         if line and line[0] == "|":
             segment += line[1:]
         elif segment:
-            more = create_yesno(segment, font[0][20], 
+            more = create_yesno(segment, font[0][20],
                                 (screen_size[0]/2 - 175, 50), (350, 350),
                                 colors["dark_blue"], colors["white"],
                                 colors["white"], ("CONTINUE", "SKIP"),

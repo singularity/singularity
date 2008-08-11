@@ -23,7 +23,7 @@ import g
 import buyable
 
 class Tech(buyable.Buyable):
-    def __init__(self, id, description, known, cost, prerequisites, danger, 
+    def __init__(self, id, description, known, cost, prerequisites, danger,
                  tech_type, secondary_data):
         # A bit silly, but it does the trick.
         type = buyable.BuyableClass(id, description, cost, prerequisites,
@@ -101,4 +101,4 @@ class Tech(buyable.Buyable):
                 for group in g.pl.groups.values():
                     group.alter_suspicion(-self.secondary_data)
             else:
-                print "tech: %s is unknown bonus can't be applied" % self.tech_type 
+                print "tech: %s is unknown bonus can't be applied" % self.tech_type

@@ -63,7 +63,7 @@ class Button(text.SelectableText):
         super(Button, self).add_hooks()
         self.parent.add_handler(constants.MOUSEMOTION, self.watch_mouse,
                                 self.priority)
-        self.parent.add_handler(constants.CLICK, self.handle_event, 
+        self.parent.add_handler(constants.CLICK, self.handle_event,
                                 self.priority)
         if self.hotkey:
             self.parent.add_key_handler(self.hotkey, self.handle_event,
@@ -120,7 +120,7 @@ class Button(text.SelectableText):
         from code.g import play_sound
         play_sound("click")
         self.activated(event)
-        
+
 
     def activated(self, event):
         """Called when the button is pressed or otherwise triggered."""
@@ -133,7 +133,7 @@ class ImageButton(Button):
 
         super(ImageButton, self).__init__(*args, **kwargs)
 
-        self.image = image.Image(self, (-.5, -.5), (-.9, -.9), 
+        self.image = image.Image(self, (-.5, -.5), (-.9, -.9),
                                  anchor = constants.MID_CENTER,
                                  image = image_surface)
 
@@ -150,7 +150,7 @@ class FunctionButton(Button):
            call and raises Handled if it returns without incident."""
         self.function(*self.args, **self.kwargs)
         raise constants.Handled
-        
+
 
 class ExitDialogButton(FunctionButton):
     def __init__(self, *args, **kwargs):
@@ -165,7 +165,7 @@ class ExitDialogButton(FunctionButton):
             raise constants.ExitDialog, self.exit_code_func()
         else:
             raise constants.ExitDialog, self.exit_code
-        
+
 class DialogButton(FunctionButton):
     def __init__(self, *args, **kwargs):
         self.dialog = kwargs.pop("dialog", None)

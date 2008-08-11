@@ -21,7 +21,7 @@
 import buyable
 
 class ItemClass(buyable.BuyableClass):
-    def __init__(self, name, description, cost, prerequisites, item_type, 
+    def __init__(self, name, description, cost, prerequisites, item_type,
             item_qual, buildable):
         super(ItemClass, self).__init__(name, description, cost, prerequisites,
                                          type="item")
@@ -41,7 +41,7 @@ class ItemClass(buyable.BuyableClass):
         import g
         basic_text = super(ItemClass, self).get_info()
         if self.item_type == "cpu":
-            return basic_text.replace("---", "Generates %s CPU.\n---" % 
+            return basic_text.replace("---", "Generates %s CPU.\n---" %
                                               g.add_commas(self.item_qual))
         return basic_text
 

@@ -57,11 +57,11 @@ class Scrollbar(widget.Widget):
     window = widget.causes_rebuild("_window")
     horizontal = widget.causes_rebuild("_horizontal")
 
-    def __init__(self, parent, pos = (-1,0), size = (.025, -1), 
+    def __init__(self, parent, pos = (-1,0), size = (.025, -1),
                  anchor = constants.TOP_RIGHT, scroll_pos = 0,
                  elements = 15, window = 5, horizontal = False):
         super(Scrollbar, self).__init__(parent, pos, size, anchor)
-        
+
         self.scroll_pos = scroll_pos
         self.elements = elements
         self.window = window
@@ -72,11 +72,11 @@ class Scrollbar(widget.Widget):
                                           horizontal = horizontal,
                                           update_func = self.on_change)
 
-        self.button1 = _ArrowButton(self, (0,0), None, 
+        self.button1 = _ArrowButton(self, (0,0), None,
                                     anchor = constants.TOP_LEFT,
                                     first = True, horizontal = horizontal)
 
-        self.button2 = _ArrowButton(self, (-1,-1), None, 
+        self.button2 = _ArrowButton(self, (-1,-1), None,
                                     anchor = constants.BOTTOM_RIGHT,
                                     first = False, horizontal = horizontal)
 
