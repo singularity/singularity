@@ -92,7 +92,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.alloc_cpus.visible = False
         canvas.slider = slider.UpdateSlider(canvas, (-.01, -.55), (-.98, -.40),
                                             anchor=constants.TOP_LEFT,
-                                            horizontal=True)
+                                            horizontal=True, priority=150)
         canvas.slider.visible = False
 
         canvas.help_button = button.FunctionButton(canvas, (-.11, -.55),

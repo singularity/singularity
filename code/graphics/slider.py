@@ -40,6 +40,7 @@ class Slider(button.Button):
                  border_color=None, background_color=None, slider_color=None,
                  slider_pos=0, slider_max=10, slider_size=5, horizontal=False,
                  **kwargs):
+        kwargs.setdefault("priority", 80)
         super(Slider, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
         self.borders = borders
@@ -60,7 +61,7 @@ class Slider(button.Button):
                                     border_color = self.border_color,
                                     selected_color = self.slider_color,
                                     unselected_color = self.slider_color,
-                                    priority = 75)
+                                    priority = self.priority - 5)
 
     def redraw(self):
         super(Slider, self).redraw()
@@ -155,7 +156,8 @@ class Slider(button.Button):
     def handle_click(self, event):
         if self.drag_state == True:
             self.drag_state = None
-            raise constants.Handled
+            if not self.is_over(pygame.mouse.get_pos()):
+                raise constants.Handled
         else:
             self.drag_state = None
 
@@ -176,7 +178,8 @@ class Slider(button.Button):
         if self.horizontal:
             self.jump(go_lower=(event.pos[0] < self.button.collision_rect[0]))
         else:
-            self.jump(lower = event.pos[1] < self.button.collision_rect[1])
+            self.jump(go_lower = event.pos[1] < self.button.collision_rect[1])
+        raise constants.Handled
 
 
 class UpdateSlider(Slider):
