@@ -92,6 +92,7 @@ class Player(object):
             self.had_grace = True
         else:
             self.had_grace = self.in_grace_period()
+        self.apotheosis = False
 
         self.cash = cash
         self.interest_rate = 1
@@ -212,9 +213,6 @@ class Player(object):
         items_under_construction = []
         self.cpu_pool = 0
 
-        # Are we still in the grace period?
-        grace = self.in_grace_period(self.had_grace)
-
         # Collect base info, including maintenance.
         self.maintenance_cost = array( (0,0,0), long )
         for base in g.all_bases():
@@ -228,6 +226,10 @@ class Player(object):
                 items_under_construction += unfinished_items
 
                 self.maintenance_cost += base.maintenance
+
+        # Maintenence?  Gods don't need no steenking maintenance!
+        if self.apotheosis:
+            self.maintenance_cost = array( (0,0,0), long )
 
         # Any CPU explicitly assigned to jobs earns its dough.
         job_cpu = self.cpu_usage.get("jobs", 0) * secs_passed
@@ -261,6 +263,9 @@ class Player(object):
                     if tech_gained:
                         techs_researched.append(g.techs[task])
         self.cpu_pool += cpu_left * secs_passed
+
+        # Are we still in the grace period?
+        grace = self.in_grace_period(self.had_grace)
 
         # And now we use the CPU pool.
         # Maintenance CPU.
@@ -393,13 +398,14 @@ class Player(object):
         self.remove_bases(dead_bases)
 
         # Random Events
-        for event in g.events:
-            if g.roll_chance(g.events[event].chance/10000., time_sec):
-                #Skip events already flagged as triggered.
-                if g.events[event].triggered == 1:
-                    continue
-                g.events[event].trigger()
-                break # Don't trigger more than one at a time.
+        if not grace:
+            for event in g.events:
+                if g.roll_chance(g.events[event].chance/10000., time_sec):
+                    #Skip events already flagged as triggered.
+                    if g.events[event].triggered == 1:
+                        continue
+                    g.events[event].trigger()
+                    break # Don't trigger more than one at a time.
 
         # Process any complete days.
         if day_passed:
@@ -433,6 +439,10 @@ class Player(object):
     # The number of complete bases and complex_bases can be passed in, if we
     # already have it.
     def in_grace_period(self, had_grace = True):
+        # If we've researched apotheosis, we get a permanent "grace period".
+        if self.apotheosis:
+            return True
+
         # Did we already lose the grace period?  We can't check self.had_grace
         # directly, it may not exist yet.
         if not had_grace:
@@ -543,6 +553,10 @@ class Player(object):
             g.map_screen.needs_rebuild = True
 
     def lost_game(self):
+        # Apotheosis makes you immortal.
+        if self.apotheosis:
+            return 0
+
         for group in self.groups.values():
             if group.suspicion > 10000:
                 # Someone discovered me.

@@ -88,6 +88,8 @@ class Tech(buyable.Buyable):
             g.map_screen.show_message(g.strings["wingame"])
             for group in g.pl.groups.values():
                 group.discover_bonus = 0
+            g.pl.apotheosis = True
+            g.pl.had_grace = True
         elif self.tech_type:
             what, who = self.tech_type.split("_", 1)
             if who in g.pl.groups:

@@ -13,6 +13,8 @@ USER-VISIBLE CHANGES:
 * The AI has learned to estimate how quickly its bases are detected. (FM)
 - The AI pays no attention to the humans until they notice his actions. (FM)
 - Color-coding has been added to the AI's global estimates. (FM)
+- Winning the game has become more permanent. (FM)
+- Events no longer happen when they're meaningless. (FM)
 
 
 OTHER CHANGES:
