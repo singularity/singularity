@@ -227,6 +227,7 @@ class BaseScreen(dialog.Dialog):
             text = g.strings["num_cpu_prompt"] % (item_type.name, space_left)
 
             self.count_dialog.text = text
+            self.count_dialog.default_text = locale.format("%d", space_left)
             can_exit = False
             while not can_exit:
                 result = dialog.call_dialog(self.count_dialog, self)
