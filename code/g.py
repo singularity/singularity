@@ -1207,7 +1207,7 @@ def load_strings():
     load_string_defs("en_US")
     load_string_defs(language)
 
-def run_intro():
+def get_intro():
     intro_file_name = data_loc+"intro_"+language+".dat"
     if not os.path.exists(intro_file_name):
         print "Intro is missing.  Skipping."
@@ -1222,15 +1222,11 @@ def run_intro():
         if line and line[0] == "|":
             segment += line[1:]
         elif segment:
-            more = create_yesno(segment, font[0][20],
-                                (screen_size[0]/2 - 175, 50), (350, 350),
-                                colors["dark_blue"], colors["white"],
-                                colors["white"], ("CONTINUE", "SKIP"),
-                                reverse_key_context = True)
-            if not more:
-                break
-            else:
-                segment = ""
+            yield segment
+            segment = ""
+
+    if segment:
+        yield segment
 
 #difficulty=1 for very easy, to 9 for very hard. 5 for normal.
 def new_game(difficulty):

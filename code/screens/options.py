@@ -32,6 +32,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         self.size = (.79, .63)
         self.pos = (.5, .5)
         self.anchor = constants.MID_CENTER
+        self.background_color = (0,0,50)
+        self.borders = ()
 
         self.fullscreen_label = text.Text(self, (.01, .01), (.15, .05),
                                           text="Fullscreen:", underline=0,

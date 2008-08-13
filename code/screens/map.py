@@ -189,9 +189,7 @@ class MapScreen(dialog.Dialog):
                           background_color=gg.colors["black"],
                           border_color=gg.colors["dark_blue"])
 
-        self.message_dialog = dialog.MessageDialog(self, size=(.35, .4),
-                                     background_color=gg.colors["dark_blue"],
-                                     borders=constants.ALL)
+        self.message_dialog = dialog.MessageDialog(self)
 
         self.savename_dialog = \
             dialog.TextEntryDialog(self.menu_dialog,
@@ -237,6 +235,16 @@ class MapScreen(dialog.Dialog):
             self.stop_timer()
         self.needs_rebuild = True
 
+    def show_intro(self):
+        intro_dialog = dialog.YesNoDialog(self, yes_type="continue_",
+                                          no_type="skip")
+        for segment in g.get_intro():
+            intro_dialog.text = segment
+            if not dialog.call_dialog(intro_dialog, self):
+                break
+
+        intro_dialog.remove_hooks()
+
     def show(self):
         self.force_update()
 
@@ -256,6 +264,10 @@ class MapScreen(dialog.Dialog):
 
     leftovers = 1
     def on_tick(self, event):
+        if not g.pl.intro_shown:
+            g.pl.intro_shown = True
+            self.show_intro()
+
         self.leftovers += g.curr_speed / float(gg.FPS)
         if self.leftovers < 1:
             return
@@ -390,8 +402,6 @@ class MapScreen(dialog.Dialog):
         if name:
             g.save_game(name)
             raise constants.ExitDialog, False
-
-intro_shown = False
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):
     pass

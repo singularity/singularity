@@ -78,6 +78,7 @@ class Group(object):
             return 0
 
 class Player(object):
+    intro_shown = False
     def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0,
                  difficulty = 5):
         self.difficulty = difficulty

@@ -327,15 +327,15 @@ class TopDialog(Dialog):
 
 
 class TextDialog(Dialog):
-    def __init__(self, parent, pos=(.5,.1), size=(.5,.5),
-                 anchor=constants.TOP_CENTER, valign=constants.TOP,
-                 align=constants.LEFT,
-                 shrink_factor=.88, background_color=(0,0,50,255), **kwargs):
+    def __init__(self, parent, pos=(.5,.1), size=(.45,.5),
+                 anchor=constants.TOP_CENTER, **kwargs):
+        kwargs.setdefault("valign", constants.TOP)
+        kwargs.setdefault("align", constants.LEFT)
+        kwargs.setdefault("shrink_factor", .88)
+        kwargs.setdefault("background_color", g.colors["dark_blue"])
+        kwargs.setdefault("borders", constants.ALL)
 
-        super(TextDialog, self).__init__(parent, pos, size, anchor,
-                                         shrink_factor=shrink_factor,
-                                         background_color=background_color,
-                                         valign=valign, align=align, **kwargs)
+        super(TextDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
 
 class YesNoDialog(TextDialog):

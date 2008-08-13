@@ -109,5 +109,7 @@ Version %s"""
 class AboutDialog(dialog.MessageDialog):
     def __init__(self, *args, **kwargs):
         super(AboutDialog, self).__init__(*args, **kwargs)
+        self.background_color = (0,0,50)
+        self.borders = ()
         self.align = constants.LEFT
         self.text = about_message % (g.version,)
