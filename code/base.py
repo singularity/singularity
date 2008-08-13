@@ -176,9 +176,44 @@ class Base(buyable.Buyable):
 
     def convert_from(self, save_version):
         super(Base, self).convert_from(save_version)
-        for item in self.cpus + self.extra_items:
-            if item:
-                item.convert_from(save_version)
+        if save_version < 4.91: # < r5_pre
+            for cpu in self.cpus:
+                if cpu:
+                    cpu.convert_from(save_version)
+                    cpu.base = self
+            for index in range(len(self.extra_items)):
+                if self.extra_items[index]:
+                    self.extra_items[index].convert_from(save_version)
+                else:
+                    self.extra_items[index] = None
+
+            self.raw_cpu = 0
+            if self.cpus[0]:
+                for cpu in self.cpus[1:]:
+                    self.cpus[0] += cpu
+
+                if len(self.cpus) == 1 and self.cpus[0].done:
+                    # Force it to report its CPU.
+                    self.cpus[0].finish()
+
+                self.cpus = self.cpus[0]
+            else:
+                self.cpus = None
+
+            self.recalc_cpu()
+
+            self.power_state = self.power_state.lower()
+
+            # Update CPU usage.
+            if self.studying in g.techs:
+                g.pl.cpu_usage[self.studying] = \
+                    g.pl.cpu_usage.get(self.studying, 0) + self.cpu
+            elif "Jobs" in self.studying:
+                g.pl.cpu_usage["jobs"] = \
+                    g.pl.cpu_usage.get("jobs", 0) + self.cpu
+            elif self.studying == "CPU Pool":
+                g.pl.cpu_usage["cpu_pool"] = \
+                    g.pl.cpu_usage.get("cpu_pool", 0) + self.cpu
 
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full

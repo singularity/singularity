@@ -116,6 +116,10 @@ class Buyable(object):
     available = property(lambda self: self.type.available)
 
     def convert_from(self, save_version):
+        if save_version < 4.91: # r5_pre
+            self.cost_left = array(self.cost_left, long)
+            self.total_cost = array(self.total_cost, long)
+            self.count = 1
         if save_version <= 3:
             if self.cost_left[cpu] < self.total_cost[cpu]:
                 self.cost_left[cpu] *= g.seconds_per_day

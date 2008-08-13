@@ -51,6 +51,12 @@ class Item(buyable.Buyable):
         self.item_qual = item_type.item_qual
         self.base = base
 
+    def convert_from(self, load_version):
+        super(Item, self).convert_from(load_version)
+        if load_version < 4.91: # < r5_pre
+            import g
+            self.type = g.items[self.type.id]
+
     def finish(self):
         super(Item, self).finish()
         if self.base:

@@ -119,6 +119,11 @@ class Player(object):
         self.sleeping_cpus = 0
 
     def convert_from(self, old_version):
+         if old_version < 4.91: # < r5_pre
+             self.cpu_usage = {}
+             self.apotheosis = g.techs["Apotheosis"].done
+             if self.apotheosis:
+                 self.had_grace = True
          if old_version <= 3.94: # <= r4_pre4
              # We don't know what the difficulty was, and techs have fooled with
              # any values that would help (not to mention the headache of

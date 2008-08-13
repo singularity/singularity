@@ -649,14 +649,13 @@ def load_game(loadgame_name):
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
-        if load_version <= 3.93: # <= r4_pre3
+        if load_version < 4.91: # < r5_pre
             pl.convert_from(load_version)
-        if load_version <= 3:
-            for tech in techs.values():
-                tech.convert_from(load_version)
             for location in locations.values():
                 for my_base in location.bases:
                     my_base.convert_from(load_version)
+            for tech in techs.values():
+                tech.convert_from(load_version)
 
     loadfile.close()
 
