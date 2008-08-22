@@ -60,6 +60,7 @@ class MapScreen(dialog.Dialog):
 
         self.suspicion_bar = \
             text.FastStyledText(self, (0,.92), (1, .04), base_font=gg.font[1],
+                                wrap=False,
                                 background_color=gg.colors["black"],
                                 border_color=gg.colors["dark_blue"],
                                 borders=constants.ALL, align=constants.LEFT)
@@ -67,6 +68,7 @@ class MapScreen(dialog.Dialog):
 
         self.danger_bar = \
             text.FastStyledText(self, (0,.96), (1, .04), base_font=gg.font[1],
+                                wrap=False,
                                 background_color=gg.colors["black"],
                                 border_color=gg.colors["dark_blue"],
                                 borders=constants.ALL, align=constants.LEFT)
@@ -137,6 +139,7 @@ class MapScreen(dialog.Dialog):
                                                  function=show_menu)
 
         self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
+                                          wrap=False,
                                           text="DAY 0000, 00:00:00",
                                           base_font=gg.font[1],
                                           background_color=gg.colors["black"],
@@ -176,6 +179,7 @@ class MapScreen(dialog.Dialog):
 
         self.cash_display = \
             text.FastText(self.info_window, (0,0), (-1, -.5),
+                          wrap=False,
                           base_font=gg.font[1], shrink_factor = .7,
                           borders=constants.ALL,
                           background_color=gg.colors["black"],
@@ -183,6 +187,7 @@ class MapScreen(dialog.Dialog):
 
         self.cpu_display = \
             text.FastText(self.info_window, (0,-.5), (-1, -.5),
+                          wrap=False,
                           base_font=gg.font[1], shrink_factor=.7,
                           borders=
                            (constants.LEFT, constants.RIGHT, constants.BOTTOM),
