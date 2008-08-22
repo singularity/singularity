@@ -473,3 +473,131 @@ class FocusWidget(Widget):
     def remove_hooks(self):
         super(FocusWidget, self).remove_hooks()
         self.parent.remove_focus_widget(self)
+
+
+def print_on_click(event):
+    if event.button != 2:
+        return
+    prefixes = ["|-", "| "]
+    kids = [(child, 0) for child in d.children]
+    while kids:
+        kid, depth = kids.pop()
+        further_kids = [(child, depth+1) for child in kid.children]
+        kids += further_kids
+
+        prefix = ""
+        if depth:
+            prefix = prefixes[1] * (depth - 1) + prefixes[0]
+
+        print prefix + str(kid)
+
+class ProtoWidget(BorderedWidget):
+    drag_state = -1
+
+    def add_hooks(self):
+        super(ProtoWidget, self).add_hooks()
+        self.parent.add_handler(constants.DRAG, self.handle_drag)
+        self.parent.add_handler(constants.CLICK, self.handle_click)
+
+        import dialog
+        if not dialog.Dialog.top.getattr("demo_mode", False):
+            dialog.Dialog.top.demo_mode = True
+            d.add_handler(constants.CLICK, print_on_click)
+
+    def remove_hooks(self):
+        self.parent.remove_handler(constants.DRAG, self.handle_drag)
+        self.parent.remove_handler(constants.CLICK, self.handle_click)
+        super(ProtoWidget, self).remove_hooks()
+
+    def handle_drag(self, event):
+        if self.drag_state == -1:
+            start_pos = tuple(event.pos[i]-event.rel[i] for i in range(2))
+            if self.is_over(start_pos):
+                for child in self.children:
+                    if child.is_over(start_pos):
+                        self.drag_state = 0
+                        return
+                real_pos = self.collision_rect[:2]
+                self.mouse_rel = tuple(real_pos[i]-start_pos[i]
+                                                     for i in range(2))
+
+                mod_keys = pygame.key.get_mods()
+                shift = mod_keys & pygame.KMOD_SHIFT
+                control = mod_keys & pygame.KMOD_CTRL
+                if shift and control:
+                    self.drag_state = 0
+                    dw=DemoWidget(self, (0,0), tuple(array(self.size)/2),
+                                  self.anchor,
+                                  background_color = self.background_color,
+                                  border_color = self.border_color,
+                                  borders = self.borders)
+                    dw.drag_state = 0
+                elif shift:
+                    self.drag_state = 2
+                elif control:
+                    self.drag_state = 0
+                    dw=DemoWidget(self.parent, self.pos, self.size, self.anchor,
+                                  background_color = self.background_color,
+                                  border_color = self.border_color,
+                                  borders = self.borders)
+                    dw.drag_state = 1
+                    dw.mouse_rel = self.mouse_rel
+                else:
+                    self.drag_state = 1
+            else:
+                self.drag_state = 0
+
+        if self.drag_state <= 0:
+            return
+
+        if self.parent:
+            parent_rect = self.parent.collision_rect
+        else:
+            parent_rect = pygame.Rect((0,0) + g.screen_size)
+
+        if self.drag_state == 1:
+            new_real_pos = array(self.mouse_rel) + pygame.mouse.get_pos()
+
+            new_rel_pos = new_real_pos - parent_rect[:2]
+
+            new_unit_pos = tuple( max(0,(new_rel_pos[i] / float(g.screen_size[i])))
+                                     for i in range(2))
+
+            new_pct_pos = tuple( int( (new_unit_pos[i] * 100) + 0.5)
+                                   for i in range(2))
+
+            self.pos = tuple(new_pct_pos[i] / 100. for i in range(2))
+
+            raise constants.Handled
+        elif self.drag_state == 2:
+            mouse_pos = pygame.mouse.get_pos()
+            new_size = array(mouse_pos) - self.collision_rect[:2]
+
+            unit_size = tuple(max(0,new_size[i] / float(g.screen_size[i]))
+                                    for i in range(2))
+
+            pct_size = tuple( int( (unit_size[i] * 100) + 0.5)
+                                   for i in range(2))
+
+            self.size = tuple(pct_size[i] / 100. for i in range(2))
+
+            raise constants.Handled
+
+    def handle_click(self, event):
+        if event.button == 3 and self.is_over(event.pos):
+            mine = True
+            for child in self.children:
+                if child.is_over(event.pos):
+                    mine = False
+                    break
+            if mine:
+                self.remove_hooks()
+                self.parent.needs_redraw = True
+        if self.drag_state > 0:
+            self.drag_state = -1
+            #raise constants.Handled
+        else:
+            self.drag_state = -1
+
+    def __str__(self):
+        return "(%.2f, %.2f, %.2f, %.2f)" % (self.pos + self.size)
