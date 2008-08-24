@@ -26,6 +26,46 @@ from code.graphics import dialog, constants, image, button, text, widget
 
 from location import LocationScreen
 
+import math
+
+class EarthImage(image.Image):
+    def __init__(self, parent):
+        super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
+                                         constants.MID_CENTER,
+                                         gg.images['earth.jpg'])
+
+
+    def redraw(self):
+        super(image.Image, self).redraw()
+        self.surface.blit(self.scaled_image, (0,0))
+
+        ### darken some part of the original map according to time
+        night_image = self.scaled_image.copy()
+        width, height = self.surface.get_size()
+        night_width = width*9/16
+        night_start = (g.pl.raw_sec % g.seconds_per_day) * (width) \
+                      / g.seconds_per_day
+        night_start = night_width-1 - night_start
+
+        ## simple gradient
+        for n in range(night_width):
+            def _f(n):
+                x = float(n)/night_width
+                y = (1 - math.cos(x*math.pi)**200)
+                return int(240*y)
+            screen_x = night_start-night_width + n
+            alpha = _f(n)
+            night_image.fill((0,0,0, alpha), (screen_x, 0, 1, height))
+            night_image.fill((0,0,0, alpha), (screen_x+width, 0, 1, height))
+
+        ## update both sides of the zone
+        self.surface.blit(night_image,
+                          (night_start-night_width,0),
+                          (night_start-night_width, 0,night_width,height))
+        self.surface.blit(night_image,
+                          (night_start-night_width+width,0),
+                          (night_start-night_width+width, 0,night_width,height))
+
 class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
                  anchor = constants.TOP_LEFT,  *args, **kwargs):
@@ -39,8 +79,7 @@ class MapScreen(dialog.Dialog):
         self.background_color = gg.colors["black"]
         self.add_handler(constants.TICK, self.on_tick)
 
-        self.map = image.Image(self, (.5,.5), (1,.667), constants.MID_CENTER,
-                               gg.images['earth.jpg'])
+        self.map = EarthImage(self)
 
         self.location_buttons = {}
         for location in g.locations.values():
@@ -390,6 +429,8 @@ class MapScreen(dialog.Dialog):
             button.text = "%s (%d)" % (location.name, len(location.bases))
             button.visible = location.available()
 
+        ## redraw map (daylight)
+        self.map.needs_redraw = True
 
     def load_game(self):
         save_names = g.get_save_names()
