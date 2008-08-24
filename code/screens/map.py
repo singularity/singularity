@@ -38,18 +38,22 @@ class EarthImage(image.Image):
 
     def get_night_mask(self):
         width, height = self.real_size
-        night_width = width*9/16
+        night_width = width * 17/32
 
         night_mask = self.night_masks.get( (night_width, height), None)
         if night_mask is None:
             night_mask = pygame.Surface( (night_width, height), 0, gg.ALPHA)
+            night_mask.fill( (0, 0, 0, 175) )
+
             ## simple gradient
-            for n in range(night_width):
-                x = float(n)/night_width
-                y = (1 - math.cos(x*math.pi)**200)
-                alpha = int(175*y)
+            gradient_width = night_width // 34
+            for n in range(gradient_width):
+                fade_factor = 1 - ((n + 1) / (gradient_width + 1.))
+                alpha = int(175 * math.cos(math.pi * fade_factor / 2))
 
                 night_mask.fill((0,0,0, alpha), (n, 0, 1, height))
+                mirror_n = night_width - n - 1
+                night_mask.fill((0,0,0, alpha), (mirror_n, 0, 1, height))
             self.night_masks[(night_width, height)] = night_mask
 
         return night_mask
@@ -57,13 +61,15 @@ class EarthImage(image.Image):
     def redraw(self):
         width, height = self.real_size
         if self.needs_redraw:
-            self.night_start = width - ((width * (g.pl.raw_min % g.minutes_per_day)) // g.minutes_per_day)
+            day_portion = (g.pl.raw_min % g.minutes_per_day) \
+                          / float(g.minutes_per_day)
+            self.night_start = int(width * (1 - day_portion))
 
         super(EarthImage, self).redraw()
 
         ### darken some part of the original map according to time
         night_image = self.get_night_mask()
-        night_width = width*9/16
+        night_width = width * 17/32
 
         ## update both sides of the zone
         self.surface.blit(night_image, (self.night_start, 0))
@@ -83,17 +89,20 @@ class EarthImage(image.Image):
             return
 
         width, height = self.real_size
-        self.night_start = width - \
-            ((width * (g.pl.raw_min % g.minutes_per_day)) // g.minutes_per_day)
+        day_portion = (g.pl.raw_min % g.minutes_per_day) \
+                      / float(g.minutes_per_day)
+        self.night_start = int(width * (1 - day_portion))
 
         movement = (old_night_start - self.night_start) % width
         if movement == 0:
             return
 
-        # Use clipping rectangles to update as little of the display as possible
-        update_width = movement + 40
-        night_width = width*9/16
-        for where in (self.night_start, self.night_start + night_width - 40):
+        # Use clipping rectangles to update as few pixels as possible.
+        night_width = width * 17/32
+        gradient_width = night_width // 34
+        update_width = movement + gradient_width
+        for where in (self.night_start,
+                      self.night_start + night_width - gradient_width):
             self.partial_redraw(where, update_width)
 
             if where + update_width > width:
