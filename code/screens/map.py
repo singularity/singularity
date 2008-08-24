@@ -55,19 +55,55 @@ class EarthImage(image.Image):
         return night_mask
 
     def redraw(self):
+        width, height = self.real_size
+        if self.needs_redraw:
+            self.night_start = width - ((width * (g.pl.raw_min % g.minutes_per_day)) // g.minutes_per_day)
+
         super(EarthImage, self).redraw()
 
         ### darken some part of the original map according to time
-        width, height = self.real_size
         night_image = self.get_night_mask()
-        night_width = night_image.get_width()
-        night_start = width - ((width * (g.pl.raw_min % g.minutes_per_day)) \
-                               // g.minutes_per_day)
+        night_width = width*9/16
 
         ## update both sides of the zone
-        self.surface.blit(night_image, (night_start, 0))
-        if night_start + night_width >= width:
-            self.surface.blit(night_image, (night_start - width, 0))
+        self.surface.blit(night_image, (self.night_start, 0))
+        if self.night_start + night_width >= width:
+            self.surface.blit(night_image, (self.night_start - width, 0))
+
+    def partial_redraw(self, start, width):
+        self.surface.set_clip((start, 0, width, self.real_size[1]))
+        self.redraw()
+
+    night_start = None
+    def rebuild(self):
+        super(EarthImage, self).rebuild()
+
+        old_night_start = self.night_start
+        if old_night_start is None or self.needs_redraw:
+            return
+
+        width, height = self.real_size
+        self.night_start = width - \
+            ((width * (g.pl.raw_min % g.minutes_per_day)) // g.minutes_per_day)
+
+        movement = (old_night_start - self.night_start) % width
+        if movement == 0:
+            return
+
+        # Use clipping rectangles to update as little of the display as possible
+        update_width = movement + 40
+        night_width = width*9/16
+        for where in (self.night_start, self.night_start + night_width - 40):
+            self.partial_redraw(where, update_width)
+
+            if where + update_width > width:
+                self.partial_redraw(where - width, update_width)
+
+        # Reset the clipping rectangle for normal use.
+        self.surface.set_clip(None)
+        for child in self.children:
+            if child.visible:
+                child.redraw()
 
 class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
@@ -333,8 +369,8 @@ class MapScreen(dialog.Dialog):
             self.find_speed_button()
 
         # Update the day/night image every minute of game time.
-        if mins_passed:
-            self.map.needs_redraw = True
+        if g.curr_speed == 0 or (mins_passed and g.curr_speed < 100000):
+            self.map.needs_rebuild = True
 
         lost = g.pl.lost_game()
         if lost == 1:
