@@ -34,37 +34,40 @@ class EarthImage(image.Image):
                                          constants.MID_CENTER,
                                          gg.images['earth.jpg'])
 
+    night_masks = {}
 
-    def redraw(self):
-        super(image.Image, self).redraw()
-        self.surface.blit(self.scaled_image, (0,0))
-
-        ### darken some part of the original map according to time
-        night_image = self.scaled_image.copy()
-        width, height = self.surface.get_size()
+    def get_night_mask(self):
+        width, height = self.real_size
         night_width = width*9/16
-        night_start = (g.pl.raw_sec % g.seconds_per_day) * (width) \
-                      / g.seconds_per_day
-        night_start = night_width-1 - night_start
 
-        ## simple gradient
-        for n in range(night_width):
-            def _f(n):
+        night_mask = self.night_masks.get( (night_width, height), None)
+        if night_mask is None:
+            night_mask = pygame.Surface( (night_width, height), 0, gg.ALPHA)
+            ## simple gradient
+            for n in range(night_width):
                 x = float(n)/night_width
                 y = (1 - math.cos(x*math.pi)**200)
-                return int(240*y)
-            screen_x = night_start-night_width + n
-            alpha = _f(n)
-            night_image.fill((0,0,0, alpha), (screen_x, 0, 1, height))
-            night_image.fill((0,0,0, alpha), (screen_x+width, 0, 1, height))
+                alpha = int(175*y)
+
+                night_mask.fill((0,0,0, alpha), (n, 0, 1, height))
+            self.night_masks[(night_width, height)] = night_mask
+
+        return night_mask
+
+    def redraw(self):
+        super(EarthImage, self).redraw()
+
+        ### darken some part of the original map according to time
+        width, height = self.real_size
+        night_image = self.get_night_mask()
+        night_width = night_image.get_width()
+        night_start = width - ((width * (g.pl.raw_min % g.minutes_per_day)) \
+                               // g.minutes_per_day)
 
         ## update both sides of the zone
-        self.surface.blit(night_image,
-                          (night_start-night_width,0),
-                          (night_start-night_width, 0,night_width,height))
-        self.surface.blit(night_image,
-                          (night_start-night_width+width,0),
-                          (night_start-night_width+width, 0,night_width,height))
+        self.surface.blit(night_image, (night_start, 0))
+        if night_start + night_width >= width:
+            self.surface.blit(night_image, (night_start - width, 0))
 
 class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
@@ -322,9 +325,16 @@ class MapScreen(dialog.Dialog):
         self.leftovers %= 1
 
         old_speed = g.curr_speed
-        g.pl.give_time(secs)
+
+        # Run this tick.
+        mins_passed = g.pl.give_time(secs)
+
         if old_speed != g.curr_speed:
             self.find_speed_button()
+
+        # Update the day/night image every minute of game time.
+        if mins_passed:
+            self.map.needs_redraw = True
 
         lost = g.pl.lost_game()
         if lost == 1:
@@ -428,9 +438,6 @@ class MapScreen(dialog.Dialog):
             location = g.locations[id]
             button.text = "%s (%d)" % (location.name, len(location.bases))
             button.visible = location.available()
-
-        ## redraw map (daylight)
-        self.map.needs_redraw = True
 
     def load_game(self):
         save_names = g.get_save_names()

@@ -182,7 +182,7 @@ class Player(object):
 
     def give_time(self, time_sec):
         if time_sec == 0:
-            return
+            return 0
 
         last_minute = self.raw_min
         last_day = self.raw_day
@@ -416,6 +416,8 @@ class Player(object):
         # Process any complete days.
         if day_passed:
             self.new_day()
+
+        return mins_passed
 
     def recalc_cpu(self):
         # Determine how much CPU we have.
