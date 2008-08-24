@@ -19,9 +19,13 @@
 
 #This file is the starting file for the game. Run it to start the game.
 
+# Since we require numpy anyway, and pygame will default to the less-efficient
+# Numeric if available, we... persuade python that Numeric doesn't exist.
+import sys
+sys.modules["Numeric"] = None
+
 import ConfigParser
 import pygame
-import sys
 import os.path
 import optparse
 

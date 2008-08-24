@@ -28,11 +28,23 @@ from location import LocationScreen
 
 import math
 
+try:
+    from pygame.surfarray import pixels_alpha
+    can_twiddle_alpha = True
+except ImportError:
+    can_twiddle_alpha = False
+
 class EarthImage(image.Image):
     def __init__(self, parent):
         super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
                                          constants.MID_CENTER,
                                          gg.images['earth.jpg'])
+
+    def rescale(self):
+        super(EarthImage, self).rescale()
+        if can_twiddle_alpha:
+            self.night_image = image.scale(gg.images['earth_night.jpg'],
+                                           self.real_size).convert_alpha()
 
     night_masks = {}
 
@@ -42,14 +54,21 @@ class EarthImage(image.Image):
 
         night_mask = self.night_masks.get( (night_width, height), None)
         if night_mask is None:
-            night_mask = pygame.Surface( (night_width, height), 0, gg.ALPHA)
-            night_mask.fill( (0, 0, 0, 175) )
+            if can_twiddle_alpha:
+                max_alpha = 255
+                mask_width = width
+            else:
+                max_alpha = 175
+                mask_width = night_width
+
+            night_mask = pygame.Surface((mask_width, height), 0, gg.ALPHA)
+            night_mask.fill( (0, 0, 0, max_alpha), (0, 0, night_width, height) )
 
             ## simple gradient
             gradient_width = night_width // 34
             for n in range(gradient_width):
                 fade_factor = 1 - ((n + 1) / (gradient_width + 1.))
-                alpha = int(175 * math.cos(math.pi * fade_factor / 2))
+                alpha = int(max_alpha * math.cos(math.pi * fade_factor / 2))
 
                 night_mask.fill((0,0,0, alpha), (n, 0, 1, height))
                 mirror_n = night_width - n - 1
@@ -63,18 +82,30 @@ class EarthImage(image.Image):
         if self.needs_redraw:
             day_portion = (g.pl.raw_min % g.minutes_per_day) \
                           / float(g.minutes_per_day)
-            self.night_start = int(width * (1 - day_portion))
+            self.night_start = int(width * (1 - day_portion)) % width
 
         super(EarthImage, self).redraw()
 
-        ### darken some part of the original map according to time
-        night_image = self.get_night_mask()
-        night_width = width * 17/32
+        # Turn half of the map to night, with blended borders.
+        night_mask = self.get_night_mask()
+        if can_twiddle_alpha:
+            mask_alphas = pixels_alpha(night_mask)
+            night_alphas = pixels_alpha(self.night_image)
 
-        ## update both sides of the zone
-        self.surface.blit(night_image, (self.night_start, 0))
-        if self.night_start + night_width >= width:
-            self.surface.blit(night_image, (self.night_start - width, 0))
+            right_width = width - self.night_start
+            night_alphas[self.night_start:] = mask_alphas[:right_width]
+            if self.night_start != 0:
+                left_width = width - right_width
+                night_alphas[:left_width]  = mask_alphas[right_width:]
+
+            del night_alphas, mask_alphas
+            self.surface.blit(self.night_image, (0,0))
+        else:
+            # If we can't use the pretty image, we just dim the normal one.
+            night_width = width * 17/32
+            self.surface.blit(night_mask, (self.night_start, 0))
+            if self.night_start + night_width >= width:
+                self.surface.blit(night_mask, (self.night_start - width, 0))
 
     def partial_redraw(self, start, width):
         self.surface.set_clip((start, 0, width, self.real_size[1]))
