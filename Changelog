@@ -15,6 +15,8 @@ USER-VISIBLE CHANGES:
 - Color-coding has been added to the AI's global estimates. (FM)
 - Winning the game has become more permanent. (FM)
 - Events no longer happen when they're meaningless. (FM)
+* The AI has discovered a network of light sensors around the globe.  You can
+  now see day and night on the map. (dvrasp, FM)
 
 
 OTHER CHANGES:

@@ -187,9 +187,9 @@ See the file data/Attribution-ShareAlike 3.0.html or
 http://creativecommons.org/licenses/by-sa/3.0/legalcode for the full license.
 
 GRAPHIC LICENSE
-The image of the earth is NASA's "The Blue Marble: Land Surface, Ocean Color
-and Sea Ice".
-http://visibleearth.nasa.gov/view_rec.php?vev1id=11612
+The day and night images of the earth are from NASA's "Blue Marble 2002" image
+collection:
+http://visibleearth.nasa.gov/view_set.php?categoryID=2364
 
 NASA Terms of Use
 
