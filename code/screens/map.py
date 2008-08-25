@@ -1,5 +1,6 @@
 #file: map_screen.py
-#Copyright (C) 2005,2006 Evil Mr Henry and Phil Bordelon
+#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, FunnyMan3595,
+#and Anne M. Archibald.
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -27,6 +28,7 @@ from code.graphics import dialog, constants, image, button, text, widget
 from location import LocationScreen
 
 import math
+import time
 
 try:
     from pygame.surfarray import pixels_alpha
@@ -46,43 +48,88 @@ class EarthImage(image.Image):
             self.night_image = image.scale(gg.images['earth_night.jpg'],
                                            self.real_size).convert_alpha()
 
+    night_mask_day_of_year = -10000
     night_masks = {}
+    start_day = None
+    start_second = None
+
+    def compute_day_of_year(self):
+        if self.start_day is None:
+            self.start_day = time.gmtime()[7]
+        day_of_year = (g.pl.time_day+self.start_day) % 365 # no leap years, sorry
+        return day_of_year
 
     def get_night_mask(self):
         width, height = self.real_size
-        night_width = width * 17/32
+        if can_twiddle_alpha:
+            max_alpha = 255
+        else:
+            max_alpha = 170
 
-        night_mask = self.night_masks.get( (night_width, height), None)
+        day_of_year = self.compute_day_of_year()
+
+        if day_of_year!=self.night_mask_day_of_year:
+            self.night_masks = {}
+        night_mask = self.night_masks.get( (width, height), None)
         if night_mask is None:
-            if can_twiddle_alpha:
-                max_alpha = 255
-                mask_width = width
-            else:
-                max_alpha = 175
-                mask_width = night_width
+            self.night_mask_day_of_year = day_of_year
+            night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
+            sun_declination = (-23.45/360.*2*math.pi *
+                    math.cos(2*math.pi/365.*(day_of_year + 10)))
+            for n in range(width):
+                hour_angle = float(n)/float(width)*2*math.pi
+                if math.tan(sun_declination)!=0:
+                    latitude_limit_angle = math.atan(-math.cos(hour_angle)/math.tan(sun_declination))
+                else:
+                    latitude_limit_angle = -math.pi/2
+                latitude_limit_fraction = latitude_limit_angle/math.pi+0.5
+                latitude_limit = int(latitude_limit_fraction*height)
+                if latitude_limit<0:
+                    latitude_limit = 0
+                elif latitude_limit>=height:
+                    latitude_limit=height-1
+                if sun_declination>0:
+                    top = 0
+                    bottom = max_alpha
+                else:
+                    top = max_alpha
+                    bottom = 0
+                night_mask.fill((0,0,0,top),(n,0,1,latitude_limit))
+                night_mask.fill((0,0,0,bottom),(n,latitude_limit,1,height-latitude_limit))
+                if False:
+                    gradient_width = 5
+                    for i in range(gradient_width):
+                        y0 = latitude_limit_fraction*height-gradient_width//2
+                        y = latitude_limit-gradient_width//2+i
+                        if 0<=y<height:
+                            c = top + (bottom-top)*max(y-y0,0)/float(gradient_width)
+                            night_mask.set_at((n,y),(0,0,0,int(c)))
+                else:
+                    assert 0<=(latitude_limit_fraction*height-     latitude_limit)<1
+                    c = bottom + (top-bottom)*(latitude_limit_fraction*height-latitude_limit)
+                    night_mask.set_at((n,latitude_limit),(0,0,0,int(c)))
 
-            night_mask = pygame.Surface((mask_width, height), 0, gg.ALPHA)
-            night_mask.fill( (0, 0, 0, max_alpha), (0, 0, night_width, height) )
-
-            ## simple gradient
-            gradient_width = night_width // 34
-            for n in range(gradient_width):
-                fade_factor = 1 - ((n + 1) / (gradient_width + 1.))
-                alpha = int(max_alpha * math.cos(math.pi * fade_factor / 2))
-
-                night_mask.fill((0,0,0, alpha), (n, 0, 1, height))
-                mirror_n = night_width - n - 1
-                night_mask.fill((0,0,0, alpha), (mirror_n, 0, 1, height))
-            self.night_masks[(night_width, height)] = night_mask
-
+            self.night_masks[(width, height)] = night_mask
         return night_mask
+
+    def compute_night_start(self):
+        width, height = self.real_size
+        if self.start_second is None:
+            t = time.gmtime()
+            self.start_second = t[5] + 60*(t[4]+60*t[3])
+        day_portion = (((g.pl.raw_min+self.start_second//60)
+                           % g.minutes_per_day)
+                  / float(g.minutes_per_day))
+        return int(width * (0.5 - day_portion)) % width
 
     def redraw(self):
         width, height = self.real_size
-        if self.needs_redraw:
-            day_portion = (g.pl.raw_min % g.minutes_per_day) \
-                          / float(g.minutes_per_day)
-            self.night_start = int(width * (1 - day_portion)) % width
+
+        self.night_start = self.compute_night_start()
+
+        # For some reason redraws don't happen without this
+        # also using None doesn't work
+        self.surface.set_clip((0,0,width,height))
 
         super(EarthImage, self).redraw()
 
@@ -95,20 +142,16 @@ class EarthImage(image.Image):
             right_width = width - self.night_start
             night_alphas[self.night_start:] = mask_alphas[:right_width]
             if self.night_start != 0:
-                left_width = width - right_width
-                night_alphas[:left_width]  = mask_alphas[right_width:]
+                night_alphas[:self.night_start]  = mask_alphas[right_width:]
 
             del night_alphas, mask_alphas
             self.surface.blit(self.night_image, (0,0))
         else:
-            # If we can't use the pretty image, we just dim the normal one.
-            night_width = width * 17/32
             self.surface.blit(night_mask, (self.night_start, 0))
-            if self.night_start + night_width >= width:
-                self.surface.blit(night_mask, (self.night_start - width, 0))
+            self.surface.blit(night_mask, (self.night_start - width, 0))
 
     def partial_redraw(self, start, width):
-        self.surface.set_clip((start, 0, width, self.real_size[1]))
+        #self.surface.set_clip((start, 0, width, self.real_size[1]))
         self.redraw()
 
     night_start = None
@@ -120,24 +163,14 @@ class EarthImage(image.Image):
             return
 
         width, height = self.real_size
-        day_portion = (g.pl.raw_min % g.minutes_per_day) \
-                      / float(g.minutes_per_day)
-        self.night_start = int(width * (1 - day_portion))
+        self.night_start = self.compute_night_start()
 
+        #Doesn't work in day-at-a-time mode
         movement = (old_night_start - self.night_start) % width
-        if movement == 0:
+        if movement == 0 and self.compute_day_of_year()==self.night_mask_day_of_year:
             return
 
-        # Use clipping rectangles to update as few pixels as possible.
-        night_width = width * 17/32
-        gradient_width = night_width // 34
-        update_width = movement + gradient_width
-        for where in (self.night_start,
-                      self.night_start + night_width - gradient_width):
-            self.partial_redraw(where, update_width)
-
-            if where + update_width > width:
-                self.partial_redraw(where - width, update_width)
+        self.redraw()
 
         # Reset the clipping rectangle for normal use.
         self.surface.set_clip(None)
@@ -408,8 +441,10 @@ class MapScreen(dialog.Dialog):
         if old_speed != g.curr_speed:
             self.find_speed_button()
 
-        # Update the day/night image every minute of game time.
-        if g.curr_speed == 0 or (mins_passed and g.curr_speed < 100000):
+        # Update the day/night image every minute of game time, or at
+        # midnight if going fast.
+        if g.curr_speed == 0 or (mins_passed and g.curr_speed < 100000) \
+                or (g.curr_speed>=100000 and g.pl.time_hour==0):
             self.map.needs_rebuild = True
 
         lost = g.pl.lost_game()
