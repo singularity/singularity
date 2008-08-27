@@ -126,24 +126,23 @@ class EarthImage(image.Image):
             self.night_masks[(width, height)] = night_mask
         return night_mask
 
+    high_speed_pos = None
     def compute_night_start(self):
-        width, height = self.real_size
-        if self.start_second is None:
-            t = time.gmtime()
-            self.start_second = t[5] + 60*(t[4]+60*t[3])
-        day_portion = (((g.pl.raw_min+self.start_second//60)
-                           % g.minutes_per_day)
-                  / float(g.minutes_per_day))
-        return int(width * (0.5 - day_portion)) % width
+        if self.high_speed_pos is None or g.curr_speed<=100000:
+            width, height = self.real_size
+            if self.start_second is None:
+                t = time.gmtime()
+                self.start_second = t[5] + 60*(t[4]+60*t[3])
+            day_portion = (((g.pl.raw_min+self.start_second//60)
+                               % g.minutes_per_day)
+                      / float(g.minutes_per_day))
+            self.high_speed_pos = int(width * (0.5 - day_portion)) % width
+        return self.high_speed_pos
 
     def redraw(self):
         width, height = self.real_size
 
         self.night_start = self.compute_night_start()
-
-        # For some reason redraws don't happen without this
-        # also using None doesn't work
-        self.surface.set_clip((0,0,width,height))
 
         super(EarthImage, self).redraw()
 
@@ -383,6 +382,8 @@ class MapScreen(dialog.Dialog):
 
         if find_button:
             self.find_speed_button()
+
+        self.map.needs_redraw = True
 
     def open_location(self, location):
         self.location_dialog.location = g.locations[location]
