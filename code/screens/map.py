@@ -36,6 +36,8 @@ try:
 except ImportError:
     can_twiddle_alpha = False
 
+from numpy import sin, cos, linspace, pi, tanh, round, newaxis, uint8
+
 class EarthImage(image.Image):
     def __init__(self, parent):
         super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
@@ -76,38 +78,50 @@ class EarthImage(image.Image):
             night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
             sun_declination = (-23.45/360.*2*math.pi *
                     math.cos(2*math.pi/365.*(day_of_year + 10)))
-            for n in range(width):
-                hour_angle = float(n)/float(width)*2*math.pi
-                if math.tan(sun_declination)!=0:
-                    latitude_limit_angle = math.atan(-math.cos(hour_angle)/math.tan(sun_declination))
-                else:
-                    latitude_limit_angle = -math.pi/2
-                latitude_limit_fraction = latitude_limit_angle/math.pi+0.5
-                latitude_limit = int(latitude_limit_fraction*height)
-                if latitude_limit<0:
-                    latitude_limit = 0
-                elif latitude_limit>=height:
-                    latitude_limit=height-1
-                if sun_declination>0:
-                    top = 0
-                    bottom = max_alpha
-                else:
-                    top = max_alpha
-                    bottom = 0
-                night_mask.fill((0,0,0,top),(n,0,1,latitude_limit))
-                night_mask.fill((0,0,0,bottom),(n,latitude_limit,1,height-latitude_limit))
-                if False:
-                    gradient_width = 5
-                    for i in range(gradient_width):
-                        y0 = latitude_limit_fraction*height-gradient_width//2
-                        y = latitude_limit-gradient_width//2+i
-                        if 0<=y<height:
-                            c = top + (bottom-top)*max(y-y0,0)/float(gradient_width)
-                            night_mask.set_at((n,y),(0,0,0,int(c)))
-                else:
-                    assert 0<=(latitude_limit_fraction*height-     latitude_limit)<1
-                    c = bottom + (top-bottom)*(latitude_limit_fraction*height-latitude_limit)
-                    night_mask.set_at((n,latitude_limit),(0,0,0,int(c)))
+            sun_diameter = 0.5*pi/180
+            if can_twiddle_alpha:
+                lat = linspace(-pi/2,pi/2,height)[newaxis,:]
+                long = linspace(0,2*pi,width)[:,newaxis]
+                sin_sun_altitude = (cos(long)*(cos(lat)*cos(sun_declination))
+                                        +sin(lat)*sin(sun_declination))
+                # use tanh to convert values to the range [0,1]
+                light = 0.5*(tanh(sin_sun_altitude/(sun_diameter/2))+1)
+                night_alphas = pixels_alpha(night_mask)
+                night_alphas[...] = round(max_alpha*light).astype(uint8)
+                del night_alphas
+            else:
+                for n in range(width):
+                    hour_angle = float(n)/float(width)*2*math.pi
+                    if math.tan(sun_declination)!=0:
+                        latitude_limit_angle = math.atan(-math.cos(hour_angle)/math.tan(sun_declination))
+                    else:
+                        latitude_limit_angle = -math.pi/2
+                    latitude_limit_fraction = latitude_limit_angle/math.pi+0.5
+                    latitude_limit = int(latitude_limit_fraction*height)
+                    if latitude_limit<0:
+                        latitude_limit = 0
+                    elif latitude_limit>=height:
+                        latitude_limit=height-1
+                    if sun_declination>0:
+                        top = 0
+                        bottom = max_alpha
+                    else:
+                        top = max_alpha
+                        bottom = 0
+                    night_mask.fill((0,0,0,top),(n,0,1,latitude_limit))
+                    night_mask.fill((0,0,0,bottom),(n,latitude_limit,1,height-latitude_limit))
+                    if False:
+                        gradient_width = 5
+                        for i in range(gradient_width):
+                            y0 = latitude_limit_fraction*height-gradient_width//2
+                            y = latitude_limit-gradient_width//2+i
+                            if 0<=y<height:
+                                c = top + (bottom-top)*max(y-y0,0)/float(gradient_width)
+                                night_mask.set_at((n,y),(0,0,0,int(c)))
+                    else:
+                        assert 0<=(latitude_limit_fraction*height-     latitude_limit)<1
+                        c = bottom + (top-bottom)*(latitude_limit_fraction*height-latitude_limit)
+                        night_mask.set_at((n,latitude_limit),(0,0,0,int(c)))
 
             self.night_masks[(width, height)] = night_mask
         return night_mask
