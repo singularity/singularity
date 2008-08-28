@@ -150,8 +150,9 @@ class Buyable(object):
         return self.min_valid(self._percent_complete())
 
 
-    def calculate_work(self, cash_available = None, cpu_available = None,
-                       time = 0):
+    def calculate_work(self, cash_available=None, cpu_available=None, time=0):
+        """Given an amount of available resources, calculates and returns the
+           amount that would be spent and the progress towards completion."""
 
         # cash_available defaults to all the player's cash.
         if cash_available == None:
@@ -179,12 +180,18 @@ class Buyable(object):
         was_complete = self.cost_paid
         cost_paid = numpy.cast[numpy.int64](numpy.ceil(raw_paid))
         spent = cost_paid - was_complete
-        return cost_paid, spent
+        return spent, cost_paid
 
-    def work_on(self, cash_available = None, cpu_available = None, time = 0):
+    def work_on(self, *args, **kwargs):
+        """As calculate_work, but apply the changes.
+
+        Returns a boolean indicating whether this buyable is done afterwards.
+        """
+
         if self.done:
             return
-        self.cost_paid, spent = self.calculate_work(cash_available, cpu_available, time)
+        spent, self.cost_paid = self.calculate_work(*args, **kwargs)
+
         # Consume CPU and Cash.
         # Note the cast from <type 'numpy.int64'> to <type 'int'> to avoid
         # poisoning other calculations (like, say, g.pl.do_jobs).
