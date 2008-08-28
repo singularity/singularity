@@ -191,6 +191,8 @@ The day and night images of the earth are from NASA's "Blue Marble 2002" image
 collection:
 http://visibleearth.nasa.gov/view_set.php?categoryID=2364
 
+The night image has been altered to better match by overlaying, blending, and color-matching missing ice from the day image.  These modifications are not considered to be substantial, and are therefore ineligible for copyright.
+
 NASA Terms of Use
 
 For all non-private uses, NASA's Terms Of Use are as follows:
