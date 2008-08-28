@@ -241,7 +241,8 @@ class MapScreen(dialog.Dialog):
         self.finance_button = button.DialogButton(self, (0, 0.88),
                                                   (0.15, 0.04),
                                                   text="FINANCE",
-                                                  hotkey="e")
+                                                  hotkey="e",
+                                                  dialog=screens.finance.FinanceScreen(self))
 
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
                                                     (0.15, 0.04),

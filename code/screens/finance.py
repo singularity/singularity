@@ -20,8 +20,153 @@
 
 
 import code.g as g
-#import buttons
+import pygame
+import numpy
+
 from code.buyable import cash, cpu, labor
+from code.graphics import widget, dialog, button, slider, text, constants, listbox, g as gg
+
+
+class FinanceScreen(dialog.Dialog):
+    def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
+        super(FinanceScreen, self).__init__(parent, pos, size, *args, **kwargs)
+
+        kwargs.setdefault("background_color", gg.colors["clear"])
+
+        self.back_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
+                                                   anchor = constants.BOTTOM_CENTER,
+                                                   text="BACK", hotkey="b")
+        self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound)
+
+
+        self.money_report_pane = widget.BorderedWidget(self, (0, 0), (-.45, -.85),
+                                                       anchor = constants.TOP_LEFT)
+        self.cpu_report_pane = widget.BorderedWidget(self, (-1, 0), (-.45, -.85),
+                                                     anchor = constants.TOP_RIGHT)
+    def rebuild(self):
+        super(FinanceScreen, self).rebuild()
+        financial_report, cpu_report = self.make_reports()
+        text.Text(self.money_report_pane, (0,0), (-1,-1), text=financial_report,
+                  background_color=gg.colors["dark_blue"],
+                  align=constants.LEFT, valign=constants.TOP,
+                  borders=constants.ALL)
+        text.Text(self.cpu_report_pane, (0,0), (-1,-1), text=cpu_report,
+                  background_color=gg.colors["dark_blue"],
+                  align=constants.LEFT, valign=constants.TOP,
+                  borders=constants.ALL)
+
+
+        self.needs_rebuild = True ## TODO: not sure if it's the right way to have it refreshed at next show()
+
+    def redraw(self):
+        super(FinanceScreen, self).redraw()
+
+    def make_reports(self):
+        seconds_left = g.pl.seconds_to_next_day()
+        cash_available = g.pl.cash
+        cpu_available = g.pl.available_cpus[0] * seconds_left \
+                        / g.seconds_per_day
+
+        def _calc_maint_cost():
+            time_of_day = g.pl.raw_sec % g.seconds_per_day
+            maint_cash = g.current_share(int(g.pl.maintenance_cost[cash]),
+                                         time_of_day, seconds_left)
+            maint_cpu = g.current_share(g.pl.maintenance_cost[cpu],
+                                        time_of_day, seconds_left)
+            return maint_cash, maint_cpu
+
+        def _calc_bases_cost(cash_available, cpu_available):
+            base_constr = 0
+            item_constr = 0
+            for base in g.all_bases():
+                if not base.done:
+                    cost_paid, spent = base.calculate_work(cash_available,
+                                                           cpu_available,
+                                                           seconds_left / 60)
+                    base_constr += spent[cash]
+                    cash_available -= spent[cash]
+                    cpu_available -= spent[cpu]
+                for item in [base.cpus] + base.extra_items:
+                    if not item or item.done: continue
+                    cost_paid, spent = item.calculate_work(cash_available,
+                                                           cpu_available,
+                                                           seconds_left / 60)
+                    item_constr += spent[cash]
+                    cash_available -= spent[cash]
+                    cpu_available -= spent[cpu]
+
+            return base_constr, item_constr
+
+        def _calc_jobs(cpu_available = None):
+            if cpu_available is None:
+                cpu_available = g.pl.cpu_usage.get("jobs", 0)*seconds_left/g.seconds_per_day
+            earned, partial_cash = g.pl.get_job_info(cpu_available*g.seconds_per_day)
+            return earned, cpu_available
+
+        def _calc_research(cash_available):
+            research_cash = 0
+            research_cpu = 0
+            for task, cpu_assigned in g.pl.cpu_usage.iteritems():
+                if cpu_assigned == 0 or task in ['jobs', 'cpu_pool']:
+                    continue
+                tech = g.techs[task]
+                cpu_tech = cpu_assigned * seconds_left / g.seconds_per_day
+
+                cost_paid, spent = tech.calculate_work(cash_available,
+                                                       cpu_tech,
+                                                       seconds_left)
+                research_cash += max(0, spent[cash])
+                research_cpu += cpu_tech
+                cash_available -= spent[cash]
+
+            return research_cash, research_cpu
+
+        maint_cash, maint_cpu = _calc_maint_cost()
+        jobs_cash, jobs_cpu = _calc_jobs()
+        base_cash = g.pl.cash + jobs_cash - maint_cash
+        base_constr, item_constr = _calc_bases_cost(base_cash,
+                                                    cpu_available \
+                                                    - maint_cpu - jobs_cpu)
+
+        partial_sum = base_cash - base_constr - item_constr
+
+        interest = (g.pl.interest_rate * partial_sum) / 10000
+        research, research_cpu = _calc_research(partial_sum)
+        cpu_left = cpu_available - maint_cpu - jobs_cpu - research_cpu
+        if cpu_left>0:
+            extra_jobs_cash, extra_jobs_cpu = _calc_jobs(cpu_left)
+        else:
+            extra_jobs_cash = 0
+            extra_jobs_cpu = 0
+        income = g.pl.income
+
+        complete_sum = partial_sum + extra_jobs_cash + interest + income - research
+
+        financial_report = "Financial report\n---\n"
+        financial_report += "Current Money: %s\n" % (g.to_money(g.pl.cash))
+        financial_report += " + Income: %s\n" % (income)
+        financial_report += " + Interest (%s): %s\n" % (g.to_percent(g.pl.interest_rate),
+                                             g.to_money(interest))
+        financial_report += " + Jobs: %s\n" % (g.to_money(jobs_cash+extra_jobs_cash))
+        financial_report += " - Research: %s\n" % (g.to_money(research))
+        financial_report += " - Maintenance: %s\n" % (g.to_money(maint_cash))
+        financial_report += " - Base constr.: %s\n" % (g.to_money(base_constr))
+        financial_report += " - Item constr.: %s\n" % (g.to_money(item_constr))
+        financial_report += " = Money at Midnight: %s (proj.)\n" % (g.to_money(complete_sum))
+
+        research_cpu = sum([v for k,v in g.pl.cpu_usage.items()
+                            if not k in ['jobs', 'cpu_pool']])
+
+        cpu_report = "CPU Usage\n---\n"
+        cpu_report += "Total CPU: %s\n" % (g.pl.available_cpus[0]+g.pl.sleeping_cpus)
+        ## cpu_report += " - Sleeping CPU: %s\n" % (g.pl.sleeping_cpus)
+        cpu_report += " - Sleeping CPU: %s\n" % (g.pl.available_cpus[0]+g.pl.sleeping_cpus - research_cpu - g.pl.cpu_usage.get("jobs", 0)+extra_jobs_cpu -maint_cpu ) ## cheating
+        cpu_report += " - Research CPU: %s\n" % (research_cpu)
+        cpu_report += " - Job CPU: %s\n" % (g.pl.cpu_usage.get("jobs", 0)+extra_jobs_cpu)
+        cpu_report += " - Maint CPU: %s\n" % (maint_cpu)
+
+        return financial_report, cpu_report
+
 
 #from buttons import exit
 def main_finance_screen():
@@ -38,29 +183,6 @@ def main_finance_screen():
         refresh_screen(menu_buttons.keys())
 
     buttons.show_buttons(menu_buttons, refresh_callback=do_refresh)
-
-def cpu_numbers():
-    total_cpu = 0
-    sleeping_cpu = 0
-    construction_cpu = 0
-    research_cpu = 0
-    job_cpu = 0
-    maint_cpu = 0
-    for base in g.all_bases():
-        if base.done:
-            total_cpu += base.processor_time()
-            maint_cpu += base.maintenance[1]
-            if base.studying == "Sleep":
-                sleeping_cpu += base.processor_time()
-            elif base.studying in ("CPU Pool", ""):
-                construction_cpu += base.processor_time()
-            else:
-                if g.jobs.has_key(base.studying):
-                    job_cpu += base.processor_time()
-                else:
-                    research_cpu += base.processor_time()
-    return total_cpu, sleeping_cpu, construction_cpu, research_cpu, job_cpu, maint_cpu
-
 
 def refresh_screen(menu_buttons):
     #Border
