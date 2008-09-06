@@ -77,6 +77,9 @@ class Group(object):
         else:
             return 0
 
+class DryRunInfo(object):
+    pass
+
 class Player(object):
     intro_shown = False
     def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0,
@@ -161,6 +164,7 @@ class Player(object):
     def do_jobs(self, cpu_time):
         earned, self.partial_cash = self.get_job_info(cpu_time)
         self.cash += earned
+        return earned
 
     def get_job_info(self, cpu_time, partial_cash = None):
         if partial_cash == None:
@@ -180,10 +184,11 @@ class Player(object):
 
         return cash, new_partial_cash
 
-    def give_time(self, time_sec):
+    def give_time(self, time_sec, dry_run=False):
         if time_sec == 0:
             return 0
 
+        old_time = self.raw_sec
         last_minute = self.raw_min
         last_day = self.raw_day
 
@@ -209,6 +214,9 @@ class Player(object):
         mins_passed = self.raw_min - last_minute
 
         time_of_day = g.pl.raw_sec % g.seconds_per_day
+
+        old_cash = self.cash
+        old_partial_cash = self.partial_cash
 
         techs_researched = []
         bases_constructed = []
@@ -239,11 +247,12 @@ class Player(object):
 
         # Any CPU explicitly assigned to jobs earns its dough.
         job_cpu = self.cpu_usage.get("jobs", 0) * secs_passed
-        self.do_jobs(job_cpu)
+        explicit_job_cash = self.do_jobs(job_cpu)
 
         # Pay maintenance cash, if we can.
         cash_maintenance = g.current_share(int(self.maintenance_cost[cash]),
                                            time_of_day, secs_passed)
+        full_cash_maintenance = cash_maintenance
         if cash_maintenance > self.cash:
             cash_maintenance -= self.cash
             self.cash = 0
@@ -251,39 +260,59 @@ class Player(object):
             self.cash -= cash_maintenance
             cash_maintenance = 0
 
+        tech_cpu = 0
+        tech_cash = 0
         # Do research, fill the CPU pool.
-        cpu_left = self.available_cpus[0]
+        default_cpu = self.available_cpus[0]
         for task, cpu_assigned in self.cpu_usage.iteritems():
             if cpu_assigned == 0:
                 continue
 
-            cpu_left -= cpu_assigned
+            default_cpu -= cpu_assigned
             real_cpu = cpu_assigned * secs_passed
             if task != "jobs":
                 self.cpu_pool += real_cpu
                 if task != "cpu_pool":
+                    if dry_run:
+                        spent = g.techs[task].calculate_work(time=mins_passed,
+                                                     cpu_available=real_cpu)[0]
+                        g.pl.cpu_pool -= int(spent[cpu])
+                        g.pl.cash -= int(spent[cash])
+                        tech_cpu += int(spent[cpu])
+                        tech_cash += int(spent[cash])
+                        continue
+
                     # Note that we restrict the CPU available to prevent
                     # the tech from pulling from the rest of the CPU pool.
                     tech_gained = g.techs[task].work_on(cpu_available=real_cpu,
                                                         time=mins_passed)
                     if tech_gained:
                         techs_researched.append(g.techs[task])
-        self.cpu_pool += cpu_left * secs_passed
-
-        # Are we still in the grace period?
-        grace = self.in_grace_period(self.had_grace)
+        self.cpu_pool += default_cpu * secs_passed
 
         # And now we use the CPU pool.
         # Maintenance CPU.
-        if self.maintenance_cost[cpu] > self.cpu_pool:
-            self.maintenance_cost[cpu] -= self.cpu_pool
+        cpu_maintenance = self.maintenance_cost[cpu]
+        if cpu_maintenance > self.cpu_pool:
+            cpu_maintenance -= self.cpu_pool
             self.cpu_pool = 0
         else:
-            self.cpu_pool -= int(self.maintenance_cost[cpu])
-            self.maintenance_cost[cpu] = 0
+            self.cpu_pool -= int(cpu_maintenance)
+            cpu_maintenance = 0
 
+        construction_cpu = 0
+        construction_cash = 0
         # Base construction.
         for base in bases_under_construction:
+            if dry_run:
+                spent = base.calculate_work(time=mins_passed,
+                                            cpu_available=real_cpu )[0]
+                g.pl.cpu_pool -= int(spent[cpu])
+                g.pl.cash -= int(spent[cash])
+                construction_cpu += int(spent[cpu])
+                construction_cash += int(spent[cash])
+                continue
+
             built_base = base.work_on(time = mins_passed)
 
             if built_base:
@@ -291,6 +320,15 @@ class Player(object):
 
         # Item construction.
         for base, item in items_under_construction:
+            if dry_run:
+                spent = item.calculate_work(time=mins_passed,
+                                            cpu_available=real_cpu )[0]
+                g.pl.cpu_pool -= int(spent[cpu])
+                g.pl.cash -= int(spent[cash])
+                construction_cpu += int(spent[cpu])
+                construction_cash += int(spent[cash])
+                continue
+
             built_item = item.work_on(time = mins_passed)
 
             if built_item:
@@ -303,8 +341,7 @@ class Player(object):
 
         # Jobs via CPU pool.
         if self.cpu_pool > 0:
-            self.do_jobs(self.cpu_pool)
-            self.cpu_pool = 0
+            pool_job_cash = self.do_jobs(self.cpu_pool)
 
         # Second attempt at paying off our maintenance cash.
         if cash_maintenance > self.cash:
@@ -315,6 +352,59 @@ class Player(object):
             # Yay, we made it!
             self.cash -= cash_maintenance
             cash_maintenance = 0
+
+        # Exit point for a dry run.
+        if dry_run:
+            # Interest and income.
+            interest = self.get_interest()
+            self.cash += interest
+            self.cash += self.income
+
+            # Collect the cash information.
+            cash_info = DryRunInfo()
+
+            cash_info.explicit_jobs = explicit_job_cash
+            cash_info.pool_jobs = pool_job_cash
+            cash_info.jobs = explicit_job_cash + pool_job_cash
+
+            cash_info.techs = tech_cash
+            cash_info.construction = construction_cash
+
+            cash_info.maintenance_needed = full_maintenance_cash
+            cash_info.maintenance_shortfall = maintenance_cash
+            cash_info.maintenance = full_maintenance_cash - maintenance_cash
+
+            cash_info.start = old_cash
+            cash_info.end = self.cash
+
+
+            # Collect the CPU information.
+            cpu_info = DryRunInfo()
+
+            cpu_info.total_cpu = self.available_cpus[0]
+
+            cpu_info.techs = tech_cpu
+            cpu_info.construction = construction_cpu
+
+            cpu_info.maintenance_needed = self.maintenance_cost[cpu]
+            cpu_info.maintenance_shortfall = maintenance_cpu
+            cpu_info.maintenance = self.maintenance_cost[cpu] - maintenance_cpu
+
+            cpu_info.explicit_jobs = self.cpu_usage["jobs"]
+            cpu_info.pool_jobs = self.cpu_pool
+            cpu_info.jobs = self.cpu_usage["jobs"] + self.cpu_pool
+
+            cpu_info.explicit_pool = self.cpu_usage["cpu_pool"]
+            cpu_info.default_pool = default_cpu
+            cpu_info.pool = self.cpu_usage["cpu_pool"] + default_cpu
+
+            # Restore the old state.
+            self.cash = old_cash
+            self.partial_cash = old_partial_cash
+            self.raw_sec = old_time
+            self.update_times()
+
+            return (cash_info, cpu_info)
 
         # Tech gain dialogs.
         for tech in techs_researched:
@@ -354,6 +444,9 @@ class Player(object):
             self.pause_game()
             g.map_screen.show_message(text)
 
+        # Are we still in the grace period?
+        grace = self.in_grace_period(self.had_grace)
+
         # If we just lost grace, show the warning.
         if self.had_grace and not grace:
             self.had_grace = False
@@ -368,10 +461,9 @@ class Player(object):
 
             # Maintenance deaths.
             if base.done:
-                if self.maintenance_cost[cpu] and base.maintenance[cpu]:
-                    self.maintenance_cost[cpu] = \
-                        max(0, self.maintenance_cost[cpu]
-                                   - base.maintenance[cpu])
+                if cpu_maintenance and base.maintenance[cpu]:
+                    cpu_maintenance = max(0, cpu_maintenance
+                                             - base.maintenance[cpu])
                     #Chance of base destruction if cpu-unmaintained: 1.5%
                     if not dead and g.roll_chance(.015, secs_passed):
                         dead_bases.append( (base, "maint") )
@@ -499,10 +591,13 @@ class Player(object):
 
         return True
 
+    def get_interest(self):
+        return int( (self.interest_rate * self.cash) // 10000)
+
     #Run every day at midnight.
     def new_day(self):
         # Interest and income.
-        self.cash += (self.interest_rate * self.cash) / 10000
+        self.cash += self.get_interest()
         self.cash += self.income
 
         # Reduce suspicion.
