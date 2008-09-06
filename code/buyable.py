@@ -24,6 +24,7 @@ import g
 cash, cpu, labor = range(3)
 
 import numpy
+numpy.seterr(all='ignore')
 array = numpy.array
 
 class BuyableClass(object):
