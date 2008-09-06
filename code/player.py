@@ -293,14 +293,12 @@ class Player(object):
         # And now we use the CPU pool.
         # Maintenance CPU.
         cpu_maintenance = self.maintenance_cost[cpu] * secs_passed
-        print cpu_maintenance, self.cpu_pool
         if cpu_maintenance > self.cpu_pool:
             cpu_maintenance -= self.cpu_pool
             self.cpu_pool = 0
         else:
             self.cpu_pool -= int(cpu_maintenance)
             cpu_maintenance = 0
-        print cpu_maintenance, self.cpu_pool
 
         construction_cpu = 0
         construction_cash = 0
@@ -401,7 +399,6 @@ class Player(object):
             cpu_info.explicit_pool = self.cpu_usage.get("cpu_pool", 0)
             cpu_info.default_pool = default_cpu
             cpu_info.pool = self.cpu_usage.get("cpu_pool", 0) + default_cpu
-            print cpu_info.__dict__
 
             # Restore the old state.
             self.cash = old_cash
