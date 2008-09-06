@@ -1050,12 +1050,6 @@ def load_items():
         items[item_name["id"]]=item.ItemClass( item_name["id"], "",
          item_cost, item_pre, item_type, item_second, build_list)
 
-    #this is used by the research screen in order for the assign research
-    #screen to have the right amount of CPU. It is a computer, unbuildable,
-    #and with an adjustable amount of power.
-    items["research_screen_fake_cpu"]=item.ItemClass("research_screen_fake_cpu",
-            "", (0, 0, 0), ["unknown_tech"], "compute", 0, ["all"])
-
     # We use the en_US translations of item definitions as the default,
     # then overwrite those with any available entries in the native language.
     load_item_defs("en_US")

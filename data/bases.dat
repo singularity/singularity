@@ -97,11 +97,3 @@ detect_chance_list = science:250
 cost_list = 8000000000000 | 60000000 | 100
 pre = Space-Time Manipulation
 maint_list = 5000000000 | 300000 | 0
-
-[Fake]
-size = 1
-allowed = NOWHERE
-detect_chance_list = science:0
-cost_list = 0 | 0 | 0
-pre = unknown_tech
-maint_list = 0 | 0 | 0
