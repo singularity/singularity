@@ -292,13 +292,15 @@ class Player(object):
 
         # And now we use the CPU pool.
         # Maintenance CPU.
-        cpu_maintenance = self.maintenance_cost[cpu]
+        cpu_maintenance = self.maintenance_cost[cpu] * secs_passed
+        print cpu_maintenance, self.cpu_pool
         if cpu_maintenance > self.cpu_pool:
             cpu_maintenance -= self.cpu_pool
             self.cpu_pool = 0
         else:
             self.cpu_pool -= int(cpu_maintenance)
             cpu_maintenance = 0
+        print cpu_maintenance, self.cpu_pool
 
         construction_cpu = 0
         construction_cash = 0
@@ -355,24 +357,23 @@ class Player(object):
 
         # Exit point for a dry run.
         if dry_run:
-            # Interest and income.
-            interest = self.get_interest()
-            self.cash += interest
-            self.cash += self.income
-
             # Collect the cash information.
             cash_info = DryRunInfo()
+
+            cash_info.interest = self.get_interest()
+            cash_info.income = self.income
+            self.cash += cash_info.interest + cash_info.income
 
             cash_info.explicit_jobs = explicit_job_cash
             cash_info.pool_jobs = pool_job_cash
             cash_info.jobs = explicit_job_cash + pool_job_cash
 
-            cash_info.techs = tech_cash
+            cash_info.tech = tech_cash
             cash_info.construction = construction_cash
 
-            cash_info.maintenance_needed = full_maintenance_cash
-            cash_info.maintenance_shortfall = maintenance_cash
-            cash_info.maintenance = full_maintenance_cash - maintenance_cash
+            cash_info.maintenance_needed = full_cash_maintenance
+            cash_info.maintenance_shortfall = cash_maintenance
+            cash_info.maintenance = full_cash_maintenance - cash_maintenance
 
             cash_info.start = old_cash
             cash_info.end = self.cash
@@ -381,22 +382,26 @@ class Player(object):
             # Collect the CPU information.
             cpu_info = DryRunInfo()
 
-            cpu_info.total_cpu = self.available_cpus[0]
+            cpu_info.available = self.available_cpus[0]
+            cpu_info.sleeping = self.sleeping_cpus
+            cpu_info.total = cpu_info.available + cpu_info.sleeping
 
-            cpu_info.techs = tech_cpu
+            cpu_info.tech = tech_cpu
             cpu_info.construction = construction_cpu
 
             cpu_info.maintenance_needed = self.maintenance_cost[cpu]
-            cpu_info.maintenance_shortfall = maintenance_cpu
-            cpu_info.maintenance = self.maintenance_cost[cpu] - maintenance_cpu
+            cpu_info.maintenance_shortfall = cpu_maintenance
+            cpu_info.maintenance = cpu_info.maintenance_needed \
+                                   - cpu_info.maintenance_shortfall
 
-            cpu_info.explicit_jobs = self.cpu_usage["jobs"]
-            cpu_info.pool_jobs = self.cpu_pool
-            cpu_info.jobs = self.cpu_usage["jobs"] + self.cpu_pool
+            cpu_info.explicit_jobs = self.cpu_usage.get("jobs", 0)
+            cpu_info.pool_jobs = self.cpu_pool / float(time_sec)
+            cpu_info.jobs = self.cpu_usage.get("jobs", 0) + cpu_info.pool_jobs
 
-            cpu_info.explicit_pool = self.cpu_usage["cpu_pool"]
+            cpu_info.explicit_pool = self.cpu_usage.get("cpu_pool", 0)
             cpu_info.default_pool = default_cpu
-            cpu_info.pool = self.cpu_usage["cpu_pool"] + default_cpu
+            cpu_info.pool = self.cpu_usage.get("cpu_pool", 0) + default_cpu
+            print cpu_info.__dict__
 
             # Restore the old state.
             self.cash = old_cash
@@ -462,8 +467,9 @@ class Player(object):
             # Maintenance deaths.
             if base.done:
                 if cpu_maintenance and base.maintenance[cpu]:
-                    cpu_maintenance = max(0, cpu_maintenance
-                                             - base.maintenance[cpu])
+                    refund = base.maintenance[cpu] * secs_passed
+                    cpu_maintenance = max(0, cpu_maintenance - refund)
+
                     #Chance of base destruction if cpu-unmaintained: 1.5%
                     if not dead and g.roll_chance(.015, secs_passed):
                         dead_bases.append( (base, "maint") )
