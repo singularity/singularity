@@ -123,6 +123,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             # Remove the excess ones.
             for child in self.display_elements[list_size:]:
                 child.remove_hooks()
+            del self.display_elements[list_size:]
         elif current_size < list_size:
             if current_size > 0:
                 self.display_elements[-1].borders = \

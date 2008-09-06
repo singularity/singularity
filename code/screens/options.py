@@ -273,6 +273,7 @@ def set_language_properly():
         pass
 
     dialog.Dialog.top.map_screen.needs_rebuild = True
+    dialog.Dialog.top.map_screen.needs_redraw = True
 
 def save_options():
     # Build a ConfigParser for writing the various preferences out.

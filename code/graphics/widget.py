@@ -165,8 +165,8 @@ class Widget(object):
         for child in self.children[:]:
             child.remove_hooks()
 
-        # Remove the children at the end, so that their own removals propogate.
-        self.parent.children.remove(self)
+        if self in self.parent.children:
+            self.parent.children.remove(self)
 
     def _parent_size(self):
         if self.parent == None:
