@@ -60,11 +60,8 @@ nodesep=0.10;
 edge [arrowsize=0.75];
 node [shape=record,fontname=FreeSans,fontsize=7,height=0.01,width=0.01
       style=filled,fillcolor=white];
-subgraph s {
-rank=source;
 """)
 
-s += ";\n".join('"%s"' % k for k,v in g.techs.items() if not v.prerequisites) + ";\n}\n"
 f.write(s)
 so_far += s
 
