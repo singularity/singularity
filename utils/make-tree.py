@@ -57,6 +57,7 @@ s = ("""\
 digraph g {
 ranksep=0.15;
 nodesep=0.10;
+ratio=.75;
 edge [arrowsize=0.75];
 node [shape=record,fontname=FreeSans,fontsize=7,height=0.01,width=0.01
       style=filled,fillcolor=white];
@@ -82,7 +83,7 @@ for n,t in g.techs.items():
     f.write(s)
     so_far += s
 
-f.write("\n};\n")
+f.write("\n}\n")
 so_far += '\n'
 f.close()
 
@@ -158,9 +159,9 @@ for name,loc in g.locations.items():
     f.write(s)
     so_far += s
 
-f.write("\n};\n")
+f.write("\n}\n")
 so_far += '\n'
 f.close()
 
-try:    system("dot -Tpng -o items.png items.dot")
+try:    system("unflatten -l10 items.dot | dot -Tpng -o items.png")
 except: pass
