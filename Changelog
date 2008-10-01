@@ -22,6 +22,8 @@ USER-VISIBLE CHANGES:
 OTHER CHANGES:
 - Removed a redundant tech requirement. (Phil, Xombie for bug report)
 - Major efficiency improvements. (FM)
+- New utility, make-tree.py.  Uses graphviz to create a visualization of the
+  tech tree. (aes, FM)
 
 v0.28a (release 2008.05.12):
 
