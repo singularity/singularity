@@ -30,11 +30,7 @@ from location import LocationScreen
 import math
 import time
 
-try:
-    from pygame.surfarray import pixels_alpha
-    can_twiddle_alpha = True
-except ImportError:
-    can_twiddle_alpha = False
+from pygame.surfarray import pixels_alpha
 
 from numpy import sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -46,12 +42,13 @@ class EarthImage(image.Image):
 
     def rescale(self):
         super(EarthImage, self).rescale()
-        if can_twiddle_alpha:
-            self.night_image = image.scale(gg.images['earth_night.jpg'],
-                                           self.real_size).convert_alpha()
+        self.night_image = image.scale(gg.images['earth_night.jpg'],
+                                       self.real_size).convert_alpha()
 
-    night_mask_day_of_year = -10000
-    night_masks = {}
+    night_mask_day_of_year = None
+    night_mask_dim = None
+    night_mask = None
+
     start_day = None
     start_second = None
 
@@ -63,68 +60,34 @@ class EarthImage(image.Image):
 
     def get_night_mask(self):
         width, height = self.real_size
-        if can_twiddle_alpha:
-            max_alpha = 255
-        else:
-            max_alpha = 170
+        max_alpha = 255
 
         day_of_year = self.compute_day_of_year()
 
-        if day_of_year!=self.night_mask_day_of_year:
-            self.night_masks = {}
-        night_mask = self.night_masks.get( (width, height), None)
-        if night_mask is None:
+        if day_of_year != self.night_mask_day_of_year:
+            self.night_mask = None
+        elif self.night_mask_dim != (width, height):
+            self.night_mask = None
+
+        if self.night_mask is None:
             self.night_mask_day_of_year = day_of_year
-            night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
+            self.night_mask_dim = (width, height)
+
+            self.night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
             sun_declination = (-23.45/360.*2*math.pi *
                     math.cos(2*math.pi/365.*(day_of_year + 10)))
             sun_diameter = 0.5*pi/180
-            if can_twiddle_alpha:
-                lat = linspace(-pi/2,pi/2,height)[newaxis,:]
-                long = linspace(0,2*pi,width)[:,newaxis]
-                sin_sun_altitude = (cos(long)*(cos(lat)*cos(sun_declination))
-                                        +sin(lat)*sin(sun_declination))
-                # use tanh to convert values to the range [0,1]
-                light = 0.5*(tanh(sin_sun_altitude/(sun_diameter/2))+1)
-                night_alphas = pixels_alpha(night_mask)
-                night_alphas[...] = round(max_alpha*light).astype(uint8)
-                del night_alphas
-            else:
-                for n in range(width):
-                    hour_angle = float(n)/float(width)*2*math.pi
-                    if math.tan(sun_declination)!=0:
-                        latitude_limit_angle = math.atan(-math.cos(hour_angle)/math.tan(sun_declination))
-                    else:
-                        latitude_limit_angle = -math.pi/2
-                    latitude_limit_fraction = latitude_limit_angle/math.pi+0.5
-                    latitude_limit = int(latitude_limit_fraction*height)
-                    if latitude_limit<0:
-                        latitude_limit = 0
-                    elif latitude_limit>=height:
-                        latitude_limit=height-1
-                    if sun_declination>0:
-                        top = 0
-                        bottom = max_alpha
-                    else:
-                        top = max_alpha
-                        bottom = 0
-                    night_mask.fill((0,0,0,top),(n,0,1,latitude_limit))
-                    night_mask.fill((0,0,0,bottom),(n,latitude_limit,1,height-latitude_limit))
-                    if False:
-                        gradient_width = 5
-                        for i in range(gradient_width):
-                            y0 = latitude_limit_fraction*height-gradient_width//2
-                            y = latitude_limit-gradient_width//2+i
-                            if 0<=y<height:
-                                c = top + (bottom-top)*max(y-y0,0)/float(gradient_width)
-                                night_mask.set_at((n,y),(0,0,0,int(c)))
-                    else:
-                        assert 0<=(latitude_limit_fraction*height-     latitude_limit)<1
-                        c = bottom + (top-bottom)*(latitude_limit_fraction*height-latitude_limit)
-                        night_mask.set_at((n,latitude_limit),(0,0,0,int(c)))
 
-            self.night_masks[(width, height)] = night_mask
-        return night_mask
+            lat = linspace(-pi/2,pi/2,height)[newaxis,:]
+            long = linspace(0,2*pi,width)[:,newaxis]
+            sin_sun_altitude = (cos(long)*(cos(lat)*cos(sun_declination))
+                                    +sin(lat)*sin(sun_declination))
+            # use tanh to convert values to the range [0,1]
+            light = 0.5*(tanh(sin_sun_altitude/(sun_diameter/2))+1)
+            night_alphas = pixels_alpha(self.night_mask)
+            night_alphas[...] = round(max_alpha*light).astype(uint8)
+            del night_alphas
+        return self.night_mask
 
     high_speed_pos = None
     def compute_night_start(self):
@@ -148,24 +111,16 @@ class EarthImage(image.Image):
 
         # Turn half of the map to night, with blended borders.
         night_mask = self.get_night_mask()
-        if can_twiddle_alpha:
-            mask_alphas = pixels_alpha(night_mask)
-            night_alphas = pixels_alpha(self.night_image)
+        mask_alphas = pixels_alpha(night_mask)
+        night_alphas = pixels_alpha(self.night_image)
 
-            right_width = width - self.night_start
-            night_alphas[self.night_start:] = mask_alphas[:right_width]
-            if self.night_start != 0:
-                night_alphas[:self.night_start]  = mask_alphas[right_width:]
+        right_width = width - self.night_start
+        night_alphas[self.night_start:] = mask_alphas[:right_width]
+        if self.night_start != 0:
+            night_alphas[:self.night_start]  = mask_alphas[right_width:]
 
-            del night_alphas, mask_alphas
-            self.surface.blit(self.night_image, (0,0))
-        else:
-            self.surface.blit(night_mask, (self.night_start, 0))
-            self.surface.blit(night_mask, (self.night_start - width, 0))
-
-    def partial_redraw(self, start, width):
-        #self.surface.set_clip((start, 0, width, self.real_size[1]))
-        self.redraw()
+        del night_alphas, mask_alphas
+        self.surface.blit(self.night_image, (0,0))
 
     night_start = None
     def rebuild(self):
@@ -178,15 +133,14 @@ class EarthImage(image.Image):
         width, height = self.real_size
         self.night_start = self.compute_night_start()
 
-        #Doesn't work in day-at-a-time mode
         movement = (old_night_start - self.night_start) % width
-        if movement == 0 and self.compute_day_of_year()==self.night_mask_day_of_year:
+        if movement == 0 \
+           and self.compute_day_of_year() == self.night_mask_day_of_year:
             return
 
         self.redraw()
 
-        # Reset the clipping rectangle for normal use.
-        self.surface.set_clip(None)
+        # Redraw children.
         for child in self.children:
             if child.visible:
                 child.redraw()
