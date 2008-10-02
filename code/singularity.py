@@ -30,6 +30,7 @@ except ValueError:
 except ImportError:
   raise SystemExit("Endgame: Singularity requires pygame.")
 
+import sys
 import ConfigParser
 import os.path
 import optparse
