@@ -68,6 +68,7 @@ class Dialog(text.Text):
     def __init__(self, parent=None, pos = (.5,.1), size = (1, .9),
                  anchor = constants.TOP_CENTER, **kwargs):
         kwargs.setdefault("background_color", (0,0,0,0))
+        kwargs.setdefault("borders", ())
         super(Dialog, self).__init__(parent, pos, size, anchor, **kwargs)
         self.visible = False
         self.faded = False
