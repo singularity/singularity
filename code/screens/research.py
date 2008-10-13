@@ -44,6 +44,10 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
         self.help_dialog = dialog.MessageDialog(self)
 
+        self.yes_button.remove_hooks()
+        self.no_button.pos = (-.5,-.99)
+        self.no_button.anchor = constants.BOTTOM_CENTER
+
     def adjust_slider(self, event):
         if 0 <= self.listbox.list_pos < len(self.listbox.list):
             go_lower = (event.key == pygame.K_LEFT)
