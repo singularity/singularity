@@ -144,6 +144,9 @@ for common_res in [(640,480), (800,600), (1024,768), (1280,1024)]:
     display_options.add_option("--" + x, action="store_const",
                                dest="resolution", const=res_str,
                                help="set resolution to %s" % res_str)
+display_options.add_option("--xo1", action="store_const",
+                           dest="resolution", const="1200x900",
+                           help="set resolution to 1200x900 (OLPC XO-1)")
 display_options.add_option("--fullscreen", action="store_true",
                            help="start in fullscreen mode")
 display_options.add_option("--windowed", action="store_false",
