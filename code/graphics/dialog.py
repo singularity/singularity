@@ -29,6 +29,41 @@ import text
 import button
 import listbox
 
+KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4, pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7, pygame.K_KP8: 8, pygame.K_KP9: 9}
+
+def move_mouse((dx, dy)):
+    old_x, old_y = pygame.mouse.get_pos()
+    x = old_x+dx
+    y = old_y+dy
+    pygame.mouse.set_pos((x, y))
+
+def fake_click():
+    click_event = pygame.event.Event(pygame.MOUSEBUTTONUP,
+                                     {'button': 1, 'pos': pygame.mouse.get_pos()})
+    pygame.event.post(click_event)
+
+def handle_ebook(event):
+    if event.type != pygame.KEYDOWN:
+        return
+
+    key = KEYPAD[event.key]
+    if key == 2:
+        move_mouse((0,10))
+    elif key == 4:
+        move_mouse((-10,0))
+    elif key == 6:
+        move_mouse((10,0))
+    elif key == 8:
+        move_mouse((0,-10))
+    elif key == 1:
+        fake_click()
+    elif key in (3, 9):
+        import code.g
+        code.g.map_screen.adjust_speed(faster=(key == 9))
+    elif key == 7:
+        import code.g
+        code.g.map_screen.set_speed(0)
+
 def call_dialog(dialog, parent=None):
     parent_dialog = None
     target = parent
@@ -218,6 +253,9 @@ class Dialog(text.Text):
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
 
+            # OLPC XO-1 ebook mode.
+            if g.ebook_mode and event.key in KEYPAD:
+                handlers = [(0, handle_ebook)]
         elif event.type == pygame.MOUSEBUTTONUP:
             # Mouse click handlers.
             handlers = self.handlers.get(constants.CLICK, [])

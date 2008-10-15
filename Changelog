@@ -17,6 +17,7 @@ USER-VISIBLE CHANGES:
 - Events no longer happen when they're meaningless. (FM)
 * The AI has discovered a network of light sensors around the globe.  You can
   now see day and night on the map. (dvrasp, FM, Anne M. Archibald)
+* Added support for running the game on an OLPC XO-1. (FM)
 
 
 OTHER CHANGES:

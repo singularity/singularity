@@ -144,14 +144,19 @@ for common_res in [(640,480), (800,600), (1024,768), (1280,1024)]:
     display_options.add_option("--" + x, action="store_const",
                                dest="resolution", const=res_str,
                                help="set resolution to %s" % res_str)
-display_options.add_option("--xo1", action="store_const",
-                           dest="resolution", const="1200x900",
-                           help="set resolution to 1200x900 (OLPC XO-1)")
 display_options.add_option("--fullscreen", action="store_true",
                            help="start in fullscreen mode")
 display_options.add_option("--windowed", action="store_false",
                            help="start in windowed mode (default)")
 parser.add_option_group(display_options)
+
+olpc_options = optparse.OptionGroup(parser, "OLPC-specific Options")
+olpc_options.add_option("--xo1", action="store_const",
+                        dest="resolution", const="1200x900",
+                        help="set resolution to 1200x900 (OLPC XO-1)")
+olpc_options.add_option("--ebook", help="enables gamepad buttons for use in ebook mode.  D-pad moves mouse, check is click.  O speeds up time, X slows down time, and square stops time.",
+                        action="store_true", default=False)
+parser.add_option_group(olpc_options)
 
 hidden_options = optparse.OptionGroup(parser, "Hidden Options")
 hidden_options.add_option("-p", help="(ignored)", metavar=" ")
@@ -185,6 +190,8 @@ if options.soundbuf is not None:
     g.soundbuf = options.soundbuf
 if options.singledir is not None:
     g.singledir = options.singledir
+
+graphics.g.ebook_mode = options.ebook
 
 g.cheater = options.cheater
 g.debug = options.debug

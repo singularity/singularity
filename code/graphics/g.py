@@ -127,3 +127,6 @@ def init_alpha():
 
 # Global FPS, used where continuous behavior is undesirable or a CPU hog.
 FPS = 30
+
+# OLPC ebook mode.
+ebook_mode = False

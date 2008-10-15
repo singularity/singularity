@@ -151,6 +151,7 @@ class EarthImage(image.Image):
             if child.visible:
                 child.redraw()
 
+speeds = [0, 1, 60, 7200, 432000]
 class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
                  anchor = constants.TOP_LEFT,  *args, **kwargs):
@@ -279,9 +280,9 @@ class MapScreen(dialog.Dialog):
 
         bar = u"\u25AE"
         arrow = u"\u25B6"
-        speed_button_souls = [ (bar * 2, .025, 0), (arrow, .024, 1),
-                              (arrow * 2, .033, 60), (arrow * 3, .044, 7200),
-                              (arrow * 4, .054, 432000) ]
+        speed_button_souls = [ (bar * 2, .025, speeds[0]), (arrow, .024, speeds[1]),
+                              (arrow * 2, .033, speeds[2]), (arrow * 3, .044, speeds[3]),
+                              (arrow * 4, .054, speeds[4]) ]
 
         self.speed_buttons = button.ButtonGroup()
         hpos = .38
@@ -345,6 +346,19 @@ class MapScreen(dialog.Dialog):
             self.find_speed_button()
 
         self.map.needs_redraw = True
+
+    def adjust_speed(self, faster):
+        old_index = -1
+        if g.curr_speed in speeds:
+            old_index = speeds.index(g.curr_speed)
+        if faster:
+            new_index = old_index + 1
+        else:
+            new_index = old_index - 1
+
+        new_index = min(len(speeds)-1, max(0, new_index))
+
+        self.set_speed(speeds[new_index])
 
     def open_location(self, location):
         self.location_dialog.location = g.locations[location]
