@@ -73,6 +73,11 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid 'grab' setting in preferences.\n")
 
         try:
+            g.daynight = prefs.getboolean("Preferences", "daynight")
+        except:
+            sys.stderr.write("Invalid 'daynight' setting in preferences.\n")
+
+        try:
             g.soundbuf = prefs.getint("Preferences", "soundbuf")
         except:
             sys.stderr.write("Invalid 'soundbuf' setting in preferences.\n")
@@ -107,6 +112,10 @@ parser.add_option("--sound", action="store_true", dest="sound",
                   help="enable sound (default)")
 parser.add_option("--nosound", action="store_false", dest="sound",
                   help="disable sound")
+parser.add_option("--daynight", action="store_true", dest="daynight",
+                  help="enable day/night display (default)")
+parser.add_option("--nodaynight", action="store_false", dest="daynight",
+                  help="disable day/night display")
 langs = g.available_languages()
 parser.add_option("-l", "--lang", "--language", dest="language", type="choice",
                   choices=langs, metavar="LANG",
@@ -167,6 +176,8 @@ if options.fullscreen is not None:
     graphics.g.fullscreen = options.fullscreen
 if options.sound is not None:
     g.nosound = not options.sound
+if options.daynight is not None:
+    g.daynight = options.daynight
 if options.soundbuf is not None:
     g.soundbuf = options.soundbuf
 if options.singledir is not None:

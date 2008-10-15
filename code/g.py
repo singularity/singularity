@@ -53,6 +53,9 @@ cheater = 0
 # but is untested.
 nosound = 0
 
+# Enables day/night display.
+daynight = True
+
 #Gives debug info at various points.
 debug = 0
 

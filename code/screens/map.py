@@ -109,6 +109,9 @@ class EarthImage(image.Image):
 
         super(EarthImage, self).redraw()
 
+        if not g.daynight:
+            return
+
         # Turn half of the map to night, with blended borders.
         night_mask = self.get_night_mask()
         mask_alphas = pixels_alpha(night_mask)
@@ -125,6 +128,9 @@ class EarthImage(image.Image):
     night_start = None
     def rebuild(self):
         super(EarthImage, self).rebuild()
+
+        if not g.daynight:
+            return
 
         old_night_start = self.night_start
         if old_night_start is None or self.needs_redraw:

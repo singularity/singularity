@@ -24,7 +24,11 @@ import constants
 import g
 import widget
 
-scale = getattr(pygame.transform, "smoothscale", pygame.transform.scale)
+def scale(*args, **kwargs):
+    try:
+        return pygame.transform.smoothscale(*args, **kwargs)
+    except Exception:
+        return pygame.transform.scale(*args, **kwargs)
 
 class Image(widget.Widget):
     image = widget.causes_rebuild("_image")

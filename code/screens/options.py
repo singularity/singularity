@@ -114,7 +114,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
 
         self.resolution_apply = \
             button.FunctionButton(self, (.66, .15), (.12, .05),
-                                  text="APPLY", text_shrink_factor=.75,
+                                  text="APPLY", text_shrink_factor=.75, hotkey="a",
                                   function=self.set_resolution_custom)
 
         self.soundbuf_label = text.Text(self, (.01, .22), (.25, .05),
@@ -151,6 +151,15 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
                                   list=g.available_languages(),
                                   update_func=self.set_language)
 
+        self.daynight_label = text.Text(self, (.55, .30), (.15, .05),
+                                        text="Day/night display:", underline=2,
+                                        background_color=gg.colors["clear"])
+        self.daynight_toggle = OptionButton(self, (.71, .30), (.07, .05),
+                                        text="NO", text_shrink_factor=.75,
+                                        hotkey="y", force_underline=-1,
+                                        function=self.set_daynight,
+                                        args=(button.TOGGLE_VALUE,))
+
         self.save_button = button.FunctionButton(self, (.42, .45), (.34, .05),
                                                  text="SAVE OPTIONS TO DISK",
                                                  hotkey="d",
@@ -163,6 +172,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         self.sound_toggle.set_active(not g.nosound)
         self.set_grab(pygame.event.get_grab())
         self.grab_toggle.set_active(pygame.event.get_grab())
+        self.set_daynight(g.daynight)
+        self.daynight_toggle.set_active(g.daynight)
         custom = True
         for res_button in self.resolution_group:
             res_button.set_active(res_button.args == (gg.screen_size,))
@@ -232,6 +243,13 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             self.grab_toggle.text = "NO"
         pygame.event.set_grab(value)
 
+    def set_daynight(self, value):
+        if value:
+            self.daynight_toggle.text = "YES"
+        else:
+            self.daynight_toggle.text = "NO"
+        g.daynight = value
+
     def set_resolution(self, value):
         gg.screen_size = value
         dialog.Dialog.top.needs_resize = True
@@ -282,6 +300,7 @@ def save_options():
     prefs.set("Preferences", "fullscreen", str(gg.fullscreen))
     prefs.set("Preferences", "nosound", str(g.nosound))
     prefs.set("Preferences", "grab", str(pygame.event.get_grab()))
+    prefs.set("Preferences", "daynight", str(g.daynight))
     prefs.set("Preferences", "xres", str(gg.screen_size[0]))
     prefs.set("Preferences", "yres", str(gg.screen_size[1]))
     prefs.set("Preferences", "lang", g.language)
