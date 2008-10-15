@@ -326,6 +326,18 @@ class MapScreen(dialog.Dialog):
             dialog.TextEntryDialog(self.menu_dialog,
                                    text="Enter a name for this save.")
 
+        self.add_key_handler(constants.XO1_X, self.got_XO1)
+        self.add_key_handler(constants.XO1_O, self.got_XO1)
+        self.add_key_handler(constants.XO1_SQUARE, self.got_XO1)
+
+    def got_XO1(self, event):
+        if event.key == constants.XO1_X:
+            self.adjust_speed(faster=False)
+        elif event.key == constants.XO1_O:
+            self.adjust_speed(faster=True)
+        elif event.key == constants.XO1_SQUARE:
+            self.set_speed(0)
+
     def show_message(self, message, color=None):
         self.message_dialog.text = message
         if color == None:

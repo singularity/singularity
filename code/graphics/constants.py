@@ -54,3 +54,8 @@ KEY, KEYDOWN, KEYUP, CLICK, MOUSEMOTION, DRAG, TICK = range(7)
 # Handler "errors", used to throw a return value up several levels.
 class Handled(Exception): pass
 class ExitDialog(Exception): pass
+
+# Key constants for XO-1 buttons.
+XO1_X = object()
+XO1_O = object()
+XO1_SQUARE = object()

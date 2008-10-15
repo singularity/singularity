@@ -37,32 +37,40 @@ def move_mouse((dx, dy)):
     y = old_y+dy
     pygame.mouse.set_pos((x, y))
 
-def fake_click():
-    click_event = pygame.event.Event(pygame.MOUSEBUTTONUP,
-                                     {'button': 1, 'pos': pygame.mouse.get_pos()})
+def fake_click(down):
+    if down:
+        type = pygame.MOUSEBUTTONDOWN
+    else:
+        type = pygame.MOUSEBUTTONUP
+    click_event = pygame.event.Event(type, {'button': 1, 'pos': pygame.mouse.get_pos()})
     pygame.event.post(click_event)
 
 def handle_ebook(event):
-    if event.type != pygame.KEYDOWN:
-        return
-
     key = KEYPAD[event.key]
-    if key == 2:
-        move_mouse((0,10))
-    elif key == 4:
-        move_mouse((-10,0))
-    elif key == 6:
-        move_mouse((10,0))
-    elif key == 8:
-        move_mouse((0,-10))
-    elif key == 1:
-        fake_click()
-    elif key in (3, 9):
-        import code.g
-        code.g.map_screen.adjust_speed(faster=(key == 9))
+    new_key = None
+
+    if event.type == pygame.KEYDOWN:
+        if key == 2:
+            move_mouse((0,10))
+        elif key == 4:
+            move_mouse((-10,0))
+        elif key == 6:
+            move_mouse((10,0))
+        elif key == 8:
+            move_mouse((0,-10))
+
+    if key == 1:
+        fake_click(event.type == pygame.KEYDOWN)
+    elif key == 3:
+        new_key = constants.XO1_X
+    elif key == 9:
+        new_key = constants.XO1_O
     elif key == 7:
-        import code.g
-        code.g.map_screen.set_speed(0)
+        new_key = constants.XO1_SQUARE
+
+    if new_key is not None:
+        new_event = pygame.event.Event(event.type, {'key': new_key, 'unicode': None})
+        pygame.event.post(new_event)
 
 def call_dialog(dialog, parent=None):
     parent_dialog = None
