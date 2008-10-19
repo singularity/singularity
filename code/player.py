@@ -340,6 +340,7 @@ class Player(object):
                     cpus_constructed.append( (base, item) )
 
         # Jobs via CPU pool.
+        pool_job_cash = 0
         if self.cpu_pool > 0:
             pool_job_cash = self.do_jobs(self.cpu_pool)
 
