@@ -261,6 +261,9 @@ class Dialog(text.Text):
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
 
+                # Keycode-based handlers for this particular key.
+                insort_all(handlers, self.key_handlers.get(event.key, []))
+
             # OLPC XO-1 ebook mode.
             if g.ebook_mode and event.key in KEYPAD:
                 handlers = [(0, handle_ebook)]
@@ -314,7 +317,10 @@ class FocusDialog(Dialog):
         self.focus_list.append(widget)
 
     def remove_focus_widget(self, widget):
-        self.focus_list.remove(widget)
+        try:
+            self.focus_list.remove(widget)
+        except ValueError:
+            pass
 
     def took_focus(self, widget):
         if self.current_focus is not None and self.current_focus is not widget:

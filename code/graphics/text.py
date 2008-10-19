@@ -591,3 +591,156 @@ class StyledText(Text):
 
 class FastStyledText(FastText, StyledText):
     pass
+
+
+def _make_prototype_handler(parent):
+    def print_on_click(event):
+        if event.button != 2 and not (event.button == 1
+                                      and (pygame.key.get_mods() & pygame.KMOD_ALT)):
+            return
+        prefixes = ["|-", "| "]
+        kids = [(child, 0) for child in parent.children]
+        while kids:
+            kid, depth = kids.pop()
+            further_kids = [(child, depth+1) for child in kid.children]
+            kids += further_kids
+
+            prefix = ""
+            if depth:
+                prefix = prefixes[1] * (depth - 1) + prefixes[0]
+
+            print prefix + str(kid)
+    return print_on_click
+
+class ProtoWidget(EditableText):
+    """Prototyping widget, for creating quick mockups.
+
+       Usage:
+       Type to name.
+       Drag to move.
+       Shift+Drag to resize.
+       Control+Drag to duplicate. (children will not duplicate)
+       Shift+Control+Drag to create a child.
+
+       Right-click to delete.
+       Middle-click or Alt+Click to write out location and size of each widget.
+       """
+    drag_state = -1
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("color", (0,0,0))
+        kwargs.setdefault("border_color", (0,0,0))
+        kwargs.setdefault("borders", constants.ALL)
+        kwargs.setdefault("background_color", (255,255,255))
+        super(ProtoWidget, self).__init__(*args, **kwargs)
+
+    def add_hooks(self):
+        super(ProtoWidget, self).add_hooks()
+        self.parent.add_handler(constants.DRAG, self.handle_drag)
+        self.parent.add_handler(constants.CLICK, self.handle_click)
+
+        if not isinstance(self.parent, ProtoWidget) \
+           and not getattr(self.parent, "demo_mode", False):
+            self.parent.demo_mode = True
+            self.parent.add_handler(constants.CLICK, _make_prototype_handler(self.parent))
+
+    def remove_hooks(self):
+        self.parent.remove_handler(constants.DRAG, self.handle_drag)
+        self.parent.remove_handler(constants.CLICK, self.handle_click)
+        super(ProtoWidget, self).remove_hooks()
+
+    def handle_drag(self, event):
+        if self.drag_state == -1:
+            start_pos = tuple(event.pos[i]-event.rel[i] for i in range(2))
+            if self.is_over(start_pos):
+                for child in self.children:
+                    if child.is_over(start_pos):
+                        self.drag_state = 0
+                        return
+                real_pos = self.collision_rect[:2]
+                self.mouse_rel = tuple(real_pos[i]-start_pos[i]
+                                                     for i in range(2))
+
+                mod_keys = pygame.key.get_mods()
+                shift = mod_keys & pygame.KMOD_SHIFT
+                control = mod_keys & pygame.KMOD_CTRL
+                if shift and control:
+                    self.drag_state = 0
+                    new_size = tuple(d/2 for d in self.size)
+                    pw=ProtoWidget(self, (0,0), new_size,
+                                  self.anchor,
+                                  background_color = self.background_color,
+                                  border_color = self.border_color,
+                                  borders = self.borders)
+                    pw.drag_state = 0
+                elif shift:
+                    self.drag_state = 2
+                elif control:
+                    self.drag_state = 0
+                    pw=ProtoWidget(self.parent, self.pos, self.size, self.anchor,
+                                  background_color = self.background_color,
+                                  border_color = self.border_color,
+                                  borders = self.borders)
+                    pw.drag_state = 1
+                    pw.mouse_rel = self.mouse_rel
+                else:
+                    self.drag_state = 1
+            else:
+                self.drag_state = 0
+
+        if self.drag_state <= 0:
+            return
+
+        if self.parent:
+            parent_rect = self.parent.collision_rect
+        else:
+            parent_rect = pygame.Rect((0,0) + g.screen_size)
+
+        if self.drag_state == 1:
+            mouse_pos = pygame.mouse.get_pos()
+            new_real_pos = tuple(self.mouse_rel[i] + mouse_pos[i] for i in range(2))
+
+            new_rel_pos = tuple(new_real_pos[i] - parent_rect[i] for i in range(2))
+
+            new_unit_pos = tuple( max(0,(new_rel_pos[i] / float(g.screen_size[i])))
+                                     for i in range(2))
+
+            new_pct_pos = tuple( int( (new_unit_pos[i] * 100) + 0.5)
+                                   for i in range(2))
+
+            self.pos = tuple(new_pct_pos[i] / 100. for i in range(2))
+
+            raise constants.Handled
+        elif self.drag_state == 2:
+            mouse_pos = pygame.mouse.get_pos()
+            new_size = tuple(mouse_pos[i] - self.collision_rect[i] for i in range(2))
+
+            unit_size = tuple(max(0,new_size[i] / float(g.screen_size[i]))
+                                    for i in range(2))
+
+            pct_size = tuple( int( (unit_size[i] * 100) + 0.5)
+                                   for i in range(2))
+
+            self.size = tuple(pct_size[i] / 100. for i in range(2))
+
+            raise constants.Handled
+
+    def handle_click(self, event):
+        if event.button == 3 and self.is_over(event.pos):
+            mine = True
+            for child in self.children:
+                if child.is_over(event.pos):
+                    mine = False
+                    break
+            if mine:
+                self.remove_hooks()
+                self.parent.needs_redraw = True
+        if self.drag_state > 0:
+            self.drag_state = -1
+            #raise constants.Handled
+        else:
+            self.drag_state = -1
+
+    def __str__(self):
+        return "%s pos: (%.2f, %.2f), size: (%.2f, %.2f)" % \
+           ((self.text,) + self.pos +        self.size)
