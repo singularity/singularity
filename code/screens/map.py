@@ -32,7 +32,7 @@ import time
 
 from pygame.surfarray import pixels_alpha
 
-from numpy import sin, cos, linspace, pi, tanh, round, newaxis, uint8
+from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
 class EarthImage(image.Image):
     def __init__(self, parent):
@@ -210,22 +210,30 @@ class MapScreen(dialog.Dialog):
                                                     text="KNOWLEDGE",
                                                     hotkey="k")
 
-        #XXX Functionality.
         cheat_buttons = []
-        cheat_buttons.append(button.Button(None, None, None, text="GIVE MONEY",
-                                           hotkey="m"))
-        cheat_buttons.append(button.Button(None, None, None, text="GIVE TECH",
-                                           hotkey="t"))
-        cheat_buttons.append(button.Button(None, None, None, text="END CONSTR.",
-                                           hotkey="e"))
-        cheat_buttons.append(button.Button(None, None, None, text="SUPERSPEED",
-                                           hotkey="s"))
-        cheat_buttons.append(button.Button(None, None, None, text="KILL SUSP.",
-                                           hotkey="k"))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text="EMBEZZLE MONEY",
+                                  hotkey="e", function=self.steal_money))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text="INSPIRATION",
+                                  hotkey="i", function=self.inspiration))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text="FINISH CONSTRUCTION",
+                                  hotkey="f", function=self.end_construction))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text="SUPERSPEED",
+                                  hotkey="s", function=self.set_speed,
+                                  args=(864000,)))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text="BRAINWASH",
+                                  hotkey="w", function=self.brainwash))
         cheat_buttons.append(button.ExitDialogButton(None, None, None,
                                                      text="BACK", hotkey="b"))
 
-        self.cheat_dialog = dialog.SimpleMenuDialog(self, buttons=cheat_buttons)
+        self.cheat_dialog = \
+            dialog.SimpleMenuDialog(self, buttons=cheat_buttons, width=.4)
+        self.steal_amount_dialog = \
+            dialog.TextEntryDialog(self.cheat_dialog, text="How much money?")
 
         if g.cheater:
             self.cheat_button = button.DialogButton(self, (0, 0), (0, 0),
@@ -345,6 +353,36 @@ class MapScreen(dialog.Dialog):
         self.message_dialog.color = color
         dialog.call_dialog(self.message_dialog, self)
 
+    def steal_money(self):
+        asked = dialog.call_dialog(self.steal_amount_dialog, self.cheat_dialog)
+        try:
+            g.pl.cash += int(asked)
+        except ValueError:
+            pass
+        else:
+            self.needs_rebuild = True
+
+    def inspiration(self):
+        for task, cpu in g.pl.cpu_usage.items():
+            if task in g.techs and cpu > 0:
+                g.techs[task].cost_left = array((0,0,0))
+        self.needs_rebuild = True
+
+    def end_construction(self):
+        for base in g.all_bases():
+            base.finish()
+            if base.cpus is not None:
+                base.cpus.finish()
+            for item in base.extra_items:
+                if item is not None:
+                    item.finish()
+        self.needs_rebuild = True
+
+    def brainwash(self):
+        for group in g.pl.groups.values():
+            group.suspicion = 0
+        self.needs_rebuild = True
+
     def set_speed(self, speed, find_button=True):
         g.curr_speed = speed
         if speed == 0:
@@ -357,7 +395,7 @@ class MapScreen(dialog.Dialog):
         if find_button:
             self.find_speed_button()
 
-        self.map.needs_redraw = True
+        self.needs_redraw = True
 
     def adjust_speed(self, faster):
         old_index = -1
@@ -382,6 +420,9 @@ class MapScreen(dialog.Dialog):
             if sb.args[0] == g.curr_speed:
                 sb.chosen_one()
                 break
+        else:
+            for sb in self.speed_buttons:
+                sb.set_active(False)
 
     def force_update(self):
         self.find_speed_button()

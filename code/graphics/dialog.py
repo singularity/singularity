@@ -576,8 +576,11 @@ class ChoiceDescriptionDialog(ChoiceDialog):
 
 
 class SimpleMenuDialog(Dialog):
+    width = widget.causes_rebuild("_width")
+
     def __init__(self, *args, **kwargs):
         buttons = kwargs.pop("buttons")
+        width = kwargs.pop("width", .20)
         super(SimpleMenuDialog, self).__init__(*args, **kwargs)
 
         self.size = (-1, -1)
@@ -586,8 +589,9 @@ class SimpleMenuDialog(Dialog):
 
         num_buttons = len(buttons)
         height = (.06 * num_buttons) + .01
+        self.width = width
         self.button_panel = \
-            widget.BorderedWidget(self, (-.5, -.5), (.22, height),
+            widget.BorderedWidget(self, (-.5, -.5), (self.width + .02, height),
                                   anchor=constants.MID_CENTER,
                                   background_color=g.colors["dark_blue"],
                                   border_color=g.colors["white"],
@@ -601,7 +605,7 @@ class SimpleMenuDialog(Dialog):
             button.add_hooks()
 
             button.pos = (.01, y_pos)
-            button.size = (.20, .05)
+            button.size = (self.width, .05)
             button.text_shrink_factor=.70
 
             y_pos += .06
