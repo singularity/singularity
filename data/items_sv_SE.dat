@@ -8,7 +8,7 @@ description = Stort nät av värmeledande metall som skickar ner värmen i marke
 
 [Facility Interconnection Switch]
 name = Snabba switchar
-description = Använder standardiserad platform för distribuerade beräkningar över alla mina baser. Detta bör ge 1%% extra kraft för alla datorer i denna basen.
+description = Använder standardiserad platform för distribuerade beräkningar över alla mina baser. Detta bör ge 2%% extra kraft för alla datorer i denna basen.
 
 [Network Backbone]
 name = Network Backbone
@@ -48,7 +48,7 @@ description = Ett system designat för mina behov som ger mycket högre prestand
 
 [High Speed Internet Access]
 name = Fast lina
-description = En fast lina för snabbare tillgång till Internet. Denna ger 2%% extra hastighet till alla datorerna i basen.
+description = En fast lina för snabbare tillgång till Internet. Denna ger 1%% extra hastighet till alla datorerna i basen.
 
 [Warning Signs]
 name = Varningsskyltar

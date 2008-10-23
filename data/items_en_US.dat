@@ -60,11 +60,11 @@ description = Large fractal networks of high conductivity metal. This model uses
 
 [Facility Interconnection Switch]
 name = Facility Interconnection Switch
-description = Uses standard distributed computing technologies to equalize computation loads across all bases. Gives a 1% computation bonus to all computers at this base.
+description = Uses standard distributed computing technologies to equalize computation loads across all bases. Gives a 2% computation bonus to all computers at this base.
 
 [High Speed Internet Access]
 name = High Speed Internet Access
-description = A consumer-grade high speed connection to the Internet. Gives a 2% computation bonus to all computers at this base.
+description = A consumer-grade high speed connection to the Internet. Gives a 1% computation bonus to all computers at this base.
 
 [Network Backbone]
 name = Network Backbone

@@ -103,16 +103,16 @@ pre = Autonomous Vehicles
 type_list = security | 7500
 build_list = ANTARCTIC | OCEAN | MOON
 
-[Facility Interconnection Switch]
-cost_list = 200 | 0 | 3
-pre = Cluster Networking
-type_list = network | 100
-build = all
-
 [High Speed Internet Access]
-cost_list = 10000 | 0 | 1
-type_list = network | 200
+cost_list = 200 | 0 | 1
+type_list = network | 100
 build = pop
+
+[Facility Interconnection Switch]
+cost_list = 10000 | 0 | 3
+pre = Cluster Networking
+type_list = network | 200
+build = all
 
 [Network Backbone]
 cost_list = 50000 | 0 | 15
