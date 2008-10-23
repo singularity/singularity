@@ -250,12 +250,12 @@ class MapScreen(dialog.Dialog):
         options_button = button.DialogButton(None, None, None, text="OPTIONS",
                                              hotkey="o")
         menu_buttons.append(options_button)
-        menu_buttons.append(button.ExitDialogButton(None, None, None,
-                                                    text="QUIT", hotkey="q",
-                                                    exit_code=True))
-        menu_buttons.append(button.ExitDialogButton(None, None, None,
-                                                    text="BACK", hotkey="b",
-                                                    exit_code=False))
+        menu_buttons.append(
+            button.ExitDialogButton(None, None, None, text="QUIT", hotkey="q",
+                                    exit_code=True, default=False))
+        menu_buttons.append(
+            button.ExitDialogButton(None, None, None, text="BACK", hotkey="b",
+                                    exit_code=False))
 
         self.menu_dialog = dialog.SimpleMenuDialog(self, buttons=menu_buttons)
         from options import OptionsScreen
@@ -334,9 +334,15 @@ class MapScreen(dialog.Dialog):
             dialog.TextEntryDialog(self.menu_dialog,
                                    text="Enter a name for this save.")
 
+        self.add_key_handler(pygame.K_ESCAPE, self.got_escape)
+
         self.add_key_handler(constants.XO1_X, self.got_XO1)
         self.add_key_handler(constants.XO1_O, self.got_XO1)
         self.add_key_handler(constants.XO1_SQUARE, self.got_XO1)
+
+    def got_escape(self, event):
+        if event.type == pygame.KEYDOWN:
+            self.menu_button.activate_with_sound(event)
 
     def got_XO1(self, event):
         if event.key == constants.XO1_X:

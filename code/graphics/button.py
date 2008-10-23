@@ -156,8 +156,23 @@ class ExitDialogButton(FunctionButton):
     def __init__(self, *args, **kwargs):
         self.exit_code = kwargs.pop("exit_code", None)
         self.exit_code_func = kwargs.pop("exit_code_func", None)
+        self.default = kwargs.pop("default", True)
         super(ExitDialogButton, self).__init__(*args, **kwargs)
         self.function = self.exit_dialog
+
+    def add_hooks(self):
+        super(ExitDialogButton, self).add_hooks()
+        self.parent.add_key_handler(pygame.K_ESCAPE, self.activate_default)
+
+    def remove_hooks(self):
+        super(ExitDialogButton, self).remove_hooks()
+        self.parent.remove_key_handler(pygame.K_ESCAPE, self.activate_default)
+
+    def activate_default(self, event):
+        if event.type != pygame.KEYDOWN or not self.default:
+            return
+
+        return self.activate_with_sound(event)
 
     def exit_dialog(self):
         """Closes the dialog with the given exit code."""

@@ -45,6 +45,13 @@ def fake_click(down):
     click_event = pygame.event.Event(type, {'button': 1, 'pos': pygame.mouse.get_pos()})
     pygame.event.post(click_event)
 
+def fake_key(key):
+    down_event = pygame.event.Event(pygame.KEYDOWN,
+                                    {'key': key, 'unicode': None})
+    up_event = pygame.event.Event(pygame.KEYUP, {'key': key, 'unicode': None})
+    pygame.event.post(down_event)
+    pygame.event.post(up_event)
+
 def handle_ebook(event):
     key = KEYPAD[event.key]
     new_key = None
@@ -124,6 +131,12 @@ class Dialog(text.Text):
         self.handlers = {}
         self.key_handlers = {}
 
+        self.add_handler(constants.RCLICK, self.fake_escape, 200)
+
+    def fake_escape(self, event):
+        fake_key(pygame.K_ESCAPE)
+        raise constants.Handled
+
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
         if self.parent != None:
@@ -196,7 +209,7 @@ class Dialog(text.Text):
 
     def remove_key_handler(self, key, handler):
         """Removes all instances of the given handler from the given key."""
-        self.key_handlers[key] = [h for h in self.handlers.get(key, [])
+        self.key_handlers[key] = [h for h in self.key_handlers.get(key, [])
                                     if h[1] != handler]
 
     def handle(self, event):
@@ -268,8 +281,23 @@ class Dialog(text.Text):
             if g.ebook_mode and event.key in KEYPAD:
                 handlers = [(0, handle_ebook)]
         elif event.type == pygame.MOUSEBUTTONUP:
-            # Mouse click handlers.
-            handlers = self.handlers.get(constants.CLICK, [])
+            if event.button == 1:
+                # Ordinary mouse click handlers.
+                handlers = self.handlers.get(constants.CLICK, [])
+            elif event.button == 2:
+                # Middle click handlers.
+                handlers = self.handlers.get(constants.MCLICK, [])
+            elif event.button == 3:
+                # Right click handlers.
+                handlers = self.handlers.get(constants.RCLICK, [])
+            elif event.button in (4, 5):
+                if event.button == 4:
+                    key = pygame.K_PAGEUP
+                else:
+                    key = pygame.K_PAGEDOWN
+                fake_key(key)
+
+                handlers = []
         elif event.type == pygame.QUIT:
             raise SystemExit
         else:
@@ -405,12 +433,12 @@ class YesNoDialog(TextDialog):
         super(YesNoDialog, self).__init__(parent, *args, **kwargs)
 
         self.yes_button = button.ExitDialogButton(self, (-.1,-.99), (-.3,-.1),
-                                                 anchor = constants.BOTTOM_LEFT,
-                                                 exit_code = True)
+                                                 anchor=constants.BOTTOM_LEFT,
+                                                 exit_code=True, default=False)
 
         self.no_button = button.ExitDialogButton(self, (-.9,-.99), (-.3,-.1),
-                                                anchor = constants.BOTTOM_RIGHT,
-                                                exit_code = False)
+                                                anchor=constants.BOTTOM_RIGHT,
+                                                exit_code=False, default=False)
 
         self.add_key_handler(pygame.K_RETURN, self.on_return)
         self.add_key_handler(pygame.K_ESCAPE, self.on_escape)
@@ -446,10 +474,9 @@ class MessageDialog(TextDialog):
         super(MessageDialog, self).__init__(parent, **kwargs)
 
         self.ok_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
-                                               anchor = constants.BOTTOM_CENTER)
+                                                 anchor=constants.BOTTOM_CENTER)
 
         self.add_key_handler(pygame.K_RETURN, self.ok_button.activate_with_sound)
-        self.add_key_handler(pygame.K_ESCAPE, self.ok_button.activate_with_sound)
 
     def rebuild(self):
         super(MessageDialog, self).rebuild()

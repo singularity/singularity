@@ -39,7 +39,8 @@ class MainMenu(dialog.TopDialog):
             difficulty_buttons.append(
                 button.ExitDialogButton(None, None, None, text=name,
                                         hotkey=name[0].lower(),
-                                        exit_code=difficulty)        )
+                                        exit_code=difficulty,
+                                        default=(difficulty == -1)))
         self.difficulty_dialog = \
             dialog.SimpleMenuDialog(self, buttons=difficulty_buttons)
 
