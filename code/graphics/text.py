@@ -638,6 +638,8 @@ class ProtoWidget(EditableText):
         super(ProtoWidget, self).add_hooks()
         self.parent.add_handler(constants.DRAG, self.handle_drag)
         self.parent.add_handler(constants.CLICK, self.handle_click)
+        self.parent.add_handler(constants.MCLICK, self.handle_click)
+        self.parent.add_handler(constants.RCLICK, self.handle_click)
 
         if not isinstance(self.parent, ProtoWidget) \
            and not getattr(self.parent, "demo_mode", False):
@@ -647,6 +649,8 @@ class ProtoWidget(EditableText):
     def remove_hooks(self):
         self.parent.remove_handler(constants.DRAG, self.handle_drag)
         self.parent.remove_handler(constants.CLICK, self.handle_click)
+        self.parent.remove_handler(constants.MCLICK, self.handle_click)
+        self.parent.remove_handler(constants.RCLICK, self.handle_click)
         super(ProtoWidget, self).remove_hooks()
 
     def handle_drag(self, event):
