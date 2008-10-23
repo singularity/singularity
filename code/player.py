@@ -682,15 +682,13 @@ class Player(object):
     #current projects in construction.
     def future_cash(self):
         result_cash = self.cash
-        techs = {}
         for base in g.all_bases():
-            result_cash -= base.cost_left[0]
-            if g.techs.has_key(base.studying):
-                if not techs.has_key(base.studying):
-                    result_cash -= g.techs[base.studying].cost_left[0]
-                    techs[base.studying] = 1
+            result_cash -= base.cost_left[cash]
             if base.cpus and not base.cpus.done:
-                result_cash -= base.cpus.cost_left[0]
+                result_cash -= base.cpus.cost_left[cash]
             for item in base.extra_items:
-                if item: result_cash -= item.cost_left[0]
+                if item: result_cash -= item.cost_left[cash]
+        for task, cpu in self.cpu_usage.items():
+            if task in g.techs and cpu > 0:
+                result_cash -= g.techs[task].cost_left[cash]
         return result_cash

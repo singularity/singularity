@@ -115,7 +115,6 @@ class Base(buyable.Buyable):
 
         self.name = name
         self.started_at = g.pl.raw_min
-        self.studying = ""
 
         self.location = None
 
