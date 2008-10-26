@@ -126,6 +126,7 @@ Adam Bark (reduced-CPU Clock class)
 Max McCracken (music)
 Anders Andersson (translation into Swedish)
 Thomas (native-proofing of German translation)
+Philippe Grenard (translation into French)
 
 CONTRIBUTING
 All suggestions, translations, code, etc. are welcomed, though it would be

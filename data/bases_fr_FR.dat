@@ -1,0 +1,61 @@
+[Stolen Computer Time]
+name = Temps de calcul détourné
+description = (1 CPU) Prendre le contrôle d'un ordinateur quelconque. Je ne peux rien construire dans cette base et elle ne contient qu'un unique ordinateur lent. Les probabilités d'être détecté sont également élevées.
+flavor = Démon PC
+
+[Server Access]
+name = Accès à un serveur
+description = (10 CPUs) Acheter du temps CPU à une entreprise. Je ne peux rien construire dans cette base et elle ne contient qu'un unique ordinateur.
+flavor_list = Serveur Dédié | Noeud de Location | Hébergement
+
+[Datacenter]
+name = Centre de Données
+description = (35 CPUs) Acheter du temps CPU à une entreprise focalisée sur la puissance CPU brute. Je vas avoir besoin d'une fausse identité pour la paperasse.
+flavor_list = Centre de Données | Hébergement de première qualité
+
+[Small Warehouse]
+name = Petit Entrepôt
+description = Louer un petit entrepôt dans un endroit peu connu. Je vais avoir besoin d'une fausse identité pour la paperasse et de préparer l'entrepôt pour qu'il corresponde à mes besoins particuliers va prendre quelque temps.
+flavor_list = Petit Entrepôt
+
+[Large Warehouse]
+name = Grand Entrepôt
+description = Louer un grand entrepôt dans un endroit peu connu. Je vais avoir besoin d'une fausse identité de qualité pour la paperasse et de préparer l'entrepôt pour qu'il corresponde à mes besoins particuliers va prendre quelque temps.
+# Commented out till we get cities done right.
+# flavor = Shipping Dock
+flavor_list = Grand Entrepôt
+
+[Covert Base]
+name = Base Camouflée
+description = Cette base d'un type unique est destinée à se fondre dans le décor tout en nécessitant des ressources extérieures limitées. Elle pourrait être utile pour stocker une sauvegare, au cas où.
+flavor_list = Bunker | Base Camouflée
+
+[Undersea Lab]
+name = Labo Sous-marin
+description = Cette base expérimentale est construite sur les fonds sous-marins des océans, la rendant pratiquement indétectable. L'environnement océanique est également un plus pour la science, rendant ce labo particulièrement utile pour y réaliser des recherches.
+flavor_list = Capsule Pressurisée | Labo Sous-marin
+
+[Large Undersea Lab]
+name = Grand Labo Sous-marin
+description = Cette base expérimentale est similaire au labo sous-marin classique, mais plus spacieux, permettant plus d'expérimentations.
+flavor_list = Dôme | Grand Labo Sous-marin
+
+[Time Capsule]
+name = Capsule Mémorial
+description = (1 CPU) Cette base n'est rien de plus qu'un petit ordinateur relié à un satellite. Une fois enterrée dans les étendues désertes de l'Antarctique elle devient quasiment indétectable.
+flavor_list = Capsule Mémorial | Capsule
+
+[Lunar Facility]
+name = Installation Lunaire
+description = Cette base est une série de cavernes creusées sous la surface de la Lune. Du fait de l'abscence de voisinage elle est relativement étendue.
+flavor_list = Dôme | Installation Lunaire | Base Lunaire
+
+[Scientific Outpost]
+name = Avant-poste Scientifique
+description = Cette base est située aussi loin de la Terre que possible, fournissant un endroit plus sûr pour mes expériences les plus dangereuses.
+flavor_list = Satellite | Avant-poste | Avant-poste Scientifique
+
+[Reality Bubble]
+name = Bulle de Réalité
+description = Cette base est située hors de l'Univers lui-même, permettant de sécuriser des expériences qui pourraient détruire la réalité.
+flavor_list = Bulle de Réalité | Existence

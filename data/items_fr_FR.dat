@@ -1,0 +1,87 @@
+[PC]
+name = PC
+description = Un PC pour particuliers, bon-marché mais lent.
+
+[Gaming PC]
+name = PC de jeu
+description = Un ordinateur haut de gamme pour particuliers, plus rapide que la moyenne.
+
+[Server]
+name = Serveur
+description = Un ordinateur pour professionnel.
+
+[Cluster]
+name = Grappe 
+description = Plusieurs ordinateurs interconnectés
+
+[Mainframe]
+name = Baie
+description = Un montage spécifique à mes besoins, bien plus efficace que si j'utilisais des modules du marché.
+ 
+[Supercomputer]
+name = Supercalculateur
+description = Une architecture évoluée, répartissant la charge de calcul entre les différents noeuds internes.
+ 
+[Quantum Computer]
+name = Calculateur quantique
+description = Grâce à l'utilisation des effets quantiques des atomes, ce calculateur est incomparablement plus rapide que les calculateurs binaires classiques.
+
+[Quantum Computer MK2]
+name = Calculateur quantique MK2
+description = La seconde version de calculateur quantique, utilisant des nouvelles théories quantiques plus poussées.
+ 
+[Quantum Computer MK3]
+name = Calculateur quantique MK3
+description = La troisième version de calculateur quantique, exploitant les univers parallèles proches pour ses calculs.
+ 
+[Diesel Generator]
+name = Générateur diesel
+description = Les générateurs diesel sont peu chers, mais bruyant ; ils peuvent cependant réduire les consommations d'électricité suspectes.
+ 
+[Solar Collector]
+name = Collecteur Solaire
+description = Un groupe de cellule photovoltaïques couplées avec de simples batteries automotrices qui produisent du courant et réduisent les éventuelles suspicions liées au drainage prolongée d'énergie.
+
+[Fusion Reactor]
+name = Réacteur à fusion
+description = Un réacteur nucléaire miniature, il réduit les chances d'être découvert en réduisant les consommations d'énergies suspectes.
+
+[Hypnosis Field]
+name = Champ hypnotique
+description = Mélange d'ultra-sons et de neuro-chimie qui permet de rendre mes bases plus difficiles à détecter.
+ 
+[Heatsink]
+name = Système de refroidissement
+description = Grands réseaux fractals de métaux fortement conducteurs dispersant la chaleur et rendant mes bases plus difficiles à détecter. 
+ 
+[Ground Source Heatsink]
+name = Système de refroidissement sous-terrain
+description = Grands réseaux fractals de métaux fortement conducteurs. Ce système utilise des tubes conducteurs de chaleur qui redirigent et dispersent la chaleur dans des zones sous terraines plus froides pour camoufler encore plus mes bases.
+ 
+[Facility Interconnection Switch]
+name = Installation de Répartition Interconnectée
+description = Utilise les technologies classiques de calcul distribué pour équilibrer la charge de calcul entre toutes mes bases. Donne un bonus en calcul de 1% à tous les calculateurs de cette base.
+ 
+[High Speed Internet Access]
+name = Acces Internet haut-débit
+description = Un accès Internet haut-débit pour particuliers, il donne un bonus de 2% en calcul à tous les ordinateurs de cette base.
+
+[Network Backbone]
+name = Colonne Vertébrale du Réseau
+description = En me greffant sur des communications régulières, je peux transférer de grosses quantités de données à des processeurs sous-utilisés. Cela donne 5% de bonus à tous les calculateurs de cette base.
+
+[Quantum Entanglement Module]
+name = Module d'étranglement
+description = Ce système permet des communications avec les autres bases à des vitesses proches de celle de la lumière, permettant une utilisation quasi parfaite des ressources processeur. Donne un bonus calcul de 15% à tous les calculateurs de cette base.
+ 
+[Warning Signs]
+name = Panneaux de danger
+description = Quelques panneaux de danger autour de ma base pour dissuader les curieux.
+
+[Perimeter Fencing]
+name = Clôture
+description = Une simple clôture peut amplement réduire le nombre de personnes fourrant leur nez dans mes affaires. Cela rend mes bases plus difficile à repérer. 
+ 
+[Armed Guards]
+name = Vigiles
+description = Les vigiles peuvent éloigner les curieux de mes bases mais leur présence peut également susciter une plus grande suspicion.
