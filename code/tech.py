@@ -58,21 +58,6 @@ class Tech(buyable.Buyable):
 
     def gain_tech(self):
         #give the effect of the tech
-        if self.id == "Personal Identification":
-            job_upgrade = "Basic Jobs"
-        elif self.id == "Voice Synthesis":
-            job_upgrade = "Intermediate Jobs"
-        elif self.id == "Simulacra":
-            job_upgrade = "Expert Jobs"
-        else:
-            job_upgrade = ""
-
-        if job_upgrade:
-            for base in g.all_bases():
-                if base.studying in g.jobs:
-                    base.studying = job_upgrade
-            return
-
         if self.tech_type == "interest":
             g.pl.interest_rate += self.secondary_data
         elif self.tech_type == "income":
