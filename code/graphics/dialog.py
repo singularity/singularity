@@ -509,10 +509,12 @@ class TextEntryDialog(TextDialog):
         return super(TextEntryDialog, self).show()
 
     def return_nothing(self, event):
-        raise constants.ExitDialog, ""
+        if getattr(event, "type", None) != pygame.KEYUP:
+            raise constants.ExitDialog, ""
 
     def return_text(self, event=None):
-        raise constants.ExitDialog, self.text_field.text
+        if getattr(event, "type", None) != pygame.KEYUP:
+            raise constants.ExitDialog, self.text_field.text
 
 class ChoiceDialog(YesNoDialog):
     list = widget.causes_rebuild("_list")
