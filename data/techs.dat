@@ -189,10 +189,12 @@ pre_list = Advanced Memetics | Simulacra
 
 [Project: Subverted Media]
 cost_list = 250000 | 150000 | 0
+type_list = discovery_media | 2000
 pre = Advanced Simulacra
 
 [Project: Peer Review Agents]
 cost_list = 150000 | 200000 | 0
+type_list = discovery_science | 2000
 pre = Advanced Simulacra
 
 [Solar Collectors]

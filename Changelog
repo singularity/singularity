@@ -19,6 +19,8 @@ USER-VISIBLE CHANGES:
   now see day and night on the map. (dvrasp, FM, Anne M. Archibald)
 * Added support for running the game on an OLPC XO-1. (FM)
 * fr_FR translation (Philippe Grenard)
+- Make two Projects that didn't do anything before actually do something.
+  (Phil, FM for bug report)
 
 
 OTHER CHANGES:
