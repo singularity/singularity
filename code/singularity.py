@@ -60,39 +60,39 @@ if os.path.exists(save_loc):
             if prefs.getboolean("Preferences", "fullscreen"):
                 graphics.g.fullscreen = pygame.FULLSCREEN
         except:
-            sys.stderr.write("Invalid 'fullscreen' setting in preferences.\n")
+            sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
 
         try:
             g.nosound = prefs.getboolean("Preferences", "nosound")
         except:
-            sys.stderr.write("Invalid 'nosound' setting in preferences.\n")
+            sys.stderr.write("Invalid or missing 'nosound' setting in preferences.\n")
 
         try:
             pygame.event.set_grab(prefs.getboolean("Preferences", "grab"))
         except:
-            sys.stderr.write("Invalid 'grab' setting in preferences.\n")
+            sys.stderr.write("Invalid or missing 'grab' setting in preferences.\n")
 
         try:
             g.daynight = prefs.getboolean("Preferences", "daynight")
         except:
-            sys.stderr.write("Invalid 'daynight' setting in preferences.\n")
+            sys.stderr.write("Invalid or missing 'daynight' setting in preferences.\n")
 
         try:
             g.soundbuf = prefs.getint("Preferences", "soundbuf")
         except:
-            sys.stderr.write("Invalid 'soundbuf' setting in preferences.\n")
+            sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
 
         try:
             graphics.g.screen_size = (prefs.getint("Preferences", "xres"),
             graphics.g.screen_size[1])
         except:
-            sys.stderr.write("Invalid 'xres' resolution in preferences.\n")
+            sys.stderr.write("Invalid or missing 'xres' resolution in preferences.\n")
 
         try:
             graphics.g.screen_size = (graphics.g.screen_size[0],
             prefs.getint("Preferences", "yres"))
         except:
-            sys.stderr.write("Invalid 'yres' resolution in preferences.\n")
+            sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
 
         #If language is unset, default to English.
         try: desired_language = prefs.get("Preferences", "lang")
