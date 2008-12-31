@@ -477,7 +477,7 @@ save_classes = dict(
 def load_game(loadgame_name):
     if loadgame_name == "":
         print "No game specified."
-        return -1
+        return False
 
     save_dir = get_save_folder()
 
@@ -488,7 +488,7 @@ def load_game(loadgame_name):
         load_loc = os.path.join(save_dir, loadgame_name)
         if os.path.exists(load_loc) == 0:
             print "file "+load_loc+" does not exist."
-            return -1
+            return False
 
     loadfile = open(load_loc, 'r')
     unpickle = cPickle.Unpickler(loadfile)
@@ -506,7 +506,7 @@ def load_game(loadgame_name):
     if load_version_string not in savefile_translation:
         loadfile.close()
         print loadgame_name + " is not a savegame, or is too old to work."
-        return -1
+        return False
     load_version = savefile_translation[load_version_string]
 
     global default_savegame_name
@@ -534,6 +534,7 @@ def load_game(loadgame_name):
             tech.convert_from(load_version)
 
     loadfile.close()
+    return True
 
 #
 # Data

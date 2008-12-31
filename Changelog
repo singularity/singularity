@@ -2,6 +2,9 @@ Endgame: Singularity Changelog
 
 v0.29 (release 2008.??.??):
 
+[Note that this release explicitly removes support for all savefile formats
+ before 0.28/0.28a.]
+
 USER-VISIBLE CHANGES:
 * Complete rewrite of the graphics system, shiny new widgets and dialogs.
   Arbitrary resolutions now supported. (FM)
@@ -21,6 +24,8 @@ USER-VISIBLE CHANGES:
 * fr_FR translation (Philippe Grenard)
 - Make two Projects that didn't do anything before actually do something.
   (Phil, FM for bug report)
+* Reduced the number of savefile formats supported, but make attempts to load
+  bad saves less problematic. (Phil)
 
 
 OTHER CHANGES:

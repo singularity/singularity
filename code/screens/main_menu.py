@@ -94,8 +94,9 @@ class MainMenu(dialog.TopDialog):
         index = dialog.call_dialog(self.load_dialog, self)
         if 0 <= index < len(save_names):
             save = save_names[index]
-            g.load_game(save)
-            dialog.call_dialog(self.map_screen, self)
+            did_load = g.load_game(save)
+            if did_load:
+               dialog.call_dialog(self.map_screen, self)
 
 
 about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
