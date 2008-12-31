@@ -121,9 +121,6 @@ class Buyable(object):
             self.cost_left = array(self.cost_left, long)
             self.total_cost = array(self.total_cost, long)
             self.count = 1
-        if save_version <= 3:
-            if self.cost_left[cpu] < self.total_cost[cpu]:
-                self.cost_left[cpu] *= g.seconds_per_day
 
     def finish(self):
         if not self.done:

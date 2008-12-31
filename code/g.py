@@ -439,19 +439,6 @@ def save_game(savegame_name):
     savefile.close()
 
 savefile_translation = {
-    # Pre-change supported file formats.
-    "singularity_0.21": -2,
-    "singularity_0.21a": -1,
-    "singularity_0.22": 0,
-
-    # Post-change supported file formats.
-    "singularity_savefile_r1": 1,
-    "singularity_savefile_r2": 2,
-    "singularity_savefile_r3": 3,
-    "singularity_savefile_r4_pre": 3.91,
-    #"singularity_savefile_r4_pre2": 3.92,
-    "singularity_savefile_r4_pre3": 3.93,
-    "singularity_savefile_r4_pre4": 3.94,
     "singularity_savefile_r4": 4,
     "singularity_savefile_r5_pre": 4.91,
 }
@@ -529,136 +516,22 @@ def load_game(loadgame_name):
     load_locations()
     load_bases()
     load_events()
-    if load_version <= 3.91: # <= r4_pre
-        #general player data
-        pl.cash = unpickle.load()
-        pl.time_sec = unpickle.load()
-        pl.time_min = unpickle.load()
-        pl.time_hour = unpickle.load()
-        pl.time_day = unpickle.load()
-        pl.interest_rate = unpickle.load()
-        pl.income = unpickle.load()
-        pl.cpu_pool = unpickle.load()
-        pl.labor_bonus = unpickle.load()
-        pl.job_bonus = unpickle.load()
-        if load_version < 3.91: # < r4_pre
-            discover_bonus = unpickle.load()
-            suspicion_bonus = unpickle.load()
-            if load_version <= 1:
-                suspicion_bonus = (149+suspicion_bonus[0], 99+suspicion_bonus[1],
-                                   49+suspicion_bonus[2], 199+suspicion_bonus[3])
-            suspicion = unpickle.load()
 
-            for index, group_name in enumerate(player.group_list):
-                group = pl.groups[group_name]
-                group.suspicion = suspicion[index]
-                group.suspicion_decay = suspicion_bonus[index]
-                group.discover_bonus = discover_bonus[index]
-        else:
-            pl.groups = unpickle.load()
-
-        curr_speed = unpickle.load()
-        load_techs()
-        for tech_name in techs:
-            if tech_name == "unknown_tech" and load_version == -1: continue #21a
-            if (tech_name == "Project: Impossibility Theorem" or
-                    tech_name == "Quantum Entanglement") and load_version < 1:
-                continue
-            line = unpickle.load()
-            if line == "~~~": break
-            tech_string = line.split("|")[0]
-            techs[tech_string].done = bool(int(line.split("|")[1]))
-            techs[tech_string].cost_left = buyable.array(unpickle.load())
-        else:
-            #get rid of the ~~~ break line.
-            if load_version > 0:
-                unpickle.load()
-
-        for base_name in base_type:
-            if load_version < 1:
-                base_type[base_name].count = unpickle.load()
-            else:
-                line = unpickle.load()
-                if line == "~~~": break
-                base_type[line.split("|", 1)[0]].count = \
-                                                int(line.split("|", 1)[1])
-        else:
-            #get rid of the ~~~ break line.
-            if load_version > 0:
-                unpickle.load()
-
-        for base_loc in ("N AMERICA", "S AMERICA", "EUROPE", "ASIA", "AFRICA",
-                         "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES",
-                         "TRANSDIMENSIONAL"):
-            if load_version < 1:
-                num_of_bases = unpickle.load()
-            else:
-                line = unpickle.load()
-                base_loc = line.split("|", 1)[0]
-                num_of_bases = int(line.split("|", 1)[1])
-            base_loc = locations[base_loc]
-            for i in range(num_of_bases):
-                base_ID = unpickle.load()
-                base_name = unpickle.load()
-                base_type_name = unpickle.load()
-                built_date = unpickle.load()
-                base_studying = unpickle.load()
-                base_suspicion = unpickle.load()
-                if load_version < 3.91: # < r4_pre
-                    new_base_suspicion = {}
-                    for index, group_name in enumerate(player.group_list):
-                        new_base_suspicion[group_name] = base_suspicion[index]
-                    base_suspicion = new_base_suspicion
-                base_built = unpickle.load()
-                base_cost = unpickle.load()
-
-                my_base = base.Base(base_name, base_type[base_type_name],
-                                    base_built)
-                base_loc.add_base(my_base)
-                my_base.studying = base_studying
-                my_base.suspicion = base_suspicion
-                my_base.cost_left = buyable.array(base_cost)
-                my_base.started_at = built_date * minutes_per_day
-
-                for x in range(len(my_base.cpus)):
-                    index = unpickle.load()
-                    if index == 0: continue
-                    my_base.cpus[x] = \
-                        item.Item(items[index])
-                    my_base.cpus[x].done = unpickle.load()
-                    my_base.cpus[x].cost_left = \
-                                        buyable.array(unpickle.load())
-                for x in range(len(my_base.extra_items)):
-                    index = unpickle.load()
-                    if index == 0: continue
-                    my_base.extra_items[x] = item.Item(items[index])
-                    my_base.extra_items[x].done = unpickle.load()
-                    my_base.extra_items[x].cost_left = \
-                                buyable.array(unpickle.load())
-        #Events
-        if load_version > 2:
-            for event in events:
-                event_id = unpickle.load()
-                event_triggered = unpickle.load()
-                events[event_id].triggered = event_triggered
-
-    else: # > r4_pre
-        # Changes to overall structure go here.
-        pl = unpickle.load()
-        curr_speed = unpickle.load()
-        techs = unpickle.load()
-        locations = unpickle.load()
-        events = unpickle.load()
+    # Changes to overall structure go here.
+    pl = unpickle.load()
+    curr_speed = unpickle.load()
+    techs = unpickle.load()
+    locations = unpickle.load()
+    events = unpickle.load()
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
-        if load_version < 4.91: # < r5_pre
-            pl.convert_from(load_version)
-            for location in locations.values():
-                for my_base in location.bases:
-                    my_base.convert_from(load_version)
-            for tech in techs.values():
-                tech.convert_from(load_version)
+        pl.convert_from(load_version)
+        for location in locations.values():
+            for my_base in location.bases:
+                my_base.convert_from(load_version)
+        for tech in techs.values():
+            tech.convert_from(load_version)
 
     loadfile.close()
 

@@ -128,17 +128,6 @@ class Player(object):
              self.apotheosis = g.techs["Apotheosis"].done
              if self.apotheosis:
                  self.had_grace = True
-         if old_version <= 3.94: # <= r4_pre4
-             # We don't know what the difficulty was, and techs have fooled with
-             # any values that would help (not to mention the headache of
-             # different versions.  So we set it to Very Easy, which means that
-             # they shouldn't be hurt by any new mechanics.
-             self.difficulty = 1
-         if old_version <= 3.93: # <= r4_pre3
-             self.grace_multiplier = int(1000000./float(self.labor_bonus))
-         if old_version <= 3.91: # <= r4_pre
-             self.make_raw_times()
-             self.had_grace = self.in_grace_period()
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour
