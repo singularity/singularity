@@ -95,24 +95,24 @@ class FinanceScreen(dialog.Dialog):
                 m(cpu_info.maintenance), m(cpu_info.construction),
                 m(cpu_info.pool_jobs))
 
-        text.Text(self.money_report_pane, (0,0.05), (0.05,-0.85), text=financial_pluses,
+        text.Text(self.money_report_pane, (0,-0.10), (-0.10,-0.90), text=financial_pluses,
                   background_color=gg.colors["clear"],
                   align=constants.CENTER, valign=constants.TOP)
-        text.Text(self.cpu_report_pane, (0,0.05), (0.05,-0.85), text=cpu_pluses,
+        text.Text(self.cpu_report_pane, (0,-0.10), (-0.10,-0.90), text=cpu_pluses,
                   background_color=gg.colors["clear"],
                   align=constants.CENTER, valign=constants.TOP)
 
-        text.Text(self.money_report_pane, (0.05,0.05), (-0.85,-0.85), text=financial_report,
+        text.Text(self.money_report_pane, (-0.10,-0.10), (-0.90,-0.90), text=financial_report,
                   background_color=gg.colors["clear"],
                   align=constants.LEFT, valign=constants.TOP)
-        text.Text(self.cpu_report_pane, (0.05,0.05), (-0.85,-0.85), text=cpu_report,
+        text.Text(self.cpu_report_pane, (-0.10,-0.10), (-0.90,-0.90), text=cpu_report,
                   background_color=gg.colors["clear"],
                   align=constants.LEFT, valign=constants.TOP)
 
-        text.Text(self.money_report_pane, (0,0.05), (-0.98,-0.85), text=financial_numbers,
+        text.Text(self.money_report_pane, (0,-0.10), (-0.98,-0.90), text=financial_numbers,
                   background_color=gg.colors["clear"],
                   align=constants.RIGHT, valign=constants.TOP)
-        text.Text(self.cpu_report_pane, (0,0.05), (-0.98,-0.85), text=cpu_numbers,
+        text.Text(self.cpu_report_pane, (0,-0.10), (-0.98,-0.90), text=cpu_numbers,
                   background_color=gg.colors["clear"],
                   align=constants.RIGHT, valign=constants.TOP)
 
