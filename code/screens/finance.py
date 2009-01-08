@@ -46,49 +46,80 @@ class FinanceScreen(dialog.Dialog):
 
     def rebuild(self):
         super(FinanceScreen, self).rebuild()
-        financial_report, cpu_report = self.make_reports()
-        text.Text(self.money_report_pane, (0,0), (-1,-1), text=financial_report,
-                  background_color=gg.colors["dark_blue"],
-                  align=constants.LEFT, valign=constants.TOP,
-                  borders=constants.ALL)
-        text.Text(self.cpu_report_pane, (0,0), (-1,-1), text=cpu_report,
-                  background_color=gg.colors["dark_blue"],
-                  align=constants.LEFT, valign=constants.TOP,
-                  borders=constants.ALL)
 
-    def show(self):
-        self.needs_rebuild = True
-        return super(FinanceScreen, self).show()
-
-    def make_reports(self):
         seconds_left = g.pl.seconds_to_next_day()
         cash_info, cpu_info = g.pl.give_time(seconds_left, dry_run=True)
 
         m = g.to_money
 
-        financial_report = "Financial report\n---\n"
-        financial_report += "Current Money: %s\n" % m(cash_info.start)
-        financial_report += " + Jobs: %s\n" % m(cash_info.jobs)
-        financial_report += " - Research: %s\n" % m(cash_info.tech)
-        financial_report += " - Maintenance: %s\n" % m(cash_info.maintenance)
-        financial_report += " - Construction: %s\n" % m(cash_info.construction)
-        financial_report += " + Interest (%s): %s\n" % \
-                  (g.to_percent(g.pl.interest_rate), m(cash_info.interest))
-        financial_report += " + Income: %s\n" % cash_info.income
-        financial_report += " = Money at Midnight: %s" % m(cash_info.end)
+        #take care of the titles and border.
+        text.Text(self.money_report_pane, (0,0), (-1,-1), text="Financial report",
+                  background_color=gg.colors["dark_blue"],
+                  align=constants.CENTER, valign=constants.TOP,
+                  borders=constants.ALL)
+        text.Text(self.cpu_report_pane, (0,0), (-1,-1), text="CPU Usage",
+                  background_color=gg.colors["dark_blue"],
+                  align=constants.CENTER, valign=constants.TOP,
+                  borders=constants.ALL)
 
-        cpu_report = "CPU Usage\n---\n"
-        cpu_report += "Total CPU: %s\n" % m(cpu_info.total)
-        cpu_report += " - Sleeping CPU: %s\n" % m(cpu_info.sleeping)
-        cpu_report += " - Research CPU: %s\n" % m(cpu_info.tech)
-        cpu_report += " - Job CPU: %s\n" % m(cpu_info.explicit_jobs)
-        cpu_report += " = CPU pool: %s\n\n" % m(cpu_info.pool)
+        financial_pluses = " \n+\n-\n-\n-\n+\n+\n="
+        financial_report = "Current Money:\n"
+        financial_report += "Jobs:\n"
+        financial_report += "Research:\n"
+        financial_report += "Maintenance:\n"
+        financial_report += "Construction:\n"
+        financial_report += "Interest (%s):\n" % \
+                  (g.to_percent(g.pl.interest_rate))
+        financial_report += "Income:\n"
+        financial_report += "Money at Midnight:"
 
-        cpu_report += " - Maintenance CPU: %s\n" % m(cpu_info.maintenance)
-        cpu_report += " - Construction CPU: %s\n" % m(cpu_info.construction)
-        cpu_report += " = Pool Overflow (Jobs): %s\n" % m(cpu_info.pool_jobs)
+        financial_numbers = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % \
+                (m(cash_info.start), m(cash_info.jobs), m(cash_info.tech),
+                m(cash_info.maintenance), m(cash_info.construction),
+                m(cash_info.interest), m(cash_info.income), m(cash_info.end))
 
-        return financial_report, cpu_report
+        cpu_pluses = " \n-\n-\n-\n=\n \n-\n-\n="
+        cpu_report = "Total CPU:\n"
+        cpu_report += "Sleeping CPU:\n"
+        cpu_report += "Research CPU:\n"
+        cpu_report += "Job CPU:\n"
+        cpu_report += "CPU pool:\n\n"
+
+        cpu_report += "Maintenance CPU:\n"
+        cpu_report += "Construction CPU:\n"
+        cpu_report += "Pool Overflow (Jobs):\n"
+
+        cpu_numbers = "%s\n%s\n%s\n%s\n%s\n\n%s\n%s\n%s\n" % \
+                (m(cpu_info.total), m(cpu_info.sleeping), m(cpu_info.tech),
+                m(cpu_info.explicit_jobs), m(cpu_info.pool),
+                m(cpu_info.maintenance), m(cpu_info.construction),
+                m(cpu_info.pool_jobs))
+
+        text.Text(self.money_report_pane, (0,0.05), (0.05,-0.85), text=financial_pluses,
+                  background_color=gg.colors["clear"],
+                  align=constants.CENTER, valign=constants.TOP)
+        text.Text(self.cpu_report_pane, (0,0.05), (0.05,-0.85), text=cpu_pluses,
+                  background_color=gg.colors["clear"],
+                  align=constants.CENTER, valign=constants.TOP)
+
+        text.Text(self.money_report_pane, (0.05,0.05), (-0.85,-0.85), text=financial_report,
+                  background_color=gg.colors["clear"],
+                  align=constants.LEFT, valign=constants.TOP)
+        text.Text(self.cpu_report_pane, (0.05,0.05), (-0.85,-0.85), text=cpu_report,
+                  background_color=gg.colors["clear"],
+                  align=constants.LEFT, valign=constants.TOP)
+
+        text.Text(self.money_report_pane, (0,0.05), (-0.98,-0.85), text=financial_numbers,
+                  background_color=gg.colors["clear"],
+                  align=constants.RIGHT, valign=constants.TOP)
+        text.Text(self.cpu_report_pane, (0,0.05), (-0.98,-0.85), text=cpu_numbers,
+                  background_color=gg.colors["clear"],
+                  align=constants.RIGHT, valign=constants.TOP)
+
+    def show(self):
+        self.needs_rebuild = True
+        return super(FinanceScreen, self).show()
+
 
 
 #from buttons import exit
