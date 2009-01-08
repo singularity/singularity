@@ -26,6 +26,7 @@ from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
 from location import LocationScreen
+from knowledge import KnowledgeScreen
 
 import math
 import time
@@ -208,7 +209,8 @@ class MapScreen(dialog.Dialog):
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
                                                     (0.15, 0.04),
                                                     text="KNOWLEDGE",
-                                                    hotkey="k")
+                                                    hotkey="k",
+                                                    dialog=screens.knowledge.KnowledgeScreen(self))
 
         cheat_buttons = []
         cheat_buttons.append(
