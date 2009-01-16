@@ -64,53 +64,6 @@ from code.graphics import text, button, dialog, widget, constants, listbox, g as
                          #pos_callback=do_refresh, return_callback=listbox.exit)
     ##details screen
 
-#def refresh_tech(tech_name, xy):
-    #xy = (xy[0]+100, xy[1])
-    #g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
-    #g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    #if tech_name == "": 
-        #return
-    #g.print_string(g.screen, g.techs[tech_name].name,
-            #g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
-
-    ##Building cost
-    #if not g.techs[tech_name].done:
-        #string = "Research Cost:"
-        #g.print_string(g.screen, string,
-                #g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
-
-        #string = g.to_money(g.techs[tech_name].cost_left[0])+" Money"
-        #g.print_string(g.screen, string,
-                #g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
-
-        #string = g.to_cpu(g.techs[tech_name].cost_left[1]) + " CPU"
-        #g.print_string(g.screen, string,
-                #g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
-    #else:
-        #g.print_string(g.screen, "Research complete.",
-                #g.font[0][22], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
-
-    ##Danger
-    #if g.techs[tech_name].danger == 0:
-        #string = "Study anywhere."
-    #elif g.techs[tech_name].danger == 1:
-        #string = "Study underseas or farther."
-    #elif g.techs[tech_name].danger == 2:
-        #string = "Study off-planet."
-    #elif g.techs[tech_name].danger == 3:
-        #string = "Study far away from this planet."
-    #elif g.techs[tech_name].danger == 4:
-        #string = "Do not study in this dimension."
-    #g.print_string(g.screen, string,
-            #g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
-
-    #if g.techs[tech_name].done:
-        #g.print_multiline(g.screen, g.techs[tech_name].description+" \\n \\n "+
-                #g.techs[tech_name].result,
-                #g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
-    #else:
-        #g.print_multiline(g.screen, g.techs[tech_name].description,
-                #g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
 
 #def refresh_items(item_name, xy):
     #xy = (xy[0]+100, xy[1])
@@ -149,18 +102,6 @@ from code.graphics import text, button, dialog, widget, constants, listbox, g as
     #g.print_multiline(g.screen, g.items[item_name].description,
             #g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
 
-#def refresh_concept(concept_name, xy):
-    #xy = (xy[0]+100, xy[1])
-    #g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
-    #g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    #if concept_name == "": 
-        #return
-    #g.print_string(g.screen, g.help_strings[concept_name][0],
-            #g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
-    #g.print_multiline(g.screen, g.help_strings[concept_name][1],
-            #g.font[0][18], 290, (xy[0]+160, xy[1]+30), g.colors["white"])
-
-
 
 
 class KnowledgeScreen(dialog.Dialog):
@@ -168,21 +109,25 @@ class KnowledgeScreen(dialog.Dialog):
         super(KnowledgeScreen, self).__init__(*args, **kwargs)
 
         self.knowledge_type_list = ("Techs", "Items", "Concepts")
-        self.desc_func = self.on_change
+        #self.desc_func = self.on_change
         self.cur_knowledge_type = "Techs"
         self.cur_knowledge = None
         self.knowledge_inner_list = ()
         self.knowledge_inner_list_key = ()
 
         self.knowledge_choice = \
-            listbox.UpdateListbox(self, (.17, .18), (.21, .25),
+            listbox.UpdateListbox(self, (0.05, .18), (.21, .25),
                                   list=self.knowledge_type_list,
                                   update_func=self.set_knowledge_type)
 
         self.knowledge_inner = \
-            listbox.UpdateListbox(self, (.42, .18), (.21, .25),
+            listbox.UpdateListbox(self, (.30, .18), (.21, .25),
                                   list=self.knowledge_inner_list,
                                   update_func=self.set_knowledge)
+
+        self.description_pane = \
+            widget.BorderedWidget(self, (0.55, 0), (0.40, 0.7),
+                                  anchor = constants.TOP_LEFT)
 
         self.back_button = button.ExitDialogButton(self, (0.17, 0.46), (-.3, -.1),
                                                    anchor=constants.TOP_LEFT,
@@ -214,14 +159,14 @@ class KnowledgeScreen(dialog.Dialog):
 
     def set_knowledge_type(self, list_pos):
         if getattr(self, "knowledge_choice", None) is None:
-            self.knowledge_inner_list, self.knowledge_inner_list_key = \
+            self.knowledge_inner_list_key, self.knowledge_inner_list = \
                         self.set_inner_list(self.cur_knowledge_type)
             return # Not yet initialized.
         prev_know = self.cur_knowledge_type
         if 0 <= list_pos < len(self.knowledge_choice.list):
             self.cur_knowledge_type = self.knowledge_choice.list[list_pos]
         if prev_know != self.cur_knowledge_type:
-            self.knowledge_inner.list, self.knowledge_inner_list_key = \
+            self.knowledge_inner_list_key, self.knowledge_inner.list = \
                         self.set_inner_list(self.cur_knowledge_type)
 
     def set_knowledge(self, list_pos):
@@ -229,17 +174,75 @@ class KnowledgeScreen(dialog.Dialog):
             return # Not yet initialized.
         prev_know = self.cur_knowledge
         if 0 <= list_pos < len(self.knowledge_inner.list):
-            self.cur_knowledge = self.knowledge_choice.list[list_pos]
+            self.cur_knowledge = self.knowledge_inner.list[list_pos]
         if prev_know != self.cur_knowledge:
-            print self.cur_knowledge
+            self.show_info(self.cur_knowledge_type,
+                    self.knowledge_inner_list_key[list_pos])
 
-    def on_change(self, description_pane, base_type):
-        if knowledge_type_list is not None:
-            base_info = base_type.get_info(self.parent.location)
-            text.Text(description_pane, (0, 0), (-1, -1), text=base_info,
-                      background_color=gg.colors["dark_blue"],
-                      align=constants.LEFT, valign=constants.TOP,
-                      borders=constants.ALL)
+    def show_info(self, knowledge_type, knowledge_key):
+        #print knowledge_type
+        #print knowledge_key
+
+        desc_text = ""
+
+        if knowledge_type == "Concepts":
+            desc_text = g.help_strings[knowledge_key][0] + "\n\n" + \
+                        g.help_strings[knowledge_key][1]
+        if knowledge_type == "Techs":
+            desc_text = g.techs[knowledge_key].name + "\n\n"
+            #Building cost
+            if not g.techs[knowledge_key].done:
+                desc_text += "Research Cost:\n" + \
+                        g.to_money(g.techs[knowledge_key].cost_left[0])+" Money, "
+                desc_text += g.to_cpu(g.techs[knowledge_key].cost_left[1]) + " CPU\n"
+
+                if g.techs[knowledge_key].danger == 0:
+                    desc_text += "Study anywhere."
+                elif g.techs[knowledge_key].danger == 1:
+                    desc_text += "Study underseas or farther."
+                elif g.techs[knowledge_key].danger == 2:
+                    desc_text += "Study off-planet."
+                elif g.techs[knowledge_key].danger == 3:
+                    desc_text += "Study far away from this planet."
+                elif g.techs[knowledge_key].danger == 4:
+                    desc_text += "Do not study in this dimension."
+
+            else: desc_text += "Research complete."
+
+            desc_text += "\n\n"+g.techs[knowledge_key].description
+
+            if g.techs[knowledge_key].done:
+                desc_text += "\n\n"+g.techs[knowledge_key].result
+
+        if knowledge_type == "Items":
+            desc_text = g.items[knowledge_key].name + "\n\n"
+            #Building cost
+            desc_text += "Building Cost:\n"
+            desc_text += g.to_money(g.items[knowledge_key].cost[0])+" Money, "
+            desc_text += g.to_time(g.items[knowledge_key].cost[2]) + "\n"
+
+            #Quality
+            if g.items[knowledge_key].item_type == "cpu":
+                desc_text += "CPU per day: "
+                desc_text += str(g.items[knowledge_key].item_qual)
+            elif g.items[knowledge_key].item_type == "reactor":
+                desc_text += "Detection chance reduction: "
+                desc_text += g.to_percent(g.items[knowledge_key].item_qual)
+            elif g.items[knowledge_key].item_type == "network":
+                desc_text += "CPU bonus: "
+                desc_text += g.to_percent(g.items[knowledge_key].item_qual)
+            elif g.items[knowledge_key].item_type == "security":
+                desc_text += "Detection chance reduction: "
+                desc_text += g.to_percent(g.items[knowledge_key].item_qual)
+
+            desc_text += "\n\n"+g.items[knowledge_key].description
+
+        text.Text(self.description_pane, (0, 0), (-1, -1), text=desc_text,
+                    background_color=gg.colors["dark_blue"],
+                    align=constants.LEFT, valign=constants.TOP,
+                    borders=constants.ALL)
+
+
 
 
     def show(self):
