@@ -478,7 +478,11 @@ class MessageDialog(TextDialog):
         self.ok_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
                                                  anchor=constants.BOTTOM_CENTER)
 
-        self.add_key_handler(pygame.K_RETURN, self.ok_button.activate_with_sound)
+        self.add_key_handler(pygame.K_RETURN, self.on_return)
+
+    def on_return(self, event):
+        if event.type == pygame.KEYUP: return
+        self.ok_button.activate_with_sound(event)
 
     def rebuild(self):
         super(MessageDialog, self).rebuild()
