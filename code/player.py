@@ -267,7 +267,7 @@ class Player(object):
                                                      cpu_available=real_cpu)[0]
                         g.pl.cpu_pool -= int(spent[cpu])
                         g.pl.cash -= int(spent[cash])
-                        tech_cpu += int(spent[cpu])
+                        tech_cpu += cpu_assigned
                         tech_cash += int(spent[cash])
                         continue
 
