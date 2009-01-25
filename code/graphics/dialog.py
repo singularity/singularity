@@ -452,12 +452,14 @@ class YesNoDialog(TextDialog):
         self.no_button.hotkey = g.buttons[self.no_type + "_hotkey"]
 
     def on_return(self, event):
+        if event.type == pygame.KEYUP: return
         if self.invert_enter:
             self.no_button.activate_with_sound(event)
         else:
             self.yes_button.activate_with_sound(event)
 
     def on_escape(self, event):
+        if event.type == pygame.KEYUP: return
         if self.invert_escape:
             self.yes_button.activate_with_sound(event)
         else:
