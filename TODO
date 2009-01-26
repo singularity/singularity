@@ -11,7 +11,6 @@ TODO:
         # per-tech time to completion (from day 0 to start, then time to completion)
     - Add more items.
     - Get more items translatable.
-    - Convert CPU usage into pools instead of per-base settings.
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
     - Make translations easier to do.  (Phil has good ideas on how to do this.)
     - Arbitrary resolution, including non 4:3 scales.
