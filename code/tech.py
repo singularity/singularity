@@ -67,8 +67,6 @@ class Tech(buyable.Buyable):
         elif self.tech_type == "job_expert":
             g.pl.job_bonus += self.secondary_data
         elif self.tech_type == "endgame_sing":
-            if not g.nosound:
-                pygame.mixer.music.stop()
             g.play_music("win")
             g.map_screen.show_message(g.strings["wingame"])
             for group in g.pl.groups.values():
