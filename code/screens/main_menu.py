@@ -90,6 +90,7 @@ class MainMenu(dialog.TopDialog):
 
     def load_game(self):
         save_names = g.get_save_names()
+        save_names.sort(key=str.lower)
         self.load_dialog.list = save_names
         index = dialog.call_dialog(self.load_dialog, self)
         if 0 <= index < len(save_names):

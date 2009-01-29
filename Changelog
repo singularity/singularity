@@ -1,5 +1,11 @@
 Endgame: Singularity Changelog
 
+v0.31 (release 20??.??.??):
+
+USER-VISIBLE CHANGES:
+- Savefiles are now in sorted order instead of an arbitrary arrangement.
+  (remur_030)
+
 v0.30 (release 2009.01.26):
 
 [Note that this release explicitly removes support for all savefile formats
