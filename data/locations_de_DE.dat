@@ -1,58 +1,58 @@
 [N AMERICA]
 name = NORDAMERIKA
-hotkey = N
+hotkey = n
 cities_list = Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas
 
 [S AMERICA]
-name = SUDAMERIKA
-hotkey = S
+name = SÜDAMERIKA
+hotkey = s
 cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires 
 
 [EUROPE]
 name = EUROPA
-hotkey = U
+hotkey = u
 cities_list = Cork | Barcelona | Athen | Utrecht | Moskau | Tel Aviv | Reykjavik | Liechtenstein 
 
 [ASIA]
 name = ASIEN
-hotkey = A
+hotkey = a
 cities_list = Delhi | Mumbai | Singapur | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Peking
 
 [AFRICA]
 name = AFRIKA
-hotkey = I
+hotkey = i
 cities_list = Johannesburg | Accra | Kairo | Tanger 
 
 [ANTARCTIC]
 name = ANTARKTIS
-hotkey = T
+hotkey = t
 cities_list = Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre Adelie 
 
 [OCEAN]
 name = OZEAN
-hotkey = Z
-cities_list = Pazifik | Atlantik | Indik | Südmeer | Nordpolarmeer
+hotkey = z
+cities_list = Pazifik | Atlantik | Indik | Südpolarmeer | Nordpolarmeer
 
 [MOON]
 name = MOND
-hotkey = O
+hotkey = o
 cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicuskrater | Vallis Planck 
 
 [ORBIT]
 name = ORBIT
-hotkey = B
+hotkey = b
 
 [FAR REACHES]
-name = FERNLAUF
-hotkey = F
+name = WEITE FERNEN
+hotkey = f
 cities_list = Widder | Stier | Zwillinge | Krebs | Löwe | Jungfrau | Waage | Skorpion | Schütze | Steinbock | Wassermann | Fische
 
 [TRANSDIMENSIONAL]
 name = TRANSDIMENSIONAL
-hotkey = D
+hotkey = d
 
 [AUSTRALIA]
 name = AUSTRALIEN
-hotkey = L
+hotkey = l
 cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Caims | Brisbane | Sydney | Newcastle
 
