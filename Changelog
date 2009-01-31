@@ -7,7 +7,8 @@ USER-VISIBLE CHANGES:
   (remur_030)
 - Additional corrections to de_DE translation. (Christian Gerloff)
 - Really make the Projects do something. (Phil, WvWisokee for bug report)
-- Support the Delete key properly. (Phil, Yoshi for bug report)
+- Support the Delete and Keypad Enter keys properly. (Phil, Yoshi for bug
+  report)
 
 v0.30 (release 2009.01.26):
 

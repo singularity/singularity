@@ -441,6 +441,7 @@ class YesNoDialog(TextDialog):
                                                 exit_code=False, default=False)
 
         self.add_key_handler(pygame.K_RETURN, self.on_return)
+        self.add_key_handler(pygame.K_KP_ENTER, self.on_return)
         self.add_key_handler(pygame.K_ESCAPE, self.on_escape)
 
     def rebuild(self):
@@ -479,6 +480,7 @@ class MessageDialog(TextDialog):
                                                  anchor=constants.BOTTOM_CENTER)
 
         self.add_key_handler(pygame.K_RETURN, self.on_return)
+        self.add_key_handler(pygame.K_KP_ENTER, self.on_return)
 
     def on_return(self, event):
         if event.type == pygame.KEYUP: return
@@ -507,6 +509,7 @@ class TextEntryDialog(TextDialog):
                                                function=self.return_text)
 
         self.add_key_handler(pygame.K_RETURN, self.return_text)
+        self.add_key_handler(pygame.K_KP_ENTER, self.return_text)
         self.add_key_handler(pygame.K_ESCAPE, self.return_nothing)
 
     def show(self):
