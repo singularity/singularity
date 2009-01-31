@@ -81,7 +81,7 @@ class Tech(buyable.Buyable):
                 elif what == "discover":
                     g.pl.groups[who].alter_discover_bonus(-self.secondary_data)
                 else:
-                    print "Unknown group '%s' in tech %s." % (who, self.name)
+                    print "Unknown action '%s' in tech %s." % (what, self.name)
             elif who == "onetime" and what == "suspicion":
                 for group in g.pl.groups.values():
                     group.alter_suspicion(-self.secondary_data)

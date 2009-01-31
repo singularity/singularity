@@ -5,7 +5,8 @@ v0.31 (release 20??.??.??):
 USER-VISIBLE CHANGES:
 - Savefiles are now in sorted order instead of an arbitrary arrangement.
   (remur_030)
-- Additional corrections to de_DE translation (Christian Gerloff)
+- Additional corrections to de_DE translation. (Christian Gerloff)
+- Really make the Projects do something. (Phil, WvWisokee for bug report)
 
 v0.30 (release 2009.01.26):
 
