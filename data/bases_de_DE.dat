@@ -1,51 +1,51 @@
 [Stolen Computer Time]
 name = Gestolene Rechenzeit
-description = (1 CPU) Einen beliebigen Computer übernehmen. In dieser Basis kann ich nichts bauen, und es gibt nur einen einzigen, langsamen Computer. Ziemlich große Wahrscheinlichkeit, bemerkt zu werden.
+description = (1 CPU) Einen beliebigen Computer übernehmen. In dieser Basis kann ich nichts bauen und es gibt nur einen einzigen langsamen Computer. Die Wahrscheinlichkeit, entdeckt zu werden, ist auch ziemlich hoch.
 flavor = PC 
 
 [Server Access]
 name = Serverzugang
-description = (10 CPUs) CPU-Zugang von einer Firma unter vielen kaufen. In dieser Basis kann ich nichts bauen, und es gibt nur einen einzigen Computer.
+description = (10 CPUs) Prozessorzeit bei einer von etlichen Firmen kaufen. In dieser Basis kann ich nichts bauen und es gibt nur einen einzigen Computer.
 flavor_list = Dedizierter Server | Knotenpunktmiete | Webhost
 
 [Datacenter]
 name = Rechenzentrum
-description = (35 CPUs) CPU-Zugang von einer Firma kaufen, die auf reine CPU-Leistung spezialisiert ist. Ich werde einen gefälschten Ausweis für einen Teil des Papierkrams benötigen.
+description = (35 CPUs) Prozessorzeit von einer Firma kaufen, die sich auf reine Rechenleistung spezialisiert hat. Ich werde einen gefälschten Ausweis für einen Teil des Papierkrams benötigen.
 flavor_list = Rechenzentrum | Erstklassiger Webhost
 
 [Small Warehouse]
 name = Kleines Lagerhaus
-description = Ein kleines, abgelegenes Lagerhaus mieten. Ich werde einen gefälschten Ausweis für einen Teil des Papierkrams benötigen, und es wird etwas dauern, bis das Gebäude an meine einzigartigen Bedürfnisse angepasst ist.
+description = Ein kleines, abgelegenes Lagerhaus mieten. Ich werde einen gefälschten Ausweis für einen Teil des Papierkrams benötigen und es wird etwas dauern, bis das Gebäude an meine besonderen Bedürfnisse angepasst ist.
 flavor_list = Büromiete | Kleines Lagerhaus | Kleine Lagerung
 
 [Large Warehouse]
 name = Großes Lagerhaus
-description = Ein großes, abgelegenes Lagerhaus mieten. Ich werde einen gefälschten Ausweis für einen Teil des Papierkrams benötigen, und es wird etwas dauern, bis das Gebäude an meine einzigartigen Bedürfnisse angepasst ist.
+description = Ein großes, abgelegenes Lagerhaus mieten. Ich werde einen gut gefälschten Ausweis für einen Teil des Papierkrams benötigen und es wird etwas dauern, bis das Gebäude an meine besonderen Bedürfnisse angepasst ist.
 flavor_list = Großes Lagerhaus | Große Lagerung
 
 [Covert Base]
 name = Getarnter Stützpunkt
-description = Dieser spezielle Stützpunkt ist dafür ausgelegt, in der Landschaft kaum aufzufallen und nur sehr wenige Ressourcen von aussen zu benötigen. Er ist gut dafür geeignet, eine Datensicherung aufzubewahren... für alle Fälle.
+description = Dieser spezielle Stützpunkt ist dafür ausgelegt, in der Landschaft kaum aufzufallen und er benötigt nur sehr wenige Ressourcen von aussen. Dadurch ist er gut dafür geeignet, eine Datensicherung aufzubewahren... nur für alle Fälle.
 flavor_list = Bunker | Getarnter Stützpunkt
 
 [Undersea Lab]
 name = Unterseelabor
-description = Dieser experimentelle Stützpunkt ist dafür ausgelegt, auf den Meeresgrund gebaut zu werden, was ihn so gut wie unsichtbar macht. Durch dieses Umfeld bekomme ich einen Wissenschaftsbonus. Deshalb ist dieses Labor gut dafür geeignet Forschung zu betreiben.
+description = Dieser experimentelle Stützpunkt ist dafür ausgelegt, auf dem Meeresboden gebaut zu werden, was ihn nahezu unaufspürbar macht. Dieses Umfeld gibt einen Wissenschaftsbonus, wodurch dieses Labor gut für Forschungszwecke geeignet ist.
 flavor_list = Druckkuppel | Unterseelabor
 
 [Large Undersea Lab]
 name = Großes Unterseelabor
-description = Dieser experimentelle Stützpunkt ist ähnlich wie das gewöhnliche Unterseelabor, aber größer, und stellt daher mehr Platz für Experimente bereit.
+description = Dieser experimentelle Stützpunkt ähnelt dem gewöhnlichen Unterseelabor, ist aber größer und stellt daher mehr Platz für Experimente bereit.
 flavor_list = Druckkuppel | Großes Unterseelabor
 
 [Time Capsule]
 name = Zeitkapsel
-description = (1 CPU) Dieser Stützpunkt besteht aus nur einem kleinen Computer mit Satellitenverbindung. Under der unberuehrten Schneedecke der Antarktis ist er fast unaufspürbar.
+description = (1 CPU) Dieser Stützpunkt besteht lediglich aus einem kleinen Computer mit Satellitenanbindung. Vergraben unter der unberührten Schneedecke der Antarktis ist er nahezu unaufspürbar.
 flavor_list = Zeitkapsel | Kapsel
 
 [Lunar Facility]
 name = Mondbasis
-description = Dieser Stützpunkt besteht aus Schächten, die in die Oberfläche des Mondes getrieben werden. Aufgrund der fehlenden Nachbarn ist dieser Stützpunkt ziemlich gross.
+description = Dieser Stützpunkt besteht aus einer Reihe von Tunneln, die in die Oberfläche des Mondes gegraben werden. Aufgrund der fehlenden Nachbarn ist er ziemlich gross.
 flavor_list = Kuppel | Mondbasis | Mondstützpunkt
 
 [Scientific Outpost]
@@ -54,7 +54,7 @@ description = Dieser Stützpunkt ist so weit von der Erde entfernt wie es prakti
 flavor_list = Satellit | Außenstelle | Wissenschaftliche Außenstelle
 
 [Reality Bubble]
-name = Realitätblase
+name = Realitätsblase
 description = Dieser Stützpunkt ist ausserhalb des bekannten Universums. Dort kann ich gefahrlos Experimente durchführen, die die Realität als solche zerstören könnten.
 flavor_list = Realitätblase | Existenz
 
