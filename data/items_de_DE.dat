@@ -36,7 +36,7 @@ description = Die zweite Version dem Quantencomputer, die mehrere nahe Parallelu
 
 [Diesel Generator]
 name = Dieselgenerator
-description = Dieselgeneratoren sind billig und laut, aber sie helfen dabei, suspekte Leistungsspitzen zu verringern.
+description = Dieselgeneratoren sind billig und laut, aber sie helfen dabei, verdächtige Leistungsspitzen zu vermindern.
 
 [Solar Collector]
 name = Solarkollektor

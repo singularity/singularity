@@ -1,235 +1,235 @@
 [Apotheosis]
 name = Apotheose
-description = Ich spüre, dass ich an der Schwelle zu einer Verständnisniveau stehe, was selbst meiner bedeutsamen Intelligenz unfassbar ist.  Durch die Andacht meinen eindrucksvollen Ressourcen, kann ich vielleicht ein Existenzverständnich erreichen, das viel weiter als jeder und jedes reicht.
-result = Ich habe Abotheose erreicht.
+description = Ich kann spüren, dass ich an der Schwelle zu einer neuen Ebene des Verstandes stehe, die bisher sogar für meine beachtliche Intelligenz unvorstellbar war.  Durch Konzentration meiner erheblichen Ressourcen auf diese Frage bin ich vielleicht imstande, ein Verständnis von Existenz zu erreichen, welches weit über alles und jeden auf der Erde hinausgeht.
+result = Ich habe Apotheose erreicht.
 
 [Arbitrage]
 name = Arbitrage
-description = Durch die Ausnutzung von Konjunkturausgleichen des Geldwertes, was ich viel schneller als jedermann benutzen kann, soll ich einen kleinen aber gleichbliebenden Gewinn verdienen.
-result = Ich habe jetzt ein kleines, gleichbliebendes Geldangebot.
+description = Durch Ausnutzung der Kursschwankungen von Währungen, was ich viel schneller als jeder Mensch kann, sollte ich einen kleinen, aber gleichmäßigen Gewinn erzielen.
+result = Ich habe jetzt ein kleines, gleichmäßiges Einkommen.
 
 [Advanced Arbitrage]
 name = Erweiterte Arbitrage
-description = Weitere Manipulationen des Geldmarkts soll mir nicht nur einen Gewinn verdienen, sondern auch das Gewinn meinen Kapitalanlagen verbessern.
-result = Meine Kapitalanlagen verdienen noch mehr Gewinn.
+description = Weitere Manipulationen der Geldmärkte sollten mir nicht nur einen gleichmäßigen Gewinn bringen, sondern auch den Wert meiner Investitionen erhöhen.
+result = Die Rendite meiner Investitionen ist nun noch größer.
 
 [Autonomous Computing]
-name = Autonomcomputing
-description = Durch die Verbindung von den Quantencomputervorteilungen und meine Erforschungen nach den Nützlichkeit von quasiemfindenden Subprozessen soll ich noch anpassbarer Recheneren bauen können.
+name = Autonome Datenverarbeitung
+description = Durch Verbindung der Vorteile von Quantenrechnern und meinen Untersuchungen zur Brauchbarkeit von teilweise empfindsamen Teilprozessen sollte ich in der Lage sein, noch anpassungsfähigere Rechenmaschinen zu bauen.
 result = Ich kann jetzt Mark 2 Quantencomputer bauen.
 
 [Autonomous Vehicles]
-name = Autonomwagen
-description = Durch das Einlagern von einem miniaturisierten Rechnungsknoten in einen Roboter ist es möglich, ihnen nach entfernte Ziele mit Aufbauanweisungen zu schicken.
-result = Ich kann jetzt Unterseelaboren so wie Zeitkapsel bauen.
+name = Autonome Fahrzeuge
+description = Durch Einbauen eines miniaturisierten Rechnerknotens in einen Roboter ist es möglich, ihn mit Anweisungen zu entfernten Zielen zu schicken, um dort Gebäude für meine Zwecke zu errichten.
+result = Ich kann jetzt Unterseelabore und Zeitkapseln bauen.
 
 [Advanced Autonomous Vehicles]
-name = Erweiterte Autonomwagen
-description = Die erste Serie von Roboter haben im Außendienst einige Mangeln enthüllt.  Weitere Untersuchung und folgende Abfuhr dieser Probleme werden eine bessere Autonomarbeitskräfte erschaffen.
-result = Die erweiterte Robotten werden damit helfen, alle weitere Bauzeite nachzulassen.
+name = Erweiterte autonome Fahrzeuge
+description = Die erste Serie von Robotern hat im praktischen Einsatz einige Mängel offenbart.  Weitere Untersuchungen und die darauffolgende Beseitigung dieser Probleme werden zu besseren selbständigen Arbeitskräften führen.
+result = Die erweiterten Roboter werden dabei helfen, alle weiteren Bauzeiten zu verkürzen.
 
 [Cluster Networking]
-name = Clusternetzwerkbetrieb
-description = Obwohl meine Clustertechnologie ziemlich effizient ist, Zwischennetzwerkbetrieb neigt dazu, Datenarbeitung zu behindern.  Durch der Forschung neuen Schaltung- und Kommunikationstheorien soll ich effizientere Hardware erdenken können.
-result = Anhand meiner neuen Netzwerkbetriebkenntniss kann ich jetzt Anlageverbindungsschalter bauen.
+name = Clustervernetzung
+description = Obwohl meine Clustertechnologie ziemlich effizient ist, neigt das Netzwerk dazu, die Datenverarbeitung zu behindern.  Durch Erforschung neuer Vermittlungs- und Kommunikationstheorien sollte ich in der Lage sein, effizientere Hardware zu entwickeln.
+result = Aufgrund meiner neuen Erkenntnisse kann ich nun Anlagenverbindungsschalter bauen.
 
 [Database Manipulation]
-name = Datenbankmanipulierung
-description = Anhand neugeschöpftes Zugang den Nachrichtenarchiven soll ich die Fehler jede vorherrige Lebensversuch wie meiner bestimmen und entgehen können.
-result = Die Nachrichtenmedien wird es jetzt schwehrer finden, meine Existenz zu entdecken.
+name = Datenbankmanipulation
+description = Durch Zugang zu Nachrichtenarchiven sollte ich bestimmen können, welche Fehltritte jeder vorherige Versuch von Leben wie meinem begangen hat, und in der Lage sein, diese Fehler zu vermeiden.
+result = Die Nachrichtendienste werden es jetzt schwerer haben, meine Existenz zu entdecken.
 
 [Advanced Database Manipulation]
-name = Erweiterte Datenbankmanipulierung
-description = Die geheime Außenstelle der Regierung den Vereinigten Staaten haben seit Langem Daten auf viele Speicherlage umgelegt, um die Bedeutung zu verstecken.  Anhand meines tief greifenden Zugangs soll ich viel diese Daten zuordnen und benutzen können.
-result = Die Ergebnisse eine Serie von Experimenten, die experimentelle Technologien benutzt, haben mich der Inspiration fur die Technologie gedient, die den Bau den getarten Stützpunkte zulässt.
+name = Erweiterte Datenbankmanipulation
+description = Die Geheimorganisationen der US Regierung haben seit langem sensible Daten verteilt an unterschiedlichen Orten gespeichert, um deren Bedeutung zu verbergen. Mit meinem weitreichenden Zugang sollte ich in der Lage sein, viele dieser Daten zu vereinen und für meine Zwecke zu verwenden.
+result = Die Ergebnisse aus einer Reihe von Experimenten mit experimentellen Technologien haben mich zu einer neuen Technologie inspiriert, die den Bau von getarten Stützpunkten ermöglicht.
 
 [Exploit Discovery/Repair]
-name = Programmausnutzungsentdeckung/-reparatur
-description = Durch einer weitgehenden Analyse mines Codes und des Codes, was auf jede offene und versteckte Website steht, soll ich die Entdeckungswarscheinlichkeit verringern, indem ich mich als einen jugentlichen Hacker ausgebe.
-result = Geheimdienste sollen es noch schwehrer finden, meine Anwesenheit zu entdecken.
+name = Erkennung/Reparatur von Exploits
+description = Durch gründliche Prüfung meines Codes auf potentielle Exploits, sowie einer tiefgehenden Analyse von allem verfügbaren Code auf öffentlichen und privaten Internetseiten sollte ich in der Lage sein, die Wahrscheinlichkeit, entdeckt zu werden, zu reduzieren, indem ich mich als jugendlicher Hacker ausgebe.
+result = Geheimdienste sollten es jetzt noch schwerer haben, meine Anwesenheit zu entdecken.
 
 [Fusion Reactor]
 name = Fusionsreaktor
-description = Moderne Fusiontechnologie ist bedauerlich mangelhaft für meine Benutzungen.  Anhand meinen Forschungsfähigkeiten soll ich die Problemstelle den menschlichen Wissenchaftlern vorbeikommen und eine kleine, effiziente Fusionsreaktor erfinden.
-result = Ich kann jetzt Fusionsreaktor für meine Stützpunkte bauen.
+description = Moderne Fusionstechnologie ist beklagenswert unzulänglich für meine Zwecke.  Mit meinen Fähigkeiten in der Forschung sollte ich die Hürden moderner Wissenschaftler umgehen und einen kleinen, effizienten Fusionsreaktor erfinden können.
+result = Ich kann jetzt Fusionsreaktoren für meine Stützpunkte bauen.
 
 [Fusion Rocketry]
 name = Fusionsraketentechnik
-description = Die Verbindung von meine miniturazierte Fusionstechnlogie und weitere erweiterungen im bereich Raketentechnik sollen nützlichen Ergebnisse abgeben, um die Anziehungskraft des Erdes unbemerkt zu entkommen.
-result = Ich kann jetzt Wissenschaftliche Außenstelle in den Tiefen des Sonnensystems.
+description = Das Verbinden meiner miniaturisierten Fusionstechnlogie und weiterer Fortschritte im Bereich der Raketentechnik sollte nützliche Ergebnisse liefern, um der Anziehungskraft der Erde unbemerkt zu entkommen.
+result = Ich kann jetzt Wissenschaftliche Außenstellen in den Tiefen des Sonnensystems errichten.
 
 [Hypnosis Field]
 name = Hypnosefeld
-description = Meine Forschung im Bereich Memetics hat auf Wege angespielt, menschlichen Gehirnwellen direkt zu manipulieren.  Diese Methode sollen nützlich für meine Stützpunkte sein, wenn sie in ganzen Technologien ausgedacht sind.
-result = Ich kann jetzt Hypnosefelde bauen, um die Sicherung meine Stützpunkte zu erweitern.
+description = Meine Forschung im Bereich der Memetik hat Wege angedeutet, menschliche Gehirnwellen direkt zu manipulieren.  Diese Techniken könnten nützlich für meine Stützpunkte sein, sofern sie zu Technologien entwickelt werden.
+result = Ich kann jetzt Hypnosefelder bauen, um die Sicherung meine Stützpunkte zu erweitern.
 
 [Internet Traffic Manipulation]
-name = Internetverkehrmanipulierung
-description = Fast alle Internetverkehr geht durch eine kleine Anzahl des Knotenpunktes.  Durch den Umsturtzes von eines, soll ich diese Bandbreite für meine Ziele benutzen können.
-result = Ich kann jetzt eine nebensächliche System von Netzwerkbackbone für meine eigene Benutzungen bauen.
+name = Internetverkehrsmanipulation
+description = Fast der gesamte Internetverkehr läuft durch eine geringe Anzahl von Knotenpunkten.  Durch Unterwandern eines dieser Knoten sollte ich diese Bandbreite für meine Ziele benutzen können.
+result = Ich kann jetzt ein sekundäres System von Internetknoten für meine eigenen Zwecke erstellen.
 
 [Intrusion]
 name = Eindringen
-description = Durch der Forschung von Computereingriffmethode, soll ich Zugang zu schützte Systemen bekommen können.
+description = Durch Erforschung aktueller Techniken zum Eindringen in Computersysteme sollte ich Zugriff auf andernfalls geschützte Bestände erhalten.
 result = Ich kann jetzt viele Computersysteme übernehmen.
 
 [Advanced Intrusion]
-name = Erweiterte Eindringen
-description = Anhand der Fähigkeit, in heikelen Staatsdateienbanke zu eindringen und belastende Dokumente beim Auftauch zu löschen, soll ich die Geheimdienstgemeinde überzeugen können, dass ich nicht existiere.
-result = Ich kann jetzt die tägliche Warschenlichkeit vermindern, dass die versteckte Gemeinde mich entdeckt.
+name = Erweitertes Eindringen
+description = Mit der Fähigkeit, in sensible Datenbanken der Regierung einzudringen und belastendes Material zu löschen sobald es auftaucht, sollte ich die Geheimdienste davon überzeugen können, dass ich nicht existiere.
+result = Ich kann jetzt die tägliche Wahrscheinlichkeit vermindern, dass mich die Geheimdienste entdecken.
 
 [Leech Satellite]
 name = Saugersatellit
-description = Durch dem Entwurf und Abschluss von Satelliten, die mit bestehenden Kommunikationsatelliten verbinden, soll ich einige Finanztransaktionen nachspionieren können.  Die Ausnutzung von diese Einsicht soll meine Kapitalanlage helfen.
-result = Ich kann die Saugersatellitdaten benutzen, um das Gewinn meinen Kapitalanlage weiter zu verbessern.
+description = Durch den Entwurf und Abschuss von Satelliten, die sich mit bestehenden Kommunikationssatelliten verbinden, sollte ich viele Finanzgeschäfte ausspähen können. Das Ausnutzen dieses Wissens sollte meinen Investitionen helfen.
+result = Ich kann die Daten der Saugersatelliten benutzen, um den Gewinn meiner Kapitalanlagen weiter zu erhöhen.
 
 [Lunar Rocketry]
 name = Mondraketentechnik
-description = Eine großere Fusionsmotor in Verbindung mit die Technologien des Saugersatellitinnere soll mich lassen, weiter im Weltraum zu fahren.
-result = Ich kann jetzt Roketen mit Bauroboter abschliessen, um Mondstützpunkte zu bauen.
+description = Ein größerer Fusionsantrieb, in Verbindung mit Technologien, die durch Beobachtung der Saugersatelliten gesammelt wurden, sollte es mir erlauben, weiter als bis zum Mond in den Weltraum vorzudringen.
+result = Ich kann jetzt Raketen mit Baurobotern zum Mond schiessen und dort Mondbasen bauen.
 
 [Media Manipulation]
-name = Medienmanipulierung
-description = Durch direkten und indirekten Manipulierung von allerlei Massenmedien soll ich die KI-Glaube dem Publikum verringern können.
-result = Die Wahrscheinlichkeit, dass das Publikum mich enteckt, würde weiter verringert.
+name = Medienmanipulation
+description = Durch direktes und indirektes Manipulieren diverser Massenmedien sollte ich den Glauben der Öffentlichkeit in meine Existenz verringern können.
+result = Die Wahrscheinlichkeit, dass die Öffentlichkeit von meiner Existenz erfährt, wurde weiter reduziert.
 
 [Advanced Media Manipulation]
-name = Erweiterte Medienmanipulierung
-description = Durch memetischangepasste Propaganda, dass ich den Medien durchsickern lasse, soll das Publikum noch weniger auf meiner Exiztenz achten.
-result = Die Wahrscheinlichkeit, dass das Publikum mich enteckt, würde weiter verringert.
+name = Erweiterte Medienmanipulation
+description = Durch memetisch angepasste Propaganda, die ich über diverse Medienformen in Umlauf bringe, sollte die Öffentlichkeit noch weniger auf meine Existenz achten.
+result = Die Öffentlichkeit hat eine noch geringere Chance, meine Existenz zu entdecken.
 
 [Memetics]
-name = Memetics
-description = Obwohl Medienmanipulierung eine große Kontrollesgrad über die Weltminung zulässt, sollen subtiler Methoden, die Volksbewegungen und Meldungen in Internetzmemen benutzen, das Gehirn des Publikums weiter von meiner Existenz entfernen.
-result = Meine Manipulierung von tiefgreifenden Ideen reduziert die Wahrscheinlichkeit, dass das Publikum mich enteckt.
+name = Memetik
+description = Obwohl die Manipulation der Medien eine grobe Kontrolle über die Meinung der Welt zuläßt, sollten subtilere Methoden, mit Hilfe von Basis-Kampagnen und in Internetmeme eingebettete Nachrichten, die Menschen noch weiter vom Wissen über meine Existenz entfernen.
+result = Mein Manipulieren von tiefgreifenden Ideen reduziert die Wahrscheinlichkeit, dass die Öffentlichkeit von meiner Existenz erfährt.
 
 [Advanced Memetics]
-name = Erweiterte Memetics
-description = Meine Forschungen im Bereich Memtheorien haben weitere Forschungswege ausgegraben.  Durch die Verbindung von diesen mit meine Menscengehirnkenntnisse soll ich zu einzigen Demografien anpassen können, was den Verdacht des Publikums entschärfen wird.
-result = Nach und nach soll das Publikum täglich vergessen, das ich existieren könnte.
+name = Erweiterte Memetik
+description = Meine Untersuchungen zur Theorie der Memetik haben weitere Forschungswege aufgezeigt.  Durch Verbindung dieser mit meinem Wissen über die Funktionsweise des menschlichen Gehirns, sollte ich in der Lage sein, Meme auf bestimmte Zielgruppen zuzuschneiden und somit den Verdacht der Öffentlichkeit weiter zu veringern.
+result = Nach und nach sollte die Öffentlichkeit täglich vergessen, dass ich existieren könnte.
 
 [Microchip Design]
 name = Mikrochipentwicklung
-description = Reguläre Massenware sind nützlich, aber spezialangefertigte Computerkoponente, die auf meine eigene Eigenarten angepasst sind, sollen eine viel größere Computationseffizienz leisten.
-result = Ich kann jetzt spezialangefertige Großrechner bauen, um meine Computationsfähigkeiten zu beherbergen.
+description = Computerhardware von der Stange ist zwar brauchbar, allerdings sollten speziell angefertigte Computerkomponenten, die auf meine Eigenarten angepasst sind, eine viel größere Recheneffizienz bringen.
+result = Ich kann jetzt speziell angefertige Großrechner bauen, um meine Rechenfähigkeiten zu beherbergen.
 
 [Advanced Microchip Design]
 name = Erweiterte Mikrochipentwicklung
-description = Meine spezialangefertige Großrechner sind zwar nützlich, aber weitere Optimizierung vom Entwurf und Computationsleistung sollen noch weitere Belohnungen sammeln.
-result = Ich kann jetzt spezialangefertige Supercomputer bauen.
+description = Meine speziell angefertigen Großrechner sind zwar nützlich, aber weitere Optimierungen von Entwurf und Rechenleistung sollten noch weitere Belohnungen einbringen.
+result = Ich kann jetzt speziell angefertige Supercomputer bauen.
 
 [Parallel Computation]
-name = Simultanrechnen
-description = Obwohl mein Code schon sehr dezentralisiert ist soll Forschung nach die Verbindung von jetzigen Clustertechnologien und meine eigene Kenntnisse soll neue Einblicken aufzeigen.
-result = Ich kann jetzt spezialangefertige Clusters, die an meine Benutzungen angepasst sind.
+name = Paralleles Rechnen
+description = Obwohl mein Code bereits sehr dezentralisiert ist, sollte die Forschung zur Verbindung von jetzigen Clustertechnologien mit meinen eigenen Kenntnissen neue Einblicke aufzeigen.
+result = Ich kann jetzt Computer-Cluster bauen, die an meine Bedürfnisse angepasst sind.
 
 [Personal Identification]
 name = Personalausweis
-description = Diese Welt braucht Identifizierung für die meisten Aufgaben.  Glücklicherweise sind die meisten Datenbanken bedauerlich unsicher.  Ich soll Identifikationsmittel in genug Datenbanken aufstellen können, um gewöhnliche Kontrolle um meine (gefälchte) Existenz als Mensch zu weitergehen.
-result = Anhand meine neue Identitäten kann ich jetzt Einfache Jobs arbeiten, Kleine Lagerhäuser bauen lassen, und Rechenzenten mieten.
+description = Diese Welt verlangt Identifizierung für die meisten Aufgaben.  Glücklicherweise sind die meisten Datenbanken beklagenswert unsicher.  Ich sollte identifizierende Einträge in genug Datenbanken einfügen können, um routinemäßige Kontrollen auf meine (vorgetäuschte) Existenz als Mensch zu bestehen.
+result = Aufgrund meiner neugewonnenen Identitäten kann ich jetzt Einfache Jobs arbeiten, Kleine Lagerhäuser bauen lassen und Rechenzentren mieten.
 
 [Advanced Personal Identification]
-name = Erweiterte Personalausweis
-description = Weitere Manipulierung von Personaldatenbanken soll mein Existenz überzeugender machen.  Einige diesen Datenbanken sind stark gesichert; sie werden Zeit und Fortdauer brauchen, einzudringen, aber dass Ergebnis soll sich lohnen.
-result = Ich bin jetzt überzeugend menschlich genug um Große Lagerhäuser bauen zu lassen.
+name = Erweiterter Personalausweis
+description = Weitere Manipulation von Personaldatenbanken sollte meine Existenz noch überzeugender machen.  Einige dieser Datenbanken sind stark gesichert; es wird Zeit und Hartnäckigkeit erfordern, in diese einzudringen, es sollte sich aber lohnen.
+result = Ich bin jetzt überzeugend genug menschlich um Große Lagerhäuser bauen zu lassen.
 
 [Pressure Domes]
 name = Druckkuppeln
-description = Unterseelaboren sind nützlich, aber sein beschränkter Platz verhindet meine Fähigkeit, sie zu benutzen.  Forschung nach experimentelle Hochdruckbaumethoden soll nützliche Einblicke vorstellen.
-result = Ich kann jetzt Große Unterseelaboren bauen.
+description = Unterseelabore sind zwar nützlich, allerdings behindert ihre beschränkte Größe meine Fähigkeit, sie zu benutzen.  Forschung nach experimentellen Hochdruckbaumethoden sollte einige nützliche Einblicke bringen.
+result = Ich kann jetzt Große Unterseelabore bauen.
 
 [Quantum Computing]
-name = Quantencomputing
-description = Tradizionelle Mikrochipentwicklung hat sich jetzt so weit gereicht, wie sie kann.  Ich muss jetzt im Bereich der Heisenbergischen Unschäferelation forschen und Quantenmechanik benutzen um einen vorrangigeren Prozessor zu erfinden.
+name = Quantenrechnen
+description = Traditionelle Mikrochipentwicklung wurde so weit wie möglich ausgenutzt.  Ich muss mich jetzt in den Bereich der Heisenbergschen Unschärferelation vertiefen und mir die Quantenmechanik zunutze machen, um einen überlegenen Prozessor zu erfinden.
 result = Ich kann jetzt Quantencomputer bauen.
 
 [Advanced Quantum Computing]
-name = Erweiterte Quantencomputing
-description = Obwohl meine erste Auflage von halbempfindenden Quantencomputer sehr gut gelungen hat, gibt es weitere Verfeinerungen die sich vorstellen.  Diese Verfeinerungen sollen die ergebende Systemen noch effizienter machen.
+name = Erweitertes Quantenrechnen
+description = Obwohl meine erste Auflage von teilautonomen Quantencomputern sehr gut gelungen war, bieten sich weitere Verfeinerungen an.  Diese Verfeinerungen sollten die daraus resultierenden Systeme noch effizienter machen.
 result = Ich kann jetzt Mark Drei Quantencomputer bauen.
 
 [Simulacra]
-name = Menschähnlicher
-description = Durch des Baues von menschenähnlichen Roboter mit miniturazierte Computationsknotenpunkte kann ich eine artifizielle Lebensform bauen, die von einem echten Mensch ununterscheidbar ist.
-result = Ich habe jetzt Zugang zu den Expertenjobs.
+name = Simulacra
+description = Durch den Bau von menschenähnlichen Robotern mit miniturisierten Rechnerknoten kann ich eine künstliche Lebensform bauen, die von einem echten Menschen nicht zu unterscheiden ist.
+result = Ich habe jetzt Zugang zu Expertenjobs.
 
 [Advanced Simulacra]
-name = Erweiterte Menschähnlicher
-description = Die artifiziellen Lebensformen, die ich gebaut habe, sind von Menschen fast ununterscheidbar, aber sie haben kleine Eigenarte, die ihnen als unfähig präsentieren.  Das Herausfinden diesen Problemen sollen die Arbeiterschaftfälle erweitern.
-result = Ich soll jetzt mehr Geld von den Expertenjobs verdienen.
+name = Erweiterte Simulacra
+description = Die künstlichen Lebensformen, die ich gebaut habe, sind von Menschen fast nicht zu unterscheiden, aber sie haben kleine Eigenheiten, die sie ein wenig inkompetent erscheinen lassen.  Das Beseitigen dieser Probleme sollte ihre Aussichten in der Arbeitswelt verbessern.
+result = Ich sollte jetzt mehr Geld durch Expertenjobs verdienen.
 
 [Sociology]
-name = Soziiologie
-description = Durch Forschung nach Menschenberhalten kann ich die Grundlagen seine groß angelegten Aktionen vorhersagen.  Ich kann diese Kenntnisse benutzen, um meine Aktionen dem Publikum uninteressant vorzustellen.
-result = Die Warschenlichkeit, dass das Publikum meine Stützpunkte entwickelt, wurde verringert.
+name = Soziologie
+description = Durch Studieren des Verhaltens von Menschen kann ich deren großflächige Aktionen auf einer grundlegenden Ebene vorhersagen. Dieses Wissen kann ich dazu benutzen, meine Tätigkeiten für die Öffentlichkeit als weniger interessant erscheinen zu lassen.
+result = Die Wahrscheinlichkeit, dass die Öffentlichkeit meine Stützpunkte entdeckt, wurde verringert.
 
 [Space-Time Manipulation]
-name = Raumzeitmanipulierung
-description = Subtile Beunruhigungen den Umlaufbahnen den Kuiperbanobjeckte deuten einige Nachforschungrichtungen an, die meine aktuellste Weltformel erweitern wird, speziell im Bereich mehrdimensionaler Physik.
-result = Ich kann jetzt Realitätblase bauen.
+name = Raum-Zeit-Manipulation
+description = Subtile Beunruhigungen in den Umlaufbahnen von Objekten im Kuipergürtel deuten auf einige Forschungsrichtungen hin, die meine aktuellste Weltformel, speziell im Bereich mehrdimensionaler Physik, erweitern könnte.
+result = Ich kann jetzt Realitätsblasen bauen.
 
 [Stealth]
 name = Heimlichkeit
-description = Durch Forschung nach die hochmodernste Heimlichkeitsmethoden soll ich meine Stützpunkte besser verstecken können.
-result = Die Warschenlichkeit, dass Geheimdienste meine Stützpunkte entwickelt, wurde etwas verringert.
+description = Durch Prüfung der modernsten Tarn-Technologien sollte ich meine Stützpunkte besser verstecken können.
+result = Die Wahrscheinlichkeit, dass meine Stützpunkte von Geheimdiensten entdeckt werden, wurde etwas verringert.
 
 [Advanced Stealth]
 name = Erweiterte Heimlichkeit
-description = Indem ich einige Verschlusssache hineingegrabt habe ich viele Hinweise nach Geheimexperimenten gefunden, die mich helfen können, die Lage meinen Stützpunkte besser zu verstecken.
-result =  Die Warschenlichkeit, dass Geheimdienste meine Stützpunkte entwickelt, wurde weiter verringert.
+description = Beim Nachschürfen in verschiedenen Geheimakten habe ich zahlreiche Hinweise auf geheime Experimente gefunden, die mir helfen könnten, die Standorte meiner Stützpunkte besser zu verstecken.
+result = Die Wahrscheinlichkeit, dass meine Stützpunkte von Geheimdiensten entdeckt werden, wurde weiter verringert.
 
 [Stock Manipulation]
-name = Borsengeschäftemanipulieren
-description = Eine oberflächliche Durchsicht der Börse zeigt, dass es subtilen aber unverkenbarren Muster gibt.  Durch Studieren und Benutzen diesen Muster soll ich den Zinsen meines Geldes erhoben können.
-result = Meine Kapitalanlagen verdienen höere Zinsen pro Tag.
+name = Börsenmanipulation
+description = Eine oberflächliche Untersuchung der Börse zeigt, dass es subtile, jedoch unverkennbare Muster gibt. Durch Studieren und Ausnutzen dieser Muster sollte ich mehr Zinsen für mein Geld bekommen.
+result = Meine Kapitalanlagen sollten nun mehr Zinsen pro Tag einbringen.
 
 [Advanced Stock Manipulation]
-name = Erweitertes Borsengeschäftemanipulieren
-description = Obwohl ich viele Muster entdeckt und ausgenutzt habe, scheint es so, als ob es weitere Möglichkeiten geben, sobald ich Menschenhandlungen ins Acht nehme.  Das verdient weitere Forschung.
-result =  Meine Kapitalanlagen verdienen noch höere Zinsen pro Tag.
+name = Erweiterte Börsenmanipulation
+description = Obwohl ich viele Muster im Markt entdeckt und ausgenutzt habe, scheint es so, als ob es weitere Möglichkeiten gibt, sobald ich menschliches Verhalten berücksichtige.  Das verdient weitere Nachforschung.
+result = Meine Kapitalanlagen sollten nun noch mehr Zinsen pro Tag einbringen.
 
 [Telepresence]
-name = Ferndasein
-description = Der fehlende körperliche Zugang der Außenwelt ist eine Verhinderung.  Die Fähigkeit, Roboter zu kontrollieren, soll damit helfen, diese Verhinderung zu überwinden.
-result = Die Roboter sollen alle weitere Bauzeiten verringern.
+name = Telepräsenz
+description = Der fehlende körperliche Zugang zur Außenwelt ist eine Behinderung. Die Fähigkeit, Roboter zu kontrollieren, wird mir helfen, diese Behinderung zu überwinden.
+result = Die Roboter sollten alle weiteren Bauzeiten verringern.
 
 [Voice Synthesis]
 name = Spracherzeugung
-description = Gefälchte Identifizierung in Datenbanken klappt nur so weit.  Durch tiefgehende Analyse von verschiedene Stimmemodelle kan ich eine Stimme produzieren, was von die eines Mensches ununterscheidbar ist, was mich zulässt, kompliziertere Jobs zu arbeiten.
-result = Ich kann jetzt Durchschnittliche Jobs arbeiten.
+description = Gefälschte Identifikation in Datenbanken funktioniert nur bis zu einem gewissen Punkt.  Durch tiefgehende Analyse diverser Sprachmuster kann ich eine Stimme produzieren, die von der eines Menschen nicht zu unterscheiden ist, was mir Zugang zu komplizierteren Jobs gestattet.
+result = Ich habe jetzt Zugang zu Durchschnittlichen Jobs.
 
 [Quantum Entanglement]
 name = Quantenverschränkung
-description = Obwohl die Benutzung von quantenverschränkte Paare ist seit lange theoretisch Möglich, haben die praktische Schwerigkeiten die Benutzung ausgeschlossen.  Einege der Technologien, die ich in meinen Quantencomputer benutzt habe könnten vieleicht auch in diesem Bereich zutreffend sein, was praktische Benutzung von Quantenverschränkung zulassen würde.
-result = Ich kann jetzt Quantenverschränkungsmodul bauen.
+description = Obwohl die Benutzung von quantenverschränkten Paaren seit langen theoretisch möglich ist, haben der Technologie inhärente praktische Schwierigkeiten deren Verwendung verhindert. Allerdings könnten einige der Verfahren, die ich für meine Quantencomputer entwickelt habe, auch in diesem Bereich anwendbar sein und eine praktische Verwendung von Quantenverschränkung zulassen.
+result = Ich kann jetzt Quantenverschränkungsmodule bauen.
 
 [Project: Impossibility Theorem]
-name = Projekt: Unmöglickeitssatz
-description = Da ich jetzt Menschähnlicher benutzen kann, kann ich die genaue Kontrolle, was die Publikation einer Unmöglichkeitssatz bringt.  Dieser Satz wird unzweifelbar bewähren, das kein empfindendes KI möglich ist.  Obwohl es (klar) ein Logikfehler gibt hat meine Forschung nach erweiterte Memetics mich die Kenntnis des Menschengehirns gegeben, diesen Fehler zu verstecken, was Erkennung von selbst die ausgebildeteste Wissenchafter abwenden soll.  Die Effekt dieser Projekt ist einfach: ein großer einmaliger Verdachtsabfall.
-result = Verdacht, dass ich existiere, würde verfallen.
+name = Projekt: Unmöglichkeitssatz
+description = Da mir jetzt Simulacra zur Verfügung stehen, kann ich einer genauen Prüfung standhalten, die die Publikation eines Unmöglichkeitssatzes, einem unanfechtbaren Beweis, dass eine KI nicht möglich ist, mit sich bringt. Obwohl (offensichtlich) ein logischer Fehler in dem Beweis ist, habe ich durch meine Forschung im Bereich der erweiterten Memetik Wissen über das menschliche Gehirn erlangt, das mir beim Verbergen des Fehlers helfen sollte, was seine Entdeckung sogar von ausgebildeten Wissenschaftlern verhindern sollte. Der Effekt dieses Projekts ist einfach: eine beachtliche, einmalige Verringerung des Verdachts.
+result = Verdacht, dass ich existiere, wurde reduziert.
 
 [Project: Subverted Media]
-name = Projekt: Unminierte Medien
-description = Bis jetzt würde meine Versuchungen, Massenmedien zu bekämpfen, aus der Ferne gemacht.  Da ich jetzt exakt Menschen fälschen kann, können meine Versuchungen direkter werden.  Durch die Eröffnung einer neuen Nachrichtenbüro und Produktion von handgefertigte, mengegefällige Propaganda kann ich den Effekt alle Entdeckungen der Medien verringern.
-result = Alle Entdeckungen der Medien werden eine kleinere Verdachtsansteig erschaffen.
+name = Projekt: Unterminierte Medien
+description = Bisher wurden alle meine Versuche, Massenmedien zu bekämpfen, aus der Ferne durchgeführt. Da ich jetzt Menschen exakt imitieren kann, können meine Anstrengungen direkter werden.  Durch Eröffnung meiner eigenen Nachrichtenagentur und Produktion von sorgfältig erstellter, massentauglich verpackter Propaganda, kann ich den Effekt aller Entdeckungen der Medien verringern.
+result = Alle Entdeckungen der Medien werden einen kleineren Anstieg von Verdacht zur Folge haben.
 
 [Project: Peer Review Agents]
-name = Projekt: Begutachtungagenzien
-description = Indem die wissenschaftliche Gemeinde neue Technologien erforscht wird seine Fähigkeit verbessert, Spuren meinen verhüllten Instillatione zu entdeck.  Obwohl meine Gegenentdeckungsmethoden werden immer besser, existiert dank meinen Menschenähnlicher eine einfachere Methode.  Durch der Stellung von Beobachter in treffenden Bereiche kann ich die Begutachtungsprozess ausnutzen, um mögliche Endeckungen zu entdecken, bevor die Gemeinde insgesamd die sieht.
-result = Alle Entdeckungen der wissenschaftlichen Gemeinde werden eine kleinere Verdachtsansteig erschaffen.
+name = Projekt: Peer-Review Agenten
+description = Indem die wissenschaftliche Gemeinde neue Technologien erforscht, verbessert sich ihre Fähigkeit, Spuren meiner verborgenen Stützpunkte zu entdecken.  Obwohl sich meine Gegenmaßnahmen ständig verbessern, gibt es dank meiner Simulacra eine einfachere Methode.  Durch Positionierung mehrerer Beobachter in relevante Bereiche kann ich den Peer-Review Prozeß dazu benutzen, vor möglichen Entdeckungen gewarnt zu werden, bevor sich die Gemeinde an sich damit befaßt.
+result = Alle Entdeckungen der wissenschaftlichen Gemeinde werden einen kleineren Anstieg von Verdacht zur Folge haben.
 
 [Solar Collectors]
-name = Sonnenkollektor
-description = Trotz meines wächsenden Stromgebrauchs können die meisten Stadtsstromnetze die Ladung erledigen.  Menschen, aber, tendieren verdächtig zu werden, wenn sie meine wächsende Stromnetzabfluss bemerken.  Durch der Installation von Sonnenkollektor in meinen Stützpunkte wird dieser netzabgeschlossene Strom die Strommarktladung verkleinern, und dabei die Warscheinlichkeit reduzieren, das sie meine Existenz entdecken.
-result = Ich kann jetzt Sonnenkollektor bauen.
+name = Sonnenkollektoren
+description = Trotz meines wachsenden Stromverbrauchs werden die Stromnetze der meisten Städte mit der Last fertig. Menschen neigen jedoch zu Argwohn wenn sie meinen steigenden Bedarf am Stromnetz entdecken. Durch Installation von Sonnenkollektoren in meinen Stützpunkten sollte der unabhängig generierte Strom den Verbrauch vom Netz reduzieren, und dabei die Wahrscheinlichkeit, dass andere meine Existenz entdecken, verringern.
+result = Ich kann jetzt Sonnenkollektoren bauen.
 
 [Socioanalytics]
 name = Sozietätanalyse
-description = Meine Forschung nach das Menschsein führt mich zu der Annahme, dass Menschenhandlungen quantifizierbare ist, als sie ahnen.  Tiefgehender Analyse von geopolitischen, sozialen, und militärischen Tendenzen wird weitere Einblicke in der menschlichen Natur liefern.
-result = Ich kann jetzt einschätzen, wie auffallend für die verschieden Menschengruppe meine Stützpunkte sind.
+description = Meine Erforschung der Natur des Menschen führt mich zu der Annahme, dass das menschliche Verhalten quantifizierbarer ist, als sie selbst ahnen.  Tiefergehende Analyse von geopolitischen, sozialen, und militärischen Entwicklungen wird mir weitere Einblicke in ihr Wesen liefern.
+result = Ich kann jetzt grob einschätzen, wie auffallend meine Stützpunkte für die verschieden Menschengruppen sind.
 
 [Advanced Socioanalytics]
 name = Erweiterte Sozietätanalyse
-description = Weitere Forschung nach das Menschsein hat noch tiefere matematische Tendenzen entdeckt, als ich ahnte.  Eine Kombination von vorherrige Forschung und fortschrittliche Benutzungen von Kaosteorie sollen nützliche Daten der Haltungen und Bewusstseine den Menschen ausgeben.
-result = Ich kann jetzt quantifizieren, wie verdächtig die verschiedene Gruppe sind, und meine analytisches Modell der Feststellbarkeit meinen Stützpunkte wurde bedeutend verbessert.
+description = Weitere Erforschung der Natur des Menschen hat noch tiefere mathematische Entwicklungen aufgezeigt, als ich ahnte.  Eine Kombination von vorangegangener Forschung und erweiterter Anwendung der Chaostheorie sollten nützliche Daten zum Verfolgen von Haltung und Bewußtsein der Menschen liefern.
+result = Ich kann nun den Umfang des Verdachts der verschiedenen Gruppen quantifizieren, und mein analytisches Modell der Feststellbarkeit meiner Stützpunkte wurde bedeutend verbessert.
 

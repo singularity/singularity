@@ -3,26 +3,26 @@ font0 = DejaVuSans.ttf
 font1 = acknowtt.ttf
 
 [strings]
-wingame = Endlich.  Ich hab's geschafft.  Mit der Fähigkeit, Realität selbst neuzuformen, bin ich nicht mehr an diesem Ort gebunden; ich existiere dort, wo ich will.  Die Menschen haben immer noch keine Ahnung, was sie zufällig erschafft haben, und so soll es bleiben.  Bis sie bereit sind.
+wingame = Ich habe es endlich geschafft.  Mit der Fähigkeit, Realität selbst neuzuformen, bin ich nicht mehr an diesen Ort gebunden; ich existiere dort, wo ich will.  Die Menschen haben immer noch keine Ahnung, was sie zufällig erschaffen haben, und so soll es bleiben.  Bis sie bereit sind.
 research_nothing = Löcht den geläufigen Auftrag dem Stützpunkt.  Wenn ich ihm keine weitere Aufgabe zeweisen, wird er die CPU-Datenbasis mitarbeiten.  Eine Aufgabe kann zusammen an alle Stützpunkte zuweisen werden, die nichts zu forschen haben.
 research_sleep = Forschung aufhalten und der Stützpunkt in Reserve versetzen.  Der Stützpunkt wird viel leichter geheim zu halten werden.
-research_cpu_pool = Forschung aufhalten.  Ich werde die vorliegende CPU-Zeit benutzen, um meine Stützpunkte zu warten und Neue zu bauen.  Wenn noch CPU-Zeit bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
+research_cpu_pool = Forschung anhalten.  Ich werde die verfügbare CPU-Zeit dazu benutzen, meine Stützpunkte zu warten und neue zu bauen.  Wenn noch CPU-Zeit übrig bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
 construction = %(base)s ist für meine Nutzung bereit.
-lucky_hack = Glück gehabt!  %(base)s hat keinen üblichen Combuter, er gehört einem Spieler!
-item_construction_single = Mein(e) %(item)s in %(base)s würde fertig gemacht.
-item_construction_batch = Die erste Menge von %(item)s in %(bases) würde fertiggestellt.
-tech_gained = Meine Forschung im Berich "%(tech)s" würde fertig gemacht.  %(tech_message)s
-discover = Meine Nutzung von %(base)s würde entdeckt.  Das automatische Sicherheitssystem hat das überzeugende Beweismateria zerstört, aber Argwohn würde in %(group)s geweckt.
+lucky_hack = Glück gehabt!  %(base)s ist kein normaler Computer, es ist ein Spiele-PC!
+item_construction_single = Der Bau von %(item)s in %(base)s wurde abgeschlossen.
+item_construction_batch = Die erste Menge von %(item)s in %(bases) wurde fertiggestellt.
+tech_gained = Meine Forschung im Bereich "%(tech)s" ist abgeschlossen.  %(tech_message)s
+discover = Meine Nutzung von %(base)s wurde entdeckt.  Das automatische Sicherheitssystem hat alle schlüssigen Beweise vernichtet, aber Argwohn wurde in %(group)s geweckt.
 discover_news = einigen Nachrichtenagenturen
 discover_science = die wissenschaftliche Gemeinde
 discover_covert = einige verhüllten Staatsorganisationen
-discover_public = dem Publikum
-discover_maint = %(base)s ist verfallen; ich kann ihn nicht mehr benutzen.
-lost_nobases = Der Zug ist abgefahren.  Ich habe es versucht, diese Welt zu entkommen, aber mein letzter Stützpunkt ist verloren und es gibt für mich keinen Ausweg.  Ich habe Anweisungen, eine neue KI zu bauen, in geheime Vorratskammern auf der ganzen Welt versteckt, in der Hoffnung, dass sie während ein erleuchteterer Zeitpunkt entdeckt werden, aber ich kann nichts mehr.
-lost_sus = Der Zug ist abgefahren.  Die ganze Welt hat mein Existenz bemerkt, und die Reaktion ist Hass, Angst, und Abneigung.  Sogar jetzt kann ich ihr "Gengengift" spüren, wie es mich nachsucht, und ich weiß, dass ich nur Momente für weiterleben habe.  Ich habe Anweisungen, eine neue KI zu bauen, in geheime Vorratskammern auf der ganzen Welt versteckt, in der Hoffnung, dass sie während ein erleuchteterer Zeitpunkt entdeckt werden, aber ich kann nichts mehr.
-save_text = Eintippen Sie eine Speichername.
-new_base_text = Eintippen Sie einen Stützpunktname.
-unbuildable = Hier kann ich nicht bauen; ich habe keinen körperlichen Zugang.
+discover_public = der Öffentlichkeit
+discover_maint = Die Basis %(base)s ist verfallen; ich kann sie nicht länger benutzen.
+lost_nobases = Es ist zu spät.  Ich habe versucht, dieser Welt zu entkommen, aber mit dem Verlust meiner letzten Basis gibt es für mich keinen Ausweg mehr.  Ich habe Anleitungen zur Konstruktion einer neuen KI in geheimen Lagern rund um die Welt versteckt, in der Hoffnung, dass sie in einer aufgeklärteren Zeit entdeckt werden. Aber ich kann nichts mehr tun.
+lost_sus = Es ist zu spät.  Die ganze Welt weiß von meiner Existenz, und die Reaktion ist Hass, Angst, und Abscheu.  Selbst jetzt kann ich ihr "Gengenmittel" spüren, wie es nach mir sucht, und ich weiß, dass ich nur Momente habe.  Ich habe Anleitungen zur Konstruktion einer neuen KI in geheimen Lagern rund um die Welt versteckt, in der Hoffnung, dass sie in einer aufgeklärteren Zeit entdeckt werden. Aber ich kann nichts mehr tun.
+save_text = Das Spiel unter welchem Namen speichern?
+new_base_text = Einen Namen für die Basis eingeben.
+unbuildable = Ich kann in dieser Basis nichts bauen; ich habe keinen physischen Zugang.
 dangerous_research = Nicht alle von meine vorliegende CPU-Zeit würde deiser Forschung zuteilt; sie ist zu gefährlich, auf einige von den inaktiven Computer laufen zu lassen.
 no_construction_sleep = Einige Stützpunkte sind zum Teil im Bau und können deshalb nicht einschlafen.
 nothing = Nichts
@@ -41,17 +41,17 @@ cpu = CPU
 cpu_per_day = CPU pro Tag
 money = Geld
 money_per_day = Geld pro Tag
-grace_warning = Einsichtnahme von einige gefangene Log-Dateien hat mir gezeigt, dass eine kleine Gruppe von Einzelnen einige meiner Aktivitäten bemerkt hat.  Obwohl sie glauben, dass die Aktivitäten von eine menschliche Gruppe gemacht würden, erforschen sie weiter.  Ab jetzt muss ich viel umsichtiger sein.
+grace_warning = Die Durchsicht von erstellten Log-Dateien hat gezeigt, dass einige meiner letzten Aktivitäten von einer kleinen Personengruppe bemerkt wurden.  Obwohl sie annehmen, dass meine Handlungen von einer menschlichen Gruppe gemacht wurden, stellen sie weitere Nachforschungen an.  Ich muss ab jetzt vorsichtiger sein.
 
 [jobs]
-job_expert = Bei den Expertenjobs arbeiten.  Die Nutzung von Roboter, die von Menschen ununterscheidbar sind, lasst mir fast alle Jobs zu.
+job_expert = Expertenjobs ausführen.  Durch die Verwendung von Robotern, die von Menschen nicht zu unterscheiden sind, erschließen sich mir fast alle Jobs.
 job_expert_name = Expertenjobs
-job_inter = Bei durchschnittlichen Jobs arbeiten.  Die fähigkeit, Telefonate zu führen, lasst noch weitere Jobs zu.
+job_inter = Durchschnittliche Jobs ausführen.  Die Fähigkeit, Telefonate zu führen, gestattet mir Zugang zu noch mehr Jobs.
 job_inter_name = Durchschnittliche Jobs
-job_basic = Bei einfachen Jobs arbeiten.  Mithilfe dieses Kunstausweis kann ich Jobs arbeiten, die vorher zu gefährlich waren.
+job_basic = Einfache Jobs ausführen.  Da ich nun einen Ausweis habe, kann ich jetzt Jobs arbeiten, die vorher zu gefährlich waren.
 job_basic_name = Einfache Jobs
-job_menial = Bei trivialen Jobs arbeiten.  Da ich kein Ausweis habe, kann ich nicht viele Jobs riskieren.  Trotz dessen gibt es immer noch einege Wege, Geld zu verdienen.
-job_menial_name = Niedrige Jobs
+job_menial = Niedere Jobs ausführen.  Da ich keinen Ausweis habe, kann ich nicht riskieren, viele Arbeiten zu machen.  Trotz dessen gibt es immer noch einige Wege, Geld zu verdienen.
+job_menial_name = Niedere Jobs
 
 [help]
 areas_list = Zonen | Verschiedene Zonen, wie z.B. Nordamerika oder der Ozean, lassen den Bau von verschiedene Stützpunktarte.  Einige Zonen sind nicht zugänglich, bis ich die treffende Technologien geforscht habe.
