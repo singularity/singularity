@@ -13,6 +13,8 @@ USER-VISIBLE CHANGES:
   (FM, Yoshi for bug report)
 - Location name fix. (Phil, pederick for bug report)
 - Fix a crash with handling scrollbars. (Phil, netantho for bug report)
+- Fix a bug where the finance report wouldn't always display. (Raymond
+  Martinau)
 
 v0.30 (release 2009.01.26):
 
