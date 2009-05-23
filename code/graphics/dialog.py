@@ -221,6 +221,7 @@ class Dialog(text.Text):
         # If more than one handler type is applicable, we use [:] to make a
         # copy of the first type's list, then insort_all to insert the elements
         # of the other lists in proper sorted order.
+        handlers = []
         if event.type == pygame.MOUSEMOTION:
             # Compress multiple MOUSEMOTION events into one.
             # Note that the pos will be wrong, so pygame.mouse.get_pos() must
@@ -297,11 +298,8 @@ class Dialog(text.Text):
                     key = pygame.K_PAGEDOWN
                 fake_key(key)
 
-                handlers = []
         elif event.type == pygame.QUIT:
             raise SystemExit
-        else:
-            handlers = []
 
         return self.call_handlers(handlers, event)
 
