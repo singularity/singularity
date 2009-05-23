@@ -11,6 +11,7 @@ USER-VISIBLE CHANGES:
   report)
 - Stopped building additional CPUs from refunding the money previously paid.
   (FM, Yoshi for bug report)
+- Location name fix. (Phil, pederick for bug report)
 
 v0.30 (release 2009.01.26):
 
