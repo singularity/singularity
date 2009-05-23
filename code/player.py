@@ -295,7 +295,7 @@ class Player(object):
         for base in bases_under_construction:
             if dry_run:
                 spent = base.calculate_work(time=mins_passed,
-                                            cpu_available=real_cpu )[0]
+                                            cpu_available=self.cpu_pool )[0]
                 g.pl.cpu_pool -= int(spent[cpu])
                 g.pl.cash -= int(spent[cash])
                 construction_cpu += int(spent[cpu])
