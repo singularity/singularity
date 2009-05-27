@@ -26,6 +26,23 @@ import g
 
 DEBUG = False
 
+def do_bisect(left, right, test):
+    # Run a binary search for the largest acceptable value.
+    # Thanks to bisect.bisect_left for the basic implementation.
+    while left + 1 < right:
+        test_index = (left + right) // 2
+        if test(test_index):
+            left = test_index
+        else:
+            right = test_index
+    return left
+
+def convert_font_size(size):
+    # Scale it to the screen size.
+    raw_size = size * g.screen_size[1] / 600.
+    # And round.
+    return int(raw_size + 0.5)
+
 def get_widths(font, text):
     if hasattr(font, "metrics"):
         return [m[4] for m in font.metrics(text)]
@@ -82,6 +99,20 @@ def split_wrap(text, font, wrap_at, break_words=True):
             if line and line != " ":
                 lines.append(strip_to_null(line))
     return lines
+
+def size_of_block(text, font, width=0):
+    # Apply newlines and word wrap.
+    lines = split_wrap(text, font, width)
+
+    # Calculate height and width of the text.
+    total_height = 0
+    max_width = 0
+    for line in lines:
+        line_width, line_height = font.size(line)
+        max_width = max(max_width, line_width)
+        total_height += line_height
+
+    return (max_width, total_height)
 
 def _do_print(surface, text, xy, font, color):
     if font.size(text)[0] == 0:
@@ -154,32 +185,28 @@ def print_line(surface, xy, font, chunks, styles):
         # Adjust the starting position.
         xy[0] += size[0]
 
-def causes_refont(data_member):
-    return widget.set_on_change(data_member, "needs_refont")
+def resize_redraw(self):
+    self.needs_resize = True
+    self.needs_redraw = True
 
 class Text(widget.BorderedWidget):
-    text = causes_refont("_text")
-    base_font = causes_refont("_base_font")
+    text = widget.call_on_change("_text", resize_redraw)
+    base_font = widget.call_on_change("_base_font", resize_redraw)
+    shrink_factor = widget.call_on_change("_shrink_factor", resize_redraw)
+    underline = widget.call_on_change("_underline", resize_redraw)
+    wrap = widget.call_on_change("_wrap", resize_redraw)
+    bold = widget.call_on_change("_bold", resize_redraw)
+
     color = widget.causes_redraw("_color")
-    shrink_factor = causes_refont("_shrink_factor")
-    underline = causes_refont("_underline")
     align = widget.causes_redraw("_align")
     valign = widget.causes_redraw("_valign")
-    wrap = causes_refont("_wrap")
-    bold = causes_refont("_bold")
-    oversize = causes_refont("_oversize")
 
-    needs_refont = widget.causes_resize("_needs_refont")
-
-    lorem_ipsum = {}
 
     def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
                  text=None, base_font=None, shrink_factor=1,
                  color=None, align=constants.CENTER, valign=constants.MID,
-                 underline=-1, wrap=True, bold=False, oversize=False, **kwargs):
+                 underline=-1, wrap=True, bold=False, text_size=36, **kwargs):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
-
-        self.needs_refont = True
 
         self.text = text
         self.base_font = base_font or g.font[0]
@@ -190,47 +217,49 @@ class Text(widget.BorderedWidget):
         self.valign = valign
         self.wrap = wrap
         self.bold = bold
-        self.oversize = oversize
+        self.text_size = text_size
 
-    def pick_font(self, dimensions=None):
-        if dimensions and self.needs_refont:
-            nice_size = self.pick_font_size(dimensions, False)
-            mean_size = self.pick_font_size(dimensions)
+    max_size = property(lambda self: convert_font_size(self.text_size))
+    font = property(lambda self: self._font)
 
-            if nice_size > mean_size - 5:
-                size = nice_size
-            else:
-                size = mean_size
-            self._font = self.base_font[size]
+    def pick_font(self, dimensions):
+        nice_size = self.pick_font_size(dimensions, False)
+        mean_size = self.pick_font_size(dimensions)
 
-            self.needs_refont = False
+        if nice_size > mean_size - convert_font_size(5):
+            size = nice_size
+        else:
+            size = mean_size
 
-        return self._font
+        return self.base_font[size]
 
-    font = property(pick_font)
+    def font_bisect(self, test_font):
+        left = 0
+        right = len(self.base_font)
+        if self.max_size:
+            right = min(right, self.max_size)
+
+        def test_size(size):
+            font = self.base_font[size]
+
+            font.set_bold(self.bold)
+            result = test_font(font)
+            font.set_bold(False)
+
+            return result
+
+        return do_bisect(left, right, test_size)
 
     def pick_font_size(self, dimensions, break_words=True):
         if dimensions[0]:
-            width = dimensions[0] - 4
+            width = int((dimensions[0] - 4) * self.shrink_factor)
         else:
             width = None
-        height = dimensions[1]
+        height = int((dimensions[1] - 4) * self.shrink_factor)
 
         basic_line_count = self.text.count("\n") + 1
 
-        # Run a binary search for the best font size.
-        # Thanks to bisect.bisect_left for the basic implementation.
-        left = 8
-        if self.oversize or self.base_font[0] not in Text.lorem_ipsum:
-            right = len(self.base_font)
-        else:
-            right = Text.lorem_ipsum[self.base_font[0]].font_size
-
-        while left + 1 < right:
-            test_index = (left + right) // 2
-            test_font = self.base_font[test_index]
-            test_font.set_bold(self.bold)
-
+        def test_size(test_font):
             too_wide = False
             if width:
                 if self.wrap:
@@ -251,40 +280,71 @@ class Text(widget.BorderedWidget):
                 line_count = basic_line_count
 
             too_tall = (test_font.get_linesize() * line_count) > height
-            if too_tall or too_wide:
-                right = test_index
-            else:
-                left = test_index
 
-            test_font.set_bold(False)
+            return not (too_tall or too_wide)
 
-        return left
+        return self.font_bisect(test_size)
 
-    def calc_text_size(self, dimensions=None):
-        if dimensions == None:
-            dimensions = self.real_size
+    def size_using_font(self, font, width=0):
+        #Calculate the size of the text block.
+        raw_width, raw_height = size_of_block(self.text, font, width)
 
-        # Calculate the text height.
-        height = int( (dimensions[1] - 4) * self.shrink_factor )
-        width = dimensions[0]
+        #Adjust for shrink_factor and borders.
+        width = int(raw_width / self.shrink_factor) + 4
+        height = int(raw_height / self.shrink_factor) + 4
 
         return width, height
+
+    def calc_text_size(self, initial_dimensions):
+        if not (initial_dimensions[0] and initial_dimensions[1]):
+            if not self.max_size:
+                raise ValueError("No font size given, but a dimension is 0.")
+
+            max_font = self.base_font[self.max_size]
+            if initial_dimensions[0] == initial_dimensions[1] == 0:
+                # No size specified, use the natural size of the max font.
+                width, height = self.size_using_font(max_font)
+                return (width, height), max_font
+            elif not initial_dimensions[1]:
+                # Width specified, use the size of the max font, word-wrapped.
+                text_width = int((initial_dimensions[0] - 4)
+                                 * self.shrink_factor)
+                width, height = self.size_using_font(max_font, width=text_width)
+                return (initial_dimensions[0], height), max_font
+            else:
+                # Height specified.  Try the natural size of the max font.
+                width, height = self.size_using_font(max_font)
+
+                if height <= initial_dimensions[1]:
+                    return (width, initial_dimensions[1]), max_font
+                else:
+                    # Too tall.  Run a binary search to find the largest font
+                    # size that fits.
+                    def test_size(font):
+                        width, height = self.size_using_font(font)
+                        width, raw_height = size_of_block(self.text, font)
+                        height = int(raw_height / self.shrink_factor) + 4
+                        return height <= initial_dimensions[1]
+
+                    font_size = self.font_bisect(test_size)
+                    font = self.base_font[font_size]
+                    width, height = self.size_using_font(font)
+
+                    return (width, initial_dimensions[1]), font
+        else:
+            # Both sizes specified.  Search for a usable font size.
+            return initial_dimensions, self.pick_font(initial_dimensions)
 
     def _calc_size(self):
         base_size = list(super(Text, self)._calc_size())
 
-        if self.text != None:
-            # Determine the true size of the text area.
-            text_size = self.calc_text_size(base_size)
-
-            # Pick a font based on that size.
-            self.needs_refont = True
-            font = self.pick_font(text_size)
-
-            # If the width is unspecified, calculate it from the font and text.
-            if base_size[0] == 0:
-                base_size[0] = font.size(self.text)[0] + 16
-        return tuple(base_size)
+        if self.text is None:
+            return tuple(base_size)
+        else:
+            # Determine the true size and font of the text area.
+            text_size, font = self.calc_text_size(base_size)
+            self._font = font
+            return tuple(text_size)
 
     def redraw(self):
         super(Text, self).redraw()
@@ -308,53 +368,30 @@ class Text(widget.BorderedWidget):
                      self.align, self.valign, self.real_size, self.wrap)
         self.font.set_bold(False)
 
-_lorem_ipsum = '''Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'''
-class _LoremIpsum(Text):
-    def __init__(self, base_font):
-        super(_LoremIpsum, self).__init__(None, (0,0), (.35, .4),
-                                          base_font=base_font,
-                                          text=_lorem_ipsum, oversize=True)
-        Text.lorem_ipsum[base_font[0]] = self
-        self.last_resolution = None
-
-    _calc_size = widget.Widget._calc_size
-
-    def get_font_size(self):
-        if self.last_resolution != g.screen_size:
-            self._font_size = self.pick_font_size(self._calc_size())
-            self.last_resolution = g.screen_size
-        return self._font_size
-
-    font_size = property(get_font_size)
+def text_changed(self):
+    if self.text is None:
+        new_len = 0
+    else:
+        new_len = len(self.text)
+    if new_len != self.old_len:
+        self.old_len = new_len
+        self.needs_resize = True
+    self.needs_redraw = True
 
 class FastText(Text):
-    """Reduces font searches by assuming a monospace font, single-line text,
-       and a fixed widget width."""
-    text = widget.set_on_change("_text", "maybe_needs_refont")
-    _text = widget.causes_redraw("__text")
-    old_text = ""
+    """
+       Reduces font searches by assuming a monospace font and single-line text.
+    """
+    text = widget.call_on_change("_text", text_changed)
+    old_len = 0
     maybe_needs_refont = False
-
-    def redraw(self):
-        self.pick_font(self.calc_text_size(self._real_size))
-        super(FastText, self).redraw()
-
-    def pick_font(self, dimensions=None):
-        if self.maybe_needs_refont and not self.needs_refont:
-            if len(self.old_text) != len(self.text):
-                self.old_text = self.text
-                self.needs_refont = True
-        self.maybe_needs_refont = False
-
-        return super(FastText, self).pick_font(dimensions)
 
 class EditableText(widget.FocusWidget, Text):
     cursor_pos = widget.causes_redraw("_cursor_pos")
     def __init__(self, parent, *args, **kwargs):
         super(EditableText, self).__init__(parent, *args, **kwargs)
 
-        if self.text == None:
+        if self.text is None:
             self.text = ""
 
         self.cursor_pos = len(self.text)
@@ -564,19 +601,25 @@ class ProgressText(SelectableText):
         self.draw_borders()
 
 
-class StyledText(Text):
+class ChunkedText(Text):
     def update_text(self):
         self.text = "".join(self.chunks)
 
     chunks = widget.call_on_change("_chunks", update_text)
-    styles = widget.causes_redraw("_styles")
 
     def __init__(self, *args, **kwargs):
         chunks = kwargs.pop("chunks", ())
+        super(ChunkedText, self).__init__(*args, **kwargs)
+
+        self.chunks = chunks
+
+class StyledText(ChunkedText):
+    styles = widget.causes_redraw("_styles")
+
+    def __init__(self, *args, **kwargs):
         styles = kwargs.pop("styles", ())
         super(StyledText, self).__init__(*args, **kwargs)
 
-        self.chunks = chunks
         self.styles = styles
 
     def print_text(self):
@@ -642,8 +685,6 @@ class ProtoWidget(EditableText):
         super(ProtoWidget, self).add_hooks()
         self.parent.add_handler(constants.DRAG, self.handle_drag)
         self.parent.add_handler(constants.CLICK, self.handle_click)
-        self.parent.add_handler(constants.MCLICK, self.handle_click)
-        self.parent.add_handler(constants.RCLICK, self.handle_click)
 
         if not isinstance(self.parent, ProtoWidget) \
            and not getattr(self.parent, "demo_mode", False):
@@ -653,8 +694,6 @@ class ProtoWidget(EditableText):
     def remove_hooks(self):
         self.parent.remove_handler(constants.DRAG, self.handle_drag)
         self.parent.remove_handler(constants.CLICK, self.handle_click)
-        self.parent.remove_handler(constants.MCLICK, self.handle_click)
-        self.parent.remove_handler(constants.RCLICK, self.handle_click)
         super(ProtoWidget, self).remove_hooks()
 
     def handle_drag(self, event):

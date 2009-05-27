@@ -80,7 +80,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             index = int(local_vert_pos * len(self.display_elements))
 
             # ... and select it.
-            self.list_pos = index + self.scrollbar.scroll_pos
+            self.list_pos = self.safe_pos(index + self.scrollbar.scroll_pos)
 
     def safe_pos(self, raw_pos):
         return max(0, min(len(self.list) - 1, raw_pos))

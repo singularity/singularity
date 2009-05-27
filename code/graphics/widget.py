@@ -37,8 +37,7 @@ def unmask_all(widget):
     widget.do_mask = lambda: None
 
 def call_on_change(data_member, call_me, *args, **kwargs):
-    """Creates a data member that sets another data member to a given value
-       when changed."""
+    """Creates a data member that calls a function when changed."""
     def get(self):
         return getattr(self, data_member)
 
@@ -136,8 +135,7 @@ class Widget(object):
         self.anchor = anchor
 
         # "It's a widget!"
-        if self.parent:
-            self.add_hooks()
+        self.add_hooks()
 
         self.is_above_mask = False
         self.self_mask = False
@@ -152,21 +150,28 @@ class Widget(object):
         #self.needs_full_redraw = True
 
     def add_hooks(self):
-        self.parent.children.append(self)
-
-        # Won't trigger on the call from __init__, since there are no children
-        # yet, but add_hooks may be explicitly called elsewhere to undo
-        # remove_hooks.
-        for child in self.children:
-            child.add_hooks()
+        if self.parent is not None:
+            self.parent.children.append(self)
+            # Won't trigger on the call from __init__, since there are no
+            # children yet, but add_hooks may be explicitly called elsewhere to
+            # undo remove_hooks.
+            for child in self.children:
+                child.add_hooks()
 
     def remove_hooks(self):
-        # We copy the children list to avoid index corruption.
-        for child in self.children[:]:
+        # Localize the children list to avoid index corruption and O(N^2) time.
+        children = self.children
+        self.children = []
+
+        # Recurse to the children.
+        for child in children:
             child.remove_hooks()
 
-        if self in self.parent.children:
-            self.parent.children.remove(self)
+        if self.parent is not None:
+            try:
+                self.parent.children.remove(self)
+            except ValueError:
+                pass # Wasn't there to start with.
 
     def _parent_size(self):
         if self.parent == None:

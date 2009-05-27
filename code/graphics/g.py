@@ -79,10 +79,6 @@ directory.
     # Size 17 has a bad "R".
     font[1][17] = font[1][18]
 
-    import text
-    text._LoremIpsum(font[0])
-    text._LoremIpsum(font[1])
-
 images = {}
 def load_images(data_loc):
     """

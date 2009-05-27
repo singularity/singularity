@@ -89,17 +89,13 @@ def call_dialog(dialog, parent=None):
         target = target.parent
 
     if parent_dialog:
-        parent_dialog.key_down = None
-        parent_dialog.faded = True
-        parent_dialog.stop_timer()
+        parent_dialog.lost_focus()
 
     retval = dialog.show()
 
     if parent_dialog:
-        parent_dialog.faded = False
-        parent_dialog.start_timer()
+        parent_dialog.regained_focus()
 
-    parent_dialog.fake_mouse()
     Dialog.top.needs_redraw = True
 
     return retval
@@ -114,6 +110,10 @@ class Dialog(text.Text):
     top = None # The top-level dialog.
 
     faded = widget.causes_redraw("_faded")
+
+    # Used for detecting double-clicks.
+    #            (time, (x, y), button)
+    last_click = (0,    (0, 0), -1    )
 
     def __init__(self, parent=None, pos = (.5,.1), size = (1, .9),
                  anchor = constants.TOP_CENTER, **kwargs):
@@ -131,11 +131,22 @@ class Dialog(text.Text):
         self.handlers = {}
         self.key_handlers = {}
 
-        self.add_handler(constants.RCLICK, self.fake_escape, 200)
+        self.add_handler(constants.CLICK, self.fake_escape, 200)
+
+    def lost_focus(self):
+        self.key_down = None
+        self.faded = True
+        self.stop_timer()
 
     def fake_escape(self, event):
-        fake_key(pygame.K_ESCAPE)
-        raise constants.Handled
+        if event.button == 3:
+            fake_key(pygame.K_ESCAPE)
+            raise constants.Handled
+
+    def regained_focus(self):
+        self.faded = False
+        self.start_timer()
+        self.fake_mouse()
 
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
@@ -282,22 +293,34 @@ class Dialog(text.Text):
             if g.ebook_mode and event.key in KEYPAD:
                 handlers = [(0, handle_ebook)]
         elif event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                # Ordinary mouse click handlers.
-                handlers = self.handlers.get(constants.CLICK, [])
-            elif event.button == 2:
-                # Middle click handlers.
-                handlers = self.handlers.get(constants.MCLICK, [])
-            elif event.button == 3:
-                # Right click handlers.
-                handlers = self.handlers.get(constants.RCLICK, [])
-            elif event.button in (4, 5):
+            # Handle mouse scrolls by imitating PageUp/Dn
+            if event.button in (4, 5):
                 if event.button == 4:
                     key = pygame.K_PAGEUP
                 else:
                     key = pygame.K_PAGEDOWN
                 fake_key(key)
+                return
 
+            # Mouse click handlers.
+            handlers = [] + self.handlers.get(constants.CLICK, [])
+
+            when = time.time()
+            where = event.pos
+            button = event.button
+
+            old_when, old_where, old_button = self.last_click
+            self.last_click = when, where, button
+
+            if button == old_button and when - old_when < .5:
+                # Taxicab distance.
+                dist = (abs(where[0] - old_where[0]) +
+                        abs(where[1] - old_where[1]))
+
+                if dist < 10:
+                    # Add double-click handlers, but keep the click handlers.
+                    insort_all(handlers,
+                               self.handlers.get(constants.DOUBLECLICK, []))
         elif event.type == pygame.QUIT:
             raise SystemExit
 
@@ -451,14 +474,16 @@ class YesNoDialog(TextDialog):
         self.no_button.hotkey = g.buttons[self.no_type + "_hotkey"]
 
     def on_return(self, event):
-        if event.type == pygame.KEYUP: return
+        if event and event.type == pygame.KEYUP:
+            return
         if self.invert_enter:
             self.no_button.activate_with_sound(event)
         else:
             self.yes_button.activate_with_sound(event)
 
     def on_escape(self, event):
-        if event.type == pygame.KEYUP: return
+        if event and event.type == pygame.KEYUP:
+            return
         if self.invert_escape:
             self.yes_button.activate_with_sound(event)
         else:
@@ -516,12 +541,14 @@ class TextEntryDialog(TextDialog):
         return super(TextEntryDialog, self).show()
 
     def return_nothing(self, event):
-        if getattr(event, "type", None) != pygame.KEYUP:
-            raise constants.ExitDialog, ""
+        if event and event.type == pygame.KEYUP:
+            return
+        raise constants.ExitDialog, ""
 
     def return_text(self, event=None):
-        if getattr(event, "type", None) != pygame.KEYUP:
-            raise constants.ExitDialog, self.text_field.text
+        if event and event.type == pygame.KEYUP:
+            return
+        raise constants.ExitDialog, self.text_field.text
 
 class ChoiceDialog(YesNoDialog):
     list = widget.causes_rebuild("_list")
@@ -536,9 +563,14 @@ class ChoiceDialog(YesNoDialog):
         super(ChoiceDialog, self).__init__(parent, *args, **kwargs)
 
         self.listbox = self.make_listbox()
+        self.add_handler(constants.DOUBLECLICK, self.handle_double_click, 200)
 
         self.yes_button.exit_code_func = self.return_list_pos
         self.no_button.exit_code = None
+
+    def handle_double_click(self, event):
+        if self.listbox.is_over(event.pos):
+            self.yes_button.activated(None)
 
     def make_listbox(self):
         return listbox.Listbox(self, (0, 0), (-1, -.85),

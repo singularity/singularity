@@ -61,20 +61,22 @@ class Button(text.SelectableText):
 
     def add_hooks(self):
         super(Button, self).add_hooks()
-        self.parent.add_handler(constants.MOUSEMOTION, self.watch_mouse,
+        if self.parent:
+            self.parent.add_handler(constants.MOUSEMOTION, self.watch_mouse,
+                                    self.priority)
+            self.parent.add_handler(constants.CLICK, self.handle_event,
                                 self.priority)
-        self.parent.add_handler(constants.CLICK, self.handle_event,
-                                self.priority)
-        if self.hotkey:
-            self.parent.add_key_handler(self.hotkey, self.handle_event,
-                                        self.priority)
+            if self.hotkey:
+                self.parent.add_key_handler(self.hotkey, self.handle_event,
+                                            self.priority)
 
     def remove_hooks(self):
         super(Button, self).remove_hooks()
-        self.parent.remove_handler(constants.MOUSEMOTION, self.watch_mouse)
-        self.parent.remove_handler(constants.CLICK, self.handle_event)
-        if self.hotkey:
-            self.parent.remove_key_handler(self.hotkey, self.handle_event)
+        if self.parent:
+            self.parent.remove_handler(constants.MOUSEMOTION, self.watch_mouse)
+            self.parent.remove_handler(constants.CLICK, self.handle_event)
+            if self.hotkey:
+                self.parent.remove_key_handler(self.hotkey, self.handle_event)
 
     def rebuild(self):
         old_underline = self.underline
@@ -87,7 +89,7 @@ class Button(text.SelectableText):
     def calc_underline(self):
         if self.force_underline != None:
             self.underline = self.force_underline
-        elif self.hotkey and type(self.hotkey) in (str, unicode):
+        elif self.text and self.hotkey and type(self.hotkey) in (str, unicode):
             if self.hotkey in self.text:
                 self.underline = self.text.index(self.hotkey)
             elif self.hotkey.lower() in self.text.lower():
@@ -162,11 +164,13 @@ class ExitDialogButton(FunctionButton):
 
     def add_hooks(self):
         super(ExitDialogButton, self).add_hooks()
-        self.parent.add_key_handler(pygame.K_ESCAPE, self.activate_default)
+        if self.parent:
+            self.parent.add_key_handler(pygame.K_ESCAPE, self.activate_default)
 
     def remove_hooks(self):
         super(ExitDialogButton, self).remove_hooks()
-        self.parent.remove_key_handler(pygame.K_ESCAPE, self.activate_default)
+        if self.parent:
+            self.parent.remove_key_handler(pygame.K_ESCAPE, self.activate_default)
 
     def activate_default(self, event):
         if event.type != pygame.KEYDOWN or not self.default:

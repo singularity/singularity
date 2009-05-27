@@ -48,8 +48,7 @@ NO_RESULT = _NoResult()
 
 
 # Handler types.
-KEY, KEYDOWN, KEYUP, LCLICK, RCLICK, MCLICK, MOUSEMOTION, DRAG, TICK = range(9)
-CLICK = LCLICK
+KEY, KEYDOWN, KEYUP, CLICK, DOUBLECLICK, MOUSEMOTION, DRAG, TICK = range(8)
 
 
 # Handler "errors", used to throw a return value up several levels.
