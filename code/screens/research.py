@@ -74,7 +74,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             description = ""
 
         text.Text(self.description_pane, (0,0), (-1,-1), text=description,
-                  background_color=gg.colors["dark_blue"],
+                  background_color=gg.colors["dark_blue"], text_size=18,
                   align=constants.LEFT, valign=constants.TOP,
                   borders=constants.ALL)
 

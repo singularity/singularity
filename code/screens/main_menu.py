@@ -52,26 +52,26 @@ class MainMenu(dialog.TopDialog):
             button.FunctionButton(self, (.5, .20), (.25, .08),
                                   text="NEW GAME", hotkey="n",
                                   anchor=constants.TOP_CENTER,
-                                  text_shrink_factor=.5,
+                                  text_size=28,
                                   function=self.new_game)
         self.load_game_button = \
             button.FunctionButton(self, (.5, .36), (.25, .08),
                                   text="LOAD GAME", hotkey="l",
                                   anchor=constants.TOP_CENTER,
-                                  text_shrink_factor=.5,
+                                  text_size=28,
                                   function=self.load_game)
         self.options_button = button.DialogButton(self, (.5, .52), (.25, .08),
                                                   text="OPTIONS", hotkey="o",
                                                   anchor=constants.TOP_CENTER,
-                                                  text_shrink_factor=.5,
+                                                  text_size=28,
                                                   dialog=OptionsScreen(self))
         self.quit_button = button.ExitDialogButton(self, (.5, .68), (.25, .08),
                                          text="QUIT", hotkey="q",
                                          anchor=constants.TOP_CENTER,
-                                         text_shrink_factor=.5)
+                                         text_size=28)
         self.about_button = button.DialogButton(self, (0, 1), (.13, .04),
                                                 text="ABOUT", hotkey="a",
-                                                text_shrink_factor=.75,
+                                                text_size=20,
                                                 anchor=constants.BOTTOM_LEFT,
                                                 dialog=AboutDialog(self))
 

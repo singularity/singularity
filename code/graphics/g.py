@@ -72,7 +72,7 @@ directory.
     font1_file = os.path.join(font_dir, font1)
     font[0][0] = font0
     font[1][0] = font1
-    for i in range(8, 100):
+    for i in range(100):
         font[0][i] = pygame.font.Font(font0_file, i)
         font[1][i] = pygame.font.Font(font1_file, i)
 

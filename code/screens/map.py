@@ -330,7 +330,7 @@ class MapScreen(dialog.Dialog):
                           background_color=gg.colors["black"],
                           border_color=gg.colors["dark_blue"])
 
-        self.message_dialog = dialog.MessageDialog(self)
+        self.message_dialog = dialog.MessageDialog(self, text_size=20)
 
         self.savename_dialog = \
             dialog.TextEntryDialog(self.menu_dialog,

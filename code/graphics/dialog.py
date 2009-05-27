@@ -674,6 +674,6 @@ class SimpleMenuDialog(Dialog):
 
             button.pos = (.01, y_pos)
             button.size = (self.width, .05)
-            button.text_shrink_factor=.70
+            button.text_size = 24
 
             y_pos += .06
