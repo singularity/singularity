@@ -300,7 +300,7 @@ class Dialog(text.Text):
                 else:
                     key = pygame.K_PAGEDOWN
                 fake_key(key)
-                return
+                return constants.NO_RESULT
 
             # Mouse click handlers.
             handlers = [] + self.handlers.get(constants.CLICK, [])
