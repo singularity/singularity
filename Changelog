@@ -17,6 +17,7 @@ USER-VISIBLE CHANGES:
 - Fix a crash with handling scrollbars. (Phil, netantho for bug report)
 - Fix a bug where the finance report wouldn't always display. (Raymond
   Martinau)
+- Updated (but not fully complete) es_AR translation. (Guga)
 
 v0.30 (release 2009.01.26):
 
