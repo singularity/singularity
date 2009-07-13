@@ -1050,6 +1050,7 @@ def load_string_defs(lang):
 
             # Load button labels/hotkeys
             buttons.update(string_section)
+            graphics.g.buttons.update(buttons)
 
         elif string_section["id"] == "help":
 
@@ -1192,7 +1193,6 @@ def init_graphics_system():
     graphics.g.load_fonts(data_loc)
     graphics.g.load_images(data_loc)
     graphics.g.init_alpha()
-    graphics.g.buttons.update(buttons)
 
 soundbuf = 1024*2
 def reinit_mixer():

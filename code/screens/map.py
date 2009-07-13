@@ -443,7 +443,7 @@ class MapScreen(dialog.Dialog):
         self.needs_rebuild = True
 
     def show_intro(self):
-        intro_dialog = dialog.YesNoDialog(self, yes_type="continue_",
+        intro_dialog = dialog.YesNoDialog(self, yes_type="continue",
                                           no_type="skip")
         for segment in g.get_intro():
             intro_dialog.text = segment

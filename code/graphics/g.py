@@ -110,8 +110,9 @@ buttons = dict(yes = "YES", yes_hotkey = "y",
                build = "BUILD", build_hotkey = "b",
                back = "BACK", back_hotkey = "b",
                load = "LOAD", load_hotkey = "l",
-               continue_ = "CONTINUE", continue__hotkey = "c",
+               continue_hotkey = "c",
                skip = "SKIP", skip_hotkey = "s")
+buttons["continue"] = "CONTINUE"
 
 # Used to initialize surfaces that should have transparency.
 # Why the SRCALPHA parameter isn't working, I have no idea.
