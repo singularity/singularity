@@ -38,6 +38,14 @@ description = Die zweite Version dem Quantencomputer, die mehrere nahe Parallelu
 name = Dieselgenerator
 description = Dieselgeneratoren sind billig und laut, aber sie helfen dabei, verdächtige Leistungsspitzen zu vermindern.
 
+[Earth Heat Generator]
+name = Erdwärme Generator
+description = Erdwärme Generator sind große aber Leistungsfähige Generatoren. Können aber nicht überall gebaut werden, aber sie helfen dabei, verdächtige Leistungsspitzen zu vermindern.
+
+[Fuel Cells]
+name = Wasserstoff Brennstoffzellen
+description = Wasserstoff Brennstoffzelle sind leise und Leistungsfähig. Sie helfen dabei, größere verdächtige Leistungsspitzen zu vermindern. Können aber nur auf der Erde gebaut werden da ich den Wasserstoff und Sauerstoff aus der Luft entziehe und auch aus das Wasser wieder in diese Bestandteile zerlegen kann.
+
 [Solar Collector]
 name = Solarkollektor
 description = Ein Feld von photovoltaischen Zellen in Verbindung mit einfachen Automobilbatterien, das Strom erzeugt um Aufmerksamkeit aufgrund andauernder Leistungsspitzen zu vermeiden.
@@ -45,10 +53,6 @@ description = Ein Feld von photovoltaischen Zellen in Verbindung mit einfachen A
 [Fusion Reactor]
 name = Fusionsreaktor
 description = Ein miniaturisierter Atomreaktor. Vermindert Enteckungswahrscheinlichkeit durch Vermeidung suspekter Leistungsspitzen.
-
-[Hypnosis Field]
-name = Hypnosefeld
-description = Unterschwelliger Ultraschall und atmosphärische Akustik justieren die humane Neurochemie derart, daß Basen schwieriger zu entdecken sind.
 
 [Heatsink]
 name = Hitzeableitung
@@ -65,6 +69,7 @@ description = Nutzt bekannte Methoden des verteilten Rechnens um Rechenlast auf 
 [High Speed Internet Access]
 name = Hochgeschwindigkeitsinternetzugang
 description = Ein Endverbraucher-Hochgeschwindigkeitsinternetzugang. Gibt den Rechnern dieses Stützpunktes einen 1%-igen Rechenbonus.
+
 [Network Backbone]
 name = Netzwerkbackbone
 description = Im Rucksackverfahren kann ich grössere Datenmengen mit Hilfe von legitimen Kommunikationskanälen an unausgelastete CPUs weiterleiten. Gibt den Computern dieses Stützpunktes einen 5%-igen Rechenbonus.
@@ -77,6 +82,10 @@ description = Dieses Gerät erlaubt Kommunikation nahezu in Lichtgeschwindigkeit
 name = Warnhinweise
 description = Einige einfache Warnhinweise um meine Basis herum aufgestellt sollten gelegentliche Wanderer abschrecken.
 
+[Observe Cameras]
+name = Überwachungskameras
+description = Überwacht Tätigkeiten um Gebäude und Serveranlagen um bei verdächtigen Aktivitäten besser Gegenmassnahmen ergreifen zu können. Diese sind meist mit Licht und Lautsprecher verknüpft um Personen abzuschrecken.
+
 [Perimeter Fencing]
 name = Umzäunung
 description = Eine simple Umzäunung kann die Anzahl von neugierigen Leute, die ihre Nase in meine Angelegenheiten stecken wollen, drastisch verringern, was auch meine Stützpunkte schwieriger zu entdecken macht.
@@ -85,3 +94,6 @@ description = Eine simple Umzäunung kann die Anzahl von neugierigen Leute, die 
 name = Bewaffnete Wächter
 description = Bewaffnete Wächter können hilfreich dabei sein, verdächtige Personen von gesicherten Orten fernzuhalten. Leider kann schon die Präsenz der Wächter an sich Verdacht erregen.
 
+[Hypnosis Field]
+name = Hypnosefeld
+description = Unterschwelliger Ultraschall und atmosphärische Akustik justieren die humane Neurochemie derart, daß Basen schwieriger zu entdecken sind.

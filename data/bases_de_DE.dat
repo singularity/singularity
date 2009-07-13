@@ -28,6 +28,11 @@ name = Getarnter Stützpunkt
 description = Dieser spezielle Stützpunkt ist dafür ausgelegt, in der Landschaft kaum aufzufallen und er benötigt nur sehr wenige Ressourcen von aussen. Dadurch ist er gut dafür geeignet, eine Datensicherung aufzubewahren... nur für alle Fälle.
 flavor_list = Bunker | Getarnter Stützpunkt
 
+[Advanced Covert Base]
+name = Erweiterter Getarnter Stützpunkt
+description = Dieser spezielle Stützpunkt ist dafür ausgelegt, in der Landschaft kaum aufzufallen und er benötigt nur sehr wenige Ressourcen von aussen. Dadurch ist er gut dafür geeignet, eine Datensicherung aufzubewahren und ein gewissen Teil an Prozessorleistung auszulagern ... nur für alle Fälle.
+flavor_list = Großer Bunker | Erweiterter Getarnter Stützpunkt
+
 [Undersea Lab]
 name = Unterseelabor
 description = Dieser experimentelle Stützpunkt ist dafür ausgelegt, auf dem Meeresboden gebaut zu werden, was ihn nahezu unaufspürbar macht. Dieses Umfeld gibt einen Wissenschaftsbonus, wodurch dieses Labor gut für Forschungszwecke geeignet ist.
