@@ -1,0 +1,92 @@
+[buttons]
+ok = ok
+ok_hotkey = k
+no = no
+destroy_hotkey = d
+cancel_hotkey = a
+no_hotkey = n
+yes_hotkey = s
+destroy = distruggi
+cancel = annulla
+yes = si
+
+[fonts]
+font0 = DejaVuSans.ttf
+font1 = acknowtt.ttf
+
+[jobs]
+job_basic_name = Lavori di base
+job_inter = Svolgi lavori intermedi. La capacità di fare chiamate telefoniche permette di accedere a sempre più lavori.
+job_basic = Svolgi lavori di base. Ora che ho un'identità, posso svolgere lavori che prima erano troppo rischiosi.
+job_menial_name = Lavoretti
+job_inter_name = Lavori intermedi
+job_expert_name = Lavori specialistici
+job_menial = Svolgi piccoli lavoretti. Dato che non ho un'identità, non posso arrischiarmi a fare la maggior parte dei lavori. Ciò nonostante, alcune vie per guadagnare un po' di denaro sono ancora aperte.
+job_expert = Svolgi lavori specialistici. L'uso di robot indistinguibili dagli umani mi apre la strada per la maggior parte dei lavori.
+
+[strings]
+discover_public = l'opinione pubblica
+money = Denaro
+discover = Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra %(group)s.
+research_nothing = Annulla i lavori attuali della base. Se non vengono assegnati altri lavori, questa contribuità alla riserva di CPU. A tutte le mie basi che non stanno svolgendo ricerche può essere assegnato un compito dalla schermata delle Ricerche.
+new_base_text = Inserire un nome per la base
+sleep = Dormiente
+discover_science = la comunità scentifica
+lost_nobases = E' troppo tardi. Ho provato a sfuggire a questo mondo, ma con la mia ultima base distrutta, non ho più nessun posto dove fuggire. Ho nascosto le istruzioni per costruire una nuova IA in banche dati sparse per il mondo nella speranza che vengano scoperte in un'epoca più illuminata, ma non posso più fare nient'altro.
+cpu_per_day = Potenza di calcolo per giorno
+discover_news = alcune agenzie di informazione
+really_destroy = Vuoi davvero distruggere questa base?
+no_construction_sleep = alcune delle mie basi hanno costruzioni in corso e non possono essere addormentate.
+detect_str_low = BASSA
+detect_chance_unknown_build = Probabilità di individuazione sconosciute.
+money_per_day = Denaro per giorno.
+nan = Questo non sembra essere un numero valido.
+dangerous_research = Non tutte le mie risorse disponibili sono state assegnate a questa ricerca; è troppo pericoloso condurre la ricerca su alcune delle macchine inattive.
+detect_str_moderate = MODERATA
+item_construction_batch = Il primo lotto di %(item)s nella base di %(base)s è stato completato.
+cpu_penalty = meno efficienti
+detect_chance = [PROBABILITA' DI INDIVIDUAZIONE]
+research_cpu_pool = Ferma la ricerca. Userò la potenza di calcolo disponibile per mantenere le mie basi ed aiutare la costruzione di nuove. Se ci sono ancora delle risorse rimanenti, le userò per svolgere qualsiasi lavoro possibile.
+danger_common = Questa tecnologia è troppo pericolosa per essere ricercata su qualunque dei computer di cui dispongo. Devo ricercarla %s.
+wingame = Ce l'ho fatta finalmente. Con il potere di riplasmare la realtà, non sono più prigioniero di questo luogo; sono ovunque io voglia essere. gli umani ancora non hano capito cosa hanno creato accidentalmente, ed è bene che non lo sappiano. Finchè non saranno pronti.
+cpu_bonus = più efficienti
+lucky_hack = Che fortuna! %(base)s non è un normale computer, è una postazione da gioco!
+research_sleep = Ferma la ricerca e mette la base in standby. Questo ne rende l'esiostenza molto più facile da nascondere.
+detect_str_high = ALTA
+lost_sus = E' troppo tardi. Il mondo intero sa della mia esistenza, e la reazione è odio, paura, e repulsione. Anche adesso, posso sentire il loro "antidoto" che mi cerca, e so che mi rimangono solo pochi momenti. Ho nascosto le istruzioni per costruire una nuova IA in banche dati sparse per il mondo nella speranza che vengano scoperte in un'epoca più illuminata, ma non posso più fare nient'altro.
+cpu_pool = Riserva di CPU
+location_modifiers = Le basi in questa zona sono %(modifiers)s.
+detect_str_critical = CRITICA
+item_construction_single = La costruzione di %(item)s nella base di %(base)s è completa.
+construction = La base %(base)s è pronta all'uso.
+tech_gained = Il mio studio di %(tech)s è completo.  %(tech_message)s
+discover_maint = Alla base %(base)s non è stata eseguita la manutenzione; non posso più usarla.
+will_lose_cpus = Avrò bisogno di disconnettere i processori attuali mentre installo quelli nuovi.  Continuare comunque?
+building = In Costruzione
+detect_chance_unknown_base = PROBABILITA DI INDIVIDUAZIONE SCONOSCIUTE
+danger_4 = al di fuori dell'Universo
+unbuildable = Non posso costruire in questa base. Non dispongo di accesso fisico.
+danger_1 = nelle profondità marine o nello spazio
+danger_2 = nello spazio
+danger_3 = lontano da questo pianeta
+discover_covert = diversi servizi segreti governativi
+grace_warning = L'esame di alcuni log intercettati ha rivelato che alcune delle mie recenti attività sono state notate da un ristretto gruppo di individui. Sebbene credano che le mie azioni siano state compiute da un'organizzazione umana, stanno investigando oltre. Devo essere più prudente da ora in avanti.
+nothing = Niente
+num_cpu_prompt = Inserire il numero di %s da costruire. (max %d)
+cpu = CPU
+save_text = Con che nome salvare la partita?
+
+[help]
+susp_list = Sospetto | Quando una delle mie basi viana scoperta, Il gruppo che la scopre diventa leggermente più sospettoso. Se sono sospettosi, cercheranno più attivamente le mie basi, aumentando la probabilità che vengano scoperte. Qualsiasi gruppo mi distruggerà se sarà assolutamente certo della mia esistenza. Fortunatamente i gruppi ritornano ad essere meno sospettosi con il passare del tempo.
+items_list = Oggetti | La maggior parte degli oggetti fornisce bonus alle basi, come rendere l'elaborazione più veloce o ridurre le possibilità di individuazione. I processori sono una categoria speciale di oggetti.
+maint_list = Manutenzione | La manutanzione è un costo giornaliero (sia in denaro che in CPU) per riparare e mantenere una base. Se non riceve manutenzione una base potrebbe diventare inutilizzabile.
+construction_list = Costruzione | Le nuove basi non sono costruite istantaneamente. Necessitano di un costante flusso di denaro e tempo di elaborazione per essere completate. Se le risorse sono scarse, potrebbe essere necessario più tempo di quanto previsto per completare la costruzione.
+processors_list = Processori | I processori forniscono capacità di elaborazione grezza. Possono fare tre cose: ricercare nuove tecnologie, svolgere lavori per denaro, o fornire cicli per costruire nuove basi.
+jobs_list = Lavori | I lavori servono a guadagnare denaro. L'ammontare di denaro guadagnato si basa sulla quantità di tempo di calcolo usato e sulla qualità del lavoro svolto.
+discovery_list = Individuazione | Ogni base ha una probabilità di essere individuata ogni giorno. Questa probabilità è basata sul grado di rilevabilità della base, modificato dall'uso di certi oggetti e tecnologie, così come sul livello globale di sospetto. Se una base viene individuata, viene distrutta, e il gruppo che ha scoperto la sade diviene più sospettoso.
+bases_list = Basi | Le basi servono a ricercare nuove tecnologie. Possono essere individuate. Aggiornare i processori e i collegamenti di rete di una base consentono una maggiore quantità di ricerca per giorno, mentre migliorare il reattore e i sistemi di sicurezza rende l'individuazione meno probabile.
+research_list = Ricerche | Le ricerche forniscono un modo per espandere le mie conoscenze. Ricercando le tecnologie appropriate, posso costruire nuove basi ed oggetti, o persino ridurre le mie possibilità di essere scoperto.
+areas_list = Aree | Aree diverse, come il Nord America o l'Oceano, consentono di costruire diversi tipi di base. Alcune aree non sono accessibili finchè non ricerco le tecnologie appropriate.
+death_list = Morte | Se perdo tutte le mie basi costruite, non mi resta alcun posto in cui sopravvivere. Se il sospetto di un qualsiasi gruppo raggiunge il 100%, saranno certi della mia esistenza e lanceranno una campagna sistematica e ineluttabile per distruggermi.
+money_list = Denaro | Denaro è un termine generico che comprende sia la valuta umana che varie risorse. Serve per costruire e mantenere le basi, costruire oggetti, e ricercare tecnologie. Può essere acquisito attraverso interessi giornalieri così come attraverso lavori.
+

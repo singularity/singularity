@@ -1,0 +1,57 @@
+[EUROPE]
+hotkey = u
+cities_list = Cork | Barcellona | Atene | Utrecht | Mosca | Roma | Reykjavik | Liechtenstein
+name = EUROPA
+
+[AUSTRALIA]
+hotkey = c
+cities_list = Camberra | Melbourne | Fremantle | Perth | Darwin | Caims | Brisbane | Sydney | Newcastle
+name = OCEANIA
+
+[TRANSDIMENSIONAL]
+hotkey = m
+name = MULTIVERSO
+
+[AFRICA]
+hotkey = i
+cities_list = Johannesburg | Accra | Cairo | Tangeri
+name = AFRICA
+
+[ORBIT]
+hotkey = b
+name = ORBITA
+
+[ASIA]
+hotkey = a
+cities_list = Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Pechino
+name = ASIA
+
+[FAR REACHES]
+hotkey = p
+cities_list = Ariete | Toro | Gemelli | Cancro | Leone | Vergine | Bilancia | Scorpione | Sagittario | Capricorno | Aquario | Pesci
+name = SPAZIO PROFONDO
+
+[N AMERICA]
+hotkey = n
+cities_list = Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas
+name = AMERICA DEL NORD
+
+[ANTARCTIC]
+hotkey = t
+cities_list = Monte Erebus | Terra di Ellsworth | Isole Shetland | Derra della Regina Maud | Terra di Kemp | Terra di Adelie
+name = ANTARTIDE
+
+[OCEAN]
+hotkey = o
+cities_list = Pacifico | Atlantico | Indiano | Antartico | Artico
+name = OCEANI
+
+[S AMERICA]
+hotkey = s
+cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires
+name = AMERICA DEL SUD
+
+[MOON]
+hotkey = l
+cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Valle di Schroedinger | Cratere Copernico | Valle di Planck
+name = LUNA

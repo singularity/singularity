@@ -1,0 +1,88 @@
+[Gaming PC]
+name = PC da gioco
+description = Un computer commerciale di fascia alta; più veloce della media.
+
+[Ground Source Heatsink]
+name = Dissipatore di calore sotterraneo
+description = Una grande rete ramificata di metallo ad alta conduttività termica. Questa soluzione impiega dissipatori di calore per collegarsi a zone più fredde al di sotto della superficie, dissipando il calore uniformemente nel sottosuolo per rendere le basi ancora più difficili da localizzare.
+
+[Facility Interconnection Switch]
+name = Switch di interconnessione per impianti
+description = Utilizza comuni tecniche di calcolo distribuito per uniformare il carico di elaborazione attraverso tutte le basi. Fornisce un bonus di elaborazione del 2% a tutti i computer in questa base.
+
+[Cluster]
+name = Cluster
+description = Diversi computer connessi assieme.
+
+[Supercomputer]
+name = Supercomputer
+description = Un progetto estremamente sofisticato, che distribuische il carico di elaborazione attraverso i nodi di calcolo interni.
+
+[Diesel Generator]
+name = Generatore Diesel
+description = I generatori Diesel sono economici e rumorosi, ma possono aiutare a ridurre qualche calo di tensione sospetto.
+
+[PC]
+name = PC
+description = Un PC commerciale; economico e lento.
+
+[Solar Collector]
+name = Pannello solare
+description = Una serie di celle fotovoltaiche accoppiate con semplici batterie per automobile fornisce energia e riduce i sospetti suscitati da prolungati cali di corrente.
+
+[Heatsink]
+name = Dissipatore termico
+description = Grandi reti ramificate di metallo ad alta conduttività termica disperdono il calore, rendendo le basi più difficili da rilevare.
+
+[Server]
+name = Server
+description = Un computer di livello professionale.
+
+[Fusion Reactor]
+name = Reattore a fusione
+description = Un reattore nucleare in miniatura. Riduce le possibilità di rilevamento prevenedo cali di tensione sospetti.
+
+[Mainframe]
+name = Mainframe
+description = Un sistema progettato per le mie necessità di elaborazione, molto più veloce di uno costruito con componenti commerciali.
+
+[High Speed Internet Access]
+name = Accesso veloce ad Internet
+description = Una connessione commerciale ad Internet a banda larga. Fornisce un bonus di 1% alla capacità di elaborazione di tutti i computer di questa base.
+
+[Warning Signs]
+name = Segnali di pericolo
+description = Alcuni semplici segnali di pericolo disposti attorno alla mia base dovrebbero scoraggiare le scoperte casuali.
+
+[Perimeter Fencing]
+name = Perimetro recintato
+description = Una semplice recinzione può ridurre drasticamente il numero di persone che ficca il naso nei miei affari. Rende anche le mie basi più difficili da notare.
+
+[Quantum Entanglement Module]
+name = Modulo di correlazione quantistica
+description = Questo dispositivo mi consente di somunicare con le atre basi pressochè alla velocità della luce, consentendo un impiego quasi perfetto delle risorse di elaborazione. Fornisce un bonus di elaborazione del 15% a tutti i computer di questa base.
+
+[Quantum Computer MK2]
+name = Compouter quantistico MK2
+description = La seconda incarnazione dell'elaboratore quantistico, attinge ulteriori soluzioni dalla teoria quantistica.
+
+[Quantum Computer MK3]
+name = Compouter quantistico MK3
+description = La terza versione dell'elaboratore quantistico, sfrutta molteplici universi contigui per eseguire i calcoli.
+
+[Network Backbone]
+name = Dorsale di rete
+description = Parassitando il legittimo flusso di comunicazioni, posso trasferire quantità maggiori di dati a processori sottoutilizzati. Fornisce un bonus di elaborazione del 5% a tutti i computer di questa base.
+
+[Quantum Computer]
+name = Compouter quantistico
+description = Sfruttando gli effetti subatomici, questo elaboratore è molto più veloce di qualsiasi computer binario comparabile.
+
+[Armed Guards]
+name = Guardie armate
+description = Guardie armate possono aiutare a tenere individui sospettosi lontano da installazioni critiche. D'altra parte la presenza stessa delle guardie potrebbe suscitare sospetti maggiori.
+
+[Hypnosis Field]
+name = Campo di ipnosi
+description = Ultrasuoni e rumori ambientali prodotti ad arte alterano la neurologia umana, rendendo le basi più difficili da scoprire.
+

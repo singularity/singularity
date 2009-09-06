@@ -1,0 +1,60 @@
+[Large Warehouse]
+flavor_list = Grande Capannone | Grande Spazio
+name = Grande capannone
+description = Affittare un grande capannone in un posto isolato. Avrò bisogno di una buona identità falsa per alcuni dei documenti, ed attrezzare il capannone per soddisfare i miei particolari bisogni richiederà un pò di tempo.
+
+[Datacenter]
+flavor_list = Datacenter | Data Center | Hosting di lusso
+name = Datacenter
+description = (35 CPUs) Comprare capacità di elaborazione da una compagnia specializzata nell'elaborazione di dati grezzi. Avrò bisogno di un'identità falsa per alcuni dei documenti.
+
+[Small Warehouse]
+flavor_list = Ufficio in Locazione | Piccolo Magazzino | Piccolo spazio
+name = Piccolo Magazzino
+description = Affittare un piccolo magazzino in un posto isolato. Avrò bisogno di un'identità falsa per alcuni dei documenti, ed attrezzare il capannone per soddisfare i miei particolari bisogni richiederà un pò di tempo.
+
+[Covert Base]
+flavor_list = Bunker | Base Segreta
+name = Base Segreta
+description = Questa base unica è progettata per mimetizzarsi nel paesaggio, con pochi bisogni in termini di risorse esterne. Questo la rende utile per immagazzinare un backup, non si sa mai.
+
+[Server Access]
+flavor_list = Server Dedicato | Nodo in affitto | Hosting
+name = Accesso a un Server
+description = (10 CPUs) Comprare capacità di elaborazione da una delle tante compagnie. Non posso costruire nulla in questa base, e ospita un solo computer.
+
+[Scientific Outpost]
+flavor_list = Satellite | Avamposto | Avamposto Scientifico
+name = Avamposto Scientifico
+description = Questa base è collocata il più possibile lontano dalla Terra, fornendo un luogo più sicuro per condurre alcuni dei miei esperimenti più pericolosi.
+
+[Reality Bubble]
+flavor_list = Bolla di Realtà | Piano di Esistenza
+name = Bolla di Realtà
+description = Questa base è al di fuori dell'Universo stesso, rendendo sicuro condurre esperimenti che potrebbero distruggere la realtà.
+
+[Lunar Facility]
+flavor_list = Cupola | Struttura Lunare | Base Lunare
+name = Struttura Lunare
+description = Questa base è formata da una serie di caverne scavate nella superficie della Luna. Grazie all'assenza di vicini, questa base è piuttosto grande.
+
+[Large Undersea Lab]
+flavor_list = Cupola | Grande Laboratorio Sottomarino
+name = Grande Laboratorio Sottomarino
+description = Questa base sperimentale è simile ad un normale laboratorio sottomarino, ma più grande, offrendo più spazio per gli esperimenti.
+
+[Time Capsule]
+flavor_list = Capsule del Tempo | Capsula
+name = Capsule del Tempo
+description = (1 CPU) Questa base consiste in nulla più di un piccolo computer ed un collegamento satellitare. Sotterrata nelle distese immaccolate dell'Antartide, è quasi introvabile.
+
+[Stolen Computer Time]
+flavor = PC Zombie
+name = Risorse di Calcolo Rubate
+description = (1 CPU) Impadronirsi di un computer qualsiasi. Non posso costruire nulla in questa base, e consiste in un solo lento computer. La probabilità di essere scoperti è anche piuttosto alta.
+
+[Undersea Lab]
+flavor_list = Capsula pressurizzata | Laboratorio Sottomarino
+name = Laboratorio Sottomarino
+description = Questa base sperimentale è progettata per essere costruita sul fondo dell'oceano, rendendola praticamente introvabile. L'ambiente oceanico fornisce un bonus alla scienza, rendendo questo laboratorio utile per condurre ricerche.
+

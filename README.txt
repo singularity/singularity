@@ -127,6 +127,8 @@ Max McCracken (music)
 Anders Andersson (translation into Swedish)
 Thomas (native-proofing of German translation)
 Philippe Grenard (translation into French)
+Guga (updates to the Spanish translation)
+Daniele Sapino (translation into Spanish)
 
 CONTRIBUTING
 All suggestions, translations, code, etc. are welcomed, though it would be

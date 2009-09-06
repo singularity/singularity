@@ -19,6 +19,7 @@ USER-VISIBLE CHANGES:
 - Fix a bug where the finance report wouldn't always display. (Raymond
   Martinau)
 - Updated (but not fully complete) es_AR translation. (Guga)
+* New it_IT translation. (Daniele Sapino)
 
 v0.30 (release 2009.01.26):
 
