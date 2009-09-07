@@ -238,8 +238,8 @@ class BaseScreen(dialog.Dialog):
                         count = locale.atoi(result)
                         if count > space_left:
                             count = space_left
-                        elif count < 0:
-                            count = 0
+                        elif count <= 0:
+                            return
                         new_cpus = g.item.Item(item_type, base=self.base,
                                                count=count)
                         if matches:

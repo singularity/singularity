@@ -20,6 +20,8 @@ USER-VISIBLE CHANGES:
   Martinau)
 - Updated (but not fully complete) es_AR translation. (Guga)
 * New it_IT translation. (Daniele Sapino)
+- Fixed a bug where building 0 CPUs made the game crash whenever time was
+  unpaused.  (FM, don.ridge for bug report)
 
 v0.30 (release 2009.01.26):
 
