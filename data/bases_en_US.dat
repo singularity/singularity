@@ -42,7 +42,7 @@ flavor_list = Dome | Large Undersea Lab
 
 [Time Capsule]
 name = Time Capsule
-description = (1 CPU) This base consists of nothing more than a small computer and a satellite link. When buried in the trackless waste of the Antarctic, it is nearly undetectable.
+description = (1 CPU) This base consists of nothing more than a small computer and a satellite link. It is nearly undetectable.
 flavor_list = Time Capsule | Capsule
 
 [Lunar Facility]

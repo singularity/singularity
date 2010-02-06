@@ -3,6 +3,8 @@ Endgame: Singularity Changelog
 v0.31 (release 20??.??.??):
 
 USER-VISIBLE CHANGES:
+- Time Capsule English text no longer assumes the Antarctic. (Phil Bordelon,
+  Avaera8820 for bug report)
 - Game pauses when random events occur. (Phil Bordelon, captainsegfault for
   bug report, justapawn for initial implementation)
 - Savefiles are now in sorted order instead of an arbitrary arrangement.
