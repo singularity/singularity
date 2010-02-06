@@ -495,6 +495,7 @@ class Player(object):
                     #Skip events already flagged as triggered.
                     if g.events[event].triggered == 1:
                         continue
+                    self.pause_game()
                     g.events[event].trigger()
                     break # Don't trigger more than one at a time.
 
