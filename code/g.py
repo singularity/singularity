@@ -49,8 +49,7 @@ seconds_per_day = 24 * 60 * 60
 #Allows access to the cheat menu.
 cheater = 0
 
-#Kills the sound. Should allow usage of the game without SDL_mixer,
-# but is untested.
+#Kills the sound. Should allow usage of the game without SDL_mixer
 nosound = 0
 
 # Enables day/night display.
@@ -746,7 +745,7 @@ from the actual name, and the internal entries are broken up by the pipe
     filename = os.path.join(data_loc, file)
     try:
         config.readfp(open(filename, "r"))
-    except Exception, reason:
+    except Exception as reason:
         sys.stderr.write("Cannot open %s for reading! (%s)\n" % (filename, reason))
         sys.exit(1)
 
@@ -1196,8 +1195,14 @@ def init_graphics_system():
 
 soundbuf = 1024*2
 def reinit_mixer():
-    pygame.mixer.quit()
-    pygame.mixer.init(48000, -16, 2, soundbuf)
+    global nosound
+    if nosound: return
+    try:
+        pygame.mixer.quit()
+        pygame.mixer.init(48000, -16, 2, soundbuf)
+    except Exception as reason:
+        sys.stderr.write("Failure starting sound system. Disabling. (%s)\n" % reason)
+        nosound = 1
 
 def available_languages():
     return [file_name[8:-4] for file_name in os.listdir(data_loc)
