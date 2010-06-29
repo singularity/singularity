@@ -64,6 +64,11 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                       background_color=gg.colors["dark_blue"],
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
+        else:
+            text.Text(description_pane, (0, 0), (-1, -1), text="",
+                      background_color=gg.colors["dark_blue"],
+                      align=constants.LEFT, valign=constants.TOP,
+                      borders=constants.ALL)
 
 type_names = dict(cpu="Processor", reactor="Reactor",
                   network="Network", security="Security")

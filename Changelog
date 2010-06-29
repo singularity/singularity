@@ -5,6 +5,7 @@ v0.30b (release 2010.??.??):
 USER-VISIBLE CHANGES:
 - --nosound properly ignores the sound system.(emh, Cyclotron / Daryl for bug
   report)
+- Better appearance when no items will fit in the slot.
 
 v0.30a (release 2010.02.06):
 
