@@ -70,10 +70,6 @@ class KnowledgeScreen(dialog.Dialog):
         self.add_key_handler(pygame.K_LEFT, self.key_handle)
         self.add_key_handler(pygame.K_RIGHT, self.key_handle)
 
-        self.set_knowledge_type(0)
-        self.set_knowledge(0)
-
-
     #custom key handler.
     def key_handle(self, event):
         if event.type != pygame.KEYDOWN: return
@@ -114,6 +110,9 @@ class KnowledgeScreen(dialog.Dialog):
                         self.set_inner_list(self.cur_knowledge_type)
             return # Not yet initialized.
         prev_know = self.cur_knowledge_type
+        if list_pos == -1:
+            prev_know = ""
+            list_pos = 0
         if 0 <= list_pos < len(self.knowledge_choice.list):
             self.cur_knowledge_type = self.knowledge_choice.list[list_pos]
         if prev_know != self.cur_knowledge_type:
@@ -196,6 +195,9 @@ class KnowledgeScreen(dialog.Dialog):
 
 
     def show(self):
+        self.set_knowledge_type(-1)
+        self.knowledge_choice.list_pos = 0
+        self.knowledge_inner.list_pos = 0
         return super(KnowledgeScreen, self).show()
 
 
