@@ -19,7 +19,7 @@
 
 #This file contains all global objects.
 
-version = "0.30a"
+version = "0.30b"
 
 import ConfigParser
 import pygame
