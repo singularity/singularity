@@ -218,15 +218,15 @@ name = Projekt: Peer-Review Agenten
 description = Indem die wissenschaftliche Gemeinde neue Technologien erforscht, verbessert sich ihre Fähigkeit, Spuren meiner verborgenen Stützpunkte zu entdecken.  Obwohl sich meine Gegenmaßnahmen ständig verbessern, gibt es dank meiner Simulacra eine einfachere Methode.  Durch Positionierung mehrerer Beobachter in relevante Bereiche kann ich den Peer-Review Prozeß dazu benutzen, vor möglichen Entdeckungen gewarnt zu werden, bevor sich die Gemeinde an sich damit befaßt.
 result = Alle Entdeckungen der wissenschaftlichen Gemeinde werden einen kleineren Anstieg von Verdacht zur Folge haben.
 
-[Knowledge Acquirement]
-name = Wissen Aneignung
-description = Durch die Aneignung von Wissen aus dem Globalen Internet und Veröffentlichungen von Wissenschaftlern und Ideen der Menschen bin ich in der Lage neuere Technologien für meine Zwecke zu nutzen.
-result = Ich kann jetzt mit der Wissensaneignung Erdwärme Kraftwerke bauen.
+#[Knowledge Acquirement]
+#name = Wissen Aneignung
+#description = Durch die Aneignung von Wissen aus dem Globalen Internet und Veröffentlichungen von Wissenschaftlern und Ideen der Menschen bin ich in der #Lage neuere Technologien für meine Zwecke zu nutzen.
+#result = Ich kann jetzt mit der Wissensaneignung Erdwärme Kraftwerke bauen.
 
-[Fuel Cells]
-name = Brennstoffzellen
-description = Durch meinen steigenen Stromverbrauchs werden die Menschen misstrauerischer. Durch Installation von Brennstoffzellen in meinen Stützpunkten sollte der unabhängig generierte Strom den Verbrauch vom Netz reduzieren, und dabei die Wahrscheinlichkeit, dass andere meine Existenz entdecken, verringern.
-result = Ich kann jetzt Brennstoffzellen bauen.
+#[Fuel Cells]
+#name = Brennstoffzellen
+#description = Durch meinen steigenen Stromverbrauchs werden die Menschen misstrauerischer. Durch Installation von Brennstoffzellen in meinen Stützpunkten #sollte der unabhängig generierte Strom den Verbrauch vom Netz reduzieren, und dabei die Wahrscheinlichkeit, dass andere meine Existenz entdecken, #verringern.
+#result = Ich kann jetzt Brennstoffzellen bauen.
 
 [Solar Collectors]
 name = Sonnenkollektoren
