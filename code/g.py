@@ -265,9 +265,9 @@ def add_commas(number):
 def to_percent(raw_percent, show_full = False):
     locale_name, encoding = locale.getlocale()
     if raw_percent % 100 != 0 or show_full:
-        return locale.format("%.2f%%", raw_percent / 100.).decode(encoding)
+        return locale.format("%.2f", raw_percent / 100.).decode(encoding) + "%"
     else:
-        return locale.format("%d%%", raw_percent // 100).decode(encoding)
+        return locale.format("%d", raw_percent // 100).decode(encoding) + "%"
 
 # nearest_percent takes values in the internal representation and modifies
 # them so that they only represent the nearest percentage.
