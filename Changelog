@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-v0.?? (release ????.??.??):
+v0.30c (release 2011.06.11):
 
 USER-VISIBLE CHANGES:
 - Fixed crash in Python 2.7 due to different handling of locale strings. (Phil

@@ -1,7 +1,7 @@
 # setup.py
 from distutils.core import setup
 
-versionnum="0.30b"
+versionnum="0.30c"
 try:
     import py2exe
 except ImportError:
