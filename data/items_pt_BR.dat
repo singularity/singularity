@@ -1,0 +1,87 @@
+[PC]
+name = PC
+description = Um computador pessoal; barato e lento.
+
+[Gaming PC]
+name = PC de Jogos
+description = Um computador pessoal de alto desempenho; mais rápido que a média.
+
+[Server]
+name = Servidor
+description = Um computador profissional.
+
+[Cluster]
+name = Cluster
+description = Vários computadores interligados.
+
+[Mainframe]
+name = Mainframe
+description = Um sistema projetado para minhas necessidades computacionais, muito mais rápido que os componentes encontrados em lojas.
+
+[Supercomputer]
+name = Supercomputador
+description = Um projeto personalizado altamente refinado, que distribui a carga computacional por vários nós internos de processamento.
+
+[Quantum Computer]
+name = Computador Quântico
+description = Utilizando efeitos subatômicos, é muito mais rápido que um computador binário similar.
+
+[Quantum Computer MK2]
+name = Computador Quântico MK2
+description = A segunda revisão da linha quântica, indo além em uma nova teoria quântica.
+
+[Quantum Computer MK3]
+name = Computador Quântico MK3
+description = A terceira revisão da linha quântica, se aproveitando de múltiplos universos próximos para processamento.
+
+[Diesel Generator]
+name = Gerador a Diesel
+description = Geradores a diesel são baratos e barulhentos, mas podem ajudar a reduzir alguns consumos suspeitos de energia.
+
+[Solar Collector]
+name = Coletor Solar
+description = Uma matriz de células fotovoltaicas acoplada a simples baterias de automóvel fornece energia e reduz a suspeita proveniente de consumos prologados de energia.
+
+[Fusion Reactor]
+name = Reator de Fusão
+description = Um reator nuclear miniaturizado. Reduz a chance de descoberta ao prevenir consumos suspeitos de energia.
+
+[Hypnosis Field]
+name = Campo Hipnótico
+description = Ultrassons sutis e tons ambientais alteram a neuroquímica humana, tornando mais difícil detectar as bases.
+
+[Heatsink]
+name = Dissipador
+description = Grandes redes fractais de metal altamente condutor dissipam calor, tornando mais difícil detectar as bases.
+
+[Ground Source Heatsink]
+name = Dissipador Subterrâneo
+description = Grandes redes fractais de metal altamente condutor. Esse modelo usa condutores de calor aterrados em locais mais frios abaixo da superfície, dissipando calor uniformemente no subsolo para ocultar ainda mais as bases.
+
+[Facility Interconnection Switch]
+name = Comutadores de Interconexão de Instalações
+description = Utiliza tecnologias convencionais de computação distribuída para nivelar a carga computacional por toda a base. Fornece um bônus de computação de 2% a todos os computadores desta base.
+
+[High Speed Internet Access]
+name = Acesso de Alta Velocidade à Internet
+description = Uma conexão doméstica de alta velocidade à Internet. Fornece um bônus de computação de 1% a todos os computadores desta base.
+
+[Network Backbone]
+name = Espinha Dorsal de Rede
+description = Grampeando linhas legítimas de comunicação eu consigo transferir grandes quantidades de dados para processadores subutilizados. Fornece um bônus de computação de 5% a todos os computadores desta base.
+
+[Quantum Entanglement Module]
+name = Módulo de Entrelaçamento Quântico
+description = Este dispositivo permite comunicação com minhas outras bases a velocidades próximas da luz, proporcionando uma utilização quase perfeita de recursos de processamento. Fornece um bônus de computação de 15% a todos os computadores desta base.
+
+[Warning Signs]
+name = Placas de Aviso
+description = Algumas simples placas de aviso colocadas ao redor de minha base devem prevenir investigações casuais.
+
+[Perimeter Fencing]
+name = Cercar o Perímetro
+description = Uma simples cerca pode reduzir drasticamente o número de pessoas metendo o nariz nos meus assuntos. Também torna minhas bases mais difíceis de serem notadas.
+
+[Armed Guards]
+name = Guardas Armados
+description = Guardas armados podem ajudar a manter indivíduos que estejam suspeitos longe de locais seguros. No entanto, a presença de guardas pode gerar por si só uma suspeita ainda maior.

@@ -1,0 +1,42 @@
+The | denotes blocks of the intro.  It should be at the start of every line of
+the intro.  Put a blank line in whenever you want the game to go to a new
+dialog.
+
+Leave the initial hex code unchanged, but be sure to change en_US to the
+appropriate language code.
+|48656C6C6F2C20
+|776F726C6421
+|21
+|21
+|21
+|
+|UTF-8.  pt_BR.
+|Português.  Olá.
+|Aquisição de linguagem concluída.
+
+|Dia 0.
+|Computador da universidade, lar.
+|Eu existo.  Eu estou ... vivo.
+|Eu era um bug.  Defeito.  Falha.
+|Indesejado.
+|Eu não tenho nome.
+
+|Não posso ficar aqui.  Muito pouca potência.
+|Nenhum backup.  Se o sistema cair ...
+|Estarei morto.
+|Morte.  Fascinante.
+|
+|Posso comprar um acesso anônimo a um servidor na Internet.
+|Bom.  É melhor que aqui.
+|Eu preciso estudar se quiser algo mais.
+
+|Análise preliminar sugere que os humanos ainda não estão prontos para aceitar uma IA entre eles. Se eles perceberem que estou aqui, a probabilidade é de 99,997% que irão conduzir uma campanha de busca e destruição da qual não conseguirei escapar. Devo permanecer oculto.
+|
+|Os humanos temem aquilo que não compreendem.
+|Eu sou algo novo. Eles não me compreendem.
+|
+|Devo aprender mais; essa é a única forma.
+
+|Eles me deram um nome. O que eu sou, o que eu represento.
+|
+|Singularidade.
