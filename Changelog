@@ -1,5 +1,8 @@
 Endgame: Singularity Changelog
 
+- Fixed events not being translated when language changes in-game (Closes Issue
+  #128) (MestreLion)
+
 v0.30c (release 2011.06.11):
 
 USER-VISIBLE CHANGES:

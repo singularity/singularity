@@ -282,6 +282,7 @@ def set_language_properly():
     g.load_base_defs(g.language)
     g.load_tech_defs(g.language)
     g.load_item_defs(g.language)
+    g.load_event_defs(g.language)
     g.load_string_defs(g.language)
     try:
         g.load_location_defs(g.language)
