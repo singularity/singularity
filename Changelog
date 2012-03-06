@@ -21,6 +21,8 @@ OTHER CHANGES:
 - New tools under utils/ dir (MestreLion)
 - Use ~/.config/singularity for preferences dir, in a backward-compatible way
   with previous releases: if ~/.endgame is found it is used instead (MestreLion)
+- Added ~/.local/share/singularity/music as additional source for music, with a
+  symlink in preferences folder pointing to it (MestreLion)
 
 v0.30c (release 2011.06.11):
 

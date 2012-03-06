@@ -238,8 +238,9 @@ def load_music():
     """
 load_music() loads music for the game.  It looks in multiple locations:
 
-* music/ in the install directory for E:S; and
-* music/ in the save folder.
+* music/ in the install directory for E:S.
+* music/ in the preferences folder.
+* music/ in user's XDG_DATA_HOME/singularity folder.
 """
 
     if nosound:
@@ -248,10 +249,35 @@ load_music() loads music for the game.  It looks in multiple locations:
     music_dict = {}
 
     # Build the set of paths we'll check for music.
-    music_paths = (
-        os.path.join(data_dir, "..", "music"),
-        os.path.join(get_save_folder(True), "music")
-    )
+    music_paths = [ os.path.join(data_dir, "..", "music") ]
+
+    # XDG User Data and E:S Preferences dir
+    if not force_single_dir:
+
+        xdg_data_home = os.environ.get('XDG_DATA_HOME') or \
+                        os.path.join(os.path.expanduser('~'), '.local', 'share')
+        xdg_music = os.path.join(xdg_data_home, "singularity", "music")
+
+        prefs_dir = get_save_folder(True)
+        prefs_music = os.path.join(prefs_dir, "music")
+
+        # XDG User Data dir (defaults to ~/.local/share)
+        # Only use if it already exists
+        if os.path.isdir(xdg_data_home):
+            music_paths.append(xdg_music)
+
+            # Since we will use xdg_data_dir for reading music, try to create
+            # a symlink in prefs dir, pointing to xdg_music
+            if not os.path.isdir(prefs_music):
+                try: os.symlink(xdg_music, prefs_music)
+                except: pass # windows users... Well, at least we tried
+
+        # E:S Preferences dir
+        # (only if music it's not already a symlink to xdg)
+        if os.path.realpath(prefs_music) != os.path.realpath(xdg_music):
+            music_paths.append(prefs_music)
+
+    # Main loop for music_paths
     for music_path in music_paths:
         if os.path.isdir(music_path):
 
