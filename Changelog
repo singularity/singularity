@@ -1,5 +1,8 @@
 Endgame: Singularity Changelog
 
+- Fixed techs being reset if language is changed mid-game (Closes Issue #99)
+  (MestreLion)
+
 v0.30c (release 2011.06.11):
 
 USER-VISIBLE CHANGES:
