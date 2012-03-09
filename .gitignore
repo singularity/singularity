@@ -1,5 +1,8 @@
+prefs.dat
+saves/
 *.pyc
 *.ogg
 *.mp3
+*.log
 .*
 !.gitignore
