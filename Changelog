@@ -1,5 +1,7 @@
 Endgame: Singularity Changelog
 
+- Created .gitignore and .gitattributes files to aid development (Mestrelion)
+
 v0.30c (release 2011.06.11):
 
 USER-VISIBLE CHANGES:

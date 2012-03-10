@@ -6,3 +6,4 @@ saves/
 *.log
 .*
 !.gitignore
+!.gitattributes
