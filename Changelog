@@ -3,6 +3,7 @@ Endgame: Singularity Changelog
 - Created .gitignore and .gitattributes files to aid development (Mestrelion)
 - Fixed techs being reset if language is changed mid-game (Closes Issue #99)
   (MestreLion)
+- Saved games list now sorted in in-game load dialog (MestreLion)
 
 v0.30c (release 2011.06.11):
 
