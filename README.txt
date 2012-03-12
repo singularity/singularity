@@ -100,8 +100,8 @@ Endgame: Singularity looks in two places for music tracks to play:
 
 * A music/ directory directly inside of the Endgame: Singularity install
   directory, and
-* A music/ directory inside of the save directory (~/.endgame in Linux, the
-  install directory for Windows).
+* A music/ directory inside of the preferences directory (~/.config/singularity
+  in Linux, the install directory for Windows).
 
 Tracks placed in these directories will be played randomly as part of the
 soundtrack.  The Official Sound Track can be downloaded from the Endgame:

@@ -19,6 +19,8 @@ OTHER CHANGES:
 - Created .gitignore and .gitattributes files to aid development (Mestrelion)
 - New i18n and hotkey approach. E:S is now fully translatable (MestreLion)
 - New tools under utils/ dir (MestreLion)
+- Use ~/.config/singularity for preferences dir, in a backward-compatible way
+  with previous releases: if ~/.endgame is found it is used instead (MestreLion)
 
 v0.30c (release 2011.06.11):
 

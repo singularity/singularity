@@ -449,10 +449,32 @@ def all_bases(with_loc = False):
                 yield base
 
 #Get the proper folder on Linux/Win/Mac, and possibly others.
-#Assumes that all platforms that have HOME defined have it defined properly.
+#Assumes that all platforms that have HOME and XDG_CONFIG_HOME defined have them
+# defined properly.
 def get_save_folder(just_pref_dir=False):
+
+    #For a smooth, trouble-free and most importantly *backward-compatible*
+    # transition to XDG Base Directory Specification, the following rules apply
+    # for choosing the preferences/saves directory, in order:
+    #- if the new standard prefs dir ~/.config/singularity exist, use it
+    #- if the old standard prefs  dir ~/.endgame exists, use it
+    #- if none exist (new install), and ~/.config exist, use the new standard
+    #- otherwise, use the old standard
+
     if os.environ.has_key("HOME") and not force_single_dir:
-        pref_dir = os.path.join(os.environ["HOME"], ".endgame")
+
+        xdg_config_home = os.environ.get('XDG_CONFIG_HOME') or \
+                          os.path.join(os.environ["HOME"], '.config')
+
+        pref_dir_new = os.path.join(xdg_config_home, "singularity")
+        pref_dir_old = os.path.join(os.environ["HOME"], ".endgame")
+
+        if os.path.exists(pref_dir_new) or \
+          (os.path.exists(xdg_config_home) and not os.path.exists(pref_dir_old)):
+            pref_dir = pref_dir_new
+        else:
+            pref_dir = pref_dir_old
+
     else:
         pref_dir = os.path.abspath(os.path.join(data_dir, ".."))
 
