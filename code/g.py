@@ -973,15 +973,15 @@ def load_events():
          int(event_name["chance"]),
          int(event_name["unique"]))
 
-    load_event_defs()
+    # We use the en_US translations of event definitions as the default,
+    # then overwrite those with any available entries in the native language.
+    load_event_defs("en_US")
+    if language != "en_US":
+        load_event_defs(language)
 
-def load_event_defs():
-    event_defs = {}
-
+def load_event_defs(language_str):
     #If there are no event data files, stop.
-    if (not os.path.exists(data_loc+"events.dat") or
-     not os.path.exists(data_loc+"events_"+language+".dat") or
-     not os.path.exists(data_loc+"events_en_US.dat")):
+    if (not os.path.exists(data_loc+"events_"+language+".dat")):
         print "event files are missing. Exiting."
         sys.exit(1)
 

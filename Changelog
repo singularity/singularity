@@ -4,6 +4,8 @@ Endgame: Singularity Changelog
 - Fixed techs being reset if language is changed mid-game (Closes Issue #99)
   (MestreLion)
 - Saved games list now sorted in in-game load dialog (MestreLion)
+- Fixed events not being translated when language changes in-game (Closes Issue
+  #128) (MestreLion)
 
 v0.30c (release 2011.06.11):
 
