@@ -11,7 +11,7 @@ cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires
 [EUROPE]
 name = EUROPE
 hotkey = u
-cities_list = Cork | Barcelona | Athens | Utrecht | Moscow | Tel Aviv | Reykjavik | Liechtenstein
+cities_list = Cork | Barcelona | Athens | Utrecht | Moscow | Sytki | Reykjavik | Liechtenstein
 
 [ASIA]
 name = ASIA
