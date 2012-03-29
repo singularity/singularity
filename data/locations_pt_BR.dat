@@ -1,0 +1,57 @@
+[N AMERICA]
+name = AMÉRICA DO NORTE
+hotkey = n
+cities_list = Seattle | Los Angeles | Vancouver | Atlanta | Tijuana | Guadalajara | Toronto | Boston | Dallas
+
+[S AMERICA]
+name = AMÉRICA DO SUL
+hotkey = s
+cities_list = Lima | São Paulo | Rio de Janeiro | Bogotá | Recife | Buenos Aires | Curitiba | Montevidéu | Fortaleza | Brasília | Manaus
+
+[EUROPE]
+name = EUROPA
+hotkey = u
+cities_list = Paris | Barcelona | Atenas | Estocolmo | Moscou | Frankfurt | Lisboa | Milão | Amsterdã | Zurique | Viena
+
+[ASIA]
+name = ÁSIA
+hotkey = a
+cities_list = Xangai | Cingapura | Seul | Hong Kong | Kioto | Pequim | Dubai | Mumbai | Bagdá | Taiwan | Teerã
+
+[AFRICA]
+name = ÁFRICA
+hotkey = f
+cities_list = Joanesburgo | Nairóbi | Cairo | Trípoli | Kampala | Pretória | Luanda
+
+[ANTARCTIC]
+name = ANTÁRTIDA
+hotkey = d
+cities_list = Monte Erebus | Montes Ellsworth | Ilha de Ross | Maciço Vinson | Geleira Byrd
+
+[OCEAN]
+name = OCEANO
+hotkey = c
+cities_list = Pacífico | Atlântico | Índico
+
+[MOON]
+name = LUA
+hotkey = l
+cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Cratera Copernicus | Vallis Planck
+
+[ORBIT]
+name = ÓRBITA
+hotkey = b
+
+[FAR REACHES]
+name = ESPAÇO SIDERAL
+hotkey = p
+cities_list = Áries | Touro | Gêmeos | Câncer | Leão | Virgem | Libra | Escorpião | Sagitário | Capricórnio | Aquário | Peixes
+
+[TRANSDIMENSIONAL]
+name = TRANSDIMENSIONAL
+hotkey = d
+
+[AUSTRALIA]
+name = AUSTRÁLIA
+hotkey = t
+cities_list = Camberra | Melbourne | Brisbane | Sydney
