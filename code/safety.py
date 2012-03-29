@@ -23,21 +23,6 @@ import time
 import traceback
 import sys
 
-import os
-import os.path
-
-# We store error.log in .endgame on OSes with a HOME directory;
-# otherwise, we store it in the CWD.  As we're not importing any
-# parts of E:S here, we have to reimplement this logic.
-logpath = "error.log"
-if os.environ.has_key("HOME"):
-    prefs_dir = os.path.expanduser("~/.endgame")
-    if not os.path.isdir(prefs_dir):
-        os.makedirs(prefs_dir)
-    logpath = os.path.join(prefs_dir, "error.log")
-
-logging.getLogger().addHandler(logging.FileHandler(logpath))
-
 class Buffer(object):
     def __init__(self, prefix=""):
         self.data = prefix
@@ -50,8 +35,12 @@ def get_timestamp(when=None):
     return time.ctime(when) + " " + time.tzname[time.daylight]
 
 def log_error(error_message):
-    logging.getLogger().error(error_message)
     sys.stderr.write(error_message + "\n")
+    if len(logging.getLogger().handlers) > 0:
+        try:
+            logging.getLogger().error(error_message)
+        except IOError: # Probably access denied with --singledir. That's ok
+            pass
 
 def safe_call(func, args=(), kwargs={}, on_error=None):
     try:

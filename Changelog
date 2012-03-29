@@ -6,6 +6,9 @@ Endgame: Singularity Changelog
 - Saved games list now sorted in in-game load dialog (MestreLion)
 - Fixed events not being translated when language changes in-game (Closes Issue
   #128) (MestreLion)
+- Fixed --singledir and --multidir being ignored for saves, preferences, music
+  and error log. Also, if possible (Python >= 2.6), error.log is now created
+  only when (and if) an error actually occurs. (MestreLion)
 
 v0.30c (release 2011.06.11):
 

@@ -34,6 +34,7 @@ import sys
 import ConfigParser
 import os.path
 import optparse
+import logging
 
 import g, graphics.g
 from screens import main_menu, map
@@ -41,6 +42,23 @@ from screens import main_menu, map
 pygame.init()
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
+
+# Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
+# so g.get_save_folder reports the correct location of preferences file
+for parser in sys.argv[1:]:
+    if parser == "--singledir" or parser == "-s": g.force_single_dir = True
+    if parser == "--multidir"                   : g.force_single_dir = False
+
+#configure global logger
+logfile = os.path.join(g.get_save_folder(True), "error.log")
+if len(logging.getLogger().handlers) == 0:
+    try:
+        logging.getLogger().addHandler(logging.FileHandler(logfile, delay=True))
+    except TypeError: # Python < 2.6, delay not supported yet.
+        try:
+            logging.getLogger().addHandler(logging.FileHandler(logfile))
+        except IOError: # Probably access denied with --singledir. That's ok
+            pass
 
 #load prefs from file:
 save_dir = g.get_save_folder(True)
@@ -188,8 +206,6 @@ if options.daynight is not None:
     g.daynight = options.daynight
 if options.soundbuf is not None:
     g.soundbuf = options.soundbuf
-if options.singledir is not None:
-    g.singledir = options.singledir
 
 graphics.g.ebook_mode = options.ebook
 
