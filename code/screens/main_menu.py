@@ -18,9 +18,6 @@
 
 #This file is used to display the main menu upon startup.
 
-from os import listdir
-import pygame
-
 import map
 from code.graphics import dialog, g as gg, button, text, constants
 import code.g as g
@@ -97,7 +94,7 @@ class MainMenu(dialog.TopDialog):
             save = save_names[index]
             did_load = g.load_game(save)
             if did_load:
-               dialog.call_dialog(self.map_screen, self)
+                dialog.call_dialog(self.map_screen, self)
 
 
 about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.

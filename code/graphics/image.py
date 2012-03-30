@@ -21,7 +21,6 @@
 import pygame
 
 import constants
-import g
 import widget
 
 def scale(*args, **kwargs):

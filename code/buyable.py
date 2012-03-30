@@ -18,7 +18,7 @@
 
 #This file contains the item class.
 
-from operator import div, truediv
+from operator import truediv
 import g
 
 cash, cpu, labor = range(3)

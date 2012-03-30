@@ -20,10 +20,9 @@
 #This file contains the base class.
 
 
-import bisect
 import g
 import buyable
-from buyable import cash, cpu, labor
+from buyable import cpu, labor
 
 class BaseClass(buyable.BuyableClass):
     def __init__(self, name, description, size, force_cpu, regions,

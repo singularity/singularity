@@ -21,14 +21,14 @@
 
 # Since we require numpy anyway, we might as well ask pygame to use it.
 try:
-  import pygame
-  pygame.surfarray.use_arraytype("numpy")
+    import pygame
+    pygame.surfarray.use_arraytype("numpy")
 except AttributeError:
-  pass # Pygame older than 1.8.
+    pass # Pygame older than 1.8.
 except ValueError:
-  raise SystemExit("Endgame: Singularity requires NumPy.")
+    raise SystemExit("Endgame: Singularity requires NumPy.")
 except ImportError:
-  raise SystemExit("Endgame: Singularity requires pygame.")
+    raise SystemExit("Endgame: Singularity requires pygame.")
 
 import sys
 import ConfigParser
@@ -37,7 +37,7 @@ import optparse
 import logging
 
 import g, graphics.g
-from screens import main_menu, map
+from screens import main_menu
 
 pygame.init()
 pygame.font.init()
@@ -212,9 +212,6 @@ graphics.g.ebook_mode = options.ebook
 g.cheater = options.cheater
 g.debug = options.debug
 
-g.load_strings()
-g.load_events()
-
 pygame.display.set_caption("Endgame: Singularity")
 
 #I can't use the standard image dictionary, as that requires the screen to
@@ -227,12 +224,17 @@ if pygame.image.get_extended() == 0:
 pygame.display.set_mode(graphics.g.screen_size)
 
 #init data:
+g.load_strings()
+g.load_events()
+g.load_locations()
+g.load_techs()
+g.load_items()
+
 g.init_graphics_system()
 g.reinit_mixer()
 g.load_sounds()
-g.load_items()
 g.load_music()
-g.load_locations()
+
 
 # Set the application icon.
 pygame.display.set_icon(graphics.g.images["icon.png"])

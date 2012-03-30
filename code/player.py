@@ -25,8 +25,7 @@ from numpy import array
 
 import g
 from graphics import g as gg
-import buyable
-from buyable import cash, cpu, labor
+from buyable import cash, cpu
 
 group_list = ("news", "science", "covert", "public")
 class Group(object):
@@ -82,7 +81,7 @@ class DryRunInfo(object):
 
 class Player(object):
     intro_shown = False
-    def __init__(self, cash, time_sec=0, time_min=0, time_hour=0, time_day=0,
+    def __init__(self, cash=0, time_sec=0, time_min=0, time_hour=0, time_day=0,
                  difficulty = 5):
         self.difficulty = difficulty
 
@@ -123,11 +122,11 @@ class Player(object):
         self.sleeping_cpus = 0
 
     def convert_from(self, old_version):
-         if old_version < 4.91: # < r5_pre
-             self.cpu_usage = {}
-             self.apotheosis = g.techs["Apotheosis"].done
-             if self.apotheosis:
-                 self.had_grace = True
+        if old_version < 4.91: # < r5_pre
+            self.cpu_usage = {}
+            self.apotheosis = g.techs["Apotheosis"].done
+            if self.apotheosis:
+                self.had_grace = True
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour

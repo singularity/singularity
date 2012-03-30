@@ -91,9 +91,9 @@ def propogate_need(data_member):
                 child = descendants.pop()
                 # Propogate to this child and its descendants, if needed.
                 if not getattr(child, data_member, False):
-                   setattr(child, data_member, True)
-                   child._needs_update = True
-                   descendants += child.children
+                    setattr(child, data_member, True)
+                    child._needs_update = True
+                    descendants += child.children
 
     return do_propogate
 

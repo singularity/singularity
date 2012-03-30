@@ -23,7 +23,6 @@ version = "0.30c"
 
 import ConfigParser
 import pygame
-import os
 import os.path
 import cPickle
 import random
@@ -67,6 +66,53 @@ language = "en_US"
 #Makes the intro be shown on the first GUI tick.
 intro_shown = True
 
+#name given when the savegame button is pressed. This is changed when the
+#game is loaded or saved.
+default_savegame_name = "Default Save"
+
+#which fonts to use
+font0 = "DejaVuSans.ttf"
+font1 = "acknowtt.ttf"
+
+#savefile version; update whenever the data saved changes.
+current_save_version = "singularity_savefile_r5_pre"
+savefile_translation = {
+    "singularity_savefile_r4": 4,
+    "singularity_savefile_r5_pre": 4.91,
+}
+
+data_loc = "data/"
+
+# Initialization data
+strings = {}
+locations = {}
+techs = {}
+events = {}
+items = {}
+base_type = {}
+buttons = {}
+help_strings = {}
+sounds = {}
+music_dict = {}
+delay_time = 1
+curr_speed = 1
+soundbuf = 1024*2
+danger_colors = ((0, 0, 255), (85, 0, 170), (170, 0, 85), (255, 0, 0))
+detect_string_names = ("detect_str_low",
+                       "detect_str_moderate",
+                       "detect_str_high",
+                       "detect_str_critical")
+
+jobs = {"Expert Jobs"       : [75, "Simulacra", "", ""],
+        "Intermediate Jobs" : [50, "Voice Synthesis", "", ""],
+        "Basic Jobs"        : [20, "Personal Identification", "", ""],
+        "Menial Jobs"       : [5 , "", "", ""],
+       }
+
+pl = player.Player()
+map_screen = None
+
+
 # Try a few locale settings.  First the selected language, then the user's
 # default, then en_US.  The selected lanugage and en_US are tried with encoding
 # UTF-8 first, then the default encoding.  The user's default encoding is not
@@ -81,26 +127,9 @@ def set_locale():
         except locale.Error:
             continue
 
-set_locale()
-
-#name given when the savegame button is pressed. This is changed when the
-#game is loaded or saved.
-default_savegame_name = "Default Save"
-
-#which fonts to use
-font0 = "DejaVuSans.ttf"
-font1 = "acknowtt.ttf"
-
-data_loc = "../data/"
-
 def quit_game():
     sys.exit()
 
-strings = {}
-buttons = {}
-help_strings = {}
-
-sounds = {}
 def load_sounds():
     """
 load_sounds() loads all of the sounds in the data/sounds/ directory,
@@ -173,9 +202,6 @@ play_sound() plays a sound from a particular class.
         sys.stderr.write("D: Playing sound %s.\n" % random_sound["filename"])
     random_sound["sound"].play()
 
-delay_time = 1
-music_dict = {}
-
 def load_music():
     """
 load_music() loads music for the game.  It looks in multiple locations:
@@ -199,7 +225,9 @@ load_music() loads music for the game.  It looks in multiple locations:
 
             # Loop through the files in music_path and add the ones
             # that are .mp3s and .oggs.
-            for root, dirs, files in os.walk(music_path):
+            for entry in os.walk(music_path):
+                root  = entry[0]
+                files = entry[2]
                 (head, tail) = os.path.split(root)
                 if (tail.lower() != ".svn"):
                     if not music_dict.has_key(tail):
@@ -248,7 +276,7 @@ def play_music(musicdir="music"):
 
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number):
-    locale_name, encoding = locale.getlocale()
+    encoding = locale.getlocale()[1]
     raw_with_commas = locale.format("%0.2f", number,
                                     grouping=True    ).decode(encoding)
     locale_test = locale.format("%01.1f", 0.1).decode(encoding)
@@ -263,7 +291,7 @@ def add_commas(number):
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
 def to_percent(raw_percent, show_full = False):
-    locale_name, encoding = locale.getlocale()
+    encoding = locale.getlocale()[1]
     if raw_percent % 100 != 0 or show_full:
         return locale.format("%.2f", raw_percent / 100.).decode(encoding) + "%"
     else:
@@ -278,10 +306,6 @@ def nearest_percent(value):
     else:
         return value + (100 - sub_percent)
 
-danger_colors = ((0, 0, 255), (85, 0, 170), (170, 0, 85), (255, 0, 0))
-
-detect_string_names = ("detect_str_low", "detect_str_moderate",
-                       "detect_str_high", "detect_str_critical")
 # percent_to_detect_str takes a percent and renders it to a short (four
 # characters or less) string representing whether it is low, moderate, high,
 # or critically high.
@@ -388,10 +412,6 @@ def all_bases(with_loc = False):
             else:
                 yield base
 
-#
-#load/save
-#
-
 #Get the proper folder on Linux/Win/Mac, and possibly others.
 #Assumes that all platforms that have HOME defined have it defined properly.
 def get_save_folder(just_pref_dir=False):
@@ -418,8 +438,6 @@ def get_save_folder(just_pref_dir=False):
     else:
         return save_dir
 
-#savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_r5_pre"
 def save_game(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
@@ -436,42 +454,6 @@ def save_game(savegame_name):
     cPickle.dump(events, savefile)
 
     savefile.close()
-
-savefile_translation = {
-    "singularity_savefile_r4": 4,
-    "singularity_savefile_r5_pre": 4.91,
-}
-
-# For cPickle
-import copy_reg
-import numpy.core.multiarray
-save_classes = dict(
-    player_class=player.Player,
-    Player=player.Player,
-    _reconstructor = copy_reg._reconstructor,
-    object=object,
-    array=list, # This is the old buyable.array.  We just treat it as a list
-                # for conversion purposes.
-    list=list,
-    Location=location.Location,
-    Tech=tech.Tech,
-    event_class=event.Event,
-    Event=event.Event,
-    group=player.Group,
-    Group=player.Group,
-    Buyable_Class=buyable.BuyableClass,
-    BuyableClass=buyable.BuyableClass,
-    Base=base.Base,
-    Base_Class=base.BaseClass,
-    BaseClass=base.BaseClass,
-    Item=item.Item,
-    Item_Class=item.ItemClass,
-    ItemClass=item.ItemClass,
-    _reconstruct=numpy.core.multiarray._reconstruct,
-    scalar=numpy.core.multiarray.scalar,
-    ndarray=numpy.ndarray,
-    dtype=numpy.dtype,
-)
 
 def load_game(loadgame_name):
     if loadgame_name == "":
@@ -493,6 +475,36 @@ def load_game(loadgame_name):
     unpickle = cPickle.Unpickler(loadfile)
 
     def find_class(module_name, class_name):
+        # For cPickle
+        import copy_reg
+        import numpy.core.multiarray
+        save_classes = dict(
+            player_class=player.Player,
+            Player=player.Player,
+            _reconstructor = copy_reg._reconstructor,
+            object=object,
+            array=list, # This is the old buyable.array.  We just treat it as a list
+                        # for conversion purposes.
+            list=list,
+            Location=location.Location,
+            Tech=tech.Tech,
+            event_class=event.Event,
+            Event=event.Event,
+            group=player.Group,
+            Group=player.Group,
+            Buyable_Class=buyable.BuyableClass,
+            BuyableClass=buyable.BuyableClass,
+            Base=base.Base,
+            Base_Class=base.BaseClass,
+            BaseClass=base.BaseClass,
+            Item=item.Item,
+            Item_Class=item.ItemClass,
+            ItemClass=item.ItemClass,
+            _reconstruct=numpy.core.multiarray._reconstruct,
+            scalar=numpy.core.multiarray.scalar,
+            ndarray=numpy.ndarray,
+            dtype=numpy.dtype,
+        )
         if class_name in save_classes:
             return save_classes[class_name]
         else:
@@ -526,23 +538,14 @@ def load_game(loadgame_name):
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         pl.convert_from(load_version)
-        for location in locations.values():
-            for my_base in location.bases:
+        for my_location in locations.values():
+            for my_base in my_location.bases:
                 my_base.convert_from(load_version)
-        for tech in techs.values():
-            tech.convert_from(load_version)
+        for my_tech in techs.values():
+            my_tech.convert_from(load_version)
 
     loadfile.close()
     return True
-
-#
-# Data
-#
-curr_speed = 1
-
-pl = player.Player(8000000000000)
-
-base_type = {}
 
 def load_base_defs(language_str):
     base_array = generic_load("bases_"+language_str+".dat")
@@ -725,13 +728,6 @@ def load_locations():
     if language != "en_US":
         load_location_defs(language)
 
-def fix_data_dir():
-    global data_loc
-    if os.path.exists(data_loc): return
-    elif os.path.exists("data"):
-        data_loc = "data/"
-        return
-
 def generic_load(file):
     """
 generic_load() loads a data file.  Data files are all in Python-standard
@@ -791,8 +787,6 @@ the type of object it is processing; this should be passed in via 'name'.
 
 #Techs.
 
-techs = {}
-
 def load_tech_defs(language_str):
     tech_array = generic_load("techs_"+language_str+".dat")
     for tech in tech_array:
@@ -804,7 +798,6 @@ def load_tech_defs(language_str):
             techs[tech["id"]].description = tech["description"]
         if tech.has_key("result"):
             techs[tech["id"]].result = tech["result"]
-
 
 def load_techs():
     global techs
@@ -866,16 +859,7 @@ def load_techs():
 
     if debug:
         print "Loaded %d techs." % len (techs)
-fix_data_dir()
-load_techs()
 
-jobs = {}
-jobs["Expert Jobs"] = [75, "Simulacra", "", ""]
-jobs["Intermediate Jobs"] = [50, "Voice Synthesis", "", ""]
-jobs["Basic Jobs"] = [20, "Personal Identification", "", ""]
-jobs["Menial Jobs"] = [5, "", "", ""]
-
-items = {}
 def load_items():
     global items
     items = {}
@@ -942,8 +926,6 @@ def load_item_defs(language_str):
         if item_name.has_key("description"):
             items[item_name["id"]].description = item_name["description"]
 
-
-events = {}
 def load_events():
     global events
     events = {}
@@ -1193,7 +1175,6 @@ def init_graphics_system():
     graphics.g.load_images(data_loc)
     graphics.g.init_alpha()
 
-soundbuf = 1024*2
 def reinit_mixer():
     global nosound
     if nosound: return
@@ -1223,8 +1204,8 @@ def get_save_names():
     return save_names
 
 
-map_screen = None
-
+# Initialization code
+set_locale()
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()

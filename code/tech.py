@@ -18,7 +18,6 @@
 
 #This file contains the tech class.
 
-import pygame
 import g
 import buyable
 

@@ -417,7 +417,7 @@ class EditableText(widget.FocusWidget, Text):
                 self.cursor_pos -= 1
         elif event.key == pygame.K_DELETE:
             if self.cursor_pos < len(self.text):
-               self.text = self.text[:self.cursor_pos] \
+                self.text = self.text[:self.cursor_pos] \
                 + self.text[self.cursor_pos + 1:]
         elif event.key == pygame.K_LEFT:
             self.cursor_pos = max(0, self.cursor_pos - 1)

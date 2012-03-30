@@ -342,11 +342,11 @@ class Dialog(text.Text):
             except constants.ExitDialog, e:
                 # Exiting the dialog.
                 if e.args:
-                   # If we're given a return value, we pass it on.
-                   return e.args[0]
+                    # If we're given a return value, we pass it on.
+                    return e.args[0]
                 else:
-                   # Otherwise, exit with a return value of None.
-                   return
+                    # Otherwise, exit with a return value of None.
+                    return
 
         # None of the handlers instructed the dialog to close, so we pass that
         # information back up to the event loop.

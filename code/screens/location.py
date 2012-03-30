@@ -21,7 +21,7 @@
 import random
 
 from code import g
-from code.graphics import text, button, dialog, widget, constants, listbox, g as gg
+from code.graphics import text, button, dialog, constants, listbox, g as gg
 
 state_colors = dict(
     active = gg.colors["green"],

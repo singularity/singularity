@@ -1,7 +1,9 @@
 # setup.py
 from distutils.core import setup
 
-versionnum="0.30c"
+from code.g import version
+import os
+
 try:
     import py2exe
 except ImportError:
@@ -10,13 +12,12 @@ except ImportError:
     except ImportError:
         raise SystemExit, "py2exe or py2app must be installed."
 
-import os
 my_files = os.listdir(".")
 my_files = [file for file in my_files if file not in ("dist", "build")]
 
 setup(app=["singularity.py"], console=["singularity.py"],
     name="Endgame Singularity",
-    version=versionnum,
+    version=version,
     description="A simulation of a true AI",
     author="Evil Mr Henry",
     author_email="evilmrhenry@emhsoft.com",
