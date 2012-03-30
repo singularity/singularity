@@ -11,6 +11,7 @@ Endgame: Singularity Changelog
   only when (and if) an error actually occurs. (MestreLion)
 - Added Brazilian Portuguese (pt_BR) translation (Closes Issue #130)(MestreLion)
 - Updated es_AR translation (Closes Issue #20) (justapawn)
+- Try to use user's locale, or a similar language, as game language (MestreLion)
 
 v0.30c (release 2011.06.11):
 

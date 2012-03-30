@@ -61,7 +61,9 @@ debug = 0
 force_single_dir = False
 
 #Used to determine which data files to load.
-language = "en_US"
+default_language = "en_US"
+try:    language = locale.getdefaultlocale()[0] or default_language
+except: language = default_language
 
 #Makes the intro be shown on the first GUI tick.
 intro_shown = True
@@ -112,15 +114,33 @@ jobs = {"Expert Jobs"       : [75, "Simulacra", "", ""],
 pl = player.Player()
 map_screen = None
 
+def set_language(lang=None):
+    global language # required, since we're going to change it
+    if lang is None: lang = language
 
-# Try a few locale settings.  First the selected language, then the user's
-# default, then en_US.  The selected lanugage and en_US are tried with encoding
-# UTF-8 first, then the default encoding.  The user's default encoding is not
-# paired with UTF-8.
-#
-# If all of that fails, we hope locale magically does the right thing.
-def set_locale():
-    for attempt in [language + ".UTF-8", language, "", "en_US.UTF-8", "en_US"]:
+    langs = available_languages()
+    if lang in langs:
+        language = lang
+    else:
+        # Let's try to be smart: if base language exists for another for another
+        # country, use it. So es_ES => es_AR, pt_PT => pt_BR, etc
+        code = lang.split("_")[0]
+        languages = [ l for l in langs if code == l.split("_")[0] ]
+        if len(languages) > 0:
+            language = languages[0]
+        else:
+            language = default_language
+
+    # Try a few locale settings. First the selected language, then the user's
+    # default, then default language. Languages are tried with UTF-8 encoding
+    # first, then the default encoding. The user's default language is not
+    # paired with UTF-8.
+    # If all of that fails, we hope locale magically does the right thing.
+    for attempt in [ language + ".UTF-8",
+                     language,
+                     "",
+                     default_language + ".UTF-8",
+                     default_language]:
         try:
             locale.setlocale(locale.LC_ALL, attempt)
             break
@@ -628,12 +648,12 @@ def load_bases():
 #         (8000000000000, 60000000, 100), "Space-Time Manipulation",
 #         (5000000000, 300000, 0))
 
-    # We use the en_US definitions as fallbacks, in case strings haven't been
+    # We use the default definitions as fallbacks, in case strings haven't been
     # fully translated into the other language.  Load them first, then load the
     # alternate language strings.
-    load_base_defs("en_US")
+    load_base_defs(default_language)
 
-    if language != "en_US":
+    if language != default_language:
         load_base_defs(language)
 
 def load_location_defs(language_str):
@@ -721,12 +741,12 @@ def load_locations():
 #        locations["MOON"] = location.Location("MOON", (82, 10), 2,
 #                                              "Lunar Rocketry")
 
-    # We use the en_US definitions as fallbacks, in case strings haven't been
+    # We use the default definitions as fallbacks, in case strings haven't been
     # fully translated into the other language.  Load them first, then load the
     # alternate language strings.
-    load_location_defs("en_US")
+    load_location_defs(default_language)
 
-    if language != "en_US":
+    if language != default_language:
         load_location_defs(language)
 
 def generic_load(file):
@@ -845,11 +865,11 @@ def load_techs():
         techs[tech_name["id"]]=tech.Tech(tech_name["id"], "", 0,
          tech_cost, tech_pre, tech_danger, tech_type, tech_second)
 
-    # As with others, we load the en_US language definitions as a safe
-    # default, then overwrite them with the selected language.
+    # As with others, we load the default language definitions as a safe
+    # fallback, then overwrite them with the selected language.
 
-    load_tech_defs("en_US")
-    if language != "en_US":
+    load_tech_defs(default_language)
+    if language != default_language:
         load_tech_defs(language)
 
 # #        techs["Construction 1"] = tech.Tech("Construction 1",
@@ -911,10 +931,10 @@ def load_items():
         items[item_name["id"]]=item.ItemClass( item_name["id"], "",
          item_cost, item_pre, item_type, item_second, build_list)
 
-    # We use the en_US translations of item definitions as the default,
+    # We use the default translations of item definitions as the default,
     # then overwrite those with any available entries in the native language.
-    load_item_defs("en_US")
-    if language != "en_US":
+    load_item_defs(default_language)
+    if language != default_language:
         load_item_defs(language)
 
 def load_item_defs(language_str):
@@ -956,10 +976,10 @@ def load_events():
          int(event_name["chance"]),
          int(event_name["unique"]))
 
-    # We use the en_US translations of event definitions as the default,
+    # We use the default translations of event definitions as the default,
     # then overwrite those with any available entries in the native language.
-    load_event_defs("en_US")
-    if language != "en_US":
+    load_event_defs(default_language)
+    if language != default_language:
         load_event_defs(language)
 
 def load_event_defs(language_str):
@@ -1053,13 +1073,14 @@ def load_string_defs(lang):
 
 def load_strings():
     #If there are no string data files, stop.
-    if not os.path.exists(data_loc+"strings_"+language+".dat") or \
-                    not os.path.exists(data_loc+"strings_en_US.dat"):
+    if not os.path.exists(data_loc+"strings_"+language+".dat") and \
+       not os.path.exists(data_loc+"strings_"+default_language+".dat"):
         print "string files are missing. Exiting."
         sys.exit(1)
 
-    load_string_defs("en_US")
-    load_string_defs(language)
+    load_string_defs(default_language)
+    if language != default_language:
+        load_string_defs(language)
 
 def get_intro():
     intro_file_name = data_loc+"intro_"+language+".dat"
@@ -1204,9 +1225,7 @@ def get_save_names():
 
     return save_names
 
-
 # Initialization code
-set_locale()
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()

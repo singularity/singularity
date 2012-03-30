@@ -19,6 +19,10 @@
 
 #This file is the starting file for the game. Run it to start the game.
 
+# Set language first, so help page and all error messages can be translated
+import g
+g.set_language()
+
 # Since we require numpy anyway, we might as well ask pygame to use it.
 try:
     import pygame
@@ -36,8 +40,7 @@ import os.path
 import optparse
 import logging
 
-import g, graphics.g
-from screens import main_menu
+import graphics.g
 
 pygame.init()
 pygame.font.init()
@@ -74,6 +77,15 @@ if os.path.exists(save_loc):
         sys.exit(1)
 
     if prefs.has_section("Preferences"):
+        try:
+            desired_language = prefs.get("Preferences", "lang")
+            if desired_language in g.available_languages():
+                g.set_language(desired_language)
+            else:
+                raise ValueError
+        except:
+            sys.stderr.write("Invalid or missing 'lang' in preferences.\n")
+
         try:
             if prefs.getboolean("Preferences", "fullscreen"):
                 graphics.g.fullscreen = pygame.FULLSCREEN
@@ -112,16 +124,6 @@ if os.path.exists(save_loc):
         except:
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
 
-        #If language is unset, default to English.
-        try: desired_language = prefs.get("Preferences", "lang")
-        except: desired_language = "en_US"
-        try:
-            if os.path.exists(g.data_loc + "strings_" + desired_language + ".dat"):
-                g.language = desired_language
-                g.set_locale()
-        except:
-            sys.stderr.write("Cannot find language files for language '%s'.\n" % desired_language)
-
 #Handle the program arguments.
 desc = """Endgame: Singularity is a simulation of a true AI. Go from computer to computer, pursued by the entire world. Keep hidden, and you might have a chance."""
 parser = optparse.OptionParser(version=g.version, description=desc,
@@ -138,7 +140,7 @@ langs = g.available_languages()
 parser.add_option("-l", "--lang", "--language", dest="language", type="choice",
                   choices=langs, metavar="LANG",
                   help="set the language to LANG (available languages: " +
-                       " ".join(langs) + ", default en_us)")
+                       " ".join(langs) + ", default " + g.language +")")
 parser.add_option("-g", "--grab", help="grab the mouse pointer", dest="grab",
                   action="store_true")
 parser.add_option("--nograb", help="don't grab the mouse pointer (default)",
@@ -184,12 +186,10 @@ hidden_options.add_option("--cheater", help="for bad little boys and girls",
                           action="store_true", default=False)
 # Uncomment to make the hidden options visible.
 #parser.add_option_group(hidden_options)
-
 (options, args) = parser.parse_args()
 
 if options.language is not None:
-    g.language = options.language
-    g.set_locale()
+    g.set_language(options.language)
 if options.resolution is not None:
     try:
         xres, yres = options.resolution.split("x")
@@ -220,9 +220,6 @@ if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
 
-# Initialize the screen with a dummy size.
-pygame.display.set_mode(graphics.g.screen_size)
-
 #init data:
 g.load_strings()
 g.load_events()
@@ -231,15 +228,20 @@ g.load_techs()
 g.load_items()
 g.load_bases()
 
+# Initialize the screen with a dummy size.
+pygame.display.set_mode(graphics.g.screen_size)
+
 g.init_graphics_system()
 g.reinit_mixer()
 g.load_sounds()
 g.load_music()
 
-
 # Set the application icon.
 pygame.display.set_icon(graphics.g.images["icon.png"])
 
 #Display the main menu
+#Import is delayed until now so selected language via command-line options or
+# preferences file can be effective
+from screens import main_menu
 menu_screen = main_menu.MainMenu()
 menu_screen.show()
