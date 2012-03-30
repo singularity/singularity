@@ -9,7 +9,7 @@ Pre-built versions of Endgame: Singularity are currently available for Windows
 and Mac OS X.
 
 RUNNING FROM SOURCE
-You will need Python (2.4+), pygame (1.7+, 1.8.1+ preferred), and NumPy.
+You will need Python (2.6+), pygame (1.7+, 1.8.1+ preferred), and NumPy.
 This game should work on Linux, Windows, and Mac OS X as long as the preceding
 requirements are met.  However, all development was done in Linux, so glitches
 may be present in OS X and Windows.
@@ -27,7 +27,7 @@ Python, pygame, and NumPy first, which can be tricky. Some fonts are incorrect,
 but the game itself should work properly.
 
 RUNNING THE GAME
-on Linux, running the shell script "Endgame_Linux" will start the game. On
+on Linux, running the shell script "singularity" will start the game. On
 other platforms, type "python singularity.py". If using the Windows compile,
 just run the .exe.
 
@@ -36,9 +36,11 @@ COMMAND-LINE OPTIONS
   -h, --help            show this help message and exit
   --sound               enable sound (default)
   --nosound             disable sound
+  --daynight            enable day/night display (default)
+  --nodaynight          disable day/night display
   -l LANG, --lang=LANG, --language=LANG
                         set the language to LANG (available languages: de_DE
-                        en_US es_AR sv_SE, default en_us)
+                        en_US es_AR fr_FR it_IT pt_BR sv_SE, default en_US)
   -g, --grab            grab the mouse pointer
   --nograb              don't grab the mouse pointer (default)
   -s, --singledir       keep saved games and settings in the Singularity
@@ -129,6 +131,7 @@ Thomas (native-proofing of German translation)
 Philippe Grenard (translation into French)
 Guga (updates to the Spanish translation)
 Daniele Sapino (translation into Spanish)
+MestreLion (translation into Brazilian Portuguese)
 
 CONTRIBUTING
 All suggestions, translations, code, etc. are welcomed, though it would be
@@ -159,8 +162,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-Portions Copyright (C) 2005 Adam Bark.  See code/clock.py for details.
 
 DATA LICENSE
 The sounds, music, text files, and icons in the data subdirectory are under
@@ -194,7 +195,9 @@ The day and night images of the earth are from NASA's "Blue Marble 2002" image
 collection:
 http://visibleearth.nasa.gov/view_set.php?categoryID=2364
 
-The night image has been altered to better match by overlaying, blending, and color-matching missing ice from the day image.  These modifications are not considered to be substantial, and are therefore ineligible for copyright.
+The night image has been altered to better match by overlaying, blending, and
+color-matching missing ice from the day image.  These modifications are not
+considered to be substantial, and are therefore ineligible for copyright.
 
 NASA Terms of Use
 
@@ -207,12 +210,14 @@ Visible Earth Addendum
 
 Beyond the NASA Terms, the Visible Earth team requests, but does not require:
 
-   1. The Visible Earth be provided a credit as the location that the imagery was found at
+   1. The Visible Earth be provided a credit as the location that the imagery
+      was found at
    2. A URL be provided, either to the Visible Earth
-      (http://visibleearth.nasa.gov/) or to the page providing the link to the used image.
+      (http://visibleearth.nasa.gov/) or to the page providing the link to the
+      used image.
 
 FONT LICENSES
-The boxy font used is "Acknowledge", by Brian Kent, modified in order to have 
+The boxy font used is "Acknowledge", by Brian Kent, modified in order to have
 the numbers fixed-width and to register the correct height in pygame.
 http://www.aenigmafonts.com/fonts/fontsa.html
 
@@ -333,4 +338,3 @@ be used in advertising or otherwise to promote the sale, use or other
 dealings in this Font Software without prior written authorization
 from Tavmjong Bah. For further information, contact: tavmjong @ free
 . fr.
-

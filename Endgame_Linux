@@ -1,4 +1,1 @@
-#!/bin/sh
-my_dir=`dirname "$0"`
-cd "$my_dir"
-exec python singularity.py "$@"
+singularity
