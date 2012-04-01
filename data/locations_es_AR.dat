@@ -1,58 +1,57 @@
 [N AMERICA]
-name = !!!NORTH AMERICA!!!
-hotkey = !!!N!!!
-cities_list = !!!Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas!!!
+name = AMERICA DEL NORTE
+hotkey = n
+cities_list = Seattle | San Diego | Vancouver | Atlanta | Mérida | Guadalajara | San José | Omaha | Dallas
 
 [S AMERICA]
-name = !!!SOUTH AMERICA!!!
-hotkey = !!!S!!!
-cities_list = !!!Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires!!!
+name = AMERICA DEL SUR
+hotkey = s
+cities_list = Lima | Sao Paulo | Ushuaia | Bogotá | Mar del Plata | Buenos Aires
 
 [EUROPE]
-name = !!!EUROPE!!!
-hotkey = !!!U!!!
-cities_list = !!!Cork | Barcelona | Athens | Utrecht | Moscow | Sytki | Reykjavik | Liechtenstein!!!
+name = EUROPA
+hotkey = u
+cities_list = Cork | Barcelona | Atenas | Utrecht | Moscú | Sytki | Reykjavik | Liechtenstein
 
 [ASIA]
-name = !!!ASIA!!!
-hotkey = !!!A!!!
-cities_list = !!!Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing!!!
+name = ASIA
+hotkey = a
+cities_list = Delhi | Mumbai | Singapur | Seúl | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing
 
 [AFRICA]
-name = !!!AFRICA!!!
-hotkey = !!!I!!!
-cities_list = !!!Johannesburg | Accra | Cairo | Tangier!!!
+name = ÁFRICA
+hotkey = i
+cities_list = Johannesburgo | Accra | Cairo | Tánger
 
 [ANTARCTIC]
-name = !!!ANTARCTIC!!!
-hotkey = !!!T!!!
-cities_list = !!!Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre Adelie!!!
+name = ANTÁRTICO
+hotkey = t
+cities_list = Monte Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Tierra Adelia
 
 [OCEAN]
-name = !!!OCEAN!!!
-hotkey = !!!C!!!
-cities_list = !!!Pacific | Atlantic | Indian | Southern | Arctic!!!
+name = OCÉANO
+hotkey = c
+cities_list = Pacífico | Atlántico | India | Sur | Ártico
 
 [MOON]
-name = !!!MOON!!!
-hotkey = !!!O!!!
-cities_list = !!!Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus Crater | Vallis Planck!!!
+name = LUNA
+hotkey = l
+cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Cráter Copérnico | Vallis Planck
 
 [ORBIT]
-name = !!!ORBIT!!!
-hotkey = !!!B!!!
+name = ÓRBITA
+hotkey = b
 
 [FAR REACHES]
-name = !!!FAR REACHES!!!
-hotkey = !!!F!!!
-cities_list = !!!Aries | Taurus | Gemini | Cancer | Leo | Virgo | Libra | Scorpio | Sagittarius | Capricorn | Aquarius | Pisces!!!
+name = CONFINES
+hotkey = f
+cities_list Aries | Tauro | Géminis | Cáncer | Leo | Virgo | Libra | Escorpión | Sagitario | Capricornio | Acuario | Piscis
 
 [TRANSDIMENSIONAL]
-name = !!!TRANSDIMENSIONAL!!!
-hotkey = !!!D!!!
+name = TRANSDIMENSIONAL
+hotkey = d
 
 [AUSTRALIA]
-name = !!!AUSTRALIA!!!
-hotkey = !!!L!!!
-cities_list = !!!Canberra | Melbourne | Fremantle | Perth | Darwin | Cairns | Brisbane | Sydney | Newcastle!!!
-
+name = AUSTRALIA
+hotkey = t
+cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Cairns | Brisbane | Sydney | Newcastle

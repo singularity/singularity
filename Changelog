@@ -10,6 +10,7 @@ Endgame: Singularity Changelog
   and error log. Also, if possible (Python >= 2.6), error.log is now created
   only when (and if) an error actually occurs. (MestreLion)
 - Added Brazilian Portuguese (pt_BR) translation (Closes Issue #130)(MestreLion)
+- Updated es_AR translation (Closes Issue #20) (justapawn)
 
 v0.30c (release 2011.06.11):
 
