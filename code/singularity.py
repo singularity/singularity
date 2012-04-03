@@ -229,6 +229,7 @@ g.load_events()
 g.load_locations()
 g.load_techs()
 g.load_items()
+g.load_bases()
 
 g.init_graphics_system()
 g.reinit_mixer()

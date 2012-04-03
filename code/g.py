@@ -523,17 +523,18 @@ def load_game(loadgame_name):
     global default_savegame_name
     default_savegame_name = loadgame_name
 
-    global pl, curr_speed, techs, base_type, events, locations
-    load_locations()
-    load_bases()
-    load_events()
-
     # Changes to overall structure go here.
+    global pl, curr_speed, techs, locations, events
     pl = unpickle.load()
     curr_speed = unpickle.load()
     techs = unpickle.load()
     locations = unpickle.load()
     events = unpickle.load()
+
+    # Apply current language
+    load_tech_defs()
+    load_location_defs()
+    load_event_defs()
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
@@ -1130,10 +1131,10 @@ def new_game(difficulty):
         for group in pl.groups.values():
             group.discover_bonus = discover_bonus
 
-    global locations
+    # Reset all "mutable" game data
     load_locations()
-    load_bases()
     load_techs()
+    load_events()
 
     if difficulty < 5:
         techs["Socioanalytics"].finish()
