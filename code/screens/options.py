@@ -276,19 +276,12 @@ class OptionButton(button.ToggleButton, button.FunctionButton):
 
 def set_language_properly():
     g.set_language()
-    g.load_bases()
-    g.load_items()
-    g.load_base_defs(g.language)
-    g.load_tech_defs(g.language)
-    g.load_item_defs(g.language)
-    g.load_event_defs(g.language)
-    g.load_string_defs(g.language)
-    try:
-        g.load_location_defs(g.language)
-    except NameError:
-        # We haven't initialized the location yet.  This will be handled when
-        # we do that.
-        pass
+    g.load_string_defs()
+    g.load_base_defs()
+    g.load_tech_defs()
+    g.load_item_defs()
+    g.load_event_defs()
+    g.load_location_defs()
 
     dialog.Dialog.top.map_screen.needs_rebuild = True
     dialog.Dialog.top.map_screen.needs_redraw = True

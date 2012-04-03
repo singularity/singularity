@@ -568,21 +568,53 @@ def load_game(loadgame_name):
     loadfile.close()
     return True
 
-def load_base_defs(language_str):
-    base_array = generic_load("bases_"+language_str+".dat")
-    for base in base_array:
-        if (not base.has_key("id")):
-            print "base lacks id in bases_"+language_str+".dat"
-        if base.has_key("name"):
-            base_type[base["id"]].base_name = base["name"]
-        if base.has_key("description"):
-            base_type[base["id"]].description = base["description"]
-        if base.has_key("flavor"):
-            if type(base["flavor"]) == list:
-                base_type[base["id"]].flavor = base["flavor"]
-            else:
-                base_type[base["id"]].flavor = [base["flavor"]]
+def load_generic_defs_file(name,lang=None,mandatory=False):
+    if lang is None: lang = language
 
+    filename = name + "_" + lang + ".dat"
+    try:
+        # Definition file for default language is always mandatory
+        if lang == default_language: mandatory = True
+        return generic_load(filename, mandatory)
+
+    except:
+        return [] # For other languages, ignore errors
+
+def load_generic_defs(name,object,lang=None,listype_attrs=[]):
+    if lang is None: lang = language
+
+    # We use the default language definitions as fallbacks, then overwrite those
+    # with any available entries in the native language.
+    if lang != default_language:
+        load_generic_defs(name, object, default_language, listype_attrs)
+
+    array = load_generic_defs_file(name,lang)
+    for item in array:
+
+        # ID
+        if not "id" in item:
+            sys.stderr.write("an entry from %s has no id" % file)
+            continue # ignore entries without id
+
+        # Keys of type list
+        for key in listype_attrs:
+            if key in dir(object[item["id"]]):
+                if key in item:
+                    if type(item[key]) == list:
+                        object[item["id"]].__setattr__(key, item[key])
+                    else:
+                        object[item["id"]].__setattr__(key, [item[key]])
+                else:
+                    object[item["id"]].__setattr__(key, [""])
+
+        # Ordinary keys
+        for key in item:
+            if key == "id" or key in listype_attrs: continue # Already handled
+            if key in dir(object[item["id"]]):
+                object[item["id"]].__setattr__(key, item[key])
+
+def load_base_defs(lang=None):
+    load_generic_defs("bases",base_type,lang,["flavor"])
 
 def load_bases():
     global base_type
@@ -639,42 +671,10 @@ def load_bases():
             base_size, force_cpu, allowed_list, chance_dict, cost_list,
             base_pre, maint_list)
 
-#         base_type["Reality Bubble"] = base.BaseClass("Reality Bubble",
-#         "This base is outside the universe itself, "+
-#         "making it safe to conduct experiments that may destroy reality.",
-#         50, False,
-#         ["TRANSDIMENSIONAL"],
-#         {"science": 250}
-#         (8000000000000, 60000000, 100), "Space-Time Manipulation",
-#         (5000000000, 300000, 0))
+    load_base_defs()
 
-    # We use the default definitions as fallbacks, in case strings haven't been
-    # fully translated into the other language.  Load them first, then load the
-    # alternate language strings.
-    load_base_defs(default_language)
-
-    if language != default_language:
-        load_base_defs(language)
-
-def load_location_defs(language_str):
-    location_array = generic_load("locations_"+language_str+".dat")
-    for location_def in location_array:
-        if (not location_def.has_key("id")):
-            print "location lacks id in locations_"+language_str+".dat"
-
-        location = locations[location_def["id"]]
-        if location_def.has_key("name"):
-            location.name = location_def["name"]
-        if location_def.has_key("hotkey"):
-            location.hotkey = location_def["hotkey"]
-        if location_def.has_key("cities"):
-            if type(location_def["cities"]) == list:
-                location.cities = location_def["cities"]
-            else:
-                location.cities = [location_def["cities"]]
-        else:
-            location.cities = [""]
-
+def load_location_defs(lang=None):
+    load_generic_defs("locations",locations,lang,["cities"])
 
 def load_locations():
     global locations
@@ -738,33 +738,42 @@ def load_locations():
 
         locations[id].modifiers = modifiers_dict
 
-#        locations["MOON"] = location.Location("MOON", (82, 10), 2,
-#                                              "Lunar Rocketry")
+    load_location_defs()
 
-    # We use the default definitions as fallbacks, in case strings haven't been
-    # fully translated into the other language.  Load them first, then load the
-    # alternate language strings.
-    load_location_defs(default_language)
-
-    if language != default_language:
-        load_location_defs(language)
-
-def generic_load(file):
+def generic_load(file, mandatory=True):
     """
 generic_load() loads a data file.  Data files are all in Python-standard
 ConfigParser format.  The 'id' of any object is the section of that object.
 Fields that need to be lists are postpended with _list; this is stripped
 from the actual name, and the internal entries are broken up by the pipe
 ("|") character.
+
+On errors, if file is mandatory then quit, else raise exception. For syntax
+parsing-related errors, always print error message. For IOErrors silently ignore
+non-mandatory missing or otherwise unreadable files
 """
 
     config = ConfigParser.RawConfigParser()
     filename = os.path.join(data_loc, file)
     try:
         config.readfp(open(filename, "r"))
+
+    except IOError as reason:
+        # Silently ignore non-mandatory missing files
+        if mandatory:
+            sys.stderr.write("Cannot read '%s': %s\nExiting\n" % filename, reason)
+            sys.exit(1)
+        else:
+            raise
+
     except Exception as reason:
-        sys.stderr.write("Cannot open %s for reading! (%s)\n" % (filename, reason))
-        sys.exit(1)
+        # Always print parsing errors, even for non-mandatory files
+        sys.stderr.write("Error parsing '%s': %s\n" % filename, reason)
+        if mandatory:
+            sys.stderr.write("Exiting.\n")
+            sys.exit(1)
+        else:
+            raise
 
     return_list = []
 
@@ -800,25 +809,13 @@ the list 'fields' in the dictionary 'dict'.  If any do not exist, it
 will print an error message and abort.  Part of that error message is
 the type of object it is processing; this should be passed in via 'name'.
 """
-
     for field in fields:
         if field not in dict:
             sys.stderr.write("%s %s lacks key %s.\n" % (name, repr(dict), field))
             sys.exit(1)
 
-#Techs.
-
-def load_tech_defs(language_str):
-    tech_array = generic_load("techs_"+language_str+".dat")
-    for tech in tech_array:
-        if (not tech.has_key("id")):
-            print "tech lacks id in techs_"+language_str+".dat"
-        if tech.has_key("name"):
-            techs[tech["id"]].name = tech["name"]
-        if tech.has_key("description"):
-            techs[tech["id"]].description = tech["description"]
-        if tech.has_key("result"):
-            techs[tech["id"]].result = tech["result"]
+def load_tech_defs(lang=None):
+    load_generic_defs("techs",techs,lang)
 
 def load_techs():
     global techs
@@ -865,21 +862,9 @@ def load_techs():
         techs[tech_name["id"]]=tech.Tech(tech_name["id"], "", 0,
          tech_cost, tech_pre, tech_danger, tech_type, tech_second)
 
-    # As with others, we load the default language definitions as a safe
-    # fallback, then overwrite them with the selected language.
+    if debug: print "Loaded %d techs." % len (techs)
 
-    load_tech_defs(default_language)
-    if language != default_language:
-        load_tech_defs(language)
-
-# #        techs["Construction 1"] = tech.Tech("Construction 1",
-# #                "Basic construction techniques. "+
-# #                "By studying the current literature on construction techniques, I "+
-# #                "can learn to construct basic devices.",
-# #                0, (5000, 750, 0), [], 0, "", 0)
-
-    if debug:
-        print "Loaded %d techs." % len (techs)
+    load_tech_defs()
 
 def load_items():
     global items
@@ -931,21 +916,10 @@ def load_items():
         items[item_name["id"]]=item.ItemClass( item_name["id"], "",
          item_cost, item_pre, item_type, item_second, build_list)
 
-    # We use the default translations of item definitions as the default,
-    # then overwrite those with any available entries in the native language.
-    load_item_defs(default_language)
-    if language != default_language:
-        load_item_defs(language)
+    load_item_defs()
 
-def load_item_defs(language_str):
-    item_array = generic_load("items_"+language_str+".dat")
-    for item_name in item_array:
-        if (not item_name.has_key("id")):
-            print "item lacks id in items_"+language_str+".dat"
-        if item_name.has_key("name"):
-            items[item_name["id"]].name = item_name["name"]
-        if item_name.has_key("description"):
-            items[item_name["id"]].description = item_name["description"]
+def load_item_defs(lang=None):
+    load_generic_defs("items",items,lang)
 
 def load_events():
     global events
@@ -976,34 +950,20 @@ def load_events():
          int(event_name["chance"]),
          int(event_name["unique"]))
 
-    # We use the default translations of event definitions as the default,
-    # then overwrite those with any available entries in the native language.
-    load_event_defs(default_language)
-    if language != default_language:
-        load_event_defs(language)
+    load_event_defs()
 
-def load_event_defs(language_str):
-    #If there are no event data files, stop.
-    if (not os.path.exists(data_loc+"events_"+language+".dat")):
-        print "event files are missing. Exiting."
-        sys.exit(1)
+def load_event_defs(lang=None):
+    load_generic_defs("events",events,lang)
 
-    event_array = generic_load("events_"+language+".dat")
-    for event_name in event_array:
-        if (not event_name.has_key("id")):
-            print "event lacks id in events_"+language+".dat"
-            continue
-        if (not event_name.has_key("description")):
-            print "event lacks description in events_"+language+".dat"
-            continue
-        if event_name.has_key("id"):
-            events[event_name["id"]].name = event_name["id"]
-        if event_name.has_key("description"):
-            events[event_name["id"]].description = event_name["description"]
+def load_string_defs(lang=None):
+    if lang is None: lang = language
 
-def load_string_defs(lang):
+    # We use the default language definitions as fallbacks, then overwrite those
+    # with any available entries in the native language, like load_generic_defs()
+    if lang != default_language:
+        load_string_defs(default_language)
 
-    string_list = generic_load("strings_" + lang + ".dat")
+    string_list = load_generic_defs_file("strings",lang,True)
     for string_section in string_list:
         if string_section["id"] == "fonts":
 
@@ -1072,15 +1032,7 @@ def load_string_defs(lang):
             sys.exit(1)
 
 def load_strings():
-    #If there are no string data files, stop.
-    if not os.path.exists(data_loc+"strings_"+language+".dat") and \
-       not os.path.exists(data_loc+"strings_"+default_language+".dat"):
-        print "string files are missing. Exiting."
-        sys.exit(1)
-
-    load_string_defs(default_language)
-    if language != default_language:
-        load_string_defs(language)
+    load_string_defs()
 
 def get_intro():
     intro_file_name = data_loc+"intro_"+language+".dat"
