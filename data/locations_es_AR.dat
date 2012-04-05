@@ -45,7 +45,7 @@ hotkey = b
 [FAR REACHES]
 name = CONFINES
 hotkey = f
-cities_list Aries | Tauro | Géminis | Cáncer | Leo | Virgo | Libra | Escorpión | Sagitario | Capricornio | Acuario | Piscis
+cities_list = Aries | Tauro | Géminis | Cáncer | Leo | Virgo | Libra | Escorpión | Sagitario | Capricornio | Acuario | Piscis
 
 [TRANSDIMENSIONAL]
 name = TRANSDIMENSIONAL
