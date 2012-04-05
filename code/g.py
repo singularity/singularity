@@ -115,7 +115,15 @@ jobs = {"Expert Jobs"       : [75, "Simulacra", "", ""],
         "Menial Jobs"       : [5 , "", "", ""],
        }
 
-pl = player.Player()
+# Order IS relevant! (because of base.extra_items array)
+item_types = [
+    item.ItemType('cpu'),
+    item.ItemType('reactor'),
+    item.ItemType('network'),
+    item.ItemType('security'),
+]
+
+pl = None # The Player instance
 map_screen = None
 
 def set_language(lang=None):
@@ -367,16 +375,20 @@ def to_money(amount):
     else:
         if abs_amount < 1000000000: # Millions.
             divisor = 1000000
-            unit = 'mi'
+            #Translators: abbreviation of 'millions'
+            unit = _('mi')
         elif abs_amount < 1000000000000: # Billions.
             divisor = 1000000000
-            unit = 'bi'
+            #Translators: abbreviation of 'billions'
+            unit = _('bi')
         elif abs_amount < 1000000000000000: # Trillions.
             divisor = 1000000000000
-            unit = 'tr'
+            #Translators: abbreviation of 'trillions'
+            unit = _('tr')
         else: # Hope we don't need past quadrillions!
             divisor = 1000000000000000
-            unit = 'qu'
+            #Translators: abbreviation of 'quadrillions'
+            unit = _('qu')
 
         to_return = "%3.3f" % (float(amount) / divisor)
         to_return += unit
@@ -421,11 +433,11 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time/60 > 48:
-        return str(raw_time/(24*60)) +" days"
+        return str(raw_time/(24*60)) +" "+_("days")
     elif raw_time/60 > 1:
-        return str(raw_time/(60)) +" hours"
+        return str(raw_time/(60)) +" "+_("hours")
     else:
-        return str(raw_time) +" minutes"
+        return str(raw_time) +" "+_("minutes")
 
 # Generator function for iterating through all bases.
 def all_bases(with_loc = False):
@@ -913,6 +925,13 @@ def load_items():
     load_item_defs()
 
 def load_item_defs(lang=None):
+
+    for type in item_types:
+        if type.id == 'cpu'     : type.text = _("&Processor")
+        if type.id == 'reactor' : type.text = _("&Reactor")
+        if type.id == 'network' : type.text = _("&Network")
+        if type.id == 'security': type.text = _("&Security")
+
     load_generic_defs("items",items,lang)
 
 def load_events():

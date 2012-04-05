@@ -14,13 +14,9 @@ TODO:
     - Design a way to do the above with events,locations,techs, etc
     - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
     - Consistent use of stderr and print, preferably using available Logger
-    - Reload all dialogs and buttons when language changes
-    - Fix hotkeys when language changes
-    - Make buttons extract hotkey from their own labels using "&" markers (ongoing - MestreLion)
+    - Fix hotkeys and reload all dialogs and buttons when language changes
     - Revamp Options screen (several #TODO: remarks in code/screens/options.py)
     - Prevent language-dependent data from BaseType and Buyable, either loading game or
       switching language, to "contaminate" g.location.bases[*].type/.cpus. Approaches:
       - replace all occurrences to use g.base_type[baselocation.bases[i].type.id]
       - force refresh of bases.type and bases.cpus in g.load_location_defs()
-      - prevent leaking in Location.add_base
-      - fix cPickle to load the updated references

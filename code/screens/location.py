@@ -20,20 +20,22 @@
 
 import random
 
-from code import g
+from code import g, base
 from code.graphics import text, button, dialog, constants, listbox, g as gg
 
+import base as basescreen
+
 state_colors = dict(
-    active = gg.colors["green"],
-    sleep = gg.colors["yellow"],
-    stasis = gg.colors["gray"],
-    overclocked = gg.colors["orange"],
-    suicide = gg.colors["red"],
+    active          = gg.colors["green"],
+    sleep           = gg.colors["yellow"],
+    stasis          = gg.colors["gray"],
+    overclocked     = gg.colors["orange"],
+    suicide         = gg.colors["red"],
     entering_stasis = gg.colors["gray"],
-    leaving_stasis = gg.colors["gray"],
+    leaving_stasis  = gg.colors["gray"],
 )
 
-state_list = ["active", "sleep"]
+state_list = base.power_states[:2]
 state_list.reverse()
 
 class LocationScreen(dialog.Dialog):
@@ -51,38 +53,37 @@ class LocationScreen(dialog.Dialog):
         self.open_button = \
             button.FunctionButton(self, (-.33, -.8), (-.3, -.09),
                                   anchor=constants.TOP_CENTER,
-                                  text="OPEN BASE", hotkey="o",
+                                  text=_("&OPEN BASE"), autohotkey=True,
                                   function=self.open_base)
         self.power_button = \
             button.FunctionButton(self, (-.67, -.8), (-.3, -.09),
                                   anchor=constants.TOP_CENTER,
-                                  text="POWER STATE", hotkey="p",
+                                  text=_("&POWER STATE"), autohotkey=True,
                                   function=self.power_state)
 
         self.new_button = \
             button.FunctionButton(self, (0, -.91), (-.3, -.09),
-                                  text="NEW BASE", hotkey="n",
+                                  text=_("&NEW BASE"), autohotkey=True,
                                   function=self.new_base)
         self.destroy_button = \
             button.FunctionButton(self, (-.50, -.91), (-.3, -.09),
                                   anchor=constants.TOP_CENTER,
-                                  text="DESTROY BASE", hotkey="d",
+                                  text=_("&DESTROY BASE"), autohotkey=True,
                                   function=self.destroy_base)
         self.back_button = button.ExitDialogButton(self, (-1, -.9), (-.3, -.09),
                                                    anchor=constants.TOP_RIGHT,
-                                                   text="BACK", hotkey="b")
+                                                   text=_("&BACK"), autohotkey=True)
 
         self.confirm_destroy = \
             dialog.YesNoDialog(self, (-.5,0), (-.35, -.7),
-                            text="Are you sure you want to destroy this base?",
+                            text=_("Are you sure you want to destroy this base?"),
                             shrink_factor=.5)
 
         self.new_base_dialog = NewBaseDialog(self)
         self.location = None
 
-        from code import screens
-        self.base_dialog = screens.base.BaseScreen(self, (0,0),
-                                                   anchor=constants.TOP_LEFT)
+        self.base_dialog = basescreen.BaseScreen(self, (0,0),
+                                                 anchor=constants.TOP_LEFT)
 
     def make_item(self, canvas):
         canvas.name_display = text.Text(canvas, (-.01,-.05), (-.48, -.9),
@@ -103,24 +104,24 @@ class LocationScreen(dialog.Dialog):
                 element.text = ""
         else:
             canvas.name_display.text = name
-            canvas.power_display.text = base.power_state.capitalize()
+            canvas.power_display.text = base.power_state_name
             canvas.power_display.color = state_colors[base.power_state]
 
             if not base.done:
-                canvas.status_display.text = "Building Base"
+                canvas.status_display.text = _("Building Base")
             elif base.type.force_cpu:
                 canvas.status_display.text = ""
             elif base.cpus is None and base.extra_items == [None] * 3:
-                canvas.status_display.text = "Empty"
+                canvas.status_display.text = _("Empty")
             elif base.cpus is None:
-                canvas.status_display.text = "Incomplete"
+                canvas.status_display.text = _("Incomplete")
             elif not base.cpus.done:
-                canvas.status_display.text = "Building CPU"
+                canvas.status_display.text = _("Building CPU")
             elif [item for item in base.extra_items if item is not None
                                                        and not item.done]:
-                canvas.status_display.text = "Building Item"
+                canvas.status_display.text = _("Building Item")
             else:
-                canvas.status_display.text = "Complete"
+                canvas.status_display.text = _("Complete")
 
     def show(self):
         self.needs_rebuild = True
@@ -251,29 +252,34 @@ significant_numbers = [
 
 ## Generates a name for a base, given a particular location.
 def generate_base_name(location, base_type):
-    # First, decide whether we're going to try significant values or just
-    # choose one randomly.
-    if random.random() < 0.3: # 30% chance.
-        attempts = 0
-        done = False
-        while (not done) and (attempts < 5):
-            name = random.choice(location.cities) + \
-                " " + random.choice(base_type.flavor) + " " \
-                + random.choice(significant_numbers)
-            duplicate = False
-            for check_base in location.bases:
-                if check_base.name == name:
-                    duplicate = True
-                    break
-            if duplicate:
-                attempts += 1
-            else:
-                done = True
-        if done:
-            return name
-    # This is both the else case and the general case.
-    name = random.choice(location.cities) + " " + \
-        random.choice(base_type.flavor) + " " + \
-        str (random.randint(0, 32767))
+
+    attempts = 0
+    name = None
+    base_names = [name]+[base.name for base in location.bases]
+    while name in base_names:
+
+        # First, decide whether we're going to try significant values or just
+        # choose one randomly.
+        if random.random() < 0.3: # 30% chance.
+            number = random.choice(significant_numbers)
+        else:
+            number = str(random.randint(0, 32767))
+
+        city   = random.choice(location.cities)
+        flavor = random.choice(base_type.flavor)
+
+        if city:
+            #Translators: Format string for the name of a new base
+            #Example: "${NUMBER} ${BASETYPE} in ${CITY}"
+            name = _("{CITY} {BASETYPE} {NUMBER}",
+                     CITY=city,BASETYPE=flavor,NUMBER=number)
+        else:
+            #Translators: Name of a new base when location has no cities
+            name = _("{BASETYPE} {NUMBER}",
+                     BASETYPE=flavor,NUMBER=number)
+
+        # Damn translators omitting the ${NUMBER} in template string!
+        if attempts > 100: name = city + " " + flavor + " " + number
+        attempts += 1
 
     return name

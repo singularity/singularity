@@ -27,15 +27,18 @@ class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)
 
-        difficulty_button_souls = (("VERY EASY", 1), ("EASY", 3),
-                                   ("NORMAL", 5), ("HARD", 7),
-                                   ("ULTRA HARD", 10), ("IMPOSSIBLE", 100),
-                                   ("BACK", -1))
+        difficulty_button_souls = ((_("&VERY EASY") ,   1),
+                                   (_("&EASY")      ,   3),
+                                   (_("&NORMAL")    ,   5),
+                                   (_("&HARD")      ,   7),
+                                   (_("&ULTRA HARD"),  10),
+                                   (_("&IMPOSSIBLE"), 100),
+                                   (_("&BACK")      ,  -1),)
         difficulty_buttons = []
         for name, difficulty in difficulty_button_souls:
             difficulty_buttons.append(
                 button.ExitDialogButton(None, None, None, text=name,
-                                        hotkey=name[0].lower(),
+                                        autohotkey=True,
                                         exit_code=difficulty,
                                         default=(difficulty == -1)))
         self.difficulty_dialog = \
@@ -47,27 +50,27 @@ class MainMenu(dialog.TopDialog):
         self.map_screen = map.MapScreen(self)
         self.new_game_button = \
             button.FunctionButton(self, (.5, .20), (.25, .08),
-                                  text="NEW GAME", hotkey="n",
+                                  text=_("&NEW GAME"), autohotkey=True,
                                   anchor=constants.TOP_CENTER,
                                   text_size=28,
                                   function=self.new_game)
         self.load_game_button = \
             button.FunctionButton(self, (.5, .36), (.25, .08),
-                                  text="LOAD GAME", hotkey="l",
+                                  text=_("&LOAD GAME"), autohotkey=True,
                                   anchor=constants.TOP_CENTER,
                                   text_size=28,
                                   function=self.load_game)
         self.options_button = button.DialogButton(self, (.5, .52), (.25, .08),
-                                                  text="OPTIONS", hotkey="o",
+                                                  text=_("&OPTIONS"), autohotkey=True,
                                                   anchor=constants.TOP_CENTER,
                                                   text_size=28,
                                                   dialog=OptionsScreen(self))
         self.quit_button = button.ExitDialogButton(self, (.5, .68), (.25, .08),
-                                         text="QUIT", hotkey="q",
+                                         text=_("&QUIT"), autohotkey=True,
                                          anchor=constants.TOP_CENTER,
                                          text_size=28)
         self.about_button = button.DialogButton(self, (0, 1), (.13, .04),
-                                                text="ABOUT", hotkey="a",
+                                                text=_("&ABOUT"), autohotkey=True,
                                                 text_size=20,
                                                 anchor=constants.BOTTOM_LEFT,
                                                 dialog=AboutDialog(self))
@@ -97,14 +100,14 @@ class MainMenu(dialog.TopDialog):
                 dialog.call_dialog(self.map_screen, self)
 
 
-about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
+about_message = _("""Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
 
 A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 2005, 2006, 2007, 2008.
 
 Website: http://www.emhsoft.com/singularity/
 IRC Room: #singularity on irc.oftc.net (port 6667)
 
-Version %s"""
+Version %s""")
 
 class AboutDialog(dialog.MessageDialog):
     def __init__(self, *args, **kwargs):

@@ -16,7 +16,7 @@
 #along with Endgame: Singularity; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the item class.
+#This file contains the buyable class, a super class for item, base and tech
 
 from operator import truediv
 import g
@@ -39,26 +39,27 @@ class BuyableClass(object):
         else:
             self.prefix = ""
 
-    def get_cost(self):
+    @property
+    def cost(self):
         cost = array(self._cost, long)
-        cost[labor] *= g.minutes_per_day * g.pl.labor_bonus
+        cost[labor] *= g.minutes_per_day * getattr(g.pl,'labor_bonus',1)
         cost[labor] /= 10000
         cost[cpu] *= g.seconds_per_day
         return cost
 
-    cost = property(get_cost)
-
     def describe_cost(self, cost, hide_time=False):
-        cpu_cost = g.to_cpu(cost[cpu])
-        cash_cost = g.to_money(cost[cash])
-        labor_cost = ""
-        if not hide_time:
-            labor_cost = ", %s" % g.to_time(cost[labor]).replace(" ", u"\xA0")
-        return u"%s\xA0CPU, %s\xA0money%s" % (cpu_cost, cash_cost, labor_cost)
+        cpu_label   = _("%s CPU")   % g.to_cpu(cost[cpu])
+        cash_label  = _("%s money") % g.to_money(cost[cash])
+        labor_label = ", %s" % g.to_time(cost[labor]).replace(" ", u"\xA0")
+        if hide_time:
+            labor_label = ""
+        return u"%s, %s%s" % (cpu_label.replace(" ", u"\xA0"),
+                              cash_label.replace(" ", u"\xA0"),
+                              labor_label)
 
     def get_info(self):
         cost_str = self.describe_cost(self.cost)
-        template = """%s\nCost: %s\n---\n%s"""
+        template = "%s\n" + _("Cost:") + " %s\n---\n%s"
         return template % (self.name, cost_str, self.description)
 
     def __cmp__(self, other):
@@ -114,7 +115,14 @@ class Buyable(object):
 
     # Note that this is a method, handled by a property to avoid confusing
     # pickle.
-    available = property(lambda self: self.type.available)
+    @property
+    def available(self): return self.type.available
+
+    @property
+    def cost_paid(self): return self.total_cost - self.cost_left
+
+    @cost_paid.setter
+    def cost_paid(self, value): self.cost_left = self.total_cost - value
 
     def convert_from(self, save_version):
         if save_version < 4.91: # r5_pre
@@ -128,14 +136,6 @@ class Buyable(object):
             self.type.total_complete_count += self.count
             self.cost_left = array([0,0,0], long)
             self.done = True
-
-    def get_cost_paid(self):
-        return self.total_cost - self.cost_left
-
-    def set_cost_paid(self, value):
-        self.cost_left = self.total_cost - value
-
-    cost_paid = property(get_cost_paid, set_cost_paid)
 
     def _percent_complete(self, available=(0,0,0)):
         available_array = array(available, long)

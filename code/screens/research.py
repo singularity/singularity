@@ -22,8 +22,7 @@ from numpy import array
 import pygame
 
 from code import g
-from code.graphics import widget, dialog, button, slider, text, constants, listbox, g as gg
-import finance
+from code.graphics import dialog, button, slider, text, constants, listbox, g as gg
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
@@ -64,7 +63,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         elif key == "cpu_pool":
             description = g.strings["cpu_pool"] + "\n---\n" + g.strings["research_cpu_pool"]
         elif key == "jobs":
-            template = "%s\n%s money per CPU per day.\n---\n%s"
+            template = "%s\n" + _("%s money per CPU per day.") + "\n---\n%s"
             job = g.jobs[g.get_job_level()]
             profit = job[0]
             if g.techs["Advanced Simulacra"].done:
@@ -100,7 +99,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.slider.visible = False
 
         canvas.help_button = button.FunctionButton(canvas, (-.11, -.55),
-                                                   (0, -.40), text="?",
+                                                   (0, -.40), text=" ??? ",
                                                    text_shrink_factor=1,
                                                    base_font=gg.font[0],
                                                    function=self.show_help)
@@ -182,8 +181,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         techs = [tech for tech in g.techs.values() if tech.available()
                                                       and not tech.done]
         techs.sort()
-        self.list = ["CPU Pool", g.get_job_level()] + \
-                    ["Research %s" % tech.name for tech in techs]
+        self.list = [_("CPU Pool"), g.jobs[g.get_job_level()][3]] + \
+                    [_("Research %s") % tech.name for tech in techs]
         self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]
         self.listbox.key_list = self.key_list
 

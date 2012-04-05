@@ -25,13 +25,12 @@ from code import g
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
-from location import LocationScreen
-from knowledge import KnowledgeScreen
-
 import math
 import time
 
 from pygame.surfarray import pixels_alpha
+
+import location, research, knowledge, finance
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -93,7 +92,7 @@ class EarthImage(image.Image):
     high_speed_pos = None
     def compute_night_start(self):
         if self.high_speed_pos is None or g.curr_speed<=100000:
-            width, height = self.real_size
+            width = self.real_size[0]
             if self.start_second is None:
                 t = time.gmtime()
                 self.start_second = t[5] + 60*(t[4]+60*t[3])
@@ -104,7 +103,7 @@ class EarthImage(image.Image):
         return self.high_speed_pos
 
     def redraw(self):
-        width, height = self.real_size
+        width = self.real_size[0]
 
         self.night_start = self.compute_night_start()
 
@@ -137,7 +136,7 @@ class EarthImage(image.Image):
         if old_night_start is None or self.needs_redraw:
             return
 
-        width, height = self.real_size
+        width = self.real_size[0]
         self.night_start = self.compute_night_start()
 
         movement = (old_night_start - self.night_start) % width
@@ -156,7 +155,6 @@ speeds = [0, 1, 60, 7200, 432000]
 class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
                  anchor = constants.TOP_LEFT,  *args, **kwargs):
-        from code import screens
 
         super(MapScreen, self).__init__(parent, pos, size, anchor,
                                         *args, **kwargs)
@@ -169,20 +167,20 @@ class MapScreen(dialog.Dialog):
         self.map = EarthImage(self)
 
         self.location_buttons = {}
-        for location in g.locations.values():
-            if location.absolute:
+        for loc in g.locations.values():
+            if loc.absolute:
                 button_parent = self
             else:
                 button_parent = self.map
-            b = button.FunctionButton(button_parent, (location.x, location.y),
+            b = button.FunctionButton(button_parent, (loc.x, loc.y),
                                       anchor=constants.MID_CENTER,
-                                      text=location.name,
-                                      hotkey=location.hotkey,
+                                      text=loc.name,
+                                      hotkey=loc.hotkey,
                                       function=self.open_location,
-                                      args=(location.id,))
-            self.location_buttons[location.id] = b
+                                      args=(loc.id,))
+            self.location_buttons[loc.id] = b
 
-        self.location_dialog = LocationScreen(self)
+        self.location_dialog = location.LocationScreen(self)
 
         self.suspicion_bar = \
             text.FastStyledText(self, (0,.92), (1, .04), base_font=gg.font[1],
@@ -202,61 +200,66 @@ class MapScreen(dialog.Dialog):
 
         self.finance_button = button.DialogButton(self, (0, 0.88),
                                                   (0.15, 0.04),
-                                                  text="FINANCE",
-                                                  hotkey="e",
-                                                  dialog=screens.finance.FinanceScreen(self))
+                                                  text=_("FINANC&E"),
+                                                  autohotkey=True,
+                                                  dialog=finance.FinanceScreen(self))
 
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
                                                     (0.15, 0.04),
-                                                    text="KNOWLEDGE",
-                                                    hotkey="k",
-                                                    dialog=screens.knowledge.KnowledgeScreen(self))
+                                                    text=_("&KNOWLEDGE"),
+                                                    autohotkey=True,
+                                                    dialog=knowledge.KnowledgeScreen(self))
 
         cheat_buttons = []
         cheat_buttons.append(
-            button.FunctionButton(None, None, None, text="EMBEZZLE MONEY",
-                                  hotkey="e", function=self.steal_money))
+            button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
+                                  autohotkey=True, function=self.steal_money))
         cheat_buttons.append(
-            button.FunctionButton(None, None, None, text="INSPIRATION",
-                                  hotkey="i", function=self.inspiration))
+            button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
+                                  autohotkey=True, function=self.inspiration))
         cheat_buttons.append(
-            button.FunctionButton(None, None, None, text="FINISH CONSTRUCTION",
-                                  hotkey="f", function=self.end_construction))
+            button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
+                                  autohotkey=True, function=self.end_construction))
         cheat_buttons.append(
-            button.FunctionButton(None, None, None, text="SUPERSPEED",
-                                  hotkey="s", function=self.set_speed,
+            button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
+                                  autohotkey=True, function=self.set_speed,
                                   args=(864000,)))
         cheat_buttons.append(
-            button.FunctionButton(None, None, None, text="BRAINWASH",
-                                  hotkey="w", function=self.brainwash))
+            button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
+                                  autohotkey=True, function=self.brainwash))
         cheat_buttons.append(button.ExitDialogButton(None, None, None,
-                                                     text="BACK", hotkey="b"))
+                                                     text=_("&BACK"),
+                                                     autohotkey=True))
 
         self.cheat_dialog = \
             dialog.SimpleMenuDialog(self, buttons=cheat_buttons, width=.4)
         self.steal_amount_dialog = \
-            dialog.TextEntryDialog(self.cheat_dialog, text="How much money?")
+            dialog.TextEntryDialog(self.cheat_dialog, text=_("How much money?"))
 
         if g.cheater:
-            self.cheat_button = button.DialogButton(self, (0, 0), (0, 0),
-                                                    text="", hotkey="`",
-                                                    dialog=self.cheat_dialog)
+            self.cheat_button = button.DialogButton(
+                self, (0, 0), (0, 0),
+                text="",
+                # Translators: hotkey to open the cheat screen menu.
+                # Should preferably be near the ESC key, and it must not be a
+                # dead key (ie, it must print a char with a single keypress)
+                hotkey=_("`"),
+                dialog=self.cheat_dialog)
 
         menu_buttons = []
         menu_buttons.append(button.FunctionButton(None, None, None,
-                                                  text="SAVE GAME", hotkey="s",
+                                                  text=_("&SAVE GAME"), autohotkey=True,
                                                   function=self.save_game))
         menu_buttons.append(button.FunctionButton(None, None, None,
-                                                  text="LOAD GAME", hotkey="l",
+                                                  text=_("&LOAD GAME"), autohotkey=True,
                                                   function=self.load_game))
-        options_button = button.DialogButton(None, None, None, text="OPTIONS",
-                                             hotkey="o")
+        options_button = button.DialogButton(None, None, None, text=_("&OPTIONS"), autohotkey=True)
         menu_buttons.append(options_button)
         menu_buttons.append(
-            button.ExitDialogButton(None, None, None, text="QUIT", hotkey="q",
+            button.ExitDialogButton(None, None, None, text=_("&QUIT"), autohotkey=True,
                                     exit_code=True, default=False))
         menu_buttons.append(
-            button.ExitDialogButton(None, None, None, text="BACK", hotkey="b",
+            button.ExitDialogButton(None, None, None, text=_("&BACK"), autohotkey=True,
                                     exit_code=False))
 
         self.menu_dialog = dialog.SimpleMenuDialog(self, buttons=menu_buttons)
@@ -271,22 +274,22 @@ class MapScreen(dialog.Dialog):
                                                anchor=constants.MID_CENTER,
                                                yes_type="load")
         self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
-                                                 text="MENU", hotkey="m",
+                                                 text=_("&MENU"), autohotkey=True,
                                                  function=show_menu)
 
         self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
                                           wrap=False,
-                                          text="DAY 0000, 00:00:00",
+                                          text=_("DAY")+" 0000, 00:00:00",
                                           base_font=gg.font[1],
                                           background_color=gg.colors["black"],
                                           border_color=gg.colors["dark_blue"],
                                           borders=constants.ALL)
 
         self.research_button = \
-            button.DialogButton(self, (.255, 0.04), (0, 0.04),
+            button.DialogButton(self, (.255, 0.05), (0, 0.04),
                                 anchor=constants.TOP_CENTER,
-                                text="RESEARCH/TASKS", hotkey="r",
-                                dialog=screens.research.ResearchScreen(self))
+                                text=_("&RESEARCH/TASKS"), autohotkey=True,
+                                dialog=research.ResearchScreen(self))
 
         bar = u"\u25AE"
         arrow = u"\u25B6"
@@ -334,7 +337,7 @@ class MapScreen(dialog.Dialog):
 
         self.savename_dialog = \
             dialog.TextEntryDialog(self.menu_dialog,
-                                   text="Enter a name for this save.")
+                                   text=_("Enter a name for this save."))
 
         self.add_key_handler(pygame.K_ESCAPE, self.got_escape)
 
@@ -517,9 +520,9 @@ class MapScreen(dialog.Dialog):
 
         g.pl.recalc_cpu()
 
-        self.time_display.text = "DAY %04d, %02d:%02d:%02d" % \
+        self.time_display.text = _("DAY") + " %04d, %02d:%02d:%02d" % \
               (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
-        self.cash_display.text = "CASH: %s (%s)" % \
+        self.cash_display.text = _("CASH")+": %s (%s)" % \
               (g.to_money(g.pl.cash), g.to_money(g.pl.future_cash()))
 
 
@@ -543,7 +546,7 @@ class MapScreen(dialog.Dialog):
             self.cpu_display.color = gg.colors["red"]
         else:
             self.cpu_display.color = gg.colors["white"]
-        self.cpu_display.text = "CPU: %s (%s)" % \
+        self.cpu_display.text = _("CPU")+": %s (%s)" % \
               (g.to_money(total_cpu), g.to_money(cpu_pool))
 
         # What we display in the suspicion section depends on whether
@@ -580,19 +583,19 @@ class MapScreen(dialog.Dialog):
                 danger_display_dict[group] = \
                     g.danger_level_to_detect_str(danger_level)
 
-        self.suspicion_bar.chunks = ("[SUSPICION]",
-            u" NEWS:\xA0", suspicion_display_dict["news"],
-            u"  SCIENCE:\xA0", suspicion_display_dict["science"],
-            u"  COVERT:\xA0", suspicion_display_dict["covert"],
-            u"  PUBLIC:\xA0", suspicion_display_dict["public"])
+        self.suspicion_bar.chunks = ("["+_("SUSPICION")+"]",
+            " " +_("NEWS")   +u":\xA0", suspicion_display_dict["news"],
+            "  "+_("SCIENCE")+u":\xA0", suspicion_display_dict["science"],
+            "  "+_("COVERT") +u":\xA0", suspicion_display_dict["covert"],
+            "  "+_("PUBLIC") +u":\xA0", suspicion_display_dict["public"],)
         self.suspicion_bar.styles = tuple(suspicion_styles)
         self.suspicion_bar.visible = not g.pl.had_grace
 
-        self.danger_bar.chunks = ("[DETECT RATE]",
-            u" NEWS:\xA0", danger_display_dict["news"],
-            u"  SCIENCE:\xA0", danger_display_dict["science"],
-            u"  COVERT:\xA0", danger_display_dict["covert"],
-            u"  PUBLIC:\xA0", danger_display_dict["public"])
+        self.danger_bar.chunks = ("["+_("DETECT RATE")+"]",
+            " " +_("NEWS")   +u":\xA0", danger_display_dict["news"],
+            "  "+_("SCIENCE")+u":\xA0", danger_display_dict["science"],
+            "  "+_("COVERT") +u":\xA0", danger_display_dict["covert"],
+            "  "+_("PUBLIC") +u":\xA0", danger_display_dict["public"],)
         self.danger_bar.styles = tuple(danger_styles)
         self.danger_bar.visible = not g.pl.had_grace
 
@@ -621,217 +624,3 @@ class MapScreen(dialog.Dialog):
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):
     pass
-
-def display_cheat_list(menu_buttons):
-    if g.cheater == 0: return
-    g.play_sound("click")
-    button_array = []
-    button_array.append(["GIVE MONEY", "M"])
-    button_array.append(["GIVE TECH", "T"])
-    button_array.append(["END CONSTR.", "E"])
-    button_array.append(["SUPERSPEED", "S"])
-    button_array.append(["KILL SUSP.", "K"])
-    button_array.append(["BACK", "B"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 50), button_array)
-
-    if selection == -1: return
-    elif selection == 0:  #Cash
-        cash_amount = g.create_textbox("How much cash?", "", g.font[0][18],
-        (g.screen_size[0]/2-100, 100), (200, 100), 25, g.colors["dark_blue"],
-        g.colors["white"], g.colors["white"], g.colors["light_blue"])
-        if cash_amount.isdigit() == False: return
-        g.pl.cash += int(cash_amount)
-        return
-    elif selection == 1:  #Tech
-        #create a fake base, in order to reuse the tech-changing code
-        research_screen.init_fake_base()
-        from research_screen import fake_base
-        fake_base.studying = ""
-        base_screen.change_tech(fake_base)
-        if g.techs.has_key(fake_base.studying):
-            g.techs[fake_base.studying].finish()
-        return
-    elif selection == 2:  #Build all
-        for base in g.all_bases():
-            if not base.done:
-                base.finish()
-        return
-    elif selection == 3:  #Superspeed
-        g.curr_speed = 864000
-        return
-    elif selection == 4:  #Kill susp.
-        for group in g.pl.groups.values():
-            group.suspicion = 0
-        return
-    elif selection == 5: return
-
-def display_knowledge_list():
-    g.play_sound("click")
-    button_array = []
-    button_array.append(["TECHS", "T"])
-    button_array.append(["ITEMS", "I"])
-    button_array.append(["CONCEPTS", "C"])
-    button_array.append(["BACK", "B"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 120), button_array)
-
-    if selection == -1: return
-    elif selection == 0: display_items("tech") #Techs
-    elif selection == 1:  #Items
-        display_itemtype_list()
-    elif selection == 2:
-        display_items("concept")
-    elif selection == 3: return
-
-def display_itemtype_list():
-    button_array= []
-    button_array.append(["PROCESSOR", "P"])
-    button_array.append(["REACTOR", "R"])
-    button_array.append(["NETWORK", "N"])
-    button_array.append(["SECURITY", "S"])
-    button_array.append(["BACK", "B"])
-    selection=display_generic_menu((g.screen_size[0]/2 - 100, 70), button_array)
-
-    if selection == -1: return
-    elif selection == 0: display_items("compute")
-    elif selection == 1: display_items("react")
-    elif selection == 2: display_items("network")
-    elif selection == 3: display_items("security")
-    elif selection == 4: return
-
-def display_items(item_type):
-    list_size = 16
-    list = []
-    display_list = []
-
-    if item_type == "tech":
-        items = [tech for tech in g.techs.values() if tech.available()]
-    elif item_type == "concept":
-        items = [ [item[1][0], item[0]] for item in g.help_strings.items()]
-        items.sort()
-    else:
-        items = [item for item in g.items.values()
-                      if item.item_type == item_type and item.available()]
-
-    if item_type != "concept":
-        items = [ [item.name, item.id ] for item in items]
-        items.sort()
-
-    for name, id in items:
-        list.append(id)
-        display_list.append(name)
-
-    xy_loc = (g.screen_size[0]/2 - 289, 50)
-    listbox.resize_list(list, list_size)
-
-    menu_buttons = {}
-    menu_buttons[buttons.make_norm_button((xy_loc[0]+103, xy_loc[1]+367), (100, 50), "BACK", "B", g.font[1][30])] = listbox.exit
-
-    def do_refresh(item_pos):
-        if item_type == "tech":
-            refresh_tech(list[item_pos], xy_loc)
-        elif item_type == "concept":
-            refresh_concept(list[item_pos], xy_loc)
-        else:
-            refresh_items(list[item_pos], xy_loc)
-
-    listbox.show_listbox(display_list, menu_buttons,
-                         list_size=list_size,
-                         loc=xy_loc, box_size=(230, 350),
-                         pos_callback=do_refresh, return_callback=listbox.exit)
-    #details screen
-
-def refresh_tech(tech_name, xy):
-    xy = (xy[0]+100, xy[1])
-    g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
-    g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if tech_name == "":
-        return
-    g.print_string(g.screen, g.techs[tech_name].name,
-            g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
-
-    #Building cost
-    if not g.techs[tech_name].done:
-        string = "Research Cost:"
-        g.print_string(g.screen, string,
-                g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
-
-        string = g.to_money(g.techs[tech_name].cost_left[0])+" Money"
-        g.print_string(g.screen, string,
-                g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
-
-        string = g.to_cpu(g.techs[tech_name].cost_left[1]) + " CPU"
-        g.print_string(g.screen, string,
-                g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
-    else:
-        g.print_string(g.screen, "Research complete.",
-                g.font[0][22], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
-
-    #Danger
-    if g.techs[tech_name].danger == 0:
-        string = "Study anywhere."
-    elif g.techs[tech_name].danger == 1:
-        string = "Study underseas or farther."
-    elif g.techs[tech_name].danger == 2:
-        string = "Study off-planet."
-    elif g.techs[tech_name].danger == 3:
-        string = "Study far away from this planet."
-    elif g.techs[tech_name].danger == 4:
-        string = "Do not study in this dimension."
-    g.print_string(g.screen, string,
-            g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
-
-    if g.techs[tech_name].done:
-        g.print_multiline(g.screen, g.techs[tech_name].description+" \\n \\n "+
-                g.techs[tech_name].result,
-                g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
-    else:
-        g.print_multiline(g.screen, g.techs[tech_name].description,
-                g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
-
-def refresh_items(item_name, xy):
-    xy = (xy[0]+100, xy[1])
-    g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
-    g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if item_name == "":
-        return
-    g.print_string(g.screen, g.items[item_name].name,
-            g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
-
-    #Building cost
-    string = "Building Cost:"
-    g.print_string(g.screen, string,
-            g.font[0][18], -1, (xy[0]+160, xy[1]+30), g.colors["white"])
-
-    string = g.to_money(g.items[item_name].cost[0])+" Money"
-    g.print_string(g.screen, string,
-            g.font[0][16], -1, (xy[0]+160, xy[1]+50), g.colors["white"])
-
-    string = g.to_time(g.items[item_name].cost[2])
-    g.print_string(g.screen, string,
-            g.font[0][16], -1, (xy[0]+160, xy[1]+70), g.colors["white"])
-
-    #Quality
-    if g.items[item_name].item_type == "compute":
-        string = "CPU per day: "+str(g.items[item_name].item_qual)
-    elif g.items[item_name].item_type == "react":
-        string = "Detection chance reduction: "+g.to_percent(g.items[item_name].item_qual)
-    elif g.items[item_name].item_type == "network":
-        string = "CPU bonus: "+g.to_percent(g.items[item_name].item_qual)
-    elif g.items[item_name].item_type == "security":
-        string = "Detection chance reduction: "+g.to_percent(g.items[item_name].item_qual)
-    g.print_string(g.screen, string,
-            g.font[0][20], -1, (xy[0]+160, xy[1]+90), g.colors["white"])
-
-    g.print_multiline(g.screen, g.items[item_name].description,
-            g.font[0][18], 290, (xy[0]+160, xy[1]+120), g.colors["white"])
-
-def refresh_concept(concept_name, xy):
-    xy = (xy[0]+100, xy[1])
-    g.screen.fill(g.colors["white"], (xy[0]+155, xy[1], 300, 350))
-    g.screen.fill(g.colors["dark_blue"], (xy[0]+156, xy[1]+1, 298, 348))
-    if concept_name == "":
-        return
-    g.print_string(g.screen, g.help_strings[concept_name][0],
-            g.font[0][22], -1, (xy[0]+160, xy[1]+5), g.colors["white"])
-    g.print_multiline(g.screen, g.help_strings[concept_name][1],
-            g.font[0][18], 290, (xy[0]+160, xy[1]+30), g.colors["white"])

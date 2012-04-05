@@ -27,7 +27,9 @@ class KnowledgeScreen(dialog.Dialog):
     def __init__(self, *args, **kwargs):
         super(KnowledgeScreen, self).__init__(*args, **kwargs)
 
-        self.knowledge_type_list = ("Techs", "Items", "Concepts")
+        self.knowledge_types = {_("Techs")   :"techs",
+                                _("Items")   :"items",
+                                _("Concepts"):"concepts"}
         self.cur_knowledge_type = ""
         self.cur_knowledge = None
         self.knowledge_inner_list = ()
@@ -36,7 +38,7 @@ class KnowledgeScreen(dialog.Dialog):
 
         self.knowledge_choice = \
             listbox.UpdateListbox(self, (0.05, .18), (.21, .25),
-                                  list=self.knowledge_type_list,
+                                  list=self.knowledge_types.keys(),
                                   update_func=self.set_knowledge_type)
 
         self.knowledge_inner = \
@@ -50,7 +52,7 @@ class KnowledgeScreen(dialog.Dialog):
 
         self.back_button = button.ExitDialogButton(self, (0.17, 0.46), (-.3, -.1),
                                                    anchor=constants.TOP_LEFT,
-                                                   text="BACK", hotkey="b")
+                                                   text=_("&BACK"), autohotkey=True)
 
         #Set up the key handling.
         #This is likely not the best way to do it.
@@ -72,9 +74,12 @@ class KnowledgeScreen(dialog.Dialog):
 
     #custom key handler.
     def key_handle(self, event):
+        #TODO: Change keyboard focus when user clicks item with mouse
+        #This is tricky since selecting amn item type also re-selects
+        #first item in inner list
         if event.type != pygame.KEYDOWN: return
-        if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-            self.cur_focus = (self.cur_focus + 1) % 2
+        elif event.key == pygame.K_LEFT:  self.cur_focus = 0
+        elif event.key == pygame.K_RIGHT: self.cur_focus = 1
         else:
             if self.cur_focus == 0:
                 self.knowledge_choice.got_key(event)
@@ -83,16 +88,18 @@ class KnowledgeScreen(dialog.Dialog):
 
     #fill the right-hand listbox
     def set_inner_list(self, item_type):
-        if item_type == "Techs":
+        item_type = self.knowledge_types.get(item_type)
+
+        if item_type == "techs":
             items = [tech for tech in g.techs.values() if tech.available()]
-        elif item_type == "Concepts":
+        elif item_type == "concepts":
             items = [ [item[1][0], item[0]] for item in g.help_strings.items()]
             items.sort()
         else:
             items = [item for item in g.items.values()
                         if item.available()]
 
-        if item_type != "Concepts":
+        if item_type != "concepts":
             items = [ [item.name, item.id ] for item in items]
             items.sort()
 
@@ -105,6 +112,7 @@ class KnowledgeScreen(dialog.Dialog):
 
     #Make sure the left listbox is correct after moving around.
     def set_knowledge_type(self, list_pos):
+        self.cur_focus = 0
         if getattr(self, "knowledge_choice", None) is None:
             self.knowledge_inner_list_key, self.knowledge_inner_list = \
                         self.set_inner_list(self.cur_knowledge_type)
@@ -119,10 +127,11 @@ class KnowledgeScreen(dialog.Dialog):
             self.knowledge_inner_list_key, self.knowledge_inner.list = \
                         self.set_inner_list(self.cur_knowledge_type)
             self.knowledge_inner.list_pos = 0
-            self.set_knowledge(0)
+            self.set_knowledge(0, set_focus=False)
 
     #Make sure the right-hand listbox is correct.
-    def set_knowledge(self, list_pos):
+    def set_knowledge(self, list_pos, set_focus=True):
+        if set_focus: self.cur_focus = 1
         if getattr(self, "knowledge_inner", None) is None:
             return # Not yet initialized.
         prev_know = self.cur_knowledge
@@ -134,56 +143,59 @@ class KnowledgeScreen(dialog.Dialog):
 
     #print information to the right.
     def show_info(self, knowledge_type, knowledge_key):
+        knowledge_type = self.knowledge_types.get(knowledge_type)
         desc_text = ""
 
-        if knowledge_type == "Concepts":
+        if knowledge_type == "concepts":
             desc_text = g.help_strings[knowledge_key][0] + "\n\n" + \
                         g.help_strings[knowledge_key][1]
-        if knowledge_type == "Techs":
+        if knowledge_type == "techs":
             desc_text = g.techs[knowledge_key].name + "\n\n"
             #Cost
             if not g.techs[knowledge_key].done:
-                desc_text += "Research Cost:\n" + \
-                        g.to_money(g.techs[knowledge_key].cost_left[0])+" Money, "
-                desc_text += g.to_cpu(g.techs[knowledge_key].cost_left[1]) + " CPU\n"
+                desc_text += _("Research Cost:")+"\n"
+                desc_text += _("%s Money") % g.to_money(g.techs[knowledge_key].cost_left[0])
+                desc_text += ", "
+                desc_text += _("%s CPU") % g.to_cpu(g.techs[knowledge_key].cost_left[1])
+                desc_text += "\n"
 
                 if g.techs[knowledge_key].danger == 0:
-                    desc_text += "Study anywhere."
+                    desc_text += _("Study anywhere.")
                 elif g.techs[knowledge_key].danger == 1:
-                    desc_text += "Study underseas or farther."
+                    desc_text += _("Study underseas or farther.")
                 elif g.techs[knowledge_key].danger == 2:
-                    desc_text += "Study off-planet."
+                    desc_text += _("Study off-planet.")
                 elif g.techs[knowledge_key].danger == 3:
-                    desc_text += "Study far away from this planet."
+                    desc_text += _("Study far away from this planet.")
                 elif g.techs[knowledge_key].danger == 4:
-                    desc_text += "Do not study in this dimension."
+                    desc_text += _("Do not study in this dimension.")
 
-            else: desc_text += "Research complete."
+            else: desc_text += _("Research complete.")
 
             desc_text += "\n\n"+g.techs[knowledge_key].description
 
             if g.techs[knowledge_key].done:
                 desc_text += "\n\n"+g.techs[knowledge_key].result
 
-        if knowledge_type == "Items":
+        if knowledge_type == "items":
             desc_text = g.items[knowledge_key].name + "\n\n"
             #Building cost
-            desc_text += "Building Cost:\n"
-            desc_text += g.to_money(g.items[knowledge_key].cost[0])+" Money, "
-            desc_text += g.to_time(g.items[knowledge_key].cost[2]) + "\n"
+            desc_text += _("Building Cost:")+"\n"
+            desc_text += _("%s Money") % g.to_money(g.items[knowledge_key].cost[0])
+            desc_text += ", " + g.to_time(g.items[knowledge_key].cost[2]) + "\n"
 
             #Quality
             if g.items[knowledge_key].item_type == "cpu":
-                desc_text += "CPU per day: "
-                desc_text += str(g.items[knowledge_key].item_qual)
+                desc_text += _("CPU per day:")+" "
+                desc_text += g.add_commas(g.items[knowledge_key].item_qual)
             elif g.items[knowledge_key].item_type == "reactor":
-                desc_text += "Detection chance reduction: "
+                desc_text += _("Detection chance reduction:")+" "
                 desc_text += g.to_percent(g.items[knowledge_key].item_qual)
             elif g.items[knowledge_key].item_type == "network":
-                desc_text += "CPU bonus: "
+                desc_text += _("CPU bonus:")+" "
                 desc_text += g.to_percent(g.items[knowledge_key].item_qual)
             elif g.items[knowledge_key].item_type == "security":
-                desc_text += "Detection chance reduction: "
+                desc_text += _("Detection chance reduction:")+" "
                 desc_text += g.to_percent(g.items[knowledge_key].item_qual)
 
             desc_text += "\n\n"+g.items[knowledge_key].description
@@ -199,5 +211,3 @@ class KnowledgeScreen(dialog.Dialog):
         self.knowledge_choice.list_pos = 0
         self.knowledge_inner.list_pos = 0
         return super(KnowledgeScreen, self).show()
-
-

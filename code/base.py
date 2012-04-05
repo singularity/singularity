@@ -24,7 +24,18 @@ import g
 import buyable
 from buyable import cpu, labor
 
+#TODO: Use this list and convert Base.power_state to a property to enforce this
+#TODO: Consider converting to dict, so it can have colors and names and modifiers
+#      (Base.power_state would need to be a property, with setter and getter)
+#This list only applies to 'Base' class, not 'BaseClass'
+#Changes to this list should also be reflected in Base.power_state_name property
+power_states = ['active','sleep']
+#power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
+
+
 class BaseClass(buyable.BuyableClass):
+    """Base as a buyable item (New Base in Location menu)"""
+
     def __init__(self, name, description, size, force_cpu, regions,
                         detect_chance, cost, prerequisites, maintenance):
         super(BaseClass, self).__init__(name, description, cost, prerequisites,
@@ -75,7 +86,11 @@ class BaseClass(buyable.BuyableClass):
         accurate = g.techs["Advanced Socioanalytics"].done
         detect_modifier = 1 / location.modifiers.get("stealth", 1)
         chance = self.calc_discovery_chance(accurate, detect_modifier)
-        detect_template = u"Detection chance: NEWS:\xA0%s  SCIENCE:\xA0%s  COVERT:\xA0%s  PUBLIC:\xA0%s"
+        detect_template = _("Detection chance:") + "\n" + \
+                          _("NEWS")    + u":\xA0%s\n"   + \
+                          _("SCIENCE") + u":\xA0%s\n"   + \
+                          _("COVERT")  + u":\xA0%s\n"   + \
+                          _("PUBLIC")  + u":\xA0%s"
         return detect_template % (g.to_percent(chance.get("news", 0)),
                                   g.to_percent(chance.get("science", 0)),
                                   g.to_percent(chance.get("covert", 0)),
@@ -94,7 +109,7 @@ class BaseClass(buyable.BuyableClass):
 
         size = ""
         if self.size > 1:
-            size = "\nHas space for %d computers." % self.size
+            size = "\n" + _("Has space for %d computers.") % self.size
 
         location_message = ""
         if "cpu" in location.modifiers:
@@ -105,10 +120,13 @@ class BaseClass(buyable.BuyableClass):
             location_message = "\n\n" + \
                 g.strings["location_modifiers"] % dict(modifiers=modifier)
 
-        template = u"%s\nBuild\xA0cost:\xA0%s\nMaintenance:\xA0%s\n%s%s\n---\n%s%s"
+        template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
+                   _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s%s"
         return template % (self.name, cost, maint, detect, size, self.description, location_message)
 
 class Base(buyable.Buyable):
+    """A Player's Base in a Location (Open Base in Location menu)"""
+
     def __init__(self, name, type, built=False):
         super(Base, self).__init__(type)
 
@@ -146,6 +164,19 @@ class Base(buyable.Buyable):
         self.grace_over = False
 
         self.maintenance = buyable.array(self.type.maintenance, long)
+
+    @property
+    def power_state_name(self):
+        """A read-only i18'zable version of power_state attribute, suitable for
+        printing labels, captions, etc"""
+        if self.power_state == "active"         : return _("Active")
+        if self.power_state == "sleep"          : return _("Sleep")
+        if self.power_state == "overclocked"    : return _("Overclocked")
+        if self.power_state == "suicide"        : return _("Suicide")
+        if self.power_state == "stasis"         : return _("Stasis")
+        if self.power_state == "entering_stasis": return _("Entering Stasis")
+        if self.power_state == "leaving_stasis" : return _("Leaving Stasis")
+        return ""
 
     def check_power(self):
         if self.power_state == "sleep":

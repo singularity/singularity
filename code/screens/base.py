@@ -24,8 +24,17 @@ import pygame
 
 import code.g as g
 import code.graphics.g as gg
-from code.graphics import constants, widget, dialog, text, button, listbox
+from code.graphics import constants, widget, dialog, text, button
 
+state_colors = dict(
+    active          = gg.colors["green"],
+    sleep           = gg.colors["yellow"],
+    overclocked     = gg.colors["orange"],
+    suicide         = gg.colors["red"],
+    stasis          = gg.colors["gray"],
+    entering_stasis = gg.colors["gray"],
+    leaving_stasis  = gg.colors["gray"],
+)
 class BuildDialog(dialog.ChoiceDescriptionDialog):
     type = widget.causes_rebuild("_type")
     def __init__(self, parent, pos=(0, 0), size=(-1, -1),
@@ -70,18 +79,19 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
 
-type_names = dict(cpu="Processor", reactor="Reactor",
-                  network="Network", security="Security")
-
 class ItemPane(widget.BorderedWidget):
     type = widget.causes_rebuild("_type")
     def __init__(self, parent, pos, size=(.48, .06), anchor=constants.TOP_LEFT,
-                 type="cpu", **kwargs):
+                 type=None, **kwargs):
 
         kwargs.setdefault("background_color", gg.colors["dark_blue"])
 
-        super(ItemPane, self).__init__(parent, pos, size, anchor=anchor,
-                                       **kwargs)
+        super(ItemPane, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
+
+        if type is None:
+            for type in g.item_types:
+                if type.id == 'cpu':
+                    break
 
         self.type = type
 
@@ -95,35 +105,16 @@ class ItemPane(widget.BorderedWidget):
                                      anchor=constants.TOP_LEFT,
                                      align=constants.LEFT,
                                      background_color=self.background_color,
-                                     text="Completion in 15 hours.", bold=True)
+                                     text="", bold=True)
 
-        #TODO: Use information out of gg.buttons
-        change_text = "CHANGE"
-        hotkey_dict = dict(cpu="p", reactor="r", network="n", security="s")
-        hotkey = hotkey_dict[self.type]
-        button_text = "%s (%s)" % (change_text, hotkey.upper())
-
-        self.change_button = button.FunctionButton(self, (.36,.01), (.12, .04),
-                                                   anchor=constants.TOP_LEFT,
-                                                   text=button_text,
-                                                   hotkey=hotkey,
-                                                   function=
-                                                self.parent.parent.build_item,
-                                                   kwargs={"type": self.type})
-
-        if hotkey.upper() in change_text:
-            hotkey_pos = len(change_text) + 2
-            self.change_button.force_underline = hotkey_pos
-
-state_colors = dict(
-    active          = gg.colors["green"],
-    sleep           = gg.colors["yellow"],
-    overclocked     = gg.colors["orange"],
-    suicide         = gg.colors["red"],
-    stasis          = gg.colors["gray"],
-    entering_stasis = gg.colors["gray"],
-    leaving_stasis  = gg.colors["gray"],
-)
+        self.change_button = button.FunctionButton(
+            self, (.36,.01), (.12, .04),
+            anchor=constants.TOP_LEFT,
+            text="%s (&%s)" % (_("CHANGE"),self.type.hotkey.upper()),
+            autohotkey=True,
+            function=self.parent.parent.build_item,
+            kwargs={'type': self.type.id},
+        )
 
 class BaseScreen(dialog.Dialog):
     base = widget.causes_rebuild("_base")
@@ -177,7 +168,7 @@ class BaseScreen(dialog.Dialog):
         self.back_button = \
             button.ExitDialogButton(self, (-.5,-1),
                                     anchor = constants.BOTTOM_CENTER,
-                                    text="BACK", hotkey="b")
+                                    text=_("&BACK"), autohotkey=True)
 
         self.detect_frame = text.Text(self, (-1, .09), (.21, .33),
                                       anchor=constants.TOP_RIGHT,
@@ -193,14 +184,10 @@ class BaseScreen(dialog.Dialog):
                                   background_color=gg.colors["dark_blue"],
                                   borders=range(6))
 
-        self.cpu_pane      = ItemPane(self.contents_frame, (.01, .01),
-                                      type="cpu")
-        self.reactor_pane  = ItemPane(self.contents_frame, (.01, .09),
-                                      type="reactor")
-        self.network_pane  = ItemPane(self.contents_frame, (.01, .17),
-                                      type="network")
-        self.security_pane = ItemPane(self.contents_frame, (.01, .25),
-                                      type="security")
+        for i, type in enumerate(g.item_types):
+            setattr(self,
+                    type.id + "_pane",
+                    ItemPane(self.contents_frame, (.01, .01+.08*i), type=type))
 
     def get_current(self, type):
         if type == "cpu":
@@ -288,32 +275,36 @@ class BaseScreen(dialog.Dialog):
         return super(BaseScreen, self).show()
 
     def rebuild(self):
-        self.name_display.text="%s (%s)" % (self.base.name, self.base.type.name)
+        # Cannot use self.base.type.name directly because it may contain a
+        # different language than current
+        self.name_display.text="%s (%s)" % (self.base.name,
+                                            g.base_type[self.base.type.id].name)
         discovery_template = \
-"""DISCOVERY CHANCE:
-News: %s
-Science: %s
-Covert: %s
-Public: %s"""
+            _("Detection chance:").upper() + "\n" + \
+            _("NEWS").title()    + u":\xA0%s\n"   + \
+            _("SCIENCE").title() + u":\xA0%s\n"   + \
+            _("COVERT").title()  + u":\xA0%s\n"   + \
+            _("PUBLIC").title()  + u":\xA0%s"
         self.state_display.color = state_colors[self.base.power_state]
-        self.state_display.text = self.base.power_state.capitalize()
+        self.state_display.text = self.base.power_state_name
 
         mutable = not self.base.type.force_cpu
-        for item in ["cpu", "reactor", "network", "security"]:
-            pane = getattr(self, item + "_pane")
+        for item in g.item_types:
+            pane = getattr(self, item.id + "_pane")
             pane.change_button.visible = mutable
-            current = self.get_current(item)
+            current = self.get_current(item.id)
             if current is None:
-                current_name = "None"
+                current_name = _("None")
                 current_build = ""
             else:
-                current_name = current.name
+                current_name = g.items[current.id].name
                 if current.done:
                     current_build = ""
                 else:
-                    current_build = "Completion in %s." % \
+                    current_build = _("Completion in %s.") % \
                         g.to_time(current.cost_left[2])
-            pane.name_panel.text = "%s: %s" % (type_names[item], current_name)
+            pane.name_panel.text = "%s: %s" % (item.label,
+                                               current_name)
             pane.build_panel.text = current_build
 
         count = ""
@@ -323,13 +314,15 @@ Public: %s"""
             size = self.base.type.size
 
             if size == current:
-                count = " x%d (max)" % current
+                count = _("x%d (max)") % current
             elif current == 0:
-                count = " (room for %d)" % size
+                count = _("(room for %d)") % size
             else:
-                count = " x%d (max %d)" % (current, size)
+                #Translators: current and maximum number of CPUs in a base
+                count = _("x{CURRENT:d} (max {SIZE:d})",
+                          CURRENT=current, SIZE=size)
 
-        self.cpu_pane.name_panel.text += count
+        self.cpu_pane.name_panel.text += " " + count
 
         # Detection chance display.  If Socioanalytics hasn't been researched,
         # you get nothing; if it has, but not Advanced Socioanalytics, you get

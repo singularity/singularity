@@ -19,8 +19,54 @@
 #This file contains the item class.
 
 import buyable
+import g
+
+class ItemType(object):
+    """ Item type, 4 fixed instances: cpu, reactor, network and security """
+    def __init__(self, id, **kwargs):
+
+        # Either cpu, reactor, network or security
+        self.id   = id
+
+        # Text is language-dependent data, thus ideally it should not be passed
+        # to the constructor, so label, hotkey and pos are created with default
+        # (blank) values. When language changes, update data with text.setter
+        self.text = kwargs.pop("text", id)
+
+        #TODO: Extend this class so eventually item_type attribute of Item and
+        # ItemClass classes can be an instance of this, instead of a string.
+        # Maybe a new "item" attribute and leave item_type alone until all
+        # methods are converted. Be careful with interface to Buyable
+        # Useful attributes would be:
+        # - iscpu (Boolean, so no more type == 'cpu' testing)
+        # - extra_item_index (Integer, so no more relying on list order)
+        # - desc_text - for item_qual bonus description in knowledge screen
+
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        # Updates language-dependent data
+        try:
+            hotkey = g.hotkey(value)
+        except AttributeError:
+            # g.hotkey() wasn't declared yet, mimick its defaults
+            hotkey = dict(text= value,
+                          key = value[0:1],
+                          pos = 0,)
+        self._text  = value
+        self.label  = hotkey['text'] # "Friendly" name for screens and buttons
+        self.hotkey = hotkey['key']  # Hotkey char
+        self.pos    = hotkey['pos']  # Hotkey index in Label
+
+    def __repr__(self):
+        return self.id
 
 class ItemClass(buyable.BuyableClass):
+    """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
+
     def __init__(self, name, description, cost, prerequisites, item_type,
             item_qual, buildable):
         super(ItemClass, self).__init__(name, description, cost, prerequisites,
@@ -40,14 +86,16 @@ class ItemClass(buyable.BuyableClass):
             "AFRICA", "AUSTRALIA"]
 
     def get_info(self):
-        import g
         basic_text = super(ItemClass, self).get_info()
         if self.item_type == "cpu":
-            return basic_text.replace("---", "Generates %s CPU.\n---" %
-                                              g.add_commas(self.item_qual))
+            return basic_text.replace("---", _("Generates {0} CPU.",
+                                               g.add_commas(self.item_qual)) + \
+                                      "\n---")
         return basic_text
 
 class Item(buyable.Buyable):
+    """ An installed Item in a Player's Base """
+
     def __init__(self, item_type, base=None, count=1):
         super(Item, self).__init__(item_type, count)
         self.item_qual = item_type.item_qual
@@ -56,7 +104,6 @@ class Item(buyable.Buyable):
     def convert_from(self, load_version):
         super(Item, self).convert_from(load_version)
         if load_version < 4.91: # < r5_pre
-            import g
             self.type = g.items[self.type.id]
 
     def finish(self):
