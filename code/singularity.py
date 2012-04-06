@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 #file: singularity.py
 #Copyright (C) 2005, 2006, 2007 Evil Mr Henry, Phil Bordelon, and Brian Reid
 #This file is part of Endgame: Singularity.
@@ -17,7 +16,9 @@
 #along with Endgame: Singularity; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file is the starting file for the game. Run it to start the game.
+#This file sets up initial values from command line and preferences file,
+# initialize hardware, load data files and show main screen. Do not execute it
+# directly. use ../singularity.py instead.
 
 # Set language first, so help page and all error messages can be translated
 import g

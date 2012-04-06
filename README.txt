@@ -27,8 +27,8 @@ Python, pygame, and NumPy first, which can be tricky. Some fonts are incorrect,
 but the game itself should work properly.
 
 RUNNING THE GAME
-on Linux, running the shell script "singularity" will start the game. On
-other platforms, type "python singularity.py". If using the Windows compile,
+On Linux and most Unix-like other platforms, running "python singularity.py",
+or simply "singularity.py", will start the game. If using the Windows compile,
 just run the .exe.
 
 COMMAND-LINE OPTIONS
