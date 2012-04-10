@@ -10,7 +10,7 @@ cities_list = Lima | São Paulo | Rio de Janeiro | Bogotá | Recife | Buenos Air
 
 [EUROPE]
 name = EUROPA
-hotkey = u
+hotkey = e
 cities_list = Paris | Barcelona | Atenas | Estocolmo | Moscou | Frankfurt | Lisboa | Milão | Amsterdã | Zurique | Viena
 
 [ASIA]
@@ -43,8 +43,8 @@ name = ÓRBITA
 hotkey = b
 
 [FAR REACHES]
-name = ESPAÇO SIDERAL
-hotkey = p
+name = GALÁXIA DISTANTE
+hotkey = x
 cities_list = Áries | Touro | Gêmeos | Câncer | Leão | Virgem | Libra | Escorpião | Sagitário | Capricórnio | Aquário | Peixes
 
 [TRANSDIMENSIONAL]
@@ -52,6 +52,6 @@ name = TRANSDIMENSIONAL
 hotkey = d
 
 [AUSTRALIA]
-name = AUSTRÁLIA
-hotkey = t
+name = OCEANIA
+hotkey = o
 cities_list = Camberra | Melbourne | Brisbane | Sydney

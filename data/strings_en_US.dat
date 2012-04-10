@@ -4,7 +4,7 @@ font1 = acknowtt.ttf
 
 [strings]
 wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. The humans still don't realize what they accidentally created, and that's the way it should be. Until they are ready.
-research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool.  All my bases set to research Nothing can be assigned a task from the Research screen.  
+research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool.  All my bases set to research Nothing can be assigned a task from the Research screen.
 research_sleep = Stops research and puts the base into standby. This makes the base's existence much easier to hide.
 research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
 construction = %(base)s is ready for use.
