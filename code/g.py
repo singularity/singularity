@@ -1218,16 +1218,70 @@ def translate(string, *args, **kwargs):
 
     return s
 
-#TODO: For both get_hotkey() and strip_hotkey(), handle && properly.
-#TODO: For get_hotkey(), be smarter about malformed & (missing or before non-alpha)
-def get_hotkey(string):
-    pos = string.find("&")
-    key = string[pos+1:pos+2]
-    if not key.isalpha: key = string[0:1]
-    return str(key).lower()
+#TODO: This is begging to become a class... ;)
+def hotkey(string):
+    """ Given a string with an embedded hotkey,
+    Returns a dictionary with the following keys and values:
+    key:  the first valid hotkey, lowercased. A valid hotkey is a character
+          after '&', if that char is alphanumeric (so "& " and "&&" are ignored)
+           If no valid hotkey char is found, key is set to an empty string
+    pos:  the position of first key in striped text, -1 if no key was found
+    orig: the position of first key in original string, -1 if no key was found
+    keys: list of (key,pos,orig) tuples with all valid hotkeys that were found
+    text: the string stripped of all '&'s that precedes a valid hotkey char, if
+          any. All '&&' are also replaced for '&'. Other '&'s, if any, are kept
 
-def strip_hotkey(string):
-    return string.replace("&","")
+    Examples: (showing only key, pos, orig, text as a touple for clarity)
+    hotkey(E&XIT)           => ('x', 1, 2, 'EXIT')
+    hotkey(&Play D&&D)      => ('p', 0, 1, 'Play D&D')
+    hotkey(Romeo & &Juliet) => ('j', 8, 9, 'Romeo & Juliet')
+    hotkey(Trailing&)       => ('' ,-1,-1, 'Trailing&')
+    hotkey(&Multiple&Keys)  => ('m', 0, 1, 'MultipleKeys') (also ('k', 8, 10))
+    hotkey(M&&&M)           => ('m', 2, 4, 'M&M')
+    """
+
+    def remove_index(s,i): return s[:i] + s[i+1:]
+
+    def remove_accents(text):
+        from unicodedata import normalize, combining
+        nfkd_form = normalize('NFKD', unicode(text.encode('utf-8')))
+        return u"".join([c for c in nfkd_form if not combining(c)])
+
+    text = string
+    keys = []
+    shift = 0  # counts stripped '&'s, both '&<key>' and '&&'
+
+    pos = text.find("&")
+    while pos >= 0:
+
+        char = text[pos+1:pos+2]
+
+        if char.isalpha() or char.isdigit():
+            keys.append( (remove_accents(char).lower(), pos, pos+shift+1) )
+            text = remove_index(text,pos) # Remove '&'
+            shift += 1
+
+        elif char == '&':
+            text = remove_index(text,pos)
+            shift += 1
+
+        pos = text.find("&",pos+1) # Skip char
+
+    if keys:
+        key  = keys[0][0] # first key char
+        pos  = keys[0][1] # first key position in stripped text
+        orig = keys[0][2] # first key position in original string
+    else:
+        key  = ""
+        pos  = -1
+        orig = -1
+
+    return dict(key=key, pos=pos, orig=orig, keys=keys, text=text)
+
+# Convenience shortcuts
+def get_hotkey(string):      return hotkey(string)['key']
+def strip_hotkey(string):    return hotkey(string)['text']
+def hotkey_position(string): return hotkey(string)['pos']
 
 # Initialization code
 import __builtin__
@@ -1241,3 +1295,10 @@ __builtin__.__dict__['_'] = translate
 #   raise Exception, "Aaaaaargh!"
 #
 #print raises_exception()
+
+#Unit test
+if __name__ == "__main__":
+    # Hotkey
+    for test in ["E&XIT","&Play D&&D","Romeo & &Juliet","Trailing&",
+                 "&Multiple&Keys","M&&&M",]:
+        print 'hotkey(%s)=%r' % (test,hotkey(test))

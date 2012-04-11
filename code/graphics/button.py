@@ -46,7 +46,17 @@ class Button(text.SelectableText):
                  borders = constants.ALL, hotkey = "", force_underline = None,
                  text_shrink_factor = .825, priority = 100, **kwargs):
         self.parent = parent
-        self.hotkey = hotkey
+
+        from code.g import get_hotkey, strip_hotkey
+        autohotkey = kwargs.pop('autohotkey',False)
+        if autohotkey:
+            text = kwargs.get('text',"")
+            self.hotkey = get_hotkey(text)
+            # Strip hotkey info from text
+            if 'text' in kwargs: kwargs['text'] = strip_hotkey(text)
+        else:
+            self.hotkey = hotkey
+
         self.priority = priority
 
         super(Button, self).__init__(parent, pos, size, **kwargs)
@@ -246,4 +256,3 @@ class ButtonGroup(list):
     def remove(self, button):
         button.button_group = None
         super(ButtonGroup, self).remove(button)
-
