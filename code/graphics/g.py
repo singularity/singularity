@@ -59,7 +59,7 @@ font.append([0] * 100)
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
-def load_fonts(data_loc):
+def load_fonts(data_dir):
     """
 load_fonts() loads the two fonts used throughout the game from the data/fonts/
 directory.
@@ -67,7 +67,7 @@ directory.
 
     global font
 
-    font_dir = os.path.join(data_loc, "fonts")
+    font_dir = os.path.join(data_dir, "fonts")
     font0_file = os.path.join(font_dir, font0)
     font1_file = os.path.join(font_dir, font1)
     font[0][0] = font0
@@ -80,13 +80,13 @@ directory.
     font[1][17] = font[1][18]
 
 images = {}
-def load_images(data_loc):
+def load_images(data_dir):
     """
 load_images() loads all of the images in the data/images/ directory.
 """
     global images
 
-    image_dir = os.path.join(data_loc, "images")
+    image_dir = os.path.join(data_dir, "images")
     image_list = os.listdir(image_dir)
     for image_filename in image_list:
 

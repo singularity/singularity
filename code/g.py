@@ -83,7 +83,7 @@ savefile_translation = {
     "singularity_savefile_r5_pre": 4.91,
 }
 
-data_loc = "data/"
+data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))
 
 # Initialization data
 strings = {}
@@ -167,7 +167,7 @@ defined in sounds/sounds.dat.
         nosound = 1
         return
 
-    sound_dir = os.path.join(data_loc, "sounds")
+    sound_dir = os.path.join(data_dir, "sounds")
     sound_class_list = generic_load(os.path.join("sounds", "sounds.dat"))
     for sound_class in sound_class_list:
 
@@ -237,7 +237,7 @@ load_music() loads music for the game.  It looks in multiple locations:
 
     # Build the set of paths we'll check for music.
     music_paths = (
-        os.path.join(data_loc, "..", "music"),
+        os.path.join(data_dir, "..", "music"),
         os.path.join(get_save_folder(True), "music")
     )
     for music_path in music_paths:
@@ -438,14 +438,7 @@ def get_save_folder(just_pref_dir=False):
     if os.environ.has_key("HOME") and not force_single_dir:
         pref_dir = os.path.join(os.environ["HOME"], ".endgame")
     else:
-        # normpath strips the trailing /, split separates the data
-        # subdirectory.
-        pref_dir, data_subdir = os.path.split(os.path.normpath(data_loc))
-
-        # If we didn't get the data subdirectory, something went wrong.
-        # Throw an error and bail.
-        if data_subdir.lower() != "data":
-            raise ValueError,  "data_loc="+data_loc+" breaks get_save_folder"
+        pref_dir = os.path.abspath(os.path.join(data_dir, ".."))
 
     save_dir = os.path.join(pref_dir, "saves")
 
@@ -754,7 +747,7 @@ non-mandatory missing or otherwise unreadable files
 """
 
     config = ConfigParser.RawConfigParser()
-    filename = os.path.join(data_loc, file)
+    filename = os.path.join(data_dir, file)
     try:
         config.readfp(open(filename, "r"))
 
@@ -1035,7 +1028,7 @@ def load_strings():
     load_string_defs()
 
 def get_intro():
-    intro_file_name = data_loc+"intro_"+language+".dat"
+    intro_file_name = os.path.join(data_dir, "intro_"+language+".dat")
     if not os.path.exists(intro_file_name):
         print "Intro is missing.  Skipping."
         return
@@ -1145,8 +1138,8 @@ def get_job_level():
     return level + " Jobs"
 
 def init_graphics_system():
-    graphics.g.load_fonts(data_loc)
-    graphics.g.load_images(data_loc)
+    graphics.g.load_fonts(data_dir)
+    graphics.g.load_images(data_dir)
     graphics.g.init_alpha()
 
 def reinit_mixer():
@@ -1160,7 +1153,7 @@ def reinit_mixer():
         nosound = 1
 
 def available_languages():
-    return [file_name[8:-4] for file_name in os.listdir(data_loc)
+    return [file_name[8:-4] for file_name in os.listdir(data_dir)
                             if file_name.startswith("strings_")
                                and file_name.endswith(".dat")  ]
 
