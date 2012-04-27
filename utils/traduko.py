@@ -32,7 +32,7 @@ MODE_LIST = ["update", "verify", "package"]
 
 # A list of things that can be translated.  Tracked are whether or
 # not they have a standalone file that defines certain things and the
-# prefix of the filename. 
+# prefix of the filename.
 TRANSLATION_LIST = [
     {"prefix": "bases", "has_standalone": True},
     {"prefix": "events", "has_standalone": True},
@@ -172,7 +172,7 @@ TODO: Describe better.
 
                 if verbose:
                     verbout("Trying to preload %s." % dest_filepath)
-                    
+
                 fp = open(dest_filepath, "r")
                 dest_parser.readfp(fp)
                 fp.close()
@@ -218,7 +218,7 @@ TODO: Describe better.
                     verbout("Failed to find translation data.")
 
             for section in source_parser.sections():
-                
+
                 # Add this section if the new translation doesn't have it.
                 if not dest_parser.has_section(section):
                     if verbose:
