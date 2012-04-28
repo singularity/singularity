@@ -39,7 +39,7 @@ def do_bisect(left, right, test):
 
 def convert_font_size(size):
     # Scale it to the screen size.
-    raw_size = size * g.screen_size[1] / 600.
+    raw_size = size * g.screen_size[1] / g.default_screen_size[1]
     # And round.
     return int(raw_size + 0.5)
 

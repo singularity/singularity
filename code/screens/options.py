@@ -18,29 +18,23 @@
 
 #This file is used to display the options screen.
 
-from os import path
+import os, sys
 import ConfigParser
 import pygame
+import cPickle
+
 
 from code.graphics import constants, dialog, button, listbox, text, g as gg
 import code.g as g
 
-#TODO: Create and use a global resolution list so buttons can be dynamic
-#TODO: Change available resolutions. Drop 640x480, add widescreen ones. It's 2012!
-#TODO: Consider default to Fullscreen. And 1024x768 (or 1024x600 for old netbooks)
-#TODO: Why text in resolutions buttons is so tiny?
-#TODO: Show a 2-or-so-seconds "Please wait" dialog when changing sound options
-#      (both Enable/Disable and Sound Buffering ones), because huge lag when
-#      applying them might confuse users in clicking them several times
-#TODO: Integrate "Save Options to Disk" functionality in OK button. There is
-#      little point for a user not to save preferences automatically, and most
-#      will be confused when settings are not applied on next run
+#TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
+#TODO: Show a 2-or-so-seconds "Please wait" dialog when changing sound options,
+#      because huge lag when applying them might confuse users
+#TODO: Integrate "Save Options to Disk" functionality in OK button.
 #TODO: Add dialog suggesting restart when language changes, so changes may apply
 #      at least until/if we find a way refresh all screens. Don't forget to
 #      remind user to save current game (if loaded from map menu)
-#TODO: Is it really needed to have Sound Buffering options? Or Grab Mouse? Why
-#      would a regular user want to tinker with that? Could be command-line only
-#TODO: There is Enable/Disable Sound. Maybe add Music too?
+#TODO: Add enable/disable Music
 #
 
 class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
@@ -60,12 +54,13 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             'daynight'  : g.hotkey(_("Da&y/night display:")),
         }
 
-        self.fullscreen_label = text.Text(self, (.01, .01), (.15, .05),
+        # First row
+        self.fullscreen_label = text.Text(self, (.01, .01), (.14, .05),
                                           text=labels['fullscreen']['text'],
                                           underline=labels['fullscreen']['pos'],
                                           align=constants.LEFT,
                                           background_color=gg.colors["clear"])
-        self.fullscreen_toggle = OptionButton(self, (.17, .01), (.07, .05),
+        self.fullscreen_toggle = OptionButton(self, (.16, .01), (.07, .05),
                                               text=_("NO"), text_shrink_factor=.75,
                                               hotkey=labels['fullscreen']['key'],
                                               force_underline=-1,
@@ -91,95 +86,65 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
                                         force_underline=-1,
                                         function=self.set_grab,
                                         args=(button.TOGGLE_VALUE,))
-        self.resolution_label = text.Text(self, (.01, .08), (.15, .05),
+
+        # Second and third row
+        self.resolution_label = text.Text(self, (.01, .08), (.14, .05),
                                           text=_("Resolution:"),
                                           align=constants.LEFT,
                                           background_color=gg.colors["clear"])
 
         self.resolution_group = button.ButtonGroup()
-        self.resolution_640x480 = OptionButton(self, (.17, .08), (.12, .05),
-                                               text="640X480",
-                                               text_shrink_factor=.5,
-                                               function=self.set_resolution,
-                                               args=((640,480),))
-        self.resolution_group.add(self.resolution_640x480)
-        self.resolution_800x600 = OptionButton(self, (.333, .08), (.12, .05),
-                                               text="800X600",
-                                               text_shrink_factor=.5,
-                                               function=self.set_resolution,
-                                               args=((800,600),))
-        self.resolution_group.add(self.resolution_800x600)
-        self.resolution_1024x768 = OptionButton(self, (.496, .08), (.12, .05),
-                                                text="1024X768",
-                                                text_shrink_factor=.5,
-                                                function=self.set_resolution,
-                                                args=((1024,768),))
-        self.resolution_group.add(self.resolution_1024x768)
-        self.resolution_1280x1024 = OptionButton(self, (.66, .08), (.12, .05),
-                                                 text="1280X1024",
-                                                 text_shrink_factor=.5,
-                                                 function=self.set_resolution,
-                                                 args=((1280,1024),))
-        self.resolution_group.add(self.resolution_1280x1024)
 
-        self.resolution_custom = OptionButton(self, (.17, .15), (.12, .05),
-                                              text=_("CUSTOM:"),
-                                              text_shrink_factor=.5)
+        def xpos(i): return .16 + .16 *    (i%4)
+        def ypos(i): return .08 + .07 * int(i/4)
+
+        for i, (xres,yres) in enumerate(gg.resolutions):
+            self.resolution_group.add(OptionButton(self,
+                                                   (xpos(i), ypos(i)),
+                                                   (.14, .05),
+                                                   text="%sx%s" % (xres, yres),
+                                                   function=self.set_resolution,
+                                                   args=((xres,yres),)))
+
+        # Forth row
+        self.resolution_custom = OptionButton(self,
+                                              (xpos(0),ypos(i+1)),
+                                              (.14, .05),
+                                              text=_("&CUSTOM:"),
+                                              autohotkey=True,
+                                              function=self.set_resolution_custom)
         self.resolution_group.add(self.resolution_custom)
 
         self.resolution_custom_horiz = \
-            text.EditableText(self, (.333, .15), (.12, .05), text="1366",
+            text.EditableText(self, (xpos(1), ypos(i+1)), (.14, .05),
+                              text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0,0,50,255))
 
-        self.resolution_custom_X = text.Text(self, (.46, .15), (.03, .05),
-                                             text="X", base_font=gg.font[1],
+        self.resolution_custom_X = text.Text(self,
+                                             (xpos(2)-.02, ypos(i+1)),
+                                             (.02, .05),
+                                             text="X",
+                                             base_font=gg.font[1],
                                              background_color=gg.colors["clear"])
 
         self.resolution_custom_vert = \
-            text.EditableText(self, (.496, .15), (.12, .05), text="768",
+            text.EditableText(self, (xpos(2), ypos(i+1)), (.14, .05),
+                              text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0,0,50,255))
 
-        self.resolution_apply = \
-            button.FunctionButton(self, (.66, .15), (.12, .05),
-                                  text=_("&APPLY"), autohotkey=True, text_shrink_factor=.75,
-                                  function=self.set_resolution_custom)
-
-        self.soundbuf_label = text.Text(self, (.01, .22), (.25, .05),
-                                        text=_("Sound buffering:"),
-                                        align=constants.LEFT,
-                                        background_color=gg.colors["clear"])
-
-        self.soundbuf_group = button.ButtonGroup()
-
-        self.soundbuf_low = OptionButton(self, (.27, .22), (.14, .05),
-                                         text=_("&LOW"), autohotkey=True,
-                                         function=self.set_soundbuf,
-                                         args=(1024,))
-        self.soundbuf_group.add(self.soundbuf_low)
-
-        self.soundbuf_normal = OptionButton(self, (.44, .22), (.17, .05),
-                                            text=_("&NORMAL"), autohotkey=True,
-                                            function=self.set_soundbuf,
-                                            args=(1024*2,))
-        self.soundbuf_group.add(self.soundbuf_normal)
-
-        self.soundbuf_high = OptionButton(self, (.64, .22), (.14, .05),
-                                          text=_("&HIGH"), autohotkey=True,
-                                          function=self.set_soundbuf,
-                                          args=(1024*4,))
-        self.soundbuf_group.add(self.soundbuf_high)
-
-        self.language_label = text.Text(self, (.01, .30), (.15, .05),
+        # Fifth row
+        self.language_label = text.Text(self, (.01, .30), (.14, .05),
                                         text=_("Language:"), align=constants.LEFT,
                                         background_color=gg.colors["clear"])
 
+        self.languages = get_languages_list()
         self.language_choice = \
-            listbox.UpdateListbox(self, (.17, .30), (.21, .25),
-                                  list=g.available_languages(),
+            listbox.UpdateListbox(self, (.16, .30), (.21, .25),
+                                  list=[lang[1] for lang in self.languages],
                                   update_func=self.set_language)
 
         self.daynight_label = text.Text(self, (.55, .30), (.15, .05),
@@ -216,18 +181,12 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             self.resolution_custom.set_active(True)
             self.resolution_custom_horiz.text = str(gg.screen_size[0])
             self.resolution_custom_vert.text = str(gg.screen_size[1])
-        for soundbuf_button in self.soundbuf_group:
-            soundbuf_button.set_active(soundbuf_button.args == (g.soundbuf,))
 
-        lang_array = self.language_choice.list
-        lang_pos = 0
-        for i in range(len(lang_array)):
-            if lang_array[i] == g.language:
-                lang_pos = i
-        self.language_choice.list_pos = lang_pos
+        self.language_choice.list_pos = [i for i, (code, _)
+                                         in enumerate(self.languages)
+                                         if code == g.language][0] or 0
 
         retval = super(OptionsScreen, self).show()
-
         if self.resolution_custom.active:
             try:
                 old_size = gg.screen_size
@@ -241,12 +200,12 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         return retval
 
     def set_language(self, list_pos):
-        if getattr(self, "language_choice", None) is None:
+        if not getattr(self, "language_choice", None):
             return # Not yet initialized.
 
         prev_lang = g.language
         if 0 <= list_pos < len(self.language_choice.list):
-            g.language = self.language_choice.list[list_pos]
+            g.language = self.languages[list_pos][0]
         if g.language != prev_lang:
             set_language_properly()
 
@@ -302,6 +261,41 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             g.reinit_mixer()
             g.play_sound("click")
 
+# For the future...
+class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
+    def __init__(self, *args, **kwargs):
+        super(AdvancedOptionsScreen, self).__init__(*args, **kwargs)
+
+        self.soundbuf_label = text.Text(self, (.01, .22), (.25, .05),
+                                        text=_("Sound buffering:"),
+                                        align=constants.LEFT,
+                                        background_color=gg.colors["clear"])
+
+        self.soundbuf_group = button.ButtonGroup()
+
+        self.soundbuf_low = OptionButton(self, (.27, .22), (.14, .05),
+                                         text=_("&LOW"), autohotkey=True,
+                                         function=self.set_soundbuf,
+                                         args=(1024,))
+        self.soundbuf_group.add(self.soundbuf_low)
+
+        self.soundbuf_normal = OptionButton(self, (.44, .22), (.17, .05),
+                                            text=_("&NORMAL"), autohotkey=True,
+                                            function=self.set_soundbuf,
+                                            args=(1024*2,))
+        self.soundbuf_group.add(self.soundbuf_normal)
+
+        self.soundbuf_high = OptionButton(self, (.64, .22), (.14, .05),
+                                          text=_("&HIGH"), autohotkey=True,
+                                          function=self.set_soundbuf,
+                                          args=(1024*4,))
+        self.soundbuf_group.add(self.soundbuf_high)
+
+    def show(self):
+        for soundbuf_button in self.soundbuf_group:
+            soundbuf_button.set_active(soundbuf_button.args == (g.soundbuf,))
+        return super(OptionsScreen, self).show()
+
 
 class OptionButton(button.ToggleButton, button.FunctionButton):
     pass
@@ -335,7 +329,44 @@ def save_options():
 
     # Actually write the preferences out.
     save_dir = g.get_save_folder(True)
-    save_loc = path.join(save_dir, "prefs.dat")
+    save_loc = os.path.join(save_dir, "prefs.dat")
     savefile = open(save_loc, 'w')
     prefs.write(savefile)
     savefile.close()
+
+def restart():
+    executable = sys.executable
+    args = list(sys.argv)
+    args.insert(0, executable)
+    os.execv(executable, args)
+
+def get_languages_list():
+
+    gamelangs = [(code.split("_", 1)[0], code)
+                 for code in g.available_languages()]
+
+    langcount = {}
+    for language, _ in gamelangs:
+
+        #language++
+        langcount[language] = langcount.get(language, 0) + 1
+
+    #Load languages data
+    with open(os.path.join(g.data_dir,"languages.dat")) as langdata:
+        languages = cPickle.load(langdata)
+
+    output = []
+    for language, code in gamelangs:
+        if langcount[language] > 1:
+            # There are more countries with this base language.
+            # Use full language+country locale name
+            name = languages.get(code, code)
+        else:
+            #This is the only country using that base language.
+            #Use the (shorter) base language name
+            name = languages.get(language, language)
+
+        #Choose native or english name
+        output.append((code, name[1] or name[0]))
+
+    return sorted(output)

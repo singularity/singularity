@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity 0.30c\n"
 "Report-Msgid-Bugs-To: endgame-singularity-dev@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-05 05:12-0300\n"
+"POT-Creation-Date: 2012-05-05 05:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -424,67 +424,63 @@ msgstr ""
 msgid "Research %s"
 msgstr ""
 
-#: screens/options.py:57
+#: screens/options.py:51
 msgid "&Fullscreen:"
 msgstr ""
 
-#: screens/options.py:58
+#: screens/options.py:52
 msgid "&Sound:"
 msgstr ""
 
-#: screens/options.py:59
+#: screens/options.py:53
 msgid "&Mouse grab:"
 msgstr ""
 
-#: screens/options.py:60
+#: screens/options.py:54
 msgid "Da&y/night display:"
 msgstr ""
 
-#: screens/options.py:69 screens/options.py:89 screens/options.py:190
-#: screens/options.py:257 screens/options.py:266 screens/options.py:276
-#: screens/options.py:283
+#: screens/options.py:64 screens/options.py:84 screens/options.py:155
+#: screens/options.py:216 screens/options.py:225 screens/options.py:235
+#: screens/options.py:242
 msgid "NO"
 msgstr ""
 
-#: screens/options.py:79 screens/options.py:255 screens/options.py:264
-#: screens/options.py:274 screens/options.py:281
+#: screens/options.py:74 screens/options.py:214 screens/options.py:223
+#: screens/options.py:233 screens/options.py:240
 msgid "YES"
 msgstr ""
 
-#: screens/options.py:95
+#: screens/options.py:92
 msgid "Resolution:"
 msgstr ""
 
-#: screens/options.py:126
-msgid "CUSTOM:"
+#: screens/options.py:113
+msgid "&CUSTOM:"
 msgstr ""
 
-#: screens/options.py:148
-msgid "&APPLY"
-msgstr ""
-
-#: screens/options.py:152
-msgid "Sound buffering:"
-msgstr ""
-
-#: screens/options.py:159
-msgid "&LOW"
-msgstr ""
-
-#: screens/options.py:165 screens/main_menu.py:32
-msgid "&NORMAL"
-msgstr ""
-
-#: screens/options.py:171
-msgid "&HIGH"
-msgstr ""
-
-#: screens/options.py:177
+#: screens/options.py:141
 msgid "Language:"
 msgstr ""
 
-#: screens/options.py:197
+#: screens/options.py:162
 msgid "SAVE OPTIONS TO &DISK"
+msgstr ""
+
+#: screens/options.py:270
+msgid "Sound buffering:"
+msgstr ""
+
+#: screens/options.py:277
+msgid "&LOW"
+msgstr ""
+
+#: screens/options.py:283 screens/main_menu.py:32
+msgid "&NORMAL"
+msgstr ""
+
+#: screens/options.py:289
+msgid "&HIGH"
 msgstr ""
 
 #: screens/main_menu.py:30

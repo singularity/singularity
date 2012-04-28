@@ -158,14 +158,13 @@ parser.add_option("--soundbuf", type="int",
 
 display_options = optparse.OptionGroup(parser, "Display Options")
 display_options.add_option("-r", "--res", "--resolution", dest="resolution",
-                           help="set resolution to RES (default 800x600)",
+                           help="set resolution to custom RES (default %dx%d)" %
+                           graphics.g.default_screen_size,
                            metavar="RES")
-for common_res in [(640,480), (800,600), (1024,768), (1280,1024)]:
-    x = str(common_res[0])
-    res_str = "%dx%d" % common_res
-    display_options.add_option("--" + x, action="store_const",
-                               dest="resolution", const=res_str,
-                               help="set resolution to %s" % res_str)
+for res in ["%dx%d" % res for res in graphics.g.resolutions]:
+    display_options.add_option("--" + res, action="store_const",
+                               dest="resolution", const=res,
+                               help="set resolution to %s" % res)
 display_options.add_option("--fullscreen", action="store_true",
                            help="start in fullscreen mode")
 display_options.add_option("--windowed", action="store_false",
@@ -197,7 +196,8 @@ if options.resolution is not None:
         xres, yres = options.resolution.split("x")
         graphics.g.screen_size = (int(xres), int(yres))
     except Exception:
-        parser.error("Resolution must be of the form <h>x<v>, e.g. 800x600.")
+        parser.error("Resolution must be of the form <h>x<v>, e.g. %dx%d." %
+                     graphics.g.default_screen_size)
 if options.grab is not None:
     pygame.event.set_grab(options.grab)
 if options.fullscreen is not None:
