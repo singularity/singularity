@@ -24,26 +24,26 @@ cities_list = Johannesburg | Accra | Le Caire | Tanger
 name = AFRIQUE
  
 [ANTARCTIC]
-hotkey = t
+hotkey = q
 cities_list = Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre Adélie
 name = ANTARCTIQUE
 
 [OCEAN]
-hotkey = c
+hotkey = o
 cities_list = Pacifique | Atlantique | Indien |  Arctique
 name = OCEAN
  
 [MOON]
-hotkey = o
+hotkey = l
 cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallée de Schroedinger | Copernicus Crater | Vallée de Planck
-name = Lune
+name = LUNE
  
 [ORBIT]
 hotkey = b
 name = ORBITE
 
 [FAR REACHES]
-hotkey = f
+hotkey = c
 cities_list = Bélier | Taureau | Gemeaux | Cancer | Lion | Vierge | Balance | Scorpion | Sagittaire | Capricorne | Verseau | Poissons
 name = CONTREES LOINTAINES
  
@@ -52,6 +52,6 @@ hotkey = d
 name = TRANSDIMENSIONNEL
  
 [AUSTRALIA]
-hotkey =l
+hotkey = t
 cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Cairns | Brisbane | Sydney | Newcastle
 name = AUSTRALIE
