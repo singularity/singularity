@@ -1,0 +1,195 @@
+#!/bin/bash
+#
+# gettext-singularity - gettext wrapper customized to Endgame: Singularity
+#
+#    Copyright (C) 2012 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. See <http://www.gnu.org/licenses/gpl.html>
+#
+# Uses GNU's gettext tools to parse source code files for translatable
+# strings, generate a template .POT file in data/messages.pot, update
+# existing data/messages_ll_CC.po files, check them for syntax errors,
+# and create a new one if requested.
+# It is smart enough to properly find the source code files and output dir
+# regardless of the current dir on invocation, provided this script is in
+# tools/ dir of E:S tree source
+#
+# All gettext options are already properly set for the Endgame: Singularity
+# project, so this script can be invoked without any options.
+
+usage() {
+cat <<- USAGE
+	Usage: $myname [options] [--new LANG | --check FILE]
+USAGE
+if [[ "$1" ]] ; then
+	cat <<- USAGE
+		Try '$myname --help' for more information.
+	USAGE
+	exit 1
+fi
+cat <<-USAGE
+
+	gettext wrapper customized to Endgame: Singularity project
+
+	Options:
+	-h|--help     - show this page
+	-q|--quiet    - suppress non-error, informative messages
+
+	--new LANG    - create a new PO file. LANG must be in ll or
+	                ll_CC format. Examples: en, en_US, pt, pt_BR
+
+	--check FILE  - test FILE for syntax errors in the PO format and
+	                print translation statistics (regardless of -q)
+	                If used, does not perform any other actions.
+
+	Uses the following GNU's gettext tools:
+	- xgettext : to create or update data/messages.pot template
+	- msgmerge : to update existing data/messages_ll_CC.po files
+	- msgfmt   : to check existing PO files for syntax errors
+	- msginit  : to create a new data/messages_ll_CC.po file
+
+	This command must reside in utils/ dir of E:S source tree, so it can
+	properly find the source code files and output dir.
+
+	Copyright (C) 2012 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+	License: GPLv3 or later. See <http://www.gnu.org/licenses/gpl.html>
+USAGE
+exit 0
+}
+fatal()   { printf "%s: error: %s\n" "$myname" "$1" >&2 ; exit "${2:-1}" ; }
+argerr()  { printf "%s: %s\n" "$myname" "${1:-error}" >&2 ; usage 1 ; }
+invalid() { argerr "invalid option: $1" ; }
+missing() { argerr "missing ${2:+$2 }operand${1:+ in $1}." ; }
+message() { ((verbose)) && printf "%s\n" "$1"; }
+rel()     { python -c "import os.path; print os.path.relpath('$1','$dir')"; }
+
+check() {
+	local stats=()
+	(($1)) && stats=( --statistics )
+	[[ "$2" ]] || missing "--check" "FILE"
+	msgfmt --check-accelerators    \
+	       --output-file=/dev/null \
+	       --check                 \
+	       "${stats[@]}"           \
+	       "$2"
+}
+
+myname="${0##*/}"
+dir="$PWD"
+mydir=$(dirname "$(readlink -f "$0")")
+esdir="${mydir}/.."
+datadir="${esdir}/data"
+potfile="${datadir}/messages.pot"
+verbose=1
+new=0
+quiet=()
+
+# Loop options
+while (( $# )); do
+	case "$1" in
+	-h|--help     ) usage                          ;;
+	-q|--quiet    ) verbose=0 ; quiet=( -q )       ;;
+	   --new=*    ) new=1 ; lang="${1#*=}"         ;;
+	   --new      ) new=1 ; shift ; lang="$1"      ;;
+	   --check=*  ) check 1 "${1#*=}" ; exit       ;;
+	   --check    ) shift ; check 1 "$1"; exit     ;;
+	*             ) invalid "$1"                   ;;
+	esac
+	shift
+done
+
+((new)) && {
+	[[ "$lang" ]] || missing "--new" "LANG"
+	[[ "$lang" =~ ^[[:lower:]][[:lower:]](_[[:upper:]][[:upper:]])?$ ]] ||
+		invalid "LANG format must be 'll' or 'll_CC'"
+}
+message "E:S root dir: $(rel "$esdir")"
+
+# Create or update the POT template from source code
+message "updating template $(rel "$potfile") from sources in $(rel "$esdir")/code"
+tempfile=$(tempfile) || fatal "could not create temporary file"
+trap 'rm -f -- "$tempfile"' EXIT
+cd "${esdir}/code" || fatal "could not access source code dir '${esdir}/code'"
+xgettext --language=Python \
+         --from-code=UTF-8 \
+         --force-po        \
+         --add-comments    \
+         --package-name=singularity \
+         --package-version=$(awk -F'['\'\"']' '/^version *= */{print $2}' g.py) \
+         --msgid-bugs-address="endgame-singularity-dev@googlegroups.com" \
+         --output="$tempfile" \
+         --files-from=<(find -type f -name "*.py")
+cd "$dir"
+
+# Fix POT, as --from-code is currently ignored for Python
+sed -i '/^"Content-Type:/s/CHARSET/UTF-8/;/^#, fuzzy$/d' "$tempfile"
+
+# Compare new POT with existing one. Did only date change?
+if [[ -f "$potfile" ]] &&
+   diff -I '^"POT-Creation-Date:' "$tempfile" "$potfile" > /dev/null
+then
+	message "template was already up-to-date"
+else
+	mv "$tempfile" "$potfile" || fatal "could update POT file"
+fi
+
+# Update existing PO files with new entries
+pofiles=( "$datadir"/messages_*.po )
+for pofile in "${pofiles[@]}"; do
+	[[ "$pofile" == "$datadir/messages_*.po" ]] && {
+		message "no translation .po files to update yet" ; break
+	}
+	message "updating translation $(rel "$pofile")"
+	msgmerge --no-fuzzy-matching \
+	         --backup=off        \
+	         --previous          \
+	         --update            \
+	         "${quiet[@]}"       \
+	         "$pofile"           \
+	         "$potfile"
+	check $verbose "$(rel "$pofile")"
+done
+
+
+# Create a new PO file, if requested
+[[ "$lang" ]] && {
+	output="${datadir}/messages_${lang}.po"
+	[[ -f "$output" ]] && fatal "translation $(rel "$output") already exists!"
+	message "creating blank translation $(rel "$output")"
+	msginit --input="$potfile"               \
+		--output-file="$(rel "$output")" \
+		--locale="${lang}.UTF-8"
+
+	# Ask user and add Language-Native-Name header
+	# So much work for so little gain...
+	name=$(awk -F': |"|\\\\| <' '$2=="Language-Team"{print $3}' "$output")
+	tempfile=$(tempfile) || fatal "could not create temporary file"
+	trap 'rm -f -- "$tempfile"' EXIT
+	awk -v name="$name" -F': |"|\\\\| <' '$2=="Language-Team"{
+		print "\"Language-Name: " name  "\\n\""
+		print "\"Language-Native-Name: LANGUAGE\\n\""
+		} 1' "$output" > "$tempfile"
+	mv "$tempfile" "$output" || fatal "could update PO file"
+	native=""
+	echo
+	while [[ -z "$native" ]]; do
+		read -r -p "What is this language name in ${name}? " native
+	done
+	tempfile=$(tempfile) || fatal "could not create temporary file"
+	trap 'rm -f -- "$tempfile"' EXIT
+	awk -v native="$native" -F': |"|\\\\' '$2=="Language-Native-Name"{
+		sub(/LANGUAGE/,native)} 1' "$output" > "$tempfile"
+	mv "$tempfile" "$output" || fatal "could update PO file"
+	message "$(rel "$output") created and ready to be translated"
+}
