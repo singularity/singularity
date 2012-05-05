@@ -456,10 +456,7 @@ class BorderedWidget(Widget):
         self.draw_borders()
 
     def draw_borders(self):
-        # Draw borders
         my_size = self.real_size
-        horiz = (my_size[0], 1)
-        vert = (1, my_size[0])
 
         for edge in self.borders:
             if edge == constants.TOP:

@@ -420,6 +420,8 @@ class NullDialog(Dialog):
 
 
 class TopDialog(Dialog):
+    """A Dialog that sets itself as the top-level dialog.
+       It must not have a parent, or exception will occur"""
     def __init__(self, *args, **kwargs):
         super(TopDialog, self).__init__(*args, **kwargs)
         self.size = (1, 1)

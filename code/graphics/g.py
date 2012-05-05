@@ -118,6 +118,9 @@ buttons["continue"] = "CONTINUE"
 # Why the SRCALPHA parameter isn't working, I have no idea.
 ALPHA = None
 
+# Related to ALPHA, used by widget.Widget class
+fade_mask = None
+
 def init_alpha():
     global ALPHA
     ALPHA = pygame.Surface((0,0)).convert_alpha()

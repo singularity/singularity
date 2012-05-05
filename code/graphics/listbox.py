@@ -129,6 +129,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
                     (constants.LEFT, constants.TOP)
 
             # Create the new ones.
+            #FIXME: `i` is unused, so why not this instead:
+            #self.display_elements.extend((list_size-current_size)*[self.make_element()])
             for i in range(list_size - current_size):
                 self.display_elements.append(self.make_element())
 
@@ -203,6 +205,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
 
 class UpdateListbox(Listbox):
+    """Listbox with a function called on selection change"""
     def _on_selection_change(self):
         self.update_func(self.list_pos)
 

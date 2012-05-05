@@ -29,6 +29,8 @@ class ItemClass(buyable.BuyableClass):
         self.item_type = item_type
         self.item_qual = item_qual
         self.buildable = buildable
+
+        #TODO: do we need hard-coded lists? Can't we get those from Location?
         if self.buildable == ["all"]:
             self.buildable = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
             "AFRICA", "ANTARCTIC", "OCEAN", "MOON", "FAR REACHES",

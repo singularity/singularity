@@ -38,7 +38,7 @@ position_list = absolute | 50 | 13
 pre = unknown_tech
 
 [FAR REACHES]
-position_list = absolute | 16 | 13
+position_list = absolute | 22 | 13
 safety = 3
 modifier_list = stealth:2 | thrift:.1 | speed:.1
 pre = Fusion Rocketry

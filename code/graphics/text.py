@@ -591,6 +591,7 @@ class ProgressText(SelectableText):
         self.parent = parent
         self.progress = kwargs.pop("progress", 0)
         self.progress_color = kwargs.pop("progress", g.colors["blue"])
+        #FIXME: Where is pos and size below coming from?
         super(ProgressText, self).__init__(parent, pos, size, **kwargs)
 
     def redraw(self):
