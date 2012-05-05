@@ -23,6 +23,7 @@
 # Set language first, so help page and all error messages can be translated
 import g
 g.set_language()
+g.load_messages()
 
 # Since we require numpy anyway, we might as well ask pygame to use it.
 try:
@@ -222,6 +223,7 @@ if pygame.image.get_extended() == 0:
     sys.exit(1)
 
 #init data:
+g.load_messages()
 g.load_strings()
 g.load_events()
 g.load_locations()

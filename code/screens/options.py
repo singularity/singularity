@@ -276,6 +276,7 @@ class OptionButton(button.ToggleButton, button.FunctionButton):
 
 def set_language_properly():
     g.set_language()
+    g.load_messages()
     g.load_string_defs()
     g.load_base_defs()
     g.load_tech_defs()

@@ -27,6 +27,7 @@ import os.path
 import cPickle
 import random
 import sys
+import polib
 
 # Use locale to add commas and decimal points, so that appropriate substitutions
 # are made where needed.
@@ -61,6 +62,8 @@ debug = 0
 force_single_dir = False
 
 #Used to determine which data files to load.
+#It is required that default language have all data files and all of them
+# must have all available entries
 default_language = "en_US"
 try:    language = locale.getdefaultlocale()[0] or default_language
 except: language = default_language
@@ -86,6 +89,7 @@ savefile_translation = {
 data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))
 
 # Initialization data
+messages = {}
 strings = {}
 locations = {}
 techs = {}
@@ -561,50 +565,47 @@ def load_game(loadgame_name):
     loadfile.close()
     return True
 
-def load_generic_defs_file(name,lang=None,mandatory=False):
+def load_generic_defs_file(name,lang=None):
     if lang is None: lang = language
 
-    filename = name + "_" + lang + ".dat"
-    try:
-        # Definition file for default language is always mandatory
-        if lang == default_language: mandatory = True
-        return generic_load(filename, mandatory)
+    return_list = []
 
-    except:
-        return [] # For other languages, ignore errors
+    lang_list = language_searchlist(lang)
+    for lang in lang_list:
+
+        filename = name + "_" + lang + ".dat"
+        try:
+            # Definition file for default language is always mandatory
+            mandatory = (lang==default_language)
+            return_list.extend( generic_load(filename, mandatory) )
+
+        except:
+            pass # For other languages, ignore errors
+
+    return return_list
 
 def load_generic_defs(name,object,lang=None,listype_attrs=[]):
     if lang is None: lang = language
 
-    # We use the default language definitions as fallbacks, then overwrite those
-    # with any available entries in the native language.
-    if lang != default_language:
-        load_generic_defs(name, object, default_language, listype_attrs)
-
-    array = load_generic_defs_file(name,lang)
-    for item in array:
-
-        # ID
-        if not "id" in item:
-            sys.stderr.write("an entry from %s has no id" % file)
-            continue # ignore entries without id
+    item_list = load_generic_defs_file(name,lang)
+    for item in item_list:
 
         # Keys of type list
         for key in listype_attrs:
             if key in dir(object[item["id"]]):
                 if key in item:
                     if type(item[key]) == list:
-                        object[item["id"]].__setattr__(key, item[key])
+                        setattr(object[item["id"]], key, item[key])
                     else:
-                        object[item["id"]].__setattr__(key, [item[key]])
+                        setattr(object[item["id"]], key, [item[key]])
                 else:
-                    object[item["id"]].__setattr__(key, [""])
+                    setattr(object[item["id"]], key, [""])
 
         # Ordinary keys
         for key in item:
             if key == "id" or key in listype_attrs: continue # Already handled
             if key in dir(object[item["id"]]):
-                object[item["id"]].__setattr__(key, item[key])
+                setattr(object[item["id"]], key, item[key])
 
 def load_base_defs(lang=None):
     load_generic_defs("bases",base_type,lang,["flavor"])
@@ -754,14 +755,14 @@ non-mandatory missing or otherwise unreadable files
     except IOError as reason:
         # Silently ignore non-mandatory missing files
         if mandatory:
-            sys.stderr.write("Cannot read '%s': %s\nExiting\n" % filename, reason)
+            sys.stderr.write("Cannot read '%s': %s\nExiting\n" %  (filename, reason))
             sys.exit(1)
         else:
             raise
 
     except Exception as reason:
         # Always print parsing errors, even for non-mandatory files
-        sys.stderr.write("Error parsing '%s': %s\n" % filename, reason)
+        sys.stderr.write("Error parsing '%s': %s\n" %  (filename, reason))
         if mandatory:
             sys.stderr.write("Exiting.\n")
             sys.exit(1)
@@ -951,12 +952,7 @@ def load_event_defs(lang=None):
 def load_string_defs(lang=None):
     if lang is None: lang = language
 
-    # We use the default language definitions as fallbacks, then overwrite those
-    # with any available entries in the native language, like load_generic_defs()
-    if lang != default_language:
-        load_string_defs(default_language)
-
-    string_list = load_generic_defs_file("strings",lang,True)
+    string_list = load_generic_defs_file("strings",lang)
     for string_section in string_list:
         if string_section["id"] == "fonts":
 
@@ -1026,6 +1022,19 @@ def load_string_defs(lang=None):
 
 def load_strings():
     load_string_defs()
+
+def load_messages(lang=None):
+    if lang is None: lang = language
+
+    messages.clear()
+
+    lang_list = language_searchlist(lang, default=False)
+    for lang in lang_list:
+        try:
+            po = polib.pofile(os.path.join(data_dir, "messages_"+lang+".po"))
+            for entry in po.translated_entries():
+                messages[entry.msgid] = entry.msgstr
+        except IOError: pass # silently ignore non-existing files
 
 def get_intro():
     intro_file_name = os.path.join(data_dir, "intro_"+language+".dat")
@@ -1109,7 +1118,7 @@ def new_game(difficulty):
 
     #Starting base
     open = [loc for loc in locations.values() if loc.available()]
-    random.choice(open).add_base(base.Base("University Computer",
+    random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
 
     #Assign random properties to each starting location.
@@ -1157,6 +1166,23 @@ def available_languages():
                             if file_name.startswith("strings_")
                                and file_name.endswith(".dat")  ]
 
+def language_searchlist(lang=None, default=True):
+    if lang is None: lang = language
+
+    # if lang is in ll_CC format (language_COUNTRY, like en_US), add both ll
+    # and ll_CC, in that order, so all generic language entries are loaded first
+    # and then overwritten by any country-specific ones
+    lang_list = [ lang ]
+    if "_" in lang: lang_list.insert(0, lang.split("_",1)[0])
+
+    # If requested and not already in list, add default language as first,
+    # so it acts as a fallback and is overwritten with any available entries
+    # in the native language
+    if default and default_language not in lang_list:
+        lang_list.insert(0, default_language)
+
+    return lang_list
+
 def get_save_names():
     save_names = []
     all_files = os.listdir(get_save_folder())
@@ -1170,7 +1196,42 @@ def get_save_names():
 
     return save_names
 
+def translate(string, *args, **kwargs):
+    if   string in strings : s = strings[string]
+    elif string in buttons : s = buttons[string]
+    elif string in messages: s = messages[string]
+    else:                    s = string
+
+    if args or kwargs:
+        try:
+            # format() is favored over interpolation for 2 reasons:
+            # - parsing occurs here, allowing centralized try/except handling
+            # - it is the new standard in Python 3
+            return s.format(*args, **kwargs)
+
+        except Exception as reason:
+            sys.stderr.write("Error translating from '%s' to '%s' in %r:\n"
+                             "%s: %s\n" %
+                             (string, s, language_searchlist(default=False),
+                              type(reason).__name__, reason))
+            s = string # Discard the translation
+
+    return s
+
+#TODO: For both get_hotkey() and strip_hotkey(), handle && properly.
+#TODO: For get_hotkey(), be smarter about malformed & (missing or before non-alpha)
+def get_hotkey(string):
+    pos = string.find("&")
+    key = string[pos+1:pos+2]
+    if not key.isalpha: key = string[0:1]
+    return str(key).lower()
+
+def strip_hotkey(string):
+    return string.replace("&","")
+
 # Initialization code
+import __builtin__
+__builtin__.__dict__['_'] = translate
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()
