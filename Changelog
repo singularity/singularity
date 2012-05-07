@@ -1,17 +1,24 @@
 Endgame: Singularity Changelog
 
-- Created .gitignore and .gitattributes files to aid development (Mestrelion)
-- Fixed techs being reset if language is changed mid-game (Closes Issue #99)
+USER-VISIBLE CHANGES:
+- Fixed techs being reset if language is changed mid-game (Closes: #99)
   (MestreLion)
 - Saved games list now sorted in in-game load dialog (MestreLion)
-- Fixed events not being translated when language changes in-game (Closes Issue
-  #128) (MestreLion)
+- Fixed events not being translated when language changes in-game (Closes: #128)
+  (MestreLion)
 - Fixed --singledir and --multidir being ignored for saves, preferences, music
   and error log. Also, if possible (Python >= 2.6), error.log is now created
   only when (and if) an error actually occurs. (MestreLion)
-- Added Brazilian Portuguese (pt_BR) translation (Closes Issue #130)(MestreLion)
-- Updated es_AR translation (Closes Issue #20) (justapawn)
+- Added Brazilian Portuguese (pt_BR) translation (Closes: #130)(MestreLion)
+- Updated es_AR translation (Closes: #20)(justapawn)
 - Try to use user's locale, or a similar language, as game language (MestreLion)
+- Launcher for Linux is now "singularity"
+- Revamped Options screen, including new resolutions (MestreLion)
+
+OTHER CHANGES:
+- Created .gitignore and .gitattributes files to aid development (Mestrelion)
+- New i18n and hotkey approach. E:S is now fully translatable (MestreLion)
+- New tools under utils/ dir (MestreLion)
 
 v0.30c (release 2011.06.11):
 

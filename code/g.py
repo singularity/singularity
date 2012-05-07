@@ -1,6 +1,6 @@
-#file: g.py
-#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
-#                        and FunnyMan3595
+#file: code/g.py
+#Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,
+#                   MestreLion
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -14,8 +14,8 @@
 #GNU General Public License for more details.
 
 #You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#A full copy of this license is provided in GPL.txt
 
 #This file contains all global objects.
 

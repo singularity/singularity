@@ -6,7 +6,7 @@ REQUIREMENTS
 
 PREBUILT VERSIONS
 Pre-built versions of Endgame: Singularity are currently available for Windows
-and Mac OS X.
+and Mac OS X. Linux does not require building, and can run directly from source
 
 RUNNING FROM SOURCE
 You will need Python (2.6+), pygame (1.7+, 1.8.1+ preferred), and NumPy.
@@ -26,40 +26,32 @@ Macintosh is mostly unsupported, but it should work. You will need to install
 Python, pygame, and NumPy first, which can be tricky. Some fonts are incorrect,
 but the game itself should work properly.
 
-RUNNING THE GAME
-On Linux and most Unix-like other platforms, running "python singularity.py",
-or simply "singularity.py", will start the game. If using the Windows compile,
-just run the .exe.
 
-COMMAND-LINE OPTIONS
+================
+RUNNING THE GAME
+================
+
+On Linux and most Unix-like other platforms, running "python singularity.py",
+or simply "singularity", will start the game. If using the Windows compile,
+just run singularity.exe
+
+SOME COMMAND-LINE OPTIONS
   --version             show program's version number and exit
   -h, --help            show this help message and exit
-  --sound               enable sound (default)
-  --nosound             disable sound
-  --daynight            enable day/night display (default)
-  --nodaynight          disable day/night display
-  -l LANG, --lang=LANG, --language=LANG
-                        set the language to LANG (available languages: de_DE
-                        en_US es_AR fr_FR it_IT pt_BR sv_SE, default en_US)
-  -g, --grab            grab the mouse pointer
-  --nograb              don't grab the mouse pointer (default)
   -s, --singledir       keep saved games and settings in the Singularity
-                        directory
-  --multidir            keep saved games and settings in an OS-specific, per-
-                        user directory (default)
-  --soundbuf=SOUNDBUF   set the size of the sound buffer (default 2048)
+                        install directory
+  --multidir            keep saved games and settings in an OS-specific,
+                        per-user directory (default)
 
   Display Options:
-    -r RES, --res=RES, --resolution=RES
-                        set resolution to RES (default 800x600)
-    --640               set resolution to 640x480
-    --800               set resolution to 800x600
-    --1024              set resolution to 1024x768
-    --1280              set resolution to 1280x1024
     --fullscreen        start in fullscreen mode
     --windowed          start in windowed mode (default)
 
-Most of these options are also changable in the options screen in-game.
+The above is only a tiny fraction of current command-line options. As new
+features are added to the game, so does the options change. For a complete and
+updated list, run singularity --help
+
+Most of these options are also changeable at the in-game options screen.
 
 A NOTE ABOUT SAVE FILES
 Endgame: Singularity is still under heavy development.  As such, the save file
@@ -69,7 +61,11 @@ when you load up old saves.  We will clearly note in the Changelog when we
 break savefile compatibility, and the game will refuse to load completely
 incompatible saves.
 
+
+================
 PLAYING THE GAME
+================
+
 The game is playable either with mouse control or the keyboard.  Buttons have
 underlined letters to indicate shortcuts.  Some other useful shortcuts:
 
@@ -104,7 +100,7 @@ Endgame: Singularity looks in two places for music tracks to play:
 
 * A music/ directory directly inside of the Endgame: Singularity install
   directory, and
-* A music/ directory inside of the save directory (~/endgame in Linux, the
+* A music/ directory inside of the save directory (~/.endgame in Linux, the
   install directory for Windows).
 
 Tracks placed in these directories will be played randomly as part of the
@@ -118,11 +114,34 @@ support for MP3 is not as strong as its support for Ogg Vorbis.  This may
 cause in-game crashes; if you are experiencing problems with the game,
 first remove any MP3s you may have added to the soundtrack.
 
-CREDITS
+
+============
+CONTRIBUTING
+============
+
+All suggestions, translations, code, etc. are welcomed, though it would be
+wise to tell us before starting work on any large projects.  Join and/or
+send mail to endgame-singularity@googlegroups.com for more details.
+
+CONTRIBUTING TRANSLATIONS
+To add a new translation, please use the 'traduko' and 'gettext-singularity'
+tools in utils/ dir. Their --help option should walk you through its usage.
+If you have any questions contact us at endgame-singularity-dev@googlegroups.com
+Note that the resulting file will be licensed either under the CC-BY-SA 3.0
+license (for *.dat files created with traduko) or the game's code license
+(for the *.po files created by gettext-singularity), both described below.
+
+
+====================
+CREDITS AND LICENSES
+====================
+
+AUTHORS AND MAIN CONTRIBUTORS
 Evil Mr Henry
 Phil Bordelon
 Brian Reid
 FunnyMan3595
+MestreLion
 Borg[MDQ] (translation into Spanish)
 Adam Bark (reduced-CPU Clock class)
 Max McCracken (music)
@@ -131,23 +150,11 @@ Thomas (native-proofing of German translation)
 Philippe Grenard (translation into French)
 Guga (updates to the Spanish translation)
 Daniele Sapino (translation into Spanish)
-MestreLion (translation into Brazilian Portuguese)
-
-CONTRIBUTING
-All suggestions, translations, code, etc. are welcomed, though it would be
-wise to tell us before starting work on any large projects.  Join and/or
-send mail to endgame-singularity@googlegroups.com for more details.
-
-CONTRIBUTING TRANSLATIONS
-To add a new translation, please use the 'traduko' utility in utils/traduko.
-Its --help should walk you through its usage; if you have any questions,
-contact us at endgame-singularity-dev@googlegroups.com.  Note that the
-resulting file will be licensed under the CC-BY-SA 3.0 license, described
-below.
+Dafne Saqueti (translation into Brazilian Portuguese)
 
 CODE LICENSE
-Copyright (C) 2005, 2006, 2007, 2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
-                                     and FunnyMan3595
+Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,
+                   MestreLion
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -160,8 +167,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+A full copy of this license is provided in GPL.txt
 
 DATA LICENSE
 The sounds, music, text files, and icons in the data subdirectory are under
@@ -223,7 +231,7 @@ http://www.aenigmafonts.com/fonts/fontsa.html
 
 Terms of use (quoted from an eMail from Brian Kent):
 
-===
+-----
 Hi,
 
   Feel free to use the font any way you want to.
@@ -234,7 +242,7 @@ Brian Kent
 aefonts@frontiernet.net
 ÆNIGMA GAMES & FONTS
 http://www.aenigmafonts.com/
-===
+-----
 
 Note that this is /not/ the license available on his website; Brian has given
 us directly 'free to use for any purpose' licensing on this font file.  Thanks
@@ -245,7 +253,6 @@ Fonts; while DejaVu's modifications are public domain, both Bistream Vera and
 Arev Fonts have copyrights, shown below:
 
 Bistream Vera Copyright
-=======================
 
 Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream
 Vera is a trademark of Bitstream, Inc.
@@ -294,7 +301,6 @@ or Bitstream Inc., respectively. For further information, contact:
 fonts at gnome dot org.
 
 Arev Fonts Copyright
-====================
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of the fonts accompanying this license ("Fonts") and
