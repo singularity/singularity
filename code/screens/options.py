@@ -21,7 +21,7 @@
 import os, sys
 import ConfigParser
 import pygame
-import cPickle
+import json
 
 
 from code.graphics import constants, dialog, button, listbox, text, g as gg
@@ -353,7 +353,7 @@ def get_languages_list():
 
     #Load languages data
     with open(os.path.join(g.data_dir,"languages.dat")) as langdata:
-        languages = cPickle.load(langdata)
+        languages = json.load(langdata)
 
     output = []
     for language, code in gamelangs:
