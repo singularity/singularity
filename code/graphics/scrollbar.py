@@ -35,7 +35,7 @@ class _ArrowButton(button.FunctionButton, button.ImageButton):
         kwargs["args"] = (self.first,)
         super(_ArrowButton, self).__init__(parent, *args, **kwargs)
 
-        base_image = g.images['arrow.png']
+        base_image = g.images['arrow']
         if self.first and self.horizontal:
             angle = 90
             self.borders = (constants.LEFT, constants.TOP, constants.BOTTOM)

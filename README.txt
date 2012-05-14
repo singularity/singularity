@@ -200,8 +200,8 @@ See the file data/Attribution-ShareAlike 3.0.html or
 http://creativecommons.org/licenses/by-sa/3.0/legalcode for the full license.
 
 GRAPHIC LICENSE
-The day and night images of the earth are from NASA's "Blue Marble 2002" image
-collection:
+The day and night earth images of the Default theme are from NASA's "Blue Marble
+2002" image collection:
 http://visibleearth.nasa.gov/view_set.php?categoryID=2364
 
 The night image has been altered to better match by overlaying, blending, and
@@ -224,6 +224,9 @@ Beyond the NASA Terms, the Visible Earth team requests, but does not require:
    2. A URL be provided, either to the Visible Earth
       (http://visibleearth.nasa.gov/) or to the page providing the link to the
       used image.
+
+Other images, such as backgrounds in Vector and other themes, are distributed
+under the same license as other data files. See DATA LICENSE section for details
 
 FONT LICENSES
 The boxy font used is "Acknowledge", by Brian Kent, modified in order to have

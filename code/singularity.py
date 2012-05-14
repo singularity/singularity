@@ -133,6 +133,11 @@ if os.path.exists(save_loc):
         if xres and yres:
             graphics.g.set_screen_size((xres, yres))
 
+        try:
+            graphics.g.theme = prefs.get("Preferences", "theme")
+        except:
+            pass # don't be picky (for now...)
+
 
 #Handle the program arguments.
 desc = """Endgame: Singularity is a simulation of a true AI.
@@ -169,6 +174,8 @@ parser.add_option("--soundbuf", type="int",
                     % g.soundbuf)
 
 display_options = optparse.OptionGroup(parser, "Display Options")
+display_options.add_option("-t", "--theme", dest="theme", type="string",
+                           metavar="THEME", help="set theme to THEME")
 display_options.add_option("-r", "--res", "--resolution", dest="resolution",
                            help="set resolution to custom RES (default %dx%d)" %
                            graphics.g.default_screen_size,
@@ -205,6 +212,8 @@ hidden_options.add_option("--cheater", help="for bad little boys and girls",
 
 if options.language is not None:
     g.set_language(options.language)
+if options.theme is not None:
+    graphics.g.theme = options.theme
 if options.resolution is not None:
     try:
         xres, yres = options.resolution.split("x")

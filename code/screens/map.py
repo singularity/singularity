@@ -38,12 +38,23 @@ class EarthImage(image.Image):
     def __init__(self, parent):
         super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
                                          constants.MID_CENTER,
-                                         gg.images['earth.jpg'])
+                                         gg.images['earth'])
 
     def rescale(self):
         super(EarthImage, self).rescale()
-        self.night_image = image.scale(gg.images['earth_night.jpg'],
+        self.night_image = image.scale(gg.images['earth_night'],
                                        self.real_size).convert_alpha()
+
+    def on_theme(self):
+        self.image = gg.images['earth']
+        try:
+            self.rescale()
+            self.needs_rebuild = True
+            self.needs_resize = True
+            self.needs_redraw = True
+        except AttributeError:
+            # Map not initialized yet (theme set before start/load game)
+            pass
 
     night_mask_day_of_year = None
     night_mask_dim = None
@@ -536,6 +547,11 @@ class MapScreen(dialog.Dialog):
             self.show_message(g.strings["lost_nobases"] if lost == 1 else
                               g.strings["lost_sus"])
             raise constants.ExitDialog
+
+    def on_theme(self):
+        """Not a true handler: must be called and propagated manually"""
+        self.map.on_theme()
+        self.needs_redraw = True
 
     def rebuild(self):
         super(MapScreen, self).rebuild()

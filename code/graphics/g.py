@@ -86,6 +86,10 @@ font.append([0] * 100)
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
+default_theme = 'default'
+theme = default_theme
+themes = []
+
 images = {}
 
 # This should be overridden by code.g.py
@@ -132,10 +136,11 @@ def init_graphics_system(data_dir, size=None):
 
     load_fonts(data_dir)
     load_images(data_dir)
+    load_themes(data_dir)
     init_alpha()
 
     # Set the application icon and caption
-    pygame.display.set_icon(images["icon.png"])
+    pygame.display.set_icon(images["icon"])
     pygame.display.set_caption("Endgame: Singularity")
 
 
@@ -206,26 +211,30 @@ directory.
     font[1][17] = font[1][18]
 
 
-def load_images(data_dir):
-    """
-load_images() loads all of the images in the data/images/ directory.
-"""
-    global images
+def load_themes(data_dir):
+    themes.extend(os.walk(os.path.join(data_dir, 'themes')).next()[1])
 
-    image_dir = os.path.join(data_dir, "images")
+
+def load_image(filename):
+    # We need to convert the image to a Pygame image surface and
+    # set the proper color key for the game.
+    image = pygame.image.load(filename).convert()
+    image.set_colorkey((255, 0, 255, 255), pygame.RLEACCEL)
+    return image.convert_alpha()
+
+
+def load_images(data_dir):
+    """load all images in current theme: <data_dir>/themes/<theme>/images/"""
+
+    image_dir = os.path.join(data_dir, 'themes', theme, 'images')
     image_list = os.listdir(image_dir)
     for image_filename in image_list:
 
         # We only want JPGs and PNGs.
-        if len(image_filename) > 4 and (image_filename[-4:] == ".png" or
-         image_filename[-4:] == ".jpg"):
+        if os.path.splitext(image_filename)[1].lower() in ['.png', '.jpg']:
 
-            # We need to convert the image to a Pygame image surface and
-            # set the proper color key for the game.
-            images[image_filename] = pygame.image.load(
-             os.path.join(image_dir, image_filename)).convert()
-            images[image_filename].set_colorkey((255, 0, 255, 255),
-             pygame.RLEACCEL)
+            filetitle = os.path.splitext(image_filename)[0]
+            images[filetitle] = load_image(os.path.join(image_dir, image_filename))
 
 
 def init_alpha():
