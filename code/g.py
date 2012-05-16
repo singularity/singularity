@@ -128,6 +128,7 @@ map_screen = None
 
 def set_language(lang=None):
     global language # required, since we're going to change it
+    oldlang = language # save it before we change it
     if lang is None: lang = language
 
     langs = available_languages()
@@ -158,6 +159,9 @@ def set_language(lang=None):
             break
         except locale.Error:
             continue
+
+    if language != oldlang:
+        load_messages()
 
 def quit_game():
     sys.exit()

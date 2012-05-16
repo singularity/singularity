@@ -223,7 +223,6 @@ if pygame.image.get_extended() == 0:
     sys.exit(1)
 
 #init data:
-g.load_messages()
 g.load_strings()
 g.load_events()
 g.load_locations()
