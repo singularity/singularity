@@ -22,15 +22,27 @@
 #graphviz.
 
 from os import system
-from os.path import realpath
+import os.path as osp
 import sys
 
+if __name__ == '__main__':
+    myname = sys.argv[0]
+    mydir  = osp.dirname(myname)
+    esdir  = osp.abspath(osp.join(osp.dirname(myname), '..'))
+    sys.path.insert(0,esdir)
+else:
+    myname = __file__
+    mydir  = osp.dirname(myname)
+    esdir  = osp.abspath(osp.join(osp.dirname(myname), '..'))
+    sys.path.append(esdir)
+
 try:
-    sys.path.insert(0, ".")
-    from code import g
+    import code.g as g
+    g.set_language()
+    g.load_techs()
+    g.load_items()
 except ImportError:
-    print "Run this from the main Singularity directory, as utils/make-tree.py"
-    raise SystemExit
+    sys.exit("Could not find game's code.g")
 
 so_far = ""
 
@@ -42,7 +54,8 @@ def abbr(s):
          ("Computing","Cpu"),
          ("Quantum","Qu"),
          ("Personal Identification","P-Id"))
-    for f,t in l: s = s.replace(f, t)
+    #It is silly to abbreviate names
+    #for f,t in l: s = s.replace(f, t)
     return s
 
 def cost(c):
