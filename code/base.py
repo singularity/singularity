@@ -22,6 +22,7 @@
 
 import g
 import buyable
+from buyable import cash, cpu, labor
 
 
 #TODO: Use this list and convert Base.power_state to a property to enforce this
@@ -103,6 +104,8 @@ class BaseClass(buyable.BuyableClass):
 
         raw_maintenance = self.maintenance[:]
         location.modify_maintenance(raw_maintenance)
+        # describe_cost() expects CPU-seconds, not CPU-days
+        raw_maintenance[cpu] *= g.seconds_per_day
         maint = self.describe_cost(raw_maintenance, True)
 
         detect = self.get_detect_info(location)
