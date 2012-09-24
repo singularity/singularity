@@ -538,6 +538,10 @@ class MapScreen(dialog.Dialog):
         for base in g.all_bases():
             if base.done:
                 maint_cpu += base.maintenance[1]
+            if base.has_grace():
+                # It cannot be detected, so it doesn't contribute to
+                # detection odds calculation
+                continue
             detect_chance = base.get_detect_chance()
             for group in g.player.group_list:
                 detects_per_day[group] = \
