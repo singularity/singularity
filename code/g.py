@@ -461,6 +461,10 @@ def roll_chance(chance_per_day, seconds = seconds_per_day):
     chance = 1 - inv_chance
     return random.random() < chance
 
+# Correct way to add chance multiplier with each other.
+def add_chance(first, second):
+    return 1.0 - (1.0 - first) * (1.0 - second)
+
 # Spreads a number of events per day (e.g. processor ticks) out over the course
 # of the day.
 def current_share(num_per_day, time_of_day, seconds_passed):
