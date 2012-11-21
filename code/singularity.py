@@ -89,8 +89,7 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid or missing 'lang' in preferences.\n")
 
         try:
-            if prefs.getboolean("Preferences", "fullscreen"):
-                graphics.g.fullscreen = pygame.FULLSCREEN
+            graphics.g.fullscreen = prefs.getboolean("Preferences", "fullscreen")
         except:
             sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
 

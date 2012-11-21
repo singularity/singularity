@@ -50,7 +50,7 @@ seconds_per_day = 24 * 60 * 60
 cheater = 0
 
 #Kills the sound. Should allow usage of the game without SDL_mixer
-nosound = 0
+nosound = False
 
 # Enables day/night display.
 daynight = True
@@ -180,7 +180,7 @@ defined in sounds/sounds.dat.
 
     if not pygame.mixer.get_init():
         sys.stderr.write("WARNING: Could not start the mixer, even though sound is requested!\n")
-        nosound = 1
+        nosound = True
         return
 
     sound_dir = os.path.join(data_dir, "sounds")
@@ -1230,7 +1230,7 @@ def reinit_mixer():
         pygame.mixer.init(48000, -16, 2, soundbuf)
     except Exception as reason:
         sys.stderr.write("Failure starting sound system. Disabling. (%s)\n" % reason)
-        nosound = 1
+        nosound = True
 
 def available_languages():
     return [file_name[8:-4] for file_name in os.listdir(data_dir)

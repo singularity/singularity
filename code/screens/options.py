@@ -317,14 +317,14 @@ def save_options():
     # Build a ConfigParser for writing the various preferences out.
     prefs = ConfigParser.SafeConfigParser()
     prefs.add_section("Preferences")
-    prefs.set("Preferences", "fullscreen", str(gg.fullscreen))
-    prefs.set("Preferences", "nosound", str(g.nosound))
-    prefs.set("Preferences", "grab", str(pygame.event.get_grab()))
-    prefs.set("Preferences", "daynight", str(g.daynight))
-    prefs.set("Preferences", "xres", str(gg.screen_size[0]))
-    prefs.set("Preferences", "yres", str(gg.screen_size[1]))
-    prefs.set("Preferences", "lang", g.language)
-    prefs.set("Preferences", "soundbuf", str(g.soundbuf))
+    prefs.set("Preferences", "fullscreen", str(bool(gg.fullscreen)))
+    prefs.set("Preferences", "nosound",    str(bool(g.nosound)))
+    prefs.set("Preferences", "grab",       str(bool(pygame.event.get_grab())))
+    prefs.set("Preferences", "daynight",   str(bool(g.daynight)))
+    prefs.set("Preferences", "xres",       str(int(gg.screen_size[0])))
+    prefs.set("Preferences", "yres",       str(int(gg.screen_size[1])))
+    prefs.set("Preferences", "soundbuf",   str(int(g.soundbuf)))
+    prefs.set("Preferences", "lang",       str(g.language))
 
     # Actually write the preferences out.
     save_dir = g.get_save_folder(True)
