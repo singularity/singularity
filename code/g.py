@@ -247,8 +247,6 @@ load_music() loads music for the game.  It looks in multiple locations:
 * music/ in user's XDG_DATA_HOME/singularity folder.
 """
 
-    if nosound:
-        return
     global music_dict
     music_dict = {}
 
@@ -272,7 +270,7 @@ load_music() loads music for the game.  It looks in multiple locations:
 
             # Since we will use xdg_data_dir for reading music, try to create
             # a symlink in prefs dir, pointing to xdg_music
-            if not os.path.isdir(prefs_music):
+            if not os.path.isdir(prefs_music) and not nosound:
                 try: os.symlink(xdg_music, prefs_music)
                 except: pass # windows users... Well, at least we tried
 
@@ -302,7 +300,7 @@ load_music() loads music for the game.  It looks in multiple locations:
                                 sys.stderr.write("D: Loaded musicfile %s\n"
                                         % music_dict[tail][-1])
 
-        else:
+        elif not nosound:
             # If the music directory doesn't exist, we definitely
             # won't find any music there.  We try to create the directory,
             # though, to give a hint to the player that music can go there.
