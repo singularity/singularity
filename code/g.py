@@ -49,8 +49,14 @@ seconds_per_day = 24 * 60 * 60
 #Allows access to the cheat menu.
 cheater = 0
 
-#Kills the sound. Should allow usage of the game without SDL_mixer
+#Disables sound playback (and, currently, music too)
 nosound = False
+
+#Indicates if mixer is initialized
+#Unlike nosound, which user may change at any time via options screen,
+#this deals with hardware capability and mixer initialization status
+#In a nutshell: nosound is what user /wants/, mixerinit is what user /has/
+mixerinit = False
 
 # Enables day/night display.
 daynight = True
@@ -103,6 +109,7 @@ music_dict = {}
 delay_time = 1
 curr_speed = 1
 soundbuf = 1024*2
+soundargs = (48000, -16, 2)  # sampling frequency, size, channels
 danger_colors = ((0, 0, 255), (85, 0, 170), (170, 0, 85), (255, 0, 0))
 detect_string_names = ("detect_str_low",
                        "detect_str_moderate",
@@ -172,15 +179,10 @@ load_sounds() loads all of the sounds in the data/sounds/ directory,
 defined in sounds/sounds.dat.
 """
 
-    global sounds
-    global nosound
-
-    if nosound:
-        return
-
-    if not pygame.mixer.get_init():
-        sys.stderr.write("WARNING: Could not start the mixer, even though sound is requested!\n")
-        nosound = True
+    if not mixerinit:
+        # Sound is not initialized. Warn if user wanted sound
+        if not nosound:
+            sys.stderr.write("WARNING: Sound is requested, but mixer is not initialized!\n")
         return
 
     sound_dir = os.path.join(data_dir, "sounds")
@@ -201,7 +203,8 @@ defined in sounds/sounds.dat.
 
             # Check to make sure it's a real file; bail if not.
             if not os.path.isfile(real_filename):
-                sys.stderr.write("ERROR: Cannot load nonexistent soundfile %s!\n" % real_filename)
+                sys.stderr.write("ERROR: Cannot load nonexistent soundfile: %s!\n" %
+                                 real_filename)
                 sys.exit(1)
             else:
 
@@ -215,27 +218,28 @@ defined in sounds/sounds.dat.
                     "filename": real_filename,
                     "sound": sound})
                 if debug:
-                    sys.stderr.write("D: Loaded soundfile %s\n"
-                            % real_filename)
+                    sys.stderr.write("DEBUG: Loaded soundfile: %s\n" %
+                                     real_filename)
 
 def play_sound(sound_class):
     """
 play_sound() plays a sound from a particular class.
 """
 
-    if nosound:
+    if nosound or not mixerinit:
         return
 
     # Don't crash if someone requests the wrong sound class, but print a
     # warning.
     if sound_class not in sounds:
-        sys.stderr.write("WARNING: Requesting a sound of unavailable class %s!\n" % sound_class)
+        sys.stderr.write("WARNING: Requesting a sound of unavailable class: %s\n" %
+                         sound_class)
         return
 
     # Play a random choice of sounds from the sound class.
     random_sound = random.choice(sounds[sound_class])
     if debug:
-        sys.stderr.write("D: Playing sound %s.\n" % random_sound["filename"])
+        sys.stderr.write("DEBUG: Playing sound %s.\n" % random_sound["filename"])
     random_sound["sound"].play()
 
 def load_music():
@@ -312,15 +316,16 @@ load_music() loads music for the game.  It looks in multiple locations:
 
 def play_music(musicdir="music"):
 
-    global music_dict
     global delay_time
 
-    # Don't bother if the user doesn't want sound, there's no music available,
+    # Don't bother if the user doesn't want or have sound,
+    # there's no music available at all or for that musicdir,
     # or the music mixer is currently busy.
-    if nosound or len(music_dict) == 0: return
-    if not music_dict.has_key(musicdir): return
-    if len(music_dict[musicdir]) == 0: return
-    if pygame.mixer.music.get_busy() and musicdir == "music": return
+    if (nosound
+        or not mixerinit
+        or not music_dict.get(musicdir)
+        or (pygame.mixer.music.get_busy() and musicdir == "music")):
+        return
 
     if musicdir != "music":
         pygame.mixer.music.stop()
@@ -1221,14 +1226,18 @@ def init_graphics_system():
     graphics.g.init_alpha()
 
 def reinit_mixer():
-    global nosound
-    if nosound: return
+    global mixerinit
+
+    if nosound:
+        return
+
     try:
         pygame.mixer.quit()
-        pygame.mixer.init(48000, -16, 2, soundbuf)
+        pygame.mixer.init(*soundargs, buffer=soundbuf)
     except Exception as reason:
         sys.stderr.write("Failure starting sound system. Disabling. (%s)\n" % reason)
-        nosound = True
+    finally:
+        mixerinit = bool(pygame.mixer.get_init())
 
 def available_languages():
     return [file_name[8:-4] for file_name in os.listdir(data_dir)

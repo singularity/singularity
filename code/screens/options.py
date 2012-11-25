@@ -28,12 +28,11 @@ from code.graphics import constants, dialog, button, listbox, text, g as gg
 import code.g as g
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
-#TODO: Show a 2-or-so-seconds "Please wait" dialog when changing sound options,
-#      because huge lag when applying them might confuse users
 #TODO: Integrate "Save Options to Disk" functionality in OK button.
 #TODO: Add dialog suggesting restart when language changes, so changes may apply
 #      at least until/if we find a way refresh all screens. Don't forget to
 #      remind user to save current game (if loaded from map menu)
+#TODO: Disable Sound button if mixer is not initialized
 #TODO: Create a dedicated button for Music
 #
 
@@ -230,7 +229,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
 
         g.nosound = not value
         if g.nosound:
-            pygame.mixer.music.stop()
+            if g.mixerinit:
+                pygame.mixer.music.stop()
         else:
             g.play_sound("click")
             g.delay_time = 1  # force g.play_music() to play immediately
@@ -299,11 +299,19 @@ class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             soundbuf_button.set_active(soundbuf_button.args == (g.soundbuf,))
         return super(AdvancedOptionsScreen, self).show()
 
+    #TODO: Show a 2-second "Please wait" dialog when reinitializing mixer,
+    #      otherwise its huge lag might confuse users
+    #TODO: Disable buffer buttons when g.nosound is set, because mixer will
+    #      /not/ be reinitialized, and desired buffer size will be discarded
+    #      Also, notice that (re-)enabling sound will /not/ reinitialize mixer,
+    #      so it won't apply any new buffer size.
+    #TODO: Also consider disabling buttons if g.mixerinit is not set, unless
+    #      changing buffer size is considered an attempt to make mixer work
     def set_soundbuf(self, value):
-        g.soundbuf = value
-        if not g.nosound:
+
+        if not g.nosound and g.soundbuf != value:
+            g.soundbuf = value
             g.reinit_mixer()
-            g.play_sound("click")
 
 
 class OptionButton(button.ToggleButton, button.FunctionButton):

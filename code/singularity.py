@@ -44,7 +44,10 @@ import logging
 
 import graphics.g
 
+pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
 pygame.init()
+#pygame.mixer.quit()  # simulate mixer init failure (eg, no soundcard available)
+g.mixerinit = bool(pygame.mixer.get_init())
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
 
@@ -109,7 +112,7 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid or missing 'daynight' setting in preferences.\n")
 
         try:
-            g.soundbuf = prefs.getint("Preferences", "soundbuf")
+            desired_soundbuf = prefs.getint("Preferences", "soundbuf")
         except:
             sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
 
@@ -153,7 +156,9 @@ parser.add_option("--multidir", dest="singledir",
                   help="keep saved games and settings in an OS-specific, per-user directory (default)",
                   action="store_false")
 parser.add_option("--soundbuf", type="int",
-                  help="set the size of the sound buffer (default 2048)")
+                  help="""set the size of the sound buffer (default %s).
+                    Discarded if --nosound is specified."""
+                    % g.soundbuf)
 
 display_options = optparse.OptionGroup(parser, "Display Options")
 display_options.add_option("-r", "--res", "--resolution", dest="resolution",
@@ -206,7 +211,12 @@ if options.sound is not None:
 if options.daynight is not None:
     g.daynight = options.daynight
 if options.soundbuf is not None:
-    g.soundbuf = options.soundbuf
+    desired_soundbuf = options.soundbuf
+
+# If needed, reinit_mixer() only once after parsing both prefs file and options
+if desired_soundbuf is not None and desired_soundbuf != g.soundbuf:
+    g.soundbuf = desired_soundbuf
+    g.reinit_mixer()
 
 graphics.g.ebook_mode = options.ebook
 
@@ -233,7 +243,6 @@ g.load_bases()
 pygame.display.set_mode(graphics.g.screen_size)
 
 g.init_graphics_system()
-g.reinit_mixer()
 g.load_sounds()
 g.load_music()
 
