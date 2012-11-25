@@ -34,7 +34,7 @@ import code.g as g
 #TODO: Add dialog suggesting restart when language changes, so changes may apply
 #      at least until/if we find a way refresh all screens. Don't forget to
 #      remind user to save current game (if loaded from map menu)
-#TODO: Add enable/disable Music
+#TODO: Create a dedicated button for Music
 #
 
 class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
@@ -182,7 +182,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             self.resolution_custom_horiz.text = str(gg.screen_size[0])
             self.resolution_custom_vert.text = str(gg.screen_size[1])
 
-        self.language_choice.list_pos = [i for i, (code, _)
+        self.language_choice.list_pos = [i for i, (code, __)
                                          in enumerate(self.languages)
                                          if code == g.language][0] or 0
 
@@ -223,10 +223,19 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             self.sound_toggle.text = _("YES")
         else:
             self.sound_toggle.text = _("NO")
+
+        if not reset:
+            # No transition requested, bail out
+            return
+
         g.nosound = not value
-        if reset and not g.nosound:
-            g.reinit_mixer()
+        if g.nosound:
+            pygame.mixer.music.stop()
+        else:
             g.play_sound("click")
+            g.delay_time = 1  # force g.play_music() to play immediately
+            g.play_music()
+
 
     def set_grab(self, value):
         if value:
@@ -254,12 +263,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             self.set_resolution(screen_size)
         except ValueError:
             pass
-
-    def set_soundbuf(self, value):
-        g.soundbuf = value
-        if not g.nosound:
-            g.reinit_mixer()
-            g.play_sound("click")
 
 # For the future...
 class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
@@ -294,7 +297,13 @@ class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
     def show(self):
         for soundbuf_button in self.soundbuf_group:
             soundbuf_button.set_active(soundbuf_button.args == (g.soundbuf,))
-        return super(OptionsScreen, self).show()
+        return super(AdvancedOptionsScreen, self).show()
+
+    def set_soundbuf(self, value):
+        g.soundbuf = value
+        if not g.nosound:
+            g.reinit_mixer()
+            g.play_sound("click")
 
 
 class OptionButton(button.ToggleButton, button.FunctionButton):
