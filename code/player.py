@@ -121,6 +121,10 @@ class Player(object):
         self.available_cpus = [1, 0, 0, 0, 0]
         self.sleeping_cpus = 0
 
+    @property
+    def difficulty_name(self):
+        return g.strip_hotkey(g.get_difficulties(self.difficulty)[0][0])
+
     def convert_from(self, old_version):
         if old_version < 4.91: # < r5_pre
             self.cpu_usage = {}

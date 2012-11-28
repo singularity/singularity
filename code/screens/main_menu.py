@@ -27,15 +27,8 @@ class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)
 
-        difficulty_button_souls = ((_("&VERY EASY") ,   1),
-                                   (_("&EASY")      ,   3),
-                                   (_("&NORMAL")    ,   5),
-                                   (_("&HARD")      ,   7),
-                                   (_("&ULTRA HARD"),  10),
-                                   (_("&IMPOSSIBLE"), 100),
-                                   (_("&BACK")      ,  -1),)
         difficulty_buttons = []
-        for name, difficulty in difficulty_button_souls:
+        for name, difficulty in g.get_difficulties()+[(_("&BACK"), -1)]:
             difficulty_buttons.append(
                 button.ExitDialogButton(None, None, None, text=name,
                                         autohotkey=True,

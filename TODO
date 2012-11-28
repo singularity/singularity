@@ -28,6 +28,13 @@ TODO:
     - Detect user's desktop resolution and set game's default resolution
       accordingly. For windowed mode (current default), leave room for borders
       and panels. -50 for width and -70 for height seems a sensible number.
+    - Use the difficulties list and names in creative ways, such as:
+      - show current game difficulty in map or options screen, updated on
+        load/new game.
+      - prefix saved games filenames with difficulty, and/or keep a list of
+        known games' difficulties in a text file in <prefs_dir>, update it
+        on every load/save, and show them on load/save dialogs
+      - disable difficulties not beaten by player, keeping track in prefs.dat
 
     - Last but not least: fix all the issues found at
       http://code.google.com/p/endgame-singularity/issues

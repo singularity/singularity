@@ -1150,6 +1150,18 @@ def get_intro():
     if segment:
         yield segment
 
+
+def get_difficulties(min=0):
+    return [x for x in (
+            (_("&VERY EASY") ,   1),
+            (_("&EASY")      ,   3),
+            (_("&NORMAL")    ,   5),
+            (_("&HARD")      ,   7),
+            (_("&ULTRA HARD"),  10),
+            (_("&IMPOSSIBLE"), 100),
+            ) if x[1] >= min]
+
+
 #difficulty=1 for very easy, to 9 for very hard. 5 for normal.
 def new_game(difficulty):
     global curr_speed
