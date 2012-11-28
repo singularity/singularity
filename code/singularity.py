@@ -68,6 +68,9 @@ if len(logging.getLogger().handlers) == 0:
         except IOError: # Probably access denied with --singledir. That's ok
             pass
 
+# keep g's defaults intact so we can compare after parsing options and prefs
+desired_soundbuf = g.soundbuf
+
 #load prefs from file:
 save_dir = g.get_save_folder(True)
 save_loc = os.path.join(save_dir, "prefs.dat")
@@ -214,7 +217,7 @@ if options.soundbuf is not None:
     desired_soundbuf = options.soundbuf
 
 # If needed, reinit_mixer() only once after parsing both prefs file and options
-if desired_soundbuf is not None and desired_soundbuf != g.soundbuf:
+if desired_soundbuf != g.soundbuf:
     g.soundbuf = desired_soundbuf
     g.reinit_mixer()
 

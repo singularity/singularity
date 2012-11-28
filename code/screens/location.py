@@ -272,11 +272,11 @@ def generate_base_name(location, base_type):
             #Translators: Format string for the name of a new base
             #Example: "${NUMBER} ${BASETYPE} in ${CITY}"
             name = _("{CITY} {BASETYPE} {NUMBER}",
-                     CITY=city,BASETYPE=flavor,NUMBER=number)
+                     CITY=city, BASETYPE=flavor, NUMBER=number)
         else:
             #Translators: Name of a new base when location has no cities
             name = _("{BASETYPE} {NUMBER}",
-                     BASETYPE=flavor,NUMBER=number)
+                     NUMBER=number, BASETYPE=flavor)
 
         # Damn translators omitting the ${NUMBER} in template string!
         if attempts > 100: name = city + " " + flavor + " " + number

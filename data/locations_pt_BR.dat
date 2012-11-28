@@ -25,7 +25,7 @@ cities_list = Joanesburgo | Nairóbi | Cairo | Trípoli | Kampala | Pretória | 
 
 [ANTARCTIC]
 name = ANTÁRTIDA
-hotkey = d
+hotkey = i
 cities_list = Monte Erebus | Montes Ellsworth | Ilha de Ross | Maciço Vinson | Geleira Byrd
 
 [OCEAN]
@@ -53,5 +53,5 @@ hotkey = d
 
 [AUSTRALIA]
 name = OCEANIA
-hotkey = i
+hotkey = o
 cities_list = Camberra | Melbourne | Brisbane | Sydney

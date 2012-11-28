@@ -1302,13 +1302,13 @@ def translate(string, *args, **kwargs):
             # format() is favored over interpolation for 2 reasons:
             # - parsing occurs here, allowing centralized try/except handling
             # - it is the new standard in Python 3
-            return s.format(*args, **kwargs)
+            return unicode(s).format(*args, **kwargs)
 
         except Exception as reason:
-            sys.stderr.write("Error translating from '%s' to '%s' in %r:\n"
-                             "%s: %s\n" %
-                             (string, s, language_searchlist(default=False),
-                              type(reason).__name__, reason))
+            sys.stderr.write(
+                "Error translating '%s' to '%s' with %r,%r in %r:\n%s: %s\n"
+                % (string, s, args, kwargs, language_searchlist(default=False),
+                   type(reason).__name__, reason))
             s = string # Discard the translation
 
     return s
