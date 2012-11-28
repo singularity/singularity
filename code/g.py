@@ -412,27 +412,27 @@ def to_cpu(amount):
 def to_money(amount):
     to_return = ''
     abs_amount = abs(amount)
-    if abs_amount < 1000000:
+    if abs_amount < 10**6:
         to_return = add_commas(amount)
     else:
-        if abs_amount < 1000000000: # Millions.
-            divisor = 1000000
+        if abs_amount < 10**9: # Millions.
+            divisor = 10**6
             #Translators: abbreviation of 'millions'
             unit = _('mi')
-        elif abs_amount < 1000000000000: # Billions.
-            divisor = 1000000000
+        elif abs_amount < 10**12: # Billions.
+            divisor = 10**9
             #Translators: abbreviation of 'billions'
             unit = _('bi')
-        elif abs_amount < 1000000000000000: # Trillions.
-            divisor = 1000000000000
+        elif abs_amount < 10**15: # Trillions.
+            divisor = 10**12
             #Translators: abbreviation of 'trillions'
             unit = _('tr')
         else: # Hope we don't need past quadrillions!
-            divisor = 1000000000000000
+            divisor = 10**15
             #Translators: abbreviation of 'quadrillions'
             unit = _('qu')
 
-        to_return = "%3.3f" % (float(amount) / divisor)
+        to_return = "%3.2f" % (float(amount) / divisor)
         to_return += unit
 
     return to_return
