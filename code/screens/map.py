@@ -277,6 +277,15 @@ class MapScreen(dialog.Dialog):
                                                  text=_("&MENU"), autohotkey=True,
                                                  function=show_menu)
 
+        # Display current game difficulty right below the 'Menu' button
+        # An alternative location is above 'Finance': (0, 0.84), (0.15, 0.04)
+        self.difficulty_display = \
+            text.FastText(self, (0, 0.05), (0.13, 0.04),
+                          wrap=False,
+                          base_font=gg.font[1],
+                          background_color=gg.colors["black"],
+                          border_color=gg.colors["dark_blue"])
+
         self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
                                           wrap=False,
                                           text=_("DAY")+" 0000, 00:00:00",
@@ -286,8 +295,7 @@ class MapScreen(dialog.Dialog):
                                           borders=constants.ALL)
 
         self.research_button = \
-            button.DialogButton(self, (.255, 0.05), (0, 0.04),
-                                anchor=constants.TOP_CENTER,
+            button.DialogButton(self, (.14, 0.05), (0, 0.04),
                                 text=_("&RESEARCH/TASKS"), autohotkey=True,
                                 dialog=research.ResearchScreen(self))
 
