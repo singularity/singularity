@@ -502,17 +502,10 @@ class MapScreen(dialog.Dialog):
             self.map.needs_rebuild = True
 
         lost = g.pl.lost_game()
-        if lost == 1:
-            if not g.nosound:
-                pygame.mixer.music.stop()
+        if lost > 0:
             g.play_music("lose")
-            self.show_message(g.strings["lost_nobases"])
-            raise constants.ExitDialog
-        if lost == 2:
-            if not g.nosound:
-                pygame.mixer.music.stop()
-            g.play_music("lose")
-            self.show_message(g.strings["lost_sus"])
+            self.show_message(g.strings["lost_nobases"] if lost == 1 else
+                              g.strings["lost_sus"])
             raise constants.ExitDialog
 
     def rebuild(self):

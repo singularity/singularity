@@ -105,8 +105,9 @@ base_type = {}
 buttons = {}
 help_strings = {}
 sounds = {}
+music_class = None  # currently playing music "class" (ie, dir)
 music_dict = {}
-delay_time = 1
+delay_time = 0
 curr_speed = 1
 soundbuf = 1024*2
 soundargs = (48000, -16, 2)  # sampling frequency, size, channels
@@ -314,30 +315,37 @@ load_music() loads music for the game.  It looks in multiple locations:
                 # We don't have permission to write here.  That's fine.
                 pass
 
-def play_music(musicdir="music"):
+def play_music(musicdir=None):
 
     global delay_time
+    global music_class
+
+    if musicdir:
+        music_class = musicdir
+        delay_time = 0  # unset delay to force music switch
+    else:
+        musicdir = music_class
 
     # Don't bother if the user doesn't want or have sound,
     # there's no music available at all or for that musicdir,
-    # or the music mixer is currently busy.
+    # or the delay has not yet expired
     if (nosound
         or not mixerinit
         or not music_dict.get(musicdir)
-        or (pygame.mixer.music.get_busy() and musicdir == "music")):
+        or delay_time > pygame.time.get_ticks()):
         return
 
-    if musicdir != "music":
-        pygame.mixer.music.stop()
-        pygame.mixer.music.load(random.choice(music_dict[musicdir]))
-        pygame.mixer.music.play()
-    if delay_time == 0:
+    # If music mixer is currently busy and switch was not forced, renew delay
+    if pygame.mixer.music.get_busy() and delay_time:
         delay_time = pygame.time.get_ticks() + int(random.random()*10000)+2000
-    else:
-        if delay_time > pygame.time.get_ticks(): return
-        delay_time = 0
-        pygame.mixer.music.load(random.choice(music_dict[musicdir]))
-        pygame.mixer.music.play()
+        return
+
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load(random.choice(music_dict[musicdir]))
+    pygame.mixer.music.play()
+    delay_time = 1  # set a (dummy) delay
+
+
 
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number):
@@ -628,6 +636,12 @@ def load_game(loadgame_name):
                 my_base.convert_from(load_version)
         for my_tech in techs.values():
             my_tech.convert_from(load_version)
+
+    # Play the appropriate music
+    if pl.apotheosis:
+        play_music("win")
+    else:
+        play_music("music")
 
     loadfile.close()
     return True
@@ -1204,6 +1218,9 @@ def new_game(difficulty):
         open_loc.modifiers = modifier_sets[i]
         if debug:
             print "%s gets modifiers %s" % (open_loc.name, modifier_sets[i])
+
+    # Reset music
+    play_music("music")
 
     global intro_shown
     intro_shown = False

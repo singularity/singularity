@@ -245,6 +245,7 @@ pygame.display.set_mode(graphics.g.screen_size)
 g.init_graphics_system()
 g.load_sounds()
 g.load_music()
+g.play_music("music")
 
 # Set the application icon.
 pygame.display.set_icon(graphics.g.images["icon.png"])

@@ -233,8 +233,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
                 pygame.mixer.music.stop()
         else:
             g.play_sound("click")
-            g.delay_time = 1  # force g.play_music() to play immediately
-            g.play_music()
+            g.play_music(g.music_class)  # force music switch at same dir
 
 
     def set_grab(self, value):
