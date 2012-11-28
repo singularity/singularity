@@ -131,6 +131,7 @@ item_types = [
     item.ItemType('security'),
 ]
 
+max_cash = 3.14 * 10**15  # pi qu :)
 pl = None # The Player instance
 map_screen = None
 

@@ -342,6 +342,9 @@ class Player(object):
             self.cash -= cash_maintenance
             cash_maintenance = 0
 
+        # Apply max cash cap to avoid overflow @ 9.220 qu
+        self.cash = min(self.cash, g.max_cash)
+
         # Exit point for a dry run.
         if dry_run:
             # Collect the cash information.
@@ -363,7 +366,7 @@ class Player(object):
             cash_info.maintenance = full_cash_maintenance - cash_maintenance
 
             cash_info.start = old_cash
-            cash_info.end = self.cash
+            cash_info.end = min(self.cash, g.max_cash)
 
 
             # Collect the CPU information.
@@ -677,7 +680,9 @@ class Player(object):
                 result_cash -= base.cpus.cost_left[cash]
             for item in base.extra_items:
                 if item: result_cash -= item.cost_left[cash]
+            result_cash = max(result_cash, -g.max_cash)
         for task, cpus in self.cpu_usage.items():
             if task in g.techs and cpus > 0:
                 result_cash -= g.techs[task].cost_left[cash]
+                result_cash = max(result_cash, -g.max_cash)
         return result_cash
