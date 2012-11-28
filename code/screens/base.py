@@ -110,7 +110,8 @@ class ItemPane(widget.BorderedWidget):
         self.change_button = button.FunctionButton(
             self, (.36,.01), (.12, .04),
             anchor=constants.TOP_LEFT,
-            text="%s (&%s)" % (_("CHANGE"),self.type.hotkey.upper()),
+            text="%s (&%s)" % (_("CHANGE"), self.type.hotkey.upper()),
+            force_underline=len(_("CHANGE")) + 2,
             autohotkey=True,
             function=self.parent.parent.build_item,
             kwargs={'type': self.type.id},

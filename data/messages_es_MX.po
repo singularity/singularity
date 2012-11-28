@@ -1,7 +1,7 @@
 # Spanish translations for singularity package
 # Traducción en Español para el paquete Singularity
 # Copyright (C) 2012 THE singularity's COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the singularity package.
 # Eleazar Castellanos <eagle_boy@rocketmail.com>, 2012.
 #
 msgid ""
@@ -32,7 +32,7 @@ msgstr "%s dinero"
 
 #: buyable.py:62
 msgid "Cost:"
-msgstr "Costo"
+msgstr "Costo:"
 
 #: base.py:89 screens/base.py:283
 msgid "Detection chance:"
@@ -176,11 +176,11 @@ msgstr "CPU de Mantenimiento:"
 
 #: screens/finance.py:88
 msgid "Construction CPU:"
-msgstr "Construcción de CPU"
+msgstr "Construcción de CPU:"
 
 #: screens/finance.py:89
 msgid "Pool Overflow (Jobs):"
-msgstr "Exceso (Trabajos)"
+msgstr "Exceso (Trabajos):"
 
 #: screens/knowledge.py:30
 msgid "Techs"
@@ -250,7 +250,7 @@ msgstr "&FINANZAS"
 
 #: screens/map.py:209
 msgid "&KNOWLEDGE"
-msgstr "EN&CYCLOPEDIA"
+msgstr "&ENCYCLOPEDIA"
 
 #: screens/map.py:215
 msgid "&EMBEZZLE MONEY"
@@ -309,7 +309,7 @@ msgstr "DÍA"
 
 #: screens/map.py:291
 msgid "&RESEARCH/TASKS"
-msgstr "I&NVESTIGACIÓN / TAREAS"
+msgstr "IN&VESTIGACIÓN / TAREAS"
 
 #: screens/map.py:340
 msgid "Enter a name for this save."
@@ -497,7 +497,7 @@ msgstr "&FÁCIL"
 
 #: screens/main_menu.py:33
 msgid "&HARD"
-msgstr ""
+msgstr "&DIFÍCIL"
 
 #: screens/main_menu.py:34
 msgid "&ULTRA HARD"
@@ -513,7 +513,7 @@ msgstr "&NUEVO JUEGO"
 
 #: screens/main_menu.py:73
 msgid "&ABOUT"
-msgstr "&ACERCA DE"
+msgstr "A&CERCA DE"
 
 #: screens/main_menu.py:103
 #, python-format

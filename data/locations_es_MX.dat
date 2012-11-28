@@ -25,12 +25,12 @@ cities_list = Johannesburgo | Accra | Cairo | Tánger
 
 [ANTARCTIC]
 name = ANTÁRTICO
-hotkey = t
+hotkey = r
 cities_list = Monte Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Tierra Adelia
 
 [OCEAN]
 name = OCÉANO
-hotkey = c
+hotkey = o
 cities_list = Pacífico | Atlántico | India | Sur | Ártico
 
 [MOON]
@@ -44,7 +44,7 @@ hotkey = b
 
 [FAR REACHES]
 name = CONFINES
-hotkey = f
+hotkey = c
 cities_list = Aries | Tauro | Géminis | Cáncer | Leo | Virgo | Libra | Escorpión | Sagitario | Capricornio | Acuario | Piscis
 
 [TRANSDIMENSIONAL]

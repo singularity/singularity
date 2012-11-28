@@ -16,6 +16,7 @@ TODO:
     - Consistent use of stderr and print, preferably using available Logger
     - Fix hotkeys and reload all dialogs and buttons when language changes, or
       provide Options Screen a way to restart the game
+    - Create a hook for dialogs to auto-detect hotkey conflicts
     - Prevent language-dependent data in save files to "contaminate" current
       game language when loading saves. Currently this is an issue with Base and
       Buyable classes' data in g.location.bases[*].type/.cpus. Approaches:
@@ -26,4 +27,8 @@ TODO:
       from Philippe Tar that provides basic "themability" support.
     - Detect user's desktop resolution and set game's default resolution
       accordingly. For windowed mode (current default), leave room for borders
-      and panels. -10 for width and -70 for height seems a sensible number.
+      and panels. -50 for width and -70 for height seems a sensible number.
+
+    - Last but not least: fix all the issues found at
+      http://code.google.com/p/endgame-singularity/issues
+      https://github.com/singularity/singularity/issues

@@ -297,7 +297,7 @@ msgstr "&OPÇÕES"
 
 #: screens/map.py:259 screens/main_menu.py:69
 msgid "&QUIT"
-msgstr "&SAIR"
+msgstr "SAI&R"
 
 #: screens/map.py:277
 msgid "&MENU"
