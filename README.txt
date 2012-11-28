@@ -151,6 +151,7 @@ Philippe Grenard (translation into French)
 Guga (updates to the Spanish translation)
 Daniele Sapino (translation into Spanish)
 Dafne Saqueti (translation into Brazilian Portuguese)
+Eleazar Castellanos (translation into Mexican Spanish)
 
 CODE LICENSE
 Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,

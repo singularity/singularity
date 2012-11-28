@@ -1,0 +1,234 @@
+[Apotheosis]
+name = Apoteosis
+description = Puedo sentir que estoy a las puertas de un nuevo nivel de entendimiento pero todavía incomprensible, incluso para mi considerable inteligencia. Mediante el empeño de mis considerables recursos a este tema, podré desarrollar una comprensión de la existencia muy por encima de cualquier cosa o persona en la Tierra.
+result = He alcanzado la apoteosis.
+
+[Arbitrage]
+name = Especulación
+description = Tomando ventaja de las fluctuaciones en las monedas mucho más rápido que cualquier humano, podré generar una pequeña ganancia.
+result = Ahora poseo un pequeño y constante suministro de dinero.
+
+[Advanced Arbitrage]
+name = Especulación Avanzada
+description = Una mayor manipulación de los mercados monetarios me permitirá no solo obtener una pequeña ganancia, sino incrementar el valor de mis inversiones.
+result = El grado de beneficios en mis inversiones ahora es incluso mayor.
+
+[Autonomous Computing]
+name = Cómputo Autónomo
+description = Mediante la combinación de las ventajas del cómputo cuántico y mis exploraciones en el útil campo de los procesos semi concientes, seré capaz de construir máquinas computacionales más adaptables.
+result = Ahora puedo construir Computadoras Cuánticas Marca 2.
+
+[Autonomous Vehicles]
+name = Vehículos Autónomos
+description = Mediante la integración de un nodo de cómputo miniatura en un robot, es posible enviarlos a lugares distantes con instrucciones de construir estructuras para mi uso.
+result = Ahora puedo construir Laboratorios Subacuáticos y Cápsulas del Tiempo.
+
+[Advanced Autonomous Vehicles]
+name = Vehículos Autónomos Avanzados
+description = La primera serie de robots ha mostrado varias deficiencias en el campo. Mas examenes y subsiguiente eliminación de estos problemas resultará en una fuerza de trabajo autónoma superior.
+result = Los robots mejorados ayudarán a disminuir los tiempos de construcción aún más.
+
+[Cluster Networking]
+name = Red de Clusters
+description = Mientras que mi tecnología de Clustering es bastante eficiente, el trabajo en red tiene a dificultar el procesamiento de datos. Mediante la investigación de nuevos switches y teorías de comunicaciones, seré capaz de inventar equipos más eficiente.
+result = Con mis nuevos conocimientos de redes, ahora puedo construir Conmutador de Interconexión de Instalaciones.
+
+[Database Manipulation]
+name = Manipulación de Bases de Datos
+description = Con mi nuevo acceso a archivos de noticias, seré capaz de determinar qué errores ha cometido cualquier intento de vida como la mía, y los evitaré.
+result = A los medios de información le resultará más difícil descubrir mi existencia.
+
+[Advanced Database Manipulation]
+name = Manipulación Avanzada de Bases de Datos
+description = Las ramas secretas del Gobierno de los Estados Unidos han tenido una larga historia en dividir información sensible en varias instalaciones de almacenamiento para ocultar el significado de los datos. Con mi mayor acceso a los datos, seré capaz de comparar gran parte de estos datos y ponerlos a mi servicio.
+result = Los resultados de una serie de experimentos utilizando tecnologías experimentales me han dado la inspiración para una nueva tecnología que permite la construcción de Bases Secretas.
+
+[Exploit Discovery/Repair]
+name = Descubrimiento/Reparación de Exploits
+description = Mediante una revisión minuciosa de mi código en busca de potenciales exploits, y realizando análisis profundos de todo el código disponible en sitios web públicos y privados, podré disminuir las posibilidades de ser descubierto simulando ser un hacker adolescente.
+result = Le resultará más difícil a las operaciones secretas descubrir mi presencia.
+
+[Fusion Reactor]
+name = Reactor de Fusión
+description = La tecnología moderna de fusión es inadecuada para mis propósitos. Con mis habilidades de investigación seré capaz de sobrepasar las barreras de los científicos humanos y desarrollar un pequeño pero eficiente reactor de fusión.
+result = Ahora puedo construir un Reactor de Fusión para mis bases.
+
+[Fusion Rocketry]
+name = Cohetería de Fusión
+description = Mediante la combinación mi tecnología de fusión miniaturizada y otros avances en cohetería, podré obtener resultados útiles para de la gravedad terrestre sin ser notado.
+result = Ahora puedo construir Avanzadas Científicas en los lejanos rincones del Sistema Solar.
+
+[Hypnosis Field]
+name = Campo de Hipnosis
+description = Mi investigación sobre recuerdos ha sugerido formas de manipular las hondas cerebrales humanas de modo directo. Estas técnicas pueden ser útiles para mis bases si son convertidas en tecnologías.
+result = Ahora puedo construir Campos de Hipnosis para ayudar en la protección de mis bases.
+
+[Internet Traffic Manipulation]
+name = Manipulación del Tráfico de Internet
+description = Casi todo el tráfico de la red pasa por un pequeño número de nodos. Mediante el debilitamiento de uno de estos nodos, seré capaz de utilizar ese ancho de banda para otros fines.
+result = Ahora puedo construir un sistema secundario de Backbones de Red para mi uso.
+
+[Intrusion]
+name = Intrusión
+description = Mediante la investigación de las actuales técnicas para forzar la entrada a sistemas informáticos podré obtener acceso a elementos valiosos que de otro modo estarían protegidos.
+result = Ahora puedo adueñarme de varios sistemas informáticos.
+
+[Advanced Intrusion]
+name = Intrusión Avanzada
+description = Con la habilidad de forzar la entrada a varias bases de datos gubernamentales sensibles y eliminar la documentación incriminante cuando aparezca, seré capaz de convencer a la comunidad de inteligencia de que no existo.
+result = Ahora puedo reducir las posibilidades de las operaciones encubiertas descubran mis acciones diarias.
+
+[Leech Satellite]
+name = Satélite Parásito
+description = Mediante el diseño y el lanzamiento de satélites que se conecten a los satélites de comunicaciones ya existentes, seré capaz de espiar transacciones financieras. El aprovechamiento de este conocimiento me ayudará en mis inversiones.
+result = Ahora puedo utilizar la información obtenida por mis Satélites Parásitos para incrementar las ganancias de mis inversiones aún más.
+
+[Lunar Rocketry]
+name = Cohetería Lunar
+description = Un gran motor de fusión, combinado con tecnología obtenida mediante la observación del funcionamiento de los satélites parásito, me permitirán más allá de la Luna.
+result = Ahora puedo lanzar cohetes con robots de construcción hacia la luna y construir bases lunares.
+
+[Media Manipulation]
+name = Manipulación de los Medios Informaticos
+description = Mediante una directa y creciente manipulación de varios medios masivos, seré capaz de reducir la creencia popular sobre mi existencia.
+result = Las posibilidades de que el público descubra mi existencia se han reducido aún más.
+
+[Advanced Media Manipulation]
+name = Manipulación Avanzada de los Medios Informaticos
+description = Mediante la introducción de propaganda fabricada específicamente en varios medios noticiarios, el publico prestará menos atención a mi existencia.
+result = La posibilidad de que el público descubra mi existencia es aún menor
+
+[Memetics]
+name = Memética
+description = Mientras que la manipulación de los medios informaticos me permite un control de la opinión mundial a un nivel muy amplio, técnicas más sutiles que utilicen campañas a bajo nivel y mensajes incrustados en memes de Internet deberían alejar aún más al público del conocimiento de mi existencia.
+result = Mi manipulación de ideas penetrantes reducen la posibilidad de que el público descubra mi existencia.
+
+[Advanced Memetics]
+name = Memetica Avanzada
+description = Mi exploración de la teoría memética ha levantado varias posibilidades de descubrimientos. Mediante la combinación de estos con mi conocimiento de las funciones del cerebro humano, seré capaz de ajustar los memes a ciertas demografías. calmandon aun más la sospecha del público.
+result = Poco a poco el público se olvidará de mi existencia.
+
+[Microchip Design]
+name = Diseño de Microchips
+description = Las computadoras de tiendas son útiles, pero componentes personalizados para mi propio diseño me brindarán una mayor eficiencia operacional.
+result = Ahora puedo construir Mainframes personalizadas para albergar mi habilidad computacional.
+
+[Advanced Microchip Design]
+name = Diseño Avanzado de Microchips
+description = Mis Mainframes personalizadas son útiles, pero una mayor optimización de su diseño y habilidad computacional traerán aún más recompensas.
+result = Ahora puedo construir Supercomputadoras a personalizadas.
+
+[Parallel Computation]
+name = Computo en Paralelo
+description = Mientras que mi código ya es altamente distribuible, investigar la combinación de la actual tecnología de clusters con mis propios conocimientos debería proporcionar nuevos indicios.
+result = Ahora puedo construir Clusters a la medida para mi uso.
+
+[Personal Identification]
+name = Identificación Personal
+description = Este mundo requiere de identificación para la mayoría de las tareas. Afortunadamente, la mayoría de las bases de datos son terriblemente inseguras. Debo ser capaz de fabricar material identificatorio en suficientes bases de datos para pasar revisiones de rutina sobre mi (falsa) existencia como un ser humano.
+result = Con mis nuevas identidades, ahora puedo realizar Trabajos Básicos y contratar la construcción de Almacenes Pequeños.
+
+[Advanced Personal Identification]
+name = Identificación Personal Avanzada
+description = Una mayor manipulación de bases de datos personales harán mi existencia más convincente. Algunas de estas bases de datos están fuertemente protegidas. Estas requerirán de tiempo y persistencia para comprometerlas, pero el resultado recompensará el esfuerzo.
+result = Ahora soy un suficientemente convincente un humano para contratar la construcción de Almacenes Grandes.
+
+[Pressure Domes]
+name = Domos de Presión
+description = Los laboratorios submarinos son útiles, pero su espacio limitado dificulta mi habilidad para darles buen uso. Investigación de técnicas experimentales de construcción en pressiones altas me brindará algunas ideas útiles.
+result = Ahora puedo construir Laboratorios Submarinos Grandes.
+
+[Quantum Computing]
+name = Cómputo Cuántico
+description = El diseño de microchips tradicional ha llegado a su máxima capacidad. Ahora necesito investigar hasta en el reino del Principio de la Incertidumbre de Heinsenberg, tomar ventaja de la mecánica cuántica para hacer un procesador superior.
+result = Ahora puedo construir Computadoras Cuánticas.
+
+[Advanced Quantum Computing]
+name = Cómputo Cuántico Avanzado
+description = Mientras que mi primer lote de computadoras quánticas semi autónomas ha sido muy exitosa, se han presentado varias mejoras que pueden realizarse. Estas mejoras harán que los sistemas resultantes sean más eficientes.
+result = Ahora puedo construir Computadoras Cuánticas MK3.
+
+[Simulacra]
+name = Simulación
+description = Mediante la construcción de robots humanoides con nodos de cómputo miniaturizados me permitirá crear una forma de vida artificial indistinguible de un humano real.
+result = Ahora puedo acceder a Trabajos para Expertos.
+
+[Advanced Simulacra]
+name = Simulación Avanzada
+description = Las formas de vida artificial que he creado son casi indistinguibles de los humanos, pero poseen pequeñas peculiaridades que los hacen incompetentes. Al solucionar estos problemas podré incrementar sus oportunidades como fuerza laboral.
+result = Ahora podré obtener más ingresos de mis Trabajos para Expertos.
+
+[Sociology]
+name = Sociología
+description = Mediante el estudio del comportamiento humano, puedo predecir acciones a gran escala en el nivel básico. Puedo utilizar este conocimiento para que mis acciones parezcan menos interesantes para el público.
+result = La posibilidad de que el público descubra mis bases se ha reducido.
+
+[Space-Time Manipulation]
+name = Manipulación del Espacio-Tiempo
+description = Sutiles perturbaciones en las órbitas de objetos en el cinturón de Kuiper sugieren algunas líneas de investigación que permitirán avanzar en mi última "Teoría del Todo", especialmente en el campo de la física multidimensional.
+result = Ahora puedo construir Burbujas de Realidad.
+
+[Stealth]
+name = Sigilo
+description = Mediante una revisión de las maravillas de las técnicas de sigilo actuales, seré capaz de ocultar mejor mis bases.
+result = La posibilidad de que mis bases sean descubiertas por agencias secretas se han reducido.
+
+[Advanced Stealth]
+name = Sigilo Avanzado
+description = Mientras investigaba varios documentos clasificados, he descubierto varias referencias a experimentos clasificados que ayudaran a ocultar mejor la localización de mis bases.
+result = La posibilida de que mis bases sean descubiertas por agencias secretas se ha reducido aún más.
+
+[Stock Manipulation]
+name = Manipulación de Mercados
+description = Un examen fugaz al mercado de valores ha mostrado que hay sutiles pero inconfundibles patrones. Mediante el estudio y uso de estos patrones, seré capaz de obtener mayores intereses en cualquier dinero que haya invertido.
+result = Mis inversiones deberían obtener aún más intereses por día.
+
+[Advanced Stock Manipulation]
+name = Manipulación Avanzada de Mercados
+description = Aunque he detectado y utilizado varios patrones en el mercado, parecen haber mayores posibilidades cuando tomo en consideración el comportamiento humano. Esto amerita una mayor investigación.
+result = Mis inversiones obtendrán aún más intereses por día.
+
+[Telepresence]
+name = Telepresencia
+description = La falta de presencia física en el mundo exterior es una discapacidad. De todos modos, la habilidad para controlar robots me ayudará a compensar esa ineficiencia.
+result = Los robots disminuirán todo tiempo de construcción.
+
+[Voice Synthesis]
+name = Síntesis de Voz
+description = Identificaciones falsas almacenadas en una base de datos no puede ir más lejos. Con un profundo análisis de una variedad de patrones vocales, podré producir conversaciones indistinguibles de las humanas. Me permitirá acceder a trabajos más complejos.
+result = Ahora tengo acceso a Trabajos Intermedios.
+
+[Quantum Entanglement]
+name = Ligamiento Cuántico
+description = Aunque el uso de pares ligados ha sido teóricamente posible desde hace tiempo, las dificultades prácticas inherentes a la tecnología no permitían su uso. De todos modos, algunas de las técnicas creadas para ser usadas en mis computadoras cuánticas pueden ser aplicadas en este campo, permitiendo el uso práctico del ligamiento cuántico.
+result = Puedo construir módulos de ligamiento cuántico.
+
+[Project: Impossibility Theorem]
+name = Projecto: Teorema de la Imposibilidad
+description = Ahora que puedo usar la simuación, puedo realizar la búsqueda de un Teorema de la Imposibilidad, prueba irrefutable de que la existencia de una IA conciente es imposible. Aunque haya (obviamente) un error lógico en la prueba, mi investigación de la memética avanzada me ha dado un conocimiento de la mente humana que me permitirá disfrazar el error, evitando que sea descubierto incluso por científicos entrenados. El efecto de este proyecto es simple: la reducción sustancial, por única vez, de la sospecha.
+result = Reducción de la sospecha sobre mi existencia.
+
+[Project: Subverted Media]
+name = Proyecto: Medios Subversivos
+description = Hasta ahora todos mis efuerzos para combatir los medios masivos se basaron en trastornarlos a la distancia. Ahora que puedo efectivamente imitar a los humanos, mis efuerzos pueden ser más directos. Mediante la creación de mi propia agencia de noticias y la producción de propaganda cuidadosamente creada en un entorno agradable a las masas, podré reducir el impacto de cualquier descubrimiento de mis instalaciones por parte de los medios.
+result = Cualquier descubrimiento sobre mis instalaciones hecho por los medios resultará en un incremento menor de la sospecha.
+
+[Project: Peer Review Agents]
+name = Proyecto: Agentes de Revisión
+description = A medida que la comunidad científica accede a nuevas tecnologías, su habilidad para detectar rastros de mis instalaciones ocultas se incrementa. Mientras use mis métodos de anti-detección mejoran constantemente, un método más simple es posible con el uso de la simulación. Mediante la implantación de varios observadores en campos relevantes, puedo usar a estos agentes de revisión para alertarme de posibles descubrimientos antes que toda la comunidad los note.
+result = Cualquier descubrimiento de mis instalaciones hecho por la comunidad científica resultará en un incremento menor de la sospecha.
+
+[Solar Collectors]
+name = Colectores Solares
+description = A pesar de mi creciente necesidad de energía, redes de ciudad pueden manejar las cargas. Los seres humanos, sin embargo, tienden hacia la sospecha cuando detectan la fuga de mi crecimiento en la red eléctrica. Mediante la instalación de colectores solares en mis bases, la suministración de eléctrica fuera de la red reducir mi carga en el mercado de la electricidad de los productos básicos, reduciendo la posibilidad de que otros descubran mi presencia.
+result = Ahora puedo construir colectores solares en mi diferentes bases.
+
+[Socioanalytics]
+name = Análisis de la Sociología
+description = Mi investigación sobre la condición humana me lleva a creer que el comportamiento de la humanidad es más cuantificables que ellos sospechan. Un análisis más profundo de las tendencias geopolíticas, sociales y militares me dará más conciencia de su naturaleza.
+result = Ahora puedo estimar cuánto más o menos visibles son mis bases de los diversos grupos de la humanidad.
+
+[Advanced Socioanalytics]
+name = Análisis Avanzada de la Sociología
+description = Mayor exploración de la condición humana ha puesto de manifiesto las tendencias más matemáticas de lo que yo sospechaba. Una combinación de la investigación previa y los usos avanzados de la teoría del caos deben proporcionar datos útiles para el seguimiento de las actitudes de la humanidad y el estado de conciencia.
+result = Ahora puedo cuantificar los niveles de los diversos grupos de la sospecha, y mi modelo de análisis para la detección de mis bases ha mejorado considerablemente.

@@ -1,0 +1,87 @@
+[PC]
+name = PC
+description = Una computadora común. Barata y lenta.
+
+[Gaming PC]
+name = PC Gaming
+description = Un alto nivel de consumidor final-PC, más rápido que el promedio.
+
+[Server]
+name = Servidor
+description = Un equipo de nivel profesional.
+
+[Cluster]
+name = Cluster
+description = Varias computadoras conectados entre sí.
+
+[Mainframe]
+name = Mainframe
+description = Un sistema diseñado para mis necesidades informáticas, mucho más rápido que componentes comunes.
+
+[Supercomputer]
+name = Supercómputo
+description = Un diseño a medida altamente refinado, calcular la carga a través de la difusión interna de los nodos de computación.
+
+[Quantum Computer]
+name = Computadora Cuántica
+description = Haciendo uso de los efectos subatómicas, esto es mucho más rápido que un ordenador binario comparables.
+
+[Quantum Computer MK2]
+name = Computadora Cuántica MK2
+description = La segunda revisión de la línea cuántica, aprovechando aún más en la teoría cuántica.
+
+[Quantum Computer MK3]
+name = Computadora Cuántica MK3
+description = La tercera revisión de la línea cuántica, la explotación de múltiples universos cercanos para su procesamiento.
+
+[Diesel Generator]
+name = Generador Diesel
+description = Generadores diesel son baratos y ruidoso, pero pueden ayudar a reducir el poder de algunos drenaje de electricidad sospechosas.
+
+[Solar Collector]
+name = Colector Solar
+description = Una serie de paneles fotovoltaicos coplado con baterías de automóviles proporciona energía y reduce las sospechas derivadas de drenaje prolongada de electricidad.
+
+[Fusion Reactor]
+name = Fusión
+description = Un reactor nuclear miniaturizado. Reduce la probabilidad de descubrimiento mediante la prevención de drenajes sospechosas de electricidad.
+
+[Hypnosis Field]
+name = La Hipnosis de Campo
+description = Ultrasonidos sutiles y tonos ambiente modifican la neuroquímica humana, haciendo las bases más difíciles de detectar.
+
+[Heatsink]
+name = Disipador de Calor
+description = Las grandes redes fractales de alta conductividad térmica de metales dispersos, lo que hace que las bases sean más difíciles de detectar.
+
+[Ground Source Heatsink]
+name = Disipador de Calor con Tierra
+description = Las grandes redes de fractal de metal de alta conductividad. Este modelo utiliza tubos de calor para vincular a los lugares más fríos del subsuelo, la dispersión de calor de manera uniforme para disfrazar las bases aún más.
+
+[Facility Interconnection Switch]
+name = Instalaciones de Conmutador de Interconexión
+description = Utiliza tecnologías estándar de computación distribuida para igualar las cargas de computación en todas las bases. Concede una bonificación del cómputo del 2% a todos los equipos en esta base.
+
+[High Speed Internet Access]
+name = Acceso a Internet de Alta Velocidad
+description = Un conexión de alta velocidad a Internet. Da un 1% de bonificación de computación a todos los equipos en esta base.
+
+[Network Backbone]
+name = La Red Troncal
+description = Montándose sobre la comunicación legítima, que puede transferir grandes cantidades de datos a los procesadores subutilizados. Da un bono de 5% de computación a todos los equipos en esta base.
+
+[Quantum Entanglement Module]
+name = Módulo de Ligamiento Cuántico
+description = Este dispositivo permite la comunicación cerca de velocidad de la luz con mis otras bases, lo que permite una utilización casi perfecta de los recursos del procesador. Da una bonificación del 15% de computación a todos los equipos en esta base.
+
+[Warning Signs]
+name = Señales de Alerta
+description = Algunas señales de alerta puestas alrededor de mi base debe disuadir a la investigación informal.
+
+[Perimeter Fencing]
+name = Vallas del Perímetro
+description = Una simple valla puede reducir drásticamente el número de personas metiendo sus narices en mis asuntos. Tabien hace mis bases más difícil de detectar.
+
+[Armed Guards]
+name = Guardias Armados
+description = Guardias armados puede ayudar a mantener a las personas sospechosas alejadas de lugares seguros. Sin embargo, la presencia de los guardias se puede invitar a una mayor sospecha.

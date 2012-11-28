@@ -1,0 +1,59 @@
+[Stolen Computer Time]
+name = Tiempo de Computación Robado
+description = (1 CPU) Te apoderas de una computadora al azar. No puedo construir nada en esta base, y solo contiene una computadora lenta. Las posibilidades de detección son también bastante altas.
+flavor = Servicio
+
+[Server Access]
+name = Acceso a Servidor
+description = (10 CPU) Compra tiempo a una de varias companías. No puedo construir nada en esta base, y solo contiene una computadora.
+flavor_list = Servidor Dedicado | Nodo Alquilado| Alojamiento
+
+[Datacenter]
+name = Centro de cómputos
+description = (35 CPU) Comprar tiempo de procesamiento de una compañía que ofrece procesamiento en bruto. Necesitaré una identificación falsa para el papeleo.
+flavor_list = Centro de cómputos | Centro de datos | Alojamiento
+
+[Small Warehouse]
+name = Almacén Pequeño
+description = Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, tomara algún tiempo para preparar el almacén para mis necesidades.
+flavor_list = Oficina Alquilada | Almacén Pequeño | Depósito Pequeño
+
+[Large Warehouse]
+name = Almacén Grande
+description = Alquila un gran almacén en un lugar alejado. Necesitaré una buena identificación falsa para el papeleo, tomara algún tiempo para preparar el almacén para mis necesidades.
+flavor_list = Almacén Grande | Depósito Grande
+
+[Covert Base]
+name = Base Secreta
+description = Esta base especial está diseñada para combinarse con el ambiente y utilizar pocos recursos externos. Esto la hace útil para almacenar respaldos, por si acaso.
+flavor_list = Refugio | Base Secreta
+
+[Undersea Lab]
+name = Laboratorio Submarino
+description = Esta base experimental está diseñada para ser construida en el suelo oceánico, haciéndola virtualmente indetectable. El ambiente oceánico le otorga un bono a la ciencia, haciéndo este laboratorio útil para propósitos investigaciones científicas.
+flavor_list = Cápsula de Presión | Laboratorio Submarino
+
+[Large Undersea Lab]
+name = Laboratorio Submarino Grande
+description = Esta base experimental es similar al Laboratorio Submarino común, pero más grande, permitiendo más lugar para experimentos.
+flavor_list = Domo | Laboratorio Submarino Grande
+
+[Time Capsule]
+name = Cápsula de Tiempo
+description = (1 CPU) Esta base consta de nada más que una pequeña computadora y un enlace de satélite. Es prácticamente indetectable.
+flavor_list = Cápsula de Tiempo | Cápsula
+
+[Lunar Facility]
+name = Instalación Lunar
+description = Esta base consta de una serie de cavernas cavadas bajo la superficie lunar. Debido a la ausensia de vecinos, esta base es bastante grande.
+flavor_list = Domo | Instalación Lunar | Base Lunar
+
+[Scientific Outpost]
+name = Avanzada Científica
+description = Esta base está ubicada tan lejos de la Tierra como me resulte práctica, haciéndola segura para llevar a cabo algunos de mis experimentos más peligrosos.
+flavor_list = Satélite | Puesto Avanzado | Avanzada Científica
+
+[Reality Bubble]
+name = Burbuja de Realidad
+description = Esta base se encuentra fuera del universo mismo, haciéndola segura para llevar a cabo experimentos que podrían destruir la realidad misma.
+flavor_list = Burbuja de Realidad | Existencia
