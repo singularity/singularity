@@ -1,8 +1,27 @@
-Included here are the source Psycle files for the various music tracks
-(downloadable separately) created for Endgame: Singularity by Max
+Included here are the source Psycle files for the original music tracks
+created for Endgame: Singularity and also the source Renoise files for the
+extended music sountrack, both downloadable separately and created by Max
 McCracken.
 
-To generate your own files from these:
+Pre-encoded music in Ogg Vorbis format for both original and extended soundtrack
+can be downloaded at Max McCracken's website:
+
+     http://www.soundcloud.com/maxstack
+
+And also at Endgame: Singularity download hosts:
+
+    http://www.emhsoft.com/singularity
+    https://code.google.com/p/endgame-singularity/downloads/list
+
+Be aware that the Ogg Vorbis songs available at Endgame: Singularity hosts were
+re-encoded from source to better fit the game (smaller size, ReplayGain normali-
+zation etc), and thus are not bitwise identical to the ones at author's website.
+
+Lossless versions of the songs in FLAC format are also available by request.
+The full soundtrack is around 527 MB.
+
+
+To generate your own files from the Psycle (.psy) original sountrack sources:
 
 * Download Psycle from:
 
@@ -25,15 +44,30 @@ To generate your own files from these:
   will make Psycle detect the Drumatic VE VST plugin.
 
 * Load one of the .psy files via File->Open and choose File->Render as WAV.
-  You'll need to pick a sample rate here.  The canonical sample rates are:
+  You'll need to pick a sample rate here.  The canonical sample rate is 48000 Hz
 
-     Advanced Simulacra: 48000 Hz
-     Apex Aleph: 48000 Hz
-     Awakening: 48000 Hz
-     By-Product: 44100 Hz
-     Chimes They Fade: 48000 Hz
-     Coherence: 48000 Hz
-     Deprecation: 48000 Hz
-     Inevitable: 48000 Hz
-     March Thee to Dis: 48000 Hz
-     Media Threat: 48000 Hz
+
+To generate your own files from the Renoise (.xrns) extended sountrack sources:
+
+* Download Renoise from:
+
+     http://www.renoise.com
+
+  Renoise is available for Windows, Mac OSX and Linux. A greate Linux release
+  info, including a mini tutorial for Renoise itself, can be found at:
+
+     http://www.linuxjournal.com/content/renoise-linux
+
+* Run Renoise, open the .xrns files and export them to Vorbis format (.ogg).
+  Or you may convert them to MIDI format using the MidiConvert plugin found at:
+
+    http://www.renoise.com/tools/midi-convert
+
+* It's also possible to convert the songs to MIDI without installing Renoise,
+  using the (deprecated) xrns2midi standalone PHP script found at:
+
+    http://xrns-php.sourceforge.net/xrns2midi.html
+
+* Some commercial instruments were used by the author to create the songs, and
+  are required to make the generated files sound the same as the pre-encoded
+  ones available for download.
