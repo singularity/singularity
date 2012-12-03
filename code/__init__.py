@@ -5,12 +5,12 @@
 def _copy():
 
     import sys, os, imp
-    dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    fd, path, desc = imp.find_module(__name__, sys.path[sys.path.index(dir)+1:])
+    esdir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    index = sys.path.index(esdir) if esdir in sys.path else 0
+    fd, path, desc = imp.find_module(__name__, sys.path[index+1:])
     module = imp.load_module(__name__ + '_stdlib', fd, path, desc)
     fd.close()
-    del sys.modules[__name__ + '_stdlib']
-    for key in module.__all__:
+    for key in module.__dict__:
         if not hasattr(sys.modules[__name__], key):
             setattr(sys.modules[__name__], key, getattr(module, key))
 _copy()
