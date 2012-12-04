@@ -1,6 +1,43 @@
 #!/usr/bin/env python
+#
+# classdiagram.py - Generates a class diagram of E:S
+#
+#    Copyright (C) 2012 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. See <http://www.gnu.org/licenses/gpl.html>
+#
+# If run as a script, creates a classes_singularity.png image file in current
+# directory, containing a class diagram of all classes in E:S and their
+# inheritance relationship.
+#
+# This module is importable as well. In this case, it only creates a Project
+# instance pre-loaded (and resolved) with all E:S modules, imports and classes,
+# ready to use.
 
-# Generates a class diagram of E:S in png format
+
+#TODO:
+# - create list of identifiers for each module. parse() or resolve() must
+#   populate it. dict Module.objects = { name: obj }
+# - dummy classes for ExternalModule, BuiltinClass, ExternalObject
+# - get rid of Import/From classes. Once a module is parsed and resolved,
+#   what I really need is the module namespace (object list) with identifiers
+#   associated with either a Module, ExternalModule, Class, BuiltinClass
+# - Module.import() and Module.importfrom() methods to be called from parse,
+#   simulating python's import mechanism, resolving names and returning objects,
+#   keeping list of externals and builtins in Project
+# - whatever is the solution, respect name binding order in each code
+
 
 import os.path
 import re
@@ -10,8 +47,6 @@ import ast
 class Node(object):
     """ Tree node that has a name, a parent, an associated file, and a list of
         modules. Currently used by Project and Module (and by proxy, Package) """
-
-    _ident = re.compile(r"^[^\d\W]\w*$")
 
     def __init__(self, **kwargs):
         # The bucket stops here...
@@ -31,6 +66,7 @@ class Node(object):
 
     def add_modules_by_path(self):
 
+        ident = re.compile(r"^[^\d\W]\w*$")
         path = os.path.dirname(self.file)
         packagefile = "__init__.py"
 
@@ -41,7 +77,7 @@ class Node(object):
             name, ext = os.path.splitext(filename)
             if (ext == ".py" and
                 filename != packagefile and
-                re.match(self._ident, name)):
+                re.match(ident, name)):
                 Module(name=name,
                        file=os.path.join(path,filename),
                        parent=self)
@@ -122,14 +158,30 @@ class Project(Node):
         super(Project, self).__init__(**kwargs)
         super(Project, self).add_modules_by_path()
 
-        # Set main module
+        # Set main (entry) module
         for module in self.modules:
             if module.file == self.file:
                 self.main = module
 
-        # Resolve modules
+        # Resolve modules. At first, only those reachable from main
+        if self.main:
+            self.main.isUsed = True
+            self.main.resolve()
+
+        # Now the unused ones
         for module in self.get_all_modules():
             module.resolve()
+
+            # since we are here, also mark packages as used
+            # if it has any used module
+            if not module.isUsed:
+                for mod in module.modules:
+                    if mod.isUsed:
+                        # mark ancestor packages too (except Project)
+                        for anc in module.get_ancestors()[:-1]:
+                            anc.isUsed = True
+                        module.isUsed = True
+                        break
 
     @property
     def name(self):
@@ -219,8 +271,10 @@ class Project(Node):
 class Module(Node):
 
     def __init__(self,**kwargs):
-        self.classes = kwargs.pop('classes',[])
-        self.imports = kwargs.pop('imports',[])
+        self.classes    = kwargs.pop('classes',[])
+        self.imports    = kwargs.pop('imports',[])
+        self.isUsed     = False
+        self.isResolved = False
 
         # Allow name to be optional
         if 'name' not in kwargs:
@@ -233,10 +287,10 @@ class Module(Node):
 
     @property
     def fullname(self):
-        if isinstance(self.parent,Project):
+        if isinstance(self.parent, Project):
             return self.name
         else:
-            return super(Module,self).fullname
+            return super(Module, self).fullname
 
     def parse(self):
         self.classes = []
@@ -268,24 +322,77 @@ class Module(Node):
                         ImportFrom(name=node.module, alias=item.asname,
                                    attribute=item.name, parent=self)
 
-    def print_tree(self, endent=0, show_external=False):
+    def print_tree(self, endent=0,
+                   show_imports=True, show_classes=True, show_external=True):
         print "{0}{1}".format("\t"*endent, self)
-        for item in sorted(self.imports) + self.classes:
-            if show_external or not getattr(item, 'external', False):
+
+        if show_imports:
+            for item in self.imports:
+                if show_external or not getattr(item, 'external', False):
+                    print "{0}{1}".format("\t"*(endent+1), item)
+
+        if show_classes:
+            for item in self.classes:
                 print "{0}{1}".format("\t"*(endent+1), item)
+
         for module in self.modules:
-            module.print_tree(endent+1 if endent>=0 else -1)
+            module.print_tree(endent+1 if endent>=0 else -1,
+                              show_imports, show_classes, show_external)
 
     def resolve(self):
+        # As per the official import mechanism, load a module only once,
+        # and consider it already loaded as soon as it begins processing,
+        # not afterwards
+        if self.isResolved:
+            return
+        else:
+            self.isResolved = True
+
+        # imports are resolved first (hopefully they appear first in code too)
         for imp in self.imports:
             imp.resolve()
 
+        # then classes
         for cls in self.classes:
             cls.resolve()
 
+    def get_object_by_name(self, name):
+        """Resolve symbols in a module: given a name (symbol, identifier, etc),
+        searches its Classes, Imports and ImportFroms and returns the associated
+        object reference (which is an instance of Module or Class), or a string
+        (for external modules and objects), or None if not found
+        """
+        for cls in self.classes:
+            if cls.name == name:
+                # Class
+                return cls
 
-    #FIXME: very old, not-yet-working code
-    def dump(self):
+        for imp in self.imports:
+            if imp.bind == name:
+                if imp.isExternal:
+                    # External Module
+                    return "<external module> %s" % name
+                elif hasattr(imp, 'type'):
+                    if imp.isModule or imp.isClass:
+                        # Module or Class
+                        return imp.reference
+                    else:
+                        # External Object
+                        return "%s %s.%s" % (imp.type, imp.name, imp.attribute)
+                else:
+                    # Module
+                    return imp.module
+
+    def __repr__(self):
+        return super(Module, self).__repr__() + (" <UNUSED>"
+                                                 if not self.isUsed else "")
+
+    def dump_classes(self):
+
+        for imp in self.imports:
+            if not imp.isExternal:
+                pass
+
         out = ""
         if self.imports or self.classes:
             out += "#", self.package.name, self.filename
@@ -330,65 +437,138 @@ class Package(Module):
 
 
 class Import(object):
+    """An import in a module: import <name> as <alias>
+    parent: a reference to the module containing the import line
+    module: a reference to the imported module (or None)
+    bind: string to imported module identifier in the importer (alias or name)
+    isExternal: boolean for modules outside the project
+    """
+    # Facts (or, better, assumptions) about import x.y.z:
+    # - x and y must be packages, z must be module or package
+    # - no identifier reassignment in x or y can change z's binding
+    # - thus, x.y.z will always mean either x/y/z.py or x/y/z/__init__.py
+    # - current limitation: x must play nice about y, and both are nice about z
 
     def __init__(self, **kwargs):
         self.name       = kwargs.pop('name'  , None)
         self.alias      = kwargs.pop('alias' , None)
         self.parent     = kwargs.pop('parent', None)
+        self.bind       = self.alias or self.name
         self.module     = None
-        self.external   = False
+        self.isExternal = True
         self.parent.imports.append(self)
-
-    @property
-    def bind(self):
-        return self.alias or self.name
 
     def resolve(self):
         module = self.parent.get_module_by_ref(self.name)
         if module:
+            self.isExternal = False
             self.module = module
-        else:
-            self.external = True
-
+            # mark a module as used if the importer is also used
+            if self.parent.isUsed:
+                self.module.isUsed = True
+            self.module.resolve()
 
     def __repr__(self):
-        return "<{0}>{1} {2} <bind> {3}".format(type(self).__name__.lower(),
-                                                " <external>"
-                                                    if self.external else "",
-                                                self.module or self.name,
-                                                self.bind,
-                                                )
+        return "<{0}>{1} {2}{3}".format(
+            type(self).__name__.lower(),
+            " <external>" if self.isExternal else "",
+            self.module or self.name,
+            (" <as> %s" % self.alias) if self.alias else "",)
 
 
 class ImportFrom(Import):
+    """A from import in a module: from <name> import <attribute> as <alias>
+    importfrom: convenience boolean to tell apart from plain Import's
+    bind: string to imported attribute identifier in the importer (alias or attribute)
+    type: string identifying the attribute type. May be one of:
+          <ident>  - for unknown identifiers, either from external imports, as
+                     in `from os import path`; or identifiers that are not
+                     modules or classes, as in `from buyable import cash`
+          <module> - for modules, as in from `code.graphics import g`
+          <class>  - for classes, as in from `code.buyable import Buyable`
+    is_*: convenience booleans to identify the attribute type
+    reference: a reference to either a module or a class (None for other types)
+    """
+
+    # Facts (or, better, assumptions) about from x.y import z:
+    # - same rules as Import applies to x.y: x/y.py or x/y/__init__.py
+    # - z can be any identifier in y:
+    #   import z, import k as z, from i.j import k as z, class z()
+    # - if y is a package, z can also be a submodule/subpackage
 
     def __init__(self, **kwargs):
-        self.attribute = kwargs.pop('attribute', None)
-        self.type = None
-        super(ImportFrom, self).__init__(**kwargs)
+        self.attribute  = kwargs.pop('attribute', None)
+        self.reference  = None
+        self.type       = "<object>"
+        self.isModule   = False
+        self.isClass    = False
 
-    @property
-    def bind(self):
-        return self.alias or self.attribute
+        super(ImportFrom, self).__init__(**kwargs)
+        self.bind = self.alias or self.attribute
+
 
     def resolve(self):
         super(ImportFrom, self).resolve()
 
-        self.type = "<object> %s" % self.attribute
+        # do not resolve attributes from external modules
+        if self.isExternal:
+            return
 
-        if self.module:
-            attribute = self.parent.get_module_by_ref(self.name + '.' + self.attribute)
-            if attribute:
-                self.type = attribute
+        # No breaks or returns from now on: any new reference found will
+        # (and should) overwrite the previous definition
 
+        # Search for attribute as module in a package
+        # from code.graphics import g
+        for mod in self.module.modules:
+            if mod.name == self.attribute:
+                self.reference = mod
+
+        # Search for attribute as bind in import or importfrom in a module
+        # Bind reference may be a module, class or object
+        # from code.screens.map import g, gg, location, OptionsScreen, math, newaxis
+        #   which may be found in code.screens.map as:
+        #     from code import g                 # module
+        #     from code.graphics import g as gg  # module
+        #     import location                    # module
+        #     from options import OptionsScreen  # class
+        #     import math                        # object
+        #     from numpy import newaxis          # object
+        for imp in self.module.imports:
+            if imp.bind == self.attribute:
+                self.reference = getattr(imp, 'reference', imp.module)
+
+        # Search for attribute as class in a module
+        # (again, hopefully they come after imports)
+        # from buyable import Buyable
+        for cls in self.module.classes:
+            if cls.name == self.attribute:
+                self.reference = cls
+
+        # Found a reference? Fill in the blanks...
+        if self.reference:
+            if isinstance(self.reference, Class):
+                self.type = "<class>"
+                self.isClass = True
+            else:
+                self.type = "<module>"
+                self.isModule = True
+                # mark the attribute module as used if the importer is also used
+                if self.parent.isUsed:
+                    self.reference.isUsed = True
+                self.reference.resolve()
 
     def __repr__(self):
-        return "<{0}>{1} {2} {3} <bind> {4}".format(type(self).__name__.lower(),
-                                                    " <external>"
-                                                        if self.external else "",
-                                                    self.module or self.name,
-                                                    self.type,
-                                                    self.bind,)
+        if self.isExternal:
+            return "<{0}> <external> {1} {2}{3}".format(
+                type(self).__name__.lower(),
+                self.name, self.attribute,
+                (" <as> %s" % self.alias) if self.alias else "",)
+        else:
+            return "<{0}> {1} {2}{3}".format(
+                type(self).__name__.lower(),
+                self.module,
+                self.reference or ("%s %s" % (self.type, self.attribute)),
+                (" <as> %s" % self.alias) if self.alias else "",)
 
 
 class Class(object):
@@ -400,12 +580,62 @@ class Class(object):
         self.module.classes.append(self)
 
     def resolve(self):
-        pass
+
+        def find_class(module, name):
+            for cls in module.classes:
+                if cls.name == name:
+                    return cls
+
+        for i, base in enumerate(self.bases):
+
+            if isinstance(base, tuple):
+                mod, name = base
+                obj = self.module.get_object_by_name(mod)
+                if isinstance(obj, Module):
+                    module = obj
+                    builtins = False
+                else:
+                    if isinstance(obj, Class):
+                        # mod is supposed to be a Module, not a known Class
+                        self.bases[i] = "<NOTMODULE> %s in %s: %s" % (mod, base, obj)
+                    elif obj:
+                        # external module or object, as string
+                        self.bases[i] = obj
+                    else:
+                        self.bases[i] = "<NOTFOUND> %s" % (base)
+
+                    # for all cases, bail out
+                    continue
+            else:
+                name = base
+                module = self.module
+                builtins = True
+
+            cls = module.get_object_by_name(name)
+            if cls:
+                if isinstance(cls, Class):
+                    self.bases[i] = cls
+                else:
+                    # currently, can only be a Module
+                    self.bases[i] = "<NOTCLASS> %s in %s: %s" % (name, base, cls)
+            else:
+                if builtins:
+                    self.bases[i] = "<builtin> %s" % name
+                else:
+                    self.bases[i] = "<NOTFOUND> %s in %s" % (name, base)
 
     def __repr__(self):
-        return "<{0}> {1} {2}".format(type(self).__name__.lower(),
-                                      self.name,
-                                      self.bases)
+        bases = []
+        for base in self.bases:
+            if isinstance(base, Class):
+                name = "<class> " + base.module.fullname + '.' + base.name
+            else:
+                name = base
+            bases.append("%s" % name)
+
+        return "<{0}> {1} ({2})".format(type(self).__name__.lower(),
+                                        self.name,
+                                        ", ".join(bases))
 
 
 if __name__ == '__main__':
@@ -415,7 +645,7 @@ if __name__ == '__main__':
         mydir = os.path.dirname(os.path.realpath(sys.argv[0]))
         esdir = os.path.realpath(os.path.join(mydir,".."))
         project = Project(name="singularity", path=esdir)
-        project.print_tree(show_external=False)
+        project.print_tree(show_imports=True, show_classes=True)
     else:
         # executed indirectly as execfile() in pydev's console
         for dir in sys.path:
@@ -433,10 +663,11 @@ else:
 def bash_classparser():
     import argparse
     import subprocess
+    import sys
     myname =  os.path.basename(sys.argv[0])
     def fatal(msg="",code=-1):
         if msg: sys.stderr.write("error: {0}\n".format(msg))
-        raise SystemExit(code)
+        sys.exit(code)
 
     def error(msg=""):
         if msg: sys.stderr.write("error: {0}\n".format(msg))
