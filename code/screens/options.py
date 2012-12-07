@@ -36,8 +36,10 @@ import code.g as g
 #TODO: Create a dedicated button for Music
 #
 
-class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
+class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
     def __init__(self, *args, **kwargs):
+        kwargs.setdefault("yes_type", "ok")
+        kwargs.setdefault("no_type", "cancel")
         super(OptionsScreen, self).__init__(*args, **kwargs)
 
         self.size = (.79, .63)
@@ -157,46 +159,64 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
                                         function=self.set_daynight,
                                         args=(button.TOGGLE_VALUE,))
 
-        self.save_button = button.FunctionButton(self, (.42, .45), (.34, .05),
-                                                 text=_("SAVE OPTIONS TO &DISK"),
-                                                 autohotkey=True,
-                                                 function=save_options)
-
     def show(self):
-        self.set_fullscreen(gg.fullscreen, resize=False)
-        self.fullscreen_toggle.set_active(gg.fullscreen)
-        self.set_sound(not g.nosound, reset=False)
-        self.sound_toggle.set_active(not g.nosound)
-        self.set_grab(pygame.event.get_grab())
-        self.grab_toggle.set_active(pygame.event.get_grab())
-        self.set_daynight(g.daynight)
-        self.daynight_toggle.set_active(g.daynight)
+        self.initial_options = dict(
+            fullscreen = gg.fullscreen,
+            sound      = not g.nosound,
+            grab       = pygame.event.get_grab(),
+            daynight   = g.daynight,
+            resolution = gg.screen_size,
+            language   = g.language,
+        )
+        self.set_options(self.initial_options)
+
+        retval = super(OptionsScreen, self).show()
+        if retval:
+            if self.resolution_custom.active:
+                try:
+                    old_size = gg.screen_size
+                    gg.screen_size = (int(self.resolution_custom_horiz.text),
+                                      int(self.resolution_custom_vert.text))
+                    if gg.screen_size != old_size:
+                        dialog.Dialog.top.needs_resize = True
+                except ValueError:
+                    pass
+            save_options()
+        else:
+            # Cancel, revert all options to initial state
+            self.set_options(self.initial_options)
+
+        return retval
+
+    def set_options(self, options):
+        self.set_fullscreen(options['fullscreen'])
+        self.fullscreen_toggle.set_active(options['fullscreen'])
+
+        self.set_sound(options['sound'])
+        self.sound_toggle.set_active(options['sound'])
+
+        self.set_grab(options['grab'])
+        self.grab_toggle.set_active(options['grab'])
+
+        self.set_daynight(options['daynight'])
+        self.daynight_toggle.set_active(options['daynight'])
+
         custom = True
         for res_button in self.resolution_group:
-            res_button.set_active(res_button.args == (gg.screen_size,))
+            res_button.set_active(res_button.args == (options['resolution'],))
             if res_button.active:
                 custom = False
         if custom:
             self.resolution_custom.set_active(True)
-            self.resolution_custom_horiz.text = str(gg.screen_size[0])
-            self.resolution_custom_vert.text = str(gg.screen_size[1])
+            self.resolution_custom_horiz.text = str(options['resolution'][0])
+            self.resolution_custom_vert.text = str(options['resolution'][1])
+        self.set_resolution(options['resolution'])
 
         self.language_choice.list_pos = [i for i, (code, __)
                                          in enumerate(self.languages)
-                                         if code == g.language][0] or 0
+                                         if code == options['language']][0] or 0
+        self.set_language(self.language_choice.list_pos)
 
-        retval = super(OptionsScreen, self).show()
-        if self.resolution_custom.active:
-            try:
-                old_size = gg.screen_size
-                gg.screen_size = (int(self.resolution_custom_horiz.text),
-                                  int(self.resolution_custom_vert.text))
-                if gg.screen_size != old_size:
-                    dialog.Dialog.top.needs_resize = True
-            except ValueError:
-                pass
-
-        return retval
 
     def set_language(self, list_pos):
         if not getattr(self, "language_choice", None):
@@ -208,22 +228,22 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             set_language_properly(language)
 
 
-    def set_fullscreen(self, value, resize=True):
+    def set_fullscreen(self, value):
         if value:
             self.fullscreen_toggle.text = _("YES")
         else:
             self.fullscreen_toggle.text = _("NO")
-        gg.fullscreen = value
-        if resize:
+        if gg.fullscreen != value:
+            gg.fullscreen = value
             dialog.Dialog.top.needs_resize = True
 
-    def set_sound(self, value, reset=True):
+    def set_sound(self, value):
         if value:
             self.sound_toggle.text = _("YES")
         else:
             self.sound_toggle.text = _("NO")
 
-        if not reset:
+        if g.nosound == (not value):
             # No transition requested, bail out
             return
 
@@ -251,8 +271,9 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         g.daynight = value
 
     def set_resolution(self, value):
-        gg.screen_size = value
-        dialog.Dialog.top.needs_resize = True
+        if gg.screen_size != value:
+            gg.screen_size = value
+            dialog.Dialog.top.needs_resize = True
 
     def set_resolution_custom(self):
         self.resolution_custom.chosen_one()
