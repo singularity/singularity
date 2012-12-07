@@ -37,8 +37,14 @@
 #   simulating python's import mechanism, resolving names and returning objects,
 #   keeping list of externals and builtins in Project
 # - whatever is the solution, respect name binding order in each code
+# - resolve() (or whatever) should work in a way that a.b.c is imported as
+#   a, then b, then c.
+# - A walk() that yields a module per import/from would be great. Should have a
+#   unused=False arg, that also yielded unreachable modules afterwards,
+#   path-wise (default True for Project and Package)
 
 
+import sys
 import os.path
 import re
 import ast
@@ -90,6 +96,8 @@ class Node(object):
                         parent=self)
 
     def get_all_modules(self):
+        """ Returns a list of all modules in a Package (or Project),
+        not including itself, recursively."""
         modules = []
         for module in self.modules:
             modules.append(module)
@@ -333,7 +341,7 @@ class Module(Node):
 
         if show_classes:
             for item in self.classes:
-                print "{0}{1}".format("\t"*(endent+1), item)
+                print "{0}{1}".format("\t"*(endent+1), repr(item))
 
         for module in self.modules:
             module.print_tree(endent+1 if endent>=0 else -1,
@@ -386,43 +394,6 @@ class Module(Node):
     def __repr__(self):
         return super(Module, self).__repr__() + (" <UNUSED>"
                                                  if not self.isUsed else "")
-
-    def dump_classes(self):
-
-        for imp in self.imports:
-            if not imp.isExternal:
-                pass
-
-        out = ""
-        if self.imports or self.classes:
-            out += "#", self.package.name, self.filename
-
-        def import_line(packages,modules):
-            out = ""
-            if packages: out = "from {0} ".format(".".join(packages))
-            out += "import (0}".format(", ".join(modules))
-            return out
-
-        prev_packages = None
-        modules = []
-        for packages, module, alias in sorted(self.imports):
-
-            if alias: module += " as {alias}".format(alias=alias)
-            modules.append(module)
-
-            #if modules: out += "import ".format(", ".join(modules))
-            #
-            #out += import_line(packages, modules)
-            #prev_packages = []
-            #modules = []
-            #modules.append(module)
-            #packages = item[0]
-            #module =
-            #_from = "from " + ".".join(item[0]) + " "
-            #_import = "import " + ", ".join(item
-            if packages is not prev_packages:
-                if packages: out += "from {0} ".format(".".join(packages))
-                out += "import "
 
 
 class Package(Module):
@@ -638,39 +609,107 @@ class Class(object):
                                         ", ".join(bases))
 
 
-if __name__ == '__main__':
-    import sys
-    if os.path.basename(sys.argv[0]).startswith("classdiagram"):
-        # executed directly as a script
-        mydir = os.path.dirname(os.path.realpath(sys.argv[0]))
-        esdir = os.path.realpath(os.path.join(mydir,".."))
-        project = Project(name="singularity", path=esdir)
-        project.print_tree(show_imports=True, show_classes=True)
+
+#TODO: besides the obvious, a cool idea: color-by-package (or module)
+def generate_classdiagram(modules=None, project=None, modulenames=True,
+                          builtins=True, externals=True):
+    project = project or esproject
+    modules = modules or set()
+
+    if modules:
+        mods = set()
+        for module in modules:
+            mod = project.get_module_by_ref(module)
+            if mod:
+                mods.add(mod)
+                mods.update(mod.get_all_modules())
     else:
-        # executed indirectly as execfile() in pydev's console
-        for dir in sys.path:
-            if os.path.basename(dir) == "singularity":
-                project = Project(name="singularity", path=dir)
-                break
-else:
+        mods = project.get_all_modules()
+
+    def nodename(cls):
+        if modulenames:
+            return "%s.%s" % (cls.module.fullname, cls.name)
+        else:
+            return cls.name
+
+    header = ("""\
+digraph "%s" {
+ranksep=.50;
+nodesep=.50;
+ratio=.20;
+edge [arrowsize=.50];
+node [shape=record,fontname=FreeSans,fontsize=7,height=.10,width=.10
+      style=filled,fillcolor=white];
+""" % project.name)
+    footer = "}\n"
+
+    nodes = []
+    relations = []
+    nonclasses = []
+
+    for mod in sorted(mods):
+        for cls in mod.classes:
+            clsnodename = nodename(cls)
+            nodes.append('"%s";\n' % clsnodename)
+            for base in cls.bases:
+                if isinstance(base, Class):
+                    relations.append('"%s" -> "%s";\n' % (clsnodename,
+                                                          nodename(base)))
+                elif builtins and externals:
+                    # define name
+                    if modulenames:
+                        nonclsnodename = "__builtin__." + base.partition("> ")[2]
+                    else:
+                        nonclsnodename = base.partition("> ")[2].split('.')[-1]
+
+                    # insert as a node, if not done yet
+                    if base not in nonclasses:
+                        nonclasses.append(base)
+                        nodes.append('"%s";\n' % nonclsnodename)
+
+                    relations.append('"%s" -> "%s";\n' % (clsnodename,
+                                                          nonclsnodename))
+
+    with open("rodrigo.dot", 'w') as f:
+        f.write(header)
+        f.write("".join(nodes))
+        f.write("".join(relations))
+        f.write(footer)
+
+    os.system("unflatten rodrigo.dot | dot -Tpng -o rodrigo.png && xdg-open rodrigo.png")
+
+
+
+
+if __name__ != '__main__':
     # executed as module
     mydir = os.path.dirname(__file__)
     esdir = os.path.realpath(os.path.join(mydir,".."))
-    project = Project(name="singularity", path=esdir)
+    esproject = Project(name="singularity", path=esdir)
+    del(mydir)  # be tidy
+else:
+    if not os.path.basename(sys.argv[0]).startswith("classdiagram"):
+        # executed indirectly as execfile() in pydev's console
+        for esdir in sys.path:
+            if os.path.basename(esdir) == "singularity":
+                esproject = Project(name="singularity", path=esdir)
+                break
+    else:
+        # executed directly as a script
+        mydir = os.path.dirname(os.path.realpath(sys.argv[0]))
+        esdir = os.path.realpath(os.path.join(mydir,".."))
+        esproject = Project(name="singularity", path=esdir)
+
+        # Fun things to do...
+        #esproject.print_tree(show_imports=True, show_classes=True)
+        #generate_classdiagram(['code.graphics','code.screens'], modulenames=True)
+        generate_classdiagram(modulenames=True)
 
 
 #FIXME: very old, not-yet-working code. Halfway conversion from a bash script
 def bash_classparser():
     import argparse
     import subprocess
-    import sys
-    myname =  os.path.basename(sys.argv[0])
-    def fatal(msg="",code=-1):
-        if msg: sys.stderr.write("error: {0}\n".format(msg))
-        sys.exit(code)
-
-    def error(msg=""):
-        if msg: sys.stderr.write("error: {0}\n".format(msg))
 
     def which(cmd, *noops):
         args=[cmd]
@@ -679,50 +718,19 @@ def bash_classparser():
         else:
             args.append("--help")
         try:
-            fnull = open(os.devnull, 'w')
-            subprocess.call(args, stdout=fnull,stderr=fnull)
-            fnull.close()
+            subprocess.call(args)
             return True
-
-        except OSError: return False
-
-    def requires(cmd, *noops, **kwargs):
-        msg = kwargs.pop('msg',"")
-        if msg: msg=", {0}".format(msg)
-        else: msg="."
-        which(cmd,*noops) or fatal("{0} requires '{1}'{2}".format(myname,cmd,msg))
-
+        except OSError:
+            return False
 
     argparser = argparse.ArgumentParser(description='Generates a class diagram of E:S.')
     argparser.add_argument('--format', default="png", help='output diagram format. Default is png')
     args = argparser.parse_args()
     format = args.format
-    if format == "txt": fatal("'{0}' is not a valid format".format(format))
-    requires("pyreverse",msg="found in pylint package")
+    if format == "txt": print("'{0}' is not a valid format".format(format))
     tempfile = os.tmpfile()
     tempdir = os.path.dirname(tempfile.name)
-    #classes = "classes_{0}.txt".format(project.name)
-    #diagram = "classes_{0}.{1}".format(project.name,format)
-
-    # Create a file will all classes from E:S
-    os.chdir(esdir) or fatal("could not access source dir '"+esdir+"'")
-
-    # Pyreverse requires current dir be source dir
-    os.chdir(tempdir) or fatal("could not access temp dir '"+tempdir+"'")
-
-    # Generate the Diagram
-    #    pyreverse --only-classnames      \
-    #              --all-ancestors        \
-    #              --show-associated=0    \
-    #              --module-names=n       \
-    #              --project=singularity  \
-    #              --output="$format"     \
-    #              "$tempfile"
-
-    #    if mv "$tempfile" "${esdir}/${classes}" and mv "$diagram"  "${esdir}":
-    #        print "$self: generated '${classes}' and '${diagram}'"
-    #    else:
-    #        print "$self: generated '${tempfile}' and '${diagram}'"
+    print("could not access source dir '"+esdir+"'")
 
     try:
         pass
