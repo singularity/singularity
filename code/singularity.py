@@ -262,4 +262,11 @@ pygame.display.set_icon(graphics.g.images["icon.png"])
 # preferences file can be effective
 from screens import main_menu
 menu_screen = main_menu.MainMenu()
-menu_screen.show()
+try:
+    menu_screen.show()
+except (SystemExit, KeyboardInterrupt):
+    # exit normally when window is closed (and silently for CTRL+C)
+    pass
+finally:
+    # Be nice and close the window on SystemExit
+    pygame.quit()
