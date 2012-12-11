@@ -41,6 +41,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         kwargs.setdefault("yes_type", "ok")
         kwargs.setdefault("no_type", "cancel")
         super(OptionsScreen, self).__init__(*args, **kwargs)
+        self.yes_button.function = self.check_restart
 
         self.size = (.79, .63)
         self.pos = (.5, .5)
@@ -288,6 +289,36 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         except ValueError:
             pass
 
+    def check_restart(self):
+        # Test all changes that require a restart. Currently, only language
+        if g.language == self.initial_options['language']:
+            # No restart required. Simply exit the dialog respecting all hooks
+            self.yes_button.exit_dialog()
+            return
+
+        # Ask user about a restart
+        ask_restart = dialog.YesNoDialog(
+                self,
+                pos=(-.50, -.50),
+                anchor=constants.MID_CENTER,
+                text=_(
+"""You must restart for some of the changes to be fully applied.\n
+Would you like to restart the game now?"""),)
+        if dialog.call_dialog(ask_restart, self):
+            # YES, go for it
+            #TODO: check if there is an ongoing game, save it under a special
+            #      name and automatically load it after restart using a custom
+            #      command-line argument
+            save_options()
+            restart()
+        else:
+            # NO, revert "restart-able" changes
+            self.language_choice.list_pos = [
+                    i for i, (code, __)
+                    in enumerate(self.languages)
+                    if code == self.initial_options['language']][0] or 0
+            self.set_language(self.language_choice.list_pos)
+
 
 # For the future...
 class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
@@ -376,6 +407,8 @@ def save_options():
     savefile.close()
 
 def restart():
+    """ Restarts the game with original command line arguments. Those may over-
+    write options set at Options Screen. This is by design"""
     executable = sys.executable
     args = list(sys.argv)
     args.insert(0, executable)
