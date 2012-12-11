@@ -134,10 +134,12 @@ item_types = [
 pl = None # The Player instance
 map_screen = None
 
-def set_language(lang=None):
+def set_language(lang=None, force=False):
     global language # required, since we're going to change it
-    oldlang = language # save it before we change it
     if lang is None: lang = language
+
+    if lang == language and not force:
+        return
 
     langs = available_languages()
     if lang in langs:
@@ -168,8 +170,7 @@ def set_language(lang=None):
         except locale.Error:
             continue
 
-    if language != oldlang:
-        load_messages()
+    load_messages()
 
 def quit_game():
     sys.exit()

@@ -202,11 +202,11 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         if not getattr(self, "language_choice", None):
             return # Not yet initialized.
 
-        prev_lang = g.language
         if 0 <= list_pos < len(self.language_choice.list):
-            g.language = self.languages[list_pos][0]
-        if g.language != prev_lang:
-            set_language_properly()
+            language = self.languages[list_pos][0]
+        if g.language != language:
+            set_language_properly(language)
+
 
     def set_fullscreen(self, value, resize=True):
         if value:
@@ -318,8 +318,8 @@ class OptionButton(button.ToggleButton, button.FunctionButton):
     pass
 
 
-def set_language_properly():
-    g.set_language()
+def set_language_properly(language):
+    g.set_language(language)
     g.load_string_defs()
     g.load_base_defs()
     g.load_tech_defs()

@@ -22,8 +22,7 @@
 
 # Set language first, so help page and all error messages can be translated
 import g
-g.set_language()
-g.load_messages()
+g.set_language(force=True)
 
 # Since we require numpy anyway, we might as well ask pygame to use it.
 try:
