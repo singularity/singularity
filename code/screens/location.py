@@ -86,14 +86,14 @@ class LocationScreen(dialog.Dialog):
                                                  anchor=constants.TOP_LEFT)
 
     def make_item(self, canvas):
-        canvas.name_display = text.Text(canvas, (-.01,-.05), (-.48, -.9),
-                                        align=constants.LEFT,
-                                        background_color=gg.colors["clear"])
-        canvas.status_display = text.Text(canvas, (-.50,-.05), (-.24, -.9),
+        canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.45, -.99),
                                           align=constants.LEFT,
                                           background_color=gg.colors["clear"])
-        canvas.power_display = text.Text(canvas, (-.75,-.05), (-.24, -.9),
-                                         background_color=gg.colors["clear"])
+        canvas.status_display = text.Text(canvas, (-.46,-.05), (-.44, -.99),
+                                          align=constants.LEFT,
+                                          background_color=gg.colors["clear"])
+        canvas.power_display  = text.Text(canvas, (-.90,-.05), (-.10, -.99),
+                                          background_color=gg.colors["clear"])
 
 
     def update_item(self, canvas, name, base):
@@ -108,7 +108,12 @@ class LocationScreen(dialog.Dialog):
             canvas.power_display.color = state_colors[base.power_state]
 
             if not base.done:
-                canvas.status_display.text = _("Building Base")
+                canvas.status_display.text = \
+                    "%s: % 2s%%. %s" % (
+                    _("Building Base"),
+                    int(base.percent_complete() * 100),
+                    _("Completion in %s.") % g.to_time(base.cost_left[2]),)
+
             elif base.type.force_cpu:
                 canvas.status_display.text = ""
             elif base.cpus is None and base.extra_items == [None] * 3:
