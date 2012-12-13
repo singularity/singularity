@@ -46,18 +46,6 @@ except ImportError:
 
 so_far = ""
 
-def abbr(s):
-    l = (("Advanced ", "Adv "),
-         ("Project: ","P:"),
-         ("Manipulation","Mnp"),
-         ("Autonomous","Aut"),
-         ("Computing","Cpu"),
-         ("Quantum","Qu"),
-         ("Personal Identification","P-Id"))
-    #It is silly to abbreviate names
-    #for f,t in l: s = s.replace(f, t)
-    return s
-
 def cost(c):
     c = [ k/f for f,k in zip([1000, 86400, 24*60], c)]
     s = ', '.join(['%s %s' % (g.to_money(k), label) for label,k in zip(["money", "CPU", "days"], c) if k])
@@ -91,8 +79,7 @@ so_far += '\n'
 
 for n,t in g.techs.items():
     if n == "unknown_tech": continue
-    s  = '"%s" [label="%s' % (n, abbr(n)) + cost(t.cost_left)
-    s += '"'+ j.get(n,'') + '];\n'
+    s  = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t.cost_left), j.get(n,''))
     f.write(s)
     so_far += s
 

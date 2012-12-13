@@ -146,7 +146,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
                                   list=[lang[1] for lang in self.languages],
                                   update_func=self.set_language)
 
-        self.daynight_label = text.Text(self, (.55, .30), (.15, .05),
+        self.daynight_label = text.Text(self, (.50, .30), (.20, .05),
                                         text=labels['daynight']['text'],
                                         underline=labels['daynight']['pos'],
                                         background_color=gg.colors["clear"])
@@ -262,6 +262,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
             self.set_resolution(screen_size)
         except ValueError:
             pass
+
 
 # For the future...
 class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):

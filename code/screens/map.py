@@ -238,7 +238,7 @@ class MapScreen(dialog.Dialog):
 
         if g.cheater:
             self.cheat_button = button.DialogButton(
-                self, (0, 0), (0, 0),
+                self, (0, 0), (.01, .01),
                 text="",
                 # Translators: hotkey to open the cheat screen menu.
                 # Should preferably be near the ESC key, and it must not be a

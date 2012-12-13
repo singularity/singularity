@@ -45,9 +45,7 @@ def log_error(error_message):
 def safe_call(func, args=(), kwargs={}, on_error=None):
     try:
         return func(*args, **kwargs)
-    except Exception, e:
-        if isinstance(e, SystemExit):
-            raise
+    except Exception:
         buffer = Buffer("Exception in function %s at %s:\n"
                                    % (func.__name__, get_timestamp()))
         traceback.print_exc(file=buffer)

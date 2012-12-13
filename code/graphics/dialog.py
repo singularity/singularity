@@ -29,7 +29,9 @@ import text
 import button
 import listbox
 
-KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4, pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7, pygame.K_KP8: 8, pygame.K_KP9: 9}
+KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
+          pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7, pygame.K_KP8: 8,
+          pygame.K_KP9: 9}
 
 def move_mouse((dx, dy)):
     old_x, old_y = pygame.mouse.get_pos()
@@ -115,9 +117,9 @@ class Dialog(text.Text):
     #            (time, (x, y), button)
     last_click = (0,    (0, 0), -1    )
 
-    def __init__(self, parent=None, pos = (.5,.1), size = (1, .9),
-                 anchor = constants.TOP_CENTER, **kwargs):
-        kwargs.setdefault("background_color", (0,0,0,0))
+    def __init__(self, parent=None, pos=(.5, .1), size=(1, .9),
+                 anchor=constants.TOP_CENTER, **kwargs):
+        kwargs.setdefault("background_color", (0, 0, 0, 0))
         kwargs.setdefault("borders", ())
         super(Dialog, self).__init__(parent, pos, size, anchor, **kwargs)
         self.visible = False
@@ -307,12 +309,12 @@ class Dialog(text.Text):
 
             when = time.time()
             where = event.pos
-            button = event.button
+            what = event.button
 
-            old_when, old_where, old_button = self.last_click
-            self.last_click = when, where, button
+            old_when, old_where, old_what = self.last_click
+            self.last_click = when, where, what
 
-            if button == old_button and when - old_when < .5:
+            if what == old_what and when - old_when < .5:
                 # Taxicab distance.
                 dist = (abs(where[0] - old_where[0]) +
                         abs(where[1] - old_where[1]))
@@ -334,7 +336,7 @@ class Dialog(text.Text):
 
     def call_handlers(self, handlers, event):
         # Feed the event to all the handlers, in priority order.
-        for priority, handler in handlers:
+        for __, handler in handlers:
             try:
                 handler(event)
             except constants.Handled:
@@ -431,7 +433,7 @@ class TopDialog(Dialog):
 
 
 class TextDialog(Dialog):
-    def __init__(self, parent, pos=(.5,.1), size=(.45,.5),
+    def __init__(self, parent, pos=(.5, .1), size=(.45, .5),
                  anchor=constants.TOP_CENTER, **kwargs):
         kwargs.setdefault("valign", constants.TOP)
         kwargs.setdefault("align", constants.LEFT)

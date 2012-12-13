@@ -587,11 +587,10 @@ class SelectableText(Text):
 class ProgressText(SelectableText):
     progress = widget.causes_redraw("_progress")
     progress_color = widget.causes_redraw("_progress_color")
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, pos, size, *args, **kwargs):
         self.parent = parent
         self.progress = kwargs.pop("progress", 0)
         self.progress_color = kwargs.pop("progress", g.colors["blue"])
-        #FIXME: Where is pos and size below coming from?
         super(ProgressText, self).__init__(parent, pos, size, **kwargs)
 
     def redraw(self):

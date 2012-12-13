@@ -79,11 +79,6 @@ class Slider(button.Button):
         self.parent.remove_handler(constants.CLICK, self.handle_click)
 
     def _calc_length(self, items):
-        if self.horizontal:
-            total_length = self.real_size[0] - 2
-        else:
-            total_length = self.real_size[1] - 2
-
         return items / float(self.slider_size + self.slider_max)
 
     def rebuild(self):

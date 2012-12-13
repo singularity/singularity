@@ -277,7 +277,7 @@ load_music() loads music for the game.  It looks in multiple locations:
             # a symlink in prefs dir, pointing to xdg_music
             if not os.path.isdir(prefs_music) and not nosound:
                 try: os.symlink(xdg_music, prefs_music)
-                except: pass # windows users... Well, at least we tried
+                except Exception: pass # windows users... but at least we tried
 
         # E:S Preferences dir
         # (only if music it's not already a symlink to xdg)
@@ -311,7 +311,7 @@ load_music() loads music for the game.  It looks in multiple locations:
             # though, to give a hint to the player that music can go there.
             try:
                 os.makedirs(music_path)
-            except:
+            except Exception:
                 # We don't have permission to write here.  That's fine.
                 pass
 
@@ -575,8 +575,8 @@ def load_game(loadgame_name):
             Player=player.Player,
             _reconstructor = copy_reg._reconstructor,
             object=object,
-            array=list, # This is the old buyable.array.  We just treat it as a list
-                        # for conversion purposes.
+            array=list,  # This is the old buyable.array.
+                         # We just treat it as a list for conversion purposes.
             list=list,
             Location=location.Location,
             Tech=tech.Tech,
@@ -660,13 +660,14 @@ def load_generic_defs_file(name,lang=None):
             mandatory = (lang==default_language)
             return_list.extend( generic_load(filename, mandatory) )
 
-        except:
+        except Exception:
             pass # For other languages, ignore errors
 
     return return_list
 
-def load_generic_defs(name,object,lang=None,listype_attrs=[]):
-    if lang is None: lang = language
+def load_generic_defs(name, object, lang=None, listype_attrs=None):
+    lang = lang or language
+    listype_attrs = listype_attrs or []
 
     item_list = load_generic_defs_file(name,lang)
     for item in item_list:
@@ -1059,7 +1060,6 @@ def load_string_defs(lang=None):
         elif string_section["id"] == "jobs":
 
             # Load the four extant jobs.
-            global jobs
             for string_entry in string_section:
                 if string_entry == "job_expert":
                     jobs["Expert Jobs"][2] = string_section["job_expert"]
@@ -1094,7 +1094,6 @@ def load_string_defs(lang=None):
         elif string_section["id"] == "help":
 
             # Load the help lists.
-            global help_strings
             help_keys = [x for x in string_section if x != "id"]
             for help_key in help_keys:
                 help_entry = string_section[help_key]

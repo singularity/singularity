@@ -52,7 +52,7 @@ class ItemType(object):
         try:
             hotkey = g.hotkey(value)
         except AttributeError:
-            # g.hotkey() wasn't declared yet, mimick its defaults
+            # g.hotkey() wasn't declared yet, mimic its defaults
             hotkey = dict(text= value,
                           key = value[0:1],
                           pos = 0,)

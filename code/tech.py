@@ -48,8 +48,11 @@ class Tech(buyable.Buyable):
     def get_info(self):
         cost = self.type.describe_cost(self.total_cost, True)
         left = self.type.describe_cost(self.cost_left, True)
-        template = "%s\n"+_("Total cost")+": %s\n"+_("Cost left")+": %s\n---\n%s"""
-        return template % (self.name, cost, left, self.description)
+        return ("%s\n%s: %s\n%s: %s\n---\n%s" %
+                (self.name,
+                 _("Total cost"), cost,
+                 _("Cost left"), left,
+                 self.description))
 
     def finish(self):
         super(Tech, self).finish()

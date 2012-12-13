@@ -255,8 +255,7 @@ class Locale(object):
                     ImportError("'{0}' requires icu"
                                 " or PyICU module".format(source))
 
-            self.getAvailableLocales = \
-                lambda: icu.Locale.getAvailableLocales().keys()
+            self.getAvailableLocales = icu.Locale.getAvailableLocales().keys
 
             if self.code:
                 locale = icu.Locale(self.code)

@@ -132,7 +132,9 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
 
 #Handle the program arguments.
-desc = """Endgame: Singularity is a simulation of a true AI. Go from computer to computer, pursued by the entire world. Keep hidden, and you might have a chance."""
+desc = """Endgame: Singularity is a simulation of a true AI.
+Go from computer to computer, pursued by the entire world.
+Keep hidden, and you might have a chance."""
 parser = optparse.OptionParser(version=g.version, description=desc,
                                prog="singularity")
 parser.add_option("--sound", action="store_true", dest="sound",
@@ -182,7 +184,9 @@ olpc_options = optparse.OptionGroup(parser, "OLPC-specific Options")
 olpc_options.add_option("--xo1", action="store_const",
                         dest="resolution", const="1200x900",
                         help="set resolution to 1200x900 (OLPC XO-1)")
-olpc_options.add_option("--ebook", help="enables gamepad buttons for use in ebook mode.  D-pad moves mouse, check is click.  O speeds up time, X slows down time, and square stops time.",
+olpc_options.add_option("--ebook", help="""enables gamepad buttons for use in ebook mode.
+D-pad moves mouse, check is click. O speeds up time, X slows down time,
+and square stops time.""",
                         action="store_true", default=False)
 parser.add_option_group(olpc_options)
 

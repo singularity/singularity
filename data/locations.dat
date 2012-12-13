@@ -1,5 +1,5 @@
 [N AMERICA]
-position_list = 23 | 28
+position_list = 25 | 28
 
 [S AMERICA]
 position_list = 33 | 61
@@ -38,7 +38,7 @@ position_list = absolute | 50 | 13
 pre = unknown_tech
 
 [FAR REACHES]
-position_list = absolute | 22 | 13
+position_list = absolute | 24 | 13
 safety = 3
 modifier_list = stealth:2 | thrift:.1 | speed:.1
 pre = Fusion Rocketry

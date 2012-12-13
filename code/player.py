@@ -167,10 +167,10 @@ class Player(object):
 
         raw_cash = partial_cash + cash_per_cpu * cpu_time
 
-        cash = raw_cash // g.seconds_per_day
+        new_cash = raw_cash // g.seconds_per_day
         new_partial_cash = raw_cash % g.seconds_per_day
 
-        return cash, new_partial_cash
+        return new_cash, new_partial_cash
 
     def give_time(self, time_sec, dry_run=False):
         if time_sec == 0:
@@ -229,7 +229,7 @@ class Player(object):
 
                 self.maintenance_cost += base.maintenance
 
-        # Maintenence?  Gods don't need no steenking maintenance!
+        # Maintenance?  Gods don't need no stinking maintenance!
         if self.apotheosis:
             self.maintenance_cost = array( (0,0,0), long )
 
@@ -418,7 +418,7 @@ class Player(object):
                 g.map_screen.show_message(text)
 
         # CPU complete dialogs.
-        for base, cpus in cpus_constructed:
+        for base, __ in cpus_constructed:
             if base.cpus.count == base.type.size: # Finished all CPUs.
                 text = g.strings["item_construction_single"] % \
                        {"item": base.cpus.type.name, "base": base.name}
@@ -677,7 +677,7 @@ class Player(object):
                 result_cash -= base.cpus.cost_left[cash]
             for item in base.extra_items:
                 if item: result_cash -= item.cost_left[cash]
-        for task, cpu in self.cpu_usage.items():
-            if task in g.techs and cpu > 0:
+        for task, cpus in self.cpu_usage.items():
+            if task in g.techs and cpus > 0:
                 result_cash -= g.techs[task].cost_left[cash]
         return result_cash
