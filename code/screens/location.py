@@ -195,9 +195,7 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
 
         self.yes_button.function = self.get_name
         self.name_dialog = \
-            dialog.TextEntryDialog(self, pos=(-.5,-.25),
-                                   text=g.strings["new_base_text"],
-                                   anchor=constants.MID_CENTER)
+            dialog.TextEntryDialog(self, text=g.strings["new_base_text"])
 
     def on_change(self, description_pane, base_type):
         if base_type is not None:

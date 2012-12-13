@@ -129,8 +129,7 @@ class BaseScreen(dialog.Dialog):
 
         self.build_dialog = BuildDialog(self)
 
-        self.count_dialog = dialog.TextEntryDialog(self, pos=(-.5, -.5),
-                                                   anchor=constants.MID_CENTER)
+        self.count_dialog = dialog.TextEntryDialog(self)
 
         self.header = widget.Widget(self, (0,0), (-1, .08),
                                     anchor=constants.TOP_LEFT)

@@ -521,17 +521,19 @@ class MessageDialog(TextDialog):
 
 
 class TextEntryDialog(TextDialog):
-    def __init__(self, parent, size=(.25, .1), **kwargs):
+    def __init__(self, parent, pos=(-.50, -.50), size=(.40, .10),
+                 anchor=constants.MID_CENTER, **kwargs):
+        kwargs.setdefault('wrap', False)
+        kwargs.setdefault("shrink_factor", 1)
+        kwargs.setdefault("text_size", 20)
         self.default_text = kwargs.pop("default_text", "")
+        super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
-        super(TextEntryDialog, self).__init__(parent, size = size, **kwargs)
-
-        self.shrink_factor = .5
-        self.text_field = text.EditableText(self, (0, -.5), (-.8, -.5),
+        self.text_field = text.EditableText(self, (0, -.50), (-.80, -.50),
                                             borders=constants.ALL,
                                             base_font=g.font[0])
 
-        self.ok_button = button.FunctionButton(self, (-.82, -.5), (-.18, -.5),
+        self.ok_button = button.FunctionButton(self, (-.82, -.50), (-.18, -.50),
                                                text=g.buttons["ok"],
                                                function=self.return_text)
 
