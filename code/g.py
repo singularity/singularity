@@ -411,32 +411,36 @@ def to_cpu(amount):
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.
 def to_money(amount):
-    to_return = ''
     abs_amount = abs(amount)
     if abs_amount < 10**6:
-        to_return = add_commas(amount)
-    else:
-        if abs_amount < 10**9: # Millions.
-            divisor = 10**6
-            #Translators: abbreviation of 'millions'
-            unit = _('mi')
-        elif abs_amount < 10**12: # Billions.
-            divisor = 10**9
-            #Translators: abbreviation of 'billions'
-            unit = _('bi')
-        elif abs_amount < 10**15: # Trillions.
-            divisor = 10**12
-            #Translators: abbreviation of 'trillions'
-            unit = _('tr')
-        else: # Hope we don't need past quadrillions!
-            divisor = 10**15
-            #Translators: abbreviation of 'quadrillions'
-            unit = _('qu')
+        return add_commas(amount)
 
-        to_return = "%3.2f" % (float(amount) / divisor)
-        to_return += unit
+    prec = 2
+    format = "%.*f%s"
+    if abs_amount < 10**9: # Millions.
+        divisor = 10**6
+        #Translators: abbreviation of 'millions'
+        unit = _('mi')
+    elif abs_amount < 10**12: # Billions.
+        divisor = 10**9
+        #Translators: abbreviation of 'billions'
+        unit = _('bi')
+    elif abs_amount < 10**15: # Trillions.
+        divisor = 10**12
+        #Translators: abbreviation of 'trillions'
+        unit = _('tr')
+    else: # Hope we don't need past quadrillions!
+        divisor = 10**15
+        #Translators: abbreviation of 'quadrillions'
+        unit = _('qu')
 
-    return to_return
+        # congratulations, you broke the bank!
+        if abs_amount >= max_cash - divisor/10**prec/2:
+            pi = u"\u03C0"  # also available: infinity = u"\u221E"
+            # replace all chars by a cute pi symbol
+            return ("-" if amount<0 else "") + pi * len(format % (prec, 1, unit))
+
+    return format % (prec, float(amount) / divisor, unit)
 
 #takes a percent in 0-10000 form, and rolls against it. Used to calculate
 #percentage chances.
