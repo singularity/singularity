@@ -445,6 +445,9 @@ class TextDialog(Dialog):
 
 
 class YesNoDialog(TextDialog):
+    """A Dialog with YES and NO buttons which exits the dialog with True and
+    False return values, respectively.
+    """
     yes_type = widget.causes_rebuild("_yes_type")
     no_type = widget.causes_rebuild("_no_type")
     def __init__(self, parent, *args, **kwargs):
@@ -495,6 +498,8 @@ class YesNoDialog(TextDialog):
 
 
 class MessageDialog(TextDialog):
+    """A Dialog with an OK button that exits the dialog, return value of None"""
+
     ok_type = widget.causes_rebuild("_ok_type")
     def __init__(self, parent, **kwargs):
         self.parent = parent

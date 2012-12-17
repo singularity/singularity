@@ -518,7 +518,6 @@ class MapScreen(dialog.Dialog):
         self.cash_display.text = _("CASH")+": %s (%s)" % \
               (g.to_money(g.pl.cash), g.to_money(g.pl.future_cash()))
 
-
         cpu_left = g.pl.available_cpus[0]
         total_cpu = cpu_left + g.pl.sleeping_cpus
 

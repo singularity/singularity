@@ -127,7 +127,7 @@ class Button(text.SelectableText):
         """Called when the button is pressed or otherwise triggered.
 
            This method is called directly by the GUI handler, and should be
-           overwrited only to remove the click it plays."""
+           overwritten only to remove the click it plays."""
 
         from code.g import play_sound
         play_sound("click")
