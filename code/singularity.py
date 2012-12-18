@@ -229,13 +229,13 @@ graphics.g.ebook_mode = options.ebook
 g.cheater = options.cheater
 g.debug = options.debug
 
-pygame.display.set_caption("Endgame: Singularity")
-
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.
 if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
+
+graphics.g.init_graphics_system(g.data_dir)
 
 #init data:
 g.load_strings()
@@ -244,17 +244,9 @@ g.load_locations()
 g.load_techs()
 g.load_items()
 g.load_bases()
-
-# Initialize the screen with a dummy size.
-pygame.display.set_mode(graphics.g.screen_size)
-
-g.init_graphics_system()
 g.load_sounds()
 g.load_music()
 g.play_music("music")
-
-# Set the application icon.
-pygame.display.set_icon(graphics.g.images["icon.png"])
 
 #Display the main menu
 #Import is delayed until now so selected language via command-line options or

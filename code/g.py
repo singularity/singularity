@@ -1242,11 +1242,6 @@ def get_job_level():
 
     return level + " Jobs"
 
-def init_graphics_system():
-    graphics.g.load_fonts(data_dir)
-    graphics.g.load_images(data_dir)
-    graphics.g.init_alpha()
-
 def reinit_mixer():
     global mixerinit
 

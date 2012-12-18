@@ -270,11 +270,7 @@ class Widget(object):
 
                 self.surface = self.parent.surface.subsurface(compromise)
         else:
-            if g.fullscreen:
-                flags = pygame.FULLSCREEN
-            else:
-                flags = 0
-            self.surface = pygame.display.set_mode(size, flags)
+            self.surface = g.set_screen(size)
             self.surface.fill( (0,0,0,255) )
 
             g.fade_mask = pygame.Surface(size, 0, g.ALPHA)
