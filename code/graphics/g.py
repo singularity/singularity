@@ -22,6 +22,9 @@
 import os.path
 import pygame
 
+# User desktop size. Set at init_graphics_system()
+desktop_size = ()
+
 #initial screen size. Can be set via command-line option or preferences file
 default_screen_size = (800, 600)
 
@@ -102,6 +105,13 @@ ebook_mode = False
 
 def init_graphics_system(data_dir, size=None):
 
+    global desktop_size
+    width, height = (pygame.display.Info().current_w,
+                     pygame.display.Info().current_h)
+
+    if width > 0 and height > 0:
+        desktop_size = (width, height)
+
     # Initialize the screen
     set_screen(size)
 
@@ -121,6 +131,11 @@ def set_screen(size=None):
 
     if size:
         screen_size = size
+
+    # Limit the screen size to desktop size
+    if desktop_size and (screen_size[0] > desktop_size[0] or
+                         screen_size[1] > desktop_size[1]):
+        screen_size = desktop_size
 
     if fullscreen:
         flags = pygame.FULLSCREEN
