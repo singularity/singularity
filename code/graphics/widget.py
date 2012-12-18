@@ -175,7 +175,7 @@ class Widget(object):
 
     def _parent_size(self):
         if self.parent == None:
-            return g.screen_size
+            return g.real_screen_size
         else:
             return self.parent.real_size
 
@@ -188,7 +188,7 @@ class Widget(object):
         size = list(self.size)
         for i in range(2):
             if size[i] > 0:
-                size[i] = int(size[i] * g.screen_size[i])
+                size[i] = int(size[i] * g.real_screen_size[i])
             elif size[i] < 0:
                 size[i] = int( (-size[i]) * parent_size[i] )
 
@@ -211,7 +211,7 @@ class Widget(object):
         my_size = self.real_size
 
         if self.pos[0] >= 0:
-            hpos = int(self.pos[0] * g.screen_size[0])
+            hpos = int(self.pos[0] * g.real_screen_size[0])
         else:
             hpos = - int(self.pos[0] * parent_size[0])
 
@@ -223,7 +223,7 @@ class Widget(object):
             hpos -= my_size[0]
 
         if self.pos[1] >= 0:
-            vpos = int(self.pos[1] * g.screen_size[1])
+            vpos = int(self.pos[1] * g.real_screen_size[1])
         else:
             vpos = - int(self.pos[1] * parent_size[1])
 
@@ -270,10 +270,12 @@ class Widget(object):
 
                 self.surface = self.parent.surface.subsurface(compromise)
         else:
-            self.surface = g.set_screen(size)
+            # Recreate using the abstracted screen size, NOT the real one
+            # g.set_screen() will calculate the proper g.real_screen_size
+            self.surface = g.set_screen()
             self.surface.fill( (0,0,0,255) )
 
-            g.fade_mask = pygame.Surface(size, 0, g.ALPHA)
+            g.fade_mask = pygame.Surface(g.real_screen_size, 0, g.ALPHA)
             g.fade_mask.fill( (0,0,0,175) )
 
     def prepare_for_redraw(self):

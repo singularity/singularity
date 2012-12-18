@@ -40,7 +40,7 @@ def do_bisect(left, right, test):
 
 def convert_font_size(size):
     # Scale it to the screen size.
-    raw_size = size * g.screen_size[1] / g.default_screen_size[1]
+    raw_size = size * g.real_screen_size[1] / g.default_screen_size[1]
     # And round.
     return int(raw_size + 0.5)
 
@@ -738,7 +738,7 @@ class ProtoWidget(EditableText):
         if self.parent:
             parent_rect = self.parent.collision_rect
         else:
-            parent_rect = pygame.Rect((0,0) + g.screen_size)
+            parent_rect = pygame.Rect((0,0) + g.real_screen_size)
 
         if self.drag_state == 1:
             mouse_pos = pygame.mouse.get_pos()
@@ -746,7 +746,7 @@ class ProtoWidget(EditableText):
 
             new_rel_pos = tuple(new_real_pos[i] - parent_rect[i] for i in range(2))
 
-            new_unit_pos = tuple( max(0,(new_rel_pos[i] / float(g.screen_size[i])))
+            new_unit_pos = tuple( max(0,(new_rel_pos[i] / float(g.real_screen_size[i])))
                                      for i in range(2))
 
             new_pct_pos = tuple( int( (new_unit_pos[i] * 100) + 0.5)
@@ -759,7 +759,7 @@ class ProtoWidget(EditableText):
             mouse_pos = pygame.mouse.get_pos()
             new_size = tuple(mouse_pos[i] - self.collision_rect[i] for i in range(2))
 
-            unit_size = tuple(max(0,new_size[i] / float(g.screen_size[i]))
+            unit_size = tuple(max(0,new_size[i] / float(g.real_screen_size[i]))
                                     for i in range(2))
 
             pct_size = tuple( int( (unit_size[i] * 100) + 0.5)

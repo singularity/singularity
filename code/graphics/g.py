@@ -25,11 +25,22 @@ import pygame
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
 
+# Margin used in windowed mode to compensate for panels and title bar
+# Should be sensibly large enough to account for all common OS layouts, like
+# Ubuntu/Unity side launcher (65px), Gnome panels (24+24px), Windows bottom
+# panel (48px), Mac OSX, KDE, etc
+desktop_margin = (70, 70)
+
 #initial screen size. Can be set via command-line option or preferences file
 default_screen_size = (800, 600)
 
-#current screen size
+#Current screen size. This size is an abstraction, tightly tied to resolutions.
+#Real window size in windowed mode may be smaller due to desktop_margin
 screen_size = default_screen_size
+
+#Current real window size. Will be the same as screen_size if fullscreen or
+#if abstracted screen_size is a custom resolution
+real_screen_size = screen_size
 
 # Available resolutions
 resolutions = [
@@ -127,7 +138,7 @@ def init_graphics_system(data_dir, size=None):
 def set_screen(size=None):
     """Wrapper for pygame.display.set_mode()"""
 
-    global screen_size
+    global screen_size, real_screen_size
 
     if size:
         screen_size = size
@@ -137,12 +148,18 @@ def set_screen(size=None):
                          screen_size[1] > desktop_size[1]):
         screen_size = desktop_size
 
+    # Default real size is the same as abstract screen size
+    real_screen_size = screen_size
+
     if fullscreen:
         flags = pygame.FULLSCREEN
     else:
         flags = 0
+        if desktop_size and screen_size in resolutions:
+            real_screen_size = (screen_size[0] - desktop_margin[0],
+                                screen_size[1] - desktop_margin[1])
 
-    return pygame.display.set_mode(screen_size, flags)
+    return pygame.display.set_mode(real_screen_size, flags)
 
 
 def load_fonts(data_dir):
