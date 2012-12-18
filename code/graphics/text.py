@@ -29,6 +29,7 @@ DEBUG = False
 def do_bisect(left, right, test):
     # Run a binary search for the largest acceptable value.
     # Thanks to bisect.bisect_left for the basic implementation.
+    # Return is in range [left, right-1], inclusive
     while left + 1 < right:
         test_index = (left + right) // 2
         if test(test_index):
@@ -219,25 +220,21 @@ class Text(widget.BorderedWidget):
         self.bold = bold
         self.text_size = text_size
 
-    max_size = property(lambda self: convert_font_size(self.text_size))
+    max_size = property(lambda self: min(len(self.base_font)-1,
+                                         convert_font_size(self.text_size)))
     font = property(lambda self: self._font)
 
     def pick_font(self, dimensions):
         nice_size = self.pick_font_size(dimensions, False)
         mean_size = self.pick_font_size(dimensions)
 
-        if nice_size > mean_size - convert_font_size(5):
-            size = nice_size
-        else:
-            size = mean_size
+        size = max(nice_size, mean_size - convert_font_size(5))
 
         return self.base_font[size]
 
     def font_bisect(self, test_font):
         left = 0
-        right = len(self.base_font)
-        if self.max_size:
-            right = min(right, self.max_size)
+        right = (self.max_size or len(self.base_font)-1) + 1
 
         def test_size(size):
             font = self.base_font[size]
