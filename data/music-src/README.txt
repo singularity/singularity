@@ -12,13 +12,16 @@ And also at Endgame: Singularity download hosts:
 
     http://www.emhsoft.com/singularity
     https://code.google.com/p/endgame-singularity/downloads/list
+    https://github.com/singularity/singularity-music
 
 Be aware that the Ogg Vorbis songs available at Endgame: Singularity hosts were
 re-encoded from source to better fit the game (smaller size, ReplayGain normali-
 zation etc), and thus are not bitwise identical to the ones at author's website.
 
-Lossless versions of the songs in FLAC format are also available by request.
-The full soundtrack is around 527 MB.
+Lossless versions of the songs in FLAC format are also available at:
+
+    https://github.com/singularity/singularity-music-lossless-original
+    https://github.com/singularity/singularity-music-lossless-extended
 
 
 To generate your own files from the Psycle (.psy) original sountrack sources:

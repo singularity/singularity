@@ -1,0 +1,9 @@
+[submodule "music/singularity-music-lossless-extended"]
+	path = music/singularity-music-lossless-extended
+	url = git@github.com:singularity/singularity-music-lossless-extended.git
+[submodule "music/singularity-music-lossless-original"]
+	path = music/singularity-music-lossless-original
+	url = git@github.com:singularity/singularity-music-lossless-original.git
+[submodule "music/singularity-music"]
+	path = music/singularity-music
+	url = git@github.com:singularity/singularity-music.git
