@@ -96,20 +96,24 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         self.resolution_group = button.ButtonGroup()
 
-        def xpos(i): return .16 + .16 *    (i%4)
-        def ypos(i): return .08 + .07 * int(i/4)
+        rows = 2
+        cols = 4
+        def xpos(i): return .16 + .16 *    (i%cols)
+        def ypos(i): return .08 + .07 * int(i/cols)
 
-        for i, (xres,yres) in enumerate(gg.resolutions):
+        for index, (xres,yres) in enumerate(sorted(gg.resolutions[0:rows*cols])):
             self.resolution_group.add(OptionButton(self,
-                                                   (xpos(i), ypos(i)),
+                                                   (xpos(index), ypos(index)),
                                                    (.14, .05),
                                                    text="%sx%s" % (xres, yres),
                                                    function=self.set_resolution,
                                                    args=((xres,yres),)))
+        # Adjust index to full row
+        index += cols - (index % cols) - 1
 
         # Forth row
         self.resolution_custom = OptionButton(self,
-                                              (xpos(0),ypos(i+1)),
+                                              (xpos(0),ypos(index+1)),
                                               (.14, .05),
                                               text=_("&CUSTOM:"),
                                               autohotkey=True,
@@ -117,21 +121,21 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.resolution_group.add(self.resolution_custom)
 
         self.resolution_custom_horiz = \
-            text.EditableText(self, (xpos(1), ypos(i+1)), (.14, .05),
+            text.EditableText(self, (xpos(1), ypos(index+1)), (.14, .05),
                               text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0,0,50,255))
 
         self.resolution_custom_X = text.Text(self,
-                                             (xpos(2)-.02, ypos(i+1)),
+                                             (xpos(2)-.02, ypos(index+1)),
                                              (.02, .05),
                                              text="X",
                                              base_font=gg.font[1],
                                              background_color=gg.colors["clear"])
 
         self.resolution_custom_vert = \
-            text.EditableText(self, (xpos(2), ypos(i+1)), (.14, .05),
+            text.EditableText(self, (xpos(2), ypos(index+1)), (.14, .05),
                               text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
