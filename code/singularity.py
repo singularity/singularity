@@ -50,6 +50,11 @@ g.mixerinit = bool(pygame.mixer.get_init())
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
 
+# Set user's desktop resolution right after pygame.init() so it is included
+# in gg.resolutions, and therefore never regarded as a custom resolution.
+# Enables desktop margins and listing the resolution in command-line options
+graphics.g.init_desktop_size()
+
 # Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
 # so g.get_save_folder reports the correct location of preferences file
 for parser in sys.argv[1:]:
@@ -169,18 +174,29 @@ parser.add_option("--soundbuf", type="int",
                     % g.soundbuf)
 
 display_options = optparse.OptionGroup(parser, "Display Options")
+if graphics.g.desktop_size:
+    msg_custom = \
+""". If the resolution selected here or using the options below is greater in
+either width or height than your detected desktop resolution (%dx%d), it will be
+ignored and the desktop resolution will be used instead.""" % graphics.g.desktop_size
+    msg_window = \
+""". Actual window size will be smaller if one of the above standard resolutions
+is used, to account for desktop panels and title bar. Choose Fullscreen or a
+custom resolution if you want to avoid that."""
+else:
+    msg_custom = msg_window = ""
 display_options.add_option("-r", "--res", "--resolution", dest="resolution",
-                           help="set resolution to custom RES (default %dx%d)" %
-                           graphics.g.default_screen_size,
+                           help="set resolution to custom RES (default %dx%d)%s"
+                           % (graphics.g.screen_size + (msg_custom,)),
                            metavar="RES")
-for res in ["%dx%d" % res for res in graphics.g.resolutions]:
+for res in ["%dx%d" % res for res in sorted(graphics.g.resolutions)]:
     display_options.add_option("--" + res, action="store_const",
                                dest="resolution", const=res,
                                help="set resolution to %s" % res)
 display_options.add_option("--fullscreen", action="store_true",
                            help="start in fullscreen mode")
 display_options.add_option("--windowed", action="store_false",
-                           help="start in windowed mode (default)")
+                           help="start in windowed mode (default)%s" % msg_window)
 parser.add_option_group(display_options)
 
 olpc_options = optparse.OptionGroup(parser, "OLPC-specific Options")

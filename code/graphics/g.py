@@ -22,7 +22,7 @@
 import os.path
 import pygame
 
-# User desktop size. Set at init_graphics_system()
+# User desktop size
 desktop_size = ()
 
 # Margin used in windowed mode to compensate for panels and title bar
@@ -115,17 +115,28 @@ FPS = 30
 ebook_mode = False
 
 
-def init_graphics_system(data_dir, size=None):
-
+def init_desktop_size():
     global desktop_size
     width, height = (pygame.display.Info().current_w,
                      pygame.display.Info().current_h)
 
-    if width > 0 and height > 0:
-        desktop_size = (width, height)
+    # Was pygame able to probe desktop size?
+    if not (width > 0 and height > 0):
+        return
 
-    # (Re-)calculate real screen size
+    # We have a valid desktop size
+    desktop_size = (width, height)
+
+    # Insert (or move) desktop resolution to top of list
+    if desktop_size in resolutions:
+        resolutions.remove(desktop_size)
+    resolutions.insert(0, desktop_size)
+
+    # Calculate real screen size
     set_screen_size()
+
+
+def init_graphics_system(data_dir, size=None):
 
     # Initialize the screen
     set_mode()
