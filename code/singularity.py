@@ -119,14 +119,14 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
 
         try:
-            graphics.g.screen_size = (prefs.getint("Preferences", "xres"),
-            graphics.g.screen_size[1])
+            graphics.g.set_screen_size((prefs.getint("Preferences", "xres"),
+                                        graphics.g.screen_size[1]))
         except:
             sys.stderr.write("Invalid or missing 'xres' resolution in preferences.\n")
 
         try:
-            graphics.g.screen_size = (graphics.g.screen_size[0],
-            prefs.getint("Preferences", "yres"))
+            graphics.g.set_screen_size((graphics.g.screen_size[0],
+                                        prefs.getint("Preferences", "yres")))
         except:
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
 
@@ -204,7 +204,7 @@ if options.language is not None:
 if options.resolution is not None:
     try:
         xres, yres = options.resolution.split("x")
-        graphics.g.screen_size = (int(xres), int(yres))
+        graphics.g.set_screen_size((int(xres), int(yres)))
     except Exception:
         parser.error("Resolution must be of the form <h>x<v>, e.g. %dx%d." %
                      graphics.g.default_screen_size)

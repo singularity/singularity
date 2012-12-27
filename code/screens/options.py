@@ -175,8 +175,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             if self.resolution_custom.active:
                 try:
                     old_size = gg.screen_size
-                    gg.screen_size = (int(self.resolution_custom_horiz.text),
-                                      int(self.resolution_custom_vert.text))
+                    gg.set_screen_size((int(self.resolution_custom_horiz.text),
+                                        int(self.resolution_custom_vert.text)))
                     if gg.screen_size != old_size:
                         dialog.Dialog.top.needs_resize = True
                 except ValueError:
@@ -272,7 +272,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
     def set_resolution(self, value):
         if gg.screen_size != value:
-            gg.screen_size = value
+            gg.set_screen_size(value)
             dialog.Dialog.top.needs_resize = True
 
     def set_resolution_custom(self):

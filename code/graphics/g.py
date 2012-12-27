@@ -124,7 +124,7 @@ def init_graphics_system(data_dir, size=None):
         desktop_size = (width, height)
 
     # Initialize the screen
-    set_screen(size)
+    set_mode()
 
     load_fonts(data_dir)
     load_images(data_dir)
@@ -135,13 +135,13 @@ def init_graphics_system(data_dir, size=None):
     pygame.display.set_caption("Endgame: Singularity")
 
 
-def set_screen(size=None):
-    """Wrapper for pygame.display.set_mode()"""
-
+def set_screen_size(size):
     global screen_size, real_screen_size
 
-    if size:
+    if size != screen_size:
         screen_size = size
+    else:
+        return
 
     # Limit the screen size to desktop size
     if desktop_size and (screen_size[0] > desktop_size[0] or
@@ -151,13 +151,18 @@ def set_screen(size=None):
     # Default real size is the same as abstract screen size
     real_screen_size = screen_size
 
+    if not fullscreen and desktop_size and screen_size in resolutions:
+        real_screen_size = (screen_size[0] - desktop_margin[0],
+                            screen_size[1] - desktop_margin[1])
+
+
+def set_mode():
+    """Wrapper for pygame.display.set_mode()"""
+
     if fullscreen:
         flags = pygame.FULLSCREEN
     else:
         flags = 0
-        if desktop_size and screen_size in resolutions:
-            real_screen_size = (screen_size[0] - desktop_margin[0],
-                                screen_size[1] - desktop_margin[1])
 
     return pygame.display.set_mode(real_screen_size, flags)
 

@@ -272,10 +272,10 @@ class Widget(object):
         else:
             # Recreate using the abstracted screen size, NOT the real one
             # g.set_screen() will calculate the proper g.real_screen_size
-            self.surface = g.set_screen()
+            self.surface = g.set_mode()
             self.surface.fill( (0,0,0,255) )
 
-            g.fade_mask = pygame.Surface(g.real_screen_size, 0, g.ALPHA)
+            g.fade_mask = pygame.Surface(size, 0, g.ALPHA)
             g.fade_mask.fill( (0,0,0,175) )
 
     def prepare_for_redraw(self):
