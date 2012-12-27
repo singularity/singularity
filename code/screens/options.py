@@ -43,7 +43,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         super(OptionsScreen, self).__init__(*args, **kwargs)
         self.yes_button.function = self.check_restart
 
-        self.size = (.79, .63)
+        self.size = (.79, .65)
         self.pos = (.5, .5)
         self.anchor = constants.MID_CENTER
         self.background_color = (0,0,50)
@@ -89,7 +89,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                         function=self.set_grab,
                                         args=(button.TOGGLE_VALUE,))
 
-        # Second and third row
+        # Second, third and forth row
         self.resolution_label = text.Text(self, (.01, .08), (.14, .05),
                                           text=_("Resolution:"),
                                           align=constants.LEFT,
@@ -97,7 +97,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         self.resolution_group = button.ButtonGroup()
 
-        rows = 2
+        rows = 3
         cols = 4
         def xpos(i): return .16 + .16 *    (i%cols)
         def ypos(i): return .08 + .07 * int(i/cols)
@@ -109,38 +109,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                                    text="%sx%s" % (xres, yres),
                                                    function=self.set_resolution,
                                                    args=((xres,yres),)))
-        # Adjust index to full row
-        index += cols - (index % cols) - 1
-
-        # Forth row
-        self.resolution_custom = OptionButton(self,
-                                              (xpos(0),ypos(index+1)),
-                                              (.14, .05),
-                                              text=_("&CUSTOM:"),
-                                              autohotkey=True,
-                                              function=self.set_resolution_custom)
-        self.resolution_group.add(self.resolution_custom)
-
-        self.resolution_custom_horiz = \
-            text.EditableText(self, (xpos(1), ypos(index+1)), (.14, .05),
-                              text=str(gg.default_screen_size[0]),
-                              borders=constants.ALL,
-                              border_color=gg.colors["white"],
-                              background_color=(0,0,50,255))
-
-        self.resolution_custom_X = text.Text(self,
-                                             (xpos(2)-.02, ypos(index+1)),
-                                             (.02, .05),
-                                             text="X",
-                                             base_font=gg.font[1],
-                                             background_color=gg.colors["clear"])
-
-        self.resolution_custom_vert = \
-            text.EditableText(self, (xpos(2), ypos(index+1)), (.14, .05),
-                              text=str(gg.default_screen_size[1]),
-                              borders=constants.ALL,
-                              border_color=gg.colors["white"],
-                              background_color=(0,0,50,255))
 
         # Fifth row
         self.language_label = text.Text(self, (.01, .30), (.14, .05),
@@ -177,15 +145,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         retval = super(OptionsScreen, self).show()
         if retval:
-            if self.resolution_custom.active:
-                try:
-                    old_size = gg.screen_size
-                    gg.set_screen_size((int(self.resolution_custom_horiz.text),
-                                        int(self.resolution_custom_vert.text)))
-                    if gg.screen_size != old_size:
-                        dialog.Dialog.top.needs_resize = True
-                except ValueError:
-                    pass
             save_options()
         else:
             # Cancel, revert all options to initial state
@@ -206,15 +165,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.set_daynight(options['daynight'])
         self.daynight_toggle.set_active(options['daynight'])
 
-        custom = True
         for res_button in self.resolution_group:
             res_button.set_active(res_button.args == (options['resolution'],))
-            if res_button.active:
-                custom = False
-        if custom:
-            self.resolution_custom.set_active(True)
-            self.resolution_custom_horiz.text = str(options['resolution'][0])
-            self.resolution_custom_vert.text = str(options['resolution'][1])
         self.set_resolution(options['resolution'])
 
         self.language_choice.list_pos = [i for i, (code, __)
@@ -279,15 +231,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         if gg.screen_size != value:
             gg.set_screen_size(value)
             dialog.Dialog.top.needs_resize = True
-
-    def set_resolution_custom(self):
-        self.resolution_custom.chosen_one()
-        try:
-            screen_size = (int(self.resolution_custom_horiz.text),
-                           int(self.resolution_custom_vert.text))
-            self.set_resolution(screen_size)
-        except ValueError:
-            pass
 
     def check_restart(self):
         # Test all changes that require a restart. Currently, only language
