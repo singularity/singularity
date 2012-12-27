@@ -103,9 +103,15 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         def ypos(i): return .08 + .07 * int(i/cols)
 
         for index, (xres,yres) in enumerate(get_best_resolutions(rows*cols, cols)):
+            if gg.is_wide((xres,yres)) == gg.is_wide(gg.desktop_size):
+                color = gg.colors['white']
+            else:
+                color = gg.colors['gray']
+
             self.resolution_group.add(OptionButton(self,
                                                    (xpos(index), ypos(index)),
                                                    (.14, .05),
+                                                   color=color,
                                                    text="%sx%s" % (xres, yres),
                                                    function=self.set_resolution,
                                                    args=((xres,yres),)))
@@ -396,7 +402,7 @@ def get_best_resolutions(total=0, cols=0):
     many = max(cols, total - cols)  # at least 1 row, at most n-1 rows
     few = total - many
 
-    wide, wide_extra, square, square_extra = [], [], [], []
+    chosen, extra = [], []
 
     if gg.is_wide(gg.desktop_size):
         w = many
@@ -417,19 +423,16 @@ def get_best_resolutions(total=0, cols=0):
 
         if gg.is_wide(res):
             if w > 0:
-                wide.append(res)
+                chosen.append(res)
                 w -= 1
             else:
-                wide_extra.append(res)  # valid res, but over quota
+                extra.append(res)  # valid res, but over quota
         else:
             if s > 0:
-                square.append(res)
+                chosen.append(res)
                 s -= 1
             else:
-                square_extra.append(res)
+                extra.append(res)
 
-    # Non-wide resolutions always come first, regardless if many or few
-    # Each "group" is sorted separately after appending the "over-quota"
-    # resolutions (if any). At least one of *_extra lists will be always empty.
-    return sorted(square + square_extra[0:w+s]) + \
-           sorted(wide + wide_extra[0:w+s])
+    # Sort chosen resolutions after appending over-quota ones to complete total
+    return sorted(chosen + extra[0:w+s], reverse=True)
