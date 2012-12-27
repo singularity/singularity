@@ -43,17 +43,46 @@ screen_size = default_screen_size
 #if abstracted screen_size is a custom resolution
 real_screen_size = screen_size
 
-# Available resolutions
+# Standard resolutions
+# Order DOES matter: first ones in each wide/non-wide "group" are more likely
+# to be selected in Options Screen, so they should reflect popularity
+# They will always be displayed in ascending size order
 resolutions = [
-    ( 800, 600),
-    (1024, 600),
-    (1024, 768),
-    (1280,1024),
+    # 4:3 "Fullscreen"
+    (1024, 768),  # 4:3, the former top 1, classics never die
+    (1280,1024),  # 5:4, old power users
+    (1152, 864),  # 4:3, XGA+, old 17"~21" monitors
+    ( 800, 600),  # 4:3, another old classic. Safest "playable" resolution
+    (1280, 960),  # 4:3, "SXGA-"
+    (1600,1200),  # 4:3, UXGA, some old power monitors and notebooks
+    (1400,1050),  # 4:3, SXGA+, middle ground between the 2 above
+    (2048,1536),  # 4:3, QXGA, iPad 3rd/4th generation
+    ( 640, 480),  # 4:3, I hope this is a smartphone...
 
-    (1280, 800),
-    (1366, 768),
-    (1440, 900),
-    (1920,1080),
+    # Widescreen
+    (1366, 768),  # 16:9 , Worldwide top 1 resolution
+    (1280, 800),  # 16:10, WXGA, widely used in 14/15" notebooks
+    (1920,1080),  # 16:9 , Full HD, TVs and LCD monitors
+    (1440, 900),  # 16:10, WSXGA, 19" LCD monitors or power notebooks
+    (1680,1050),  # 16:10, WSXGA+, 22" LCD monitors or power notebooks
+    (1024, 600),  # 16:~9, WSVGA, very popular in 7"~10" netbooks and tablets
+    (1600, 900),  # 16:9 , HD+ (900p), popular for notebooks
+    (1280, 720),  # 16:9 , HD, TVs and LCD monitors
+    (1920,1200),  # 16:10, WUXGA, 23"~28" power monitors and Apple notebooks
+    (2560,1440),  # 16:9 , QHD, modern 27" monitors
+    (2560,1600),  # 16:10, WQXGA, modern 30"+ monitors (I envy you)
+    (3840,2160),  # 16:9 , FQHD, 4K-you-gotta-be-kidding-me TV
+
+    # Smartphones
+    ( 960, 640),  #  3:2, DVGA, iPhone 4/4S
+    ( 800, 480),  # 15:9, WVGA, Androids and also early Asus EeePC
+    ( 854, 480),  # 16:9, FWVGA, Sony Xperia and others
+
+    # Odd-sized but still common, usually similar to more popular ones
+    # Being at bottom these are unlikely to be displayed unless matches desktop
+    (1024, 686),  # ~3:2, WSVGA variant
+    (1024, 576),  # 16:9, WSVGA variant
+    (1280, 768),  # 15:9, WXGA variant
 ]
 
 fullscreen = False
@@ -169,8 +198,7 @@ def set_screen_size(size=None, fs=None):
     fullscreen = fs
 
     # Limit the screen size to desktop size
-    if desktop_size and (screen_size[0] > desktop_size[0] or
-                         screen_size[1] > desktop_size[1]):
+    if not fits_desktop(screen_size):
         screen_size = desktop_size
 
     # Default real size is the same as abstract screen size
@@ -196,6 +224,20 @@ def set_mode():
         flags = 0
 
     return pygame.display.set_mode(real_screen_size, flags)
+
+
+def fits_desktop(res):
+    """Return True if res <= desktop_size for both width and height
+    or desktop_size is not set
+    """
+    return ((not desktop_size) or
+            (res[0] <= desktop_size[0]) and (res[1] <= desktop_size[1]))
+
+
+def is_wide(res):
+    """Return True if res ratio >= 1.5 (16:9, 16:10, 3:2) or not defined,
+    False otherwise (4:3, 5:4, or any "portrait" resolution)"""
+    return (not res) or ((float(res[0]) / float(res[1])) >= 1.5)
 
 
 def load_fonts(data_dir):

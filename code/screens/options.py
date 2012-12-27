@@ -102,7 +102,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         def xpos(i): return .16 + .16 *    (i%cols)
         def ypos(i): return .08 + .07 * int(i/cols)
 
-        for index, (xres,yres) in enumerate(sorted(gg.resolutions[0:rows*cols])):
+        for index, (xres,yres) in enumerate(get_best_resolutions(rows*cols, cols)):
             self.resolution_group.add(OptionButton(self,
                                                    (xpos(index), ypos(index)),
                                                    (.14, .05),
@@ -444,3 +444,49 @@ def get_languages_list():
         output.append((code, name[1] or name[0]))
 
     return sorted(output)
+
+def get_best_resolutions(total=0, cols=0):
+    total = total or len(gg.resolutions)
+    cols = min(cols, total)
+
+    # Quota for wide/non-wide resolutions
+    many = max(cols, total - cols)  # at least 1 row, at most n-1 rows
+    few = total - many
+
+    wide, wide_extra, square, square_extra = [], [], [], []
+
+    if gg.is_wide(gg.desktop_size):
+        w = many
+        s = few
+    else:
+        w = few
+        s = many
+
+    for res in gg.resolutions:
+
+        # Reached quota for both "groups"? So we have <total> resolutions
+        if w == s == 0:
+            break
+
+        # Discard resolutions larger than desktop
+        if not gg.fits_desktop(res):
+            continue
+
+        if gg.is_wide(res):
+            if w > 0:
+                wide.append(res)
+                w -= 1
+            else:
+                wide_extra.append(res)  # valid res, but over quota
+        else:
+            if s > 0:
+                square.append(res)
+                s -= 1
+            else:
+                square_extra.append(res)
+
+    # Non-wide resolutions always come first, regardless if many or few
+    # Each "group" is sorted separately after appending the "over-quota"
+    # resolutions (if any). At least one of *_extra lists will be always empty.
+    return sorted(square + square_extra[0:w+s]) + \
+           sorted(wide + wide_extra[0:w+s])
