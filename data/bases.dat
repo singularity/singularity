@@ -94,6 +94,6 @@ maint_list = 900000 | 150 | 0
 size = 50
 allowed = TRANSDIMENSIONAL
 detect_chance_list = science:250
-cost_list = 8000000000000 | 60000000 | 100
+cost_list = 800000000000 | 60000000 | 100
 pre = Space-Time Manipulation
 maint_list = 5000000000 | 300000 | 0
