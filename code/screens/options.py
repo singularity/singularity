@@ -395,7 +395,13 @@ def get_languages_list():
     return sorted(output)
 
 def get_best_resolutions(total=0, cols=0):
-    total = total or len(gg.resolutions)
+    # If current screen size is a custom resolution, add it as first element
+    # to make sure it is displayed among the others
+    resolutions = gg.resolutions
+    if gg.screen_size not in gg.resolutions:
+        resolutions.insert(0, gg.screen_size)
+
+    total = total or len(resolutions)
     cols = min(cols, total)
 
     # Quota for wide/non-wide resolutions
@@ -411,7 +417,7 @@ def get_best_resolutions(total=0, cols=0):
         w = few
         s = many
 
-    for res in gg.resolutions:
+    for res in resolutions:
 
         # Reached quota for both "groups"? So we have <total> resolutions
         if w == s == 0:
