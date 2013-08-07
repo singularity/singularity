@@ -123,6 +123,9 @@ def init_graphics_system(data_dir, size=None):
     if width > 0 and height > 0:
         desktop_size = (width, height)
 
+    # (Re-)calculate real screen size
+    set_screen_size()
+
     # Initialize the screen
     set_mode()
 
