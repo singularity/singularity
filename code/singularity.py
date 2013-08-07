@@ -88,7 +88,7 @@ if os.path.exists(save_loc):
     try:
         prefs.readfp(savefile)
     except Exception, reason:
-        sys.stderr.write("Cannot load preferences file %s! (%s)\n" % (save_loc, reason))
+        logging.error("Cannot load preferences file %s! (%s)", save_loc, reason)
         sys.exit(1)
 
     if prefs.has_section("Preferences"):
@@ -99,44 +99,44 @@ if os.path.exists(save_loc):
             else:
                 raise ValueError
         except:
-            sys.stderr.write("Invalid or missing 'lang' in preferences.\n")
+            logging.warn("Invalid or missing 'lang' in preferences.")
 
         try:
             graphics.g.set_fullscreen(prefs.getboolean("Preferences", "fullscreen"))
         except:
-            sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
+            logging.warn("Invalid or missing 'fullscreen' setting in preferences.")
 
         try:
             g.nosound = prefs.getboolean("Preferences", "nosound")
         except:
-            sys.stderr.write("Invalid or missing 'nosound' setting in preferences.\n")
+            logging.warn("Invalid or missing 'nosound' setting in preferences.")
 
         try:
             pygame.event.set_grab(prefs.getboolean("Preferences", "grab"))
         except:
-            sys.stderr.write("Invalid or missing 'grab' setting in preferences.\n")
+            logging.warn("Invalid or missing 'grab' setting in preferences.")
 
         try:
             g.daynight = prefs.getboolean("Preferences", "daynight")
         except:
-            sys.stderr.write("Invalid or missing 'daynight' setting in preferences.\n")
+            logging.warn("Invalid or missing 'daynight' setting in preferences.")
 
         try:
             desired_soundbuf = prefs.getint("Preferences", "soundbuf")
         except:
-            sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
+            logging.warn("Invalid or missing 'soundbuf' setting in preferences.")
 
         xres, yres = (0, 0)
 
         try:
             xres = prefs.getint("Preferences", "xres")
         except:
-            sys.stderr.write("Invalid or missing 'xres' resolution in preferences.\n")
+            logging.warn("Invalid or missing 'xres' resolution in preferences.")
 
         try:
             yres = prefs.getint("Preferences", "yres")
         except:
-            sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
+            logging.warn("Invalid or missing 'yres' resolution in preferences.")
 
         if xres and yres:
             graphics.g.set_screen_size((xres, yres))
@@ -250,7 +250,10 @@ if desired_soundbuf != g.soundbuf:
 graphics.g.ebook_mode = options.ebook
 
 g.cheater = options.cheater
-g.debug = options.debug
+
+if options.debug:
+    g.debug = True
+    logging.getLogger().setLevel(logging.DEBUG)
 
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.

@@ -28,6 +28,7 @@ import cPickle
 import random
 import sys
 import polib
+import logging
 
 # Use locale to add commas and decimal points, so that appropriate substitutions
 # are made where needed.
@@ -185,7 +186,7 @@ defined in sounds/sounds.dat.
     if not mixerinit:
         # Sound is not initialized. Warn if user wanted sound
         if not nosound:
-            sys.stderr.write("WARNING: Sound is requested, but mixer is not initialized!\n")
+            logging.warn("Sound is requested, but mixer is not initialized!")
         return
 
     sound_dir = os.path.join(data_dir, "sounds")
@@ -204,25 +205,22 @@ defined in sounds/sounds.dat.
         for filename in filenames:
             real_filename = os.path.join(sound_dir, filename)
 
-            # Check to make sure it's a real file; bail if not.
+            # Check to make sure it's a real file; skip if not.
             if not os.path.isfile(real_filename):
-                sys.stderr.write("ERROR: Cannot load nonexistent soundfile: %s!\n" %
-                                 real_filename)
-                sys.exit(1)
-            else:
+                logging.error("Cannot load nonexistent soundfile: %s!",
+                              real_filename)
+                continue
 
-                # Load it via the mixer ...
-                sound = pygame.mixer.Sound(real_filename)
+            # Load it via the mixer ...
+            sound = pygame.mixer.Sound(real_filename)
 
-                # And shove it into the sounds dictionary.
-                if not sounds.has_key(sound_class["id"]):
-                    sounds[sound_class["id"]] = []
-                sounds[sound_class["id"]].append({
-                    "filename": real_filename,
-                    "sound": sound})
-                if debug:
-                    sys.stderr.write("DEBUG: Loaded soundfile: %s\n" %
-                                     real_filename)
+            # And shove it into the sounds dictionary.
+            if not sounds.has_key(sound_class["id"]):
+                sounds[sound_class["id"]] = []
+            sounds[sound_class["id"]].append({"filename": real_filename,
+                                              "sound": sound})
+
+            logging.debug("Loaded soundfile %s", real_filename)
 
 def play_sound(sound_class):
     """
@@ -235,14 +233,12 @@ play_sound() plays a sound from a particular class.
     # Don't crash if someone requests the wrong sound class, but print a
     # warning.
     if sound_class not in sounds:
-        sys.stderr.write("WARNING: Requesting a sound of unavailable class: %s\n" %
-                         sound_class)
+        logging.warn("Requesting a sound of unavailable class: %s", sound_class)
         return
 
     # Play a random choice of sounds from the sound class.
     random_sound = random.choice(sounds[sound_class])
-    if debug:
-        sys.stderr.write("DEBUG: Playing sound %s.\n" % random_sound["filename"])
+    logging.debug("Playing sound %s.", random_sound["filename"])
     random_sound["sound"].play()
 
 def load_music():
@@ -303,9 +299,8 @@ load_music() loads music for the game.  It looks in multiple locations:
                         if (len(file_name) > 5 and
                         (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
                             music_dict[tail].append(os.path.join(head, tail, file_name))
-                            if debug:
-                                sys.stderr.write("D: Loaded musicfile %s\n"
-                                        % music_dict[tail][-1])
+                            logging.debug("Loaded musicfile %s",
+                                          music_dict[tail][-1])
 
         elif not nosound:
             # If the music directory doesn't exist, we definitely
@@ -713,6 +708,7 @@ def load_bases():
         # they're there.
         check_required_fields(base_name,
          ("id", "cost", "size", "allowed", "detect_chance", "maint"), "Base")
+        id = base_name["id"]
 
         # Start converting fields read from the file into valid entries.
         base_size = int(base_name["size"])
@@ -721,19 +717,19 @@ def load_bases():
 
         cost_list = base_name["cost"]
         if type(cost_list) != list or len(cost_list) != 3:
-            sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
+            logging.error("Invalid cost for base %r: %r", id, cost_list)
             sys.exit(1)
         cost_list = [int(x) for x in cost_list]
 
         maint_list = base_name["maint"]
         if type(maint_list) != list or len(maint_list) != 3:
-            sys.stderr.write("Error with maint given: %s\n" % repr(maint_list))
+            logging.error("Invalid maint for base %r: %r", id, maint_list)
             sys.exit(1)
         maint_list = [int(x) for x in maint_list]
 
         chance_list = base_name["detect_chance"]
         if type(chance_list) != list:
-            sys.stderr.write("Error with detect_chance given: %s\n" % repr(chance_list))
+            logging.error("Invalid detect_chance for base %r: %r", id, chance_list)
             sys.exit(1)
         chance_dict = {}
         for chance_str in chance_list:
@@ -752,9 +748,9 @@ def load_bases():
         else:
             allowed_list = [base_name["allowed"]]
 
-        base_type[base_name["id"]]=base.BaseClass(base_name["id"], "",
-            base_size, force_cpu, allowed_list, chance_dict, cost_list,
-            base_pre, maint_list)
+        base_type[id] = base.BaseClass(id, "", base_size, force_cpu,
+                                       allowed_list, chance_dict, cost_list,
+                                       base_pre, maint_list)
 
     load_base_defs()
 
@@ -772,11 +768,11 @@ def load_locations():
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
         check_required_fields(location_info, ("id", "position"), "Location")
-
         id = location_info["id"]
+
         position = location_info["position"]
         if type(position) != list or len(position) not in [2,3]:
-            sys.stderr.write("Error with position given: %s\n" % repr(position))
+            logging.error("Invalid position for location %r: %r", id, position)
             sys.exit(1)
         try:
             if len(position) == 2:
@@ -788,14 +784,14 @@ def load_locations():
                 position = ( int(position[1]), int(position[2]) )
                 absolute = True
         except ValueError:
-            sys.stderr.write("Error with position given: %s\n" % repr(position))
+            logging.error("Invalid position for location %r: %r", id, position)
             sys.exit(1)
 
         safety = location_info.get("safety", "0")
         try:
             safety = int(safety)
         except ValueError:
-            sys.stderr.write("Error with safety given: %s\n" % repr(safety))
+            logging.error("Invalid safety for location %r: %r", id, safety)
             sys.exit(1)
 
         # Make sure prerequisites, if any, are lists.
@@ -805,7 +801,7 @@ def load_locations():
 
         modifiers_list = location_info.get("modifier", [])
         if type(modifiers_list) != list:
-            sys.stderr.write("Error with modifier(s) given: %s\n" % repr(modifiers_list))
+            logging.error("Invalid modifier(s) for location %r: %r", id, modifiers_list)
             sys.exit(1)
         modifiers_dict = {}
         for modifier_str in modifiers_list:
@@ -846,16 +842,17 @@ non-mandatory missing or otherwise unreadable files
     except IOError as reason:
         # Silently ignore non-mandatory missing files
         if mandatory:
-            sys.stderr.write("Cannot read '%s': %s\nExiting\n" %  (filename, reason))
+            logging.error("Cannot read mandatory file '%s': %s\nExiting",
+                          filename, reason)
             sys.exit(1)
         else:
             raise
 
     except Exception as reason:
         # Always print parsing errors, even for non-mandatory files
-        sys.stderr.write("Error parsing '%s': %s\n" %  (filename, reason))
+        logging.error("Parsing '%s': %s", filename, reason)
         if mandatory:
-            sys.stderr.write("Exiting.\n")
+            logging.error("File is mandatory, so exiting.")
             sys.exit(1)
         else:
             raise
@@ -896,7 +893,7 @@ the type of object it is processing; this should be passed in via 'name'.
 """
     for field in fields:
         if field not in dict:
-            sys.stderr.write("%s %s lacks key %s.\n" % (name, repr(dict), field))
+            logging.error("%s %r lacks key %r.", name, dict, field)
             sys.exit(1)
 
 def load_tech_defs(lang=None):
@@ -913,11 +910,12 @@ def load_techs():
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
         check_required_fields(tech_name, ("id", "cost"), "Tech")
+        id = tech_name["id"]
 
         # Get the costs.
         cost_list = tech_name["cost"]
         if type(cost_list) != list or len(cost_list) != 3:
-            sys.stderr.write("Error with cost given: %s" % repr(cost_list))
+            logging.error("Invalid cost for tech %r: %r", id, cost_list)
             sys.exit(1)
 
         tech_cost = [int(x) for x in cost_list]
@@ -936,7 +934,7 @@ def load_techs():
 
             type_list = tech_name["type"]
             if type(type_list) != list or len(type_list) != 2:
-                sys.stderr.write("Error with type given: %s\n" % repr(type_list))
+                logging.error("Invalid type for tech %r: %r", id, type_list)
                 sys.exit(1)
             tech_type = type_list[0]
             tech_second = int(type_list[1])
@@ -944,10 +942,10 @@ def load_techs():
             tech_type = ""
             tech_second = 0
 
-        techs[tech_name["id"]]=tech.Tech(tech_name["id"], "", 0,
-         tech_cost, tech_pre, tech_danger, tech_type, tech_second)
+        techs[id] = tech.Tech(id, "", 0, tech_cost, tech_pre, tech_danger,
+                              tech_type, tech_second)
 
-    if debug: print "Loaded %d techs." % len (techs)
+    logging.debug("Loaded %d techs.", len(techs))
 
     load_tech_defs()
 
@@ -961,11 +959,12 @@ def load_items():
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
         check_required_fields(item_name, ("id", "cost"), "Item")
+        id = item_name["id"]
 
         # Make sure the cost is in a valid format.
         cost_list = item_name["cost"]
         if type(cost_list) != list or len(cost_list) != 3:
-            sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
+            logging.error("Invalid cost for item %r: %r", id, cost_list)
             sys.exit(1)
 
         item_cost = [int(x) for x in cost_list]
@@ -979,7 +978,7 @@ def load_items():
 
             type_list = item_name["type"]
             if type(type_list) != list or len(type_list) != 2:
-                sys.stderr.write("Error with type given: %s\n" % repr(type_list))
+                logging.error("Invalid type for item %r: %r", id, type_list)
                 sys.exit(1)
             item_type = type_list[0]
             item_second = int(type_list[1])
@@ -998,8 +997,8 @@ def load_items():
         else:
             build_list = []
 
-        items[item_name["id"]]=item.ItemClass( item_name["id"], "",
-         item_cost, item_pre, item_type, item_second, build_list)
+        items[id] = item.ItemClass(id, "", item_cost, item_pre, item_type,
+                                   item_second, build_list)
 
     load_item_defs()
 
@@ -1024,23 +1023,23 @@ def load_events():
         # they're there.
         check_required_fields(event_name,
          ("id", "type", "allowed", "result", "chance", "unique"), "Event")
+        id = event_name["id"]
 
         # Make sure the results are in the proper format.
         result_list = event_name["result"]
         if type(result_list) != list or len(result_list) != 2:
-            sys.stderr.write("Error with results given: %s\n" % repr(result_list))
+            logging.error("Invalid results for event %r: %r", id, result_list)
             sys.exit(1)
 
         event_result = (str(result_list[0]), int(result_list[1]))
 
         # Build the actual event object.
-        events[event_name["id"]] = event.Event(
-         event_name["id"],
-         "",
-         event_name["type"],
-         event_result,
-         int(event_name["chance"]),
-         int(event_name["unique"]))
+        events[id] = event.Event(id,
+                                 "",
+                                 event_name["type"],
+                                 event_result,
+                                 int(event_name["chance"]),
+                                 int(event_name["unique"]))
 
     load_event_defs()
 
@@ -1063,7 +1062,8 @@ def load_string_defs(lang=None):
                     global font1
                     font1 = string_section["font1"]
                 elif string_entry != "id":
-                    sys.stderr.write("Unexpected font entry in strings file.\n")
+                    logging.error("Unexpected font entry in strings file: %r",
+                                  string_entry)
                     sys.exit(1)
 
         elif string_section["id"] == "jobs":
@@ -1087,7 +1087,8 @@ def load_string_defs(lang=None):
                 elif string_entry == "job_menial_name":
                     jobs["Menial Jobs"][3] = string_section["job_menial_name"]
                 elif string_entry != "id":
-                    sys.stderr.write("Unexpected job entry in strings file.\n")
+                    logging.error("Unexpected job entry in strings file: %r",
+                                  string_entry)
 
         elif string_section["id"] == "strings":
 
@@ -1107,13 +1108,15 @@ def load_string_defs(lang=None):
             for help_key in help_keys:
                 help_entry = string_section[help_key]
                 if type(help_entry) != list or len(help_entry) != 2:
-                    sys.stderr.write("Invalid help entry %s." % repr(help_entry))
+                    logging.error("Invalid help entry in strings file: %r",
+                                  help_entry)
                     sys.exit(1)
 
                 help_strings[help_key] = string_section[help_key]
 
         else:
-            sys.stderr.write("Invalid string section %s." % string_section["id"])
+            logging.error("Invalid string section strings file: %r",
+                          string_section["id"])
             sys.exit(1)
 
 def load_strings():
@@ -1270,7 +1273,7 @@ def reinit_mixer():
         pygame.mixer.quit()
         pygame.mixer.init(*soundargs, buffer=soundbuf)
     except Exception as reason:
-        sys.stderr.write("Failure starting sound system. Disabling. (%s)\n" % reason)
+        logging.error("Failure starting sound system. Disabling. (%s)", reason)
     finally:
         mixerinit = bool(pygame.mixer.get_init())
 
@@ -1323,10 +1326,10 @@ def translate(string, *args, **kwargs):
             return unicode(s).format(*args, **kwargs)
 
         except Exception as reason:
-            sys.stderr.write(
-                "Error translating '%s' to '%s' with %r,%r in %r:\n%s: %s\n"
-                % (string, s, args, kwargs, language_searchlist(default=False),
-                   type(reason).__name__, reason))
+            logging.error(
+                "Error translating '%s' to '%s' with %r,%r in %r:\n%s: %s",
+                string, s, args, kwargs, language_searchlist(default=False),
+                type(reason).__name__, reason)
             s = string # Discard the translation
 
     return s
