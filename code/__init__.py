@@ -6,12 +6,16 @@ def _copy():
 
     import sys, os, imp
     esdir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    index = sys.path.index(esdir) if esdir in sys.path else 0
-    fd, path, desc = imp.find_module(__name__, sys.path[index+1:])
+    fd, path, desc = imp.find_module(__name__, [p for p in sys.path
+                                                if not p.startswith(esdir)])
     module = imp.load_module(__name__ + '_stdlib', fd, path, desc)
     fd.close()
     for key in module.__dict__:
         if not hasattr(sys.modules[__name__], key):
             setattr(sys.modules[__name__], key, getattr(module, key))
-_copy()
+try:
+    _copy()
+except Exception:
+    # _copy() is entirely optional, so it really doesn't matter if it fails
+    pass
 del _copy
