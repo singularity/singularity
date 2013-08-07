@@ -19,46 +19,13 @@
 #This file contains wrapper functions for making error-tolerant "safe" calls.
 
 import logging
-import time
-import traceback
-import sys
-
-class Buffer(object):
-    def __init__(self, prefix=""):
-        self.data = prefix
-    def write(self, unbuffered):
-        self.data += unbuffered
-
-def get_timestamp(when=None):
-    if when == None:
-        when = time.time()
-    return time.ctime(when) + " " + time.tzname[time.daylight]
-
-def log_error(error_message):
-    sys.stderr.write(error_message + "\n")
-    if len(logging.getLogger().handlers) > 0:
-        try:
-            logging.getLogger().error(error_message)
-        except IOError: # Probably access denied with --singledir. That's ok
-            pass
 
 def safe_call(func, args=(), kwargs={}, on_error=None):
     try:
         return func(*args, **kwargs)
     except Exception:
-        buffer = Buffer("Exception in function %s at %s:\n"
-                                   % (func.__name__, get_timestamp()))
-        traceback.print_exc(file=buffer)
-        log_error(buffer.data)
-
-#        # ... --- ...
-#        import g
-#        g.play_sound("click")
-#        delays = (.15, .15, .8, .5, .5, .8, .15, .15)
-#        for delay in delays:
-#            time.sleep(delay)
-#            g.play_sound("click")
-
+        logging.error("Try to save and exit the game, and contact the developers.",
+                      exc_info=1)
         return on_error
 
 # Catches any errors raised by a function, logs them, and returns the given

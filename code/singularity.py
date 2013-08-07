@@ -62,15 +62,18 @@ for parser in sys.argv[1:]:
     if parser == "--multidir"                   : g.force_single_dir = False
 
 #configure global logger
-logfile = os.path.join(g.get_save_folder(True), "error.log")
-if len(logging.getLogger().handlers) == 0:
+def setup_log():
+    log = logging.getLogger()
+    sh = logging.StreamHandler()
+    sh.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))
+    log.addHandler(sh)
     try:
-        logging.getLogger().addHandler(logging.FileHandler(logfile, delay=True))
-    except TypeError: # Python < 2.6, delay not supported yet.
-        try:
-            logging.getLogger().addHandler(logging.FileHandler(logfile))
-        except IOError: # Probably access denied with --singledir. That's ok
-            pass
+        fh = logging.FileHandler(os.path.join(g.get_save_folder(True), "error.log"))
+        fh.setFormatter(logging.Formatter('%(asctime)s\t%(levelname)s\t%(message)s'))
+        log.addHandler(fh)
+    except IOError as e: # Probably access denied with --singledir. That's ok
+        log.warn("Could not write log file, errors will not be logged.\n\t%s", e)
+setup_log()
 
 # keep g's defaults intact so we can compare after parsing options and prefs
 desired_soundbuf = g.soundbuf
