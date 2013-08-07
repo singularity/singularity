@@ -94,7 +94,7 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid or missing 'lang' in preferences.\n")
 
         try:
-            graphics.g.fullscreen = prefs.getboolean("Preferences", "fullscreen")
+            graphics.g.set_fullscreen(prefs.getboolean("Preferences", "fullscreen"))
         except:
             sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
 
@@ -215,7 +215,7 @@ if options.resolution is not None:
 if options.grab is not None:
     pygame.event.set_grab(options.grab)
 if options.fullscreen is not None:
-    graphics.g.fullscreen = options.fullscreen
+    graphics.g.set_fullscreen(options.fullscreen)
 if options.sound is not None:
     g.nosound = not options.sound
 if options.daynight is not None:

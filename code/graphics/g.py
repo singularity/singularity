@@ -135,13 +135,23 @@ def init_graphics_system(data_dir, size=None):
     pygame.display.set_caption("Endgame: Singularity")
 
 
-def set_screen_size(size):
-    global screen_size, real_screen_size
+def set_fullscreen(value):
+    set_screen_size(fs=value)
 
-    if size != screen_size:
-        screen_size = size
-    else:
-        return
+
+def set_screen_size(size=None, fs=None):
+    """ Calculates proper real and abstract screen sizes
+        based on current and given screen size, fullscreen and desktop size
+    """
+    global screen_size, real_screen_size, fullscreen
+
+    # default values for size and fullscreen are current values
+    if size is None: size = screen_size
+    if fs   is None: fs   = fullscreen
+
+    # sets the new values
+    screen_size = size
+    fullscreen = fs
 
     # Limit the screen size to desktop size
     if desktop_size and (screen_size[0] > desktop_size[0] or

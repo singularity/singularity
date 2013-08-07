@@ -238,7 +238,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         else:
             self.fullscreen_toggle.text = _("NO")
         if gg.fullscreen != value:
-            gg.fullscreen = value
+            gg.set_fullscreen(value)
             dialog.Dialog.top.needs_resize = True
 
     def set_sound(self, value):
