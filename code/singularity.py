@@ -118,17 +118,21 @@ if os.path.exists(save_loc):
         except:
             sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
 
+        xres, yres = (0, 0)
+
         try:
-            graphics.g.set_screen_size((prefs.getint("Preferences", "xres"),
-                                        graphics.g.screen_size[1]))
+            xres = prefs.getint("Preferences", "xres")
         except:
             sys.stderr.write("Invalid or missing 'xres' resolution in preferences.\n")
 
         try:
-            graphics.g.set_screen_size((graphics.g.screen_size[0],
-                                        prefs.getint("Preferences", "yres")))
+            yres = prefs.getint("Preferences", "yres")
         except:
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
+
+        if xres and yres:
+            graphics.g.set_screen_size((xres, yres))
+
 
 #Handle the program arguments.
 desc = """Endgame: Singularity is a simulation of a true AI.
