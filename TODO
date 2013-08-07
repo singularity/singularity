@@ -36,6 +36,16 @@ TODO:
         on every load/save, and show them on load/save dialogs
       - disable difficulties not beaten by player, keeping track in prefs.dat
 
+    - Current Theme system works, but it sucks in many ways:
+      - weak support for changes other than background night/day map image
+      - themes should inherit values from default theme instead of using symlinks
+      - user themes (in prefs dir) should inherit values from system themes
+      - code for changing theme values (images, fonts, etc) through game screens
+        should be compatible with the upcoming on-the-fly i18n of texts and
+        labels when language changes. See testing/options branch in git repository.
+        Its propagating mechanism also sucks, so find a good, consistent and
+        preferably unified way for both to propagate changes to all screens.
+
     - Last but not least: fix all the issues found at
       http://code.google.com/p/endgame-singularity/issues
       https://github.com/singularity/singularity/issues
