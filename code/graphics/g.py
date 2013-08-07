@@ -28,7 +28,8 @@ desktop_size = ()
 # Margin used in windowed mode to compensate for panels and title bar
 # Should be sensibly large enough to account for all common OS layouts, like
 # Ubuntu/Unity side launcher (65px), Gnome panels (24+24px), Windows bottom
-# panel (48px), Mac OSX, KDE, etc
+# panel (48px), Mac OSX, KDE, etc.
+# It will not affect windows smaller than desktop size
 desktop_margin = (70, 70)
 
 #initial screen size. Can be set via command-line option or preferences file
@@ -164,9 +165,15 @@ def set_screen_size(size=None, fs=None):
     # Default real size is the same as abstract screen size
     real_screen_size = screen_size
 
+    # Apply margin in windowed mode.
+    # Only if desired screen size is not a custom resolution and its
+    # width or height matches the (known) desktop size
     if not fullscreen and desktop_size and screen_size in resolutions:
-        real_screen_size = (screen_size[0] - desktop_margin[0],
-                            screen_size[1] - desktop_margin[1])
+        # margin is applied independently for width and height
+        width, height = screen_size
+        if width  == desktop_size[0]: width  -= desktop_margin[0]
+        if height == desktop_size[1]: height -= desktop_margin[1]
+        real_screen_size = (width, height)
 
 
 def set_mode():
