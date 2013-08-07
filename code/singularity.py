@@ -50,11 +50,6 @@ g.mixerinit = bool(pygame.mixer.get_init())
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
 
-# Set user's desktop resolution right after pygame.init() so it is included
-# in gg.resolutions, and therefore never regarded as a custom resolution.
-# Enables desktop margins and listing the resolution in command-line options
-graphics.g.init_desktop_size()
-
 # Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
 # so g.get_save_folder reports the correct location of preferences file
 for parser in sys.argv[1:]:
@@ -74,6 +69,10 @@ def setup_log():
     except IOError as e: # Probably access denied with --singledir. That's ok
         log.warn("Could not write log file, errors will not be logged.\n\t%s", e)
 setup_log()
+
+# Detect user's desktop resolution before setting screen size from prefs file
+# or command-line options. Enables desktop margin and correct size constraints
+graphics.g.init_desktop_size()
 
 # keep g's defaults intact so we can compare after parsing options and prefs
 desired_soundbuf = g.soundbuf

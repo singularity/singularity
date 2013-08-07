@@ -21,6 +21,7 @@
 
 import os.path
 import pygame
+import logging
 
 # User desktop size
 desktop_size = ()
@@ -87,6 +88,9 @@ resolutions = [
 
 fullscreen = False
 
+# Set if multi-monitor setup is detected
+multimonitor = False
+
 #colors:
 colors = dict(
     white = (255, 255, 255, 255),
@@ -145,7 +149,8 @@ ebook_mode = False
 
 
 def init_desktop_size():
-    global desktop_size
+    global desktop_size, multimonitor
+
     width, height = (pygame.display.Info().current_w,
                      pygame.display.Info().current_h)
 
@@ -153,10 +158,25 @@ def init_desktop_size():
     if not (width > 0 and height > 0):
         return
 
+    # Quick test for multi-monitor setup. Far from accurate or comprehensive,
+    # but detects the common scenario of dual/triple monitors lined horizontally
+    if width > 2.5 * height:
+        # Reported desktop size is of little use for windowed mode, and may
+        # freeze game and/or user desktop in fullscreen. Flag this so set_mode(),
+        # set_screen_size() and Options Screen can act appropriately, inform
+        # user and move on without setting desktop_size
+        multimonitor = True
+        logging.warn(
+            "It seems you have a multi-monitor setup. Window sizes may be incorrect"
+            " and Fullscreen mode may not work properly and can even freeze your desktop."
+            " It is highly advisable to disable all other monitors and restart the game")
+        return
+
     # We have a valid desktop size
     desktop_size = (width, height)
 
-    # Insert (or move) desktop resolution to top of list
+    # Insert (or move) desktop resolution to top of known resolutions list,
+    # so it's never regarded as a custom resolution even if not originally there
     if desktop_size in resolutions:
         resolutions.remove(desktop_size)
     resolutions.insert(0, desktop_size)
