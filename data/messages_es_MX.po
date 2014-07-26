@@ -592,4 +592,4 @@ msgstr "&Seguridad"
 
 #: g.py:1140
 msgid "University Computer"
-msgstr "&Computadora Universitaria"
+msgstr "Computadora Universitaria"

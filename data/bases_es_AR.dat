@@ -40,7 +40,7 @@ flavor_list = Domo | Laboratorio Submarino Grande
 
 [Time Capsule]
 name = Cápsula de Tiempo
-description = (1 CPU) Esta base consta de nada más que una pequeña computadora y un link satelita. Enterrada en la inmesidad de la Antártida, es prácticamente indetectable.
+description = (1 CPU) Esta base consta de nada más que una pequeña computadora y un link satelita. Es prácticamente indetectable.
 flavor_list = Cápsula de Tiempo | Cápsula
 
 [Lunar Facility]
