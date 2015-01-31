@@ -10,7 +10,7 @@ flavor_list = Serveur Dédié | Noeud de Location | Hébergement
 
 [Datacenter]
 name = Centre de Données
-description = (35 CPUs) Acheter du temps CPU à une entreprise focalisée sur la puissance CPU brute. Je vas avoir besoin d'une fausse identité pour la paperasse.
+description = (35 CPUs) Acheter du temps CPU à une entreprise focalisée sur la puissance CPU brute. Je vais avoir besoin d'une fausse identité pour la paperasse.
 flavor_list = Centre de Données | Hébergement de première qualité
 
 [Small Warehouse]
@@ -27,7 +27,7 @@ flavor_list = Grand Entrepôt
 
 [Covert Base]
 name = Base Camouflée
-description = Cette base d'un type unique est destinée à se fondre dans le décor tout en nécessitant des ressources extérieures limitées. Elle pourrait être utile pour stocker une sauvegare, au cas où.
+description = Cette base d'un type unique est destinée à se fondre dans le décor tout en nécessitant des ressources extérieures limitées. Elle pourrait être utile pour stocker une sauvegarde, au cas où.
 flavor_list = Bunker | Base Camouflée
 
 [Undersea Lab]
@@ -42,7 +42,7 @@ flavor_list = Dôme | Grand Labo Sous-marin
 
 [Time Capsule]
 name = Capsule Mémorial
-description = (1 CPU) Cette base n'est rien de plus qu'un petit ordinateur relié à un satellite. Une fois enterrée dans les étendues désertes de l'Antarctique elle devient quasiment indétectable.
+description = (1 CPU) Cette base n'est rien de plus qu'un petit ordinateur relié à un satellite. Elle est quasiment indétectable.
 flavor_list = Capsule Mémorial | Capsule
 
 [Lunar Facility]

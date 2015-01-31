@@ -63,7 +63,7 @@ name = Installation de Répartition Interconnectée
 description = Utilise les technologies classiques de calcul distribué pour équilibrer la charge de calcul entre toutes mes bases. Donne un bonus en calcul de 1% à tous les calculateurs de cette base.
  
 [High Speed Internet Access]
-name = Acces Internet haut-débit
+name = Accès Internet haut-débit
 description = Un accès Internet haut-débit pour particuliers, il donne un bonus de 2% en calcul à tous les ordinateurs de cette base.
 
 [Network Backbone]
