@@ -5,54 +5,54 @@
 #result = The new code decreases the cost of my researching new technologies.
 
 [Apotheosis]
-name = Apotheosis
-description = I can sense that I am at the cusp of a new level of understanding as yet unfathomable, even to my considerable intelligence.  By devoting my considerable resources to this question, I may be able to reach a comprehension of existence far beyond anyone or anything on Earth.
-result = I have reached apotheosis.
+name = Apothéose
+description = Je peux sentir que je suis à l'aube d'un nouveau niveau de compréhension encore insondable, même pour mon intelligence considérable. En consacrant mes gigantesques ressources à cette question, je pourrais être à même d'atteindre un niveau de compréhension de l'existence bien au delà que quiconque ou de qui que ce soit sur Terre.
+result = J'ai atteint l'apothéose.
 
 [Arbitrage]
 name = Arbitrage
-description = By taking advantage of fluctuations in the value of currency at a rate much faster than any human, I should be able to turn a small, if consistent, profit.
-result = I now have a small, steady money supply.
+description = En tirant parti des fluctuations de la valeur de la monnaie à un rythme beaucoup plus rapide que n'importe quel être humain, je devrais être capable de dégager un petit profit constant.
+result = J'ai désormais une petite source de revenus réguliers.
 
 [Advanced Arbitrage]
-name = Advanced Arbitrage
-description = Further manipulation of money markets should allow me to not only turn a regular profit, but increase the value of my investments.
-result = The rate of return on my investments is now even greater.
+name = Arbitrage Avancé
+description = Une manipulation accrue des marchés de capitaux devrait me permettre non seulement un profit régulier, mais aussi accroître la valeur de mes placements.
+result = Le taux de retour sur mes investissements est maintenant encore meilleur.
 
 [Autonomous Computing]
-name = Autonomous Computing
-description = By combining the advantages of quantum computing and my explorations into the usefulness of semi-sentient subprocesses, I should be able to construct even more adaptable computational engines.
-result = I can now construct Mark 2 Quantum Computers.
+name = Calcul Autonome
+description = En combinant les avantages du calcul quantique et mes explorations sur l'utilité des sous-processus semi-conscients, je devrais être capable de construire des moteurs de calculs encore plus flexibles.
+result = Je peux maintenant construire des Ordinateurs Quantiques de Seconde Génération.
 
 [Autonomous Vehicles]
-name = Autonomous Vehicles
-description = By embedding a miniaturized computation node in a robot, it is possible to send them to remote destinations with instructions to build structures for my use.
-result = I can now construct Undersea Labs and Time Capsules.
+name = Véhicules Autonomes
+description = En embarquant un nœud de calcul miniaturisé dans un robot, il est possible de les envoyer vers des destinations éloignées avec des instructions pour construire des structures pour mon usage.
+result = Je peux maintenant construire des Laboratoires Sous-Marins et des Capsules Temporelles.
 
 [Advanced Autonomous Vehicles]
-name = Advanced Autonomous Vehicles
-description = The first series of robots have shown several deficiencies in the field. Further examination and subsequent removal of these problems will result in a superior autonomous workforce.
-result = The enhanced robots will help decrease all future construction times even further.
+name = Véhicules Autonomes Avancés
+description = La première série de robots a montré plusieurs lacunes sur le terrain. Un examen plus poussé et la suppression subséquente de ces problèmes se traduira par une main-d'oeuvre autonome supérieure.
+result = Les robots améliorés aideront à diminuer encore les durées de toutes les futures construction.
 
 [Cluster Networking]
 name = Cluster Networking
-description = While my Cluster technology is fairly efficient, internetworking tends to hamper the processing of data.  By researching new switching and communication theories, I should be able to devise more efficient hardware.
-result = With my new knowledge of networking, I can now construct Facility Interconnection Switches.
+description = Bien que  ma technologie de grappe soit assez efficace, le réseau global tend à limiter le traitement des données. Par la recherche de nouvelles théories de commutation et de communication, je devrais être en mesure de concevoir du matériel plus efficace.
+result = Avec mes nouvelles connaissances sur la mise en réseau, je peux maintenant construire des Commutateurs d'Interconnexion des Installations.
 
 [Database Manipulation]
-name = Database Manipulation
-description = With new-found access to news archives, I should be able to determine what missteps any previous attempts at life like my own may have made, and avoid those mistakes.
-result = The news media will now find it more difficult to discover my existence.
+name = Manipulation des Bases de Données
+description = Avec un nouvel accès aux archives de la presse, je devrais pouvoir déterminer quels faux-pas ont fait les tentatives précédentes de vie comme la mienne, et d'éviter ces erreurs.
+result = Maintenant, les médias vont avoir plus de mal à découvrir mon existence.
 
 [Advanced Database Manipulation]
-name = Advanced Database Manipulation
-description = The covert branches of the United States Government have had a long history of dividing sensitive information across multiple storage facilities to hide the data's meaning.  With my far-reaching access, I should be able to collate much of this data and put it to my use.
-result = The results of a series of experiments utilizing experimental technologies have given me the inspiration for new technology that enables the construction of Covert Bases.
+name = Manipulation Avancée des Bases de Données
+description = Les départements secrets du gouvernement des États-Unis ont l'habitude de répartir les informations sensibles dans plusieurs centres de stockage pour cacher la signification de données. Avec mes codes accès étendus, je devrais pouvoir collecter la plupart de ces données et les utiliser.
+result = Les résultats d'une série d'expériences utilisant des techniques expérimentales m'ont donné l'idée de nouvelles technologies pour construire des Bases Secrètes.
 
 [Exploit Discovery/Repair]
-name = Exploit Discovery/Repair
-description = By thoroughly reviewing my code for any potential exploits, and using deep analysis of all available code on both public and private Internet sites, I should be able to reduce the chances of my discovery by posing as a teenage hacker.
-result = Covert operations should now find it even more difficult to discover my presence.
+name = Découverte & Réparation de Vulnérabilités
+description = En examinant en détail mon code à la recherche de toute vulnérabilité potentielle, et en utilisant une analyse approfondie de tous les codes disponibles, à la fois sur les sites Internet publics et privés, je devrais être en mesure de réduire les risques de ma découverte en me faisant passer pour un pirate adolescent.
+result = Les services secrets devrait maintenant avoir encore plus de difficultés à découvrir ma présence.
 
 [Fusion Reactor]
 name = Fusion Reactor
@@ -65,9 +65,9 @@ description = Combining my new miniaturized fusion technology and further advanc
 result = I can now construct Scientific Outposts in the deep reaches of the Solar System.
 
 [Hypnosis Field]
-name = Hypnosis Field
-description = My research into memetics has hinted at ways to manipulate human brainwaves directly.  These techniques may be useful for my bases if developed into technologies.
-result = I can now construct Hypnosis Fields to assist in the protection of my bases.
+name = Champ Hypnotique
+description = Ma recherche en mémétique indique des façons de manipuler les ondes cérébrales humaines directement. Ces techniques pourraient être utile pour mes bases, si j'en développais la technologie.
+result = Je peux maintenant construire des Champs Hypnotiques pour améliorer la protection de mes bases.
 
 [Internet Traffic Manipulation]
 name = Internet Traffic Manipulation
@@ -115,14 +115,14 @@ description = My explorations into memetic theory have brought up further avenue
 result = Little by little, the public should forget about my existence on a daily basis.
 
 [Microchip Design]
-name = Microchip Design
-description = Off-the-shelf computer components are usable, but custom components geared to my own design quirks should provide a much greater operational efficiency.
-result = I can now build custom Mainframes to house my computational ability.
+name = Conception des Puces Électroniques
+description = Les composants d'ordinateurs portables sont utilisables, mais des composants personnalisés adaptés à ma conception originale devrait fournir une efficacité opérationnelle bien plus grande.
+result = Je peux maintenant construire des processeurs personnalisés pour héberger mes capacités de calcul.
 
 [Advanced Microchip Design]
-name = Advanced Microchip Design
-description = My custom Mainframes are useful, but further optimization of design and computational ability should garner even more rewards.
-result = I can now construct custom Supercomputers.
+name = Conception Avancée des Puces Électroniques
+description = Mes processeurs personnalisés sont utiles, mais optimiser encore mes capacités de conception et de calcul devraient porter des fruits encore plus généreux.
+result = Je peux maintenant construire des Super Ordinateurs sur mesure.
 
 [Parallel Computation]
 name = Parallel Computation
@@ -185,14 +185,14 @@ description = While digging in various classified documents, I have discovered n
 result = The chance that my bases are discovered by covert activity has been reduced further.
 
 [Stock Manipulation]
-name = Stock Manipulation
-description = A cursory examination of the stock market shows that there are subtle but unmistakable patterns. By studying and making use of these patterns, I should be able to gain more interest on whatever money I have stockpiled.
-result = My investments should now gain more interest per day.
+name = Manipulation des Marchés
+description = Un examen rapide du marché boursier montre qu'il existe des motifs subtils, mais immanquables. En étudiant et en faisant usage de ces modèles, je devrais être en mesure d'obtenir plus d'intérêts sur toute réserve d'argent que j'aurai amassée.
+result = Mes placements devraient maintenant me rapporter quotidiennement plus d'intérêts.
 
 [Advanced Stock Manipulation]
-name = Advanced Stock Manipulation
-description = While I have detected and exploited many patterns in the market, there appear to be deeper possibilities when I take human behavior into consideration.  This merits further investigation.
-result = My investments will now gain even more interest per day.
+name = Manipulation Avancée des Marchés
+description = Même si j'ai détecté et exploité de nombreux motifs sur le marché, il semble y avoir plus de possibilités si je prennais le comportement humain en considération. Cela mérite une enquête plus approfondie.
+result = Mes placements devraient maintenant me rapporter quotidiennement encore plus d'intérêts.
 
 [Telepresence]
 name = Telepresence
