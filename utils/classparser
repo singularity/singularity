@@ -1,0 +1,93 @@
+#!/bin/bash
+#
+# classparser - Generates a class diagram of E:S in several formats
+#
+#    Copyright (C) 2015 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program. See <http://www.gnu.org/licenses/gpl.html>
+#
+# Browse E:S source code and generate a dummy module in a temp file containing
+# the header (with ancestors) of all E:S classes, then use pyreverse to create
+# a PNG diagram of classes hierarchy.
+# All output is moved to ESDIR/utils/diagrams
+#
+# TODO: Command-line options for outdir and format, --help
+# FIXME:
+# - Declaration order matters, and pyreverse ignores ancestors that are not yet
+#   declared (such as BorderedWidget in Text), so the whole approach of
+#  'all in a file' is flawed, and may be unfixable.
+#
+# THIS IS AN EXPERIMENTAL TOOL, STILL WORK IN PROGRESS!
+
+format="${1:-png}"
+
+fatal()   { [[ "$1" ]] && echo "error: $1" >&2 ; exit "${2:-1}" ; }
+
+self="${0##*/}"
+mydir=$(dirname "$(readlink -f "$0")")
+esdir="$mydir"/..
+project="singularity"
+classes="classes_${project}.txt"
+diagram="classes_${project}.${format}"
+outdir="$mydir"/diagrams
+
+type pyreverse >/dev/null 2>&1 ||
+fatal "$self requires 'pyreverse', found in pylint package"
+
+[[ "$format" != "txt" ]] || fatal "'$format' is not a valid format"
+
+tempfile=$(mktemp --suffix=.py) || fatal "could not create temporary file"
+tempdir=$(dirname "$tempfile")
+
+# Auto-delete tempfile on exit
+trap 'rm -f -- "$tempfile"' EXIT
+
+# Create a file will all classes from E:S
+cd "${esdir}" || fatal "could not access source dir '${esdir}'"
+find -type f -name "*.py" -exec \
+awk -F'^class[[:blank:]]+|[[:blank:]]*\\(|[[:blank:]]*,[[:blank:]]*|[[:blank:]]*\\)[[:blank:]]*:[[:blank:]]*' '
+	BEGIN{print "#!/usr/env python"}
+	FILENAME!=p{print "\n#",FILENAME;p=FILENAME}
+	/^class .*:$/{
+		parents=""
+		for (i=3; i<NF; i++) {
+			parent = $i
+			gsub(/.+\./,"",parent)
+			parents = parents parent ","
+		}
+		print "class " $2 "(" parents "): pass"
+	}
+	END{print "print OpstionsScreen.mro"}
+' {} + > "$tempfile"  # "${outdir}/${classes}.py"
+
+# Pyreverse requires current dir be source dir
+cd "$tempdir" || fatal "could not access temp dir '${tempdir}'"
+
+# Generate the Diagram
+pyreverse --only-classnames      \
+          --all-ancestors        \
+          --show-associated=0    \
+          --module-names=n       \
+          --ignore="$mydir"      \
+          --project="$project"   \
+          --output="$format"     \
+          "$tempfile"
+
+if mkdir -p "$outdir" &&
+   mv "$tempfile" "$outdir"/"$classes" &&
+   mv "$diagram"  "$outdir" ; then
+	echo "$self: generated '${classes}' and '${diagram}' in '${outdir}'"
+else
+	echo "$self: generated '${tempfile}' and '${diagram}' in '${tempdir}'"
+fi
