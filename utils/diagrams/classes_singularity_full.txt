@@ -1,0 +1,166 @@
+#!/usr/env python
+
+# ./setup.py
+
+# ./code/buyable.py
+class BuyableClass(object,): pass
+class Buyable(object,): pass
+
+# ./code/__init__.py
+
+# ./code/base.py
+class BaseClass(BuyableClass,): pass
+class Base(Buyable,): pass
+
+# ./code/item.py
+class ItemType(object,): pass
+class ItemClass(BuyableClass,): pass
+class Item(Buyable,): pass
+
+# ./code/polib.py
+class _BaseFile(list,): pass
+class POFile(_BaseFile,): pass
+class MOFile(_BaseFile,): pass
+class _BaseEntry(object,): pass
+class POEntry(_BaseEntry,): pass
+class MOEntry(_BaseEntry,): pass
+class _POFileParser(object,): pass
+class _MOFileParser(object,): pass
+class TextWrapper(TextWrapper,): pass
+
+# ./code/event.py
+class Event(object,): pass
+
+# ./code/singularity.py
+
+# ./code/location.py
+class Location(BuyableClass,): pass
+
+# ./code/tech.py
+class Tech(Buyable,): pass
+
+# ./code/statistics.py
+class Statistics(object,): pass
+
+# ./code/player.py
+class Group(object,): pass
+class DryRunInfo(object,): pass
+class Player(object,): pass
+
+# ./code/screens/finance.py
+class FinanceScreen(Dialog,): pass
+
+# ./code/screens/knowledge.py
+class KnowledgeScreen(Dialog,): pass
+
+# ./code/screens/map.py
+class EarthImage(Image,): pass
+class MapScreen(Dialog,): pass
+class SpeedButton(ToggleButton,FunctionButton,): pass
+
+# ./code/screens/base.py
+class BuildDialog(ChoiceDescriptionDialog,): pass
+class ItemPane(BorderedWidget,): pass
+class BaseScreen(Dialog,): pass
+
+# ./code/screens/location.py
+class LocationScreen(Dialog,): pass
+class NewBaseDialog(ChoiceDescriptionDialog,): pass
+
+# ./code/screens/research.py
+class ResearchScreen(ChoiceDescriptionDialog,): pass
+
+# ./code/screens/options.py
+class OptionsScreen(FocusDialog,MessageDialog,): pass
+class AdvancedOptionsScreen(FocusDialog,MessageDialog,): pass
+class OptionButton(ToggleButton,FunctionButton,): pass
+
+# ./code/screens/main_menu.py
+class MainMenu(TopDialog,): pass
+class AboutDialog(MessageDialog,): pass
+
+# ./code/safety.py
+class Buffer(object,): pass
+
+# ./code/g.py
+
+# ./code/graphics/scrollbar.py
+class _ArrowButton(FunctionButton,ImageButton,): pass
+class Scrollbar(Widget,): pass
+class UpdateScrollbar(Scrollbar,): pass
+
+# ./code/graphics/text.py
+class Text(BorderedWidget,): pass
+class FastText(Text,): pass
+class EditableText(FocusWidget,Text,): pass
+class SelectableText(Text,): pass
+class ProgressText(SelectableText,): pass
+class ChunkedText(Text,): pass
+class StyledText(ChunkedText,): pass
+class FastStyledText(FastText,StyledText,): pass
+class ProtoWidget(EditableText,): pass
+
+# ./code/graphics/slider.py
+class Slider(Button,): pass
+class UpdateSlider(Slider,): pass
+
+# ./code/graphics/dialog.py
+class Dialog(Text,): pass
+class FocusDialog(Dialog,): pass
+class NullDialog(Dialog,): pass
+class TopDialog(Dialog,): pass
+class TextDialog(Dialog,): pass
+class YesNoDialog(TextDialog,): pass
+class MessageDialog(TextDialog,): pass
+class TextEntryDialog(TextDialog,): pass
+class ChoiceDialog(YesNoDialog,): pass
+class ChoiceDescriptionDialog(ChoiceDialog,): pass
+class SimpleMenuDialog(Dialog,): pass
+
+# ./code/graphics/button.py
+class Button(SelectableText,): pass
+class ImageButton(Button,): pass
+class FunctionButton(Button,): pass
+class ExitDialogButton(FunctionButton,): pass
+class DialogButton(FunctionButton,): pass
+class ToggleButton(Button,): pass
+class ButtonGroup(list,): pass
+
+# ./code/graphics/listbox.py
+class Listbox(FocusWidget,SelectableText,): pass
+class UpdateListbox(Listbox,): pass
+class CustomListbox(UpdateListbox,): pass
+
+# ./code/graphics/widget.py
+class Widget(object,): pass
+class BorderedWidget(Widget,): pass
+class FocusWidget(Widget,): pass
+
+# ./code/graphics/constants.py
+class _NoResult(object,): pass
+
+# ./code/graphics/image.py
+class Image(Widget,): pass
+
+# ./code/graphics/g.py
+
+# ./singularity.py
+
+# ./utils/reorder.py
+
+# ./utils/traduko.py
+
+# ./utils/maketree.py
+
+# ./utils/languages.py
+class Locale(object,): pass
+
+# ./utils/classdiagram.py
+class Node(object,): pass
+class Project(Node,): pass
+class Module(Node,): pass
+class Package(Module,): pass
+class Import(object,): pass
+class ImportFrom(Import,): pass
+class Class(object,): pass
+print OpstionsScreen.mro
