@@ -118,7 +118,7 @@ message "E:S root dir: $(rel "$esdir")"
 
 # Create or update the POT template from source code
 message "updating template $(rel "$potfile") from sources in $(rel "$esdir")/code"
-tempfile=$(tempfile) || fatal "could not create temporary file"
+tempfile=$(mktemp) || fatal "could not create temporary file"
 trap 'rm -f -- "$tempfile"' EXIT
 cd "${esdir}/code" || fatal "could not access source code dir '${esdir}/code'"
 xgettext --language=Python \
@@ -174,7 +174,7 @@ done
 	# Ask user and add Language-Native-Name header
 	# So much work for so little gain...
 	name=$(awk -F': |"|\\\\| <' '$2=="Language-Team"{print $3}' "$output")
-	tempfile=$(tempfile) || fatal "could not create temporary file"
+	tempfile=$(mktemp) || fatal "could not create temporary file"
 	trap 'rm -f -- "$tempfile"' EXIT
 	awk -v name="$name" -F': |"|\\\\| <' '$2=="Language-Team"{
 		print "\"Language-Name: " name  "\\n\""
@@ -186,7 +186,7 @@ done
 	while [[ -z "$native" ]]; do
 		read -r -p "What is this language name in ${name}? " native
 	done
-	tempfile=$(tempfile) || fatal "could not create temporary file"
+	tempfile=$(mktemp) || fatal "could not create temporary file"
 	trap 'rm -f -- "$tempfile"' EXIT
 	awk -v native="$native" -F': |"|\\\\' '$2=="Language-Native-Name"{
 		sub(/LANGUAGE/,native)} 1' "$output" > "$tempfile"
