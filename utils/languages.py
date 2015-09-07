@@ -16,20 +16,27 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program. See <http://www.gnu.org/licenses/gpl.html>
-#
-# If run as a script, it tries to read language names (in both English and
-# Native language) from several Locale info sources, like babel or PyICU. It
-# merges this info with E:S' translation PO files headers, and save it by
-# updating a JSON file in data/languages.dat, which is later read by Options
-# Screen of E:S to present each one of the available languages in their own
-# native language.
-#
-# This module is importable as well. In this case, it only sets game's dir and
-# imports code.g. Use the Locale class for all features
+
+'''Read language names from several sources and save them for E:S.
+
+If run as a script, tries to read language names (in both English and
+Native language) from several Locale info sources, like babel or PyICU. Then
+merges this info with E:S' translation PO files headers, and save it by
+updating a JSON file in data/languages.dat, which is later read by Options
+Screen of E:S to present each one of the available languages in their own
+native language.
+
+This module is importable as well. In this case it only sets game's directory
+and imports code.g. You can use the Locale class for all of its features.
+
+In either case, modules 'icu', 'babel' and 'polib' are optional but highly
+recommended.
+'''
 
 import sys
 import os.path as osp
 import json
+import argparse
 
 if __name__ == '__main__':
     myname = sys.argv[0]
@@ -284,6 +291,9 @@ class Locale(object):
 
 
 if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.parse_args()
 
     # Get locale data from the first source that works
     languages = {}
