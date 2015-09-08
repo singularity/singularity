@@ -290,10 +290,8 @@ class Locale(object):
         return []
 
 
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
+def main(argv=None):
+    argparse.ArgumentParser(description=__doc__).parse_args(argv)
 
     # Get locale data from the first source that works
     languages = {}
@@ -328,3 +326,13 @@ if __name__ == '__main__':
     except IOError as reason:
         sys.stderr.write("Could not save languages data file:"
                          " {0}\n".format(reason))
+
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main(sys.argv[1:]))
+    except Exception as e:
+        print e
+        sys.exit(1)
+    except KeyboardInterrupt:
+        pass
