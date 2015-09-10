@@ -1,7 +1,7 @@
 [Large Warehouse]
 flavor_list = Grande Capannone | Grande Spazio
 name = Grande capannone
-description = Affittare un grande capannone in un posto isolato. Avrò bisogno di una buona identità falsa per alcuni dei documenti, ed attrezzare il capannone per soddisfare i miei particolari bisogni richiederà un pò di tempo.
+description = Affittare un grande capannone in un posto isolato. Avrò bisogno di una buona identità falsa per alcuni dei documenti, ed attrezzare il capannone per soddisfare i miei particolari bisogni richiederà un po' di tempo.
 
 [Datacenter]
 flavor_list = Datacenter | Data Center | Hosting di lusso
@@ -11,7 +11,7 @@ description = (35 CPUs) Comprare capacità di elaborazione da una compagnia spec
 [Small Warehouse]
 flavor_list = Ufficio in Locazione | Piccolo Magazzino | Piccolo spazio
 name = Piccolo Magazzino
-description = Affittare un piccolo magazzino in un posto isolato. Avrò bisogno di un'identità falsa per alcuni dei documenti, ed attrezzare il capannone per soddisfare i miei particolari bisogni richiederà un pò di tempo.
+description = Affittare un piccolo magazzino in un posto isolato. Avrò bisogno di un'identità falsa per alcuni dei documenti, ed attrezzare il capannone per soddisfare i miei particolari bisogni richiederà un po' di tempo.
 
 [Covert Base]
 flavor_list = Bunker | Base Segreta
