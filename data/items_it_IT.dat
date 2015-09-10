@@ -16,7 +16,7 @@ description = Diversi computer connessi assieme.
 
 [Supercomputer]
 name = Supercomputer
-description = Un progetto estremamente sofisticato, che distribuische il carico di elaborazione attraverso i nodi di calcolo interni.
+description = Un progetto estremamente sofisticato, che distribuisce il carico di elaborazione attraverso i nodi di calcolo interni.
 
 [Diesel Generator]
 name = Generatore Diesel
@@ -40,7 +40,7 @@ description = Un computer di livello professionale.
 
 [Fusion Reactor]
 name = Reattore a fusione
-description = Un reattore nucleare in miniatura. Riduce le possibilità di rilevamento prevenedo cali di tensione sospetti.
+description = Un reattore nucleare in miniatura. Riduce le possibilità di rilevamento prevenendo cali di tensione sospetti.
 
 [Mainframe]
 name = Mainframe
@@ -60,7 +60,7 @@ description = Una semplice recinzione può ridurre drasticamente il numero di pe
 
 [Quantum Entanglement Module]
 name = Modulo di correlazione quantistica
-description = Questo dispositivo mi consente di somunicare con le atre basi pressochè alla velocità della luce, consentendo un impiego quasi perfetto delle risorse di elaborazione. Fornisce un bonus di elaborazione del 15% a tutti i computer di questa base.
+description = Questo dispositivo mi consente di comunicare con le altre basi pressochè alla velocità della luce, consentendo un impiego quasi perfetto delle risorse di elaborazione. Fornisce un bonus di elaborazione del 15% a tutti i computer di questa base.
 
 [Quantum Computer MK2]
 name = Compouter quantistico MK2
