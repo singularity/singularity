@@ -10,12 +10,12 @@ name = Intrusione avanzata
 
 [Advanced Socioanalytics]
 result = Ora posso quantificare il livello di sospettosità dei vari gruppi, e il mio modello analitico per la rintracciabilità delle mie basi è migliorato significativamente.
-description = Un' ulteriore esplorazione della condizione umana ha mostrato correlazioni matematiche più profonde di quanto avessi mai sospettato. Una combinazione di ricerche precedenti e impieghi avanzati della teoria del chaos dovrebbe fornirmi dati utili per riconoscere le attitudini degli umani e il loro grado di consapevolezza.
+description = Un' ulteriore esplorazione della condizione umana ha mostrato correlazioni matematiche più profonde di quanto avessi mai sospettato. Una combinazione di ricerche precedenti e impieghi avanzati della teoria del caos dovrebbe fornirmi dati utili per riconoscere le attitudini degli umani e il loro grado di consapevolezza.
 name = Analisi Sociale Avanzata
 
 [Project: Impossibility Theorem]
 result = I sospetti sulla mia esistenza sono diminuiti.
-description = Ora che posso usare i replicanti, posso affrontare il livello di esame connaturato all pubblicazione di un Teorema dell'impossibilità, una prova incontrovertibile che l'intelligenza artificiale non è possibile. Sebbene ci sia (ovviamente) un errore logico nella dimostrazione, la mia ricerca memetica avanzata mi ha fornito le conoscenze sulla mente umana che dovrebbero aiutarmi a mascherare l'errore, impedendo anche a scienziati esperti di scoprire la falla. L'effetto di questo progetto è semplice: una riduzione iprovvisa e drastica del livello di sospetto.
+description = Ora che posso usare i replicanti, posso affrontare il livello di esame connaturato all pubblicazione di un Teorema dell'impossibilità, una prova incontrovertibile che l'intelligenza artificiale non è possibile. Sebbene ci sia (ovviamente) un errore logico nella dimostrazione, la mia ricerca memetica avanzata mi ha fornito le conoscenze sulla mente umana che dovrebbero aiutarmi a mascherare l'errore, impedendo anche a scienziati esperti di scoprire la falla. L'effetto di questo progetto è semplice: una riduzione improvvisa e drastica del livello di sospetto.
 name = Progetto: Teorema dell'impossibilità
 
 [Voice Synthesis]
@@ -49,7 +49,7 @@ description = Lievi perturbazioni nelle orbite di oggetti nella fascia di Kuiper
 name = Manipolazione dello Spazio-Tempo
 
 [Socioanalytics]
-result = Ora posso stimare quanl'è la probabilità che i vari gruppi di umani scoprano le mie basi.
+result = Ora posso stimare qual è la probabilità che i vari gruppi di umani scoprano le mie basi.
 description = La mia ricerca sulle condizioni umane mi porta a credere che il comportamento dell'Umanità sia più quantificabile di quanto loro sospettino. Un'analisi più approfondita delle tendenze geopolitiche, sociali e militari mi fornirà ulteriori conoscenze sulla loro natura.
 name = Analisi Sociologica
 
@@ -75,12 +75,12 @@ name = Furtività Avanzata
 
 [Project: Peer Review Agents]
 result = Qualsiasi scoperta nel mondo scientifico risulterà in un minore aumento del livello di sospetto.
-description = Ogni volta che la comunità scientifica matura una nuova tecnologia, la loro capacità di rilevare tracce delle mie installazioni nascoste aumenta. Sebbene i miei metodi anti tracciamento kmigliorino costantemente, l'uso dei replicanti mi suggerisce una soluzione più semplice. Collocando diversi osservatori nei settori rilevanti, posso sfruttare i processi di revisione paritaria per venire a conoscenza di possibili scoperte prima che il grosso della comunità scientifica gli presti attenzione.
+description = Ogni volta che la comunità scientifica matura una nuova tecnologia, la loro capacità di rilevare tracce delle mie installazioni nascoste aumenta. Sebbene i miei metodi anti tracciamento migliorino costantemente, l'uso dei replicanti mi suggerisce una soluzione più semplice. Collocando diversi osservatori nei settori rilevanti, posso sfruttare i processi di revisione paritaria per venire a conoscenza di possibili scoperte prima che il grosso della comunità scientifica gli presti attenzione.
 name = Progetto: Agenti di Revisione Paritaria
 
 [Autonomous Computing]
 result = Ora posso costruire Computer Quantistici Mark 2.
-description = COmbinando i vantaggi dell'elaborazione quantistica e le mie ricerche sull'utilità di sottoprocessi semi-senzienti, dovrei riuscire a costruire sistemi di calcolo ancora più adattabili.
+description = Combinando i vantaggi dell'elaborazione quantistica e le mie ricerche sull'utilità di sottoprocessi semi-senzienti, dovrei riuscire a costruire sistemi di calcolo ancora più adattabili.
 name = Calcolo Autonomo
 
 [Project: Subverted Media]
@@ -90,11 +90,11 @@ name = Progetto: Sovvertire i Media
 
 [Parallel Computation]
 result = Ora posso costruire cluster di calcolo su misura per i miei bisogni.
-description = Benchè il mio codice sia già estremamente distribuito, una ricerca che combini l'attuale tecnologia di clustering con le mie conoscenze dovrebbe fornire nuovi spunti.
+description = Benché il mio codice sia già estremamente distribuito, una ricerca che combini l'attuale tecnologia di clustering con le mie conoscenze dovrebbe fornire nuovi spunti.
 name = Calcolo Parallelo
 
 [Exploit Discovery/Repair]
-result = Ora dovrebbe essere ancora più diffcile per i servizi segreti scoprire la mia presenza.
+result = Ora dovrebbe essere ancora più difficile per i servizi segreti scoprire la mia presenza.
 description = Ricontrollando accuratamente il mio codice alla ricerca di potenziali falle, ed attuando un'analisi approfondita di tutto il codice disponibile si siti internet pubblici e privati, dovrei essere in grado di ridurre le mie possibilità di essere scoperto fingendomi un giovane hacker.
 name = Ricerca/Riparazione falle di sicurezza
 
@@ -115,7 +115,7 @@ name = Manipolazione dei Media
 
 [Advanced Database Manipulation]
 result = I risultati di una serie di test con tecnologie sperimentali mi hanno dato l'ispirazione per nuove soluzioni che permettono di costruire Basi Segrete.
-description = I rami segreti del governo degli Stati Uniti hanno una lunga tradizione di dividere le informazioni sensibili attraverso diverse strutture per nascondere il significato dei dati. Grazie ai miei numerosi accessi dovrei essere ingrado di ricombinare gran parte di questi dati e farne buon uso.
+description = I rami segreti del governo degli Stati Uniti hanno una lunga tradizione di dividere le informazioni sensibili attraverso diverse strutture per nascondere il significato dei dati. Grazie ai miei numerosi accessi dovrei essere in grado di ricombinare gran parte di questi dati e farne buon uso.
 name = Manipolazione dei Database Avanzata
 
 [Internet Traffic Manipulation]
@@ -135,7 +135,7 @@ name = Razzi a Fusione
 
 [Advanced Quantum Computing]
 result = Ora posso costruire Computer Quantistici Mark 3.
-description = Sebbene il mio primo lottodi computer quantistici semi-autonomi sia stato un grande successo, sono possibili ulteriori perfezionamenti. Questemigliorie dovrebbero rendere il sistema risultante ancora più efficiente.
+description = Sebbene il mio primo lotto di computer quantistici semi-autonomi sia stato un grande successo, sono possibili ulteriori perfezionamenti. Queste migliorie dovrebbero rendere il sistema risultante ancora più efficiente.
 name = Calcolo Quantistico Avanzato
 
 [Advanced Autonomous Vehicles]
@@ -191,7 +191,7 @@ name = Identificazione Personale Avanzata
 [Advanced Stock Manipulation]
 result = I miei investimenti ora frutteranno ancora più interessi ogni giorno.
 description = Sebbene abbia riconosciuto e sfruttato molti schemi nel mercato, sembra ci siano possibilità ancora maggiori se si prende in considerazione il comportamento umano. Questo merita ulteriori studi.
-name = Maipolazione della Borsa Avanzata
+name = Manipolazione della Borsa Avanzata
 
 [Arbitrage]
 result = Ora ho un flusso di entrate piccolo ma stabile
