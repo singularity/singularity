@@ -46,7 +46,7 @@ description = Questa base sperimentale è simile ad un normale laboratorio sotto
 [Time Capsule]
 flavor_list = Capsule del Tempo | Capsula
 name = Capsule del Tempo
-description = (1 CPU) Questa base consiste in nulla più di un piccolo computer ed un collegamento satellitare. Sotterrata nelle distese immaccolate dell'Antartide, è quasi introvabile.
+description = (1 CPU) Questa base consiste in nulla più di un piccolo computer ed un collegamento satellitare. Sotterrata nelle distese immacolate dell'Antartide, è quasi introvabile.
 
 [Stolen Computer Time]
 flavor = PC Zombie
