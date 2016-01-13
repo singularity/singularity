@@ -63,11 +63,11 @@ name = Modulo di correlazione quantistica
 description = Questo dispositivo mi consente di comunicare con le altre basi pressochè alla velocità della luce, consentendo un impiego quasi perfetto delle risorse di elaborazione. Fornisce un bonus di elaborazione del 15% a tutti i computer di questa base.
 
 [Quantum Computer MK2]
-name = Compouter quantistico MK2
+name = Computer quantistico MK2
 description = La seconda incarnazione dell'elaboratore quantistico, attinge ulteriori soluzioni dalla teoria quantistica.
 
 [Quantum Computer MK3]
-name = Compouter quantistico MK3
+name = Computer quantistico MK3
 description = La terza versione dell'elaboratore quantistico, sfrutta molteplici universi contigui per eseguire i calcoli.
 
 [Network Backbone]
@@ -75,7 +75,7 @@ name = Dorsale di rete
 description = Parassitando il legittimo flusso di comunicazioni, posso trasferire quantità maggiori di dati a processori sottoutilizzati. Fornisce un bonus di elaborazione del 5% a tutti i computer di questa base.
 
 [Quantum Computer]
-name = Compouter quantistico
+name = Computer quantistico
 description = Sfruttando gli effetti subatomici, questo elaboratore è molto più veloce di qualsiasi computer binario comparabile.
 
 [Armed Guards]
