@@ -583,7 +583,7 @@ class MapScreen(dialog.Dialog):
                 danger_display_dict[group] = \
                     g.danger_level_to_detect_str(danger_level)
 
-        self.suspicion_bar.chunks = ("["+_("SUSPICION")+"]",
+        self.suspicion_bar.chunks = ("  ["+_("SUSPICION")+"]",
             " " +_("NEWS")   +u":\xA0", suspicion_display_dict["news"],
             "  "+_("SCIENCE")+u":\xA0", suspicion_display_dict["science"],
             "  "+_("COVERT") +u":\xA0", suspicion_display_dict["covert"],
