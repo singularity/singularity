@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Endgame: Singularity
+Comment=Simulation of true AI
+Icon=singularity
+Exec=singularity
+Terminal=false
+StartupNotify=false
+Categories=Game;Simulation;
