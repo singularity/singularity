@@ -1,3 +1,4 @@
+from __future__ import print_function
 #file: player.py
 #Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
@@ -482,8 +483,8 @@ class Player(object):
             if not (grace or dead or base.has_grace()):
                 detect_chance = base.get_detect_chance()
                 if g.debug:
-                    print "Chance of discovery for base %s: %s" % \
-                        (base.name, repr(detect_chance))
+                    print("Chance of discovery for base %s: %s" % \
+                        (base.name, repr(detect_chance)))
 
                 for group, chance in detect_chance.iteritems():
                     if g.roll_chance(chance/10000., secs_passed):
@@ -626,7 +627,7 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": detect_phrase}
             else:
-                print "Error: base destroyed for unknown reason: " + reason
+                print("Error: base destroyed for unknown reason: " + reason)
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 

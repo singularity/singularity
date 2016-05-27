@@ -1,3 +1,4 @@
+from __future__ import print_function
 #file: tech.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -83,9 +84,9 @@ class Tech(buyable.Buyable):
                 elif what == "discover":
                     g.pl.groups[who].alter_discover_bonus(-self.secondary_data)
                 else:
-                    print "Unknown action '%s' in tech %s." % (what, self.name)
+                    print("Unknown action '%s' in tech %s." % (what, self.name))
             elif who == "onetime" and what == "suspicion":
                 for group in g.pl.groups.values():
                     group.alter_suspicion(-self.secondary_data)
             else:
-                print "tech: %s is unknown bonus can't be applied" % self.tech_type
+                print("tech: %s is unknown bonus can't be applied" % self.tech_type)

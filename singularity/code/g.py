@@ -1,3 +1,4 @@
+from __future__ import print_function
 #file: code/g.py
 #Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,
 #                   MestreLion
@@ -553,7 +554,7 @@ def save_game(savegame_name):
 
 def load_game(loadgame_name):
     if loadgame_name == "":
-        print "No game specified."
+        print("No game specified.")
         return False
 
     save_dir = get_save_folder()
@@ -564,7 +565,7 @@ def load_game(loadgame_name):
         # a few versions.
         load_loc = os.path.join(save_dir, loadgame_name)
         if os.path.exists(load_loc) == 0:
-            print "file "+load_loc+" does not exist."
+            print("file "+load_loc+" does not exist.")
             return False
 
     loadfile = open(load_loc, 'r')
@@ -612,7 +613,7 @@ def load_game(loadgame_name):
     load_version_string = unpickle.load()
     if load_version_string not in savefile_translation:
         loadfile.close()
-        print loadgame_name + " is not a savegame, or is too old to work."
+        print(loadgame_name + " is not a savegame, or is too old to work.")
         return False
     load_version = savefile_translation[load_version_string]
 
@@ -945,7 +946,7 @@ def load_techs():
         techs[tech_name["id"]]=tech.Tech(tech_name["id"], "", 0,
          tech_cost, tech_pre, tech_danger, tech_type, tech_second)
 
-    if debug: print "Loaded %d techs." % len (techs)
+    if debug: print("Loaded %d techs." % len (techs))
 
     load_tech_defs()
 
@@ -1133,7 +1134,7 @@ def load_messages(lang=None):
 def get_intro():
     intro_file_name = os.path.join(data_dir, "intro_"+language+".dat")
     if not os.path.exists(intro_file_name):
-        print "Intro is missing.  Skipping."
+        print("Intro is missing.  Skipping.")
         return
 
     intro_file = open(intro_file_name)
@@ -1235,7 +1236,7 @@ def new_game(difficulty):
     for i, open_loc in enumerate(open):
         open_loc.modifiers = modifier_sets[i]
         if debug:
-            print "%s gets modifiers %s" % (open_loc.name, modifier_sets[i])
+            print("%s gets modifiers %s" % (open_loc.name, modifier_sets[i]))
 
     # Reset music
     play_music("music")
@@ -1412,4 +1413,4 @@ if __name__ == "__main__":
     # Hotkey
     for test in ["E&XIT","&Play D&&D","Romeo & &Juliet","Trailing&",
                  "&Multiple&Keys","M&&&M",]:
-        print 'hotkey(%s)=%r' % (test,hotkey(test))
+        print('hotkey(%s)=%r' % (test,hotkey(test)))

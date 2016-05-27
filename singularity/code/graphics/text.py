@@ -1,3 +1,4 @@
+from __future__ import print_function
 #file: text.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -653,7 +654,7 @@ def _make_prototype_handler(parent):
             if depth:
                 prefix = prefixes[1] * (depth - 1) + prefixes[0]
 
-            print prefix + str(kid)
+            print(prefix + str(kid))
     return print_on_click
 
 class ProtoWidget(EditableText):

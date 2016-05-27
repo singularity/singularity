@@ -32,6 +32,7 @@ and imports code.g. You can use the Locale class for all of its features.
 In either case, modules 'icu', 'babel' and 'polib' are optional but highly
 recommended.
 '''
+from __future__ import print_function
 
 import sys
 import os.path as osp
@@ -321,8 +322,8 @@ def main(argv=None):
         # Show python code
         #Locale.dumpPythonCode(languages) # Ok, it works, no need to show off
 
-        print "{0:d} languages saved to {1}".format(len(languages),
-                                                    osp.relpath(datafile))
+        print("{0:d} languages saved to {1}".format(len(languages),
+                                                    osp.relpath(datafile)))
     except IOError as reason:
         sys.stderr.write("Could not save languages data file:"
                          " {0}\n".format(reason))
@@ -332,7 +333,7 @@ if __name__ == '__main__':
     try:
         sys.exit(main(sys.argv[1:]))
     except Exception as e:
-        print e
+        print(e)
         sys.exit(1)
     except KeyboardInterrupt:
         pass

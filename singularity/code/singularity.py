@@ -1,3 +1,4 @@
+from __future__ import print_function
 #file: code/singularity.py
 #Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, MestreLion
 #This file is part of Endgame: Singularity.
@@ -237,7 +238,7 @@ g.debug = options.debug
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.
 if pygame.image.get_extended() == 0:
-    print "Error: SDL_image required. Exiting."
+    print("Error: SDL_image required. Exiting.")
     sys.exit(1)
 
 graphics.g.init_graphics_system(g.data_dir)

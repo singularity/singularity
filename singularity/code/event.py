@@ -1,3 +1,4 @@
+from __future__ import print_function
 #file: event.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -50,10 +51,10 @@ class Event(object):
             elif what == "discover":
                 g.pl.groups[who].alter_discover_bonus(-self.result[1])
             else:
-                print "Unknown bonus '%s' in event %s." % (what, self.name)
+                print("Unknown bonus '%s' in event %s." % (what, self.name))
         elif who == "onetime" and what == "suspicion":
             for group in g.pl.groups.values():
                 group.alter_suspicion(-self.result[1])
         else:
-            print "Unknown group/bonus '%s' in event %s. " % (self.result[0],
-                                                              self.name)
+            print("Unknown group/bonus '%s' in event %s. " % (self.result[0],
+                                                              self.name))
