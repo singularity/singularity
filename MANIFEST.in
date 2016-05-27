@@ -1,0 +1,8 @@
+include AUTHORS
+include Changelog
+include TODO
+include GPL.txt
+include README.txt
+
+recursive-include singularity/data *
+recursive-include singularity/music *
