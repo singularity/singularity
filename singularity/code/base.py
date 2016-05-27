@@ -303,7 +303,7 @@ class Base(buyable.Buyable):
     def allow_study(self, tech_name):
         if not self.done:
             return False
-        elif g.jobs.has_key(tech_name) \
+        elif tech_name in g.jobs \
                 or tech_name in ("CPU Pool", ""):
             return True
         elif tech_name == "Sleep":

@@ -213,7 +213,7 @@ defined in sounds/sounds.dat.
                 sound = pygame.mixer.Sound(real_filename)
 
                 # And shove it into the sounds dictionary.
-                if not sounds.has_key(sound_class["id"]):
+                if sound_class["id"] not in sounds:
                     sounds[sound_class["id"]] = []
                 sounds[sound_class["id"]].append({
                     "filename": real_filename,
@@ -295,7 +295,7 @@ load_music() loads music for the game.  It looks in multiple locations:
                 files = entry[2]
                 (head, tail) = os.path.split(root)
                 if (tail.lower() != ".svn"):
-                    if not music_dict.has_key(tail):
+                    if tail not in music_dict:
                         music_dict[tail]=[]
                     for file_name in files:
                         if (len(file_name) > 5 and
@@ -506,7 +506,7 @@ def get_save_folder(just_pref_dir=False):
     #- if none exist (new install), and ~/.config exist, use the new standard
     #- otherwise, use the old standard
 
-    if os.environ.has_key("HOME") and not force_single_dir:
+    if "HOME" in os.environ and not force_single_dir:
 
         xdg_config_home = os.environ.get('XDG_CONFIG_HOME') or \
                           os.path.join(os.environ["HOME"], '.config')
@@ -925,12 +925,12 @@ def load_techs():
         if type(tech_pre) != list:
             tech_pre = [tech_pre]
 
-        if tech_name.has_key("danger"):
+        if "danger" in tech_name:
             tech_danger = int(tech_name["danger"])
         else:
             tech_danger = 0
 
-        if tech_name.has_key("type"):
+        if "type" in tech_name:
 
             type_list = tech_name["type"]
             if type(type_list) != list or len(type_list) != 2:
@@ -973,7 +973,7 @@ def load_items():
         if type(item_pre) != list:
             item_pre = [item_pre]
 
-        if item_name.has_key("type"):
+        if "type" in item_name:
 
             type_list = item_name["type"]
             if type(type_list) != list or len(type_list) != 2:
@@ -985,7 +985,7 @@ def load_items():
             item_type = ""
             item_second = 0
 
-        if item_name.has_key("build"):
+        if "build" in item_name:
             build_list = item_name["build"]
 
             # It may be a single item and not an actual list.  If so, make it
