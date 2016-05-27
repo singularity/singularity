@@ -81,7 +81,7 @@ if os.path.exists(save_loc):
     savefile = open(save_loc, "r")
     try:
         prefs.readfp(savefile)
-    except Exception, reason:
+    except Exception as reason:
         sys.stderr.write("Cannot load preferences file %s! (%s)\n" % (save_loc, reason))
         sys.exit(1)
 

@@ -341,7 +341,7 @@ class Dialog(text.Text):
                 handler(event)
             except constants.Handled:
                 break # If it's been handled, we leave the rest alone.
-            except constants.ExitDialog, e:
+            except constants.ExitDialog as e:
                 # Exiting the dialog.
                 if e.args:
                     # If we're given a return value, we pass it on.
