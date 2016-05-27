@@ -42,7 +42,7 @@ class BuyableClass(object):
 
     @property
     def cost(self):
-        cost = array(self._cost, long)
+        cost = array(self._cost, numpy.int64)
         cost[labor] *= singularity.code.g.minutes_per_day * getattr(singularity.code.g.pl,'labor_bonus',1)
         cost[labor] /= 10000
         cost[cpu] *= singularity.code.g.seconds_per_day
@@ -109,7 +109,7 @@ class Buyable(object):
 
         self.total_cost = type.cost * count
         self.total_cost[labor] //= count
-        self.cost_left = array(self.total_cost, long)
+        self.cost_left = array(self.total_cost, numpy.int64)
 
         self.count = count
         self.done = False
@@ -127,19 +127,19 @@ class Buyable(object):
 
     def convert_from(self, save_version):
         if save_version < 4.91: # r5_pre
-            self.cost_left = array(self.cost_left, long)
-            self.total_cost = array(self.total_cost, long)
+            self.cost_left = array(self.cost_left, numpy.int64)
+            self.total_cost = array(self.total_cost, numpy.int64)
             self.count = 1
 
     def finish(self):
         if not self.done:
             self.type.complete_count += self.count
             self.type.total_complete_count += self.count
-            self.cost_left = array([0,0,0], long)
+            self.cost_left = array([0,0,0], numpy.int64)
             self.done = True
 
     def _percent_complete(self, available=(0,0,0)):
-        available_array = array(available, long)
+        available_array = array(available, numpy.int64)
         return truediv(self.cost_paid + available_array, self.total_cost)
 
     def min_valid(self, complete):

@@ -20,6 +20,7 @@ from __future__ import absolute_import
 
 #This file contains the base class.
 
+import numpy
 
 import singularity.code.g
 from . import buyable
@@ -164,7 +165,7 @@ class Base(buyable.Buyable):
         self.power_state = "active"
         self.grace_over = False
 
-        self.maintenance = buyable.array(self.type.maintenance, long)
+        self.maintenance = buyable.array(self.type.maintenance, numpy.int64)
 
     @property
     def power_state_name(self):

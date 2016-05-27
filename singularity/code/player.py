@@ -23,6 +23,7 @@ from __future__ import absolute_import
 
 import random
 from operator import truediv
+import numpy
 from numpy import array
 
 import singularity.code.g
@@ -117,7 +118,7 @@ class Player(object):
         self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""
 
-        self.maintenance_cost = array((0,0,0), long)
+        self.maintenance_cost = array((0,0,0), numpy.int64)
 
         self.cpu_usage = {}
         self.available_cpus = [1, 0, 0, 0, 0]
@@ -222,7 +223,7 @@ class Player(object):
         self.cpu_pool = 0
 
         # Collect base info, including maintenance.
-        self.maintenance_cost = array( (0,0,0), long )
+        self.maintenance_cost = array( (0,0,0), numpy.int64 )
         for base in singularity.code.g.all_bases():
             if not base.done:
                 bases_under_construction.append(base)
@@ -237,7 +238,7 @@ class Player(object):
 
         # Maintenance?  Gods don't need no stinking maintenance!
         if self.apotheosis:
-            self.maintenance_cost = array( (0,0,0), long )
+            self.maintenance_cost = array( (0,0,0), numpy.int64 )
 
         # Any CPU explicitly assigned to jobs earns its dough.
         job_cpu = self.cpu_usage.get("jobs", 0) * secs_passed
@@ -515,7 +516,7 @@ class Player(object):
 
     def recalc_cpu(self):
         # Determine how much CPU we have.
-        self.available_cpus = array([0,0,0,0,0], long)
+        self.available_cpus = array([0,0,0,0,0], numpy.int64)
         self.sleeping_cpus = 0
         for base in singularity.code.g.all_bases():
             if base.done:

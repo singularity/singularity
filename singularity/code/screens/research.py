@@ -18,7 +18,7 @@
 
 #This file contains the global research screen.
 
-from numpy import array
+import numpy
 import pygame
 
 from singularity.code import g
@@ -156,7 +156,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.alloc_cpus.text = g.add_commas(cpu)
 
     def calc_cpu_left(self):
-        cpu_count = array(g.pl.available_cpus, long)
+        cpu_count = numpy.array(g.pl.available_cpus, numpy.int64)
         for task, cpu in g.pl.cpu_usage.iteritems():
             danger = self.danger_for(task)
             cpu_count[:danger+1] -= cpu
