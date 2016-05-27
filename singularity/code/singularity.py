@@ -41,6 +41,7 @@ import os.path
 import optparse
 import logging
 
+from .. import __version__
 import graphics.g
 
 pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
@@ -138,7 +139,7 @@ if os.path.exists(save_loc):
 desc = """Endgame: Singularity is a simulation of a true AI.
 Go from computer to computer, pursued by the entire world.
 Keep hidden, and you might have a chance."""
-parser = optparse.OptionParser(version=g.version, description=desc,
+parser = optparse.OptionParser(version=__version__, description=desc,
                                prog="singularity")
 parser.add_option("--sound", action="store_true", dest="sound",
                   help="enable sound (default)")

@@ -19,8 +19,6 @@
 
 #This file contains all global objects.
 
-version = "0.30c"
-
 import ConfigParser
 import pygame
 import os.path
