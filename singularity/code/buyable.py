@@ -43,7 +43,7 @@ class BuyableClass(object):
     @property
     def cost(self):
         cost = array(self._cost, numpy.int64)
-        cost[labor] *= singularity.code.g.minutes_per_day * getattr(singularity.code.g.pl,'labor_bonus',1)
+        cost[labor] *= singularity.code.g.minutes_per_day * getattr(singularity.code.g.pl, 'labor_bonus', 1)
         cost[labor] /= 10000
         cost[cpu] *= singularity.code.g.seconds_per_day
         return cost
@@ -135,10 +135,10 @@ class Buyable(object):
         if not self.done:
             self.type.complete_count += self.count
             self.type.total_complete_count += self.count
-            self.cost_left = array([0,0,0], numpy.int64)
+            self.cost_left = array([0, 0, 0], numpy.int64)
             self.done = True
 
-    def _percent_complete(self, available=(0,0,0)):
+    def _percent_complete(self, available=(0, 0, 0)):
         available_array = array(available, numpy.int64)
         return truediv(self.cost_paid + available_array, self.total_cost)
 

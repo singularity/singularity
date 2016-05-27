@@ -249,7 +249,7 @@ class Widget(object):
         return pygame.Rect(pos, self.real_size)
 
     def is_over(self, position):
-        if position != (0,0):
+        if position != (0, 0):
             return self.collision_rect.collidepoint(position)
         else:
             return False
@@ -275,10 +275,10 @@ class Widget(object):
             # Recreate using the abstracted screen size, NOT the real one
             # g.set_screen() will calculate the proper g.real_screen_size
             self.surface = g.set_mode()
-            self.surface.fill( (0,0,0,255) )
+            self.surface.fill( (0, 0, 0, 255) )
 
             g.fade_mask = pygame.Surface(size, 0, g.ALPHA)
-            g.fade_mask.fill( (0,0,0,175) )
+            g.fade_mask.fill( (0, 0, 0, 175) )
 
     def prepare_for_redraw(self):
         # First we handle any substance changes.
@@ -332,7 +332,7 @@ class Widget(object):
             while check_mask:
                 child = check_mask.pop()
                 if not child.self_mask:
-                    child.surface.blit(g.fade_mask, (0,0))
+                    child.surface.blit(g.fade_mask, (0, 0))
                 elif child.mask_children:
                     check_mask += child.children
 
@@ -384,7 +384,7 @@ class Widget(object):
     def redraw(self):
         self.needs_redraw = False
         if self.parent is None:
-            self.surface.fill((0,0,0,255))
+            self.surface.fill((0, 0, 0, 255))
 
     def add_handler(self, *args, **kwargs):
         """Handler pass-through."""

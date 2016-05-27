@@ -62,13 +62,13 @@ def handle_ebook(event):
 
     if event.type == pygame.KEYDOWN:
         if key == 2:
-            move_mouse((0,10))
+            move_mouse((0, 10))
         elif key == 4:
-            move_mouse((-10,0))
+            move_mouse((-10, 0))
         elif key == 6:
-            move_mouse((10,0))
+            move_mouse((10, 0))
         elif key == 8:
-            move_mouse((0,-10))
+            move_mouse((0, -10))
 
     if key == 1:
         fake_click(event.type == pygame.KEYDOWN)
@@ -461,11 +461,11 @@ class YesNoDialog(TextDialog):
 
         super(YesNoDialog, self).__init__(parent, *args, **kwargs)
 
-        self.yes_button = button.ExitDialogButton(self, (-.1,-.99), (-.3,-.1),
+        self.yes_button = button.ExitDialogButton(self, (-.1, -.99), (-.3, -.1),
                                                  anchor=constants.BOTTOM_LEFT,
                                                  exit_code=True, default=False)
 
-        self.no_button = button.ExitDialogButton(self, (-.9,-.99), (-.3,-.1),
+        self.no_button = button.ExitDialogButton(self, (-.9, -.99), (-.3, -.1),
                                                 anchor=constants.BOTTOM_RIGHT,
                                                 exit_code=False, default=False)
 
@@ -509,7 +509,7 @@ class MessageDialog(TextDialog):
 
         super(MessageDialog, self).__init__(parent, **kwargs)
 
-        self.ok_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
+        self.ok_button = button.ExitDialogButton(self, (-.5, -.99), (-.3, -.1),
                                                  anchor=constants.BOTTOM_CENTER)
 
         self.add_key_handler(pygame.K_RETURN, self.on_return)

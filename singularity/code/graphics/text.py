@@ -438,7 +438,7 @@ class EditableText(widget.FocusWidget, Text):
 
         raise constants.Handled
 
-    hitbox = [0,0,0,0]
+    hitbox = [0, 0, 0, 0]
 
     def handle_click(self, event):
         if getattr(self, "collision_rect", None) is None:
@@ -556,7 +556,7 @@ class EditableText(widget.FocusWidget, Text):
 
         if DEBUG:
             s = pygame.Surface(self.hitbox[2:]).convert_alpha()
-            s.fill( (255,0,255,100) )
+            s.fill( (255, 0, 255, 100) )
             self.surface.blit( s, self.hitbox)
 
 
@@ -674,10 +674,10 @@ class ProtoWidget(EditableText):
     drag_state = -1
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("color", (0,0,0))
-        kwargs.setdefault("border_color", (0,0,0))
+        kwargs.setdefault("color", (0, 0, 0))
+        kwargs.setdefault("border_color", (0, 0, 0))
         kwargs.setdefault("borders", constants.ALL)
-        kwargs.setdefault("background_color", (255,255,255))
+        kwargs.setdefault("background_color", (255, 255, 255))
         super(ProtoWidget, self).__init__(*args, **kwargs)
 
     def add_hooks(self):
@@ -713,7 +713,7 @@ class ProtoWidget(EditableText):
                 if shift and control:
                     self.drag_state = 0
                     new_size = tuple(d/2 for d in self.size)
-                    pw=ProtoWidget(self, (0,0), new_size,
+                    pw=ProtoWidget(self, (0, 0), new_size,
                                   self.anchor,
                                   background_color = self.background_color,
                                   border_color = self.border_color,
@@ -740,7 +740,7 @@ class ProtoWidget(EditableText):
         if self.parent:
             parent_rect = self.parent.collision_rect
         else:
-            parent_rect = pygame.Rect((0,0) + g.real_screen_size)
+            parent_rect = pygame.Rect((0, 0) + g.real_screen_size)
 
         if self.drag_state == 1:
             mouse_pos = pygame.mouse.get_pos()
@@ -748,7 +748,7 @@ class ProtoWidget(EditableText):
 
             new_rel_pos = tuple(new_real_pos[i] - parent_rect[i] for i in range(2))
 
-            new_unit_pos = tuple( max(0,(new_rel_pos[i] / float(g.real_screen_size[i])))
+            new_unit_pos = tuple( max(0, (new_rel_pos[i] / float(g.real_screen_size[i])))
                                      for i in range(2))
 
             new_pct_pos = tuple( int( (new_unit_pos[i] * 100) + 0.5)
@@ -761,7 +761,7 @@ class ProtoWidget(EditableText):
             mouse_pos = pygame.mouse.get_pos()
             new_size = tuple(mouse_pos[i] - self.collision_rect[i] for i in range(2))
 
-            unit_size = tuple(max(0,new_size[i] / float(g.real_screen_size[i]))
+            unit_size = tuple(max(0, new_size[i] / float(g.real_screen_size[i]))
                                     for i in range(2))
 
             pct_size = tuple( int( (unit_size[i] * 100) + 0.5)

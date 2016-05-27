@@ -95,20 +95,20 @@ class ItemPane(widget.BorderedWidget):
 
         self.type = type
 
-        self.name_panel = text.Text(self, (0,0), (.35, .03),
+        self.name_panel = text.Text(self, (0, 0), (.35, .03),
                                     anchor=constants.TOP_LEFT,
                                     align=constants.LEFT,
                                     background_color=self.background_color,
                                     bold=True)
 
-        self.build_panel = text.Text(self, (0,.03), (.35, .03),
+        self.build_panel = text.Text(self, (0, .03), (.35, .03),
                                      anchor=constants.TOP_LEFT,
                                      align=constants.LEFT,
                                      background_color=self.background_color,
                                      text="", bold=True)
 
         self.change_button = button.FunctionButton(
-            self, (.36,.01), (.12, .04),
+            self, (.36, .01), (.12, .04),
             anchor=constants.TOP_LEFT,
             text="%s (&%s)" % (_("CHANGE"), self.type.hotkey.upper()),
             force_underline=len(_("CHANGE")) + 2,
@@ -131,10 +131,10 @@ class BaseScreen(dialog.Dialog):
 
         self.count_dialog = dialog.TextEntryDialog(self)
 
-        self.header = widget.Widget(self, (0,0), (-1, .08),
+        self.header = widget.Widget(self, (0, 0), (-1, .08),
                                     anchor=constants.TOP_LEFT)
 
-        self.name_display = text.Text(self.header, (-.5,0), (-1, -.5),
+        self.name_display = text.Text(self.header, (-.5, 0), (-1, -.5),
                                       anchor=constants.TOP_CENTER,
                                       borders=constants.ALL,
                                       border_color=gg.colors["dark_blue"],
@@ -157,16 +157,16 @@ class BaseScreen(dialog.Dialog):
                                   kwargs={"forwards": False})
         self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activate_with_sound)
 
-        self.state_display = text.Text(self.header, (-.5,-.5), (-1, -.5),
+        self.state_display = text.Text(self.header, (-.5, -.5), (-1, -.5),
                                        anchor=constants.TOP_CENTER,
-                                       borders=(constants.LEFT,constants.RIGHT,
+                                       borders=(constants.LEFT, constants.RIGHT,
                                                 constants.BOTTOM),
                                        border_color=gg.colors["dark_blue"],
                                        background_color=gg.colors["black"],
                                        shrink_factor=.8, bold=True)
 
         self.back_button = \
-            button.ExitDialogButton(self, (-.5,-1),
+            button.ExitDialogButton(self, (-.5, -1),
                                     anchor = constants.BOTTOM_CENTER,
                                     text=_("&BACK"), autohotkey=True)
 
@@ -208,7 +208,7 @@ class BaseScreen(dialog.Dialog):
             if matches:
                 space_left -= self.base.cpus.count
                 if self.base.cpus.done:
-                    yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
+                    yn = dialog.YesNoDialog(self, pos=(-.5, -.5), size=(-.5, -1),
                                             anchor=constants.MID_CENTER,
                                             text=g.strings["will_lose_cpus"])
                     go_ahead = dialog.call_dialog(yn, self)

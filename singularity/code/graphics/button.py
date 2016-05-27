@@ -49,9 +49,9 @@ class Button(text.SelectableText):
         self.parent = parent
 
         from singularity.code.g import get_hotkey, strip_hotkey
-        autohotkey = kwargs.pop('autohotkey',False)
+        autohotkey = kwargs.pop('autohotkey', False)
         if autohotkey:
-            text = kwargs.get('text',"")
+            text = kwargs.get('text', "")
             self.hotkey = get_hotkey(text)
             # Strip hotkey info from text
             if 'text' in kwargs: kwargs['text'] = strip_hotkey(text)

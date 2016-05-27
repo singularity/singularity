@@ -29,7 +29,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.dirty_count = True
         super(ResearchScreen, self).__init__(parent, pos, size, *args, **kwargs)
         self.listbox.remove_hooks()
-        self.listbox = listbox.CustomListbox(self, (0,0), (.53, .55),
+        self.listbox = listbox.CustomListbox(self, (0, 0), (.53, .55),
                                              list_size=-40,
                                              remake_func=self.make_item,
                                              rebuild_func=self.update_item,
@@ -44,7 +44,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.help_dialog = dialog.MessageDialog(self)
 
         self.yes_button.remove_hooks()
-        self.no_button.pos = (-.5,-.99)
+        self.no_button.pos = (-.5, -.99)
         self.no_button.anchor = constants.BOTTOM_CENTER
 
     def adjust_slider(self, event):
@@ -72,7 +72,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         else:
             description = ""
 
-        text.Text(self.description_pane, (0,0), (-1,-1), text=description,
+        text.Text(self.description_pane, (0, 0), (-1, -1), text=description,
                   background_color=gg.colors["dark_blue"], text_size=18,
                   align=constants.LEFT, valign=constants.TOP,
                   borders=constants.ALL)

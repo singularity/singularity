@@ -39,7 +39,7 @@ class MainMenu(dialog.TopDialog):
         self.difficulty_dialog = \
             dialog.SimpleMenuDialog(self, buttons=difficulty_buttons)
 
-        self.load_dialog = dialog.ChoiceDialog(self, (.5,.5), (.5,.5),
+        self.load_dialog = dialog.ChoiceDialog(self, (.5, .5), (.5, .5),
                                                anchor=constants.MID_CENTER,
                                                yes_type="load")
         self.map_screen = map.MapScreen(self)
@@ -107,7 +107,7 @@ Version %s""")
 class AboutDialog(dialog.MessageDialog):
     def __init__(self, *args, **kwargs):
         super(AboutDialog, self).__init__(*args, **kwargs)
-        self.background_color = (0,0,50)
+        self.background_color = (0, 0, 50)
         self.borders = ()
         self.align = constants.LEFT
         self.text = about_message % (__version__,)

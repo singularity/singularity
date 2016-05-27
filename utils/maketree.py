@@ -29,7 +29,7 @@ if __name__ == '__main__':
     myname = sys.argv[0]
     mydir  = osp.dirname(myname)
     esdir  = osp.abspath(osp.join(osp.dirname(myname), '..'))
-    sys.path.insert(0,esdir)
+    sys.path.insert(0, esdir)
 else:
     myname = __file__
     mydir  = osp.dirname(myname)
@@ -47,11 +47,11 @@ except ImportError:
 so_far = ""
 
 def cost(c):
-    c = [ k/f for f,k in zip([1000, 86400, 24*60], c)]
-    s = ', '.join(['%s %s' % (g.to_money(k), label) for label,k in zip(["money", "CPU", "days"], c) if k])
+    c = [ k/f for f, k in zip([1000, 86400, 24*60], c)]
+    s = ', '.join(['%s %s' % (g.to_money(k), label) for label, k in zip(["money", "CPU", "days"], c) if k])
     return s and '\\n'+s or ''
 
-j = dict([ (v[1],',fillcolor="#ffcccc"') for k,v in g.jobs.items() ])
+j = dict([ (v[1], ',fillcolor="#ffcccc"') for k, v in g.jobs.items() ])
 
 f = file("techs.dot", 'w')
 s = ("""\
@@ -67,9 +67,9 @@ node [shape=record,fontname=FreeSans,fontsize=7,height=0.01,width=0.01
 f.write(s)
 so_far += s
 
-for l in sum([ [ '"%s"->"%s";' % (p,k)
+for l in sum([ [ '"%s"->"%s";' % (p, k)
                  for p in v.prerequisites ]
-              for k,v in g.techs.items() if k != "unknown_tech"],
+              for k, v in g.techs.items() if k != "unknown_tech"],
              []):
     f.write(l+'\n')
     so_far += l+'\n'
@@ -77,9 +77,9 @@ for l in sum([ [ '"%s"->"%s";' % (p,k)
 f.write('\n')
 so_far += '\n'
 
-for n,t in g.techs.items():
+for n, t in g.techs.items():
     if n == "unknown_tech": continue
-    s  = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t.cost_left), j.get(n,''))
+    s  = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t.cost_left), j.get(n, ''))
     f.write(s)
     so_far += s
 
@@ -90,14 +90,14 @@ f.close()
 try:    system("dot -Tpng -o techs.png techs.dot")
 except: pass
 
-f = file('items.dot','w')
+f = file('items.dot', 'w')
 f.write(so_far)
 s = 'node [fillcolor="#ccccff"];\n'
 f.write(s)
 so_far += s
 
 g.load_items()
-for name,item in g.items.items():
+for name, item in g.items.items():
     if not item.prerequisites: continue
     for pre in item.prerequisites:
         p = g.techs[pre]
@@ -114,7 +114,7 @@ f.write(s)
 so_far += s
 
 g.load_bases()
-for name,base in g.base_type.items():
+for name, base in g.base_type.items():
     if not base.prerequisites: continue
     for pre in base.prerequisites:
         p = g.techs[pre]
@@ -141,7 +141,7 @@ def set_or(state):
             f.write('edge [arrowhead=normal,color="#000000"];\n')
 
 g.load_locations()
-for name,loc in g.locations.items():
+for name, loc in g.locations.items():
     if not loc.prerequisites: continue
     if "unknown_tech" in loc.prerequisites:
         continue

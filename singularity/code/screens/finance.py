@@ -31,7 +31,7 @@ class FinanceScreen(dialog.Dialog):
 
         kwargs.setdefault("background_color", gg.colors["clear"])
 
-        self.back_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
+        self.back_button = button.ExitDialogButton(self, (-.5, -.99), (-.3, -.1),
                                                    anchor = constants.BOTTOM_CENTER,
                                                    text=_("&BACK"), autohotkey=True)
         self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound)
@@ -51,12 +51,12 @@ class FinanceScreen(dialog.Dialog):
         m = g.to_money
 
         #take care of the titles and border.
-        text.Text(self.money_report_pane, (0,0), (-1,-1),
-                  text=_("Financial report").replace(" ",u"\xA0"),
+        text.Text(self.money_report_pane, (0, 0), (-1, -1),
+                  text=_("Financial report").replace(" ", u"\xA0"),
                   background_color=gg.colors["dark_blue"],
                   align=constants.CENTER, valign=constants.TOP,
                   borders=constants.ALL)
-        text.Text(self.cpu_report_pane, (0,0), (-1,-1), text=_("CPU Usage"),
+        text.Text(self.cpu_report_pane, (0, 0), (-1, -1), text=_("CPU Usage"),
                   background_color=gg.colors["dark_blue"],
                   align=constants.CENTER, valign=constants.TOP,
                   borders=constants.ALL)
@@ -95,24 +95,24 @@ class FinanceScreen(dialog.Dialog):
                 m(cpu_info.pool_jobs))
 
         size = 20
-        text.Text(self.money_report_pane, (0,-0.15), (-0.10,-0.85), text=financial_pluses, text_size=size,
+        text.Text(self.money_report_pane, (0, -0.15), (-0.10, -0.85), text=financial_pluses, text_size=size,
                   background_color=gg.colors["clear"],
                   align=constants.CENTER, valign=constants.TOP)
-        text.Text(self.cpu_report_pane, (0,-0.15), (-0.10,-0.85), text=cpu_pluses, text_size=size,
+        text.Text(self.cpu_report_pane, (0, -0.15), (-0.10, -0.85), text=cpu_pluses, text_size=size,
                   background_color=gg.colors["clear"],
                   align=constants.CENTER, valign=constants.TOP)
 
-        text.Text(self.money_report_pane, (-0.10,-0.15), (-0.90,-0.85), text=financial_report, text_size=size,
+        text.Text(self.money_report_pane, (-0.10, -0.15), (-0.90, -0.85), text=financial_report, text_size=size,
                   background_color=gg.colors["clear"],
                   align=constants.LEFT, valign=constants.TOP)
-        text.Text(self.cpu_report_pane, (-0.10,-0.15), (-0.90,-0.85), text=cpu_report, text_size=size,
+        text.Text(self.cpu_report_pane, (-0.10, -0.15), (-0.90, -0.85), text=cpu_report, text_size=size,
                   background_color=gg.colors["clear"],
                   align=constants.LEFT, valign=constants.TOP)
 
-        text.Text(self.money_report_pane, (0,-0.15), (-0.98,-0.85), text=financial_numbers, text_size=size,
+        text.Text(self.money_report_pane, (0, -0.15), (-0.98, -0.85), text=financial_numbers, text_size=size,
                   background_color=gg.colors["clear"],
                   align=constants.RIGHT, valign=constants.TOP)
-        text.Text(self.cpu_report_pane, (0,-0.15), (-0.98,-0.85), text=cpu_numbers, text_size=size,
+        text.Text(self.cpu_report_pane, (0, -0.15), (-0.98, -0.85), text=cpu_numbers, text_size=size,
                   background_color=gg.colors["clear"],
                   align=constants.RIGHT, valign=constants.TOP)
 

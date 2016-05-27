@@ -31,7 +31,7 @@ from . import buyable
 #      (Base.power_state would need to be a property, with setter and getter)
 #This list only applies to 'Base' class, not 'BaseClass'
 #Changes to this list should also be reflected in Base.power_state_name property
-power_states = ['active','sleep']
+power_states = ['active', 'sleep']
 #power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
 
 
@@ -122,7 +122,7 @@ class BaseClass(buyable.BuyableClass):
             location_message = "\n\n" + \
                 singularity.code.g.strings["location_modifiers"] % dict(modifiers=modifier)
 
-        template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
+        template = "%s\n" + _("Build cost:").replace(" ", u"\xA0") + u"\xA0%s\n" + \
                    _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s%s"
         return template % (self.name, cost, maint, detect, size, self.description, location_message)
 

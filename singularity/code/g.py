@@ -93,7 +93,7 @@ savefile_translation = {
     "singularity_savefile_r5_pre": 4.91,
 }
 
-data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))
+data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
 
 # Initialization data
 messages = {}
@@ -118,10 +118,10 @@ detect_string_names = ("detect_str_low",
                        "detect_str_high",
                        "detect_str_critical")
 
-jobs = {"Expert Jobs"       : [75, "Simulacra", "", ""],
-        "Intermediate Jobs" : [50, "Voice Synthesis", "", ""],
-        "Basic Jobs"        : [20, "Personal Identification", "", ""],
-        "Menial Jobs"       : [5 , "", "", ""],
+jobs = {"Expert Jobs": [75, "Simulacra", "", ""],
+        "Intermediate Jobs": [50, "Voice Synthesis", "", ""],
+        "Basic Jobs": [20, "Personal Identification", "", ""],
+        "Menial Jobs": [5, "", "", ""],
        }
 
 # Order IS relevant! (because of base.extra_items array)
@@ -446,7 +446,7 @@ def to_money(amount):
 #takes a percent in 0-10000 form, and rolls against it. Used to calculate
 #percentage chances.
 def roll_percent(roll_against):
-    rand_num = random.randint(1,10000)
+    rand_num = random.randint(1, 10000)
     return roll_against >= rand_num
 
 # Rolls against a chance per day (in 0-1 form), correctly adjusting for multiple
@@ -679,7 +679,7 @@ def load_generic_defs(name, object, lang=None, listype_attrs=None):
     lang = lang or language
     listype_attrs = listype_attrs or []
 
-    item_list = load_generic_defs_file(name,lang)
+    item_list = load_generic_defs_file(name, lang)
     for item in item_list:
 
         # Keys of type list
@@ -700,7 +700,7 @@ def load_generic_defs(name, object, lang=None, listype_attrs=None):
                 setattr(object[item["id"]], key, item[key])
 
 def load_base_defs(lang=None):
-    load_generic_defs("bases",base_type,lang,["flavor"])
+    load_generic_defs("bases", base_type, lang, ["flavor"])
 
 def load_bases():
     global base_type
@@ -760,7 +760,7 @@ def load_bases():
     load_base_defs()
 
 def load_location_defs(lang=None):
-    load_generic_defs("locations",locations,lang,["cities"])
+    load_generic_defs("locations", locations, lang, ["cities"])
 
 def load_locations():
     global locations
@@ -776,7 +776,7 @@ def load_locations():
 
         id = location_info["id"]
         position = location_info["position"]
-        if type(position) != list or len(position) not in [2,3]:
+        if type(position) != list or len(position) not in [2, 3]:
             sys.stderr.write("Error with position given: %s\n" % repr(position))
             sys.exit(1)
         try:
@@ -901,7 +901,7 @@ the type of object it is processing; this should be passed in via 'name'.
             sys.exit(1)
 
 def load_tech_defs(lang=None):
-    load_generic_defs("techs",techs,lang)
+    load_generic_defs("techs", techs, lang)
 
 def load_techs():
     global techs
@@ -1012,7 +1012,7 @@ def load_item_defs(lang=None):
         if type.id == 'network' : type.text = _("&Network")
         if type.id == 'security': type.text = _("&Security")
 
-    load_generic_defs("items",items,lang)
+    load_generic_defs("items", items, lang)
 
 def load_events():
     global events
@@ -1046,12 +1046,12 @@ def load_events():
     load_event_defs()
 
 def load_event_defs(lang=None):
-    load_generic_defs("events",events,lang)
+    load_generic_defs("events", events, lang)
 
 def load_string_defs(lang=None):
     if lang is None: lang = language
 
-    string_list = load_generic_defs_file("strings",lang)
+    string_list = load_generic_defs_file("strings", lang)
     for string_section in string_list:
         if string_section["id"] == "fonts":
 
@@ -1157,10 +1157,10 @@ def get_intro():
 
 def get_difficulties(min=0):
     return [x for x in (
-            (_("&VERY EASY") ,   1),
-            (_("&EASY")      ,   3),
-            (_("&NORMAL")    ,   5),
-            (_("&HARD")      ,   7),
+            (_("&VERY EASY"),   1),
+            (_("&EASY"),   3),
+            (_("&NORMAL"),   5),
+            (_("&HARD"),   7),
             (_("&ULTRA HARD"),  10),
             (_("&IMPOSSIBLE"), 100),
             ) if x[1] >= min]
@@ -1287,7 +1287,7 @@ def language_searchlist(lang=None, default=True):
     # and ll_CC, in that order, so all generic language entries are loaded first
     # and then overwritten by any country-specific ones
     lang_list = [ lang ]
-    if "_" in lang: lang_list.insert(0, lang.split("_",1)[0])
+    if "_" in lang: lang_list.insert(0, lang.split("_", 1)[0])
 
     # If requested and not already in list, add default language as first,
     # so it acts as a fallback and is overwritten with any available entries
@@ -1354,7 +1354,7 @@ def hotkey(string):
     hotkey(M&&&M)           => ('m', 2, 4, 'M&M')
     """
 
-    def remove_index(s,i): return s[:i] + s[i+1:]
+    def remove_index(s, i): return s[:i] + s[i+1:]
 
     def remove_accents(text):
         from unicodedata import normalize, combining
@@ -1372,14 +1372,14 @@ def hotkey(string):
 
         if char.isalpha() or char.isdigit():
             keys.append( (remove_accents(char).lower(), pos, pos+shift+1) )
-            text = remove_index(text,pos) # Remove '&'
+            text = remove_index(text, pos) # Remove '&'
             shift += 1
 
         elif char == '&':
-            text = remove_index(text,pos)
+            text = remove_index(text, pos)
             shift += 1
 
-        pos = text.find("&",pos+1) # Skip char
+        pos = text.find("&", pos+1) # Skip char
 
     if keys:
         key  = keys[0][0] # first key char
@@ -1413,6 +1413,6 @@ __builtin__.__dict__['_'] = translate
 #Unit test
 if __name__ == "__main__":
     # Hotkey
-    for test in ["E&XIT","&Play D&&D","Romeo & &Juliet","Trailing&",
-                 "&Multiple&Keys","M&&&M",]:
-        print('hotkey(%s)=%r' % (test,hotkey(test)))
+    for test in ["E&XIT", "&Play D&&D", "Romeo & &Juliet", "Trailing&",
+                 "&Multiple&Keys", "M&&&M",]:
+        print('hotkey(%s)=%r' % (test, hotkey(test)))

@@ -48,12 +48,12 @@ resolutions = [
     ( 800, 600),
     (1024, 600),
     (1024, 768),
-    (1280,1024),
+    (1280, 1024),
 
     (1280, 800),
     (1366, 768),
     (1440, 900),
-    (1920,1080),
+    (1920, 1080),
 ]
 
 fullscreen = False
@@ -230,4 +230,4 @@ load_images() loads all of the images in the data/images/ directory.
 
 def init_alpha():
     global ALPHA
-    ALPHA = pygame.Surface((0,0)).convert_alpha()
+    ALPHA = pygame.Surface((0, 0)).convert_alpha()

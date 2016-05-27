@@ -26,7 +26,7 @@ from .buyable import cash, cpu, labor
 # Currently, each one gets a 20% bonus or its inverse, a 16.6% penalty.
 # This will probably need to be adjusted later.
 bonus_levels = dict(cpu = 1.2, stealth = 1.2, thrift = 1.2, speed = 1.2)
-penalty_levels = dict((k,1/v) for k,v in bonus_levels.iteritems())
+penalty_levels = dict((k, 1/v) for k, v in bonus_levels.iteritems())
 
 # Here are the six modifier pairs that get assigned at random on game start.
 bonus, penalty = True, False
@@ -58,7 +58,7 @@ class Location(buyable.BuyableClass):
 
     def __init__(self, id, position, absolute, safety, prerequisites):
         # Kinda hackish, but it works.
-        super(Location, self).__init__(id, "", (0,0,0), prerequisites)
+        super(Location, self).__init__(id, "", (0, 0, 0), prerequisites)
 
         self.x, self.y = position[0] / -100., position[1] / -100.
         self.absolute = absolute

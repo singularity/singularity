@@ -45,9 +45,9 @@ class LocationScreen(dialog.Dialog):
         self.pos = (-.5, -.5)
         self.anchor = constants.MID_CENTER
         self.size = (-.75, -.5)
-        self.name_display = text.Text(self, (0,0), (-1, -.08),
+        self.name_display = text.Text(self, (0, 0), (-1, -.08),
                                       background_color=gg.colors["clear"])
-        self.listbox = listbox.CustomListbox(self, (0,-.08), (-1, -.70),
+        self.listbox = listbox.CustomListbox(self, (0, -.08), (-1, -.70),
                                              remake_func=self.make_item,
                                              rebuild_func=self.update_item)
 
@@ -76,24 +76,24 @@ class LocationScreen(dialog.Dialog):
                                                    text=_("&BACK"), autohotkey=True)
 
         self.confirm_destroy = \
-            dialog.YesNoDialog(self, (-.5,0), (-.35, -.7),
+            dialog.YesNoDialog(self, (-.5, 0), (-.35, -.7),
                             text=_("Are you sure you want to destroy this base?"),
                             shrink_factor=.5)
 
         self.new_base_dialog = NewBaseDialog(self)
         self.location = None
 
-        self.base_dialog = basescreen.BaseScreen(self, (0,0),
+        self.base_dialog = basescreen.BaseScreen(self, (0, 0),
                                                  anchor=constants.TOP_LEFT)
 
     def make_item(self, canvas):
-        canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.45, -.99),
+        canvas.name_display   = text.Text(canvas, (-.01, -.05), (-.45, -.99),
                                           align=constants.LEFT,
                                           background_color=gg.colors["clear"])
-        canvas.status_display = text.Text(canvas, (-.46,-.05), (-.44, -.99),
+        canvas.status_display = text.Text(canvas, (-.46, -.05), (-.44, -.99),
                                           align=constants.LEFT,
                                           background_color=gg.colors["clear"])
-        canvas.power_display  = text.Text(canvas, (-.90,-.05), (-.10, -.99),
+        canvas.power_display  = text.Text(canvas, (-.90, -.05), (-.10, -.99),
                                           background_color=gg.colors["clear"])
 
 

@@ -36,7 +36,7 @@ class Slider(button.Button):
     slider_size = widget.causes_rebuild("_slider_size")
     horizontal = widget.causes_rebuild("_horizontal")
 
-    def __init__(self, parent, pos = (-1,0), size = (-.1, -1),
+    def __init__(self, parent, pos = (-1, 0), size = (-.1, -1),
                  anchor = constants.TOP_RIGHT, borders = constants.ALL,
                  border_color=None, background_color=None, slider_color=None,
                  slider_pos=0, slider_max=10, slider_size=5, horizontal=False,

@@ -37,7 +37,7 @@ from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
 class EarthImage(image.Image):
     def __init__(self, parent):
-        super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
+        super(EarthImage, self).__init__(parent, (.5, .5), (1, .667),
                                          constants.MID_CENTER,
                                          gg.images['earth.jpg'])
 
@@ -79,8 +79,8 @@ class EarthImage(image.Image):
                     math.cos(2*math.pi/365.*(day_of_year + 10)))
             sun_diameter = 0.5*pi/180
 
-            lat = linspace(-pi/2,pi/2,height)[newaxis,:]
-            long = linspace(0,2*pi,width)[:,newaxis]
+            lat = linspace(-pi/2, pi/2, height)[newaxis,:]
+            long = linspace(0, 2*pi, width)[:, newaxis]
             sin_sun_altitude = (cos(long)*(cos(lat)*cos(sun_declination))
                                     +sin(lat)*sin(sun_declination))
             # use tanh to convert values to the range [0,1]
@@ -124,7 +124,7 @@ class EarthImage(image.Image):
             night_alphas[:self.night_start]  = mask_alphas[right_width:]
 
         del night_alphas, mask_alphas
-        self.surface.blit(self.night_image, (0,0))
+        self.surface.blit(self.night_image, (0, 0))
 
     night_start = None
     def rebuild(self):
@@ -184,7 +184,7 @@ class MapScreen(dialog.Dialog):
         self.location_dialog = location.LocationScreen(self)
 
         self.suspicion_bar = \
-            text.FastStyledText(self, (0,.92), (1, .04), base_font=gg.font[1],
+            text.FastStyledText(self, (0, .92), (1, .04), base_font=gg.font[1],
                                 wrap=False,
                                 background_color=gg.colors["black"],
                                 border_color=gg.colors["dark_blue"],
@@ -192,7 +192,7 @@ class MapScreen(dialog.Dialog):
         widget.unmask_all(self.suspicion_bar)
 
         self.danger_bar = \
-            text.FastStyledText(self, (0,.96), (1, .04), base_font=gg.font[1],
+            text.FastStyledText(self, (0, .96), (1, .04), base_font=gg.font[1],
                                 wrap=False,
                                 background_color=gg.colors["black"],
                                 border_color=gg.colors["dark_blue"],
@@ -270,8 +270,8 @@ class MapScreen(dialog.Dialog):
             exit = dialog.call_dialog(self.menu_dialog, self)
             if exit:
                 raise constants.ExitDialog
-        self.load_dialog = dialog.ChoiceDialog(self.menu_dialog, (.5,.5),
-                                               (.5,.5),
+        self.load_dialog = dialog.ChoiceDialog(self.menu_dialog, (.5, .5),
+                                               (.5, .5),
                                                anchor=constants.MID_CENTER,
                                                yes_type="load")
         self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
@@ -326,7 +326,7 @@ class MapScreen(dialog.Dialog):
         widget.unmask_all(self.info_window)
 
         self.cash_display = \
-            text.FastText(self.info_window, (0,0), (-1, -.5),
+            text.FastText(self.info_window, (0, 0), (-1, -.5),
                           wrap=False,
                           base_font=gg.font[1], shrink_factor = .7,
                           borders=constants.ALL,
@@ -334,7 +334,7 @@ class MapScreen(dialog.Dialog):
                           border_color=gg.colors["dark_blue"])
 
         self.cpu_display = \
-            text.FastText(self.info_window, (0,-.5), (-1, -.5),
+            text.FastText(self.info_window, (0, -.5), (-1, -.5),
                           wrap=False,
                           base_font=gg.font[1], shrink_factor=.7,
                           borders=
@@ -385,7 +385,7 @@ class MapScreen(dialog.Dialog):
     def inspiration(self):
         for task, cpu in g.pl.cpu_usage.items():
             if task in g.techs and cpu > 0:
-                g.techs[task].cost_left = array((0,0,0))
+                g.techs[task].cost_left = array((0, 0, 0))
         self.needs_rebuild = True
 
     def end_construction(self):

@@ -46,14 +46,14 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.size = (.79, .63)
         self.pos = (.5, .5)
         self.anchor = constants.MID_CENTER
-        self.background_color = (0,0,50)
+        self.background_color = (0, 0, 50)
         self.borders = ()
 
         labels = {
             'fullscreen': g.hotkey(_("&Fullscreen:")),
-            'sound'     : g.hotkey(_("&Sound:")),
-            'mousegrab' : g.hotkey(_("&Mouse grab:")),
-            'daynight'  : g.hotkey(_("Da&y/night display:")),
+            'sound': g.hotkey(_("&Sound:")),
+            'mousegrab': g.hotkey(_("&Mouse grab:")),
+            'daynight': g.hotkey(_("Da&y/night display:")),
         }
 
         # First row
@@ -102,19 +102,19 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         def xpos(i): return .16 + .16 *    (i%cols)
         def ypos(i): return .08 + .07 * int(i/cols)
 
-        for index, (xres,yres) in enumerate(sorted(gg.resolutions[0:rows*cols])):
+        for index, (xres, yres) in enumerate(sorted(gg.resolutions[0:rows*cols])):
             self.resolution_group.add(OptionButton(self,
                                                    (xpos(index), ypos(index)),
                                                    (.14, .05),
                                                    text="%sx%s" % (xres, yres),
                                                    function=self.set_resolution,
-                                                   args=((xres,yres),)))
+                                                   args=((xres, yres),)))
         # Adjust index to full row
         index += cols - (index % cols) - 1
 
         # Forth row
         self.resolution_custom = OptionButton(self,
-                                              (xpos(0),ypos(index+1)),
+                                              (xpos(0), ypos(index+1)),
                                               (.14, .05),
                                               text=_("&CUSTOM:"),
                                               autohotkey=True,
@@ -126,7 +126,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                               text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
-                              background_color=(0,0,50,255))
+                              background_color=(0, 0, 50, 255))
 
         self.resolution_custom_X = text.Text(self,
                                              (xpos(2)-.02, ypos(index+1)),
@@ -140,7 +140,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                               text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
-                              background_color=(0,0,50,255))
+                              background_color=(0, 0, 50, 255))
 
         # Fifth row
         self.language_label = text.Text(self, (.01, .30), (.14, .05),
@@ -426,7 +426,7 @@ def get_languages_list():
         langcount[language] = langcount.get(language, 0) + 1
 
     #Load languages data
-    with open(os.path.join(g.data_dir,"languages.dat")) as langdata:
+    with open(os.path.join(g.data_dir, "languages.dat")) as langdata:
         languages = json.load(langdata)
 
     output = []

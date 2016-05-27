@@ -70,4 +70,4 @@ class Image(widget.Widget):
 
     def redraw(self):
         super(Image, self).redraw()
-        self.surface.blit(self.scaled_image, (0,0))
+        self.surface.blit(self.scaled_image, (0, 0))

@@ -20,7 +20,7 @@
 
 # Anchor positions, border sided.
 TOP, MID, BOTTOM = range(3)
-LEFT, CENTER, RIGHT = range(3,6)
+LEFT, CENTER, RIGHT = range(3, 6)
 TOP_LEFT = (TOP, LEFT)
 TOP_CENTER = (TOP, CENTER)
 TOP_RIGHT = (TOP, RIGHT)
