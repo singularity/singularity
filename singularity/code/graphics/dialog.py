@@ -154,8 +154,7 @@ class Dialog(text.Text):
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
         if self.parent != None:
-            raise ValueError, \
-                  "Dialogs with parents cannot be the top-level dialog."
+            raise ValueError("Dialogs with parents cannot be the top-level dialog.")
         else:
             Dialog.top = self
 
@@ -555,12 +554,12 @@ class TextEntryDialog(TextDialog):
     def return_nothing(self, event):
         if event and event.type == pygame.KEYUP:
             return
-        raise constants.ExitDialog, ""
+        raise constants.ExitDialog("")
 
     def return_text(self, event=None):
         if event and event.type == pygame.KEYUP:
             return
-        raise constants.ExitDialog, self.text_field.text
+        raise constants.ExitDialog(self.text_field.text)
 
 class ChoiceDialog(YesNoDialog):
     list = widget.causes_rebuild("_list")

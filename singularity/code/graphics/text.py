@@ -87,7 +87,7 @@ def split_wrap(text, font, wrap_at, break_words=True):
                 else:
                     if not break_words:
                         message = "'%s' is too wide and can't be broken"
-                        raise WrapError, message % word
+                        raise WrapError(message % word)
                     widths = get_widths(font, word)
                     for index, char in enumerate(word):
                         width = widths[index]

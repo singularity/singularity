@@ -613,14 +613,14 @@ class MapScreen(dialog.Dialog):
             save = save_names[index]
             g.load_game(save)
             self.force_update()
-            raise constants.ExitDialog, False
+            raise constants.ExitDialog(False)
 
     def save_game(self):
         self.savename_dialog.default_text = g.default_savegame_name
         name = dialog.call_dialog(self.savename_dialog, self.menu_dialog)
         if name:
             g.save_game(name)
-            raise constants.ExitDialog, False
+            raise constants.ExitDialog(False)
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):
     pass

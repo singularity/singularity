@@ -191,9 +191,9 @@ class ExitDialogButton(FunctionButton):
     def exit_dialog(self):
         """Closes the dialog with the given exit code."""
         if self.exit_code_func:
-            raise constants.ExitDialog, self.exit_code_func()
+            raise constants.ExitDialog(self.exit_code_func())
         else:
-            raise constants.ExitDialog, self.exit_code
+            raise constants.ExitDialog(self.exit_code)
 
 class DialogButton(FunctionButton):
     def __init__(self, *args, **kwargs):
@@ -208,7 +208,7 @@ class DialogButton(FunctionButton):
             raise constants.Handled
         else:
             import dialog
-            raise constants.Handled, dialog.call_dialog(self.dialog, self)
+            raise constants.Handled(dialog.call_dialog(self.dialog, self))
 
 TOGGLE_VALUE = object()
 class ToggleButton(Button):

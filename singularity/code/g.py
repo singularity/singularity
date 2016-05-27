@@ -605,7 +605,7 @@ def load_game(loadgame_name):
         if class_name in save_classes:
             return save_classes[class_name]
         else:
-            raise SystemExit, (module_name, class_name)
+            raise SystemExit(module_name, class_name)
 
     unpickle.find_global = find_class
 
@@ -783,7 +783,7 @@ def load_locations():
                 absolute = False
             else:
                 if position[0] != "absolute":
-                    raise ValueError, "'%s' not understood." % position[0]
+                    raise ValueError("'%s' not understood." % position[0])
                 position = ( int(position[1]), int(position[2]) )
                 absolute = True
         except ValueError:

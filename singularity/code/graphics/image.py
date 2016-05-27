@@ -47,7 +47,7 @@ class Image(widget.Widget):
     def _calc_size(self):
         size = list( super(Image, self)._calc_size() )
         if size[0] == size[1] == 0:
-            raise ValueError, "One image dimension must be specified!"
+            raise ValueError("One image dimension must be specified!")
 
         image_size = self.image.get_size()
         ratio = image_size[0] / float(image_size[1])
