@@ -592,9 +592,9 @@ class ChoiceDialog(YesNoDialog):
         return self.listbox.list_pos
 
     def show(self):
-        if type(self.default) == int:
+        if isinstance(self.default, int):
             self.listbox.list_pos = self.default
-        elif type(self.default) == str and self.default in self.list:
+        elif isinstance(self.default, str) and self.default in self.list:
             self.listbox.list_pos = self.list.index(self.default)
         else:
             self.listbox.list_pos = 0

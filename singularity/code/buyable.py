@@ -71,7 +71,7 @@ class BuyableClass(object):
 
     def available(self):
         or_mode = False
-        assert type(self.prerequisites) == list
+        assert isinstance(self.prerequisites, list)
         for prerequisite in self.prerequisites:
             if prerequisite == "OR":
                 or_mode = True

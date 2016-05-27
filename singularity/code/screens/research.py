@@ -178,9 +178,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         dialog.call_dialog(self.help_dialog, self)
 
     def show(self):
-        techs = [tech for tech in g.techs.values() if tech.available()
-                                                      and not tech.done]
-        techs.sort()
+        techs = sorted([tech for tech in g.techs.values() if tech.available()
+                                                      and not tech.done])
         self.list = [_("CPU Pool"), g.jobs[g.get_job_level()][3]] + \
                     [_("Research %s") % tech.name for tech in techs]
         self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]

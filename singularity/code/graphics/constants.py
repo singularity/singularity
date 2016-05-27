@@ -40,9 +40,9 @@ ALL = (TOP, BOTTOM, LEFT, RIGHT)
 
 class _NoResult(object):
     def __eq__(self, other):
-        return type(self) == type(other)
+        return isinstance(self, type(other))
     def __ne__(self, other):
-        return type(self) != type(other)
+        return not isinstance(self, type(other))
 
 NO_RESULT = _NoResult()
 

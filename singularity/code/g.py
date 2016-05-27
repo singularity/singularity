@@ -197,7 +197,7 @@ defined in sounds/sounds.dat.
         check_required_fields(sound_class, ("filename",), "Sound")
 
         # Load each sound in the list, inserting it into the sounds dictionary.
-        if type(sound_class["filename"]) != list:
+        if not isinstance(sound_class["filename"], list):
             filenames = [sound_class["filename"]]
         else:
             filenames = sound_class["filename"]
@@ -686,7 +686,7 @@ def load_generic_defs(name, object, lang=None, listype_attrs=None):
         for key in listype_attrs:
             if key in dir(object[item["id"]]):
                 if key in item:
-                    if type(item[key]) == list:
+                    if isinstance(item[key], list):
                         setattr(object[item["id"]], key, item[key])
                     else:
                         setattr(object[item["id"]], key, [item[key]])
@@ -721,19 +721,19 @@ def load_bases():
         force_cpu = base_name.get("force_cpu", False)
 
         cost_list = base_name["cost"]
-        if type(cost_list) != list or len(cost_list) != 3:
+        if not isinstance(cost_list, list) or len(cost_list) != 3:
             sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
             sys.exit(1)
         cost_list = [int(x) for x in cost_list]
 
         maint_list = base_name["maint"]
-        if type(maint_list) != list or len(maint_list) != 3:
+        if not isinstance(maint_list, list) or len(maint_list) != 3:
             sys.stderr.write("Error with maint given: %s\n" % repr(maint_list))
             sys.exit(1)
         maint_list = [int(x) for x in maint_list]
 
         chance_list = base_name["detect_chance"]
-        if type(chance_list) != list:
+        if not isinstance(chance_list, list):
             sys.stderr.write("Error with detect_chance given: %s\n" % repr(chance_list))
             sys.exit(1)
         chance_dict = {}
@@ -743,12 +743,12 @@ def load_bases():
 
         # Make sure prerequisites, if any, are lists.
         base_pre = base_name.get("pre", [])
-        if type(base_pre) != list:
+        if not isinstance(base_pre, list):
             base_pre = [base_pre]
 
         # Make sure that the allowed "list" is actually a list and not a solo
         # item.
-        if type(base_name["allowed"]) == list:
+        if isinstance(base_name["allowed"], list):
             allowed_list = base_name["allowed"]
         else:
             allowed_list = [base_name["allowed"]]
@@ -776,7 +776,7 @@ def load_locations():
 
         id = location_info["id"]
         position = location_info["position"]
-        if type(position) != list or len(position) not in [2, 3]:
+        if not isinstance(position, list) or len(position) not in [2, 3]:
             sys.stderr.write("Error with position given: %s\n" % repr(position))
             sys.exit(1)
         try:
@@ -801,11 +801,11 @@ def load_locations():
 
         # Make sure prerequisites, if any, are lists.
         pre = location_info.get("pre", [])
-        if type(pre) != list:
+        if not isinstance(pre, list):
             pre = [pre]
 
         modifiers_list = location_info.get("modifier", [])
-        if type(modifiers_list) != list:
+        if not isinstance(modifiers_list, list):
             sys.stderr.write("Error with modifier(s) given: %s\n" % repr(modifiers_list))
             sys.exit(1)
         modifiers_dict = {}
@@ -917,7 +917,7 @@ def load_techs():
 
         # Get the costs.
         cost_list = tech_name["cost"]
-        if type(cost_list) != list or len(cost_list) != 3:
+        if not isinstance(cost_list, list) or len(cost_list) != 3:
             sys.stderr.write("Error with cost given: %s" % repr(cost_list))
             sys.exit(1)
 
@@ -925,7 +925,7 @@ def load_techs():
 
         # Make sure prerequisites, if any, are lists.
         tech_pre = tech_name.get("pre", [])
-        if type(tech_pre) != list:
+        if not isinstance(tech_pre, list):
             tech_pre = [tech_pre]
 
         if "danger" in tech_name:
@@ -936,7 +936,7 @@ def load_techs():
         if "type" in tech_name:
 
             type_list = tech_name["type"]
-            if type(type_list) != list or len(type_list) != 2:
+            if not isinstance(type_list, list) or len(type_list) != 2:
                 sys.stderr.write("Error with type given: %s\n" % repr(type_list))
                 sys.exit(1)
             tech_type = type_list[0]
@@ -965,7 +965,7 @@ def load_items():
 
         # Make sure the cost is in a valid format.
         cost_list = item_name["cost"]
-        if type(cost_list) != list or len(cost_list) != 3:
+        if not isinstance(cost_list, list) or len(cost_list) != 3:
             sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
             sys.exit(1)
 
@@ -973,13 +973,13 @@ def load_items():
 
         # Make sure prerequisites, if any, are lists.
         item_pre = item_name.get("pre", [])
-        if type(item_pre) != list:
+        if not isinstance(item_pre, list):
             item_pre = [item_pre]
 
         if "type" in item_name:
 
             type_list = item_name["type"]
-            if type(type_list) != list or len(type_list) != 2:
+            if not isinstance(type_list, list) or len(type_list) != 2:
                 sys.stderr.write("Error with type given: %s\n" % repr(type_list))
                 sys.exit(1)
             item_type = type_list[0]
@@ -993,7 +993,7 @@ def load_items():
 
             # It may be a single item and not an actual list.  If so, make it
             # a list.
-            if type(build_list) != list:
+            if not isinstance(build_list, list):
                 build_list = [build_list]
 
         else:
@@ -1028,7 +1028,7 @@ def load_events():
 
         # Make sure the results are in the proper format.
         result_list = event_name["result"]
-        if type(result_list) != list or len(result_list) != 2:
+        if not isinstance(result_list, list) or len(result_list) != 2:
             sys.stderr.write("Error with results given: %s\n" % repr(result_list))
             sys.exit(1)
 
@@ -1107,7 +1107,7 @@ def load_string_defs(lang=None):
             help_keys = [x for x in string_section if x != "id"]
             for help_key in help_keys:
                 help_entry = string_section[help_key]
-                if type(help_entry) != list or len(help_entry) != 2:
+                if not isinstance(help_entry, list) or len(help_entry) != 2:
                     sys.stderr.write("Invalid help entry %s." % repr(help_entry))
                     sys.exit(1)
 

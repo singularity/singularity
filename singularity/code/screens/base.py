@@ -49,8 +49,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         self.list = []
         self.key_list = []
 
-        item_list = g.items.values()
-        item_list.sort()
+        item_list = sorted(g.items.values())
         item_list.reverse()
         for item in item_list:
             if item.item_type == self.type and item.available() \

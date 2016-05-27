@@ -40,7 +40,7 @@ class Image(widget.Widget):
         self.old_size = None
 
         if image:
-            if type(image) is str:
+            if isinstance(image, str):
                 image = pygame.image.load(image)
 
             self.image = image.convert_alpha()

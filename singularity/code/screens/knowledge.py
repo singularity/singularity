@@ -93,15 +93,13 @@ class KnowledgeScreen(dialog.Dialog):
         if item_type == "techs":
             items = [tech for tech in g.techs.values() if tech.available()]
         elif item_type == "concepts":
-            items = [ [item[1][0], item[0]] for item in g.help_strings.items()]
-            items.sort()
+            items = sorted([ [item[1][0], item[0]] for item in g.help_strings.items()])
         else:
             items = [item for item in g.items.values()
                         if item.available()]
 
         if item_type != "concepts":
-            items = [ [item.name, item.id ] for item in items]
-            items.sort()
+            items = sorted([ [item.name, item.id ] for item in items])
 
         return_list1 = []
         return_list2 = []
