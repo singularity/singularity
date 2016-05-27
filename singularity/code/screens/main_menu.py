@@ -20,6 +20,7 @@
 
 import map
 from singularity.code.graphics import dialog, g as gg, button, text, constants
+from ..singularity import __version__
 import singularity.code.g as g
 
 from options import OptionsScreen
@@ -108,4 +109,4 @@ class AboutDialog(dialog.MessageDialog):
         self.background_color = (0,0,50)
         self.borders = ()
         self.align = constants.LEFT
-        self.text = about_message % (g.version,)
+        self.text = about_message % (__version__,)
