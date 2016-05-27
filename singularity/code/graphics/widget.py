@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 #file: widget.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -22,8 +23,8 @@ from __future__ import print_function
 import pygame
 from numpy import array
 
-import g
-import constants
+from . import g
+from . import constants
 
 def unmask(widget):
     """Causes the widget to exist above its parent's fade mask.  The widget's

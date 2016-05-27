@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: item.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -18,8 +19,8 @@
 
 #This file contains the item class.
 
-import buyable
-import g
+from . import buyable
+import singularity.code.g
 
 class ItemType(object):
     """ Item type, 4 fixed instances: cpu, reactor, network and security """
@@ -50,7 +51,7 @@ class ItemType(object):
     def text(self, value):
         # Updates language-dependent data
         try:
-            hotkey = g.hotkey(value)
+            hotkey = singularity.code.g.hotkey(value)
         except AttributeError:
             # g.hotkey() wasn't declared yet, mimic its defaults
             hotkey = dict(text= value,
@@ -89,7 +90,7 @@ class ItemClass(buyable.BuyableClass):
         basic_text = super(ItemClass, self).get_info()
         if self.item_type == "cpu":
             return basic_text.replace("---", _("Generates {0} CPU.",
-                                               g.add_commas(self.item_qual)) + \
+                                               singularity.code.g.add_commas(self.item_qual)) + \
                                       "\n---")
         return basic_text
 
@@ -104,7 +105,7 @@ class Item(buyable.Buyable):
     def convert_from(self, load_version):
         super(Item, self).convert_from(load_version)
         if load_version < 4.91: # < r5_pre
-            self.type = g.items[self.type.id]
+            self.type = singularity.code.g.items[self.type.id]
 
     def finish(self):
         super(Item, self).finish()

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: location.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -18,9 +19,9 @@
 
 #This file contains the Location class.
 
-import g
-import buyable
-from buyable import cash, cpu, labor
+import singularity.code.g
+from . import buyable
+from .buyable import cash, cpu, labor
 
 # Currently, each one gets a 20% bonus or its inverse, a 16.6% penalty.
 # This will probably need to be adjusted later.
@@ -66,8 +67,8 @@ class Location(buyable.BuyableClass):
         # A list of the bases at this location.  Often sorted for the GUI.
         self.bases = []
 
-    had_last_discovery = property(lambda self: g.pl.last_discovery == self)
-    had_prev_discovery = property(lambda self: g.pl.prev_discovery == self)
+    had_last_discovery = property(lambda self: singularity.code.g.pl.last_discovery == self)
+    had_prev_discovery = property(lambda self: singularity.code.g.pl.prev_discovery == self)
 
     def discovery_bonus(self):
         discovery_bonus = 1

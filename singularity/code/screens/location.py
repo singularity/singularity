@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: location.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -23,7 +24,7 @@ import random
 from singularity.code import g, base
 from singularity.code.graphics import text, button, dialog, constants, listbox, g as gg
 
-import base as basescreen
+from . import base as basescreen
 
 state_colors = dict(
     active          = gg.colors["green"],

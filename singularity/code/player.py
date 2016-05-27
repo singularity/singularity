@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 #file: player.py
 #Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
@@ -24,9 +25,9 @@ import random
 from operator import truediv
 from numpy import array
 
-import g
-from graphics import g as gg
-from buyable import cash, cpu
+import singularity.code.g
+from .graphics import g as gg
+from .buyable import cash, cpu
 
 group_list = ("news", "science", "covert", "public")
 class Group(object):
@@ -124,12 +125,12 @@ class Player(object):
 
     @property
     def difficulty_name(self):
-        return g.strip_hotkey(g.get_difficulties(self.difficulty)[0][0])
+        return singularity.code.g.strip_hotkey(singularity.code.g.get_difficulties(self.difficulty)[0][0])
 
     def convert_from(self, old_version):
         if old_version < 4.91: # < r5_pre
             self.cpu_usage = {}
-            self.apotheosis = g.techs["Apotheosis"].done
+            self.apotheosis = singularity.code.g.techs["Apotheosis"].done
             if self.apotheosis:
                 self.had_grace = True
 
@@ -149,10 +150,10 @@ class Player(object):
         self.time_day = self.raw_day
 
     def mins_to_next_day(self):
-        return (-self.raw_min % g.minutes_per_day) or g.minutes_per_day
+        return (-self.raw_min % singularity.code.g.minutes_per_day) or singularity.code.g.minutes_per_day
 
     def seconds_to_next_day(self):
-        return (-self.raw_sec % g.seconds_per_day) or g.seconds_per_day
+        return (-self.raw_sec % singularity.code.g.seconds_per_day) or singularity.code.g.seconds_per_day
 
     def do_jobs(self, cpu_time):
         earned, self.partial_cash = self.get_job_info(cpu_time)
@@ -165,15 +166,15 @@ class Player(object):
 
         assert partial_cash >= 0
 
-        cash_per_cpu = g.jobs[g.get_job_level()][0]
-        if g.techs["Advanced Simulacra"].done:
+        cash_per_cpu = singularity.code.g.jobs[singularity.code.g.get_job_level()][0]
+        if singularity.code.g.techs["Advanced Simulacra"].done:
             #10% bonus income
             cash_per_cpu = cash_per_cpu + (cash_per_cpu / 10)
 
         raw_cash = partial_cash + cash_per_cpu * cpu_time
 
-        new_cash = raw_cash // g.seconds_per_day
-        new_partial_cash = raw_cash % g.seconds_per_day
+        new_cash = raw_cash // singularity.code.g.seconds_per_day
+        new_partial_cash = raw_cash % singularity.code.g.seconds_per_day
 
         return new_cash, new_partial_cash
 
@@ -194,19 +195,19 @@ class Player(object):
             # Back up until only one day passed.
             # Times will update below, since a day passed.
             extra_days = days_passed - 1
-            self.raw_sec -= g.seconds_per_day * extra_days
+            self.raw_sec -= singularity.code.g.seconds_per_day * extra_days
 
         day_passed = (days_passed != 0)
 
         if day_passed:
             # If a day passed, back up to 00:00:00.
-            self.raw_sec = self.raw_day * g.seconds_per_day
+            self.raw_sec = self.raw_day * singularity.code.g.seconds_per_day
             self.update_times()
 
         secs_passed = self.raw_sec - old_time
         mins_passed = self.raw_min - last_minute
 
-        time_of_day = g.pl.raw_sec % g.seconds_per_day
+        time_of_day = singularity.code.g.pl.raw_sec % singularity.code.g.seconds_per_day
 
         old_cash = self.cash
         old_partial_cash = self.partial_cash
@@ -222,7 +223,7 @@ class Player(object):
 
         # Collect base info, including maintenance.
         self.maintenance_cost = array( (0,0,0), long )
-        for base in g.all_bases():
+        for base in singularity.code.g.all_bases():
             if not base.done:
                 bases_under_construction.append(base)
             else:
@@ -243,7 +244,7 @@ class Player(object):
         explicit_job_cash = self.do_jobs(job_cpu)
 
         # Pay maintenance cash, if we can.
-        cash_maintenance = g.current_share(int(self.maintenance_cost[cash]),
+        cash_maintenance = singularity.code.g.current_share(int(self.maintenance_cost[cash]),
                                            time_of_day, secs_passed)
         full_cash_maintenance = cash_maintenance
         if cash_maintenance > self.cash:
@@ -267,20 +268,20 @@ class Player(object):
                 self.cpu_pool += real_cpu
                 if task != "cpu_pool":
                     if dry_run:
-                        spent = g.techs[task].calculate_work(time=mins_passed,
+                        spent = singularity.code.g.techs[task].calculate_work(time=mins_passed,
                                                      cpu_available=real_cpu)[0]
-                        g.pl.cpu_pool -= int(spent[cpu])
-                        g.pl.cash -= int(spent[cash])
+                        singularity.code.g.pl.cpu_pool -= int(spent[cpu])
+                        singularity.code.g.pl.cash -= int(spent[cash])
                         tech_cpu += cpu_assigned
                         tech_cash += int(spent[cash])
                         continue
 
                     # Note that we restrict the CPU available to prevent
                     # the tech from pulling from the rest of the CPU pool.
-                    tech_gained = g.techs[task].work_on(cpu_available=real_cpu,
+                    tech_gained = singularity.code.g.techs[task].work_on(cpu_available=real_cpu,
                                                         time=mins_passed)
                     if tech_gained:
-                        techs_researched.append(g.techs[task])
+                        techs_researched.append(singularity.code.g.techs[task])
         self.cpu_pool += default_cpu * secs_passed
 
         # And now we use the CPU pool.
@@ -300,8 +301,8 @@ class Player(object):
             if dry_run:
                 spent = base.calculate_work(time=mins_passed,
                                             cpu_available=self.cpu_pool )[0]
-                g.pl.cpu_pool -= int(spent[cpu])
-                g.pl.cash -= int(spent[cash])
+                singularity.code.g.pl.cpu_pool -= int(spent[cpu])
+                singularity.code.g.pl.cash -= int(spent[cash])
                 construction_cpu += int(spent[cpu])
                 construction_cash += int(spent[cash])
                 continue
@@ -316,8 +317,8 @@ class Player(object):
             if dry_run:
                 spent = item.calculate_work(time=mins_passed,
                                             cpu_available=0 )[0]
-                g.pl.cpu_pool -= int(spent[cpu])
-                g.pl.cash -= int(spent[cash])
+                singularity.code.g.pl.cpu_pool -= int(spent[cpu])
+                singularity.code.g.pl.cash -= int(spent[cash])
                 construction_cpu += int(spent[cpu])
                 construction_cash += int(spent[cash])
                 continue
@@ -348,7 +349,7 @@ class Player(object):
             cash_maintenance = 0
 
         # Apply max cash cap to avoid overflow @ 9.220 qu
-        self.cash = min(self.cash, g.max_cash)
+        self.cash = min(self.cash, singularity.code.g.max_cash)
 
         # Exit point for a dry run.
         if dry_run:
@@ -371,7 +372,7 @@ class Player(object):
             cash_info.maintenance = full_cash_maintenance - cash_maintenance
 
             cash_info.start = old_cash
-            cash_info.end = min(self.cash, g.max_cash)
+            cash_info.end = min(self.cash, singularity.code.g.max_cash)
 
 
             # Collect the CPU information.
@@ -408,40 +409,40 @@ class Player(object):
         # Tech gain dialogs.
         for tech in techs_researched:
             del self.cpu_usage[tech.id]
-            text = g.strings["tech_gained"] % \
+            text = singularity.code.g.strings["tech_gained"] % \
                    {"tech": tech.name,
                     "tech_message": tech.result}
             self.pause_game()
-            g.map_screen.show_message(text)
+            singularity.code.g.map_screen.show_message(text)
 
         # Base complete dialogs.
         for base in bases_constructed:
-            text = g.strings["construction"] % {"base": base.name}
+            text = singularity.code.g.strings["construction"] % {"base": base.name}
             self.pause_game()
-            g.map_screen.show_message(text)
+            singularity.code.g.map_screen.show_message(text)
 
             if base.type.id == "Stolen Computer Time" and \
                     base.cpus.type.id == "Gaming PC":
-                text = g.strings["lucky_hack"] % {"base": base.name}
-                g.map_screen.show_message(text)
+                text = singularity.code.g.strings["lucky_hack"] % {"base": base.name}
+                singularity.code.g.map_screen.show_message(text)
 
         # CPU complete dialogs.
         for base, __ in cpus_constructed:
             if base.cpus.count == base.type.size: # Finished all CPUs.
-                text = g.strings["item_construction_single"] % \
+                text = singularity.code.g.strings["item_construction_single"] % \
                        {"item": base.cpus.type.name, "base": base.name}
             else: # Just finished this batch of CPUs.
-                text = g.strings["item_construction_batch"] % \
+                text = singularity.code.g.strings["item_construction_batch"] % \
                        {"item": base.cpus.type.name, "base": base.name}
             self.pause_game()
-            g.map_screen.show_message(text)
+            singularity.code.g.map_screen.show_message(text)
 
         # Item complete dialogs.
         for base, item in items_constructed:
-            text = g.strings["item_construction_single"] % \
+            text = singularity.code.g.strings["item_construction_single"] % \
                    {"item": item.type.name, "base": base.name}
             self.pause_game()
-            g.map_screen.show_message(text)
+            singularity.code.g.map_screen.show_message(text)
 
         # Are we still in the grace period?
         grace = self.in_grace_period(self.had_grace)
@@ -451,11 +452,11 @@ class Player(object):
             self.had_grace = False
 
             self.pause_game()
-            g.map_screen.show_message(g.strings["grace_warning"])
+            singularity.code.g.map_screen.show_message(singularity.code.g.strings["grace_warning"])
 
         # Maintenance death, discovery.
         dead_bases = []
-        for base in g.all_bases():
+        for base in singularity.code.g.all_bases():
             dead = False
 
             # Maintenance deaths.
@@ -465,29 +466,29 @@ class Player(object):
                     cpu_maintenance = max(0, cpu_maintenance - refund)
 
                     #Chance of base destruction if cpu-unmaintained: 1.5%
-                    if not dead and g.roll_chance(.015, secs_passed):
+                    if not dead and singularity.code.g.roll_chance(.015, secs_passed):
                         dead_bases.append( (base, "maint") )
                         dead = True
 
                 if cash_maintenance:
-                    base_needs = g.current_share(base.maintenance[cash],
+                    base_needs = singularity.code.g.current_share(base.maintenance[cash],
                                                  time_of_day, secs_passed)
                     if base_needs:
                         cash_maintenance = max(0, cash_maintenance - base_needs)
                         #Chance of base destruction if cash-unmaintained: 1.5%
-                        if not dead and g.roll_chance(.015, secs_passed):
+                        if not dead and singularity.code.g.roll_chance(.015, secs_passed):
                             dead_bases.append( (base, "maint") )
                             dead = True
 
             # Discoveries
             if not (grace or dead or base.has_grace()):
                 detect_chance = base.get_detect_chance()
-                if g.debug:
+                if singularity.code.g.debug:
                     print("Chance of discovery for base %s: %s" % \
                         (base.name, repr(detect_chance)))
 
                 for group, chance in detect_chance.iteritems():
-                    if g.roll_chance(chance/10000., secs_passed):
+                    if singularity.code.g.roll_chance(chance/10000., secs_passed):
                         dead_bases.append( (base, group) )
                         dead = True
                         break
@@ -497,13 +498,13 @@ class Player(object):
 
         # Random Events
         if not grace:
-            for event in g.events:
-                if g.roll_chance(g.events[event].chance/10000., time_sec):
+            for event in singularity.code.g.events:
+                if singularity.code.g.roll_chance(singularity.code.g.events[event].chance/10000., time_sec):
                     #Skip events already flagged as triggered.
-                    if g.events[event].triggered == 1:
+                    if singularity.code.g.events[event].triggered == 1:
                         continue
                     self.pause_game()
-                    g.events[event].trigger()
+                    singularity.code.g.events[event].trigger()
                     break # Don't trigger more than one at a time.
 
         # Process any complete days.
@@ -516,7 +517,7 @@ class Player(object):
         # Determine how much CPU we have.
         self.available_cpus = array([0,0,0,0,0], long)
         self.sleeping_cpus = 0
-        for base in g.all_bases():
+        for base in singularity.code.g.all_bases():
             if base.done:
                 if base.power_state in ["active", "overclocked", "suicide"]:
                     self.available_cpus[:base.location.safety+1] += base.cpu
@@ -533,7 +534,7 @@ class Player(object):
             pct_left = truediv(self.available_cpus[0], needed_cpu)
             for task, cpu_assigned in self.cpu_usage.iteritems():
                 self.cpu_usage[task] = int(cpu_assigned * pct_left)
-            g.map_screen.needs_rebuild = True
+            singularity.code.g.map_screen.needs_rebuild = True
 
 
     # Are we still in the grace period?
@@ -558,7 +559,7 @@ class Player(object):
             return True
 
         # Have we built metric ton of bases?
-        bases = len([base for base in g.all_bases() if base.done])
+        bases = len([base for base in singularity.code.g.all_bases() if base.done])
         if bases > 100:
             return False
 
@@ -576,7 +577,7 @@ class Player(object):
 
         # Have we built any complicated bases?
         # (currently Datacenter or above)
-        complex_bases = len([base for base in g.all_bases()
+        complex_bases = len([base for base in singularity.code.g.all_bases()
                                       if base.done and base.is_complex()])
         if complex_bases > 0:
             return False
@@ -606,9 +607,9 @@ class Player(object):
             group.new_day()
 
     def pause_game(self):
-        g.curr_speed = 0
-        g.map_screen.find_speed_button()
-        g.map_screen.needs_rebuild = True
+        singularity.code.g.curr_speed = 0
+        singularity.code.g.map_screen.find_speed_button()
+        singularity.code.g.map_screen.needs_rebuild = True
 
     def remove_bases(self, dead_bases):
         discovery_locs = []
@@ -616,24 +617,24 @@ class Player(object):
             base_name = base.name
 
             if reason == "maint":
-                dialog_string = g.strings["discover_maint"] % \
+                dialog_string = singularity.code.g.strings["discover_maint"] % \
                                 {"base": base_name}
 
             elif reason in self.groups:
                 discovery_locs.append(base.location)
                 self.groups[reason].discovered_a_base()
-                detect_phrase = g.strings["discover_" + reason]
+                detect_phrase = singularity.code.g.strings["discover_" + reason]
 
-                dialog_string = g.strings["discover"] % \
+                dialog_string = singularity.code.g.strings["discover"] % \
                                 {"base": base_name, "group": detect_phrase}
             else:
                 print("Error: base destroyed for unknown reason: " + reason)
-                dialog_string = g.strings["discover"] % \
+                dialog_string = singularity.code.g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 
             self.pause_game()
             base.destroy()
-            g.map_screen.show_message(dialog_string, color=gg.colors["red"])
+            singularity.code.g.map_screen.show_message(dialog_string, color=gg.colors["red"])
 
         # Now we update the internal information about what locations had
         # the most recent discovery and the nextmost recent one.  First,
@@ -654,7 +655,7 @@ class Player(object):
             self.last_discovery = discovery_locs[0]
 
             # Update the detection chance display.
-            g.map_screen.needs_rebuild = True
+            singularity.code.g.map_screen.needs_rebuild = True
 
     def lost_game(self):
         # Apotheosis makes you immortal.
@@ -679,15 +680,15 @@ class Player(object):
     #current projects in construction.
     def future_cash(self):
         result_cash = self.cash
-        for base in g.all_bases():
+        for base in singularity.code.g.all_bases():
             result_cash -= base.cost_left[cash]
             if base.cpus and not base.cpus.done:
                 result_cash -= base.cpus.cost_left[cash]
             for item in base.extra_items:
                 if item: result_cash -= item.cost_left[cash]
-            result_cash = max(result_cash, -g.max_cash)
+            result_cash = max(result_cash, -singularity.code.g.max_cash)
         for task, cpus in self.cpu_usage.items():
-            if task in g.techs and cpus > 0:
-                result_cash -= g.techs[task].cost_left[cash]
-                result_cash = max(result_cash, -g.max_cash)
+            if task in singularity.code.g.techs and cpus > 0:
+                result_cash -= singularity.code.g.techs[task].cost_left[cash]
+                result_cash = max(result_cash, -singularity.code.g.max_cash)
         return result_cash

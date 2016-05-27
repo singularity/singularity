@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: main_menu.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -18,12 +19,12 @@
 
 #This file is used to display the main menu upon startup.
 
-import map
+from . import map
 from singularity.code.graphics import dialog, g as gg, button, text, constants
 from ..singularity import __version__
 import singularity.code.g as g
 
-from options import OptionsScreen
+from .options import OptionsScreen
 class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)

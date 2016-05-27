@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: button.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -20,11 +21,11 @@
 
 import pygame
 
-import constants
-import g
-import widget
-import text
-import image
+from . import constants
+from . import g
+from . import widget
+from . import text
+from . import image
 
 class Button(text.SelectableText):
     hotkey = widget.causes_rebuild("_hotkey")
@@ -207,7 +208,7 @@ class DialogButton(FunctionButton):
         if not self.dialog:
             raise constants.Handled
         else:
-            import dialog
+            from . import dialog
             raise constants.Handled(dialog.call_dialog(self.dialog, self))
 
 TOGGLE_VALUE = object()

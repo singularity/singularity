@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: map_screen.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, FunnyMan3595,
 #and Anne M. Archibald.
@@ -30,7 +31,7 @@ import time
 
 from pygame.surfarray import pixels_alpha
 
-import location, research, knowledge, finance
+from . import location, research, knowledge, finance
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -263,7 +264,7 @@ class MapScreen(dialog.Dialog):
                                     exit_code=False))
 
         self.menu_dialog = dialog.SimpleMenuDialog(self, buttons=menu_buttons)
-        from options import OptionsScreen
+        from .options import OptionsScreen
         options_button.dialog = OptionsScreen(self.menu_dialog)
         def show_menu():
             exit = dialog.call_dialog(self.menu_dialog, self)

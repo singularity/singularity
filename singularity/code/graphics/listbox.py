@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: listbox.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -20,10 +21,10 @@
 
 import pygame
 
-import constants
-import widget
-import text
-import scrollbar
+from . import constants
+from . import widget
+from . import text
+from . import scrollbar
 
 class Listbox(widget.FocusWidget, text.SelectableText):
     list = widget.causes_rebuild("_list")

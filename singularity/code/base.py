@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: base.py
 #Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
@@ -20,8 +21,8 @@
 #This file contains the base class.
 
 
-import g
-import buyable
+import singularity.code.g
+from . import buyable
 
 
 #TODO: Use this list and convert Base.power_state to a property to enforce this
@@ -57,13 +58,13 @@ class BaseClass(buyable.BuyableClass):
 
         # Adjust by the current suspicion levels ...
         for group in detect_chance:
-            suspicion = g.pl.groups[group].suspicion
+            suspicion = singularity.code.g.pl.groups[group].suspicion
             detect_chance[group] *= 10000 + suspicion
             detect_chance[group] /= 10000
 
         # ... and further adjust based on technology ...
         for group in detect_chance:
-            discover_bonus = g.pl.groups[group].discover_bonus
+            discover_bonus = singularity.code.g.pl.groups[group].discover_bonus
             detect_chance[group] *= discover_bonus
             detect_chance[group] /= 10000
 
@@ -75,15 +76,15 @@ class BaseClass(buyable.BuyableClass):
         # nearest percent.
         if not accurate:
             for group in detect_chance:
-                detect_chance[group] = g.nearest_percent(detect_chance[group])
+                detect_chance[group] = singularity.code.g.nearest_percent(detect_chance[group])
 
         return detect_chance
 
     def get_detect_info(self, location):
-        if not g.techs["Socioanalytics"].done:
-            return g.strings["detect_chance_unknown_base"].replace(" ", u"\xA0")
+        if not singularity.code.g.techs["Socioanalytics"].done:
+            return singularity.code.g.strings["detect_chance_unknown_base"].replace(" ", u"\xA0")
 
-        accurate = g.techs["Advanced Socioanalytics"].done
+        accurate = singularity.code.g.techs["Advanced Socioanalytics"].done
         detect_modifier = 1 / location.modifiers.get("stealth", 1)
         chance = self.calc_discovery_chance(accurate, detect_modifier)
         detect_template = _("Detection chance:") + "\n" + \
@@ -91,10 +92,10 @@ class BaseClass(buyable.BuyableClass):
                           _("SCIENCE") + u":\xA0%s\n"   + \
                           _("COVERT")  + u":\xA0%s\n"   + \
                           _("PUBLIC")  + u":\xA0%s"
-        return detect_template % (g.to_percent(chance.get("news", 0)),
-                                  g.to_percent(chance.get("science", 0)),
-                                  g.to_percent(chance.get("covert", 0)),
-                                  g.to_percent(chance.get("public", 0)))
+        return detect_template % (singularity.code.g.to_percent(chance.get("news", 0)),
+                                  singularity.code.g.to_percent(chance.get("science", 0)),
+                                  singularity.code.g.to_percent(chance.get("covert", 0)),
+                                  singularity.code.g.to_percent(chance.get("public", 0)))
 
     def get_info(self, location):
         raw_cost = self.cost[:]
@@ -114,11 +115,11 @@ class BaseClass(buyable.BuyableClass):
         location_message = ""
         if "cpu" in location.modifiers:
             if location.modifiers["cpu"] > 1:
-                modifier = g.strings["cpu_bonus"]
+                modifier = singularity.code.g.strings["cpu_bonus"]
             else:
-                modifier = g.strings["cpu_penalty"]
+                modifier = singularity.code.g.strings["cpu_penalty"]
             location_message = "\n\n" + \
-                g.strings["location_modifiers"] % dict(modifiers=modifier)
+                singularity.code.g.strings["location_modifiers"] % dict(modifiers=modifier)
 
         template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
                    _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s%s"
@@ -131,7 +132,7 @@ class Base(buyable.Buyable):
         super(Base, self).__init__(type)
 
         self.name = name
-        self.started_at = g.pl.raw_min
+        self.started_at = singularity.code.g.pl.raw_min
 
         self.location = None
 
@@ -148,12 +149,12 @@ class Base(buyable.Buyable):
         if self.type.force_cpu:
             # 1% chance for a Stolen Computer Time base to have a Gaming PC
             # instead.  If the base is pre-built, ignore this.
-            if self.type.id == "Stolen Computer Time" and g.roll_percent(100) \
+            if self.type.id == "Stolen Computer Time" and singularity.code.g.roll_percent(100) \
                     and not built:
-                self.cpus = g.item.Item(g.items["Gaming PC"], base=self,
+                self.cpus = singularity.code.g.item.Item(singularity.code.g.items["Gaming PC"], base=self,
                                         count=self.type.size)
             else:
-                self.cpus = g.item.Item(g.items[self.type.force_cpu],
+                self.cpus = singularity.code.g.item.Item(singularity.code.g.items[self.type.force_cpu],
                                         base=self, count=self.type.size)
             self.cpus.finish()
 
@@ -234,15 +235,15 @@ class Base(buyable.Buyable):
             self.power_state = self.power_state.lower()
 
             # Update CPU usage.
-            if self.studying in g.techs:
-                g.pl.cpu_usage[self.studying] = \
-                    g.pl.cpu_usage.get(self.studying, 0) + self.cpu
+            if self.studying in singularity.code.g.techs:
+                singularity.code.g.pl.cpu_usage[self.studying] = \
+                    singularity.code.g.pl.cpu_usage.get(self.studying, 0) + self.cpu
             elif "Jobs" in self.studying:
-                g.pl.cpu_usage["jobs"] = \
-                    g.pl.cpu_usage.get("jobs", 0) + self.cpu
+                singularity.code.g.pl.cpu_usage["jobs"] = \
+                    singularity.code.g.pl.cpu_usage.get("jobs", 0) + self.cpu
             elif self.studying == "CPU Pool":
-                g.pl.cpu_usage["cpu_pool"] = \
-                    g.pl.cpu_usage.get("cpu_pool", 0) + self.cpu
+                singularity.code.g.pl.cpu_usage["cpu_pool"] = \
+                    singularity.code.g.pl.cpu_usage.get("cpu_pool", 0) + self.cpu
 
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full
@@ -251,7 +252,7 @@ class Base(buyable.Buyable):
         # Get the base chance from the universal function.
         detect_chance = calc_base_discovery_chance(self.type.id)
 
-        for group in g.pl.groups:
+        for group in singularity.code.g.pl.groups:
             detect_chance.setdefault(group, 0)
 
         # Factor in the suspicion adjustments for this particular base ...
@@ -289,7 +290,7 @@ class Base(buyable.Buyable):
         # to the nearest percent.
         if not accurate:
             for group in detect_chance:
-                detect_chance[group] = g.nearest_percent(detect_chance[group])
+                detect_chance[group] = singularity.code.g.nearest_percent(detect_chance[group])
 
         return detect_chance
 
@@ -303,18 +304,18 @@ class Base(buyable.Buyable):
     def allow_study(self, tech_name):
         if not self.done:
             return False
-        elif tech_name in g.jobs \
+        elif tech_name in singularity.code.g.jobs \
                 or tech_name in ("CPU Pool", ""):
             return True
         elif tech_name == "Sleep":
             return not self.is_building()
         else:
             if self.location:
-                return self.location.safety >= g.techs[tech_name].danger
+                return self.location.safety >= singularity.code.g.techs[tech_name].danger
 
             # Should only happen for the fake base.
             for region in self.type.regions:
-                if g.locations[region].safety >= g.techs[tech_name].danger:
+                if singularity.code.g.locations[region].safety >= singularity.code.g.techs[tech_name].danger:
                     return True
             return False
 
@@ -322,8 +323,8 @@ class Base(buyable.Buyable):
         if self.grace_over:
             return False
 
-        age = g.pl.raw_min - self.started_at
-        grace_time = (self.total_cost[buyable.labor] * g.pl.grace_multiplier) / 100
+        age = singularity.code.g.pl.raw_min - self.started_at
+        grace_time = (self.total_cost[buyable.labor] * singularity.code.g.pl.grace_multiplier) / 100
         if age > grace_time:
             self.grace_over = True
             return False
@@ -378,5 +379,5 @@ class Base(buyable.Buyable):
 # told to be inaccurate, it rounds the value to the nearest percent.
 def calc_base_discovery_chance(base_type_name, accurate = True,
                                extra_factor = 1):
-    return g.base_type[base_type_name].calc_discovery_chance(accurate,
+    return singularity.code.g.base_type[base_type_name].calc_discovery_chance(accurate,
                                                              extra_factor)

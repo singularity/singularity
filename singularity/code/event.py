@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 #file: event.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -19,7 +20,7 @@ from __future__ import print_function
 
 #This file contains the event class.
 
-import g
+import singularity.code.g
 #detection = (news, science, covert, person)
 
 class Event(object):
@@ -37,7 +38,7 @@ class Event(object):
         self.unique = unique
         self.triggered = 0
     def trigger(self):
-        g.map_screen.show_message(self.description)
+        singularity.code.g.map_screen.show_message(self.description)
 
         # If this is a unique event, mark it as triggered.
         if self.unique:
@@ -45,15 +46,15 @@ class Event(object):
 
         # TODO: Merge this code with its duplicate in tech.py.
         what, who = self.result[0].split("_", 1)
-        if who in g.pl.groups:
+        if who in singularity.code.g.pl.groups:
             if what == "suspicion":
-                g.pl.groups[who].alter_suspicion_decay(self.result[1])
+                singularity.code.g.pl.groups[who].alter_suspicion_decay(self.result[1])
             elif what == "discover":
-                g.pl.groups[who].alter_discover_bonus(-self.result[1])
+                singularity.code.g.pl.groups[who].alter_discover_bonus(-self.result[1])
             else:
                 print("Unknown bonus '%s' in event %s." % (what, self.name))
         elif who == "onetime" and what == "suspicion":
-            for group in g.pl.groups.values():
+            for group in singularity.code.g.pl.groups.values():
                 group.alter_suspicion(-self.result[1])
         else:
             print("Unknown group/bonus '%s' in event %s. " % (self.result[0],

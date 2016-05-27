@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: dialog.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -22,12 +23,12 @@ import bisect
 import time
 import pygame
 
-import constants
-import g
-import widget
-import text
-import button
-import listbox
+from . import constants
+from . import g
+from . import widget
+from . import text
+from . import button
+from . import listbox
 
 KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
           pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7, pygame.K_KP8: 8,

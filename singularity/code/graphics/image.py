@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: image.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -20,8 +21,8 @@
 
 import pygame
 
-import constants
-import widget
+from . import constants
+from . import widget
 
 def scale(*args, **kwargs):
     try:

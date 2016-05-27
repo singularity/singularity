@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 #file: code/g.py
 #Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,
 #                   MestreLion
@@ -32,8 +33,9 @@ import polib
 # are made where needed.
 import locale
 
-import player, base, tech, item, event, location, buyable, statistics
-import graphics.g
+import singularity.code.item as item
+from . import player, base, tech, event, location, buyable, statistics
+from .graphics import g as graphicsg
 
 stats = statistics.Statistics()
 
@@ -1097,7 +1099,7 @@ def load_string_defs(lang=None):
 
             # Load button labels/hotkeys
             buttons.update(string_section)
-            graphics.g.buttons.update(buttons)
+            graphicsg.buttons.update(buttons)
 
         elif string_section["id"] == "help":
 

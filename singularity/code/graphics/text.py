@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import absolute_import
 #file: text.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -21,9 +22,9 @@ from __future__ import print_function
 
 import pygame
 
-import widget
-import constants
-import g
+from . import widget
+from . import constants
+from . import g
 
 DEBUG = False
 

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #file: slider.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -20,10 +21,10 @@
 
 import pygame
 
-import constants
-import g
-import widget
-import button
+from . import constants
+from . import g
+from . import widget
+from . import button
 
 def calc_max(elements, size):
     return max(elements - size, 0)
