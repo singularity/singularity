@@ -19,10 +19,10 @@
 #This file contains the screen to display finance information.
 
 
-import code.g as g
+import singularity.code.g as g
 import pygame
 
-from code.graphics import widget, dialog, button, text, constants, g as gg
+from singularity.code.graphics import widget, dialog, button, text, constants, g as gg
 
 
 class FinanceScreen(dialog.Dialog):

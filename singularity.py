@@ -20,4 +20,6 @@
 
 #This file is the starting file for the game. Run it to start the game.
 
-import code.singularity
+import singularity
+
+singularity.main()

@@ -20,8 +20,8 @@
 
 import random
 
-from code import g, base
-from code.graphics import text, button, dialog, constants, listbox, g as gg
+from singularity.code import g, base
+from singularity.code.graphics import text, button, dialog, constants, listbox, g as gg
 
 import base as basescreen
 

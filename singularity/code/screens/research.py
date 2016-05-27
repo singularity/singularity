@@ -21,8 +21,8 @@
 from numpy import array
 import pygame
 
-from code import g
-from code.graphics import dialog, button, slider, text, constants, listbox, g as gg
+from singularity.code import g
+from singularity.code.graphics import dialog, button, slider, text, constants, listbox, g as gg
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):

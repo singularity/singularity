@@ -22,9 +22,9 @@
 import locale
 import pygame
 
-import code.g as g
-import code.graphics.g as gg
-from code.graphics import constants, widget, dialog, text, button
+import singularity.code.g as g
+import singularity.code.graphics.g as gg
+from singularity.code.graphics import constants, widget, dialog, text, button
 
 state_colors = dict(
     active          = gg.colors["green"],

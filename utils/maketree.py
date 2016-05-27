@@ -37,12 +37,12 @@ else:
     sys.path.append(esdir)
 
 try:
-    import code.g as g
+    import singularity.code.g as g
     g.set_language()
     g.load_techs()
     g.load_items()
 except ImportError:
-    sys.exit("Could not find game's code.g")
+    sys.exit("Could not find game's singularity.code.g")
 
 so_far = ""
 

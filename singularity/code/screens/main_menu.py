@@ -19,8 +19,8 @@
 #This file is used to display the main menu upon startup.
 
 import map
-from code.graphics import dialog, g as gg, button, text, constants
-import code.g as g
+from singularity.code.graphics import dialog, g as gg, button, text, constants
+import singularity.code.g as g
 
 from options import OptionsScreen
 class MainMenu(dialog.TopDialog):

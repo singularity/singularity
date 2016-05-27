@@ -24,8 +24,8 @@ import pygame
 import json
 
 
-from code.graphics import constants, dialog, button, listbox, text, g as gg
-import code.g as g
+from singularity.code.graphics import constants, dialog, button, listbox, text, g as gg
+import singularity.code.g as g
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Integrate "Save Options to Disk" functionality in OK button.
