@@ -25,8 +25,9 @@ setup(
     zip_safe=False,
     include_package_data=True,
     install_requires=[
-      'numpy',
-      'pygame',
+        'numpy',
+        'pygame',
+        'polib',
     ],
     entry_points={
         'gui_scripts': [

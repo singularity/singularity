@@ -270,7 +270,7 @@ class Locale(object):
                 self.native_name  = locale.getDisplayName(locale)
 
         if self.source == 'pofiles':
-            import singularity.code.polib as polib
+            import polib
             import os
             self.getAvailableLocales = \
                 lambda: [osp.splitext(filename)[0].split("_", 1)[1]
