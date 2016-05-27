@@ -33,7 +33,8 @@ KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
           pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7, pygame.K_KP8: 8,
           pygame.K_KP9: 9}
 
-def move_mouse((dx, dy)):
+def move_mouse(dxy):
+    (dx, dy) = dxy
     old_x, old_y = pygame.mouse.get_pos()
     x = old_x+dx
     y = old_y+dy
