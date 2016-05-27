@@ -19,8 +19,8 @@
 #This file is used to display the knowledge lists.
 
 import pygame
-from code import g
-from code.graphics import text, button, dialog, widget, constants, listbox, g as gg
+from singularity.code import g
+from singularity.code.graphics import text, button, dialog, widget, constants, listbox, g as gg
 
 
 class KnowledgeScreen(dialog.Dialog):

@@ -21,9 +21,9 @@
 
 import pygame
 
-from code import g
-from code.graphics import g as gg
-from code.graphics import dialog, constants, image, button, text, widget
+from singularity.code import g
+from singularity.code.graphics import g as gg
+from singularity.code.graphics import dialog, constants, image, button, text, widget
 
 import math
 import time
@@ -466,7 +466,7 @@ class MapScreen(dialog.Dialog):
     def show(self):
         self.force_update()
 
-        from code.safety import safe_call
+        from singularity.code.safety import safe_call
         # By using safe call here (and only here), if an error is raised
         # during the game, it will drop back out of all the menus, without
         # doing anything, and open the pause dialog, so that the player can

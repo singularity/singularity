@@ -47,7 +47,7 @@ class Button(text.SelectableText):
                  text_shrink_factor = .825, priority = 100, **kwargs):
         self.parent = parent
 
-        from code.g import get_hotkey, strip_hotkey
+        from singularity.code.g import get_hotkey, strip_hotkey
         autohotkey = kwargs.pop('autohotkey',False)
         if autohotkey:
             text = kwargs.get('text',"")
@@ -129,7 +129,7 @@ class Button(text.SelectableText):
            This method is called directly by the GUI handler, and should be
            overwritten only to remove the click it plays."""
 
-        from code.g import play_sound
+        from singularity.code.g import play_sound
         play_sound("click")
         self.activated(event)
 

@@ -50,9 +50,9 @@ else:
     sys.path.append(esdir)
 
 try:
-    import code.g as g
+    import singularity.code.g as g
 except ImportError:
-    sys.exit("Could not find game's code.g")
+    sys.exit("Could not find game's singularity.code.g")
 
 
 class Locale(object):
@@ -270,7 +270,7 @@ class Locale(object):
                 self.native_name  = locale.getDisplayName(locale)
 
         if self.source == 'pofiles':
-            import code.polib as polib
+            import singularity.code.polib as polib
             import os
             self.getAvailableLocales = \
                 lambda: [osp.splitext(filename)[0].split("_", 1)[1]
