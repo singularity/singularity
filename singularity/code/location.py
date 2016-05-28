@@ -116,8 +116,8 @@ class Location(buyable.BuyableClass):
     def __hash__(self):
         return hash(self.id)
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         if type(other) in (str, unicode):
-            return cmp(self.id, other)
+            return self.id < other
         else:
-            return cmp(self.id, other.id)
+            return self.id < other.id

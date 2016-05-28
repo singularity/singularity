@@ -369,11 +369,11 @@ class Base(buyable.Buyable):
         # bases aren't considered equal.
         return (-self.type.size, -self.cpu, self.name, id(self))
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         if isinstance(other, Base):
-            return cmp(self.sort_tuple(), other.sort_tuple())
+            return self.sort_tuple() < other.sort_tuple()
         else:
-            return -1
+            return True
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.  If

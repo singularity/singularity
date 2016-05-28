@@ -41,11 +41,11 @@ class Tech(buyable.Buyable):
             # place.
             super(Tech, self).finish()
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         if not isinstance(other, Tech):
-            return -1
+            return True
         else:
-            return cmp(self.type, other.type)
+            return self.type < other.type
 
     def get_info(self):
         cost = self.type.describe_cost(self.total_cost, True)
