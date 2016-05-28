@@ -161,11 +161,11 @@ def set_language(lang=None, force=False):
     # first, then the default encoding. The user's default language is not
     # paired with UTF-8.
     # If all of that fails, we hope locale magically does the right thing.
-    for attempt in [ language + ".UTF-8",
-                     language,
-                     "",
-                     default_language + ".UTF-8",
-                     default_language]:
+    for attempt in [ (language, "UTF-8"),
+                     (language, None),
+                     ("", None),
+                     (default_language, "UTF-8"),
+                     (default_language, None)]:
         try:
             locale.setlocale(locale.LC_ALL, attempt)
             break
