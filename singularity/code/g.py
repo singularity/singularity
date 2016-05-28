@@ -848,7 +848,7 @@ non-mandatory missing or otherwise unreadable files
     config = configparser.RawConfigParser()
     filename = os.path.join(data_dir, file)
     try:
-        config.readfp(open(filename, "r"))
+        config.readfp(open(filename, "r", encoding='utf-8'))
 
     except IOError as reason:
         # Silently ignore non-mandatory missing files
