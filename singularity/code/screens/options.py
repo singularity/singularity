@@ -100,7 +100,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         rows = 2
         cols = 4
         def xpos(i): return .16 + .16 *    (i%cols)
-        def ypos(i): return .08 + .07 * int(i/cols)
+        def ypos(i): return .08 + .07 * int(i//cols)
 
         for index, (xres, yres) in enumerate(sorted(gg.resolutions[0:rows*cols])):
             self.resolution_group.add(OptionButton(self,

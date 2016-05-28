@@ -480,9 +480,9 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
-    if raw_time/60 > 48:
+    if raw_time//60 > 48:
         return str(raw_time/(24*60)) +" "+_("days")
-    elif raw_time/60 > 1:
+    elif raw_time//60 > 1:
         return str(raw_time/(60)) +" "+_("hours")
     else:
         return str(raw_time) +" "+_("minutes")
@@ -1172,7 +1172,7 @@ def new_game(difficulty):
     curr_speed = 1
     global pl
 
-    pl = player.Player((50 / difficulty) * 100, difficulty = difficulty)
+    pl = player.Player((50 // difficulty) * 100, difficulty = difficulty)
     if difficulty < 3:
         pl.interest_rate = 5
         pl.labor_bonus = 2500

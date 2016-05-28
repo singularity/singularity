@@ -167,7 +167,7 @@ class Dialog(text.Text):
         if self.needs_timer == None:
             self.needs_timer = bool(self.handlers.get(constants.TICK, False))
         if self.needs_timer or force:
-            pygame.time.set_timer(pygame.USEREVENT, 1000 / g.FPS)
+            pygame.time.set_timer(pygame.USEREVENT, 1000 // g.FPS)
 
     def stop_timer(self):
         pygame.time.set_timer(pygame.USEREVENT, 0)
