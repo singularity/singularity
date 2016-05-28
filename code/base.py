@@ -61,13 +61,13 @@ class BaseClass(buyable.BuyableClass):
         for group in detect_chance:
             suspicion = g.pl.groups[group].suspicion
             detect_chance[group] *= 10000 + suspicion
-            detect_chance[group] /= 10000
+            detect_chance[group] //= 10000
 
         # ... and further adjust based on technology ...
         for group in detect_chance:
             discover_bonus = g.pl.groups[group].discover_bonus
             detect_chance[group] *= discover_bonus
-            detect_chance[group] /= 10000
+            detect_chance[group] //= 10000
 
         # ... and the given factor.
         for group in detect_chance:
@@ -209,7 +209,7 @@ class Base(buyable.Buyable):
         if self.location and "cpu" in self.location.modifiers:
             compute_bonus = compute_bonus * self.location.modifiers["cpu"]
 
-        self.cpu = max(1, int(self.raw_cpu * compute_bonus / 10000))
+        self.cpu = max(1, int(self.raw_cpu * compute_bonus // 10000))
 
     def convert_from(self, save_version):
         super(Base, self).convert_from(save_version)
@@ -283,25 +283,25 @@ class Base(buyable.Buyable):
         # Factor in the suspicion adjustments for this particular base ...
         for group, suspicion in self.suspicion.iteritems():
             detect_chance[group] *= 10000 + suspicion
-            detect_chance[group] /= 10000
+            detect_chance[group] //= 10000
 
         # ... and any items built with discover_bonus ...
         base_qual = self.get_quality_for("discover_modifier")
         for group in detect_chance:
             detect_chance[group] *= 10000 - base_qual
-            detect_chance[group] /= 10000
+            detect_chance[group] //= 10000
 
         # ... and its location ...
         if self.location:
             multiplier = self.location.discovery_bonus()
             for group in detect_chance:
                 detect_chance[group] *= multiplier
-                detect_chance[group] /= 100
+                detect_chance[group] //= 100
 
         # ... and its power state.
         if self.done and self.power_state == "sleep":
             for group in detect_chance:
-                detect_chance[group] /= 2
+                detect_chance[group] //= 2
 
         # Lastly, if we're not returning the accurate values, adjust
         # to the nearest percent.
