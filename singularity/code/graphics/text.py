@@ -28,7 +28,6 @@ from builtins import range
 #This file contains the (non-editable) text widget AKA label.
 
 import pygame
-import itertools
 
 from . import widget
 from . import constants
@@ -181,7 +180,7 @@ def print_string(surface, string_to_print, xy_orig, font, styles, align, valign,
 
 
 def print_line(surface, xy, font, chunks, styles):
-    for chunk, (color, bgcolor, underline) in itertools.izip(chunks, styles):
+    for chunk, (color, bgcolor, underline) in zip(chunks, styles):
         size = font.size(chunk)
 
         # Fill the background, if any.
@@ -633,7 +632,7 @@ class StyledText(ChunkedText):
         if self.styles:
             offset = 0
             styles = []
-            for chunk, style in itertools.izip(self.chunks, self.styles):
+            for chunk, style in zip(self.chunks, self.styles):
                 offset += len(chunk)
                 styles.append(list(style) + [offset])
             styles[-1][-1] = 0
