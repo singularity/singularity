@@ -93,10 +93,9 @@ font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_r5_pre"
+current_save_version = "singularity_savefile_r5_pre2"
 savefile_translation = {
-    "singularity_savefile_r4": 4,
-    "singularity_savefile_r5_pre": 4.91,
+    "singularity_savefile_r5_pre2": 4.92,
 }
 
 data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
