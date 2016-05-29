@@ -112,8 +112,11 @@ def call_dialog(dialog, parent=None):
     return retval
 
 def insort_all(sorted_list, items):
-    for item in items:
-        bisect.insort(sorted_list, item)
+    sorted_list.extend(items)
+    sorted_list.sort(key=lambda x: x[0])
+    # TODO: Reimplement bisect
+    # for item in items:
+    #     bisect.insort(sorted_list, item)
 
 class Dialog(text.Text):
     """A Dialog is a Widget that has its own event loop and can be faded out."""
@@ -213,20 +216,28 @@ class Dialog(text.Text):
                 return result
         self.stop_timer()
 
-    def add_handler(self, type, handler, priority = 100):
+    def add_handler(self, handler_type, handler, priority = 100):
         """Adds a handler of the given type, with the given priority."""
-        bisect.insort( self.handlers.setdefault(type, []),
-                       (priority, handler) )
+        handlers = self.handlers.setdefault(handler_type, [])
+        handlers.append((priority, handler))
+        handlers.sort(key=lambda x: x[0])
+        # TODO: Reimplement bisect
+        # bisect.insort( self.handlers.setdefault(type, []),
+        #                (priority, handler) )
 
-    def remove_handler(self, type, handler):
+    def remove_handler(self, handler_type, handler):
         """Removes all instances of the given handler from the given type."""
-        self.handlers[type] = [h for h in self.handlers.get(type, [])
+        self.handlers[handler_type] = [h for h in self.handlers.get(handler_type, [])
                                  if h[1] != handler]
 
     def add_key_handler(self, key, handler, priority = 100):
         """Adds a key handler to the given key, with the given priority."""
-        bisect.insort( self.key_handlers.setdefault(key, []),
-                       (priority, handler) )
+        key_handlers = self.key_handlers.setdefault(key, [])
+        key_handlers.append((priority, handler))
+        key_handlers.sort(key=lambda x: x[0])
+        # TODO: Reimplement bisect
+        # bisect.insort( self.key_handlers.setdefault(key, []),
+        #                (priority, handler) )
 
     def remove_key_handler(self, key, handler):
         """Removes all instances of the given handler from the given key."""
