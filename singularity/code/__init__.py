@@ -1,4 +1,7 @@
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 # A dirty hack to merge stdlib's "code" module to local namespace
 # Allows IDEs and debuggers that import code, like PyDev, to work properly
 # In the future this package should be renamed to "src" so it does not collide

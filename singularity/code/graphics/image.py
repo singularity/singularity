@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from __future__ import division
+from __future__ import print_function
 from past.utils import old_div
 #file: image.py
 #Copyright (C) 2008 FunnyMan3595
