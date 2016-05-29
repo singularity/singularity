@@ -250,7 +250,8 @@ class Widget(object):
         """Creates and returns a collision rect for this widget."""
         pos = array(self.real_pos)
         if self.parent:
-            pos += self.parent.collision_rect[:2]
+            pos += [self.parent.collision_rect[0],
+                    self.parent.collision_rect[1]]
 
         return pygame.Rect(pos, self.real_size)
 
