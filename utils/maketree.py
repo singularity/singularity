@@ -24,6 +24,7 @@
 from os import system
 import os.path as osp
 import sys
+import itertools
 
 if __name__ == '__main__':
     myname = sys.argv[0]
@@ -47,8 +48,8 @@ except ImportError:
 so_far = ""
 
 def cost(c):
-    c = [ k/f for f, k in zip([1000, 86400, 24*60], c)]
-    s = ', '.join(['%s %s' % (g.to_money(k), label) for label, k in zip(["money", "CPU", "days"], c) if k])
+    c = [ k/f for f, k in itertools.izip([1000, 86400, 24*60], c)]
+    s = ', '.join(['%s %s' % (g.to_money(k), label) for label, k in itertools.izip(["money", "CPU", "days"], c) if k])
     return s and '\\n'+s or ''
 
 j = dict([ (v[1], ',fillcolor="#ffcccc"') for k, v in g.jobs.items() ])
