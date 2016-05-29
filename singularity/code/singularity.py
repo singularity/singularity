@@ -1,6 +1,8 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
 #file: code/singularity.py
 #Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, MestreLion
 #This file is part of Endgame: Singularity.
@@ -39,7 +41,7 @@ except ImportError:
     raise SystemExit("Endgame: Singularity requires pygame.")
 
 import sys
-import ConfigParser
+import configparser
 import os.path
 import optparse
 import logging
@@ -79,7 +81,7 @@ save_dir = g.get_save_folder(True)
 save_loc = os.path.join(save_dir, "prefs.dat")
 if os.path.exists(save_loc):
 
-    prefs = ConfigParser.SafeConfigParser()
+    prefs = configparser.SafeConfigParser()
     savefile = open(save_loc, "r")
     try:
         prefs.readfp(savefile)

@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
 #file: dialog.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.

@@ -22,7 +22,9 @@
 
 
 from __future__ import unicode_literals
-import ConfigParser
+from future import standard_library
+standard_library.install_aliases()
+import configparser
 import optparse
 import os.path
 import sys
@@ -157,7 +159,7 @@ TODO: Describe better.
         if source:
             source_filename = prefix + "_" + source + ".dat"
 
-        dest_parser = ConfigParser.RawConfigParser()
+        dest_parser = configparser.RawConfigParser()
         dest_filepath = os.path.join(trans_path, dest_filename)
 
         # If we're not restarting, try to preload the translation with what's
@@ -205,7 +207,7 @@ TODO: Describe better.
             required = read_elem["required"]
 
             # Read the data from this translation file.
-            source_parser = ConfigParser.RawConfigParser()
+            source_parser = configparser.RawConfigParser()
             source_filepath = os.path.join(trans_path, filename)
             try:
                 if verbose:

@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
 #file: options.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -20,7 +22,7 @@ from __future__ import unicode_literals
 #This file is used to display the options screen.
 
 import os, sys
-import ConfigParser
+import configparser
 import pygame
 import json
 
@@ -389,7 +391,7 @@ def set_language_properly(language):
 
 def save_options():
     # Build a ConfigParser for writing the various preferences out.
-    prefs = ConfigParser.SafeConfigParser()
+    prefs = configparser.SafeConfigParser()
     prefs.add_section("Preferences")
     prefs.set("Preferences", "fullscreen", unicode(bool(gg.fullscreen)))
     prefs.set("Preferences", "nosound",    unicode(bool(g.nosound)))

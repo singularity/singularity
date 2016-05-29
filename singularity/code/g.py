@@ -1,6 +1,8 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
 #file: code/g.py
 #Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,
 #                   MestreLion
@@ -22,10 +24,10 @@ from __future__ import unicode_literals
 
 #This file contains all global objects.
 
-import ConfigParser
+import configparser
 import pygame
 import os.path
-import cPickle
+import pickle
 import random
 import sys
 import polib
@@ -546,12 +548,12 @@ def save_game(savegame_name):
     save_loc = os.path.join(save_dir, savegame_name + ".sav")
     savefile=open(save_loc, 'w')
 
-    cPickle.dump(current_save_version, savefile)
-    cPickle.dump(pl, savefile)
-    cPickle.dump(curr_speed, savefile)
-    cPickle.dump(techs, savefile)
-    cPickle.dump(locations, savefile)
-    cPickle.dump(events, savefile)
+    pickle.dump(current_save_version, savefile)
+    pickle.dump(pl, savefile)
+    pickle.dump(curr_speed, savefile)
+    pickle.dump(techs, savefile)
+    pickle.dump(locations, savefile)
+    pickle.dump(events, savefile)
 
     savefile.close()
 
@@ -572,16 +574,16 @@ def load_game(loadgame_name):
             return False
 
     loadfile = open(load_loc, 'r')
-    unpickle = cPickle.Unpickler(loadfile)
+    unpickle = pickle.Unpickler(loadfile)
 
     def find_class(module_name, class_name):
         # For cPickle
-        import copy_reg
+        import copyreg
         import numpy.core.multiarray
         save_classes = dict(
             player_class=player.Player,
             Player=player.Player,
-            _reconstructor = copy_reg._reconstructor,
+            _reconstructor = copyreg._reconstructor,
             object=object,
             array=list,  # This is the old buyable.array.
                          # We just treat it as a list for conversion purposes.
@@ -840,7 +842,7 @@ parsing-related errors, always print error message. For IOErrors silently ignore
 non-mandatory missing or otherwise unreadable files
 """
 
-    config = ConfigParser.RawConfigParser()
+    config = configparser.RawConfigParser()
     filename = os.path.join(data_dir, file)
     try:
         config.readfp(open(filename, "r"))
@@ -1398,8 +1400,8 @@ def strip_hotkey(string):    return hotkey(string)['text']
 def hotkey_position(string): return hotkey(string)['pos']
 
 # Initialization code
-import __builtin__
-__builtin__.__dict__['_'] = translate
+import builtins
+builtins.__dict__['_'] = translate
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()
