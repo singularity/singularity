@@ -310,7 +310,7 @@ class MapScreen(dialog.Dialog):
         self.speed_buttons = button.ButtonGroup()
         hpos = .38
         for index, (text_, hsize, speed) in enumerate(speed_button_souls):
-            hotkey = str(index)
+            hotkey = unicode(index)
             b = SpeedButton(self, (hpos, 0), (hsize, .04),
                             text=text_, hotkey=hotkey,
                             base_font=gg.font[0], text_shrink_factor=.75,

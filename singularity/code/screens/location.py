@@ -267,7 +267,7 @@ def generate_base_name(location, base_type):
         if random.random() < 0.3: # 30% chance.
             number = random.choice(significant_numbers)
         else:
-            number = str(random.randint(0, 32767))
+            number = unicode(random.randint(0, 32767))
 
         city   = random.choice(location.cities)
         flavor = random.choice(base_type.flavor)

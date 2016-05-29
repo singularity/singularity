@@ -482,11 +482,11 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time//60 > 48:
-        return str(raw_time/(24*60)) +" "+_("days")
+        return unicode(raw_time/(24*60)) +" "+_("days")
     elif raw_time//60 > 1:
-        return str(raw_time/(60)) +" "+_("hours")
+        return unicode(raw_time/(60)) +" "+_("hours")
     else:
-        return str(raw_time) +" "+_("minutes")
+        return unicode(raw_time) +" "+_("minutes")
 
 # Generator function for iterating through all bases.
 def all_bases(with_loc = False):
@@ -1032,7 +1032,7 @@ def load_events():
             sys.stderr.write("Error with results given: %s\n" % repr(result_list))
             sys.exit(1)
 
-        event_result = (str(result_list[0]), int(result_list[1]))
+        event_result = (unicode(result_list[0]), int(result_list[1]))
 
         # Build the actual event object.
         events[event_name["id"]] = event.Event(
