@@ -487,11 +487,11 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time//60 > 48:
-        return unicode(old_div(raw_time,(24*60))) +" "+_("days")
+        return str(old_div(raw_time,(24*60))) +" "+_("days")
     elif raw_time//60 > 1:
-        return unicode(old_div(raw_time,(60))) +" "+_("hours")
+        return str(old_div(raw_time,(60))) +" "+_("hours")
     else:
-        return unicode(raw_time) +" "+_("minutes")
+        return str(raw_time) +" "+_("minutes")
 
 # Generator function for iterating through all bases.
 def all_bases(with_loc = False):
@@ -879,12 +879,12 @@ non-mandatory missing or otherwise unreadable files
             if len(option) > 6 and option[-5:] == "_list":
 
                 # Break it into elements separated by |.
-                item_dict[option[:-5]] = [unicode(x.strip()) for x in
+                item_dict[option[:-5]] = [str(x.strip()) for x in
                  config.get(item_id, option).split("|")]
             else:
 
                 # Otherwise, just grab the data.
-                item_dict[option] = unicode(config.get(item_id, option).strip())
+                item_dict[option] = str(config.get(item_id, option).strip())
 
         # Add this to the list of all objects we are returning.
         return_list.append(item_dict)
@@ -1035,7 +1035,7 @@ def load_events():
             sys.stderr.write("Error with results given: %s\n" % repr(result_list))
             sys.exit(1)
 
-        event_result = (unicode(result_list[0]), int(result_list[1]))
+        event_result = (str(result_list[0]), int(result_list[1]))
 
         # Build the actual event object.
         events[event_name["id"]] = event.Event(
@@ -1324,7 +1324,7 @@ def translate(string, *args, **kwargs):
             # format() is favored over interpolation for 2 reasons:
             # - parsing occurs here, allowing centralized try/except handling
             # - it is the new standard in Python 3
-            return unicode(s).format(*args, **kwargs)
+            return str(s).format(*args, **kwargs)
 
         except Exception as reason:
             sys.stderr.write(
@@ -1361,7 +1361,7 @@ def hotkey(string):
 
     def remove_accents(text):
         from unicodedata import normalize, combining
-        nfkd_form = normalize('NFKD', unicode(text.encode('utf-8')))
+        nfkd_form = normalize('NFKD', str(text.encode('utf-8')))
         return u"".join([c for c in nfkd_form if not combining(c)])
 
     text = string

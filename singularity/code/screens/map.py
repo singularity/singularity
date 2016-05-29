@@ -315,7 +315,7 @@ class MapScreen(dialog.Dialog):
         self.speed_buttons = button.ButtonGroup()
         hpos = .38
         for index, (text_, hsize, speed) in enumerate(speed_button_souls):
-            hotkey = unicode(index)
+            hotkey = str(index)
             b = SpeedButton(self, (hpos, 0), (hsize, .04),
                             text=text_, hotkey=hotkey,
                             base_font=gg.font[0], text_shrink_factor=.75,
@@ -613,7 +613,7 @@ class MapScreen(dialog.Dialog):
 
     def load_game(self):
         save_names = g.get_save_names()
-        save_names.sort(key=unicode.lower)
+        save_names.sort(key=str.lower)
         self.load_dialog.list = save_names
         index = dialog.call_dialog(self.load_dialog, self.menu_dialog)
         if 0 <= index < len(save_names):

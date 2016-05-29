@@ -130,7 +130,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         self.resolution_custom_horiz = \
             text.EditableText(self, (xpos(1), ypos(index+1)), (.14, .05),
-                              text=unicode(gg.default_screen_size[0]),
+                              text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0, 0, 50, 255))
@@ -144,7 +144,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         self.resolution_custom_vert = \
             text.EditableText(self, (xpos(2), ypos(index+1)), (.14, .05),
-                              text=unicode(gg.default_screen_size[1]),
+                              text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0, 0, 50, 255))
@@ -220,8 +220,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                 custom = False
         if custom:
             self.resolution_custom.set_active(True)
-            self.resolution_custom_horiz.text = unicode(options['resolution'][0])
-            self.resolution_custom_vert.text = unicode(options['resolution'][1])
+            self.resolution_custom_horiz.text = str(options['resolution'][0])
+            self.resolution_custom_vert.text = str(options['resolution'][1])
         self.set_resolution(options['resolution'])
 
         self.language_choice.list_pos = [i for i, (code, __)
@@ -397,14 +397,14 @@ def save_options():
     # Build a ConfigParser for writing the various preferences out.
     prefs = configparser.SafeConfigParser()
     prefs.add_section("Preferences")
-    prefs.set("Preferences", "fullscreen", unicode(bool(gg.fullscreen)))
-    prefs.set("Preferences", "nosound",    unicode(bool(g.nosound)))
-    prefs.set("Preferences", "grab",       unicode(bool(pygame.event.get_grab())))
-    prefs.set("Preferences", "daynight",   unicode(bool(g.daynight)))
-    prefs.set("Preferences", "xres",       unicode(int(gg.screen_size[0])))
-    prefs.set("Preferences", "yres",       unicode(int(gg.screen_size[1])))
-    prefs.set("Preferences", "soundbuf",   unicode(int(g.soundbuf)))
-    prefs.set("Preferences", "lang",       unicode(g.language))
+    prefs.set("Preferences", "fullscreen", str(bool(gg.fullscreen)))
+    prefs.set("Preferences", "nosound",    str(bool(g.nosound)))
+    prefs.set("Preferences", "grab",       str(bool(pygame.event.get_grab())))
+    prefs.set("Preferences", "daynight",   str(bool(g.daynight)))
+    prefs.set("Preferences", "xres",       str(int(gg.screen_size[0])))
+    prefs.set("Preferences", "yres",       str(int(gg.screen_size[1])))
+    prefs.set("Preferences", "soundbuf",   str(int(g.soundbuf)))
+    prefs.set("Preferences", "lang",       str(g.language))
 
     # Actually write the preferences out.
     save_dir = g.get_save_folder(True)

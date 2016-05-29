@@ -127,7 +127,7 @@ class Button(text.SelectableText):
             if self.visible and getattr(self, "collision_rect", None) and self.is_over(event.pos):
                 self.activate_with_sound(event)
         elif event.type == pygame.KEYDOWN:
-            if self.visible and self.hotkey in (event.unicode, event.key):
+            if self.visible and self.hotkey in (event.str, event.key):
                 self.activate_with_sound(event)
 
     def activate_with_sound(self, event):

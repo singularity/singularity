@@ -277,9 +277,9 @@ class Dialog(text.Text):
                 # Generic keydown handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYDOWN, []))
 
-                if event.unicode:
+                if event.str:
                     # Unicode-based keydown handlers for this particular key.
-                    insort_all(handlers, self.key_handlers.get(event.unicode, []))
+                    insort_all(handlers, self.key_handlers.get(event.str, []))
                 # Keycode-based handlers for this particular key.
                 insort_all(handlers, self.key_handlers.get(event.key, []))
 

@@ -433,8 +433,8 @@ class EditableText(widget.FocusWidget, Text):
             self.cursor_pos = 0
         elif event.key == pygame.K_DOWN:
             self.cursor_pos = len(self.text)
-        elif event.unicode:
-            char = event.unicode
+        elif event.str:
+            char = event.str
             if char == "\r":
                 char = "\n"
             self.text = self.text[:self.cursor_pos] + char \
@@ -662,7 +662,7 @@ def _make_prototype_handler(parent):
             if depth:
                 prefix = prefixes[1] * (depth - 1) + prefixes[0]
 
-            print(prefix + unicode(kid))
+            print(prefix + str(kid))
     return print_on_click
 
 class ProtoWidget(EditableText):
