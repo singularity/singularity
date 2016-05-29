@@ -360,8 +360,8 @@ def play_music(musicdir=None):
 def add_commas(number):
     encoding = locale.getlocale()[1] or "UTF-8"
     raw_with_commas = locale.format("%0.2f", number,
-                                    grouping=True).decode(encoding)
-    locale_test = locale.format("%01.1f", 0.1).decode(encoding)
+                                    grouping=True)
+    locale_test = locale.format("%01.1f", 0.1)
     if len(locale_test) == 3 and not locale_test[1].isdigit():
         if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
             return raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
@@ -375,9 +375,9 @@ def add_commas(number):
 def to_percent(raw_percent, show_full = False):
     encoding = locale.getlocale()[1] or "UTF-8"
     if raw_percent % 100 != 0 or show_full:
-        return locale.format("%.2f", old_div(raw_percent, 100.)).decode(encoding) + "%"
+        return locale.format("%.2f", old_div(raw_percent, 100.)) + "%"
     else:
-        return locale.format("%d", raw_percent // 100).decode(encoding) + "%"
+        return locale.format("%d", raw_percent // 100) + "%"
 
 # nearest_percent takes values in the internal representation and modifies
 # them so that they only represent the nearest percentage.
