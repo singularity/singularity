@@ -21,6 +21,7 @@
 #This file is used to generate a visual representation of the tech tree using
 #graphviz.
 
+from __future__ import unicode_literals
 from os import system
 import os.path as osp
 import sys

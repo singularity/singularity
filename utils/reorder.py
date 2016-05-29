@@ -20,6 +20,7 @@
 #This file contains a script that re-orders .dat files which have been scrambled
 #by traduko.
 from __future__ import print_function
+from __future__ import unicode_literals
 import re, sys
 
 if len(sys.argv) != 3:

@@ -21,6 +21,7 @@
 # for the game.
 
 
+from __future__ import unicode_literals
 import ConfigParser
 import optparse
 import os.path

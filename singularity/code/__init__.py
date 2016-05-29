@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # A dirty hack to merge stdlib's "code" module to local namespace
 # Allows IDEs and debuggers that import code, like PyDev, to work properly
 # In the future this package should be renamed to "src" so it does not collide

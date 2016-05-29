@@ -1,5 +1,6 @@
 from __future__ import print_function
 from __future__ import absolute_import
+from __future__ import unicode_literals
 #file: code/singularity.py
 #Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, MestreLion
 #This file is part of Endgame: Singularity.

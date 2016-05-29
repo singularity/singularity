@@ -33,6 +33,7 @@ In either case, modules 'icu', 'babel' and 'polib' are optional but highly
 recommended.
 '''
 from __future__ import print_function
+from __future__ import unicode_literals
 
 import sys
 import os.path as osp

@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 #file: finance_screen.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.

@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 #file: statistics.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
