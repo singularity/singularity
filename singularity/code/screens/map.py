@@ -608,7 +608,7 @@ class MapScreen(dialog.Dialog):
 
     def load_game(self):
         save_names = g.get_save_names()
-        save_names.sort(key=str.lower)
+        save_names.sort(key=unicode.lower)
         self.load_dialog.list = save_names
         index = dialog.call_dialog(self.load_dialog, self.menu_dialog)
         if 0 <= index < len(save_names):
