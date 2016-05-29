@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from builtins import range
 #file: listbox.py
 #Copyright (C) 2008 FunnyMan3595
@@ -78,7 +80,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
             # Figure out which element was clicked...
             local_vert_abs = event.pos[1] - self.collision_rect[1]
-            local_vert_pos = local_vert_abs / float(self.collision_rect.height)
+            local_vert_pos = old_div(local_vert_abs, float(self.collision_rect.height))
             index = int(local_vert_pos * len(self.display_elements))
 
             # ... and select it.
@@ -181,15 +183,15 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
         scrollbar_width = self.scrollbar.real_size[0]
         my_width = self.real_size[0]
-        scrollbar_rel_width = scrollbar_width / float(my_width)
+        scrollbar_rel_width = old_div(scrollbar_width, float(my_width))
 
         offset = self.scrollbar.scroll_pos
         for index, element in enumerate(self.display_elements):
             list_index = index + offset
 
             # Position and size the element.
-            element.pos = (0, -index / float(window_size))
-            element.size = (-1 + scrollbar_rel_width, -1 / float(window_size))
+            element.pos = (0, old_div(-index, float(window_size)))
+            element.size = (-1 + scrollbar_rel_width, old_div(-1, float(window_size)))
 
             # Set up the element contents.
             element.selected = (list_index == self.list_pos)

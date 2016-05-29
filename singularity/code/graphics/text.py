@@ -1,6 +1,8 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from builtins import range
 #file: text.py
 #Copyright (C) 2008 FunnyMan3595
@@ -292,8 +294,8 @@ class Text(widget.BorderedWidget):
         raw_width, raw_height = size_of_block(self.text, font, width)
 
         #Adjust for shrink_factor and borders.
-        width = int(raw_width / self.shrink_factor) + 4
-        height = int(raw_height / self.shrink_factor) + 4
+        width = int(old_div(raw_width, self.shrink_factor)) + 4
+        height = int(old_div(raw_height, self.shrink_factor)) + 4
 
         return width, height
 
@@ -325,7 +327,7 @@ class Text(widget.BorderedWidget):
                     def test_size(font):
                         width, height = self.size_using_font(font)
                         width, raw_height = size_of_block(self.text, font)
-                        height = int(raw_height / self.shrink_factor) + 4
+                        height = int(old_div(raw_height, self.shrink_factor)) + 4
                         return height <= initial_dimensions[1]
 
                     font_size = self.font_bisect(test_size)
@@ -715,7 +717,7 @@ class ProtoWidget(EditableText):
                 control = mod_keys & pygame.KMOD_CTRL
                 if shift and control:
                     self.drag_state = 0
-                    new_size = tuple(d/2 for d in self.size)
+                    new_size = tuple(old_div(d,2) for d in self.size)
                     pw=ProtoWidget(self, (0, 0), new_size,
                                   self.anchor,
                                   background_color = self.background_color,
@@ -751,26 +753,26 @@ class ProtoWidget(EditableText):
 
             new_rel_pos = tuple(new_real_pos[i] - parent_rect[i] for i in range(2))
 
-            new_unit_pos = tuple( max(0, (new_rel_pos[i] / float(g.real_screen_size[i])))
+            new_unit_pos = tuple( max(0, (old_div(new_rel_pos[i], float(g.real_screen_size[i]))))
                                      for i in range(2))
 
             new_pct_pos = tuple( int( (new_unit_pos[i] * 100) + 0.5)
                                    for i in range(2))
 
-            self.pos = tuple(new_pct_pos[i] / 100. for i in range(2))
+            self.pos = tuple(old_div(new_pct_pos[i], 100.) for i in range(2))
 
             raise constants.Handled
         elif self.drag_state == 2:
             mouse_pos = pygame.mouse.get_pos()
             new_size = tuple(mouse_pos[i] - self.collision_rect[i] for i in range(2))
 
-            unit_size = tuple(max(0, new_size[i] / float(g.real_screen_size[i]))
+            unit_size = tuple(max(0, old_div(new_size[i], float(g.real_screen_size[i])))
                                     for i in range(2))
 
             pct_size = tuple( int( (unit_size[i] * 100) + 0.5)
                                    for i in range(2))
 
-            self.size = tuple(pct_size[i] / 100. for i in range(2))
+            self.size = tuple(old_div(pct_size[i], 100.) for i in range(2))
 
             raise constants.Handled
 

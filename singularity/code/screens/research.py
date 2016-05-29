@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from builtins import range
 #file: research_screen.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
@@ -153,7 +155,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.slider.slider_max = total_cpu
         canvas.slider.slider_size = ss = g.pl.available_cpus[0] // 10 + 1
         full_size = -.98
-        size_fraction = (total_cpu + ss) / float(g.pl.available_cpus[0] + ss)
+        size_fraction = old_div((total_cpu + ss), float(g.pl.available_cpus[0] + ss))
         canvas.slider.size = (full_size * size_fraction, -.4)
         canvas.alloc_cpus.text = g.add_commas(cpu)
 

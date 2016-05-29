@@ -1,6 +1,8 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from future import standard_library
 standard_library.install_aliases()
 #file: code/g.py
@@ -372,7 +374,7 @@ def add_commas(number):
 def to_percent(raw_percent, show_full = False):
     encoding = locale.getlocale()[1] or "UTF-8"
     if raw_percent % 100 != 0 or show_full:
-        return locale.format("%.2f", raw_percent / 100.).decode(encoding) + "%"
+        return locale.format("%.2f", old_div(raw_percent, 100.)).decode(encoding) + "%"
     else:
         return locale.format("%d", raw_percent // 100).decode(encoding) + "%"
 
@@ -409,7 +411,7 @@ def suspicion_to_danger_level(suspicion):
 # Most CPU costs have been multiplied by seconds_per_day.  This divides that
 # back out, then passes it to add_commas.
 def to_cpu(amount):
-    display_cpu = amount / float(seconds_per_day)
+    display_cpu = old_div(amount, float(seconds_per_day))
     return add_commas(display_cpu)
 
 # Instead of having the money display overflow, we should generate a string
@@ -444,7 +446,7 @@ def to_money(amount):
             # replace all chars by a cute pi symbol
             return ("-" if amount<0 else "") + pi * len(format % (prec, 1, unit))
 
-    return format % (prec, float(amount) / divisor, unit)
+    return format % (prec, old_div(float(amount), divisor), unit)
 
 #takes a percent in 0-10000 form, and rolls against it. Used to calculate
 #percentage chances.
@@ -458,7 +460,7 @@ def roll_percent(roll_against):
 # Works perfectly if the event can only happen once, and well enough if it
 # repeats but is rare.
 def roll_chance(chance_per_day, seconds = seconds_per_day):
-    portion_of_day = seconds / float(seconds_per_day)
+    portion_of_day = old_div(seconds, float(seconds_per_day))
     inv_chance_per_day = 1 - chance_per_day
     inv_chance = (inv_chance_per_day) ** portion_of_day
     chance = 1 - inv_chance
@@ -484,9 +486,9 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 #Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time//60 > 48:
-        return unicode(raw_time/(24*60)) +" "+_("days")
+        return unicode(old_div(raw_time,(24*60))) +" "+_("days")
     elif raw_time//60 > 1:
-        return unicode(raw_time/(60)) +" "+_("hours")
+        return unicode(old_div(raw_time,(60))) +" "+_("hours")
     else:
         return unicode(raw_time) +" "+_("minutes")
 

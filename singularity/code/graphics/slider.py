@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from builtins import range
 #file: slider.py
 #Copyright (C) 2008 FunnyMan3595
@@ -82,7 +84,7 @@ class Slider(button.Button):
         self.parent.remove_handler(constants.CLICK, self.handle_click)
 
     def _calc_length(self, items):
-        return items / float(self.slider_size + self.slider_max)
+        return old_div(items, float(self.slider_size + self.slider_max))
 
     def rebuild(self):
         super(Slider, self).rebuild()
@@ -141,7 +143,7 @@ class Slider(button.Button):
             mouse_pos = pygame.mouse.get_pos()
             rel = mouse_pos[dir] - self.start_pos[dir]
             unit = self._calc_length(1) * self.real_size[dir]
-            movement = int( ( rel + (unit / 2.) ) // unit )
+            movement = int( ( rel + (old_div(unit, 2.)) ) // unit )
 
             new_pos = self.safe_pos(self.start_slider_pos + movement)
             self.slider_pos = new_pos

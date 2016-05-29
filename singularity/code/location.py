@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 #file: location.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -27,7 +29,7 @@ from .buyable import cash, cpu, labor
 # Currently, each one gets a 20% bonus or its inverse, a 16.6% penalty.
 # This will probably need to be adjusted later.
 bonus_levels = dict(cpu = 1.2, stealth = 1.2, thrift = 1.2, speed = 1.2)
-penalty_levels = dict((k, 1/v) for k, v in bonus_levels.items())
+penalty_levels = dict((k, old_div(1,v)) for k, v in bonus_levels.items())
 
 # Here are the six modifier pairs that get assigned at random on game start.
 bonus, penalty = True, False
@@ -61,7 +63,7 @@ class Location(buyable.BuyableClass):
         # Kinda hackish, but it works.
         super(Location, self).__init__(id, "", (0, 0, 0), prerequisites)
 
-        self.x, self.y = position[0] / -100., position[1] / -100.
+        self.x, self.y = old_div(position[0], -100.), old_div(position[1], -100.)
         self.absolute = absolute
         self.safety = safety
 
@@ -86,14 +88,14 @@ class Location(buyable.BuyableClass):
             mod = self.modifiers["thrift"]
 
             # Invert it and apply to the CPU/cash cost.
-            cost[cash] = int(cost[cash] / mod)
-            cost[cpu] = int(cost[cpu] / mod)
+            cost[cash] = int(old_div(cost[cash], mod))
+            cost[cpu] = int(old_div(cost[cpu], mod))
 
         if "speed" in self.modifiers:
             mod = self.modifiers["speed"]
 
             # Invert it and apply to the labor cost.
-            cost[labor] = int(cost[labor] / mod)
+            cost[labor] = int(old_div(cost[labor], mod))
 
 
     def modify_maintenance(self, maintenance):
@@ -101,7 +103,7 @@ class Location(buyable.BuyableClass):
             mod = self.modifiers["thrift"]
 
             # Invert it and apply to the cash maintenance.  CPU is not changed.
-            maintenance[cash] = int(maintenance[cash] / mod)
+            maintenance[cash] = int(old_div(maintenance[cash], mod))
 
     def add_base(self, base):
         self.bases.append(base)

@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from future import standard_library
 standard_library.install_aliases()
 #file: dialog.py
@@ -243,7 +245,7 @@ class Dialog(text.Text):
             # Compress multiple MOUSEMOTION events into one.
             # Note that the pos will be wrong, so pygame.mouse.get_pos() must
             # be used instead.
-            time.sleep(1. / g.FPS)
+            time.sleep(old_div(1., g.FPS))
             pygame.event.clear(pygame.MOUSEMOTION)
 
             # Generic mouse motion handlers.

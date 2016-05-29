@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 #file: image.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -52,11 +54,11 @@ class Image(widget.Widget):
             raise ValueError("One image dimension must be specified!")
 
         image_size = self.image.get_size()
-        ratio = image_size[0] / float(image_size[1])
+        ratio = old_div(image_size[0], float(image_size[1]))
         if size[0] == 0:
             size[0] = int(size[1] * ratio)
         elif size[1] == 0:
-            size[1] = int(size[0] / ratio)
+            size[1] = int(old_div(size[0], ratio))
 
         return tuple(size)
 

@@ -1,6 +1,8 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 #file: player.py
 #Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
@@ -171,7 +173,7 @@ class Player(object):
         cash_per_cpu = singularity.code.g.jobs[singularity.code.g.get_job_level()][0]
         if singularity.code.g.techs["Advanced Simulacra"].done:
             #10% bonus income
-            cash_per_cpu = cash_per_cpu + (cash_per_cpu / 10)
+            cash_per_cpu = cash_per_cpu + (old_div(cash_per_cpu, 10))
 
         raw_cash = partial_cash + cash_per_cpu * cpu_time
 
@@ -393,7 +395,7 @@ class Player(object):
                                    - cpu_info.maintenance_shortfall
 
             cpu_info.explicit_jobs = self.cpu_usage.get("jobs", 0)
-            cpu_info.pool_jobs = self.cpu_pool / float(time_sec)
+            cpu_info.pool_jobs = old_div(self.cpu_pool, float(time_sec))
             cpu_info.jobs = self.cpu_usage.get("jobs", 0) + cpu_info.pool_jobs
 
             cpu_info.explicit_pool = self.cpu_usage.get("cpu_pool", 0)
@@ -490,7 +492,7 @@ class Player(object):
                         (base.name, repr(detect_chance)))
 
                 for group, chance in detect_chance.items():
-                    if singularity.code.g.roll_chance(chance/10000., secs_passed):
+                    if singularity.code.g.roll_chance(old_div(chance,10000.), secs_passed):
                         dead_bases.append( (base, group) )
                         dead = True
                         break
@@ -501,7 +503,7 @@ class Player(object):
         # Random Events
         if not grace:
             for event in singularity.code.g.events:
-                if singularity.code.g.roll_chance(singularity.code.g.events[event].chance/10000., time_sec):
+                if singularity.code.g.roll_chance(old_div(singularity.code.g.events[event].chance,10000.), time_sec):
                     #Skip events already flagged as triggered.
                     if singularity.code.g.events[event].triggered == 1:
                         continue

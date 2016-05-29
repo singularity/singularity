@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 #file: scrollbar.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -89,14 +91,14 @@ class Scrollbar(widget.Widget):
         if self.horizontal:
             long_size = self.real_size[0]
             short_size = self.real_size[1]
-            size = short_size / float(long_size)
+            size = old_div(short_size, float(long_size))
             self.button1.size = (-size, -1)
             self.button2.size = (-size, -1)
             self.slider.size = ((size * 2) - 1, -1)
         else:
             long_size = self.real_size[1]
             short_size = self.real_size[0]
-            size = short_size / float(long_size)
+            size = old_div(short_size, float(long_size))
             self.button1.size = (-1, -size)
             self.button2.size = (-1, -size)
             self.slider.size = (-1, (size * 2) - 1)

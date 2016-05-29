@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from builtins import range
 #file: base.py
 #Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
@@ -88,7 +90,7 @@ class BaseClass(buyable.BuyableClass):
             return singularity.code.g.strings["detect_chance_unknown_base"].replace(" ", u"\xA0")
 
         accurate = singularity.code.g.techs["Advanced Socioanalytics"].done
-        detect_modifier = 1 / location.modifiers.get("stealth", 1)
+        detect_modifier = old_div(1, location.modifiers.get("stealth", 1))
         chance = self.calc_discovery_chance(accurate, detect_modifier)
         detect_template = _("Detection chance:") + "\n" + \
                           _("NEWS")    + u":\xA0%s\n"   + \
@@ -327,7 +329,7 @@ class Base(buyable.Buyable):
             return False
 
         age = singularity.code.g.pl.raw_min - self.started_at
-        grace_time = (self.total_cost[buyable.labor] * singularity.code.g.pl.grace_multiplier) / 100
+        grace_time = old_div((self.total_cost[buyable.labor] * singularity.code.g.pl.grace_multiplier), 100)
         if age > grace_time:
             self.grace_over = True
             return False

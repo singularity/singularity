@@ -22,6 +22,8 @@
 #graphviz.
 
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 from os import system
 import os.path as osp
 import sys
@@ -49,7 +51,7 @@ except ImportError:
 so_far = ""
 
 def cost(c):
-    c = [ k/f for f, k in itertools.izip([1000, 86400, 24*60], c)]
+    c = [ old_div(k,f) for f, k in itertools.izip([1000, 86400, 24*60], c)]
     s = ', '.join(['%s %s' % (g.to_money(k), label) for label, k in itertools.izip(["money", "CPU", "days"], c) if k])
     return s and '\\n'+s or ''
 

@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from __future__ import division
+from past.utils import old_div
 #file: map_screen.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, FunnyMan3595,
 #and Anne M. Archibald.
@@ -80,12 +82,12 @@ class EarthImage(image.Image):
                     math.cos(2*math.pi/365.*(day_of_year + 10)))
             sun_diameter = 0.5*pi/180
 
-            latitude = linspace(-pi/2, pi/2, height)[newaxis,:]
+            latitude = linspace(old_div(-pi,2), old_div(pi,2), height)[newaxis,:]
             longitude = linspace(0, 2*pi, width)[:, newaxis]
             sin_sun_altitude = (cos(longitude)*(cos(latitude)*cos(sun_declination))
                                     +sin(latitude)*sin(sun_declination))
             # use tanh to convert values to the range [0,1]
-            light = 0.5*(tanh(sin_sun_altitude/(sun_diameter/2))+1)
+            light = 0.5*(tanh(old_div(sin_sun_altitude,(old_div(sun_diameter,2))))+1)
             night_alphas = pixels_alpha(self.night_mask)
             night_alphas[...] = round(max_alpha*light).astype(uint8)
             del night_alphas
@@ -98,9 +100,8 @@ class EarthImage(image.Image):
             if self.start_second is None:
                 t = time.gmtime()
                 self.start_second = t[5] + 60*(t[4]+60*t[3])
-            day_portion = (((g.pl.raw_min+self.start_second//60)
-                               % g.minutes_per_day)
-                      / float(g.minutes_per_day))
+            day_portion = (old_div(((g.pl.raw_min+self.start_second//60)
+                               % g.minutes_per_day), float(g.minutes_per_day)))
             self.high_speed_pos = int(width * (0.5 - day_portion)) % width
         return self.high_speed_pos
 
@@ -488,7 +489,7 @@ class MapScreen(dialog.Dialog):
             g.pl.intro_shown = True
             self.show_intro()
 
-        self.leftovers += g.curr_speed / float(gg.FPS)
+        self.leftovers += old_div(g.curr_speed, float(gg.FPS))
         if self.leftovers < 1:
             return
 
@@ -542,7 +543,7 @@ class MapScreen(dialog.Dialog):
                 maint_cpu += base.maintenance[1]
             detect_chance = base.get_detect_chance()
             for group in g.player.group_list:
-                detects_per_day[group] += detect_chance[group] / 10000.
+                detects_per_day[group] += old_div(detect_chance[group], 10000.)
 
         if cpu_pool < maint_cpu:
             self.cpu_display.color = gg.colors["red"]
