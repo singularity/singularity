@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from builtins import range
 #file: constants.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -20,8 +21,8 @@ from __future__ import unicode_literals
 #This file contains GUI constants.
 
 # Anchor positions, border sided.
-TOP, MID, BOTTOM = range(3)
-LEFT, CENTER, RIGHT = range(3, 6)
+TOP, MID, BOTTOM = list(range(3))
+LEFT, CENTER, RIGHT = list(range(3, 6))
 TOP_LEFT = (TOP, LEFT)
 TOP_CENTER = (TOP, CENTER)
 TOP_RIGHT = (TOP, RIGHT)
@@ -49,7 +50,7 @@ NO_RESULT = _NoResult()
 
 
 # Handler types.
-KEY, KEYDOWN, KEYUP, CLICK, DOUBLECLICK, MOUSEMOTION, DRAG, TICK = range(8)
+KEY, KEYDOWN, KEYUP, CLICK, DOUBLECLICK, MOUSEMOTION, DRAG, TICK = list(range(8))
 
 
 # Handler "errors", used to throw a return value up several levels.

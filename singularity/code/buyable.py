@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from builtins import range
 #file: buyable.py
 #Copyright (C) 2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -23,7 +24,7 @@ from __future__ import unicode_literals
 from operator import truediv
 import singularity.code.g
 
-cash, cpu, labor = range(3)
+cash, cpu, labor = list(range(3))
 
 import numpy
 numpy.seterr(all='ignore')

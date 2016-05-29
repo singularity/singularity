@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from builtins import range
 #file: listbox.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.
@@ -132,7 +133,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
             # Create the new ones.
             self.display_elements.extend([self.make_element() for _ in
-                                          xrange(list_size - current_size)])
+                                          range(list_size - current_size)])
 
         self.display_elements[-1].borders = (constants.TOP, constants.LEFT,
                                              constants.BOTTOM)

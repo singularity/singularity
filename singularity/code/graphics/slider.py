@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from builtins import range
 #file: slider.py
 #Copyright (C) 2008 FunnyMan3595
 #This file is part of Endgame: Singularity.

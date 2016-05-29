@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from builtins import range
 #file: base_screen.py
 #Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
@@ -182,7 +183,7 @@ class BaseScreen(dialog.Dialog):
             widget.BorderedWidget(self, (0, .09), (.50, .33),
                                   anchor=constants.TOP_LEFT,
                                   background_color=gg.colors["dark_blue"],
-                                  borders=range(6))
+                                  borders=list(range(6)))
 
         for i, type in enumerate(g.item_types):
             setattr(self,

@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from builtins import range
 #file: research_screen.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
