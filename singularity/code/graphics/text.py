@@ -433,8 +433,8 @@ class EditableText(widget.FocusWidget, Text):
             self.cursor_pos = 0
         elif event.key == pygame.K_DOWN:
             self.cursor_pos = len(self.text)
-        elif event.str:
-            char = event.str
+        elif event.unicode:
+            char = event.unicode
             if char == "\r":
                 char = "\n"
             self.text = self.text[:self.cursor_pos] + char \
