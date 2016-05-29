@@ -152,7 +152,7 @@ Guga (updates to the Spanish translation)
 Daniele Sapino (translation into Spanish)
 Dafne Saqueti (translation into Brazilian Portuguese)
 Eleazar Castellanos (translation into Mexican Spanish)
-Rardiol (setuptools)
+Rardiol (setuptools and python3)
 
 CODE LICENSE
 Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,
