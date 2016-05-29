@@ -613,7 +613,8 @@ def load_game(loadgame_name):
         else:
             raise SystemExit(module_name, class_name)
 
-    unpickle.find_global = find_class
+    if int(sys.version[0]) <= 2:
+        unpickle.find_global = find_class
 
     #check the savefile version
     load_version_string = unpickle.load()
@@ -1402,7 +1403,6 @@ def hotkey_position(string): return hotkey(string)['pos']
 
 # Initialization code
 # future's compatibility import imports from a separate builtin module
-import sys
 if int(sys.version[0]) > 2:
     import builtins
     builtins.__dict__['_'] = translate
