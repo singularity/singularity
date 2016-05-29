@@ -169,7 +169,7 @@ class MapScreen(dialog.Dialog):
         self.map = EarthImage(self)
 
         self.location_buttons = {}
-        for loc in g.locations.values():
+        for loc in list(g.locations.values()):
             if loc.absolute:
                 button_parent = self
             else:
@@ -384,7 +384,7 @@ class MapScreen(dialog.Dialog):
             self.needs_rebuild = True
 
     def inspiration(self):
-        for task, cpu in g.pl.cpu_usage.items():
+        for task, cpu in list(g.pl.cpu_usage.items()):
             if task in g.techs and cpu > 0:
                 g.techs[task].cost_left = array((0, 0, 0))
         self.needs_rebuild = True
@@ -400,7 +400,7 @@ class MapScreen(dialog.Dialog):
         self.needs_rebuild = True
 
     def brainwash(self):
-        for group in g.pl.groups.values():
+        for group in list(g.pl.groups.values()):
             group.suspicion = 0
         self.needs_rebuild = True
 
@@ -531,7 +531,7 @@ class MapScreen(dialog.Dialog):
         cpu_left = g.pl.available_cpus[0]
         total_cpu = cpu_left + g.pl.sleeping_cpus
 
-        for cpu_assigned in g.pl.cpu_usage.itervalues():
+        for cpu_assigned in g.pl.cpu_usage.values():
             cpu_left -= cpu_assigned
         cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
 
@@ -601,7 +601,7 @@ class MapScreen(dialog.Dialog):
         self.danger_bar.styles = tuple(danger_styles)
         self.danger_bar.visible = not g.pl.had_grace
 
-        for id, button in self.location_buttons.iteritems():
+        for id, button in self.location_buttons.items():
             location = g.locations[id]
             button.text = "%s (%d)" % (location.name, len(location.bases))
             button.visible = location.available()

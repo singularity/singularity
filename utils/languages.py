@@ -183,11 +183,11 @@ class Locale(object):
         # Do the hard work
 
         # Auto-detect languages format
-        istuple = not isinstance(languages[languages.keys()[0]], dict)
+        istuple = not isinstance(languages[list(languages.keys())[0]], dict)
 
         # Find paddings for code and english
         if align:
-            padc = 3+max([len(padc) for padc in languages.keys()])
+            padc = 3+max([len(padc) for padc in list(languages.keys())])
             pade = 3+max([len(languages[pade][0 if istuple else 'english'])
                                                 for pade in languages])
         # Write header

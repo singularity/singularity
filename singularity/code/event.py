@@ -55,7 +55,7 @@ class Event(object):
             else:
                 print("Unknown bonus '%s' in event %s." % (what, self.name))
         elif who == "onetime" and what == "suspicion":
-            for group in singularity.code.g.pl.groups.values():
+            for group in list(singularity.code.g.pl.groups.values()):
                 group.alter_suspicion(-self.result[1])
         else:
             print("Unknown group/bonus '%s' in event %s. " % (self.result[0],

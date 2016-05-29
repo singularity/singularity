@@ -74,7 +74,7 @@ for line in order_lines:
         section_match = section_re.search(pre_comment)
         if section_match:
             if section != None:
-                for k, line in source_dict[section].iteritems():
+                for k, line in source_dict[section].items():
                     dest_file.write(line)
                 dest_file.write("\n")
             section = section_match.groups()[0].strip()
@@ -94,6 +94,6 @@ for line in order_lines:
             raise SystemExit("Order line not understood: %s")
 
 if section != None:
-    for k, line in source_dict[section].iteritems():
+    for k, line in source_dict[section].items():
         dest_file.write(line)
     dest_file.write("\n")

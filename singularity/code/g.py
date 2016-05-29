@@ -492,7 +492,7 @@ def to_time(raw_time):
 
 # Generator function for iterating through all bases.
 def all_bases(with_loc = False):
-    for base_loc in locations.values():
+    for base_loc in list(locations.values()):
         for base in base_loc.bases:
             if with_loc:
                 yield (base, base_loc)
@@ -641,10 +641,10 @@ def load_game(loadgame_name):
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         pl.convert_from(load_version)
-        for my_location in locations.values():
+        for my_location in list(locations.values()):
             for my_base in my_location.bases:
                 my_base.convert_from(load_version)
-        for my_tech in techs.values():
+        for my_tech in list(techs.values()):
             my_tech.convert_from(load_version)
 
     # Play the appropriate music
@@ -1198,23 +1198,23 @@ def new_game(difficulty):
         pl.labor_bonus = 11000
         pl.grace_multiplier = 180
         discover_bonus = 11000
-        for group in pl.groups.values():
+        for group in list(pl.groups.values()):
             group.discover_suspicion = 1500
     elif difficulty <= 50:
         pl.labor_bonus = 15000
         pl.grace_multiplier = 150
         discover_bonus = 13000
-        for group in pl.groups.values():
+        for group in list(pl.groups.values()):
             group.discover_suspicion = 2000
     else:
         pl.labor_bonus = 20000
         pl.grace_multiplier = 100
         discover_bonus = 15000
-        for group in pl.groups.values():
+        for group in list(pl.groups.values()):
             group.discover_suspicion = 2000
 
     if difficulty != 5:
-        for group in pl.groups.values():
+        for group in list(pl.groups.values()):
             group.discover_bonus = discover_bonus
 
     # Reset all "mutable" game data
@@ -1228,7 +1228,7 @@ def new_game(difficulty):
         techs["Advanced Socioanalytics"].finish()
 
     #Starting base
-    open = [loc for loc in locations.values() if loc.available()]
+    open = [loc for loc in list(locations.values()) if loc.available()]
     random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
 

@@ -258,7 +258,7 @@ class Base(buyable.Buyable):
             detect_chance.setdefault(group, 0)
 
         # Factor in the suspicion adjustments for this particular base ...
-        for group, suspicion in self.suspicion.iteritems():
+        for group, suspicion in self.suspicion.items():
             detect_chance[group] *= 10000 + suspicion
             detect_chance[group] /= 10000
 

@@ -158,7 +158,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
     def calc_cpu_left(self):
         cpu_count = numpy.array(g.pl.available_cpus, numpy.int64)
-        for task, cpu in g.pl.cpu_usage.iteritems():
+        for task, cpu in g.pl.cpu_usage.items():
             danger = self.danger_for(task)
             cpu_count[:danger+1] -= cpu
 
@@ -179,7 +179,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         dialog.call_dialog(self.help_dialog, self)
 
     def show(self):
-        techs = sorted([tech for tech in g.techs.values() if tech.available()
+        techs = sorted([tech for tech in list(g.techs.values()) if tech.available()
                                                       and not tech.done])
         self.list = [_("CPU Pool"), g.jobs[g.get_job_level()][3]] + \
                     [_("Research %s") % tech.name for tech in techs]

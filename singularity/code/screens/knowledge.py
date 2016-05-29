@@ -39,7 +39,7 @@ class KnowledgeScreen(dialog.Dialog):
 
         self.knowledge_choice = \
             listbox.UpdateListbox(self, (0.05, .18), (.21, .25),
-                                  list=self.knowledge_types.keys(),
+                                  list=list(self.knowledge_types.keys()),
                                   update_func=self.set_knowledge_type)
 
         self.knowledge_inner = \
@@ -92,11 +92,11 @@ class KnowledgeScreen(dialog.Dialog):
         item_type = self.knowledge_types.get(item_type)
 
         if item_type == "techs":
-            items = [tech for tech in g.techs.values() if tech.available()]
+            items = [tech for tech in list(g.techs.values()) if tech.available()]
         elif item_type == "concepts":
-            items = sorted([ [item[1][0], item[0]] for item in g.help_strings.items()])
+            items = sorted([ [item[1][0], item[0]] for item in list(g.help_strings.items())])
         else:
-            items = [item for item in g.items.values()
+            items = [item for item in list(g.items.values())
                         if item.available()]
 
         if item_type != "concepts":

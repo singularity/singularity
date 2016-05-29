@@ -53,7 +53,7 @@ def cost(c):
     s = ', '.join(['%s %s' % (g.to_money(k), label) for label, k in itertools.izip(["money", "CPU", "days"], c) if k])
     return s and '\\n'+s or ''
 
-j = dict([ (v[1], ',fillcolor="#ffcccc"') for k, v in g.jobs.items() ])
+j = dict([ (v[1], ',fillcolor="#ffcccc"') for k, v in list(g.jobs.items()) ])
 
 f = file("techs.dot", 'w')
 s = ("""\
@@ -71,7 +71,7 @@ so_far += s
 
 for l in sum([ [ '"%s"->"%s";' % (p, k)
                  for p in v.prerequisites ]
-              for k, v in g.techs.items() if k != "unknown_tech"],
+              for k, v in list(g.techs.items()) if k != "unknown_tech"],
              []):
     f.write(l+'\n')
     so_far += l+'\n'
@@ -79,7 +79,7 @@ for l in sum([ [ '"%s"->"%s";' % (p, k)
 f.write('\n')
 so_far += '\n'
 
-for n, t in g.techs.items():
+for n, t in list(g.techs.items()):
     if n == "unknown_tech": continue
     s  = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t.cost_left), j.get(n, ''))
     f.write(s)
@@ -99,7 +99,7 @@ f.write(s)
 so_far += s
 
 g.load_items()
-for name, item in g.items.items():
+for name, item in list(g.items.items()):
     if not item.prerequisites: continue
     for pre in item.prerequisites:
         p = g.techs[pre]
@@ -116,7 +116,7 @@ f.write(s)
 so_far += s
 
 g.load_bases()
-for name, base in g.base_type.items():
+for name, base in list(g.base_type.items()):
     if not base.prerequisites: continue
     for pre in base.prerequisites:
         p = g.techs[pre]
@@ -143,7 +143,7 @@ def set_or(state):
             f.write('edge [arrowhead=normal,color="#000000"];\n')
 
 g.load_locations()
-for name, loc in g.locations.items():
+for name, loc in list(g.locations.items()):
     if not loc.prerequisites: continue
     if "unknown_tech" in loc.prerequisites:
         continue

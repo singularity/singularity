@@ -260,7 +260,7 @@ class Player(object):
         tech_cash = 0
         # Do research, fill the CPU pool.
         default_cpu = self.available_cpus[0]
-        for task, cpu_assigned in self.cpu_usage.iteritems():
+        for task, cpu_assigned in self.cpu_usage.items():
             if cpu_assigned == 0:
                 continue
 
@@ -489,7 +489,7 @@ class Player(object):
                     print("Chance of discovery for base %s: %s" % \
                         (base.name, repr(detect_chance)))
 
-                for group, chance in detect_chance.iteritems():
+                for group, chance in detect_chance.items():
                     if singularity.code.g.roll_chance(chance/10000., secs_passed):
                         dead_bases.append( (base, group) )
                         dead = True
@@ -534,7 +534,7 @@ class Player(object):
         needed_cpu = sum(self.cpu_usage.values())
         if needed_cpu > self.available_cpus[0]:
             pct_left = truediv(self.available_cpus[0], needed_cpu)
-            for task, cpu_assigned in self.cpu_usage.iteritems():
+            for task, cpu_assigned in self.cpu_usage.items():
                 self.cpu_usage[task] = int(cpu_assigned * pct_left)
             singularity.code.g.map_screen.needs_rebuild = True
 
@@ -605,7 +605,7 @@ class Player(object):
         self.cash += self.income
 
         # Reduce suspicion.
-        for group in self.groups.values():
+        for group in list(self.groups.values()):
             group.new_day()
 
     def pause_game(self):
@@ -664,7 +664,7 @@ class Player(object):
         if self.apotheosis:
             return 0
 
-        for group in self.groups.values():
+        for group in list(self.groups.values()):
             if group.suspicion > 10000:
                 # Someone discovered me.
                 return 2
@@ -689,7 +689,7 @@ class Player(object):
             for item in base.extra_items:
                 if item: result_cash -= item.cost_left[cash]
             result_cash = max(result_cash, -singularity.code.g.max_cash)
-        for task, cpus in self.cpu_usage.items():
+        for task, cpus in list(self.cpu_usage.items()):
             if task in singularity.code.g.techs and cpus > 0:
                 result_cash -= singularity.code.g.techs[task].cost_left[cash]
                 result_cash = max(result_cash, -singularity.code.g.max_cash)

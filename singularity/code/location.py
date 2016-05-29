@@ -27,7 +27,7 @@ from .buyable import cash, cpu, labor
 # Currently, each one gets a 20% bonus or its inverse, a 16.6% penalty.
 # This will probably need to be adjusted later.
 bonus_levels = dict(cpu = 1.2, stealth = 1.2, thrift = 1.2, speed = 1.2)
-penalty_levels = dict((k, 1/v) for k, v in bonus_levels.iteritems())
+penalty_levels = dict((k, 1/v) for k, v in bonus_levels.items())
 
 # Here are the six modifier pairs that get assigned at random on game start.
 bonus, penalty = True, False
@@ -40,7 +40,7 @@ modifier_sets = [dict(     cpu = bonus, stealth = penalty ),
 
 # Translate the shorthand above into the actual bonuses/penalties.
 for set in modifier_sets:
-    for attribute, is_bonus in set.iteritems():
+    for attribute, is_bonus in set.items():
         if is_bonus:
             set[attribute] = bonus_levels[attribute]
         else:

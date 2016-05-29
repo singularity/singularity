@@ -74,7 +74,7 @@ class Tech(buyable.Buyable):
         elif self.tech_type == "endgame_sing":
             singularity.code.g.play_music("win")
             singularity.code.g.map_screen.show_message(singularity.code.g.strings["wingame"])
-            for group in singularity.code.g.pl.groups.values():
+            for group in list(singularity.code.g.pl.groups.values()):
                 group.discover_bonus = 0
             singularity.code.g.pl.apotheosis = True
             singularity.code.g.pl.had_grace = True
@@ -88,7 +88,7 @@ class Tech(buyable.Buyable):
                 else:
                     print("Unknown action '%s' in tech %s." % (what, self.name))
             elif who == "onetime" and what == "suspicion":
-                for group in singularity.code.g.pl.groups.values():
+                for group in list(singularity.code.g.pl.groups.values()):
                     group.alter_suspicion(-self.secondary_data)
             else:
                 print("tech: %s is unknown bonus can't be applied" % self.tech_type)
