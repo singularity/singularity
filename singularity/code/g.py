@@ -1409,8 +1409,8 @@ if int(sys.version[0]) > 2:
     import builtins
     builtins.__dict__['_'] = translate
 else:
-    import builtins
-    builtins.__dict__['_'] = translate
+    import __builtin__
+    __builtin__.__dict__['_'] = translate
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()
