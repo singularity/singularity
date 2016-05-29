@@ -20,6 +20,9 @@ setup(
 
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     packages = find_packages(),
     zip_safe=False,
@@ -28,6 +31,7 @@ setup(
         'numpy',
         'pygame',
         'polib',
+        'future',
     ],
     entry_points={
         'gui_scripts': [
