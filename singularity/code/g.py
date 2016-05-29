@@ -549,16 +549,14 @@ def save_game(savegame_name):
 
     save_dir = get_save_folder()
     save_loc = os.path.join(save_dir, savegame_name + ".sav")
-    savefile=open(save_loc, 'w')
 
-    pickle.dump(current_save_version, savefile)
-    pickle.dump(pl, savefile)
-    pickle.dump(curr_speed, savefile)
-    pickle.dump(techs, savefile)
-    pickle.dump(locations, savefile)
-    pickle.dump(events, savefile)
-
-    savefile.close()
+    with open(save_loc, 'wb') as savefile:
+        pickle.dump(current_save_version, savefile)
+        pickle.dump(pl, savefile)
+        pickle.dump(curr_speed, savefile)
+        pickle.dump(techs, savefile)
+        pickle.dump(locations, savefile)
+        pickle.dump(events, savefile)
 
 def load_game(loadgame_name):
     if loadgame_name == "":
@@ -576,7 +574,7 @@ def load_game(loadgame_name):
             print("file "+load_loc+" does not exist.")
             return False
 
-    loadfile = open(load_loc, 'r')
+    loadfile = open(load_loc, 'rb')
     unpickle = pickle.Unpickler(loadfile)
 
     def find_class(module_name, class_name):
