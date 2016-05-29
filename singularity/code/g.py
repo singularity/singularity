@@ -1144,12 +1144,12 @@ def get_intro():
         print("Intro is missing.  Skipping.")
         return
 
-    intro_file = open(intro_file_name)
+    intro_file = open(intro_file_name, encoding='utf-8')
     raw_intro = intro_file.readlines() + [""]
 
     segment = ""
     while raw_intro:
-        line = raw_intro.pop(0).decode("utf-8")
+        line = raw_intro.pop(0)
         if line and line[0] == "|":
             segment += line[1:]
         elif segment:
