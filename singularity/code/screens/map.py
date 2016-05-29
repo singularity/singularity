@@ -79,10 +79,10 @@ class EarthImage(image.Image):
                     math.cos(2*math.pi/365.*(day_of_year + 10)))
             sun_diameter = 0.5*pi/180
 
-            lat = linspace(-pi/2, pi/2, height)[newaxis,:]
-            long = linspace(0, 2*pi, width)[:, newaxis]
-            sin_sun_altitude = (cos(long)*(cos(lat)*cos(sun_declination))
-                                    +sin(lat)*sin(sun_declination))
+            latitude = linspace(-pi/2, pi/2, height)[newaxis,:]
+            longitude = linspace(0, 2*pi, width)[:, newaxis]
+            sin_sun_altitude = (cos(longitude)*(cos(latitude)*cos(sun_declination))
+                                    +sin(latitude)*sin(sun_declination))
             # use tanh to convert values to the range [0,1]
             light = 0.5*(tanh(sin_sun_altitude/(sun_diameter/2))+1)
             night_alphas = pixels_alpha(self.night_mask)
