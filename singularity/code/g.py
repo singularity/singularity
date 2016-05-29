@@ -1400,8 +1400,14 @@ def strip_hotkey(string):    return hotkey(string)['text']
 def hotkey_position(string): return hotkey(string)['pos']
 
 # Initialization code
-import builtins
-builtins.__dict__['_'] = translate
+# future's compatibility import imports from a separate builtin module
+import sys
+if int(sys.version[0]) > 2:
+    import builtins
+    builtins.__dict__['_'] = translate
+else:
+    import __builtin__
+    __builtin__.__dict__['_'] = translate
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()
