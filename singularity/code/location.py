@@ -118,7 +118,7 @@ class Location(buyable.BuyableClass):
         return hash(self.id)
 
     def __lt__(self, other):
-        if type(other) in (str, unicode):
+        if isinstance(other, basestring):
             return self.id < other
         else:
             return self.id < other.id
