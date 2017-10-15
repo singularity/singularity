@@ -202,7 +202,7 @@ class Player(object):
             self.raw_sec = self.raw_day * g.seconds_per_day
             self.update_times()
 
-        secs_passed = time_sec
+        secs_passed = self.raw_sec - old_time
         mins_passed = self.raw_min - last_minute
 
         time_of_day = g.pl.raw_sec % g.seconds_per_day
