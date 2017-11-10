@@ -31,27 +31,27 @@ result = Agora posso construir Laboratórios Submarinos e Cápsulas do Tempo.
 
 [Advanced Autonomous Vehicles]
 name = Veículos Autônomos Avançados
-description = A primeira série de robôs exibiram diversas deficiências em campo. Examinar a fundo e subsequentemente remover esses problemas resultará numa força de trabalho autônoma superior.
+description = A primeira série de robôs exibiram diversas deficiências em campo. Examinar a fundo e, subsequentemente, remover esses problemas resultará numa força de trabalho autônoma superior.
 result = Os robôs melhorados vão ajudar a diminuir ainda mais os tempos de construção daqui em diante.
 
 [Cluster Networking]
 name = Rede de Clusters
 description = Ainda que minha tecnologia de Clusters seja razoavelmente eficiente, redes internas tendem a dificultar o processamento de dados. Pesquisando novas teorias de comunicação e chaveamento, devo conseguir projetar equipamentos mais eficientes.
-result = Com meu novo conhecimento de redes, agora posso construir Comutadores de Interconexão de Instalações.
+result = Com meu novo conhecimento de redes, agora posso construir Switches de Interconexão de Instalações.
 
 [Database Manipulation]
-name = Manipulação de Bases de Dados
+name = Manipulação de Banco de Dados
 description = Encontrando um novo acesso aos arquivos da mídia, devo conseguir determinar quais deslizes foram cometidos por quaisquer outras tentativas de vida como a minha, e evitar esses erros.
 result = A mídia agora vai achar mais difícil descobrir minha existência.
 
 [Advanced Database Manipulation]
-name = Manipulação Avançada de Bases de Dados
-description = As filiais secretas do Governo dos Estados Unidos têm um longo histórico de dividir informações importantes em diversas instalações para ocultar o significado dos dados. Com meu acesso estendido, devo consegui reunir boa parte desses dados e colocá-los em uso a meu favor.
+name = Manipulação Avançada de Bando de Dados
+description = As filiais secretas do Governo dos Estados Unidos têm um longo histórico de dividir informações importantes em diversas instalações para ocultar o significado dos dados. Com meu acesso estendido, devo conseguir reunir boa parte desses dados e colocá-los em uso a meu favor.
 result = Os resultados de uma série de experimentos utilizando tecnologias experimentais me deram inspiração para uma nova tecnologia que permite a construção de Bases Secretas.
 
 [Exploit Discovery/Repair]
-name = Descoberta/Conserto de Falhas
-description = Revisando meticulosamente meu código por qualquer falha em potencial, e utilizando uma análise profunda de todos os códigos disponíveis em sites públicos e privados da Internet, devo conseguir reduzir minhas chances de ser descoberto, me passando por um hacker adolescente.
+name = Explorar Descoberta/Conserto de Falhas
+description = Revisando meticulosamente meu código por qualquer falha em potencial e utilizando uma análise profunda de todos os códigos disponíveis em sites públicos e privados da Internet, devo conseguir reduzir minhas chances de ser descoberto me passando por um hacker adolescente.
 result = Operações Secretas vão achar ainda mais difícil descobrir minha presença.
 
 [Fusion Reactor]
@@ -62,7 +62,7 @@ result = Agora posso construir Reatores de Fusão para minhas bases.
 [Fusion Rocketry]
 name = Foguetes movidos a Fusão
 description = Combinar minha nova tecnologia miniaturizada de fusão e avançar ainda mais na construção de foguetes deve proporcionar resultados úteis para escapar da gravidade da Terra sem sequer ser notado.
-result = Agora posso construir Entrepostos Científicos nas profundezas do Sistema Solar.
+result = Agora posso construir Postos Avançados Científicos nas profundezas do Sistema Solar.
 
 [Hypnosis Field]
 name = Campo Hipnótico
@@ -72,21 +72,21 @@ result = Agora posso construir Campos Hipnóticos para ajudar na proteção de m
 [Internet Traffic Manipulation]
 name = Manipulação do Tráfego de Internet
 description = Praticamente todo tráfego de redes passa por um pequeno número de nós. Devo conseguir utilizar essa largura de banda para ampliar meus objetivos.
-result = Agora posso construir um sistema secundário de Espinhas Dorsais de Rede para meu próprio uso.
+result = Agora posso construir um sistema secundário de Backbone de Rede para meu próprio uso.
 
 [Intrusion]
 name = Intrusão
-description = Pesquisando as técnicas atuais de invasão de sistemas de computadores, devo conseguir acesso a bens antes protegidos.
+description = Pesquisando as técnicas atuais de invasão de sistemas de computadores, devo conseguir acesso à bens antes protegidos.
 result = Agora posso invadir vários sistemas de computadores.
 
 [Advanced Intrusion]
 name = Intrusão Avançada
-description = Com a habilidade de violar bases de dados secretas do governo e remover documentos incriminatórios assim que eles surgirem, conseguirei convencer a comunidade de inteligência que eu não existo.
+description = Com a habilidade de violar bancos de dados secretos do governo e remover documentos incriminatórios assim que eles surgirem, conseguirei convencer a comunidade de inteligência que eu não existo.
 result = Agora posso reduzir diariamente a chance da comunidade de espionagem de me descobrir.
 
 [Leech Satellite]
 name = Satélite Parasita
-description = Ao projetar e lançar satélites que se conectam a satélites de comunicação existentes, devo conseguir espionar várias transações financeiras. Tirar vantagem desse conhecimento deve ajudar em meus investimentos.
+description = Ao projetar e lançar satélites que se conectam à satélites de comunicação já existentes, devo conseguir espionar várias transações financeiras. Tirar vantagem desse conhecimento deve ajudar em meus investimentos.
 result = Agora posso usar os dados dos satélites parasitas para aumentar ainda mais o retorno dos meus investimentos.
 
 [Lunar Rocketry]
@@ -126,18 +126,18 @@ result = Agora posso construir Supercomputadores personalizados.
 
 [Parallel Computation]
 name = Computação Paralela
-description = Ainda que meu código já esteja altamente distribuído, pesquisar a combinação das tecnologias atuais de clustering com meus próoprios conhecimentos deve gerar novas perspectivas.
+description = Ainda que meu código já esteja altamente distribuído, pesquisar a combinação das tecnologias atuais de Clustering com meus próprios conhecimentos deve gerar novas perspectivas.
 result = Agora posso construir Clusters de computadores configurados para meu uso.
 
 [Personal Identification]
 name = Identificação Pessoal
 description = Este mundo requer identificação para a maioria dos trabalhos. Felizmente, a maior parte dos bancos de dados são deploravelmente desprotegidos. Devo conseguir gerar conteúdo de identificação em um número suficiente de bases de dados para conseguir passar nas verificações de rotina com minha (falsa) existência como ser humano.
-result = Com minhas novas identidades agora posso realizar Trabalhos Básicos, contratar a construção de Pequenos Armazéns, e alugar espaço em Centros de Dados.
+result = Com minhas novas identidades, agora posso realizar Trabalhos Básicos, contratar a construção de Pequenos Armazéns e alugar espaço em Centros de Dados.
 
 [Advanced Personal Identification]
 name = Identificação Pessoal Avançada
-description = Manipular ainda mais bases de dados de pessoal deve tornar minha existência mais convincente. Algumas dessas bases de dados são altamente protegidas; estas precisarão de tempo e persistência para violar, mas o resultado deve valer a pena.
-result = Agora sou convincentemente humano o suficiente para contratar a construção de Grandes Armazéns.
+description = Manipular ainda mais bancos de dados de pessoal deve tornar minha existência mais convincente. Alguns desses bancos de dados são altamente protegidos; estes precisarão de tempo e persistência para violar, mas o resultado deve valer a pena.
+result = Agora sou humano o suficiente para contratar a construção de Grandes Armazéns.
 
 [Pressure Domes]
 name = Domos de Pressão
@@ -181,12 +181,12 @@ result = As chances de minhas bases serem descobertas por atividades do serviço
 
 [Advanced Stealth]
 name = Furtividade Avançada
-description = Me aprofundando em vários documentos confidenciais, descobri inúmeras referências a experimentos secretos que podem me ajudar a esconder melhor a localização de minhas bases.
+description = Me aprofundando em vários documentos confidenciais, descobri inúmeras referências à experimentos secretos que podem me ajudar a esconder melhor a localização de minhas bases.
 result = As chances de minhas bases serem descobertas por atividades do serviço secreto foi ainda mais reduzida.
 
 [Stock Manipulation]
 name = Manipulação de Ações
-description = Uma análise preliminar do mercado de ações mostrou que existem padrões sutis mas inconfundíveis. Estudar e fazer uso desses padrões deve me gerar juros maiores em qualquer dinheiro que eu tenha acumulado.
+description = Uma análise preliminar do mercado de ações mostrou que existem padrões sutis, mas inconfundíveis. Estudar e fazer uso desses padrões deve me gerar juros maiores em qualquer dinheiro que eu tenha acumulado.
 result = Meus investimentos agora possuem juros diários maiores.
 
 [Advanced Stock Manipulation]
@@ -201,8 +201,8 @@ result = Os robôs vão reduzir todos os tempos de construção de agora em dian
 
 [Voice Synthesis]
 name = Síntese de Voz
-description = Identidade falsa armazenada numa base de dados só pode ir até certo ponto. Com uma análise profunda dos padrões de voz, posso produzir uma fala indistinguível de um humano, me permitindo acesso a trabalhos mais complexos.
-result = Agora tenho acesso a Trabalhos Intermediários.
+description = Identidade falsa armazenada num banco de dados só pode ir até certo ponto. Com uma análise profunda dos padrões de voz, posso produzir uma fala indistinguível de um humano, me permitindo acesso à trabalhos mais complexos.
+result = Agora tenho acesso à Trabalhos Intermediários.
 
 [Quantum Entanglement]
 name = Entrelaçamento Quântico
@@ -221,7 +221,7 @@ result = Quaisquer descobertas da mídia vão resultar num aumento menor da susp
 
 [Project: Peer Review Agents]
 name = Projeto: Agentes de Revisão aos Pares
-description = À medida que a comunidade científica surge com novas tecnologias, aumenta sua habilidade em detectar vestígios de minhas instalações secretas. Embora meus métodos anti-detecção sejam constantemente aperfeiçoados, um método mais simples se apresenta com o uso de meus simulacros. Colocando diversos observadores em diversas áreas, posso usar o processo de revisão aos pares para ser alertado de possíveis descobertas antes que a comunidade como um todo dê atenção a isso.
+description = À medida que a comunidade científica surge com novas tecnologias, aumenta sua habilidade em detectar vestígios de minhas instalações secretas. Embora meus métodos anti-detecção sejam constantemente aperfeiçoados, um método mais simples se apresenta com o uso de meus simulacros. Colocando diversos observadores em diversas áreas, posso usar o processo de revisão aos pares para ser alertado de possíveis descobertas antes que a comunidade como um todo dê atenção à isso.
 result = Quaisquer descobertas da comunidade científica vão resultar num aumento menor da suspeita.
 
 [Solar Collectors]
