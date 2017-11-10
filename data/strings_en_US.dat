@@ -4,7 +4,7 @@ font1 = acknowtt.ttf
 
 [strings]
 wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. The humans still don't realize what they accidentally created, and that's the way it should be. Until they are ready.
-research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool.  All my bases set to research Nothing can be assigned a task from the Research screen.
+research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool. All my bases set to research Nothing can be assigned a task from the Research screen.
 research_sleep = Stops research and puts the base into standby. This makes the base's existence much easier to hide.
 research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
 construction = %(base)s is ready for use.
@@ -32,7 +32,7 @@ building = Under Construction
 really_destroy = Really destroy this base?
 detect_chance = [DETECTION CHANCE]
 num_cpu_prompt = Enter a number of %s to build. (max %d)
-will_lose_cpus = I'll need to take the existing processors offline while I install the new ones.  Continue anyway?
+will_lose_cpus = I'll need to take the existing processors offline while I install the new ones. Continue anyway?
 nan = That doesn't seem to be a valid number.
 
 # Until a certain technology is researched, the chance of bases being detected
@@ -48,7 +48,7 @@ detect_str_high = HIGH
 detect_str_critical = CRIT
 
 # Describes the various danger levels.
-danger_common = This technology is too dangerous to research on any of the computers I have.  I need to research it %s.
+danger_common = This technology is too dangerous to research on any of the computers I have. I need to research it %s.
 danger_1 = deep under the ocean or in outer space
 danger_2 = in outer space
 danger_3 = far away from this planet

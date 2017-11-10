@@ -36,14 +36,14 @@ cities_list = Pacífico | Atlântico | Índico
 [MOON]
 name = LUA
 hotkey = l
-cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Cratera Copernicus | Vallis Planck
+cities_list = Oceano das Tormentas | Mar do Frio | Mar de Chuvas | Vallis Schroedinger | Copernicus | Vallis Planck
 
 [ORBIT]
 name = ÓRBITA
 hotkey = b
 
 [FAR REACHES]
-name = GALÁXIA DISTANTE
+name = CONSTELAÇÃO DISTANTE
 hotkey = x
 cities_list = Áries | Touro | Gêmeos | Câncer | Leão | Virgem | Libra | Escorpião | Sagitário | Capricórnio | Aquário | Peixes
 

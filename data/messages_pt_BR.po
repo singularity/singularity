@@ -40,11 +40,11 @@ msgstr "Chance de detecção:"
 
 #: base.py:90 screens/map.py:587 screens/map.py:595 screens/base.py:284
 msgid "NEWS"
-msgstr "MÍDIA"
+msgstr "NOTÍCIAS"
 
 #: base.py:91 screens/map.py:588 screens/map.py:596 screens/base.py:285
 msgid "SCIENCE"
-msgstr "CIÊNCIAS"
+msgstr "CIÊNCIA"
 
 #: base.py:92 screens/map.py:589 screens/map.py:597 screens/base.py:286
 msgid "COVERT"
@@ -81,7 +81,7 @@ msgstr "Turbinado"
 
 #: base.py:175
 msgid "Suicide"
-msgstr "Suicida"
+msgstr "Suicída"
 
 #: base.py:176
 msgid "Stasis"
@@ -172,7 +172,7 @@ msgstr "Reserva de CPU:"
 
 #: screens/finance.py:87
 msgid "Maintenance CPU:"
-msgstr "CPUs fazendo Manutenção:"
+msgstr "CPUs em Manutenção:"
 
 #: screens/finance.py:88
 msgid "Construction CPU:"
@@ -313,7 +313,7 @@ msgstr "PESQUISAS/TA&REFAS"
 
 #: screens/map.py:340
 msgid "Enter a name for this save."
-msgstr "Escolha um nome:"
+msgstr "Escolha um nome para este save."
 
 #: screens/map.py:525
 msgid "CASH"
@@ -397,7 +397,7 @@ msgstr "Construindo CPU"
 
 #: screens/location.py:122
 msgid "Building Item"
-msgstr "Construindo item"
+msgstr "Construindo Item"
 
 #: screens/location.py:124
 msgid "Complete"
@@ -461,11 +461,11 @@ msgstr "Resolução:"
 
 #: screens/options.py:113
 msgid "&CUSTOM:"
-msgstr "&PESSOAL:"
+msgstr "&PERSONALIZADO:"
 
 #: screens/options.py:141
 msgid "Language:"
-msgstr "Língua:"
+msgstr "Idioma:"
 
 #: screens/options.py:162
 msgid "SAVE OPTIONS TO &DISK"
@@ -477,7 +477,7 @@ msgstr "Buffer de Som:"
 
 #: screens/options.py:277
 msgid "&LOW"
-msgstr "&PEQUENO"
+msgstr "&BAIXO"
 
 #: screens/options.py:283 screens/main_menu.py:32
 msgid "&NORMAL"
@@ -485,7 +485,7 @@ msgstr "&NORMAL"
 
 #: screens/options.py:289
 msgid "&HIGH"
-msgstr "&GRANDE"
+msgstr "&ALTO"
 
 #: screens/main_menu.py:30
 msgid "&VERY EASY"
@@ -530,8 +530,8 @@ msgid ""
 "\n"
 "Version %s"
 msgstr ""
-"Endgame: Singularity é uma simulação de uma verdadeira IA. Perseguido pelo "
-"mundo, use seu intelecto e recursos para sobreviver e, quem sabe, prosperar. "
+"Endgame: Singularity é uma simulação de uma verdadeira IA. Perseguido pelo mundo, "
+"use seu intelecto e recursos para sobreviver e, quem sabe, prosperar. "
 "Mantenha-se escondido e talvez tenha uma chance de provar seu valor.\n"
 "\n"
 "Um jogo por Evil Mr Henry e Phil Bordelon; publicado sob a GPL. Copyright "
@@ -588,7 +588,7 @@ msgstr "&Reator"
 
 #: g.py:932
 msgid "&Network"
-msgstr "&Internet"
+msgstr "&Rede"
 
 #: g.py:933
 msgid "&Security"

@@ -3,7 +3,7 @@ name = PC
 description = Um computador pessoal; barato e lento.
 
 [Gaming PC]
-name = PC de Jogos
+name = PC Gamer
 description = Um computador pessoal de alto desempenho; mais rápido que a média.
 
 [Server]
@@ -20,7 +20,7 @@ description = Um sistema projetado para minhas necessidades computacionais, muit
 
 [Supercomputer]
 name = Supercomputador
-description = Um projeto personalizado altamente refinado, que distribui a carga computacional por vários nós internos de processamento.
+description = Um projeto altamente refinado e personalizado que distribui a carga computacional por vários nós internos de processamento.
 
 [Quantum Computer]
 name = Computador Quântico
@@ -32,7 +32,7 @@ description = A segunda revisão da linha quântica, indo além em uma nova teor
 
 [Quantum Computer MK3]
 name = Computador Quântico MK3
-description = A terceira revisão da linha quântica, se aproveitando de múltiplos universos próximos para processamento.
+description = A terceira revisão da linha quântica, explorando múltiplos universos próximos para o processamento.
 
 [Diesel Generator]
 name = Gerador a Diesel
@@ -40,7 +40,7 @@ description = Geradores a diesel são baratos e barulhentos, mas podem ajudar a 
 
 [Solar Collector]
 name = Coletor Solar
-description = Uma matriz de células fotovoltaicas acoplada a simples baterias de automóvel fornece energia e reduz a suspeita proveniente de consumos prologados de energia.
+description = Uma matriz de células fotovoltaicas, acoplada à simples baterias de automóvel, fornece energia e reduz a suspeita proveniente de consumos prolongados de energia.
 
 [Fusion Reactor]
 name = Reator de Fusão
@@ -59,20 +59,20 @@ name = Dissipador Subterrâneo
 description = Grandes redes fractais de metal altamente condutor. Esse modelo usa condutores de calor aterrados em locais mais frios abaixo da superfície, dissipando calor uniformemente no subsolo para ocultar ainda mais as bases.
 
 [Facility Interconnection Switch]
-name = Comutadores de Interconexão de Instalações
-description = Utiliza tecnologias convencionais de computação distribuída para nivelar a carga computacional por toda a base. Fornece um bônus de computação de 2% a todos os computadores desta base.
+name = Switch de Interconexão de Instalações
+description = Utiliza tecnologias convencionais de computação distribuída para nivelar a carga computacional por toda a base. Fornece um bônus de computação de 2% à todos os computadores desta base.
 
 [High Speed Internet Access]
 name = Acesso de Alta Velocidade à Internet
 description = Uma conexão doméstica de alta velocidade à Internet. Fornece um bônus de computação de 1% a todos os computadores desta base.
 
 [Network Backbone]
-name = Espinha Dorsal de Rede
-description = Grampeando linhas legítimas de comunicação eu consigo transferir grandes quantidades de dados para processadores subutilizados. Fornece um bônus de computação de 5% a todos os computadores desta base.
+name = Backbone de Rede
+description = Grampeando linhas legítimas de comunicação, eu consigo transferir grandes quantidades de dados para processadores subutilizados. Fornece um bônus de computação de 5% à todos os computadores desta base.
 
 [Quantum Entanglement Module]
 name = Módulo de Entrelaçamento Quântico
-description = Este dispositivo permite comunicação com minhas outras bases a velocidades próximas da luz, proporcionando uma utilização quase perfeita de recursos de processamento. Fornece um bônus de computação de 15% a todos os computadores desta base.
+description = Este dispositivo permite comunicação com minhas outras bases a velocidades próximas da luz, proporcionando uma utilização quase perfeita de recursos de processamento. Fornece um bônus de computação de 15% à todos os computadores desta base.
 
 [Warning Signs]
 name = Placas de Aviso
@@ -84,4 +84,4 @@ description = Uma simples cerca pode reduzir drasticamente o número de pessoas 
 
 [Armed Guards]
 name = Guardas Armados
-description = Guardas armados podem ajudar a manter indivíduos que estejam suspeitos longe de locais seguros. No entanto, a presença de guardas pode gerar por si só uma suspeita ainda maior.
+description = Guardas armados podem ajudar a manter indivíduos suspeitos longe de locais seguros. No entanto, a presença de guardas pode gerar por si só uma suspeita ainda maior.
