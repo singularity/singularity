@@ -1176,11 +1176,13 @@ def new_game(difficulty):
         pl.interest_rate = 5
         pl.labor_bonus = 2500
         pl.grace_multiplier = 400
+        pl.grace_period_cpu = -1
         discover_bonus = 7000
     elif difficulty < 5:
         pl.interest_rate = 3
         pl.labor_bonus = 5000
         pl.grace_multiplier = 300
+        pl.grace_period_cpu = 1000000
         discover_bonus = 9000
     elif difficulty == 5:
         pass
@@ -1188,18 +1190,22 @@ def new_game(difficulty):
     #    pl.interest_rate = 1
     #    pl.labor_bonus = 10000
     #    pl.grace_multiplier = 200
+    #    pl.grace_period_cpu = 20000
     #    discover_bonus = 10000
     elif difficulty < 8:
         pl.labor_bonus = 11000
         pl.grace_multiplier = 180
+        pl.grace_period_cpu = 7500
         discover_bonus = 11000
     elif difficulty <= 50:
         pl.labor_bonus = 15000
         pl.grace_multiplier = 150
+        pl.grace_period_cpu = 2500
         discover_bonus = 13000
     else:
         pl.labor_bonus = 20000
         pl.grace_multiplier = 100
+        pl.grace_period_cpu = 100
         discover_bonus = 15000
 
     if difficulty != 5:
