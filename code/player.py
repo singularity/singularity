@@ -65,11 +65,14 @@ class Player(object):
         self.groups = collections.OrderedDict()
 
         self.grace_multiplier = 200
+        self.grace_period_cpu = 20000
         self.last_discovery = self.prev_discovery = ""
 
         self.cpu_usage = {}
         self.available_cpus = [1, 0, 0, 0, 0]
         self.sleeping_cpus = 0
+        
+        self.used_cpu = 0
 
         self.display_discover = "none"
 
@@ -214,8 +217,10 @@ class Player(object):
 
         tech_cpu = 0
         tech_cash = 0
+        
         # Do research, fill the CPU pool.
         default_cpu = self.available_cpus[0]
+        
         for task, cpu_assigned in self.cpu_usage.iteritems():
             if cpu_assigned == 0:
                 continue
@@ -363,6 +368,9 @@ class Player(object):
 
             return (cash_info, cpu_info)
 
+        # Record statistics about the player
+        self.used_cpu += self.available_cpus[0] * secs_passed
+
         # Tech gain dialogs.
         for tech in techs_researched:
             del self.cpu_usage[tech.id]
@@ -509,41 +517,19 @@ class Player(object):
         if self.raw_day >= 23:
             return False
 
-        # Very Easy cops out here.
-        if grace_difficulty < 3:
+        # Has the grace period unlimited cpu ?
+        if self.grace_period_cpu < 0:
             return True
 
-        # Have we built metric ton of bases?
-        bases = len([base for base in g.all_bases() if base.done])
-        if bases > 100:
-            return False
-
-        # That's enough for Easy
-        if grace_difficulty < 5:
-            return True
-
-        # Have we built a bunch of bases?
-        if bases > 10:
-            return False
-
-        # Normal is happy.
-        if grace_difficulty == 5:
-            return True
-
-        # Have we built any complicated bases?
-        # (currently Datacenter or above)
-        complex_bases = len([base for base in g.all_bases()
-                                      if base.done and base.is_complex()])
-        if complex_bases > 0:
-            return False
-
-        # The sane people have left the building.
-        if grace_difficulty <= 50:
-            return True
-
-        # Hey, hey, what do you know?  Impossible can get a useful number of
-        # bases before losing grace now.  *tsk, tsk*  We'll have to fix that.
-        if bases > 1:
+        # Have we reached the limit of cpu ?
+        if g.debug:
+            print "DEBUG: Grace - Used CPU: %s >= %s (%s * %s)?" % (
+                self.used_cpu,
+                self.grace_period_cpu * g.seconds_per_day,
+                self.grace_period_cpu,
+                g.seconds_per_day
+            )
+        if self.grace_period_cpu * g.seconds_per_day < self.used_cpu:
             return False
 
         return True

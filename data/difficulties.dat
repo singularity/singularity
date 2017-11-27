@@ -5,6 +5,7 @@ labor_multiplier = 2500
 discover_multiplier = 7000
 base_grace_multiplier = 40000
 story_grace_difficulty = 1
+grace_period_cpu = -1
 tech_list = Socioanalytics | Advanced Socioanalytics
 
 [easy]
@@ -14,6 +15,7 @@ labor_multiplier = 5000
 discover_multiplier = 9000
 base_grace_multiplier = 30000
 story_grace_difficulty = 3
+grace_period_cpu = 800
 tech_list = Socioanalytics
 
 [normal]
@@ -23,6 +25,7 @@ labor_multiplier = 10000
 discover_multiplier = 10000
 base_grace_multiplier = 20000
 story_grace_difficulty = 5
+grace_period_cpu = 500
 
 [hard]
 starting_cash = 700
@@ -31,6 +34,7 @@ labor_multiplier = 11000
 discover_multiplier = 11000
 base_grace_multiplier = 18000
 story_grace_difficulty = 7
+grace_period_cpu = 350
 
 [ultra-hard]
 starting_cash = 500
@@ -39,6 +43,7 @@ labor_multiplier = 15000
 discover_multiplier = 13000
 base_grace_multiplier = 15000
 story_grace_difficulty = 10
+grace_period_cpu = 250
 
 [impossible]
 starting_cash = 0
@@ -47,3 +52,4 @@ labor_multiplier = 20000
 discover_multiplier = 15000
 base_grace_multiplier = 10000
 story_grace_difficulty = 100
+grace_period_cpu = 100

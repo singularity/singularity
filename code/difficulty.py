@@ -32,6 +32,7 @@ columns = (
     'discover_multiplier',
     'base_grace_multiplier',
     'story_grace_difficulty',
+    'grace_period_cpu'
 )
 
 list_columns = (

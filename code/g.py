@@ -235,6 +235,7 @@ def new_game(difficulty_name):
     pl.interest_rate = diff.starting_interest_rate
     pl.labor_bonus = diff.labor_multiplier
     pl.grace_multiplier = diff.base_grace_multiplier
+    pl.grace_period_cpu = diff.grace_period_cpu
 
     import group
     for group_id in groups:
