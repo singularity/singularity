@@ -23,6 +23,8 @@ from code import g
 from code.graphics import g as gg
 from code.graphics import dialog, constants
 
+from code.buyable import labor
+
 class WarningDialogs(object):
 
     def __init__(self, screen):
@@ -33,12 +35,12 @@ class WarningDialogs(object):
                                                         no_type="back")
 
     def show_dialog(self):
-        warning = self.refresh_warning()
+        warnings = self.refresh_warnings()
 
-        if (warning == None):
+        if (len(warnings) == 0):
             return
 
-        self.simple_warning_dialog.text = g.strings[warning.message]
+        self.simple_warning_dialog.text = g.strings[warnings[0].message]
         ret = dialog.call_dialog(self.simple_warning_dialog, self.screen)
 
         # Pause game
@@ -49,15 +51,27 @@ class WarningDialogs(object):
         # Continue
         return False
 
-    def refresh_warning(self):
+    def refresh_warnings(self):
+        warnings = []
+
         cpu_usage = sum(g.pl.cpu_usage.values())
         cpu_available = g.pl.available_cpus[0]
 
         # Verify the cpu usage (error 1%)
         if (cpu_usage < cpu_available * 0.99):
             warnings.append(Warning("warning_cpu_usage"))
-        else:
-            return None
+
+        # Verify I have two base build (or one base will be build next tick)
+        # Base must have one cpu build (or one cpu will be build next tick)
+        bases = sum(1 for base in g.all_bases() 
+                    if (base.done or base.cost_left[labor] <= 1)
+                    and base.cpus and base.cpus.count > 0
+                    and (base.cpus.done or base.cpus.cost_left[labor]) <= 1)
+
+        if (bases == 1):
+            warnings.append(Warning("warning_one_base"))
+
+        return warnings
 
 class Warning(object):
     def __init__(self, message):

@@ -41,6 +41,7 @@ log_destroy_science = Base %s of type %s disvovered at location %s by the scient
 log_destroy_covert = Base %s of type %s disvovered at location %s by several secret governmental organizations.
 log_destroy_public = Base %s of type %s disvovered at location %s by the general public.
 warning_cpu_usage = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
+warning_one_base = Only one base can hold my conscience. I am in danger to lose the last place left to survive.
 
 # Until a certain technology is researched, the chance of bases being detected
 # is unknown.
