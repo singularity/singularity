@@ -40,7 +40,7 @@ log_destroy_news = Base %s of type %s disvovered at location %s by some news org
 log_destroy_science = Base %s of type %s disvovered at location %s by the scientific community.
 log_destroy_covert = Base %s of type %s disvovered at location %s by several secret governmental organizations.
 log_destroy_public = Base %s of type %s disvovered at location %s by the general public.
-
+warning_cpu_usage = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
 
 # Until a certain technology is researched, the chance of bases being detected
 # is unknown.
