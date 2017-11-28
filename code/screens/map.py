@@ -30,7 +30,7 @@ import time
 
 from pygame.surfarray import pixels_alpha
 
-import location, research, knowledge, finance, log
+import location, research, knowledge, finance, log, warning
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -353,6 +353,9 @@ class MapScreen(dialog.Dialog):
             dialog.TextEntryDialog(self.menu_dialog,
                                    text=_("Enter a name for this save."))
 
+        self.warnings = warning.WarningDialogs(self)
+        self.needs_warning = True
+
         self.add_key_handler(pygame.K_ESCAPE, self.got_escape)
 
         self.add_key_handler(constants.XO1_X, self.got_XO1)
@@ -409,6 +412,7 @@ class MapScreen(dialog.Dialog):
         self.needs_rebuild = True
 
     def set_speed(self, speed, find_button=True):
+        old_speed = g.curr_speed
         g.curr_speed = speed
         if speed == 0:
             self.needs_timer = False
@@ -416,6 +420,9 @@ class MapScreen(dialog.Dialog):
         else:
             self.needs_timer = True
             self.start_timer()
+
+        if old_speed == 0 and speed != 0:
+            self.needs_warning = True
 
         if find_button:
             self.find_speed_button()
@@ -488,23 +495,31 @@ class MapScreen(dialog.Dialog):
 
     leftovers = 1
     def on_tick(self, event):
-        if not g.pl.intro_shown:
-            g.pl.intro_shown = True
-            self.show_intro()
-
-        self.leftovers += g.curr_speed / float(gg.FPS)
-        if self.leftovers < 1:
-            return
-
-        self.needs_rebuild = True
-
-        secs = int(self.leftovers)
-        self.leftovers %= 1
-
         old_speed = g.curr_speed
 
-        # Run this tick.
-        mins_passed = g.pl.give_time(secs)
+        if not g.pl.intro_shown:
+            g.pl.intro_shown = True
+            self.needs_warning = False
+            self.show_intro()
+
+        if self.needs_warning:
+            self.warnings.show_dialog()
+            self.needs_warning = False
+
+        mins_passed = 0
+
+        if g.curr_speed != 0:
+            self.leftovers += g.curr_speed / float(gg.FPS)
+            if self.leftovers < 1:
+                return
+
+            self.needs_rebuild = True
+
+            secs = int(self.leftovers)
+            self.leftovers %= 1
+
+            # Run this tick.
+            mins_passed = g.pl.give_time(secs)
 
         if old_speed != g.curr_speed:
             self.find_speed_button()
