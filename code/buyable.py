@@ -176,7 +176,7 @@ class Buyable(object):
 
         # And apply it.
         was_complete = self.cost_paid
-        cost_paid = numpy.maximum(numpy.cast[numpy.int64](numpy.ceil(raw_paid)),
+        cost_paid = numpy.maximum(numpy.cast[numpy.int64](numpy.round(raw_paid)),
                                   was_complete)
         spent = cost_paid - was_complete
         return spent, cost_paid
