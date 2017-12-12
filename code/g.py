@@ -19,7 +19,7 @@
 
 #This file contains all global objects.
 
-version = "0.30c"
+version = "0.31alpha1"
 
 import ConfigParser
 import pygame
@@ -86,10 +86,11 @@ font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_r5_pre"
+current_save_version = "singularity_savefile_0.31pre"
 savefile_translation = {
     "singularity_savefile_r4": 4,
     "singularity_savefile_r5_pre": 4.91,
+    "singularity_savefile_0.31pre": 31,
 }
 
 data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))

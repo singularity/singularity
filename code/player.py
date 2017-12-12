@@ -20,6 +20,7 @@
 #This file contains the player class.
 
 import random
+import collections
 from operator import truediv
 from numpy import array
 
@@ -121,6 +122,8 @@ class Player(object):
         self.available_cpus = [1, 0, 0, 0, 0]
         self.sleeping_cpus = 0
 
+        self.log = collections.deque(maxlen=1000)
+
     @property
     def difficulty_name(self):
         return g.strip_hotkey(g.get_difficulties(self.difficulty)[0][0])
@@ -131,6 +134,8 @@ class Player(object):
             self.apotheosis = g.techs["Apotheosis"].done
             if self.apotheosis:
                 self.had_grace = True
+        if old_version < 31: # < 0.31pre
+            self.log = collections.deque(maxlen=1000)
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour
@@ -615,10 +620,12 @@ class Player(object):
             base_name = base.name
 
             if reason == "maint":
+                log_type = "log_destroy_maint"
                 dialog_string = g.strings["discover_maint"] % \
                                 {"base": base_name}
 
             elif reason in self.groups:
+                log_type = "log_destroy_" + reason
                 discovery_locs.append(base.location)
                 self.groups[reason].discovered_a_base()
                 detect_phrase = g.strings["discover_" + reason]
@@ -626,9 +633,12 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": detect_phrase}
             else:
+                log_type = "log_destroy"
                 print "Error: base destroyed for unknown reason: " + reason
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
+
+            self.add_log(log_type, base.name, base.type.name, base.location.name)
 
             self.pause_game()
             base.destroy()
@@ -690,3 +700,8 @@ class Player(object):
                 result_cash -= g.techs[task].cost_left[cash]
                 result_cash = max(result_cash, -g.max_cash)
         return result_cash
+
+    def add_log(self, name, *args):
+        time = (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
+        log = (time, name, args)
+        self.log.append(log)
