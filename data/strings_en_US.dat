@@ -34,6 +34,13 @@ detect_chance = [DETECTION CHANCE]
 num_cpu_prompt = Enter a number of %s to build. (max %d)
 will_lose_cpus = I'll need to take the existing processors offline while I install the new ones.  Continue anyway?
 nan = That doesn't seem to be a valid number.
+log_destroy = Base %s of type %s destroyed at location %s.
+log_destroy_maint = Base %s of type %s destroyed at location %s. Maintenance failed.
+log_destroy_news = Base %s of type %s disvovered at location %s by some news organizations.
+log_destroy_science = Base %s of type %s disvovered at location %s by the scientific community.
+log_destroy_covert = Base %s of type %s disvovered at location %s by several secret governmental organizations.
+log_destroy_public = Base %s of type %s disvovered at location %s by the general public.
+
 
 # Until a certain technology is researched, the chance of bases being detected
 # is unknown.

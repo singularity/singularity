@@ -30,7 +30,7 @@ import time
 
 from pygame.surfarray import pixels_alpha
 
-import location, research, knowledge, finance
+import location, research, knowledge, finance, log
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -209,6 +209,12 @@ class MapScreen(dialog.Dialog):
                                                     text=_("&KNOWLEDGE"),
                                                     autohotkey=True,
                                                     dialog=knowledge.KnowledgeScreen(self))
+
+        self.log_button = button.DialogButton(self, (0.5, 0.88),
+                                              (0.15, 0.04),
+                                              text=_("&LOG"), autohotkey=True,
+                                              anchor=constants.TOP_CENTER,
+                                              dialog=log.LogScreen(self))
 
         cheat_buttons = []
         cheat_buttons.append(
