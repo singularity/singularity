@@ -26,10 +26,12 @@ from code.graphics import widget, dialog, button, text, constants, g as gg
 
 
 class FinanceScreen(dialog.Dialog):
-    def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
+    def __init__(self, parent, pos=(.5, .1), size=(.93, .73), *args, **kwargs):
         super(FinanceScreen, self).__init__(parent, pos, size, *args, **kwargs)
 
         kwargs.setdefault("background_color", gg.colors["clear"])
+
+        self.format_buttons = button.ButtonGroup()
 
         self.back_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
                                                    anchor = constants.BOTTOM_CENTER,
@@ -37,16 +39,33 @@ class FinanceScreen(dialog.Dialog):
         self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound)
 
 
-        self.money_report_pane = widget.BorderedWidget(self, (0, 0), (-.45, -.85),
+        self.money_report_pane = widget.BorderedWidget(self, (0, .08), (-.45, -.72),
                                                        anchor = constants.TOP_LEFT)
-        self.cpu_report_pane = widget.BorderedWidget(self, (-1, 0), (-.45, -.85),
+        self.cpu_report_pane = widget.BorderedWidget(self, (-1, .08), (-.45, -.72),
                                                      anchor = constants.TOP_RIGHT)
+
+        self.format_button_midnight = FormatButton(self, (-.5, 0), (-.15,-.08),
+                                                   anchor = constants.TOP_RIGHT,
+                                                   text=_("&Midnight"), autohotkey=True,
+                                                   function=self.format_toggle)
+        self.format_button_midnight.args = (self.format_button_midnight, True)                           
+        self.format_buttons.add(self.format_button_midnight)
+        
+        self.format_button_24hours = FormatButton(self, (-.5, 0), (-.15,-.08),
+                                                   anchor = constants.TOP_LEFT,
+                                                   text=_("24 &Hours"), autohotkey=True,
+                                                   function=self.format_toggle)
+        self.format_button_24hours.args = (self.format_button_24hours, False)   
+        self.format_buttons.add(self.format_button_24hours)
+
+        self.format_button_midnight.chosen_one()
+        self.midnight_stop = True
 
     def rebuild(self):
         super(FinanceScreen, self).rebuild()
 
-        seconds_left = g.pl.seconds_to_next_day()
-        cash_info, cpu_info = g.pl.give_time(seconds_left, dry_run=True)
+        seconds = g.seconds_per_day
+        cash_info, cpu_info = g.pl.give_time(seconds, dry_run=True, midnight_stop=self.midnight_stop)
 
         m = g.to_money
 
@@ -70,7 +89,11 @@ class FinanceScreen(dialog.Dialog):
         financial_report += _("Interest (%s):") % \
                              (g.to_percent(g.pl.interest_rate))+"\n"
         financial_report += _("Income:")+"\n"
-        financial_report += _("Money at Midnight:")+"\n"
+        
+        if (self.midnight_stop):
+            financial_report += _("Money at Midnight:")+"\n"
+        else:
+            financial_report += _("Money in 24 hours:")+"\n"
 
         financial_numbers = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % \
                 (m(cash_info.start), m(cash_info.jobs), m(cash_info.tech),
@@ -119,3 +142,12 @@ class FinanceScreen(dialog.Dialog):
     def show(self):
         self.needs_rebuild = True
         return super(FinanceScreen, self).show()
+
+    def format_toggle(self, button, midnight_stop):
+        self.midnight_stop = midnight_stop
+        button.chosen_one()
+        self.needs_rebuild = True
+
+
+class FormatButton(button.ToggleButton, button.FunctionButton):
+    pass
