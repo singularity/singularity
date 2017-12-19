@@ -176,7 +176,7 @@ class Player(object):
 
         return new_cash, new_partial_cash
 
-    def give_time(self, time_sec, dry_run=False):
+    def give_time(self, time_sec, dry_run=False, midnight_stop=True):
         if time_sec == 0:
             return 0
 
@@ -197,8 +197,8 @@ class Player(object):
 
         day_passed = (days_passed != 0)
 
-        if day_passed:
-            # If a day passed, back up to 00:00:00.
+        if midnight_stop and day_passed:
+            # If a day passed, back up to 00:00:00 for midnight_stop.
             self.raw_sec = self.raw_day * g.seconds_per_day
             self.update_times()
 
@@ -376,25 +376,27 @@ class Player(object):
             # Collect the CPU information.
             cpu_info = DryRunInfo()
 
-            cpu_info.available = self.available_cpus[0]
-            cpu_info.sleeping = self.sleeping_cpus
+            cpu_ratio = secs_passed / float(g.seconds_per_day)
+
+            cpu_info.available = self.available_cpus[0] * cpu_ratio
+            cpu_info.sleeping = self.sleeping_cpus * cpu_ratio
             cpu_info.total = cpu_info.available + cpu_info.sleeping
 
-            cpu_info.tech = tech_cpu
-            cpu_info.construction = construction_cpu
+            cpu_info.tech = tech_cpu * cpu_ratio
+            cpu_info.construction = construction_cpu * cpu_ratio
 
-            cpu_info.maintenance_needed = self.maintenance_cost[cpu]
-            cpu_info.maintenance_shortfall = cpu_maintenance
+            cpu_info.maintenance_needed = self.maintenance_cost[cpu] * cpu_ratio
+            cpu_info.maintenance_shortfall = cpu_maintenance * cpu_ratio
             cpu_info.maintenance = cpu_info.maintenance_needed \
                                    - cpu_info.maintenance_shortfall
 
-            cpu_info.explicit_jobs = self.cpu_usage.get("jobs", 0)
+            cpu_info.explicit_jobs = self.cpu_usage.get("jobs", 0) * cpu_ratio
             cpu_info.pool_jobs = self.cpu_pool / float(time_sec)
-            cpu_info.jobs = self.cpu_usage.get("jobs", 0) + cpu_info.pool_jobs
+            cpu_info.jobs = cpu_info.explicit_jobs + cpu_info.pool_jobs
 
-            cpu_info.explicit_pool = self.cpu_usage.get("cpu_pool", 0)
-            cpu_info.default_pool = default_cpu
-            cpu_info.pool = self.cpu_usage.get("cpu_pool", 0) + default_cpu
+            cpu_info.explicit_pool = self.cpu_usage.get("cpu_pool", 0) * cpu_ratio
+            cpu_info.default_pool = default_cpu * cpu_ratio
+            cpu_info.pool = cpu_info.explicit_pool + cpu_info.default_pool
 
             # Restore the old state.
             self.cash = old_cash
