@@ -388,8 +388,8 @@ def set_language_properly(language):
     g.load_event_defs()
     g.load_location_defs()
 
-    dialog.Dialog.top.map_screen.needs_rebuild = True
-    dialog.Dialog.top.map_screen.needs_redraw = True
+    dialog.Dialog.top.needs_rebuild = True
+    dialog.Dialog.top.needs_redraw = True
 
 def save_options():
     # Build a ConfigParser for writing the various preferences out.
