@@ -290,8 +290,13 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             pass
 
     def check_restart(self):
-        # Test all changes that require a restart. Currently, only language
-        if g.language == self.initial_options['language']:
+        # Test all changes that require a restart. Currently, none.
+        # We keep it for future need...
+        need_restart = False
+
+        # Add restart test here.
+
+        if not need_restart:
             # No restart required. Simply exit the dialog respecting all hooks
             self.yes_button.exit_dialog()
             return
