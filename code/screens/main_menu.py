@@ -27,43 +27,30 @@ class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)
 
-        difficulty_buttons = []
-        for name, difficulty in g.get_difficulties()+[(_("&BACK"), -1)]:
-            difficulty_buttons.append(
-                button.ExitDialogButton(None, None, None, text=name,
-                                        autohotkey=True,
-                                        exit_code=difficulty,
-                                        default=(difficulty == -1)))
-        self.difficulty_dialog = \
-            dialog.SimpleMenuDialog(self, buttons=difficulty_buttons)
-
-        self.load_dialog = dialog.ChoiceDialog(self, (.5,.5), (.5,.5),
-                                               anchor=constants.MID_CENTER,
-                                               yes_type="load")
         self.map_screen = map.MapScreen(self)
         self.new_game_button = \
             button.FunctionButton(self, (.5, .20), (.25, .08),
-                                  text=_("&NEW GAME"), autohotkey=True,
+                                  autohotkey=True,
                                   anchor=constants.TOP_CENTER,
                                   text_size=28,
                                   function=self.new_game)
         self.load_game_button = \
             button.FunctionButton(self, (.5, .36), (.25, .08),
-                                  text=_("&LOAD GAME"), autohotkey=True,
+                                  autohotkey=True,
                                   anchor=constants.TOP_CENTER,
                                   text_size=28,
                                   function=self.load_game)
         self.options_button = button.DialogButton(self, (.5, .52), (.25, .08),
-                                                  text=_("&OPTIONS"), autohotkey=True,
+                                                  autohotkey=True,
                                                   anchor=constants.TOP_CENTER,
                                                   text_size=28,
                                                   dialog=OptionsScreen(self))
         self.quit_button = button.ExitDialogButton(self, (.5, .68), (.25, .08),
-                                         text=_("&QUIT"), autohotkey=True,
+                                         autohotkey=True,
                                          anchor=constants.TOP_CENTER,
                                          text_size=28)
         self.about_button = button.DialogButton(self, (0, 1), (.13, .04),
-                                                text=_("&ABOUT"), autohotkey=True,
+                                                autohotkey=True,
                                                 text_size=20,
                                                 anchor=constants.BOTTOM_LEFT,
                                                 dialog=AboutDialog(self))
@@ -74,6 +61,36 @@ class MainMenu(dialog.TopDialog):
                                     color=gg.colors["dark_red"],
                                     background_color=gg.colors["black"],
                                     anchor=constants.TOP_CENTER)
+
+        self.difficulty_dialog = dialog.SimpleMenuDialog(self)
+
+    def rebuild(self):
+        # Rebuild dialogs
+        self.options_button.dialog.needs_rebuild = True
+        self.about_button.dialog.needs_rebuild = True
+        self.map_screen.needs_rebuild = True
+        
+        difficulty_buttons = []
+        for name, difficulty in g.get_difficulties()+[(_("&BACK"), -1)]:
+            difficulty_buttons.append(
+                button.ExitDialogButton(None, None, None, text=name,
+                                        autohotkey=True,
+                                        exit_code=difficulty,
+                                        default=(difficulty == -1)))
+        self.difficulty_dialog.buttons = difficulty_buttons
+
+        self.load_dialog = dialog.ChoiceDialog(self, (.5,.5), (.5,.5),
+                                               anchor=constants.MID_CENTER,
+                                               yes_type="load")
+
+        # Update buttons translations
+        self.new_game_button.text  = _("&NEW GAME")
+        self.load_game_button.text = _("&LOAD GAME")
+        self.options_button.text   = _("&OPTIONS")
+        self.quit_button.text      = _("&QUIT")
+        self.about_button.text     = _("&ABOUT")
+
+        super(MainMenu, self).rebuild()
 
     def new_game(self):
         difficulty = dialog.call_dialog(self.difficulty_dialog, self)
@@ -93,14 +110,14 @@ class MainMenu(dialog.TopDialog):
                 dialog.call_dialog(self.map_screen, self)
 
 
-about_message = _("""Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
+about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.
 
 A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 2005, 2006, 2007, 2008.
 
 Website: http://www.emhsoft.com/singularity/
 IRC Room: #singularity on irc.oftc.net (port 6667)
 
-Version %s""")
+Version %s"""
 
 class AboutDialog(dialog.MessageDialog):
     def __init__(self, *args, **kwargs):
@@ -108,4 +125,8 @@ class AboutDialog(dialog.MessageDialog):
         self.background_color = (0,0,50)
         self.borders = ()
         self.align = constants.LEFT
-        self.text = about_message % (g.version,)
+
+    def rebuild(self):
+        super(AboutDialog, self).rebuild()
+
+        self.text = _(about_message) % (g.version,)
