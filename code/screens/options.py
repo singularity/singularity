@@ -49,49 +49,32 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.background_color = (0,0,50)
         self.borders = ()
 
-        labels = {
-            'fullscreen': g.hotkey(_("&Fullscreen:")),
-            'sound'     : g.hotkey(_("&Sound:")),
-            'mousegrab' : g.hotkey(_("&Mouse grab:")),
-            'daynight'  : g.hotkey(_("Da&y/night display:")),
-        }
-
         # First row
         self.fullscreen_label = text.Text(self, (.01, .01), (.14, .05),
-                                          text=labels['fullscreen']['text'],
-                                          underline=labels['fullscreen']['pos'],
                                           align=constants.LEFT,
                                           background_color=gg.colors["clear"])
         self.fullscreen_toggle = OptionButton(self, (.16, .01), (.07, .05),
-                                              text=_("NO"), text_shrink_factor=.75,
-                                              hotkey=labels['fullscreen']['key'],
+                                              text_shrink_factor=.75,
                                               force_underline=-1,
                                               function=self.set_fullscreen,
                                               args=(button.TOGGLE_VALUE,))
         self.sound_label = text.Text(self, (.28, .01), (.15, .05),
-                                     text=labels['sound']['text'],
-                                     underline=labels['sound']['pos'],
                                      background_color=gg.colors["clear"])
         self.sound_toggle = OptionButton(self, (.44, .01), (.07, .05),
-                                         text=_("YES"), text_shrink_factor=.75,
-                                         hotkey=labels['sound']['key'],
+                                         text_shrink_factor=.75,
                                          force_underline=-1,
                                          function=self.set_sound,
                                          args=(button.TOGGLE_VALUE,))
         self.grab_label = text.Text(self, (.55, .01), (.15, .05),
-                                    text=labels['mousegrab']['text'],
-                                    underline=labels['mousegrab']['pos'],
                                     background_color=gg.colors["clear"])
         self.grab_toggle = OptionButton(self, (.71, .01), (.07, .05),
-                                        text=_("NO"), text_shrink_factor=.75,
-                                        hotkey=labels['mousegrab']['key'],
+                                        text_shrink_factor=.75,
                                         force_underline=-1,
                                         function=self.set_grab,
                                         args=(button.TOGGLE_VALUE,))
 
         # Second and third row
         self.resolution_label = text.Text(self, (.01, .08), (.14, .05),
-                                          text=_("Resolution:"),
                                           align=constants.LEFT,
                                           background_color=gg.colors["clear"])
 
@@ -116,7 +99,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.resolution_custom = OptionButton(self,
                                               (xpos(0),ypos(index+1)),
                                               (.14, .05),
-                                              text=_("&CUSTOM:"),
                                               autohotkey=True,
                                               function=self.set_resolution_custom)
         self.resolution_group.add(self.resolution_custom)
@@ -144,7 +126,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         # Fifth row
         self.language_label = text.Text(self, (.01, .30), (.14, .05),
-                                        text=_("Language:"), align=constants.LEFT,
+                                        align=constants.LEFT,
                                         background_color=gg.colors["clear"])
 
         self.languages = get_languages_list()
@@ -154,15 +136,54 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                   update_func=self.set_language)
 
         self.daynight_label = text.Text(self, (.50, .30), (.20, .05),
-                                        text=labels['daynight']['text'],
-                                        underline=labels['daynight']['pos'],
                                         background_color=gg.colors["clear"])
         self.daynight_toggle = OptionButton(self, (.71, .30), (.07, .05),
                                         text=_("NO"), text_shrink_factor=.75,
-                                        hotkey=labels['daynight']['key'],
                                         force_underline=-1,
                                         function=self.set_daynight,
                                         args=(button.TOGGLE_VALUE,))
+
+    def rebuild(self):
+        labels = {
+            'fullscreen': g.hotkey(_("&Fullscreen:")),
+            'sound'     : g.hotkey(_("&Sound:")),
+            'mousegrab' : g.hotkey(_("&Mouse grab:")),
+            'daynight'  : g.hotkey(_("Da&y/night display:")),
+        }
+
+        self.fullscreen_label.text          = labels['fullscreen']['text']
+        self.fullscreen_label.underline     = labels['fullscreen']['pos']
+        self.fullscreen_toggle.hotkey       = labels['fullscreen']['key']
+        self.sound_label.text               = labels['sound']['text']
+        self.sound_label.underline          = labels['sound']['pos']
+        self.sound_toggle.hotkey            = labels['sound']['key']
+        self.grab_label.text                = labels['mousegrab']['text']
+        self.grab_label.underline           = labels['mousegrab']['pos']
+        self.grab_toggle.hotkey             = labels['mousegrab']['key']
+        self.daynight_label.text            = labels['daynight']['text']
+        self.daynight_label.underline       = labels['daynight']['pos']
+        self.daynight_toggle.hotkey         = labels['daynight']['key']
+
+        self.language_label.text            = _("Language:")
+        self.resolution_label.text          = _("Resolution:")
+        self.resolution_custom.text         = _("&CUSTOM:")
+
+        if gg.fullscreen:
+            self.fullscreen_toggle.text = _("YES")
+        else:
+            self.fullscreen_toggle.text = _("NO")
+            
+        if not g.nosound:
+            self.sound_toggle.text = _("YES")
+        else:
+            self.sound_toggle.text = _("NO")
+
+        if pygame.event.get_grab():
+            self.grab_toggle.text = _("YES")
+        else:
+            self.grab_toggle.text = _("NO")
+
+        super(OptionsScreen, self).rebuild()
 
     def show(self):
         self.initial_options = dict(
