@@ -21,7 +21,7 @@
 
 from code import g
 from code.graphics import g as gg
-from code.graphics import dialog, constants
+from code.graphics import dialog, constants, text, button
 
 from code.buyable import labor
 
@@ -29,10 +29,9 @@ class WarningDialogs(object):
 
     def __init__(self, screen):
         self.screen = screen
-        self.simple_warning_dialog = dialog.YesNoDialog(screen,
-                                                        text_size=20,
-                                                        yes_type="continue",
-                                                        no_type="back")
+        self.warning_dialog = WarningDialog(screen,
+                                            yes_type="continue",
+                                            no_type="back")
 
     def show_dialog(self):
         warnings = self.refresh_warnings()
@@ -40,8 +39,8 @@ class WarningDialogs(object):
         if (len(warnings) == 0):
             return
 
-        self.simple_warning_dialog.text = g.strings[warnings[0].message]
-        ret = dialog.call_dialog(self.simple_warning_dialog, self.screen)
+        self.warning_dialog.warnings = warnings
+        ret = dialog.call_dialog(self.warning_dialog, self.screen)
 
         # Pause game
         if (not ret):
@@ -72,6 +71,64 @@ class WarningDialogs(object):
             warnings.append(Warning("warning_one_base"))
 
         return warnings
+
+class WarningDialog(dialog.YesNoDialog):
+
+    def __init__(self, *args, **kwargs):
+        super(WarningDialog, self).__init__(*args, **kwargs)
+        
+        self.title = text.Text(self, (-.01, -.01), (-.98, -.1),
+                               background_color=gg.colors["clear"],
+                               anchor=constants.TOP_LEFT,
+                               valign=constants.MID, align=constants.LEFT,
+                               base_font=gg.font[1], text_size=28)
+
+        self.body = text.Text(self, (-.01, -.11), (-.98, -.83),
+                               background_color=gg.colors["clear"],
+                               anchor=constants.TOP_LEFT,
+                               valign=constants.TOP, align=constants.LEFT,
+                               text_size=20)
+
+        self.prev_button = button.FunctionButton(self, (-.78, -.01), (-.2, -.1),
+                                                 text=_("&PREV"), autohotkey=True,
+                                                 anchor=constants.TOP_RIGHT,
+                                                 text_size=28,
+                                                 function=self.prev_warning)   
+
+        self.next_button = button.FunctionButton(self, (-.99, -.01), (-.2, -.1),
+                                                 text=_("&NEXT"), autohotkey=True,
+                                                 anchor=constants.TOP_RIGHT,
+                                                 text_size=28,
+                                                 function=self.next_warning)            
+                               
+
+    def rebuild(self):
+        super(WarningDialog, self).rebuild()
+
+        if (len(self.warnings) == 1):
+            self.title.text = _("WARNING")
+            self.body.text = g.strings[self.warnings[0].message]
+            self.prev_button.visible = False
+            self.next_button.visible = False
+        else:
+            self.title.text = _("WARNING %d/%d") % (self.warning_nb + 1, len(self.warnings))
+            self.body.text = g.strings[self.warnings[self.warning_nb].message]
+            self.prev_button.visible = True
+            self.next_button.visible = True
+            
+
+    def prev_warning(self):
+        self.warning_nb = max(self.warning_nb - 1, 0)
+        self.needs_rebuild = True
+
+    def next_warning(self):
+        self.warning_nb = min(self.warning_nb + 1, len(self.warnings) - 1)
+        self.needs_rebuild = True
+        
+    def show(self):
+        self.warning_nb = 0
+        self.needs_rebuild = True
+        super(WarningDialog, self).show()
 
 class Warning(object):
     def __init__(self, message):
