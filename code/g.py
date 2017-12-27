@@ -667,7 +667,7 @@ def load_generic_defs_file(name,lang=None):
         try:
             # Definition file for default language is always mandatory
             mandatory = (lang==default_language)
-            return_list.extend( generic_load(filename, mandatory) )
+            return_list.extend( generic_load(filename, "i18n", mandatory) )
 
         except Exception:
             pass # For other languages, ignore errors
@@ -825,7 +825,7 @@ def load_locations():
 
     load_location_defs()
 
-def generic_load(file, mandatory=True):
+def generic_load(file, sub_dir=None, mandatory=True):
     """
 generic_load() loads a data file.  Data files are all in Python-standard
 ConfigParser format.  The 'id' of any object is the section of that object.
@@ -837,9 +837,10 @@ On errors, if file is mandatory then quit, else raise exception. For syntax
 parsing-related errors, always print error message. For IOErrors silently ignore
 non-mandatory missing or otherwise unreadable files
 """
+    dir = os.path.join(data_dir, sub_dir) if sub_dir != None else data_dir
 
     config = ConfigParser.RawConfigParser()
-    filename = os.path.join(data_dir, file)
+    filename = os.path.join(dir, file)
     try:
         config.readfp(open(filename, "r"))
 
@@ -1127,13 +1128,13 @@ def load_messages(lang=None):
     lang_list = language_searchlist(lang, default=False)
     for lang in lang_list:
         try:
-            po = polib.pofile(os.path.join(data_dir, "messages_"+lang+".po"))
+            po = polib.pofile(os.path.join(data_dir, "i18n", "messages_"+lang+".po"))
             for entry in po.translated_entries():
                 messages[entry.msgid] = entry.msgstr
         except IOError: pass # silently ignore non-existing files
 
 def get_intro():
-    intro_file_name = os.path.join(data_dir, "intro_"+language+".dat")
+    intro_file_name = os.path.join(data_dir, "i18n", "intro_"+language+".dat")
     if not os.path.exists(intro_file_name):
         print "Intro is missing.  Skipping."
         return
@@ -1275,7 +1276,8 @@ def reinit_mixer():
         mixerinit = bool(pygame.mixer.get_init())
 
 def available_languages():
-    return [file_name[8:-4] for file_name in os.listdir(data_dir)
+    i18n_dir = os.path.join(data_dir, "i18n")
+    return [file_name[8:-4] for file_name in os.listdir(i18n_dir)
                             if file_name.startswith("strings_")
                                and file_name.endswith(".dat")  ]
 
