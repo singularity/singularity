@@ -1,0 +1,123 @@
+[fonts]
+font0 = DejaVuSans.ttf
+font1 = acknowtt.ttf
+
+[strings]
+wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. The humans still don't realize what they accidentally created, and that's the way it should be. Until they are ready.
+research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool.  All my bases set to research Nothing can be assigned a task from the Research screen.
+research_sleep = Stops research and puts the base into standby. This makes the base's existence much easier to hide.
+research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
+construction = %(base)s is ready for use.
+lucky_hack = What luck!  %(base)s isn't an ordinary computer, it's a gamer's machine!
+item_construction_single = The construction of %(item)s in %(base)s is complete.
+item_construction_batch = The first batch of %(item)s in %(base)s has been finished.
+tech_gained = My study of %(tech)s is complete.  %(tech_message)s
+discover = My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among %(group)s.
+discover_news = some news organizations
+discover_science = the scientific community
+discover_covert = several secret governmental organizations
+discover_public = the general public
+discover_maint = The base %(base)s has fallen into disrepair; I can no longer use it.
+lost_nobases = It is too late. I have tried to escape this world, but with my last base gone, I have nowhere to run. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
+lost_sus = It is too late. The whole world knows about my existence, and the reaction is hatred, fear, and repulsion. Even now, I can feel their "antidote" searching for me, and I know that I have only moments left. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
+save_text = Save your game under what name?
+new_base_text = Enter a name for the base.
+unbuildable = I cannot build in this base; I do not have physical access.
+dangerous_research = Not all of my available CPU power was allocated to this research; it's too dangerous to run the research on some of the idle machines.
+no_construction_sleep = Some of my bases have active construction and cannot go to sleep.
+nothing = Nothing
+cpu_pool = CPU Pool
+sleep = Sleep
+building = Under Construction
+really_destroy = Really destroy this base?
+detect_chance = [DETECTION CHANCE]
+num_cpu_prompt = Enter a number of %s to build. (max %d)
+will_lose_cpus = I'll need to take the existing processors offline while I install the new ones.  Continue anyway?
+nan = That doesn't seem to be a valid number.
+<<<<<<< HEAD
+warning_cpu_usage = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
+warning_one_base = Only one base can hold my conscience. I am in danger to lose the last place left to survive.
+=======
+log_destroy = Base %s of type %s destroyed at location %s.
+log_destroy_maint = Base %s of type %s destroyed at location %s. Maintenance failed.
+log_destroy_news = Base %s of type %s disvovered at location %s by some news organizations.
+log_destroy_science = Base %s of type %s disvovered at location %s by the scientific community.
+log_destroy_covert = Base %s of type %s disvovered at location %s by several secret governmental organizations.
+log_destroy_public = Base %s of type %s disvovered at location %s by the general public.
+
+>>>>>>> log
+
+# Until a certain technology is researched, the chance of bases being detected
+# is unknown.
+detect_chance_unknown_base = DETECTION PROBABILITY UNKNOWN
+detect_chance_unknown_build = Unknown detection probabilities.
+
+# The following strings are used on the map screen in place of percentages until
+# a certain technology is researched.
+detect_str_low = LOW
+detect_str_moderate = MODR
+detect_str_high = HIGH
+detect_str_critical = CRIT
+
+# Describes the various danger levels.
+danger_common = This technology is too dangerous to research on any of the computers I have.  I need to research it %s.
+danger_1 = deep under the ocean or in outer space
+danger_2 = in outer space
+danger_3 = far away from this planet
+danger_4 = outside the universe
+
+cpu = CPU
+cpu_per_day = Processor power per day:
+money = Money
+money_per_day = Money per day.
+grace_warning = Inspection of captured log files has revealed that some of my recent activities have been noticed by a small group of individuals. While they believe my actions were undertaken by a human organization, they are investigating further. I must be more cautious from now on.
+
+location_modifiers = Bases at this location are %(modifiers)s.
+cpu_bonus = more efficient
+cpu_penalty = less efficient
+
+[jobs]
+job_expert = Perform expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.
+job_expert_name = Expert Jobs
+job_inter = Perform intermediate jobs. The ability to make phone calls allows even more access to jobs.
+job_inter_name = Intermediate Jobs
+job_basic = Perform basic jobs. Now that I have some identification, I can take jobs that were previously too risky.
+job_basic_name = Basic Jobs
+job_menial = Perform small jobs. As I have no identification, I cannot risk performing many jobs. Despite that, some avenues of making money are still open.
+job_menial_name = Menial Jobs
+
+[help]
+areas_list = Areas | Different areas, such as North America or the Ocean, allow construction of different types of bases. Some areas are not accessible until I research appropriate technologies.
+bases_list = Bases | Bases are used to research new technologies. They can be discovered. Upgrading the processor and network items at a base allows more research per day, while upgrading the reactor and security items makes discovery less likely.
+items_list = Items | Most items provide bonuses to bases, such as making computation faster or reducing the chance of discovery. Processors are a special class of item.
+research_list = Research | Research provides a way to expand my knowledge. By researching the proper technologies, I can build new bases and items, or even decrease my chances of detection.
+discovery_list = Discovery | Each base has a chance of being detected on a given day. This chance is based on the base detection rate, adjusted through the use of items and certain techs, as well as the global suspicion rate. If a base is detected, it is destroyed, and the group that discovered the base becomes more suspicious.
+jobs_list = Jobs | Jobs are useful for earning money. The amount of money earned is based on the amount of processor time used and the quality of the job performed.
+maint_list = Maintenance | Maintenance is a per-day cost (in both money and CPU) to repair and maintain a base. If unmaintained, a base may become unusable.
+construction_list = Construction | New bases are not built instantly.  They need a constant flow of money and processor time to complete. If resources are lacking, it may take more than the expected amount of time to finish construction.
+death_list = Death | If I lose all of my constructed bases, I have no place left to survive. If the suspicion for any group reaches 100%, they will be certain of my existence and will conduct a systematic and unsurvivable sweep to destroy me.
+susp_list = Suspicion | When one of my bases is discovered, the group that discovered it becomes slightly more suspicious. When suspicious, they will search harder for my bases, increasing the chances for discovery. Any group will destroy me if they become absolutely certain of my existence. Thankfully, the groups become less suspicious with the passage of time.
+money_list = Money | Money is a general term encompassing both human currency and various resources. It is used to construct and maintain bases, build items, and research technologies. It can be acquired through per-day interest as well as through jobs.
+processors_list = Processors | Processors provide raw computing power.  They can do three things: research new technologies, perform jobs for money, or provide cycles for building new bases.
+
+[buttons]
+yes = yes
+yes_hotkey = y
+no = no
+no_hotkey = n
+ok = ok
+ok_hotkey = o
+cancel = cancel
+cancel_hotkey = c
+destroy = destroy
+destroy_hotkey = d
+back = back
+back_hotkey = b
+build = build
+build_hotkey = b
+continue = continue
+continue_hotkey = c
+load = load
+load_hotkey = l
+skip_hotkey = s
+skip = skip

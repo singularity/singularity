@@ -1,0 +1,41 @@
+[very-easy]
+cash = 5000
+interest_rate = 5
+grace_multiplier = 40000
+labor_multiplier = 11000
+discover_multiplier = 7000
+
+[easy]
+cash = 1600
+interest_rate = 3
+grace_multiplier = 30000
+labor_multiplier = 15000
+discover_multiplier = 9000
+
+[normal]
+cash = 1000
+interest_rate = 1
+grace_multiplier = 20000
+labor_multiplier = 10000
+discover_multiplier = 10000
+
+[hard]
+cash = 700
+interest_rate = 1
+grace_multiplier = 18000
+labor_multiplier = 11000
+discover_multiplier = 11000
+
+[ultra-hard]
+cash = 500
+interest_rate = 1
+grace_multiplier = 15000
+labor_multiplier = 15000
+discover_multiplier = 13000
+
+[impossible]
+cash = 0
+interest_rate = 1
+grace_multiplier = 10000
+labor_multiplier = 20000
+discover_multiplier = 15000
