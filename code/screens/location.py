@@ -121,7 +121,11 @@ class LocationScreen(dialog.Dialog):
             elif base.cpus is None:
                 canvas.status_display.text = _("Incomplete")
             elif not base.cpus.done:
-                canvas.status_display.text = _("Building CPU")
+                canvas.status_display.text = \
+                    "%s: % 2s%%. %s" % (
+                    _("Building CPU"),
+                    int(base.cpus.percent_complete() * 100),
+                    _("Completion in %s.") % g.to_time(base.cpus.cost_left[2]),)
             elif [item for item in base.extra_items if item is not None
                                                        and not item.done]:
                 canvas.status_display.text = _("Building Item")
