@@ -51,13 +51,20 @@ class LocationScreen(dialog.Dialog):
                                              rebuild_func=self.update_item)
 
         self.open_button = \
-            button.FunctionButton(self, (-.33, -.8), (-.3, -.09),
-                                  anchor=constants.TOP_CENTER,
+            button.FunctionButton(self, (0, -.8), (-.3, -.09),
+                                  anchor=constants.TOP_LEFT,
                                   text=_("&OPEN BASE"), autohotkey=True,
                                   function=self.open_base)
-        self.power_button = \
-            button.FunctionButton(self, (-.67, -.8), (-.3, -.09),
+
+        self.rename_button = \
+            button.FunctionButton(self, (-.50, -.8), (-.3, -.09),
                                   anchor=constants.TOP_CENTER,
+                                  text=_("&RENAME BASE"), autohotkey=True,
+                                  function=self.rename_base)
+
+        self.power_button = \
+            button.FunctionButton(self, (-1, -.8), (-.3, -.09),
+                                  anchor=constants.TOP_RIGHT,
                                   text=_("&POWER STATE"), autohotkey=True,
                                   function=self.power_state)
 
@@ -81,6 +88,9 @@ class LocationScreen(dialog.Dialog):
 
         self.new_base_dialog = NewBaseDialog(self)
         self.location = None
+
+        self.name_dialog = \
+            dialog.TextEntryDialog(self, text=g.strings["name_base_text"])
 
         self.base_dialog = basescreen.BaseScreen(self, (0,0),
                                                  anchor=constants.TOP_LEFT)
@@ -187,6 +197,15 @@ class LocationScreen(dialog.Dialog):
             self.needs_rebuild = True
             self.parent.needs_rebuild = True
 
+    def rename_base(self):
+        if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
+            base = self.listbox.key_list[self.listbox.list_pos]
+            self.name_dialog.default_text = base.name
+            name = dialog.call_dialog(self.name_dialog, self)
+            if name:
+                base.name = name
+                self.needs_rebuild = True
+
 class NewBaseDialog(dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(0, 0), size = (-1, -1),
                  anchor=constants.TOP_LEFT, *args, **kwargs):
@@ -198,8 +217,6 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         self.desc_func = self.on_change
 
         self.yes_button.function = self.get_name
-        self.name_dialog = \
-            dialog.TextEntryDialog(self, text=g.strings["new_base_text"])
 
     def on_change(self, description_pane, base_type):
         if base_type is not None:
@@ -227,9 +244,9 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
     def get_name(self):
         if 0 <= self.listbox.list_pos < len(self.key_list):
             type = self.key_list[self.listbox.list_pos]
-            self.name_dialog.default_text = \
+            self.parent.name_dialog.default_text = \
                 generate_base_name(self.parent.location, type)
-            name = dialog.call_dialog(self.name_dialog, self)
+            name = dialog.call_dialog(self.parent.name_dialog, self)
             if name:
                 raise constants.ExitDialog((name, type))
 
