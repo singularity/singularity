@@ -212,7 +212,7 @@ class MapScreen(dialog.Dialog):
 
         self.log_button = button.DialogButton(self, (0.5, 0.88),
                                               (0.15, 0.04),
-                                              text=_("&LOG"), autohotkey=True,
+                                              text=_("LO&G"), autohotkey=True,
                                               anchor=constants.TOP_CENTER,
                                               dialog=log.LogScreen(self))
 
