@@ -581,6 +581,7 @@ def load_game(loadgame_name):
         # For cPickle
         import copy_reg
         import numpy.core.multiarray
+        import collections
         save_classes = dict(
             player_class=player.Player,
             Player=player.Player,
@@ -607,6 +608,7 @@ def load_game(loadgame_name):
             scalar=numpy.core.multiarray.scalar,
             ndarray=numpy.ndarray,
             dtype=numpy.dtype,
+            deque=collections.deque,
         )
         if class_name in save_classes:
             return save_classes[class_name]
