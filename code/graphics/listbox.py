@@ -33,7 +33,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
     def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
                  list_pos=0, list_size=-20, borders=constants.ALL,
-                 item_borders=True,
+                 item_borders=True, item_selectable=True,
                  align=constants.CENTER, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
@@ -41,6 +41,9 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.list = list or []
         self.display_elements = []
         self.borders = borders
+
+        self.item_borders = item_borders
+        self.item_selectable = item_selectable
 
         self.item_borders = item_borders
         self.align = align
@@ -75,20 +78,22 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             self.has_focus = True
             self.took_focus(self)
 
-            # Figure out which element was clicked...
-            local_vert_abs = event.pos[1] - self.collision_rect[1]
-            local_vert_pos = local_vert_abs / float(self.collision_rect.height)
-            index = int(local_vert_pos * len(self.display_elements))
+            if (self.item_selectable):
+                # Figure out which element was clicked...
+                local_vert_abs = event.pos[1] - self.collision_rect[1]
+                local_vert_pos = local_vert_abs / float(self.collision_rect.height)
+                index = int(local_vert_pos * len(self.display_elements))
 
-            # ... and select it.
-            self.list_pos = self.safe_pos(index + self.scrollbar.scroll_pos)
+                # ... and select it.
+                self.list_pos = self.safe_pos(index + self.scrollbar.scroll_pos)
 
     def safe_pos(self, raw_pos):
         return max(0, min(len(self.list) - 1, raw_pos))
 
     def got_key(self, event):
-        if not self.has_focus:
+        if not self.has_focus or not self.item_selectable:
             return
+
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
@@ -197,8 +202,10 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             element.pos = (0, -index / float(window_size))
             element.size = (-1 + scrollbar_rel_width, -1 / float(window_size))
 
+            if (self.item_selectable):
+                element.selected = (list_index == self.list_pos)
+
             # Set up the element contents.
-            element.selected = (list_index == self.list_pos)
             self.update_element(element, list_index)
 
         self.needs_redraw = True
