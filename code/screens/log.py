@@ -35,11 +35,11 @@ class LogScreen(dialog.ChoiceDialog):
 
     def make_listbox(self):
         return listbox.Listbox(self, (0, 0), (-1, -.85),
-                               anchor=constants.TOP_LEFT, align=constants.LEFT)
+                               anchor=constants.TOP_LEFT, align=constants.LEFT,
+                               item_borders=False)
 
     def show(self):
         self.list = ["%s -- %s" % (_("DAY") + " %04d, %02d:%02d:%02d" % log[0],
                                    g.strings[log[1]] % log[2]) for log in g.pl.log]
 
-        self.dirty_count = True
         return super(LogScreen, self).show()

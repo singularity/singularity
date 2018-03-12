@@ -33,6 +33,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
     def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
                  list_pos=0, list_size=-20, borders=constants.ALL,
+                 item_borders=True,
                  align=constants.CENTER, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
@@ -41,6 +42,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.display_elements = []
         self.borders = borders
 
+        self.item_borders = item_borders
         self.align = align
         self.list_size = list_size
         self.list_pos = list_pos
@@ -125,23 +127,30 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             del self.display_elements[list_size:]
         elif current_size < list_size:
             if current_size > 0:
-                self.display_elements[-1].borders = \
-                    (constants.LEFT, constants.TOP)
+                if (self.item_borders):
+                    self.display_elements[-1].borders = (constants.LEFT, constants.TOP)
+                else:
+                    self.display_elements[-1].borders = (constants.LEFT,)
 
             # Create the new ones.
             self.display_elements.extend([self.make_element() for _ in
                                           xrange(list_size - current_size)])
 
-        self.display_elements[-1].borders = (constants.TOP, constants.LEFT,
-                                             constants.BOTTOM)
+        if (self.item_borders):
+            self.display_elements[-1].borders = (constants.TOP, constants.LEFT,
+                                                 constants.BOTTOM)
+        else:
+            self.display_elements[0].borders = (constants.TOP, constants.LEFT)
+            self.display_elements[-1].borders = (constants.LEFT, constants.BOTTOM)
 
         # Move the scrollbar to the end so that it gets drawn on top.
         self.children.remove(self.scrollbar)
         self.children.append(self.scrollbar)
 
     def make_element(self):
+        borders = (constants.TOP, constants.LEFT) if self.item_borders else (constants.LEFT,)
         return text.SelectableText(self, None, None, anchor=constants.TOP_LEFT,
-                                   borders=(constants.TOP, constants.LEFT),
+                                   borders=borders,
                                    border_color=self.border_color,
                                    selected_color=self.selected_color,
                                    unselected_color=self.unselected_color,
