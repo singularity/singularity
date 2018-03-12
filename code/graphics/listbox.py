@@ -184,11 +184,11 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.scrollbar.window = len(self.display_elements)
         self.scrollbar.elements = list_size
 
+        self.scrollbar.rebuild()
+
         if self.auto_scroll:
             self.auto_scroll = False
             self.scrollbar.center(self.list_pos)
-
-        self.scrollbar.rebuild()
 
         scrollbar_width = self.scrollbar.real_size[0]
         my_width = self.real_size[0]
