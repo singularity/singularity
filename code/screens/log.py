@@ -42,4 +42,6 @@ class LogScreen(dialog.ChoiceDialog):
         self.list = ["%s -- %s" % (_("DAY") + " %04d, %02d:%02d:%02d" % log[0],
                                    g.strings[log[1]] % log[2]) for log in g.pl.log]
 
+        self.default = len(self.list) - 1
+
         return super(LogScreen, self).show()
