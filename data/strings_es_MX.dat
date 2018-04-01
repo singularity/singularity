@@ -32,7 +32,7 @@ building = Bajo Construcción
 really_destroy = ¿Realmente deceas destruir esta base?
 detect_chance = [DETECTION CHANCE]
 num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
-will_lose_cpus = Necesitaré dejar los procesadores existentes fuera de servicio mientras instalo los nuevos. ¿Continúo de cualquier forma?
+will_be_offline = Necesitaré dejar los procesadores existentes fuera de servicio mientras instalo los nuevos. ¿Continúo de cualquier forma?
 nan = Ese no parece ser un número válido.
 
 # Hasta que cierta tecnología sea investigada, la probabilidad de que las bases

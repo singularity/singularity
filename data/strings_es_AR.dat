@@ -52,7 +52,7 @@ job_menial = Realizar trabajo inferiores. Como no tengo identificación, no pued
 job_menial_name = Trabajos Inferiores
 
 num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
-will_lose_cpus = Necesitaré dejar los procesadores existentes fuera de linea mientras instalo los nuevos. ¿Continuar igualmente?
+will_be_offline = Necesitaré dejar los procesadores existentes fuera de linea mientras instalo los nuevos. ¿Continuar igualmente?
 nan = Ese no parece ser un número válido.
 
 

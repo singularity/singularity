@@ -32,7 +32,7 @@ building = Em Construção
 really_destroy = Realmente destruir essa base?
 detect_chance = [PROB DETECÇÂO]
 num_cpu_prompt = Construir quantos %s? (máx %d)
-will_lose_cpus = Preciso desligar os processadores atuais enquanto instalo os novos. Devo continuar?
+will_be_offline = Preciso desligar os processadores atuais enquanto instalo os novos. Devo continuar?
 nan = Esse não parece ser um número válido.
 
 # Until a certain technology is researched, the chance of bases being detected

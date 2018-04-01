@@ -203,18 +203,31 @@ class BaseScreen(dialog.Dialog):
             space_left = self.base.type.size
             # If there are any existing CPUs of this type, warn that they will
             # be taken offline until construction finishes.
-            matches = self.base.cpus is not None \
-                      and self.base.cpus.type == item_type
-            if matches:
+            cpu_added = self.base.cpus is not None \
+                        and self.base.cpus.type == item_type
+            if cpu_added:
                 space_left -= self.base.cpus.count
                 if self.base.cpus.done:
                     yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
                                             anchor=constants.MID_CENTER,
-                                            text=g.strings["will_lose_cpus"])
+                                            text=g.strings["will_be_offline"])
                     go_ahead = dialog.call_dialog(yn, self)
                     yn.remove_hooks()
                     if not go_ahead:
                         return
+
+            # If there are already existing CPUs of other type, warn that they will
+            # be taken removed.
+            cpu_removed = self.base.cpus is not None \
+                        and self.base.cpus.type != item_type
+            if cpu_removed:
+                yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
+                                        anchor=constants.MID_CENTER,
+                                        text=g.strings["will_lose_cpus"])
+                go_ahead = dialog.call_dialog(yn, self)
+                yn.remove_hooks()
+                if not go_ahead:
+                    return
 
             text = g.strings["num_cpu_prompt"] % (item_type.name, space_left)
 
@@ -234,7 +247,7 @@ class BaseScreen(dialog.Dialog):
                             return
                         new_cpus = g.item.Item(item_type, base=self.base,
                                                count=count)
-                        if matches:
+                        if cpu_added:
                             self.base.cpus += new_cpus
                         else:
                             self.base.cpus = new_cpus
