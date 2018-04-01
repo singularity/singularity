@@ -128,7 +128,7 @@ class WarningDialog(dialog.YesNoDialog):
     def show(self):
         self.warning_nb = 0
         self.needs_rebuild = True
-        super(WarningDialog, self).show()
+        return super(WarningDialog, self).show()
 
 class Warning(object):
     def __init__(self, message):
