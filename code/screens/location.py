@@ -213,10 +213,24 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         kwargs["no_type"] = "back"
         super(NewBaseDialog, self).__init__(parent, pos, size, anchor, *args,
                                             **kwargs)
+        self.listbox.size = (-.53, -.75)
+        self.description_pane.size = (-.45, -.75)
+
+        self.text_label = text.Text(self, (.01, -.87), (-.25, -.1),
+                                          anchor=constants.BOTTOM_LEFT,
+                                          borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
+                                          shrink_factor=.88,
+                                          background_color=gg.colors["dark_blue"],
+                                          text=g.strings["name_base_text"])
+
+        self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
+                                            anchor=constants.BOTTOM_LEFT,
+                                            borders=constants.ALL,
+                                            base_font=gg.font[0])
 
         self.desc_func = self.on_change
 
-        self.yes_button.function = self.get_name
+        self.yes_button.function = self.finish
 
     def on_change(self, description_pane, base_type):
         if base_type is not None:
@@ -225,6 +239,10 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
                       background_color=gg.colors["dark_blue"],
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
+
+            name = generate_base_name(self.parent.location, base_type)
+            self.text_field.text = name
+            self.text_field.cursor_pos = len(name)
 
     def show(self):
         self.list = []
@@ -241,14 +259,14 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
 
         return super(NewBaseDialog, self).show()
 
-    def get_name(self):
+    def finish(self):
         if 0 <= self.listbox.list_pos < len(self.key_list):
             type = self.key_list[self.listbox.list_pos]
-            self.parent.name_dialog.default_text = \
-                generate_base_name(self.parent.location, type)
-            name = dialog.call_dialog(self.parent.name_dialog, self)
-            if name:
-                raise constants.ExitDialog((name, type))
+            name = self.text_field.text
+            if not name:
+                name = generate_base_name(self.parent.location, type)
+
+            raise constants.ExitDialog((name, type))
 
 significant_numbers = [
     '42',	# The Answer.
