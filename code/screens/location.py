@@ -53,33 +53,33 @@ class LocationScreen(dialog.Dialog):
         self.open_button = \
             button.FunctionButton(self, (0, -.8), (-.3, -.09),
                                   anchor=constants.TOP_LEFT,
-                                  text=_("&OPEN BASE"), autohotkey=True,
+                                  autohotkey=True,
                                   function=self.open_base)
 
         self.rename_button = \
             button.FunctionButton(self, (-.50, -.8), (-.3, -.09),
                                   anchor=constants.TOP_CENTER,
-                                  text=_("&RENAME BASE"), autohotkey=True,
+                                  autohotkey=True,
                                   function=self.rename_base)
 
         self.power_button = \
             button.FunctionButton(self, (-1, -.8), (-.3, -.09),
                                   anchor=constants.TOP_RIGHT,
-                                  text=_("&POWER STATE"), autohotkey=True,
+                                  autohotkey=True,
                                   function=self.power_state)
 
         self.new_button = \
             button.FunctionButton(self, (0, -.91), (-.3, -.09),
-                                  text=_("&NEW BASE"), autohotkey=True,
+                                  autohotkey=True,
                                   function=self.new_base)
         self.destroy_button = \
             button.FunctionButton(self, (-.50, -.91), (-.3, -.09),
                                   anchor=constants.TOP_CENTER,
-                                  text=_("&DESTROY BASE"), autohotkey=True,
+                                  autohotkey=True,
                                   function=self.destroy_base)
         self.back_button = button.ExitDialogButton(self, (-1, -.9), (-.3, -.09),
                                                    anchor=constants.TOP_RIGHT,
-                                                   text=_("&BACK"), autohotkey=True)
+                                                   autohotkey=True)
 
         self.confirm_destroy = \
             dialog.YesNoDialog(self, (-.5,0), (-.35, -.7),
@@ -147,6 +147,7 @@ class LocationScreen(dialog.Dialog):
         return super(LocationScreen, self).show()
 
     def rebuild(self):
+        # Update base location
         if self.location is not None:
             self.location.bases.sort()
 
@@ -156,6 +157,19 @@ class LocationScreen(dialog.Dialog):
             self.name_display.text = self.location.name
 
             self.listbox.needs_rebuild = True
+
+        # Rebuild dialogs
+        self.confirm_destroy.needs_rebuild = True
+        self.name_dialog.needs_rebuild = True
+        self.base_dialog.needs_rebuild = True
+
+        # Update buttons translations
+        self.open_button.text = _("&OPEN BASE")
+        self.rename_button.text = _("&RENAME BASE")
+        self.power_button.text = _("&POWER STATE")
+        self.new_button.text = _("&NEW BASE")
+        self.destroy_button.text = _("&DESTROY BASE")
+        self.back_button.text = _("&BACK")
 
         super(LocationScreen, self).rebuild()
 
