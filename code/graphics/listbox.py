@@ -38,7 +38,6 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
 
-        self.list = list or []
         self.display_elements = []
         self.borders = borders
 
@@ -49,6 +48,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.align = align
         self.list_size = list_size
         self.list_pos = list_pos
+        self.list = list or []
 
         self.auto_scroll = True
         self.scrollbar = scrollbar.UpdateScrollbar(self,
@@ -224,6 +224,7 @@ class UpdateListbox(Listbox):
         self.update_func(self.list_pos)
 
     _list_pos = widget.call_on_change("__list_pos", _on_selection_change)
+    _list = widget.call_on_change("__list", _on_selection_change)
 
     def __init__(self, *args, **kwargs):
         self.update_func = kwargs.pop("update_func", lambda value: None)

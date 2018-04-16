@@ -656,9 +656,6 @@ def load_game(loadgame_name):
     else:
         play_music("music")
 
-    # Update difficulty name
-    map_screen.difficulty_display.text = pl.difficulty_name
-
     loadfile.close()
     return True
 
@@ -1248,9 +1245,6 @@ def new_game(difficulty):
 
     # Reset music
     play_music("music")
-
-    # Update difficulty name
-    map_screen.difficulty_display.text = pl.difficulty_name
 
     global intro_shown
     intro_shown = False

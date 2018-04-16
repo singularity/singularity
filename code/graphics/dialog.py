@@ -658,26 +658,47 @@ class SimpleMenuDialog(Dialog):
     width = widget.causes_rebuild("_width")
 
     def __init__(self, *args, **kwargs):
-        buttons = kwargs.pop("buttons")
+        buttons = kwargs.pop("buttons", [])
         width = kwargs.pop("width", .20)
         super(SimpleMenuDialog, self).__init__(*args, **kwargs)
 
         self.size = (-1, -1)
         self.pos = (0, 0)
         self.anchor = constants.TOP_LEFT
-
-        num_buttons = len(buttons)
-        height = (.06 * num_buttons) + .01
         self.width = width
+
         self.button_panel = \
-            widget.BorderedWidget(self, (-.5, -.5), (self.width + .02, height),
+            widget.BorderedWidget(self, (-.5, -.5), (0.22, 0.43),
                                   anchor=constants.MID_CENTER,
                                   background_color=g.colors["dark_blue"],
                                   border_color=g.colors["white"],
                                   borders=constants.ALL)
 
+        self.buttons = buttons
+
+    @property
+    def buttons(self):
+        return self._buttons
+
+    @buttons.setter
+    def buttons(self, buttons):
+        if (hasattr(self, '_buttons') and not self._buttons is None):
+            for button in self._buttons:
+                if button.parent is not None:
+                    button.remove_hooks()
+                    button.parent = None
+
+        self._buttons = buttons
+        self.needs_rebuild = True
+
+    def rebuild(self):
+        num_buttons = len(self.buttons)
+        height = (.06 * num_buttons) + .01
+
+        self.button_panel.size = (self.width + .02, height)
+
         y_pos = .01
-        for button in buttons:
+        for button in self.buttons:
             if button.parent is not None:
                 button.remove_hooks()
             button.parent = self.button_panel
@@ -688,3 +709,5 @@ class SimpleMenuDialog(Dialog):
             button.text_size = 24
 
             y_pos += .06
+
+        super(SimpleMenuDialog, self).rebuild()
