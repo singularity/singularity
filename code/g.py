@@ -34,7 +34,7 @@ import polib
 import locale
 
 import player, base, tech, item, event, location, buyable, statistics
-import graphics.g
+import graphics.g, graphics.theme as theme
 
 stats = statistics.Statistics()
 
@@ -1053,6 +1053,25 @@ def load_events():
 
 def load_event_defs(lang=None):
     load_generic_defs("events",events,lang)
+
+def load_theme(theme_id):
+    theme_filepath = "themes/%s/theme.dat" % (theme_id,)
+    theme_list = generic_load(theme_filepath)
+
+    new_theme = theme.Theme(theme_id)
+
+    for theme_section in theme_list:
+        if theme_section["id"] == "general":
+            new_theme.name = theme_section["name"]
+
+    return new_theme
+
+def load_themes(data_dir):
+    themes = theme.themes
+    themes_list = os.walk(os.path.join(data_dir, 'themes')).next()[1]
+
+    for theme_id in themes_list:
+        themes[theme_id] = load_theme(theme_id)
 
 def load_string_defs(lang=None):
     if lang is None: lang = language

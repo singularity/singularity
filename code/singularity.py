@@ -41,7 +41,9 @@ import os.path
 import optparse
 import logging
 
-import graphics.g
+import graphics.g, graphics.theme as theme
+
+set_theme = None
 
 pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
 pygame.init()
@@ -134,7 +136,7 @@ if os.path.exists(save_loc):
             graphics.g.set_screen_size((xres, yres))
 
         try:
-            graphics.g.theme = prefs.get("Preferences", "theme")
+            set_theme = prefs.get("Preferences", "theme")
         except:
             pass # don't be picky (for now...)
 
@@ -213,7 +215,7 @@ hidden_options.add_option("--cheater", help="for bad little boys and girls",
 if options.language is not None:
     g.set_language(options.language)
 if options.theme is not None:
-    graphics.g.theme = options.theme
+    set_theme = options.theme
 if options.resolution is not None:
     try:
         xres, yres = options.resolution.split("x")
@@ -247,6 +249,10 @@ g.debug = options.debug
 if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
+
+#init themes:
+g.load_themes(g.data_dir)
+theme.set_theme(set_theme)
 
 graphics.g.init_graphics_system(g.data_dir)
 

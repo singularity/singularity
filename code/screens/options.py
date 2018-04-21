@@ -24,7 +24,7 @@ import pygame
 import json
 
 
-from code.graphics import constants, dialog, button, listbox, text, g as gg
+from code.graphics import constants, dialog, button, listbox, text, theme, g as gg
 import code.g as g
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
@@ -161,9 +161,9 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         self.theme_choice = \
             listbox.UpdateListbox(self, (.47, .30), (.12, .25),
-                                  list=[t.title() for t in gg.themes],
-                                  update_func=self.set_theme,
-                                  list_pos=gg.themes.index(gg.theme))
+                                  list=theme.get_theme_list(),
+                                  update_func=theme.set_theme,
+                                  list_pos=theme.get_theme_pos())
 
         self.sound_label = text.Text(self, (.60, .30), (.10, .05),
                                      text=labels['sound']['text'],
@@ -234,7 +234,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                          if code == options['language']][0] or 0
         self.set_language(self.language_choice.list_pos)
 
-        self.theme_choice.list_pos = gg.themes.index(gg.theme)
+        self.theme_choice.list_pos = theme.get_theme_pos()
 
     def set_language(self, list_pos):
         if not getattr(self, "language_choice", None):
@@ -301,13 +301,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             self.set_resolution(screen_size)
         except ValueError:
             pass
-
-    def set_theme(self, list_pos):
-        theme = gg.themes[list_pos]
-        if gg.theme != theme:
-            gg.theme = theme
-            gg.load_images(g.data_dir)
-            g.map_screen.on_theme()
 
     def check_restart(self):
         # Test all changes that require a restart. Currently, only language
@@ -418,7 +411,7 @@ def save_options():
     prefs.set("Preferences", "yres",       str(int(gg.screen_size[1])))
     prefs.set("Preferences", "soundbuf",   str(int(g.soundbuf)))
     prefs.set("Preferences", "lang",       str(g.language))
-    prefs.set("Preferences", "theme",      str(gg.theme))
+    prefs.set("Preferences", "theme",      str(theme.current))
 
     # Actually write the preferences out.
     save_dir = g.get_save_folder(True)

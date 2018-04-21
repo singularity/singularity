@@ -21,6 +21,7 @@
 
 import os.path
 import pygame
+import theme
 
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
@@ -86,10 +87,6 @@ font.append([0] * 100)
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
-default_theme = 'default'
-theme = default_theme
-themes = []
-
 images = {}
 
 # This should be overridden by code.g.py
@@ -136,7 +133,6 @@ def init_graphics_system(data_dir, size=None):
 
     load_fonts(data_dir)
     load_images(data_dir)
-    load_themes(data_dir)
     init_alpha()
 
     # Set the application icon and caption
@@ -211,10 +207,6 @@ directory.
     font[1][17] = font[1][18]
 
 
-def load_themes(data_dir):
-    themes.extend(os.walk(os.path.join(data_dir, 'themes')).next()[1])
-
-
 def load_image(filename):
     # We need to convert the image to a Pygame image surface and
     # set the proper color key for the game.
@@ -226,7 +218,7 @@ def load_image(filename):
 def load_images(data_dir):
     """load all images in current theme: <data_dir>/themes/<theme>/images/"""
 
-    image_dir = os.path.join(data_dir, 'themes', theme, 'images')
+    image_dir = os.path.join(data_dir, 'themes', theme.current, 'images')
     image_list = os.listdir(image_dir)
     for image_filename in image_list:
 
