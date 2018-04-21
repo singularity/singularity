@@ -622,12 +622,10 @@ class Player(object):
             base_name = base.name
 
             if reason == "maint":
-                log_type = "log_destroy_maint"
                 dialog_string = g.strings["discover_maint"] % \
                                 {"base": base_name}
 
             elif reason in self.groups:
-                log_type = "log_destroy_" + reason
                 discovery_locs.append(base.location)
                 self.groups[reason].discovered_a_base()
                 detect_phrase = g.strings["discover_" + reason]
@@ -635,12 +633,11 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": detect_phrase}
             else:
-                log_type = "log_destroy"
                 print "Error: base destroyed for unknown reason: " + reason
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 
-            self.add_log(log_type, base.name, base.type.name, base.location.name)
+            self.add_log("log_destroy", reason, base.name, base.type.id, base.location.id)
 
             self.pause_game()
             base.destroy()

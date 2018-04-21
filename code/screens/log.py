@@ -40,8 +40,32 @@ class LogScreen(dialog.ChoiceDialog):
 
     def show(self):
         self.list = ["%s -- %s" % (_("DAY") + " %04d, %02d:%02d:%02d" % log[0],
-                                   g.strings[log[1]] % log[2]) for log in g.pl.log]
+                                   self.create_log_text(log[1], log[2])) for log in g.pl.log]
 
         self.default = len(self.list) - 1
 
         return super(LogScreen, self).show()
+
+    def create_log_text(self, log_name, log_data):
+        """ Dispatch log to a function.
+            This is needed because some log needs to parse its data,
+            to computate them or to fully translate them.
+        """
+        
+        method_name = 'create_' + str(log_name) + '_text'
+        method = getattr(self, method_name, lambda name, data: g.strings[name] % data)
+        
+        return method(log_name, log_data)
+        
+    def create_log_destroy_text(self, log_name, log_data):
+        reason = log_data[0] # reason
+        name = log_data[1] # base.name
+        
+        log_format = log_name + '_' + reason if reason else log_name
+        
+        # Get BASE and LOCATION from id
+        base_type = g.base_type[log_data[2]] # base.type.id
+        location = g.locations[log_data[3]] # base.location.id
+        
+        return g.strings[log_format] % (name, base_type.name, location.name)
+        
