@@ -245,8 +245,8 @@ msgid "CPU bonus:"
 msgstr "Bono de CPU:"
 
 #: screens/map.py:203
-msgid "FINANC&E"
-msgstr "&FINANZAS"
+msgid "R&EPORTS"
+msgstr "IN&FORMES"
 
 #: screens/map.py:209
 msgid "&KNOWLEDGE"

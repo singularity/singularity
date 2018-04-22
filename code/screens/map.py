@@ -30,7 +30,7 @@ import time
 
 from pygame.surfarray import pixels_alpha
 
-import location, research, knowledge, finance, log, warning
+import location, research, knowledge, report, log, warning
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -198,11 +198,11 @@ class MapScreen(dialog.Dialog):
                                 borders=constants.ALL, align=constants.LEFT)
         widget.unmask_all(self.danger_bar)
 
-        self.finance_button = button.DialogButton(self, (0, 0.88),
+        self.report_button = button.DialogButton(self, (0, 0.88),
                                                   (0.15, 0.04),
-                                                  text=_("FINANC&E"),
+                                                  text=_("R&EPORTS"),
                                                   autohotkey=True,
-                                                  dialog=finance.FinanceScreen(self))
+                                                  dialog=report.ReportScreen(self))
 
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
                                                     (0.15, 0.04),
@@ -284,7 +284,7 @@ class MapScreen(dialog.Dialog):
                                                  function=show_menu)
 
         # Display current game difficulty right below the 'Menu' button
-        # An alternative location is above 'Finance': (0, 0.84), (0.15, 0.04)
+        # An alternative location is above 'Reports': (0, 0.84), (0.15, 0.04)
         self.difficulty_display = \
             text.FastText(self, (0, 0.05), (0.13, 0.04),
                           wrap=False,

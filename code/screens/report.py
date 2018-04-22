@@ -1,4 +1,4 @@
-#file: finance_screen.py
+#file: report_screen.py
 #Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
 #This file is part of Endgame: Singularity.
 
@@ -16,7 +16,7 @@
 #along with Endgame: Singularity; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the screen to display finance information.
+#This file contains the screen to display information report.
 
 
 import code.g as g
@@ -25,9 +25,9 @@ import pygame
 from code.graphics import widget, dialog, button, text, constants, g as gg
 
 
-class FinanceScreen(dialog.Dialog):
+class ReportScreen(dialog.Dialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .73), *args, **kwargs):
-        super(FinanceScreen, self).__init__(parent, pos, size, *args, **kwargs)
+        super(ReportScreen, self).__init__(parent, pos, size, *args, **kwargs)
 
         kwargs.setdefault("background_color", gg.colors["clear"])
 
@@ -62,7 +62,7 @@ class FinanceScreen(dialog.Dialog):
         self.midnight_stop = True
 
     def rebuild(self):
-        super(FinanceScreen, self).rebuild()
+        super(ReportScreen, self).rebuild()
 
         seconds = g.seconds_per_day
         cash_info, cpu_info = g.pl.give_time(seconds, dry_run=True, midnight_stop=self.midnight_stop)
@@ -141,7 +141,7 @@ class FinanceScreen(dialog.Dialog):
 
     def show(self):
         self.needs_rebuild = True
-        return super(FinanceScreen, self).show()
+        return super(ReportScreen, self).show()
 
     def format_toggle(self, button, midnight_stop):
         self.midnight_stop = midnight_stop
