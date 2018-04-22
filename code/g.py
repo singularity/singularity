@@ -1064,6 +1064,9 @@ def load_theme(theme_id):
         if theme_section["id"] == "general":
             new_theme.name = theme_section["name"]
 
+            if theme_section.has_key("parent"):
+                new_theme.inherit(theme_section["parent"])
+
     return new_theme
 
 def load_themes(data_dir):

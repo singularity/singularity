@@ -19,7 +19,7 @@
 #This file contains the theme class.
 
 import g, code.g
-import sys, collections, numbers, itertools, traceback
+import os, sys, collections, numbers, itertools, traceback
 
 default_theme = 'default'
 
@@ -30,7 +30,7 @@ def get_theme_list():
     return [themes[k].name for k in themes]
 
 def get_theme_pos():
-    return (i[0] for i in enumerate(themes) if i[1] == current).next()
+    return (i[0] for i in enumerate(themes) if i[1] == current.id).next()
 
 def set_theme(key):
     global current
@@ -58,17 +58,70 @@ def set_theme(key):
     if theme.id != current:
         if not current == None:
             theme.update()
-        current = theme.id
+        current = theme
 
 class Theme(object):
     def __init__(self, id):
         super(Theme, self).__init__()
         self.id = id
+        self._parents = [default_theme] if id != default_theme else []
+        self.image_infos = {}
+
+    def find_images(self, data_dir):
+        """find all images in current theme: <data_dir>/themes/<theme>/images/"""
+
+        image_dir = os.path.join(data_dir, 'themes', self.id, 'images')
+        image_list = os.listdir(image_dir)
+        for image_filename in image_list:
+
+            # We only want JPGs and PNGs.
+            if os.path.splitext(image_filename)[1].lower() in ['.png', '.jpg']:
+
+                filetitle = os.path.splitext(image_filename)[0]
+                self.image_infos[filetitle] = os.path.join(image_dir, image_filename)
+
+    def inherit(self, *args):
+        for arg in args:
+            if (type(arg) == list):
+                self._parents.extend(arg)
+            else:
+                self._parents.append(arg)
+
+        # Remove duplicate parent.
+        list(dict.fromkeys(self._parents))
+
+        # TODO: Detect cycling inheritance.
+
+    @property
+    def parents(self):
+        return self._parents
+
+    def iter_parents(self):
+        """ Iterate through parents and ancestors.
+            Always return parent's parent before next parent in line.
+            
+            Note: This function needs no cycling exists between parents.
+        """
+        for parent_id in self._parents:
+            parent = themes[parent_id]
+            yield(parent)
+            for ancestor in parent.iter_parents():
+                yield(ancestor)
+
+    def init_cache(self):
+        g.images.clear()
+
+        for image_name, image_filename in self.image_infos.iteritems():
+            g.images[image_name] = g.load_image(image_filename)
+
+        # Let's inherit images from parents.
+        # Only set the image if the theme or previous parents didn't.
+        for parent in self.iter_parents():
+            for image_name, image_filename in parent.image_infos.iteritems():
+                if (image_name not in g.images):
+                    g.images[image_name] = g.load_image(image_filename)
 
     def update(self):
-        g.load_images(code.g.data_dir)
+        self.init_cache()
         # TODO: Theme should not call map_screen directly.
         code.g.map_screen.on_theme()
-
-
-

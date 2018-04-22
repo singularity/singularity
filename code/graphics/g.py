@@ -87,6 +87,7 @@ font.append([0] * 100)
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
 
+# Cache image dictionnary.
 images = {}
 
 # This should be overridden by code.g.py
@@ -131,8 +132,10 @@ def init_graphics_system(data_dir, size=None):
     # Initialize the screen
     set_mode()
 
+    # Initialize the cache of the current theme.
+    theme.current.init_cache()
+
     load_fonts(data_dir)
-    load_images(data_dir)
     init_alpha()
 
     # Set the application icon and caption
@@ -213,21 +216,6 @@ def load_image(filename):
     image = pygame.image.load(filename).convert()
     image.set_colorkey((255, 0, 255, 255), pygame.RLEACCEL)
     return image.convert_alpha()
-
-
-def load_images(data_dir):
-    """load all images in current theme: <data_dir>/themes/<theme>/images/"""
-
-    image_dir = os.path.join(data_dir, 'themes', theme.current, 'images')
-    image_list = os.listdir(image_dir)
-    for image_filename in image_list:
-
-        # We only want JPGs and PNGs.
-        if os.path.splitext(image_filename)[1].lower() in ['.png', '.jpg']:
-
-            filetitle = os.path.splitext(image_filename)[0]
-            images[filetitle] = load_image(os.path.join(image_dir, image_filename))
-
 
 def init_alpha():
     global ALPHA
