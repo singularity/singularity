@@ -411,7 +411,7 @@ def save_options():
     prefs.set("Preferences", "yres",       str(int(gg.screen_size[1])))
     prefs.set("Preferences", "soundbuf",   str(int(g.soundbuf)))
     prefs.set("Preferences", "lang",       str(g.language))
-    prefs.set("Preferences", "theme",      str(theme.current))
+    prefs.set("Preferences", "theme",      str(theme.current.id))
 
     # Actually write the preferences out.
     save_dir = g.get_save_folder(True)

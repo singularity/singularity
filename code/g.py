@@ -1071,7 +1071,9 @@ def load_themes(data_dir):
     themes_list = os.walk(os.path.join(data_dir, 'themes')).next()[1]
 
     for theme_id in themes_list:
-        themes[theme_id] = load_theme(theme_id)
+        th = load_theme(theme_id)
+        th.find_images(data_dir)
+        themes[theme_id] = th
 
 def load_string_defs(lang=None):
     if lang is None: lang = language
