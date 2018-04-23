@@ -24,7 +24,7 @@ import pygame
 
 import code.g as g
 import code.graphics.g as gg
-from code.graphics import constants, widget, dialog, text, button
+from code.graphics import constants, widget, dialog, text, button, listbox, slider
 
 state_colors = dict(
     active          = gg.colors["green"],
@@ -79,6 +79,69 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
 
+
+class MultipleBuildDialog(BuildDialog):
+    def __init__(self, parent, *args, **kwargs):
+        super(MultipleBuildDialog, self).__init__(parent, *args, **kwargs)
+
+        self.listbox.size = (-.53, -.75)
+        self.description_pane.size = (-.45, -.75)
+
+        self.count_label = text.Text(self, (.01, -.87), (-.25, -.1),
+                                     anchor=constants.BOTTOM_LEFT, valign=constants.MID,
+                                     borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
+                                     shrink_factor=.88,
+                                     background_color=gg.colors["dark_blue"],
+                                     text=g.strings["number_of_items"])
+
+        self.count_field = text.UpdateEditableText(self, (-.26, -.87), (-.10, -.1),
+                                             anchor=constants.BOTTOM_LEFT,
+                                             borders=constants.ALL,
+                                             update_func=self.on_field_change,
+                                             base_font=gg.font[0])
+
+        self.count_slider = slider.UpdateSlider(self, (-.37, -.87), (-.62, -.1),
+                                                anchor=constants.BOTTOM_LEFT,
+                                                horizontal=True, priority=150,
+                                                update_func=self.on_slider_change,
+                                                slider_size=2)
+    @property
+    def count(self):
+        return self.count_field.text
+
+    def on_change(self, description_pane, item):
+        super(MultipleBuildDialog, self).on_change(description_pane, item)
+
+        space_left = self.parent.base.type.size
+
+        if self.parent.base.cpus is not None \
+                and self.parent.base.cpus.type == item:
+            space_left -= self.parent.base.cpus.count
+
+        self.count_slider.slider_size = space_left // 10 + 1
+        self.count_slider.slider_max = space_left
+
+        self.count_slider.slider_pos = 0
+        if (space_left > 0):
+            self.count_slider.slider_pos = 1
+
+    def on_field_change(self, value):
+        if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")): 
+            return # Not initialized
+        
+        try:
+            self.count_slider.slider_pos = int(self.count_field.text)
+        except ValueError:
+            self.count_slider.slider_pos = 0
+
+
+    def on_slider_change(self, value):
+        if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")): 
+            return # Not initialized
+        
+        self.count_field.text = str(self.count_slider.slider_pos)
+
+
 class ItemPane(widget.BorderedWidget):
     type = widget.causes_rebuild("_type")
     def __init__(self, parent, pos, size=(.48, .06), anchor=constants.TOP_LEFT,
@@ -128,8 +191,7 @@ class BaseScreen(dialog.Dialog):
         self.base = base
 
         self.build_dialog = BuildDialog(self)
-
-        self.count_dialog = dialog.TextEntryDialog(self)
+        self.multiple_build_dialog = MultipleBuildDialog(self)
 
         self.header = widget.Widget(self, (0,0), (-1, .08),
                                     anchor=constants.TOP_LEFT)
@@ -198,9 +260,26 @@ class BaseScreen(dialog.Dialog):
         if target is not None:
             return target
 
-    def set_current(self, type, item_type):
+    def set_current(self, type, item_type, count):
         if type == "cpu":
             space_left = self.base.type.size
+            
+            try:
+                count = int(count)
+            except ValueError:
+                md = dialog.MessageDialog(self, pos=(-.5, -.5),
+                                          size=(-.5, -1),
+                                          anchor=constants.MID_CENTER,
+                                          text=g.strings["nan"])
+                dialog.call_dialog(md, self)
+                md.remove_hooks()
+                return
+            
+            if count > space_left:
+                count = space_left
+            elif count <= 0:
+                return
+            
             # If there are any existing CPUs of this type, warn that they will
             # be taken offline until construction finishes.
             cpu_added = self.base.cpus is not None \
@@ -229,37 +308,12 @@ class BaseScreen(dialog.Dialog):
                 if not go_ahead:
                     return
 
-            text = g.strings["num_cpu_prompt"] % (item_type.name, space_left)
-
-            self.count_dialog.text = text
-            self.count_dialog.default_text = locale.format("%d", space_left)
-            can_exit = False
-            while not can_exit:
-                result = dialog.call_dialog(self.count_dialog, self)
-                if not result:
-                    can_exit = True
-                else:
-                    try:
-                        count = locale.atoi(result)
-                        if count > space_left:
-                            count = space_left
-                        elif count <= 0:
-                            return
-                        new_cpus = g.item.Item(item_type, base=self.base,
-                                               count=count)
-                        if cpu_added:
-                            self.base.cpus += new_cpus
-                        else:
-                            self.base.cpus = new_cpus
-                        self.base.check_power()
-                        can_exit = True
-                    except ValueError:
-                        md = dialog.MessageDialog(self, pos=(-.5, -.5),
-                                                  size=(-.5, -1),
-                                                  anchor=constants.MID_CENTER,
-                                                  text=g.strings["nan"])
-                        dialog.call_dialog(md, self)
-                        md.remove_hooks()
+            new_cpus = g.item.Item(item_type, base=self.base, count=count)
+            if cpu_added:
+                self.base.cpus += new_cpus
+            else:
+                self.base.cpus = new_cpus
+            self.base.check_power()
         else:
             index = ["reactor", "network", "security"].index(type)
             if self.base.extra_items[index] is None \
@@ -271,11 +325,22 @@ class BaseScreen(dialog.Dialog):
         self.base.recalc_cpu()
 
     def build_item(self, type):
-        self.build_dialog.type = type
-        result = dialog.call_dialog(self.build_dialog, self)
-        if 0 <= result < len(self.build_dialog.key_list):
-            item_type = self.build_dialog.key_list[result]
-            self.set_current(type, item_type)
+        if (type == "cpu"):
+            build_dialog = self.multiple_build_dialog
+        else:
+            build_dialog = self.build_dialog
+        
+        build_dialog.type = type
+        
+        result = dialog.call_dialog(build_dialog, self)
+        if 0 <= result < len(build_dialog.key_list):
+            item_type = build_dialog.key_list[result]
+            
+            count = 1
+            if (type == "cpu"):
+                count = build_dialog.count
+            
+            self.set_current(type, item_type, count)
             self.needs_rebuild = True
             self.parent.parent.needs_rebuild = True
 
