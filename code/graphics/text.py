@@ -557,6 +557,15 @@ class EditableText(widget.FocusWidget, Text):
             s.fill( (255,0,255,100) )
             self.surface.blit( s, self.hitbox)
 
+class UpdateEditableText(EditableText):
+    def _on_text_change(self):
+        self.update_func(self.text)
+
+    _text = widget.call_on_change("__text", _on_text_change)
+
+    def __init__(self, *args, **kwargs):
+        self.update_func = kwargs.pop("update_func", lambda value: None)
+        super(UpdateEditableText, self).__init__(*args, **kwargs)
 
 class SelectableText(Text):
     selected = widget.causes_redraw("_selected")
