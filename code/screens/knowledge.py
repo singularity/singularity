@@ -27,9 +27,6 @@ class KnowledgeScreen(dialog.Dialog):
     def __init__(self, *args, **kwargs):
         super(KnowledgeScreen, self).__init__(*args, **kwargs)
 
-        self.knowledge_types = {_("Techs")   :"techs",
-                                _("Items")   :"items",
-                                _("Concepts"):"concepts"}
         self.cur_knowledge_type = ""
         self.cur_knowledge = None
         self.knowledge_inner_list = ()
@@ -38,12 +35,10 @@ class KnowledgeScreen(dialog.Dialog):
 
         self.knowledge_choice = \
             listbox.UpdateListbox(self, (0.05, .18), (.21, .25),
-                                  list=self.knowledge_types.keys(),
                                   update_func=self.set_knowledge_type)
 
         self.knowledge_inner = \
             listbox.UpdateListbox(self, (.30, .18), (.21, .25),
-                                  list=self.knowledge_inner_list,
                                   update_func=self.set_knowledge)
 
         self.description_pane = \
@@ -71,6 +66,22 @@ class KnowledgeScreen(dialog.Dialog):
         self.add_key_handler(pygame.K_DOWN, self.key_handle)
         self.add_key_handler(pygame.K_LEFT, self.key_handle)
         self.add_key_handler(pygame.K_RIGHT, self.key_handle)
+
+    def rebuild(self):
+        # Update knowledge lists
+        self.knowledge_types = {_("Techs")   :"techs",
+                                _("Items")   :"items",
+                                _("Concepts"):"concepts"}
+        self.knowledge_inner_list_key, self.knowledge_inner_list = \
+            self.set_inner_list(self.cur_knowledge_type)
+
+        self.knowledge_choice.list = self.knowledge_types.keys()
+        self.knowledge_inner.list = self.knowledge_inner_list
+
+        # Update buttons translations
+        self.back_button.text = _("&BACK")
+
+        super(KnowledgeScreen, self).rebuild()
 
     #custom key handler.
     def key_handle(self, event):
@@ -114,8 +125,6 @@ class KnowledgeScreen(dialog.Dialog):
     def set_knowledge_type(self, list_pos):
         self.cur_focus = 0
         if getattr(self, "knowledge_choice", None) is None:
-            self.knowledge_inner_list_key, self.knowledge_inner_list = \
-                        self.set_inner_list(self.cur_knowledge_type)
             return # Not yet initialized.
         prev_know = self.cur_knowledge_type
         if list_pos == -1:

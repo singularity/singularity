@@ -47,15 +47,7 @@ class Button(text.SelectableText):
                  text_shrink_factor = .825, priority = 100, **kwargs):
         self.parent = parent
 
-        from code.g import get_hotkey, strip_hotkey
-        autohotkey = kwargs.pop('autohotkey',False)
-        if autohotkey:
-            text = kwargs.get('text',"")
-            self.hotkey = get_hotkey(text)
-            # Strip hotkey info from text
-            if 'text' in kwargs: kwargs['text'] = strip_hotkey(text)
-        else:
-            self.hotkey = hotkey
+        self.autohotkey = kwargs.pop('autohotkey',False)
 
         self.priority = priority
 
@@ -137,6 +129,19 @@ class Button(text.SelectableText):
     def activated(self, event):
         """Called when the button is pressed or otherwise triggered."""
         raise constants.Handled
+
+    @property
+    def text(self):
+        return text.Text.text.fget(self)
+
+    @text.setter
+    def text(self, value):
+        if self.autohotkey and (value != None):
+            from code.g import get_hotkey, strip_hotkey
+            self.hotkey = get_hotkey(value)
+            text.Text.text.fset(self, strip_hotkey(value))
+        else:
+            text.Text.text.fset(self, value)
 
 
 class ImageButton(Button):

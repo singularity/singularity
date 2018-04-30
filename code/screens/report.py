@@ -35,7 +35,7 @@ class ReportScreen(dialog.Dialog):
 
         self.back_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
                                                    anchor = constants.BOTTOM_CENTER,
-                                                   text=_("&BACK"), autohotkey=True)
+                                                   autohotkey=True)
         self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound)
 
 
@@ -46,14 +46,14 @@ class ReportScreen(dialog.Dialog):
 
         self.format_button_midnight = FormatButton(self, (-.5, 0), (-.15,-.08),
                                                    anchor = constants.TOP_RIGHT,
-                                                   text=_("&Midnight"), autohotkey=True,
+                                                   autohotkey=True,
                                                    function=self.format_toggle)
         self.format_button_midnight.args = (self.format_button_midnight, True)                           
         self.format_buttons.add(self.format_button_midnight)
         
         self.format_button_24hours = FormatButton(self, (-.5, 0), (-.15,-.08),
                                                    anchor = constants.TOP_LEFT,
-                                                   text=_("24 &Hours"), autohotkey=True,
+                                                   autohotkey=True,
                                                    function=self.format_toggle)
         self.format_button_24hours.args = (self.format_button_24hours, False)   
         self.format_buttons.add(self.format_button_24hours)
@@ -62,6 +62,11 @@ class ReportScreen(dialog.Dialog):
         self.midnight_stop = True
 
     def rebuild(self):
+        # Update buttons translations
+        self.back_button.text = _("&BACK")
+        self.format_button_midnight.text = _("&Midnight")
+        self.format_button_24hours.text = _("24 &Hours")
+
         super(ReportScreen, self).rebuild()
 
         seconds = g.seconds_per_day

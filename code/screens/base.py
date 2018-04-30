@@ -230,7 +230,7 @@ class BaseScreen(dialog.Dialog):
         self.back_button = \
             button.ExitDialogButton(self, (-.5,-1),
                                     anchor = constants.BOTTOM_CENTER,
-                                    text=_("&BACK"), autohotkey=True)
+                                    autohotkey=True)
 
         self.detect_frame = text.Text(self, (-1, .09), (.21, .33),
                                       anchor=constants.TOP_RIGHT,
@@ -415,4 +415,12 @@ class BaseScreen(dialog.Dialog):
             self.detect_frame.text = discovery_template % \
                 (get_chance("news"), get_chance("science"),
                  get_chance("covert"), get_chance("public"))
+
+        # Rebuild dialogs
+        self.build_dialog.needs_rebuild = True
+        self.count_dialog.needs_rebuild = True
+
+        # Update buttons translations
+        self.back_button.text = _("&BACK")
+
         super(BaseScreen, self).rebuild()

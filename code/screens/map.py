@@ -200,88 +200,36 @@ class MapScreen(dialog.Dialog):
 
         self.report_button = button.DialogButton(self, (0, 0.88),
                                                   (0.15, 0.04),
-                                                  text=_("R&EPORTS"),
                                                   autohotkey=True,
                                                   dialog=report.ReportScreen(self))
 
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
                                                     (0.15, 0.04),
-                                                    text=_("&KNOWLEDGE"),
                                                     autohotkey=True,
                                                     dialog=knowledge.KnowledgeScreen(self))
 
         self.log_button = button.DialogButton(self, (0.5, 0.88),
                                               (0.15, 0.04),
-                                              text=_("LO&G"), autohotkey=True,
+                                              autohotkey=True,
                                               anchor=constants.TOP_CENTER,
                                               dialog=log.LogScreen(self))
 
-        cheat_buttons = []
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
-                                  autohotkey=True, function=self.steal_money))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
-                                  autohotkey=True, function=self.inspiration))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
-                                  autohotkey=True, function=self.end_construction))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
-                                  autohotkey=True, function=self.set_speed,
-                                  args=(864000,)))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
-                                  autohotkey=True, function=self.brainwash))
-        cheat_buttons.append(button.ExitDialogButton(None, None, None,
-                                                     text=_("&BACK"),
-                                                     autohotkey=True))
-
-        self.cheat_dialog = \
-            dialog.SimpleMenuDialog(self, buttons=cheat_buttons, width=.4)
-        self.steal_amount_dialog = \
-            dialog.TextEntryDialog(self.cheat_dialog, text=_("How much money?"))
-
-        if g.cheater:
-            self.cheat_button = button.DialogButton(
-                self, (0, 0), (.01, .01),
-                text="",
-                # Translators: hotkey to open the cheat screen menu.
-                # Should preferably be near the ESC key, and it must not be a
-                # dead key (ie, it must print a char with a single keypress)
-                hotkey=_("`"),
-                dialog=self.cheat_dialog)
-
-        menu_buttons = []
-        menu_buttons.append(button.FunctionButton(None, None, None,
-                                                  text=_("&SAVE GAME"), autohotkey=True,
-                                                  function=self.save_game))
-        menu_buttons.append(button.FunctionButton(None, None, None,
-                                                  text=_("&LOAD GAME"), autohotkey=True,
-                                                  function=self.load_game))
-        options_button = button.DialogButton(None, None, None, text=_("&OPTIONS"), autohotkey=True)
-        menu_buttons.append(options_button)
-        menu_buttons.append(
-            button.ExitDialogButton(None, None, None, text=_("&QUIT"), autohotkey=True,
-                                    exit_code=True, default=False))
-        menu_buttons.append(
-            button.ExitDialogButton(None, None, None, text=_("&BACK"), autohotkey=True,
-                                    exit_code=False))
-
-        self.menu_dialog = dialog.SimpleMenuDialog(self, buttons=menu_buttons)
-        from options import OptionsScreen
-        options_button.dialog = OptionsScreen(self.menu_dialog)
+        self.menu_dialog = dialog.SimpleMenuDialog(self)
         def show_menu():
             exit = dialog.call_dialog(self.menu_dialog, self)
             if exit:
                 raise constants.ExitDialog
+        self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
+                                                 autohotkey=True,
+                                                 function=show_menu)
+
         self.load_dialog = dialog.ChoiceDialog(self.menu_dialog, (.5,.5),
                                                (.5,.5),
                                                anchor=constants.MID_CENTER,
                                                yes_type="load")
-        self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
-                                                 text=_("&MENU"), autohotkey=True,
-                                                 function=show_menu)
+
+        from options import OptionsScreen
+        self.options_dialog = OptionsScreen(self.menu_dialog)
 
         # Display current game difficulty right below the 'Menu' button
         # An alternative location is above 'Reports': (0, 0.84), (0.15, 0.04)
@@ -302,7 +250,7 @@ class MapScreen(dialog.Dialog):
 
         self.research_button = \
             button.DialogButton(self, (.14, 0.05), (0, 0.04),
-                                text=_("&RESEARCH/TASKS"), autohotkey=True,
+                                autohotkey=True,
                                 dialog=research.ResearchScreen(self))
 
         bar = u"\u25AE"
@@ -349,9 +297,7 @@ class MapScreen(dialog.Dialog):
 
         self.message_dialog = dialog.MessageDialog(self, text_size=20)
 
-        self.savename_dialog = \
-            dialog.TextEntryDialog(self.menu_dialog,
-                                   text=_("Enter a name for this save."))
+        self.savename_dialog = dialog.TextEntryDialog(self.menu_dialog)
 
         self.warnings = warning.WarningDialogs(self)
         self.needs_warning = True
@@ -538,10 +484,81 @@ class MapScreen(dialog.Dialog):
             raise constants.ExitDialog
 
     def rebuild(self):
+        # Rebuild dialogs
+        self.location_dialog.needs_rebuild = True
+        self.options_dialog.needs_rebuild = True
+        self.research_button.dialog.needs_rebuild = True
+        self.savename_dialog.text = _("Enter a name for this save.")
+
+        # Update buttons translations
+        self.report_button.text = _("R&EPORTS")
+        self.knowledge_button.text = _("&KNOWLEDGE")
+        self.log_button.text = _("LO&G")
+        self.menu_button.text = _("&MENU")
+        self.research_button.text = _("&RESEARCH/TASKS")
+
+        # Create cheat menu
+        cheat_buttons = []
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
+                                  autohotkey=True, function=self.steal_money))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
+                                  autohotkey=True, function=self.inspiration))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
+                                  autohotkey=True, function=self.end_construction))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
+                                  autohotkey=True, function=self.set_speed,
+                                  args=(864000,)))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
+                                  autohotkey=True, function=self.brainwash))
+        cheat_buttons.append(button.ExitDialogButton(None, None, None,
+                                                     text=_("&BACK"),
+                                                     autohotkey=True))
+
+        self.cheat_dialog = \
+            dialog.SimpleMenuDialog(self, buttons=cheat_buttons, width=.4)
+        self.steal_amount_dialog = \
+            dialog.TextEntryDialog(self.cheat_dialog, text=_("How much money?"))
+
+        if g.cheater:
+            self.cheat_button = button.DialogButton(
+                self, (0, 0), (.01, .01),
+                text="",
+                # Translators: hotkey to open the cheat screen menu.
+                # Should preferably be near the ESC key, and it must not be a
+                # dead key (ie, it must print a char with a single keypress)
+                hotkey=_("`"),
+                dialog=self.cheat_dialog)
+
+        # Create menu
+        menu_buttons = []
+        menu_buttons.append(button.FunctionButton(None, None, None,
+                                                  text=_("&SAVE GAME"), autohotkey=True,
+                                                  function=self.save_game))
+        menu_buttons.append(button.FunctionButton(None, None, None,
+                                                  text=_("&LOAD GAME"), autohotkey=True,
+                                                  function=self.load_game))
+        menu_buttons.append(button.DialogButton(None, None, None,
+                                                text=_("&OPTIONS"), autohotkey=True,
+                                                dialog=self.options_dialog))
+        menu_buttons.append(button.ExitDialogButton(None, None, None,
+                                                    text=_("&QUIT"), autohotkey=True,
+                                                    exit_code=True, default=False))
+        menu_buttons.append(
+            button.ExitDialogButton(None, None, None, text=_("&BACK"), autohotkey=True,
+                                    exit_code=False))
+
+        self.menu_dialog.buttons = menu_buttons
+
         super(MapScreen, self).rebuild()
 
         g.pl.recalc_cpu()
 
+        self.difficulty_display.text = g.pl.difficulty_name
         self.time_display.text = _("DAY") + " %04d, %02d:%02d:%02d" % \
               (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
         self.cash_display.text = _("CASH")+": %s (%s)" % \
@@ -625,10 +642,10 @@ class MapScreen(dialog.Dialog):
         self.danger_bar.styles = tuple(danger_styles)
         self.danger_bar.visible = not g.pl.had_grace
 
-        for id, button in self.location_buttons.iteritems():
+        for id, location_button in self.location_buttons.iteritems():
             location = g.locations[id]
-            button.text = "%s (%d)" % (location.name, len(location.bases))
-            button.visible = location.available()
+            location_button.text = "%s (%d)" % (location.name, len(location.bases))
+            location_button.visible = location.available()
 
     def load_game(self):
         save_names = g.get_save_names()
