@@ -10,10 +10,6 @@ cancel = avbryt
 destroy = förstör
 yes = ja
 
-[fonts]
-font0 = DejaVuSans.ttf
-font1 = acknowtt.ttf
-
 [jobs]
 job_basic_name = Enklare uppdrag
 job_inter = Utför normala arbetsuppdrag. Möjligheten att kunna ringa telefonsamtal har öppnat dörrarna för ännu fler jobb.

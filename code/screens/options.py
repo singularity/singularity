@@ -134,7 +134,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                              (xpos(2)-.02, ypos(index+1)),
                                              (.02, .05),
                                              text="X",
-                                             base_font=gg.font[1],
+                                             base_font=gg.fonts["special"],
                                              background_color=gg.colors["clear"])
 
         self.resolution_custom_vert = \

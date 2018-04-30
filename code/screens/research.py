@@ -101,7 +101,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.help_button = button.FunctionButton(canvas, (-.11, -.55),
                                                    (0, -.40), text=" ??? ",
                                                    text_shrink_factor=1,
-                                                   base_font=gg.font[0],
+                                                   base_font=gg.fonts["normal"],
                                                    function=self.show_help)
 
     def cpu_for(self, key):

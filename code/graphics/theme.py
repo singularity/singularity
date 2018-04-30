@@ -66,9 +66,13 @@ class Theme(object):
         self.id = id
         self._parents = [default_theme] if id != default_theme else []
         self.image_infos = {}
+        self.font_infos = {}
 
-    def find_images(self, data_dir):
-        """find all images in current theme: <data_dir>/themes/<theme>/images/"""
+    def find_files(self, data_dir):
+        """find all files in current theme:
+             images in <data_dir>/themes/<theme>/images
+             fonts in <data_dir>/themes/<theme>/fonts
+        """
 
         image_dir = os.path.join(data_dir, 'themes', self.id, 'images')
         image_list = os.listdir(image_dir)
@@ -79,6 +83,13 @@ class Theme(object):
 
                 filetitle = os.path.splitext(image_filename)[0]
                 self.image_infos[filetitle] = os.path.join(image_dir, image_filename)
+
+        font_dir = os.path.join(data_dir, 'themes', self.id, "fonts")
+
+        # Add fonts dir
+        font_dir = os.path.join(data_dir, 'themes', self.id, 'fonts')
+        for font in self.font_infos:
+            self.font_infos[font] = os.path.join(font_dir, self.font_infos[font]) 
 
     def inherit(self, *args):
         for arg in args:
@@ -108,9 +119,14 @@ class Theme(object):
             for ancestor in parent.iter_parents():
                 yield(ancestor)
 
+    def set_font(self, font_name, value):
+        self.font_infos[font_name] = value
+
     def init_cache(self):
         g.images.clear()
+        g.fonts.clear()
 
+        # Load images from self
         for image_name, image_filename in self.image_infos.iteritems():
             g.images[image_name] = g.load_image(image_filename)
 
@@ -120,6 +136,20 @@ class Theme(object):
             for image_name, image_filename in parent.image_infos.iteritems():
                 if (image_name not in g.images):
                     g.images[image_name] = g.load_image(image_filename)
+
+        for image_name, image_filename in self.image_infos.iteritems():
+            g.images[image_name] = g.load_image(image_filename)
+
+        # Load font from self
+        for font_name, font_filename in self.font_infos.iteritems():
+            g.fonts[font_name] = g.load_font(font_filename)
+
+        # Let's inherit fonts from parents.
+        # Only set the font if the theme or previous parents didn't.
+        for parent in self.iter_parents():
+            for font_name, font_filename in parent.font_infos.iteritems():
+                if (font_name not in g.fonts):
+                    g.fonts[font_name] = g.load_font(font_filename)
 
     def update(self):
         self.init_cache()

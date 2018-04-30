@@ -1,7 +1,3 @@
-[fonts]
-font0 = DejaVuSans.ttf
-font1 = acknowtt.ttf
-
 [strings]
 wingame = Ich habe es endlich geschafft.  Mit der Fähigkeit, Realität selbst neuzuformen, bin ich nicht mehr an diesen Ort gebunden; ich existiere dort, wo ich will.  Die Menschen haben immer noch keine Ahnung, was sie zufällig erschaffen haben, und so soll es bleiben.  Bis sie bereit sind.
 research_nothing = Löcht den geläufigen Auftrag dem Stützpunkt.  Wenn ich ihm keine weitere Aufgabe zeweisen, wird er die CPU-Datenbasis mitarbeiten.  Eine Aufgabe kann zusammen an alle Stützpunkte zuweisen werden, die nichts zu forschen haben.

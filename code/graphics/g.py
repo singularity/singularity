@@ -78,14 +78,8 @@ colors = dict(
     clear = (0, 0, 0, 0),
 )
 
-#Normal and Acknowledge fonts.
-font = []
-font.append([0] * 100)
-font.append([0] * 100)
-
-#which fonts to use
-font0 = "DejaVuSans.ttf"
-font1 = "acknowtt.ttf"
+# Cache font dictionnary.
+fonts = {}
 
 # Cache image dictionnary.
 images = {}
@@ -135,7 +129,6 @@ def init_graphics_system(data_dir, size=None):
     # Initialize the cache of the current theme.
     theme.current.init_cache()
 
-    load_fonts(data_dir)
     init_alpha()
 
     # Set the application icon and caption
@@ -191,24 +184,13 @@ def set_mode():
     return pygame.display.set_mode(real_screen_size, flags)
 
 
-def load_fonts(data_dir):
-    """
-load_fonts() loads the two fonts used throughout the game from the data/fonts/
-directory.
-"""
-
-    font_dir = os.path.join(data_dir, "fonts")
-    font0_file = os.path.join(font_dir, font0)
-    font1_file = os.path.join(font_dir, font1)
-    font[0][0] = font0
-    font[1][0] = font1
+def load_font(filename):
+    font = ([0] * 100)
+    font[0] = filename
     for i in range(100):
-        font[0][i] = pygame.font.Font(font0_file, i)
-        font[1][i] = pygame.font.Font(font1_file, i)
+        font[i] = pygame.font.Font(filename, i)
 
-    # Size 17 has a bad "R".
-    font[1][17] = font[1][18]
-
+    return font
 
 def load_image(filename):
     # We need to convert the image to a Pygame image surface and

@@ -10,10 +10,6 @@ destroy = distruggi
 cancel = annulla
 yes = si
 
-[fonts]
-font0 = DejaVuSans.ttf
-font1 = acknowtt.ttf
-
 [jobs]
 job_basic_name = Lavori di base
 job_inter = Svolgi lavori intermedi. La capacità di fare chiamate telefoniche permette di accedere a sempre più lavori.

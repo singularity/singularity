@@ -81,10 +81,6 @@ intro_shown = True
 #game is loaded or saved.
 default_savegame_name = "Default Save"
 
-#which fonts to use
-font0 = "DejaVuSans.ttf"
-font1 = "acknowtt.ttf"
-
 #savefile version; update whenever the data saved changes.
 current_save_version = "singularity_savefile_0.31pre"
 savefile_translation = {
@@ -1067,6 +1063,11 @@ def load_theme(theme_id):
             if theme_section.has_key("parent"):
                 new_theme.inherit(theme_section["parent"])
 
+        if theme_section["id"] == "fonts":
+            for key in theme_section:
+                if key == "id": continue
+                new_theme.set_font(key, theme_section[key])
+
     return new_theme
 
 def load_themes(data_dir):
@@ -1075,7 +1076,7 @@ def load_themes(data_dir):
 
     for theme_id in themes_list:
         th = load_theme(theme_id)
-        th.find_images(data_dir)
+        th.find_files(data_dir)
         themes[theme_id] = th
 
 def load_string_defs(lang=None):
@@ -1083,21 +1084,8 @@ def load_string_defs(lang=None):
 
     string_list = load_generic_defs_file("strings",lang)
     for string_section in string_list:
-        if string_section["id"] == "fonts":
 
-            # Load up font0 and font1.
-            for string_entry in string_section:
-                if string_entry == "font0":
-                    global font0
-                    font0 = string_section["font0"]
-                elif string_entry == "font1":
-                    global font1
-                    font1 = string_section["font1"]
-                elif string_entry != "id":
-                    sys.stderr.write("Unexpected font entry in strings file.\n")
-                    sys.exit(1)
-
-        elif string_section["id"] == "jobs":
+        if string_section["id"] == "jobs":
 
             # Load the four extant jobs.
             for string_entry in string_section:

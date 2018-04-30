@@ -61,7 +61,7 @@ class Button(text.SelectableText):
 
         super(Button, self).__init__(parent, pos, size, **kwargs)
 
-        self.base_font = base_font or g.font[1]
+        self.base_font = base_font or g.fonts["special"]
         self.borders = borders
         self.shrink_factor = text_shrink_factor
 

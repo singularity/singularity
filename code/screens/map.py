@@ -194,7 +194,7 @@ class MapScreen(dialog.Dialog):
         self.location_dialog = location.LocationScreen(self)
 
         self.suspicion_bar = \
-            text.FastStyledText(self, (0,.92), (1, .04), base_font=gg.font[1],
+            text.FastStyledText(self, (0,.92), (1, .04), base_font=gg.fonts["special"],
                                 wrap=False,
                                 background_color=gg.colors["black"],
                                 border_color=gg.colors["dark_blue"],
@@ -202,7 +202,7 @@ class MapScreen(dialog.Dialog):
         widget.unmask_all(self.suspicion_bar)
 
         self.danger_bar = \
-            text.FastStyledText(self, (0,.96), (1, .04), base_font=gg.font[1],
+            text.FastStyledText(self, (0,.96), (1, .04), base_font=gg.fonts["special"],
                                 wrap=False,
                                 background_color=gg.colors["black"],
                                 border_color=gg.colors["dark_blue"],
@@ -299,14 +299,14 @@ class MapScreen(dialog.Dialog):
         self.difficulty_display = \
             text.FastText(self, (0, 0.05), (0.13, 0.04),
                           wrap=False,
-                          base_font=gg.font[1],
+                          base_font=gg.fonts["special"],
                           background_color=gg.colors["black"],
                           border_color=gg.colors["dark_blue"])
 
         self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
                                           wrap=False,
                                           text=_("DAY")+" 0000, 00:00:00",
-                                          base_font=gg.font[1],
+                                          base_font=gg.fonts["special"],
                                           background_color=gg.colors["black"],
                                           border_color=gg.colors["dark_blue"],
                                           borders=constants.ALL)
@@ -328,7 +328,7 @@ class MapScreen(dialog.Dialog):
             hotkey = str(index)
             b = SpeedButton(self, (hpos, 0), (hsize, .04),
                             text=text_, hotkey=hotkey,
-                            base_font=gg.font[0], text_shrink_factor=.75,
+                            base_font=gg.fonts["normal"], text_shrink_factor=.75,
                             align=constants.CENTER,
                             function=self.set_speed, args=(speed, False))
             hpos += hsize
@@ -344,7 +344,7 @@ class MapScreen(dialog.Dialog):
         self.cash_display = \
             text.FastText(self.info_window, (0,0), (-1, -.5),
                           wrap=False,
-                          base_font=gg.font[1], shrink_factor = .7,
+                          base_font=gg.fonts["special"], shrink_factor = .7,
                           borders=constants.ALL,
                           background_color=gg.colors["black"],
                           border_color=gg.colors["dark_blue"])
@@ -352,7 +352,7 @@ class MapScreen(dialog.Dialog):
         self.cpu_display = \
             text.FastText(self.info_window, (0,-.5), (-1, -.5),
                           wrap=False,
-                          base_font=gg.font[1], shrink_factor=.7,
+                          base_font=gg.fonts["special"], shrink_factor=.7,
                           borders=
                            (constants.LEFT, constants.RIGHT, constants.BOTTOM),
                           background_color=gg.colors["black"],
