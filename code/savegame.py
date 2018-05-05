@@ -19,6 +19,7 @@
 #This file contains functions to handle savegame (load, save, ...)
 
 import cPickle
+import collections
 import os
 
 import g, player
@@ -30,21 +31,40 @@ default_savegame_name = "Default Save"
 #savefile version; update whenever the data saved changes.
 current_save_version = "singularity_savefile_0.31pre"
 savefile_translation = {
-    "singularity_savefile_r4": 4,
-    "singularity_savefile_r5_pre": 4.91,
-    "singularity_savefile_0.31pre": 31,
+    "singularity_savefile_r4": ("0.30", 4),
+    "singularity_savefile_r5_pre": ("0.30", 4.91),
+    "singularity_savefile_0.31pre": ("1.0 (dev)", 31),
 }
 
+Savegame = collections.namedtuple('Savegame', ['name', 'version'])
+
 def get_savegames():
-    save_names = []
-    all_files = os.listdir(g.get_save_folder())
+    save_dir = g.get_save_folder()
+
+    all_savegames = []
+    all_files = os.listdir(save_dir)
     for file_name in all_files:
         if file_name[0] != "." and file_name != "CVS":
             # If it's a new-style save, trim the .sav bit.
             if len (file_name) > 4 and file_name[-4:] == ".sav":
-                file_name = file_name[:-4]
+                name = file_name[:-4]
 
-    return save_names
+                # Get version, only pickle first string.
+                version_name = None # None == Unknown version
+                try:
+                    loadfile = open(os.path.join(save_dir, file_name), 'r')
+                    unpickle = cPickle.Unpickler(loadfile)
+
+                    load_version = unpickle.load()
+                    if load_version in savefile_translation:
+                        version_name = savefile_translation[load_version][0]
+                except:
+                    version_name = None # To be sure.
+
+                savegame = Savegame(name, version_name)
+                all_savegames.append(savegame)
+
+    return all_savegames
 
 def get_savegame_path(loadgame_name):
     if not loadgame_name:
@@ -127,7 +147,7 @@ def load_savegame(loadgame_name):
         loadfile.close()
         print loadgame_name + " is not a savegame, or is too old to work."
         return False
-    load_version = savefile_translation[load_version_string]
+    load_version = savefile_translation[load_version_string][1]
 
     g.default_savegame_name = loadgame_name
 

@@ -38,6 +38,35 @@ class SavegameScreen(dialog.ChoiceDialog):
                                                    autohotkey=True,
                                                    function=self.delete_savegame)
 
+    def make_listbox(self):
+        return listbox.CustomListbox(self, (0, 0), (-1, -.85),
+                                     anchor=constants.TOP_LEFT,
+                                     remake_func=self.make_item,
+                                     rebuild_func=self.update_item)
+
+    def make_item(self, item):
+        item.name_display     = text.Text(item, (-.01,-.05), (-.45, -.99),
+                                          anchor=constants.TOP_LEFT,
+                                          align=constants.LEFT,
+                                          background_color=gg.colors["clear"])
+        item.version_display  = text.Text(item, (-.99,-.05), (-.45, -.99),
+                                          anchor=constants.TOP_RIGHT,
+                                          align=constants.RIGHT,
+                                          background_color=gg.colors["clear"])
+
+    def update_item(self, item, name, save):
+        if save is None:
+            item.name_display.text = ""
+            item.version_display.text = ""
+        else:
+            item.name_display.text = save.name
+            if save.version is None:
+                item.version_display.text  = _("UNKNOWN")
+                item.version_display.color = gg.colors["red"]
+            else:
+                item.version_display.text  = save.version
+                item.version_display.color = gg.colors["green"]
+
     def rebuild(self):
         # Update buttons translations
         self.delete_button.text = _("Delete")
@@ -45,9 +74,11 @@ class SavegameScreen(dialog.ChoiceDialog):
         super(SavegameScreen, self).rebuild()
 
     def reload_savegames(self):
-        save_names = sv.get_savegames()
-        save_names.sort(key=str.lower)
-        self.list = save_names
+        savegames = sv.get_savegames()
+        savegames.sort(key=lambda savegame: savegame.name.lower())
+
+        self.listbox.key_list = savegames
+        self.list = [save.name for save in savegames]
 
     def delete_savegame(self):
         yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
