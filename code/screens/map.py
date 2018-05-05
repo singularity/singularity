@@ -21,7 +21,7 @@
 
 import pygame
 
-from code import g
+from code import g, savegame as sv
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
@@ -656,7 +656,7 @@ class MapScreen(dialog.Dialog):
         self.savename_dialog.default_text = g.default_savegame_name
         name = dialog.call_dialog(self.savename_dialog, self.menu_dialog)
         if name:
-            g.save_game(name)
+            sv.create_savegame(name)
             raise constants.ExitDialog, False
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):

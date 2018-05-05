@@ -24,7 +24,6 @@ version = "0.31alpha1"
 import ConfigParser
 import pygame
 import os.path
-import cPickle
 import random
 import sys
 import polib
@@ -77,21 +76,9 @@ except: language = default_language
 #Makes the intro be shown on the first GUI tick.
 intro_shown = True
 
-#name given when the savegame button is pressed. This is changed when the
-#game is loaded or saved.
-default_savegame_name = "Default Save"
-
 #which fonts to use
 font0 = "DejaVuSans.ttf"
 font1 = "acknowtt.ttf"
-
-#savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_0.31pre"
-savefile_translation = {
-    "singularity_savefile_r4": 4,
-    "singularity_savefile_r5_pre": 4.91,
-    "singularity_savefile_0.31pre": 31,
-}
 
 data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))
 
@@ -540,143 +527,6 @@ def get_save_folder(just_pref_dir=False):
         return pref_dir
     else:
         return save_dir
-
-def save_game(savegame_name):
-    global default_savegame_name
-    default_savegame_name = savegame_name
-
-    save_dir = get_save_folder()
-    save_loc = os.path.join(save_dir, savegame_name + ".sav")
-    savefile=open(save_loc, 'w')
-
-    cPickle.dump(current_save_version, savefile)
-    cPickle.dump(pl, savefile)
-    cPickle.dump(curr_speed, savefile)
-    cPickle.dump(techs, savefile)
-    cPickle.dump(locations, savefile)
-    cPickle.dump(events, savefile)
-
-    savefile.close()
-
-def get_savegame_path(loadgame_name):
-    if not loadgame_name:
-        print "No game specified."
-        return None
-
-    save_dir = get_save_folder()
-
-    load_loc = os.path.join(save_dir, loadgame_name + ".sav")
-    if os.path.exists(load_loc) == 0:
-        # Try the old-style savefile location.  This should be removed in
-        # a few versions.
-        load_loc = os.path.join(save_dir, loadgame_name)
-        if os.path.exists(load_loc) == 0:
-            print "file "+load_loc+" does not exist."
-            return None
-
-    return load_loc
-
-def delete_savegame(loadgame_name):
-    load_path = get_savegame_path(loadgame_name)
-
-    if load_path is None:
-        return False
-
-    try:
-        os.remove(load_path)
-    except:
-        return False
-
-def load_game(loadgame_name):
-    load_path = get_savegame_path(loadgame_name)
-
-    if load_path is None:
-        return False
-
-    loadfile = open(load_path, 'r')
-    unpickle = cPickle.Unpickler(loadfile)
-
-    def find_class(module_name, class_name):
-        # For cPickle
-        import copy_reg
-        import numpy.core.multiarray
-        import collections
-        save_classes = dict(
-            player_class=player.Player,
-            Player=player.Player,
-            _reconstructor = copy_reg._reconstructor,
-            object=object,
-            array=list,  # This is the old buyable.array.
-                         # We just treat it as a list for conversion purposes.
-            list=list,
-            Location=location.Location,
-            Tech=tech.Tech,
-            event_class=event.Event,
-            Event=event.Event,
-            group=player.Group,
-            Group=player.Group,
-            Buyable_Class=buyable.BuyableClass,
-            BuyableClass=buyable.BuyableClass,
-            Base=base.Base,
-            Base_Class=base.BaseClass,
-            BaseClass=base.BaseClass,
-            Item=item.Item,
-            Item_Class=item.ItemClass,
-            ItemClass=item.ItemClass,
-            _reconstruct=numpy.core.multiarray._reconstruct,
-            scalar=numpy.core.multiarray.scalar,
-            ndarray=numpy.ndarray,
-            dtype=numpy.dtype,
-            deque=collections.deque,
-        )
-        if class_name in save_classes:
-            return save_classes[class_name]
-        else:
-            raise SystemExit, (module_name, class_name)
-
-    unpickle.find_global = find_class
-
-    #check the savefile version
-    load_version_string = unpickle.load()
-    if load_version_string not in savefile_translation:
-        loadfile.close()
-        print loadgame_name + " is not a savegame, or is too old to work."
-        return False
-    load_version = savefile_translation[load_version_string]
-
-    global default_savegame_name
-    default_savegame_name = loadgame_name
-
-    # Changes to overall structure go here.
-    global pl, curr_speed, techs, locations, events
-    pl = unpickle.load()
-    curr_speed = unpickle.load()
-    techs = unpickle.load()
-    locations = unpickle.load()
-    events = unpickle.load()
-
-    # Apply current language
-    load_tech_defs()
-    load_location_defs()
-    load_event_defs()
-
-    # Changes to individual pieces go here.
-    if load_version != savefile_translation[current_save_version]:
-        pl.convert_from(load_version)
-        for my_location in locations.values():
-            for my_base in my_location.bases:
-                my_base.convert_from(load_version)
-        for my_tech in techs.values():
-            my_tech.convert_from(load_version)
-
-    # Play the appropriate music
-    if pl.apotheosis:
-        play_music("win")
-    else:
-        play_music("music")
-
-    loadfile.close()
-    return True
 
 def load_generic_defs_file(name,lang=None):
     if lang is None: lang = language
@@ -1307,19 +1157,6 @@ def language_searchlist(lang=None, default=True):
         lang_list.insert(0, default_language)
 
     return lang_list
-
-def get_save_names():
-    save_names = []
-    all_files = os.listdir(get_save_folder())
-    for file_name in all_files:
-        if file_name[0] != "." and file_name != "CVS":
-            # If it's a new-style save, trim the .sav bit.
-            if len (file_name) > 4 and file_name[-4:] == ".sav":
-                file_name = file_name[:-4]
-            if file_name not in save_names:
-                save_names.append(file_name)
-
-    return save_names
 
 def translate(string, *args, **kwargs):
     if   string in strings : s = strings[string]

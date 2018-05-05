@@ -20,7 +20,7 @@
 
 import pygame
 
-from code import g
+from code import g, savegame as sv
 from code.graphics import dialog, button, slider, text, constants, listbox, g as gg
 
 class SavegameScreen(dialog.ChoiceDialog):
@@ -45,7 +45,7 @@ class SavegameScreen(dialog.ChoiceDialog):
         super(SavegameScreen, self).rebuild()
 
     def reload_savegames(self):
-        save_names = g.get_save_names()
+        save_names = sv.get_savegames()
         save_names.sort(key=str.lower)
         self.list = save_names
 
@@ -59,14 +59,14 @@ class SavegameScreen(dialog.ChoiceDialog):
             index = self.return_list_pos()
             if 0 <= index < len(self.list):
                 save = self.list[index]
-                g.delete_savegame(save)
+                sv.delete_savegame(save)
                 self.reload_savegames()
 
     def return_savegame(self):
         index = self.return_list_pos()
         if 0 <= index < len(self.list):
             save = self.list[index]
-            return g.load_game(save)
+            return sv.load_savegame(save)
         return False
 
     def show(self):
