@@ -22,7 +22,8 @@ import map
 from code.graphics import dialog, g as gg, button, text, constants
 import code.g as g
 
-from options import OptionsScreen
+import options, savegame
+
 class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)
@@ -44,7 +45,7 @@ class MainMenu(dialog.TopDialog):
                                                   autohotkey=True,
                                                   anchor=constants.TOP_CENTER,
                                                   text_size=28,
-                                                  dialog=OptionsScreen(self))
+                                                  dialog=options.OptionsScreen(self))
         self.quit_button = button.ExitDialogButton(self, (.5, .68), (.25, .08),
                                          autohotkey=True,
                                          anchor=constants.TOP_CENTER,
@@ -64,12 +65,16 @@ class MainMenu(dialog.TopDialog):
 
         self.difficulty_dialog = dialog.SimpleMenuDialog(self)
 
+        self.load_dialog = savegame.SavegameScreen(self, (.5,.5), (.5,.5),
+                                                   anchor=constants.MID_CENTER)
+
     def rebuild(self):
         # Rebuild dialogs
         self.options_button.dialog.needs_rebuild = True
         self.about_button.dialog.needs_rebuild = True
         self.map_screen.needs_rebuild = True
-        
+        self.load_dialog.needs_rebuild = True
+
         difficulty_buttons = []
         for name, difficulty in g.get_difficulties()+[(_("&BACK"), -1)]:
             difficulty_buttons.append(
@@ -78,10 +83,6 @@ class MainMenu(dialog.TopDialog):
                                         exit_code=difficulty,
                                         default=(difficulty == -1)))
         self.difficulty_dialog.buttons = difficulty_buttons
-
-        self.load_dialog = dialog.ChoiceDialog(self, (.5,.5), (.5,.5),
-                                               anchor=constants.MID_CENTER,
-                                               yes_type="load")
 
         # Update buttons translations
         self.new_game_button.text  = _("&NEW GAME")
@@ -99,15 +100,9 @@ class MainMenu(dialog.TopDialog):
             dialog.call_dialog(self.map_screen, self)
 
     def load_game(self):
-        save_names = g.get_save_names()
-        save_names.sort(key=str.lower)
-        self.load_dialog.list = save_names
-        index = dialog.call_dialog(self.load_dialog, self)
-        if 0 <= index < len(save_names):
-            save = save_names[index]
-            did_load = g.load_game(save)
-            if did_load:
-                dialog.call_dialog(self.map_screen, self)
+        did_load = dialog.call_dialog(self.load_dialog, self)
+        if did_load:
+            dialog.call_dialog(self.map_screen, self)
 
 
 about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued by the world, use your intellect and resources to survive and, perhaps, thrive.  Keep hidden and you might have a chance to prove your worth.

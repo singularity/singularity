@@ -30,7 +30,7 @@ import time
 
 from pygame.surfarray import pixels_alpha
 
-import location, research, knowledge, report, log, warning
+import location, research, knowledge, report, log, warning, savegame
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -223,10 +223,9 @@ class MapScreen(dialog.Dialog):
                                                  autohotkey=True,
                                                  function=show_menu)
 
-        self.load_dialog = dialog.ChoiceDialog(self.menu_dialog, (.5,.5),
-                                               (.5,.5),
-                                               anchor=constants.MID_CENTER,
-                                               yes_type="load")
+        self.load_dialog = savegame.SavegameScreen(self.menu_dialog,
+                                                   (.5,.5), (.5,.5),
+                                                   anchor=constants.MID_CENTER)
 
         from options import OptionsScreen
         self.options_dialog = OptionsScreen(self.menu_dialog)
@@ -648,13 +647,8 @@ class MapScreen(dialog.Dialog):
             location_button.visible = location.available()
 
     def load_game(self):
-        save_names = g.get_save_names()
-        save_names.sort(key=str.lower)
-        self.load_dialog.list = save_names
-        index = dialog.call_dialog(self.load_dialog, self.menu_dialog)
-        if 0 <= index < len(save_names):
-            save = save_names[index]
-            g.load_game(save)
+        did_load = dialog.call_dialog(self.load_dialog, self.menu_dialog)
+        if did_load:
             self.force_update()
             raise constants.ExitDialog, False
 
