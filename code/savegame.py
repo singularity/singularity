@@ -43,8 +43,6 @@ def get_savegames():
             # If it's a new-style save, trim the .sav bit.
             if len (file_name) > 4 and file_name[-4:] == ".sav":
                 file_name = file_name[:-4]
-            if file_name not in save_names:
-                save_names.append(file_name)
 
     return save_names
 
@@ -57,12 +55,8 @@ def get_savegame_path(loadgame_name):
 
     load_loc = os.path.join(save_dir, loadgame_name + ".sav")
     if os.path.exists(load_loc) == 0:
-        # Try the old-style savefile location.  This should be removed in
-        # a few versions.
-        load_loc = os.path.join(save_dir, loadgame_name)
-        if os.path.exists(load_loc) == 0:
-            print "file "+load_loc+" does not exist."
-            return None
+        print "file "+load_loc+" does not exist."
+        return None
 
     return load_loc
 
