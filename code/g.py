@@ -558,10 +558,10 @@ def save_game(savegame_name):
 
     savefile.close()
 
-def load_game(loadgame_name):
-    if loadgame_name == "":
+def get_savegame_path(loadgame_name):
+    if not loadgame_name:
         print "No game specified."
-        return False
+        return None
 
     save_dir = get_save_folder()
 
@@ -572,9 +572,28 @@ def load_game(loadgame_name):
         load_loc = os.path.join(save_dir, loadgame_name)
         if os.path.exists(load_loc) == 0:
             print "file "+load_loc+" does not exist."
-            return False
+            return None
 
-    loadfile = open(load_loc, 'r')
+    return load_loc
+
+def delete_savegame(loadgame_name):
+    load_path = get_savegame_path(loadgame_name)
+
+    if load_path is None:
+        return False
+
+    try:
+        os.remove(load_path)
+    except:
+        return False
+
+def load_game(loadgame_name):
+    load_path = get_savegame_path(loadgame_name)
+
+    if load_path is None:
+        return False
+
+    loadfile = open(load_path, 'r')
     unpickle = cPickle.Unpickler(loadfile)
 
     def find_class(module_name, class_name):

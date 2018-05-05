@@ -27,15 +27,40 @@ class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):
         super(SavegameScreen, self).__init__(parent, *args, yes_type="load", **kwargs)
 
+        self.yes_button.pos = (-.03,-.99)
         self.yes_button.exit_code_func = self.return_savegame
+
+        self.no_button.pos = (-.97,-.99)
         self.no_button.exit_code = None
 
-    def show(self):
+        self.delete_button = button.FunctionButton(self, (-.50,-.99), (-.3,-.1),
+                                                   anchor=constants.BOTTOM_CENTER,
+                                                   autohotkey=True,
+                                                   function=self.delete_savegame)
+
+    def rebuild(self):
+        # Update buttons translations
+        self.delete_button.text = _("Delete")
+
+        super(SavegameScreen, self).rebuild()
+
+    def reload_savegames(self):
         save_names = g.get_save_names()
         save_names.sort(key=str.lower)
         self.list = save_names
 
-        return super(SavegameScreen, self).show()
+    def delete_savegame(self):
+        yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
+                                anchor=constants.MID_CENTER,
+                                text=_("Are you sure to delete the saved game ?"))
+        delete = dialog.call_dialog(yn, self)
+        yn.remove_hooks()
+        if delete:
+            index = self.return_list_pos()
+            if 0 <= index < len(self.list):
+                save = self.list[index]
+                g.delete_savegame(save)
+                self.reload_savegames()
 
     def return_savegame(self):
         index = self.return_list_pos()
@@ -43,3 +68,8 @@ class SavegameScreen(dialog.ChoiceDialog):
             save = self.list[index]
             return g.load_game(save)
         return False
+
+    def show(self):
+        self.reload_savegames()
+
+        return super(SavegameScreen, self).show()
