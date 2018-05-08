@@ -60,23 +60,7 @@ resolutions = [
 fullscreen = False
 
 #colors:
-colors = dict(
-    white = (255, 255, 255, 255),
-    black = (0, 0, 0, 255),
-    red = (255, 0, 0, 255),
-    green = (0, 255, 0, 255),
-    blue = (0, 0, 255, 255),
-    yellow = (255, 255, 0, 255),
-    orange = (255, 125, 0, 255),
-    gray = (125, 125, 125, 255),
-    dark_red = (125, 0, 0, 255),
-    dark_green = (0, 125, 0, 255),
-    dark_blue = (0, 0, 125, 255),
-    light_red = (255, 50, 50, 255),
-    light_green = (50, 255, 50, 255),
-    light_blue = (50, 50, 255, 255),
-    clear = (0, 0, 0, 0),
-)
+colors = {}
 
 # Cache font dictionnary.
 fonts = {}

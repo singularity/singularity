@@ -67,6 +67,7 @@ class Theme(object):
         self._parents = [default_theme] if id != default_theme else []
         self.image_infos = {}
         self.font_infos = {}
+        self.color_infos = {}
 
     def find_files(self, data_dir):
         """find all files in current theme:
@@ -122,9 +123,15 @@ class Theme(object):
     def set_font(self, font_name, value):
         self.font_infos[font_name] = value
 
+    def set_color(self, color_name, value):
+        h = value.lstrip('#')
+        rgba = tuple(int(h[i:i+2], 16) for i in (0, 2, 4, 6))
+        self.color_infos[color_name] = rgba
+
     def init_cache(self):
         g.images.clear()
         g.fonts.clear()
+        g.colors.clear()
 
         # Load images from self
         for image_name, image_filename in self.image_infos.iteritems():
@@ -150,6 +157,17 @@ class Theme(object):
             for font_name, font_filename in parent.font_infos.iteritems():
                 if (font_name not in g.fonts):
                     g.fonts[font_name] = g.load_font(font_filename)
+
+        # Update colors from self
+        for color_name, color_rgba in self.color_infos.iteritems():
+            g.colors[color_name] = color_rgba
+
+        # Let's inherit colors from parents.
+        # Only set the color if the theme or previous parents didn't.
+        for parent in self.iter_parents():
+            for color_name, color_rgba in parent.color_infos.iteritems():
+                if (color_name not in g.fonts):
+                    g.colors[color_name] = color_rgba
 
     def update(self):
         self.init_cache()

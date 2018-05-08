@@ -1068,6 +1068,11 @@ def load_theme(theme_id):
                 if key == "id": continue
                 new_theme.set_font(key, theme_section[key])
 
+        if theme_section["id"] == "colors":
+            for key in theme_section:
+                if key == "id": continue
+                new_theme.set_color(key, theme_section[key])
+
     return new_theme
 
 def load_themes(data_dir):
