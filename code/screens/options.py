@@ -395,6 +395,7 @@ def set_language_properly(language):
     g.load_item_defs()
     g.load_event_defs()
     g.load_location_defs()
+    g.load_theme_defs()
 
     dialog.Dialog.top.map_screen.needs_rebuild = True
     dialog.Dialog.top.map_screen.needs_redraw = True

@@ -1084,6 +1084,11 @@ def load_themes(data_dir):
         th.find_files(data_dir)
         themes[theme_id] = th
 
+    load_theme_defs()
+
+def load_theme_defs(lang=None):
+    load_generic_defs("themes", theme.themes, lang)
+
 def load_string_defs(lang=None):
     if lang is None: lang = language
 

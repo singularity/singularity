@@ -64,6 +64,7 @@ class Theme(object):
     def __init__(self, id):
         super(Theme, self).__init__()
         self.id = id
+        self.name = ""
         self._parents = [default_theme] if id != default_theme else []
         self.image_infos = {}
         self.font_infos = {}
