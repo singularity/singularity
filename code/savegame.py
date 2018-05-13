@@ -166,10 +166,10 @@ def load_savegame(loadgame_name):
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         g.pl.convert_from(load_version)
-        for my_location in locations.values():
+        for my_location in g.locations.values():
             for my_base in my_location.bases:
                 my_base.convert_from(load_version)
-        for my_tech in techs.values():
+        for my_tech in g.techs.values():
             my_tech.convert_from(load_version)
 
     # Play the appropriate music
