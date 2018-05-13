@@ -44,9 +44,6 @@ class BaseClass(buyable.BuyableClass):
         self.size = size
         self.force_cpu = force_cpu
         self.regions = regions
-        if self.regions == ["pop"]:
-            self.regions = ["N AMERICA", "S AMERICA", "EUROPE", "ASIA",
-            "AFRICA", "AUSTRALIA"]
 
         self.detect_chance = detect_chance
         self.maintenance = maintenance
