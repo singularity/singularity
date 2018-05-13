@@ -158,11 +158,6 @@ def load_savegame(loadgame_name):
     g.locations = unpickle.load()
     g.events = unpickle.load()
 
-    # Apply current language
-    g.load_tech_defs()
-    g.load_location_defs()
-    g.load_event_defs()
-
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         g.pl.convert_from(load_version)
@@ -171,6 +166,13 @@ def load_savegame(loadgame_name):
                 my_base.convert_from(load_version)
         for my_tech in g.techs.values():
             my_tech.convert_from(load_version)
+        for my_event in g.events.values():
+            my_event.convert_from(load_version)
+
+    # Apply current language
+    g.load_tech_defs()
+    g.load_location_defs()
+    g.load_event_defs()
 
     # Play the appropriate music
     if g.pl.apotheosis:
