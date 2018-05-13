@@ -418,7 +418,6 @@ class BaseScreen(dialog.Dialog):
 
         # Rebuild dialogs
         self.build_dialog.needs_rebuild = True
-        self.count_dialog.needs_rebuild = True
 
         # Update buttons translations
         self.back_button.text = _("&BACK")
