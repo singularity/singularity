@@ -68,4 +68,8 @@ class LogScreen(dialog.ChoiceDialog):
         location = g.locations[log_data[3]] # base.location.id
         
         return g.strings[log_format] % (name, base_type.name, location.name)
-        
+
+    def create_log_event_text(self, log_name, log_data):
+        event = g.events[log_data[0]] # event.id
+        print(event)
+        return event.log_description

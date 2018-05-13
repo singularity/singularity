@@ -918,6 +918,7 @@ def load_events():
         events[event_name["id"]] = event.Event(
          event_name["id"],
          "",
+         "",
          event_name["type"],
          event_result,
          int(event_name["chance"]),

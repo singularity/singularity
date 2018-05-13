@@ -510,6 +510,7 @@ class Player(object):
                         continue
                     self.pause_game()
                     g.events[event].trigger()
+                    self.add_log("log_event", g.events[event].event_id)
                     break # Don't trigger more than one at a time.
 
         # Process any complete days.
