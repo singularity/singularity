@@ -2,7 +2,7 @@
 [Stolen Computer Time]
 size = 1
 force_cpu = PC
-allowed = pop
+allowed = URBAN
 detect_chance_list = news:50 | covert:75 | public:100
 cost_list = 0 | 2 | 0
 pre = Intrusion
@@ -11,7 +11,7 @@ maint_list = 0 | 0 | 0
 [Server Access]
 size = 1
 force_cpu = Server
-allowed = pop
+allowed = URBAN
 detect_chance_list = news:50 | covert:100 | public:150
 cost_list = 100 | 0 | 0
 maint_list = 5 | 0 | 0
@@ -19,7 +19,7 @@ maint_list = 5 | 0 | 0
 [Datacenter]
 size = 1
 force_cpu = Cluster
-allowed = pop
+allowed = URBAN
 detect_chance_list = news:50 | covert:125 | public:100
 cost_list = 1500 | 0 | 1
 pre = Personal Identification
@@ -27,7 +27,7 @@ maint_list = 50 | 0 | 0
 
 [Small Warehouse]
 size = 25
-allowed = pop
+allowed = URBAN
 detect_chance_list = news:75 | covert:75 | public:200
 cost_list = 15000 | 0 | 3
 pre = Personal Identification
@@ -35,7 +35,7 @@ maint_list = 50 | 0 | 0
 
 [Large Warehouse]
 size = 65
-allowed = pop
+allowed = URBAN
 detect_chance_list = news:100 | covert:200 | public:250
 cost_list = 40000 | 0 | 7
 pre = Advanced Personal Identification
@@ -43,7 +43,7 @@ maint_list = 100 | 0 | 0
 
 [Covert Base]
 size = 2
-allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA | AUSTRALIA | ANTARCTIC
+allowed_list = URBAN | ANTARCTIC
 detect_chance_list = news:50 | science:75 | covert:75
 cost_list = 400000 | 100 | 21
 pre = Advanced Database Manipulation

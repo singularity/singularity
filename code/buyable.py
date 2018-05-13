@@ -57,6 +57,29 @@ class BuyableClass(object):
                               cash_label.replace(" ", u"\xA0"),
                               labor_label)
 
+    @property
+    def regions(self):
+        return self._regions
+
+    @regions.setter
+    def regions(self, value):
+        region_all = False
+        regions = []
+
+        for region in value:
+            if "ALL" in value:
+                region_all = True
+            elif region in g.regions:
+                regions.extend(g.regions[region])
+            else:
+                regions.append(region)
+
+        self._regions = regions
+        self._region_all = region_all
+
+    def buildable_in(self, location):
+        return bool(self._region_all or location.id in self._regions)
+
     def get_info(self):
         cost_str = self.describe_cost(self.cost)
         template = "%s\n" + _("Cost:") + " %s\n---\n%s"

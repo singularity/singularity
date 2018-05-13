@@ -86,6 +86,7 @@ data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))
 messages = {}
 strings = {}
 locations = {}
+regions = {}
 techs = {}
 events = {}
 items = {}
@@ -635,7 +636,7 @@ def load_location_defs(lang=None):
     load_generic_defs("locations",locations,lang,["cities"])
 
 def load_locations():
-    global locations
+    global locations, regions
     locations = {}
 
     location_infos = generic_load("locations.dat")
@@ -692,9 +693,16 @@ def load_locations():
             else:
                 modifiers_dict[key] = float(value)
 
+        # Create the location.
         locations[id] = location.Location(id, position, absolute, safety, pre)
-
         locations[id].modifiers = modifiers_dict
+
+        # Add the location to regions it is in them.
+        region_list = location_info.get("region", [])
+        for region in region_list:
+            if (region not in regions):
+                regions[region] = []
+            regions[region].append(id)
 
     load_location_defs()
 

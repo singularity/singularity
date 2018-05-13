@@ -267,7 +267,7 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         base_type_list.reverse()
         for base_type in base_type_list:
             if base_type.available() \
-                    and self.parent.location.id in base_type.regions:
+                    and base_type.buildable_in(self.parent.location):
                 self.list.append(base_type.name)
                 self.key_list.append(base_type)
 
