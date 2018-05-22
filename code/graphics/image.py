@@ -22,6 +22,7 @@ import pygame
 
 import constants
 import widget
+import g
 
 def scale(*args, **kwargs):
     try:
@@ -38,11 +39,10 @@ class Image(widget.Widget):
 
         self.old_size = None
 
-        if image:
-            if type(image) is str:
-                image = pygame.image.load(image)
+        if image and not isinstance(image, pygame.Surface):
+            image = g.load_image(image)
 
-            self.image = image.convert_alpha()
+        self.image = image
 
     def _calc_size(self):
         size = list( super(Image, self)._calc_size() )

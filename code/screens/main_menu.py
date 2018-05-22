@@ -58,7 +58,7 @@ class MainMenu(dialog.TopDialog):
 
         self.title_text = text.Text(self, (.5, .01), (.55, .08),
                                     text="ENDGAME: SINGULARITY",
-                                    base_font=gg.font[1], text_size=100,
+                                    base_font=gg.fonts["special"], text_size=100,
                                     color=gg.colors["dark_red"],
                                     background_color=gg.colors["black"],
                                     anchor=constants.TOP_CENTER)

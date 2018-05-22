@@ -1,0 +1,20 @@
+[fonts]
+normal = DejaVuSans.ttf
+special = acknowtt.ttf
+
+[colors]
+white           = #ffffffff
+black           = #000000ff
+red             = #ff0000ff
+green           = #00ff00ff
+blue            = #0000ffff
+yellow          = #ffff00ff
+orange          = #ff8000ff
+gray            = #808080ff
+dark_red        = #800000ff
+dark_green      = #008000ff
+dark_blue       = #000080ff
+light_red       = #ff3232ff
+light_green     = #32ff32ff
+light_blue      = #3232ffff
+clear           = #00000000

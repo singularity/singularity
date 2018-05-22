@@ -81,7 +81,7 @@ class WarningDialog(dialog.YesNoDialog):
                                background_color=gg.colors["clear"],
                                anchor=constants.TOP_LEFT,
                                valign=constants.MID, align=constants.LEFT,
-                               base_font=gg.font[1], text_size=28)
+                               base_font=gg.fonts["special"], text_size=28)
 
         self.body = text.Text(self, (-.01, -.11), (-.98, -.83),
                                background_color=gg.colors["clear"],

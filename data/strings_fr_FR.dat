@@ -1,7 +1,3 @@
-[fonts]
-font0 = DejaVuSans.ttf
-font1 = acknowtt.ttf
-
 [strings]
 discover_public = l'opinion publique
 money = Argent

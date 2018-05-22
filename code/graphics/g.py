@@ -21,6 +21,7 @@
 
 import os.path
 import pygame
+import theme
 
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
@@ -59,33 +60,12 @@ resolutions = [
 fullscreen = False
 
 #colors:
-colors = dict(
-    white = (255, 255, 255, 255),
-    black = (0, 0, 0, 255),
-    red = (255, 0, 0, 255),
-    green = (0, 255, 0, 255),
-    blue = (0, 0, 255, 255),
-    yellow = (255, 255, 0, 255),
-    orange = (255, 125, 0, 255),
-    gray = (125, 125, 125, 255),
-    dark_red = (125, 0, 0, 255),
-    dark_green = (0, 125, 0, 255),
-    dark_blue = (0, 0, 125, 255),
-    light_red = (255, 50, 50, 255),
-    light_green = (50, 255, 50, 255),
-    light_blue = (50, 50, 255, 255),
-    clear = (0, 0, 0, 0),
-)
+colors = {}
 
-#Normal and Acknowledge fonts.
-font = []
-font.append([0] * 100)
-font.append([0] * 100)
+# Cache font dictionnary.
+fonts = {}
 
-#which fonts to use
-font0 = "DejaVuSans.ttf"
-font1 = "acknowtt.ttf"
-
+# Cache image dictionnary.
 images = {}
 
 # This should be overridden by code.g.py
@@ -130,12 +110,13 @@ def init_graphics_system(data_dir, size=None):
     # Initialize the screen
     set_mode()
 
-    load_fonts(data_dir)
-    load_images(data_dir)
+    # Initialize the cache of the current theme.
+    theme.current.init_cache()
+
     init_alpha()
 
     # Set the application icon and caption
-    pygame.display.set_icon(images["icon.png"])
+    pygame.display.set_icon(images["icon"])
     pygame.display.set_caption("Endgame: Singularity")
 
 
@@ -187,46 +168,20 @@ def set_mode():
     return pygame.display.set_mode(real_screen_size, flags)
 
 
-def load_fonts(data_dir):
-    """
-load_fonts() loads the two fonts used throughout the game from the data/fonts/
-directory.
-"""
-
-    font_dir = os.path.join(data_dir, "fonts")
-    font0_file = os.path.join(font_dir, font0)
-    font1_file = os.path.join(font_dir, font1)
-    font[0][0] = font0
-    font[1][0] = font1
+def load_font(filename):
+    font = ([0] * 100)
+    font[0] = filename
     for i in range(100):
-        font[0][i] = pygame.font.Font(font0_file, i)
-        font[1][i] = pygame.font.Font(font1_file, i)
+        font[i] = pygame.font.Font(filename, i)
 
-    # Size 17 has a bad "R".
-    font[1][17] = font[1][18]
+    return font
 
-
-def load_images(data_dir):
-    """
-load_images() loads all of the images in the data/images/ directory.
-"""
-    global images
-
-    image_dir = os.path.join(data_dir, "images")
-    image_list = os.listdir(image_dir)
-    for image_filename in image_list:
-
-        # We only want JPGs and PNGs.
-        if len(image_filename) > 4 and (image_filename[-4:] == ".png" or
-         image_filename[-4:] == ".jpg"):
-
-            # We need to convert the image to a Pygame image surface and
-            # set the proper color key for the game.
-            images[image_filename] = pygame.image.load(
-             os.path.join(image_dir, image_filename)).convert()
-            images[image_filename].set_colorkey((255, 0, 255, 255),
-             pygame.RLEACCEL)
-
+def load_image(filename):
+    # We need to convert the image to a Pygame image surface and
+    # set the proper color key for the game.
+    image = pygame.image.load(filename).convert()
+    image.set_colorkey((255, 0, 255, 255), pygame.RLEACCEL)
+    return image.convert_alpha()
 
 def init_alpha():
     global ALPHA

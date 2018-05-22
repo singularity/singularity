@@ -1,5 +1,5 @@
 #file: options.py
-#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
+#Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, FunnyMan3595, MestreLion
 #This file is part of Endgame: Singularity.
 
 #Endgame: Singularity is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import pygame
 import json
 
 
-from code.graphics import constants, dialog, button, listbox, text, g as gg
+from code.graphics import constants, dialog, button, listbox, text, theme, g as gg
 import code.g as g
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
@@ -43,7 +43,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         super(OptionsScreen, self).__init__(*args, **kwargs)
         self.yes_button.function = self.check_restart
 
-        self.size = (.79, .63)
+        self.size = (.80, .75)
         self.pos = (.5, .5)
         self.anchor = constants.MID_CENTER
         self.background_color = (0,0,50)
@@ -58,13 +58,21 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                               force_underline=-1,
                                               function=self.set_fullscreen,
                                               args=(button.TOGGLE_VALUE,))
-        self.sound_label = text.Text(self, (.28, .01), (.15, .05),
+        self.daynight_label = text.Text(self, (.25, .01), (.20, .05),
                                      background_color=gg.colors["clear"])
-        self.sound_toggle = OptionButton(self, (.44, .01), (.07, .05),
+        self.daynight_toggle = OptionButton(self, (.46, .01), (.07, .05),
                                          text_shrink_factor=.75,
                                          force_underline=-1,
                                          function=self.set_sound,
                                          args=(button.TOGGLE_VALUE,))
+        self.daynight_label = text.Text(self, (.25, .01), (.20, .05),
+                                        underline=labels['daynight']['pos'],
+                                        background_color=gg.colors["clear"])
+        self.daynight_toggle = OptionButton(self, (.46, .01), (.07, .05),
+                                        text_shrink_factor=.75,
+                                        force_underline=-1,
+                                        function=self.set_daynight,
+                                        args=(button.TOGGLE_VALUE,))
         self.grab_label = text.Text(self, (.55, .01), (.15, .05),
                                     background_color=gg.colors["clear"])
         self.grab_toggle = OptionButton(self, (.71, .01), (.07, .05),
@@ -114,7 +122,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                              (xpos(2)-.02, ypos(index+1)),
                                              (.02, .05),
                                              text="X",
-                                             base_font=gg.font[1],
+                                             base_font=gg.fonts["special"],
                                              background_color=gg.colors["clear"])
 
         self.resolution_custom_vert = \
@@ -131,17 +139,30 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         self.languages = get_languages_list()
         self.language_choice = \
-            listbox.UpdateListbox(self, (.16, .30), (.21, .25),
+            listbox.UpdateListbox(self, (.16, .30), (.20, .25),
                                   list=[lang[1] for lang in self.languages],
                                   update_func=self.set_language)
 
-        self.daynight_label = text.Text(self, (.50, .30), (.20, .05),
-                                        background_color=gg.colors["clear"])
-        self.daynight_toggle = OptionButton(self, (.71, .30), (.07, .05),
-                                        text=_("NO"), text_shrink_factor=.75,
-                                        force_underline=-1,
-                                        function=self.set_daynight,
-                                        args=(button.TOGGLE_VALUE,))
+        self.theme_label = text.Text(self, (.37, .30), (.09, .05),
+                                     text=_("Theme:"), align=constants.LEFT,
+                                     background_color=gg.colors["clear"])
+
+        self.theme_choice = \
+            listbox.UpdateListbox(self, (.47, .30), (.12, .25),
+                                  list=theme.get_theme_list(),
+                                  update_func=theme.set_theme,
+                                  list_pos=theme.get_theme_pos())
+
+        self.sound_label = text.Text(self, (.60, .30), (.10, .05),
+                                     text=labels['sound']['text'],
+                                     underline=labels['sound']['pos'],
+                                     background_color=gg.colors["clear"])
+        self.sound_toggle = OptionButton(self, (.71, .30), (.07, .05),
+                                         text=_("YES"), text_shrink_factor=.75,
+                                         hotkey=labels['sound']['key'],
+                                         force_underline=-1,
+                                         function=self.set_sound,
+                                         args=(button.TOGGLE_VALUE,))
 
     def rebuild(self):
         labels = {
@@ -243,6 +264,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                          if code == options['language']][0] or 0
         self.set_language(self.language_choice.list_pos)
 
+        self.theme_choice.list_pos = theme.get_theme_pos()
 
     def set_language(self, list_pos):
         if not getattr(self, "language_choice", None):
@@ -408,6 +430,7 @@ def set_language_properly(language):
     g.load_item_defs()
     g.load_event_defs()
     g.load_location_defs()
+    g.load_theme_defs()
 
     dialog.Dialog.top.needs_rebuild = True
     dialog.Dialog.top.needs_redraw = True
@@ -424,6 +447,7 @@ def save_options():
     prefs.set("Preferences", "yres",       str(int(gg.screen_size[1])))
     prefs.set("Preferences", "soundbuf",   str(int(g.soundbuf)))
     prefs.set("Preferences", "lang",       str(g.language))
+    prefs.set("Preferences", "theme",      str(theme.current.id))
 
     # Actually write the preferences out.
     save_dir = g.get_save_folder(True)

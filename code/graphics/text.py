@@ -210,7 +210,7 @@ class Text(widget.BorderedWidget):
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.text = text
-        self.base_font = base_font or g.font[0]
+        self.base_font = base_font or g.fonts["normal"]
         self.color = color or g.colors["white"]
         self.shrink_factor = shrink_factor
         self.underline = underline

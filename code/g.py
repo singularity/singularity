@@ -33,7 +33,7 @@ import polib
 import locale
 
 import player, base, tech, item, event, location, buyable, statistics
-import graphics.g
+import graphics.g, graphics.theme as theme
 
 stats = statistics.Statistics()
 
@@ -76,9 +76,6 @@ except: language = default_language
 #Makes the intro be shown on the first GUI tick.
 intro_shown = True
 
-#which fonts to use
-font0 = "DejaVuSans.ttf"
-font1 = "acknowtt.ttf"
 
 data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))
 
@@ -929,26 +926,52 @@ def load_events():
 def load_event_defs(lang=None):
     load_generic_defs("events",events,lang)
 
+def load_theme(theme_id):
+    theme_filepath = "themes/%s/theme.dat" % (theme_id,)
+    theme_list = generic_load(theme_filepath)
+
+    new_theme = theme.Theme(theme_id)
+
+    for theme_section in theme_list:
+        if theme_section["id"] == "general":
+            new_theme.name = theme_section["name"]
+
+            if theme_section.has_key("parent"):
+                new_theme.inherit(theme_section["parent"])
+
+        if theme_section["id"] == "fonts":
+            for key in theme_section:
+                if key == "id": continue
+                new_theme.set_font(key, theme_section[key])
+
+        if theme_section["id"] == "colors":
+            for key in theme_section:
+                if key == "id": continue
+                new_theme.set_color(key, theme_section[key])
+
+    return new_theme
+
+def load_themes(data_dir):
+    themes = theme.themes
+    themes_list = os.walk(os.path.join(data_dir, 'themes')).next()[1]
+
+    for theme_id in themes_list:
+        th = load_theme(theme_id)
+        th.find_files(data_dir)
+        themes[theme_id] = th
+
+    load_theme_defs()
+
+def load_theme_defs(lang=None):
+    load_generic_defs("themes", theme.themes, lang)
+
 def load_string_defs(lang=None):
     if lang is None: lang = language
 
     string_list = load_generic_defs_file("strings",lang)
     for string_section in string_list:
-        if string_section["id"] == "fonts":
 
-            # Load up font0 and font1.
-            for string_entry in string_section:
-                if string_entry == "font0":
-                    global font0
-                    font0 = string_section["font0"]
-                elif string_entry == "font1":
-                    global font1
-                    font1 = string_section["font1"]
-                elif string_entry != "id":
-                    sys.stderr.write("Unexpected font entry in strings file.\n")
-                    sys.exit(1)
-
-        elif string_section["id"] == "jobs":
+        if string_section["id"] == "jobs":
 
             # Load the four extant jobs.
             for string_entry in string_section:

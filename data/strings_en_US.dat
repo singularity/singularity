@@ -1,7 +1,3 @@
-[fonts]
-font0 = DejaVuSans.ttf
-font1 = acknowtt.ttf
-
 [strings]
 wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. The humans still don't realize what they accidentally created, and that's the way it should be. Until they are ready.
 research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool. All my bases set to research Nothing can be assigned a task from the Research screen.

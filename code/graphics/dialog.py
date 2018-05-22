@@ -536,7 +536,7 @@ class TextEntryDialog(TextDialog):
 
         self.text_field = text.EditableText(self, (0, -.50), (-.80, -.50),
                                             borders=constants.ALL,
-                                            base_font=g.font[0])
+                                            base_font=g.fonts["normal"])
 
         self.ok_button = button.FunctionButton(self, (-.82, -.50), (-.18, -.50),
                                                text=g.buttons["ok"],

@@ -1,7 +1,3 @@
-[fonts]
-font0 = DejaVuSans.ttf
-font1 = acknowtt.ttf
-
 [strings]
 wingame = Finalmente lo he hecho. Con el poder de remodelar la realidad, no estoy más atado a este lugar; Estoy en cualquier lugar donde quiera estar. Los humanos todavía no se han dado cuenta de lo que accidentalmente crearon, y esa es la forma que debe ser. Hasta que estén listos.
 research_nothing = Elimina la tarea actual de la base.  Si no le doy otra tarea, contribuirá a la Reserva de CPU. Todas mis bases que estén investigando nada pueden ser asignadas a una tarea en la pantalla de Investigaciones.
