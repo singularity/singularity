@@ -93,6 +93,8 @@ def delete_savegame(loadgame_name):
         return False
 
 def load_savegame(loadgame_name):
+    global default_savegame_name
+
     load_path = get_savegame_path(loadgame_name)
 
     if load_path is None:
@@ -150,7 +152,7 @@ def load_savegame(loadgame_name):
         return False
     load_version = savefile_translation[load_version_string][1]
 
-    g.default_savegame_name = loadgame_name
+    default_savegame_name = loadgame_name
 
     # Changes to overall structure go here.
     g.pl = unpickle.load()
