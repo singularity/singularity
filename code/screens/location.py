@@ -240,7 +240,7 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
                                             anchor=constants.BOTTOM_LEFT,
                                             borders=constants.ALL,
-                                            base_font=gg.font[0])
+                                            base_font=gg.fonts["normal"])
 
         self.desc_func = self.on_change
 

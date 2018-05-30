@@ -98,7 +98,7 @@ class MultipleBuildDialog(BuildDialog):
                                              anchor=constants.BOTTOM_LEFT,
                                              borders=constants.ALL,
                                              update_func=self.on_field_change,
-                                             base_font=gg.font[0])
+                                             base_font=gg.fonts["normal"])
 
         self.count_slider = slider.UpdateSlider(self, (-.37, -.87), (-.62, -.1),
                                                 anchor=constants.BOTTOM_LEFT,
