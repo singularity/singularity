@@ -23,7 +23,7 @@ from code import g
 from code.graphics import g as gg
 from code.graphics import dialog, constants, text, button
 
-from code.buyable import labor
+from code.buyable import cash, cpu, labor
 
 class WarningDialogs(object):
 
@@ -69,6 +69,16 @@ class WarningDialogs(object):
 
         if (bases == 1):
             warnings.append(Warning("warning_one_base"))
+
+        # Verify the cpu pool is not 0 if base or item building need CPU
+        building_base = sum(1 for base in g.all_bases()
+                    if (not base.done and base.cost_left[cpu] > 0))
+        building_item = sum(1 for base in g.all_bases()
+                    for item in [base.cpus,] + base.extra_items
+                    if item is not None and not item.done
+                    and item.cost_left[cpu] > 0)
+        if ((building_base + building_item > 0) and g.pl.cpu_usage.get("cpu_pool", 0) == 0):
+            warnings.append(Warning("warning_cpu_pool_zero"))
 
         return warnings
 
