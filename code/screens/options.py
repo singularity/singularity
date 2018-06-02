@@ -25,7 +25,7 @@ import json
 
 
 from code.graphics import constants, dialog, button, listbox, text, theme, g as gg
-import code.g as g
+import code.g as g, code.dirs as dirs
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Integrate "Save Options to Disk" functionality in OK button.
@@ -446,8 +446,7 @@ def save_options():
     prefs.set("Preferences", "theme",      str(theme.current.id))
 
     # Actually write the preferences out.
-    save_dir = g.get_save_folder(True)
-    save_loc = os.path.join(save_dir, "prefs.dat")
+    save_loc = dirs.get_writable_file_in_dirs("prefs.dat", "pref")
     savefile = open(save_loc, 'w')
     prefs.write(savefile)
     savefile.close()
@@ -472,7 +471,7 @@ def get_languages_list():
         langcount[language] = langcount.get(language, 0) + 1
 
     #Load languages data
-    with open(os.path.join(g.data_dir,"languages.dat")) as langdata:
+    with open(dirs.get_readable_file_in_dirs("languages.dat", "data")) as langdata:
         languages = json.load(langdata)
 
     output = []

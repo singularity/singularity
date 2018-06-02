@@ -22,7 +22,7 @@ import cPickle
 import collections
 import os
 
-import g, player
+import g, dirs, player
 
 #name given when the savegame button is pressed. This is changed when the
 #game is loaded or saved.
@@ -37,52 +37,45 @@ savefile_translation = {
     "singularity_savefile_99":      ("1.0 (dev)",   99   ),
 }
 
-Savegame = collections.namedtuple('Savegame', ['name', 'version'])
+Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
 
 def get_savegames():
-    save_dir = g.get_save_folder()
+    all_dirs = dirs.get_read_dirs("saves")
 
     all_savegames = []
-    all_files = os.listdir(save_dir)
-    for file_name in all_files:
-        if file_name[0] != "." and file_name != "CVS":
-            # If it's a new-style save, trim the .sav bit.
-            if len (file_name) > 4 and file_name[-4:] == ".sav":
-                name = file_name[:-4]
+    for saves_dir in all_dirs:
+        try:
+            all_files = os.listdir(saves_dir)
+        except:
+            continue
 
-                # Get version, only pickle first string.
-                version_name = None # None == Unknown version
-                try:
-                    loadfile = open(os.path.join(save_dir, file_name), 'r')
-                    unpickle = cPickle.Unpickler(loadfile)
+        for file_name in all_files:
+            if file_name[0] != "." and file_name != "CVS":
+                # If it's a new-style save, trim the .sav bit.
+                if len (file_name) > 4 and file_name[-4:] == ".sav":
+                    name = file_name[:-4]
+                    filepath = os.path.join(saves_dir, file_name)
 
-                    load_version = unpickle.load()
-                    if load_version in savefile_translation:
-                        version_name = savefile_translation[load_version][0]
-                except:
-                    version_name = None # To be sure.
+                    # Get version, only pickle first string.
+                    version_name = None # None == Unknown version
+                    try:
+                        loadfile = open(filepath, 'r')
+                        unpickle = cPickle.Unpickler(loadfile)
 
-                savegame = Savegame(name, version_name)
-                all_savegames.append(savegame)
+                        load_version = unpickle.load()
+                        if load_version in savefile_translation:
+                            version_name = savefile_translation[load_version][0]
+                    except:
+                        version_name = None # To be sure.
+
+                    savegame = Savegame(name, filepath, version_name)
+                    all_savegames.append(savegame)
 
     return all_savegames
 
-def get_savegame_path(loadgame_name):
-    if not loadgame_name:
-        print "No game specified."
-        return None
 
-    save_dir = g.get_save_folder()
-
-    load_loc = os.path.join(save_dir, loadgame_name + ".sav")
-    if os.path.exists(load_loc) == 0:
-        print "file "+load_loc+" does not exist."
-        return None
-
-    return load_loc
-
-def delete_savegame(loadgame_name):
-    load_path = get_savegame_path(loadgame_name)
+def delete_savegame(savegame):
+    load_path = savegame.filepath
 
     if load_path is None:
         return False
@@ -92,10 +85,10 @@ def delete_savegame(loadgame_name):
     except:
         return False
 
-def load_savegame(loadgame_name):
+def load_savegame(savegame):
     global default_savegame_name
 
-    load_path = get_savegame_path(loadgame_name)
+    load_path = savegame.filepath
 
     if load_path is None:
         return False
@@ -152,7 +145,7 @@ def load_savegame(loadgame_name):
         return False
     load_version = savefile_translation[load_version_string][1]
 
-    default_savegame_name = loadgame_name
+    default_savegame_name = savegame.name
 
     # Changes to overall structure go here.
     g.pl = unpickle.load()
@@ -198,9 +191,9 @@ def create_savegame(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
 
-    save_dir = g.get_save_folder()
+    save_dir = dirs.get_write_dir("saves")
     save_loc = os.path.join(save_dir, savegame_name + ".sav")
-    savefile=open(save_loc, 'w')
+    savefile = open(save_loc, 'w')
 
     cPickle.dump(current_save_version, savefile)
     cPickle.dump(g.pl, savefile)

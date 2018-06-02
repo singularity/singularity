@@ -20,8 +20,21 @@
 # initialize hardware, load data files and show main screen. Do not execute it
 # directly. use ../singularity.py instead.
 
-# Set language first, so help page and all error messages can be translated
 import g
+import sys
+import dirs
+
+# Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
+# so g.get_save_folder reports the correct location of preferences file
+for parser in sys.argv[1:]:
+    if parser == "--singledir" or parser == "-s": g.force_single_dir = True
+    if parser == "--multidir"                   : g.force_single_dir = False
+
+# Create all directories first
+dirs.create_directories(g.force_single_dir)
+
+# Set language second, so help page and all error messages can be translated
+
 g.set_language(force=True)
 
 # Since we require numpy anyway, we might as well ask pygame to use it.
@@ -35,7 +48,6 @@ except ValueError:
 except ImportError:
     raise SystemExit("Endgame: Singularity requires pygame.")
 
-import sys
 import ConfigParser
 import os.path
 import optparse
@@ -52,14 +64,8 @@ g.mixerinit = bool(pygame.mixer.get_init())
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
 
-# Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
-# so g.get_save_folder reports the correct location of preferences file
-for parser in sys.argv[1:]:
-    if parser == "--singledir" or parser == "-s": g.force_single_dir = True
-    if parser == "--multidir"                   : g.force_single_dir = False
-
 #configure global logger
-logfile = os.path.join(g.get_save_folder(True), "error.log")
+logfile = dirs.get_writable_file_in_dirs("error.log", "log")
 if len(logging.getLogger().handlers) == 0:
     try:
         logging.getLogger().addHandler(logging.FileHandler(logfile, delay=True))
@@ -73,8 +79,8 @@ if len(logging.getLogger().handlers) == 0:
 desired_soundbuf = g.soundbuf
 
 #load prefs from file:
-save_dir = g.get_save_folder(True)
-save_loc = os.path.join(save_dir, "prefs.dat")
+save_loc = dirs.get_readable_file_in_dirs("prefs.dat", "pref")
+
 if os.path.exists(save_loc):
 
     prefs = ConfigParser.SafeConfigParser()
@@ -251,10 +257,10 @@ if pygame.image.get_extended() == 0:
     sys.exit(1)
 
 #init themes:
-g.load_themes(g.data_dir)
+g.load_themes()
 theme.set_theme(set_theme)
 
-graphics.g.init_graphics_system(g.data_dir)
+graphics.g.init_graphics_system()
 
 #init data:
 g.load_strings()

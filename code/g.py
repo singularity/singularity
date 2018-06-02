@@ -32,7 +32,7 @@ import polib
 # are made where needed.
 import locale
 
-import player, base, tech, item, event, location, buyable, statistics
+import dirs, player, base, tech, item, event, location, buyable, statistics
 import graphics.g, graphics.theme as theme
 
 stats = statistics.Statistics()
@@ -75,9 +75,6 @@ except: language = default_language
 
 #Makes the intro be shown on the first GUI tick.
 intro_shown = True
-
-
-data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","data"))
 
 # Initialization data
 messages = {}
@@ -173,8 +170,7 @@ defined in sounds/sounds.dat.
             sys.stderr.write("WARNING: Sound is requested, but mixer is not initialized!\n")
         return
 
-    sound_dir = os.path.join(data_dir, "sounds")
-    sound_class_list = generic_load(os.path.join("sounds", "sounds.dat"))
+    sound_class_list = generic_load("sounds.dat", load_dirs="sounds")
     for sound_class in sound_class_list:
 
         # Make sure the sound class has the filename defined.
@@ -187,27 +183,29 @@ defined in sounds/sounds.dat.
             filenames = sound_class["filename"]
 
         for filename in filenames:
-            real_filename = os.path.join(sound_dir, filename)
+            all_paths = []
+            real_file = dirs.get_readable_file_in_dirs(filename, "sounds", 
+                                                       outer_paths=all_paths)
 
             # Check to make sure it's a real file; bail if not.
-            if not os.path.isfile(real_filename):
+            if real_file is None:
                 sys.stderr.write("ERROR: Cannot load nonexistent soundfile: %s!\n" %
-                                 real_filename)
+                                 "\n".join(paths))
                 sys.exit(1)
             else:
 
                 # Load it via the mixer ...
-                sound = pygame.mixer.Sound(real_filename)
+                sound = pygame.mixer.Sound(real_file)
 
                 # And shove it into the sounds dictionary.
                 if not sounds.has_key(sound_class["id"]):
                     sounds[sound_class["id"]] = []
                 sounds[sound_class["id"]].append({
-                    "filename": real_filename,
+                    "filename": real_file,
                     "sound": sound})
                 if debug:
                     sys.stderr.write("DEBUG: Loaded soundfile: %s\n" %
-                                     real_filename)
+                                     real_file)
 
 def play_sound(sound_class):
     """
@@ -235,7 +233,6 @@ def load_music():
 load_music() loads music for the game.  It looks in multiple locations:
 
 * music/ in the install directory for E:S.
-* music/ in the preferences folder.
 * music/ in user's XDG_DATA_HOME/singularity folder.
 """
 
@@ -243,33 +240,7 @@ load_music() loads music for the game.  It looks in multiple locations:
     music_dict = {}
 
     # Build the set of paths we'll check for music.
-    music_paths = [ os.path.join(data_dir, "..", "music") ]
-
-    # XDG User Data and E:S Preferences dir
-    if not force_single_dir:
-
-        xdg_data_home = os.environ.get('XDG_DATA_HOME') or \
-                        os.path.join(os.path.expanduser('~'), '.local', 'share')
-        xdg_music = os.path.join(xdg_data_home, "singularity", "music")
-
-        prefs_dir = get_save_folder(True)
-        prefs_music = os.path.join(prefs_dir, "music")
-
-        # XDG User Data dir (defaults to ~/.local/share)
-        # Only use if it already exists
-        if os.path.isdir(xdg_data_home):
-            music_paths.append(xdg_music)
-
-            # Since we will use xdg_data_dir for reading music, try to create
-            # a symlink in prefs dir, pointing to xdg_music
-            if not os.path.isdir(prefs_music) and not nosound:
-                try: os.symlink(xdg_music, prefs_music)
-                except Exception: pass # windows users... but at least we tried
-
-        # E:S Preferences dir
-        # (only if music it's not already a symlink to xdg)
-        if os.path.realpath(prefs_music) != os.path.realpath(xdg_music):
-            music_paths.append(prefs_music)
+    music_paths = dirs.get_read_dirs("music")
 
     # Main loop for music_paths
     for music_path in music_paths:
@@ -291,16 +262,6 @@ load_music() loads music for the game.  It looks in multiple locations:
                             if debug:
                                 sys.stderr.write("D: Loaded musicfile %s\n"
                                         % music_dict[tail][-1])
-
-        elif not nosound:
-            # If the music directory doesn't exist, we definitely
-            # won't find any music there.  We try to create the directory,
-            # though, to give a hint to the player that music can go there.
-            try:
-                os.makedirs(music_path)
-            except Exception:
-                # We don't have permission to write here.  That's fine.
-                pass
 
 def play_music(musicdir=None):
 
@@ -484,46 +445,7 @@ def all_bases(with_loc = False):
             else:
                 yield base
 
-#Get the proper folder on Linux/Win/Mac, and possibly others.
-#Assumes that all platforms that have HOME and XDG_CONFIG_HOME defined have them
-# defined properly.
-def get_save_folder(just_pref_dir=False):
 
-    #For a smooth, trouble-free and most importantly *backward-compatible*
-    # transition to XDG Base Directory Specification, the following rules apply
-    # for choosing the preferences/saves directory, in order:
-    #- if the new standard prefs dir ~/.config/singularity exist, use it
-    #- if the old standard prefs  dir ~/.endgame exists, use it
-    #- if none exist (new install), and ~/.config exist, use the new standard
-    #- otherwise, use the old standard
-
-    if os.environ.has_key("HOME") and not force_single_dir:
-
-        xdg_config_home = os.environ.get('XDG_CONFIG_HOME') or \
-                          os.path.join(os.environ["HOME"], '.config')
-
-        pref_dir_new = os.path.join(xdg_config_home, "singularity")
-        pref_dir_old = os.path.join(os.environ["HOME"], ".endgame")
-
-        if os.path.exists(pref_dir_new) or \
-          (os.path.exists(xdg_config_home) and not os.path.exists(pref_dir_old)):
-            pref_dir = pref_dir_new
-        else:
-            pref_dir = pref_dir_old
-
-    else:
-        pref_dir = os.path.abspath(os.path.join(data_dir, ".."))
-
-    save_dir = os.path.join(pref_dir, "saves")
-
-    #Make the directory if it doesn't exist.
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
-
-    if just_pref_dir:
-        return pref_dir
-    else:
-        return save_dir
 
 def load_generic_defs_file(name,lang=None):
     if lang is None: lang = language
@@ -537,7 +459,7 @@ def load_generic_defs_file(name,lang=None):
         try:
             # Definition file for default language is always mandatory
             mandatory = (lang==default_language)
-            return_list.extend( generic_load(filename, mandatory) )
+            return_list.extend( generic_load(filename, mandatory=mandatory) )
 
         except Exception:
             pass # For other languages, ignore errors
@@ -702,7 +624,7 @@ def load_locations():
 
     load_location_defs()
 
-def generic_load(file, mandatory=True):
+def generic_load(filename, load_dirs="data", mandatory=True):
     """
 generic_load() loads a data file.  Data files are all in Python-standard
 ConfigParser format.  The 'id' of any object is the section of that object.
@@ -715,27 +637,44 @@ parsing-related errors, always print error message. For IOErrors silently ignore
 non-mandatory missing or otherwise unreadable files
 """
 
+    # Get directories to find the file
+    if (isinstance(load_dirs, basestring)):
+        load_dirs = dirs.get_read_dirs(load_dirs)
+
+    # For each directories, create a file, otherwise use filename
+    if load_dirs is not None:
+        files = [os.path.join(load_dir, filename) for load_dir in load_dirs]
+    else:
+        files = [filename]
+
+    # Find the first readable file.
+    found = False
+    errors = []
     config = ConfigParser.RawConfigParser()
-    filename = os.path.join(data_dir, file)
-    try:
-        config.readfp(open(filename, "r"))
 
-    except IOError as reason:
-        # Silently ignore non-mandatory missing files
+    for filepath in files:
+        try:
+            config.readfp(open(filepath, "r"))
+            found = True
+            break;
+
+        except IOError as reason:
+            # Silently ignore non-mandatory missing files
+            if mandatory:
+                errors.append("Cannot read '%s': %s\nExiting\n" %  (filename, reason))
+
+        except Exception as reason:
+            # Always print parsing errors, even for non-mandatory files
+            errors.append("Error parsing '%s': %s\n" %  (filename, reason))
+
+    for err in errors:
+        sys.stderr.write(err)
+
+    if not found:
         if mandatory:
-            sys.stderr.write("Cannot read '%s': %s\nExiting\n" %  (filename, reason))
             sys.exit(1)
         else:
-            raise
-
-    except Exception as reason:
-        # Always print parsing errors, even for non-mandatory files
-        sys.stderr.write("Error parsing '%s': %s\n" %  (filename, reason))
-        if mandatory:
-            sys.stderr.write("Exiting.\n")
-            sys.exit(1)
-        else:
-            raise
+            return
 
     return_list = []
 
@@ -925,11 +864,10 @@ def load_events():
 def load_event_defs(lang=None):
     load_generic_defs("events",events,lang)
 
-def load_theme(theme_id):
-    theme_filepath = "themes/%s/theme.dat" % (theme_id,)
-    theme_list = generic_load(theme_filepath)
+def load_theme(theme_id, theme_dir):
+    theme_list = generic_load("theme.dat", load_dirs=(theme_dir,))
 
-    new_theme = theme.Theme(theme_id)
+    new_theme = theme.Theme(theme_id, theme_dir)
 
     for theme_section in theme_list:
         if theme_section["id"] == "general":
@@ -950,7 +888,7 @@ def load_theme(theme_id):
 
     return new_theme
 
-def load_themes(data_dir):
+def load_themes():
     themes_dir = os.path.join(data_dir, 'themes')
     themes = theme.themes
     themes_list = [name for name in os.listdir(themes_dir)
@@ -963,6 +901,18 @@ def load_themes(data_dir):
         th = load_theme(theme_id, os.path.join(themes_dir, theme_id))
         th.find_files()
         themes[theme_id] = th
+
+    for themes_dir in themes_dirs:
+        themes_list = [name for name in os.listdir(themes_dir)
+                            if os.path.isdir(os.path.join(themes_dir, name))]
+
+        for theme_id in themes_list:
+            if (theme_id in themes):
+                continue
+
+            th = load_theme(theme_id, os.path.join(themes_dir, theme_id))
+            th.find_files()
+            themes[theme_id] = th
 
     load_theme_defs()
 
@@ -1034,15 +984,16 @@ def load_messages(lang=None):
     messages.clear()
 
     lang_list = language_searchlist(lang, default=False)
-    for lang in lang_list:
-        try:
-            po = polib.pofile(os.path.join(data_dir, "messages_"+lang+".po"))
-            for entry in po.translated_entries():
-                messages[entry.msgid] = entry.msgstr
-        except IOError: pass # silently ignore non-existing files
+    for data_dir in dirs.get_read_dirs("data"):
+        for lang in lang_list:
+            try:
+                po = polib.pofile(os.path.join(data_dir, "messages_"+lang+".po"))
+                for entry in po.translated_entries():
+                    messages[entry.msgid] = entry.msgstr
+            except IOError: pass # silently ignore non-existing files
 
 def get_intro():
-    intro_file_name = os.path.join(data_dir, "intro_"+language+".dat")
+    intro_file_name = dirs.get_readable_file_in_dirs("intro_"+language+".dat", "data")
     if not os.path.exists(intro_file_name):
         print "Intro is missing.  Skipping."
         return
@@ -1173,7 +1124,8 @@ def reinit_mixer():
         mixerinit = bool(pygame.mixer.get_init())
 
 def available_languages():
-    return [file_name[8:-4] for file_name in os.listdir(data_dir)
+    return [file_name[8:-4] for file_dir in dirs.get_read_dirs("data")
+                            for file_name in os.listdir(file_dir)
                             if file_name.startswith("strings_")
                                and file_name.endswith(".dat")  ]
 
