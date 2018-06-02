@@ -95,7 +95,7 @@ FPS = 30
 ebook_mode = False
 
 
-def init_graphics_system(data_dir, size=None):
+def init_graphics_system(size=None):
 
     global desktop_size
     width, height = (pygame.display.Info().current_w,

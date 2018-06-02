@@ -61,22 +61,23 @@ def set_theme(key):
         current = theme
 
 class Theme(object):
-    def __init__(self, id):
+    def __init__(self, id, dir):
         super(Theme, self).__init__()
         self.id = id
+        self.dir = dir
         self.name = ""
         self._parents = [default_theme] if id != default_theme else []
         self.image_infos = {}
         self.font_infos = {}
         self.color_infos = {}
 
-    def find_files(self, data_dir):
+    def find_files(self):
         """find all files in current theme:
-             images in <data_dir>/themes/<theme>/images
-             fonts in <data_dir>/themes/<theme>/fonts
+             images in <theme.dir>/images
+             fonts in <theme.dir>/fonts
         """
 
-        image_dir = os.path.join(data_dir, 'themes', self.id, 'images')
+        image_dir = os.path.join(self.dir, 'images')
         image_list = os.listdir(image_dir)
         for image_filename in image_list:
 
@@ -86,10 +87,8 @@ class Theme(object):
                 filetitle = os.path.splitext(image_filename)[0]
                 self.image_infos[filetitle] = os.path.join(image_dir, image_filename)
 
-        font_dir = os.path.join(data_dir, 'themes', self.id, "fonts")
-
         # Add fonts dir
-        font_dir = os.path.join(data_dir, 'themes', self.id, 'fonts')
+        font_dir = os.path.join(self.dir, "fonts")
         for font in self.font_infos:
             self.font_infos[font] = os.path.join(font_dir, self.font_infos[font]) 
 
