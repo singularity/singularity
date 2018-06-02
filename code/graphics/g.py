@@ -186,3 +186,9 @@ def load_image(filename):
 def init_alpha():
     global ALPHA
     ALPHA = pygame.Surface((0,0)).convert_alpha()
+
+def resolve_color_alias(color):
+    if (isinstance(color, basestring)):
+        return resolve_color_alias(colors[color])
+    else:
+        return color

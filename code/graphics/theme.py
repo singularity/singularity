@@ -125,9 +125,13 @@ class Theme(object):
         self.font_infos[font_name] = value
 
     def set_color(self, color_name, value):
-        h = value.lstrip('#')
-        rgba = tuple(int(h[i:i+2], 16) for i in (0, 2, 4, 6))
-        self.color_infos[color_name] = rgba
+        if (value.startswith('#')):
+            h = value.lstrip('#')
+            rgba = tuple(int(h[i:i+2], 16) for i in (0, 2, 4, 6))
+            self.color_infos[color_name] = rgba
+        else:
+            # Alias color.
+            self.color_infos[color_name] = value
 
     def init_cache(self):
         g.images.clear()
@@ -160,17 +164,22 @@ class Theme(object):
                     g.fonts[font_name] = g.load_font(font_filename)
 
         # Update colors from self
-        for color_name, color_rgba in self.color_infos.iteritems():
-            g.colors[color_name] = color_rgba
+        for color_name, color in self.color_infos.iteritems():
+            g.colors[color_name] = color
 
         # Let's inherit colors from parents.
         # Only set the color if the theme or previous parents didn't.
         for parent in self.iter_parents():
-            for color_name, color_rgba in parent.color_infos.iteritems():
+            for color_name, color in parent.color_infos.iteritems():
                 if (color_name not in g.fonts):
-                    g.colors[color_name] = color_rgba
+                    g.colors[color_name] = color
+
+        # Resolve aliased colors
+        for color_name, color in g.colors.iteritems():
+            g.colors[color_name] = g.resolve_color_alias(color)
 
     def update(self):
         self.init_cache()
         # TODO: Theme should not call map_screen directly.
         code.g.map_screen.on_theme()
+    
