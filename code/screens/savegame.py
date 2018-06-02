@@ -54,7 +54,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                                           align=constants.RIGHT,
                                           background_color=gg.colors["clear"])
 
-    def update_item(self, item, name, save):
+    def update_item(self, item, save):
         if save is None:
             item.name_display.text = ""
             item.version_display.text = ""
@@ -77,8 +77,7 @@ class SavegameScreen(dialog.ChoiceDialog):
         savegames = sv.get_savegames()
         savegames.sort(key=lambda savegame: savegame.name.lower())
 
-        self.listbox.key_list = savegames
-        self.list = [save.name for save in savegames]
+        self.list = savegames
 
     def delete_savegame(self):
         yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
