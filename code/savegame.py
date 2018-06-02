@@ -186,6 +186,14 @@ def load_savegame(loadgame_name):
     loadfile.close()
     return True
 
+def savegame_exists(savegame_name):
+    load_path = get_savegame_path(savegame_name)
+
+    if (load_path is None or not os.path.isfile(load_path)) :
+        return False
+
+    return True
+
 def create_savegame(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
