@@ -236,6 +236,7 @@ class CustomListbox(UpdateListbox):
     rebuild_func = widget.causes_rebuild("_rebuild_func")
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
+        self.key_list = kwargs.pop("key_list", None)
         self.remake_func = kwargs.pop("remake_func", lambda value: None)
         self.rebuild_func = kwargs.pop("rebuild_func", lambda value: None)
         super(CustomListbox, self).__init__(parent, *args, **kwargs)
@@ -247,7 +248,13 @@ class CustomListbox(UpdateListbox):
 
     def update_element(self, element, list_index):
         if 0 <= list_index < len(self.list):
-            self.rebuild_func(element, self.list[list_index],
-                              self.key_list[list_index])
+            if (self.key_list is not None):
+                self.rebuild_func(element, self.list[list_index],
+                                  self.key_list[list_index])
+            else:
+                self.rebuild_func(element, self.list[list_index])
         else:
-            self.rebuild_func(element, None, None)
+            if (self.key_list is not None):
+                self.rebuild_func(element, None, None)
+            else:
+                self.rebuild_func(element, None)
