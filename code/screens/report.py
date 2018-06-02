@@ -77,11 +77,11 @@ class ReportScreen(dialog.Dialog):
         #take care of the titles and border.
         text.Text(self.money_report_pane, (0,0), (-1,-1),
                   text=_("Financial report").replace(" ",u"\xA0"),
-                  background_color=gg.colors["dark_blue"],
+                  background_color=gg.colors["pane_background"],
                   align=constants.CENTER, valign=constants.TOP,
                   borders=constants.ALL)
         text.Text(self.cpu_report_pane, (0,0), (-1,-1), text=_("CPU Usage"),
-                  background_color=gg.colors["dark_blue"],
+                  background_color=gg.colors["pane_background"],
                   align=constants.CENTER, valign=constants.TOP,
                   borders=constants.ALL)
 

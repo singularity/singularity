@@ -114,7 +114,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             text.EditableText(self, (xpos(1), ypos(index+1)), (.14, .05),
                               text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
-                              border_color=gg.colors["white"],
+                              border_color=gg.colors["widget_border"],
                               background_color=(0,0,50,255))
 
         self.resolution_custom_X = text.Text(self,
@@ -128,7 +128,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             text.EditableText(self, (xpos(2), ypos(index+1)), (.14, .05),
                               text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
-                              border_color=gg.colors["white"],
+                              border_color=gg.colors["widget_border"],
                               background_color=(0,0,50,255))
 
         # Fifth row

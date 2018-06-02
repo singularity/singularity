@@ -73,7 +73,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             description = ""
 
         text.Text(self.description_pane, (0,0), (-1,-1), text=description,
-                  background_color=gg.colors["dark_blue"], text_size=18,
+                  background_color=gg.colors["pane_background"], text_size=18,
                   align=constants.LEFT, valign=constants.TOP,
                   borders=constants.ALL)
 
@@ -81,7 +81,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         # Dirty, underhanded trick to make the canvas into a progress bar.
         canvas.__class__ = text.ProgressText
         canvas.progress = 0
-        canvas.progress_color = gg.colors["blue"]
+        canvas.progress_color = gg.colors["progress_background_progress"]
 
         canvas.research_name = text.Text(canvas, (-.01, -.01), (-.70, -.5),
                                          align=constants.LEFT,

@@ -429,8 +429,8 @@ class BorderedWidget(Widget):
         self.parent = parent
         self.children = []
         self.borders = kwargs.pop("borders", ())
-        self.border_color = kwargs.pop("border_color", g.colors["white"])
-        self.background_color = kwargs.pop("background_color", g.colors["blue"])
+        self.border_color = kwargs.pop("border_color", g.colors["widget_border"])
+        self.background_color = kwargs.pop("background_color", g.colors["widget_background"])
 
         super(BorderedWidget, self).__init__(parent, *args, **kwargs)
 

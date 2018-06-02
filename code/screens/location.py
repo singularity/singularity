@@ -25,16 +25,7 @@ from code.graphics import text, button, dialog, constants, listbox, g as gg
 
 import base as basescreen
 
-state_colors = dict(
-    active          = gg.colors["green"],
-    sleep           = gg.colors["yellow"],
-    stasis          = gg.colors["gray"],
-    overclocked     = gg.colors["orange"],
-    suicide         = gg.colors["red"],
-    entering_stasis = gg.colors["gray"],
-    leaving_stasis  = gg.colors["gray"],
-)
-
+state_colors = basescreen.state_colors
 state_list = base.power_states[:2]
 state_list.reverse()
 
@@ -234,7 +225,7 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
                                           anchor=constants.BOTTOM_LEFT,
                                           borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                           shrink_factor=.88,
-                                          background_color=gg.colors["dark_blue"],
+                                          background_color=gg.colors["pane_background"],
                                           text=g.strings["name_base_text"])
 
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
@@ -250,7 +241,7 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         if base_type is not None:
             base_info = base_type.get_info(self.parent.location)
             text.Text(description_pane, (0, 0), (-1, -1), text=base_info,
-                      background_color=gg.colors["dark_blue"],
+                      background_color=gg.colors["pane_background"],
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
 

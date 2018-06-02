@@ -172,7 +172,7 @@ class MapScreen(dialog.Dialog):
 
         g.map_screen = self
 
-        self.background_color = gg.colors["black"]
+        self.background_color = gg.colors["map_background"]
         self.add_handler(constants.TICK, self.on_tick)
 
         self.map = EarthImage(self)
@@ -196,16 +196,16 @@ class MapScreen(dialog.Dialog):
         self.suspicion_bar = \
             text.FastStyledText(self, (0,.92), (1, .04), base_font=gg.fonts["special"],
                                 wrap=False,
-                                background_color=gg.colors["black"],
-                                border_color=gg.colors["dark_blue"],
+                                background_color=gg.colors["pane_background_empty"],
+                                border_color=gg.colors["pane_background"],
                                 borders=constants.ALL, align=constants.LEFT)
         widget.unmask_all(self.suspicion_bar)
 
         self.danger_bar = \
             text.FastStyledText(self, (0,.96), (1, .04), base_font=gg.fonts["special"],
                                 wrap=False,
-                                background_color=gg.colors["black"],
-                                border_color=gg.colors["dark_blue"],
+                                background_color=gg.colors["pane_background_empty"],
+                                border_color=gg.colors["pane_background"],
                                 borders=constants.ALL, align=constants.LEFT)
         widget.unmask_all(self.danger_bar)
 
@@ -247,15 +247,15 @@ class MapScreen(dialog.Dialog):
             text.FastText(self, (0, 0.05), (0.13, 0.04),
                           wrap=False,
                           base_font=gg.fonts["special"],
-                          background_color=gg.colors["black"],
-                          border_color=gg.colors["dark_blue"])
+                          background_color=gg.colors["pane_background_empty"],
+                          border_color=gg.colors["pane_background"])
 
         self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
                                           wrap=False,
                                           text=_("DAY")+" 0000, 00:00:00",
                                           base_font=gg.fonts["special"],
-                                          background_color=gg.colors["black"],
-                                          border_color=gg.colors["dark_blue"],
+                                          background_color=gg.colors["pane_background_empty"],
+                                          border_color=gg.colors["pane_background"],
                                           borders=constants.ALL)
 
         self.research_button = \
@@ -283,8 +283,8 @@ class MapScreen(dialog.Dialog):
 
         self.info_window = \
             widget.BorderedWidget(self, (.56, 0), (.44, .08),
-                                  background_color=gg.colors["black"],
-                                  border_color=gg.colors["dark_blue"],
+                                  background_color=gg.colors["pane_background_empty"],
+                                  border_color=gg.colors["pane_background"],
                                   borders=constants.ALL)
         widget.unmask_all(self.info_window)
 
@@ -293,8 +293,8 @@ class MapScreen(dialog.Dialog):
                           wrap=False,
                           base_font=gg.fonts["special"], shrink_factor = .7,
                           borders=constants.ALL,
-                          background_color=gg.colors["black"],
-                          border_color=gg.colors["dark_blue"])
+                          background_color=gg.colors["pane_background_empty"],
+                          border_color=gg.colors["pane_background"])
 
         self.cpu_display = \
             text.FastText(self.info_window, (0,-.5), (-1, -.5),
@@ -302,8 +302,8 @@ class MapScreen(dialog.Dialog):
                           base_font=gg.fonts["special"], shrink_factor=.7,
                           borders=
                            (constants.LEFT, constants.RIGHT, constants.BOTTOM),
-                          background_color=gg.colors["black"],
-                          border_color=gg.colors["dark_blue"])
+                          background_color=gg.colors["pane_background_empty"],
+                          border_color=gg.colors["pane_background"])
 
         self.message_dialog = dialog.MessageDialog(self, text_size=20)
 
@@ -333,7 +333,7 @@ class MapScreen(dialog.Dialog):
     def show_message(self, message, color=None):
         self.message_dialog.text = message
         if color == None:
-            color = gg.colors["white"]
+            color = gg.colors["text"]
         self.message_dialog.color = color
         dialog.call_dialog(self.message_dialog, self)
 
@@ -601,9 +601,9 @@ class MapScreen(dialog.Dialog):
                     g.add_chance(detects_per_day[group], detect_chance[group] / 10000.)
 
         if cpu_pool < maint_cpu:
-            self.cpu_display.color = gg.colors["red"]
+            self.cpu_display.color = gg.colors["cpu_warning"]
         else:
-            self.cpu_display.color = gg.colors["white"]
+            self.cpu_display.color = gg.colors["cpu_normal"]
         self.cpu_display.text = _("CPU")+": %s (%s)" % \
               (g.to_money(total_cpu), g.to_money(cpu_pool))
 
@@ -623,13 +623,13 @@ class MapScreen(dialog.Dialog):
             danger_styles.append(normal)
 
             suspicion = g.pl.groups[group].suspicion
-            color = g.danger_colors[g.suspicion_to_danger_level(suspicion)]
+            color = gg.colors["danger_level_%d" % g.suspicion_to_danger_level(suspicion)]
             suspicion_styles.append( (color, None, False) )
 
             detects = detects_per_day[group]
             danger_level = \
                 g.pl.groups[group].detects_per_day_to_danger_level(detects)
-            color = g.danger_colors[danger_level]
+            color = gg.colors["danger_level_%d" % danger_level]
             danger_styles.append( (color, None, False) )
 
             if g.techs["Advanced Socioanalytics"].done:

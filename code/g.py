@@ -97,7 +97,6 @@ delay_time = 0
 curr_speed = 1
 soundbuf = 1024*2
 soundargs = (48000, -16, 2)  # sampling frequency, size, channels
-danger_colors = ((0, 0, 255), (85, 0, 170), (170, 0, 85), (255, 0, 0))
 detect_string_names = ("detect_str_low",
                        "detect_str_moderate",
                        "detect_str_high",

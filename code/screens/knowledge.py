@@ -210,7 +210,7 @@ class KnowledgeScreen(dialog.Dialog):
             desc_text += "\n\n"+g.items[knowledge_key].description
 
         text.Text(self.description_pane, (0, 0), (-1, -1), text=desc_text,
-                    background_color=gg.colors["dark_blue"], text_size=20,
+                    background_color=gg.colors["pane_background"], text_size=20,
                     align=constants.LEFT, valign=constants.TOP,
                     borders=constants.ALL)
 

@@ -3,6 +3,7 @@ normal = DejaVuSans.ttf
 special = acknowtt.ttf
 
 [colors]
+# General color alias
 white           = #ffffffff
 black           = #000000ff
 red             = #ff0000ff
@@ -18,3 +19,52 @@ light_red       = #ff3232ff
 light_green     = #32ff32ff
 light_blue      = #3232ffff
 clear           = #00000000
+
+# Screen colors
+main_menu_background     = black
+map_background           = black
+singularity_title        = dark_red
+
+# Pane colors
+pane_background          = dark_blue
+pane_background_empty    = black
+
+# Widget colors
+widget_background          = blue
+widget_border              = white
+
+# Text colors
+text_background            = dark_blue
+text_background_unselected = dark_blue
+text_background_selected   = light_blue
+text_border                = white
+text                       = white
+
+# Progress colors
+progress_background_unselected = dark_blue
+progress_background_selected   = light_blue
+progress_background_progress   = blue
+progress_border                = white
+
+# Danger colors
+danger_level_0      = #0000ffff
+danger_level_1      = #5500AAff
+danger_level_2      = #AA0055ff
+danger_level_3      = #ff0000ff
+
+# CPU display colors
+cpu_normal      = white
+cpu_warning     = red
+
+# Save colors
+save_valid      = green
+save_invalid    = red
+
+# Base state colors
+base_state_active          = green
+base_state_sleep           = yellow
+base_state_overclocked     = orange
+base_state_suicide         = red
+base_state_stasis          = gray
+base_state_entering_stasis = gray
+base_state_leaving_stasis  = gray
