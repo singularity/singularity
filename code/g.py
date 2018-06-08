@@ -889,18 +889,8 @@ def load_theme(theme_id, theme_dir):
     return new_theme
 
 def load_themes():
-    themes_dir = os.path.join(data_dir, 'themes')
     themes = theme.themes
-    themes_list = [name for name in os.listdir(themes_dir)
-                        if os.path.isdir(os.path.join(themes_dir, name))]
-
-    for theme_id in themes_list:
-        if (theme_id in themes):
-            continue
-
-        th = load_theme(theme_id, os.path.join(themes_dir, theme_id))
-        th.find_files()
-        themes[theme_id] = th
+    themes_dirs = dirs.get_read_dirs("themes")
 
     for themes_dir in themes_dirs:
         themes_list = [name for name in os.listdir(themes_dir)
