@@ -982,10 +982,9 @@ def load_messages(lang=None):
     for i18n_dir in dirs.get_read_dirs("i18n"):
         for lang in lang_list:
             if (lang==default_language): continue # Ignore default language
-            
+
             try:
                 pofile = os.path.join(i18n_dir, "lang_" + lang, "messages.po")
-                print(pofile)
                 po = polib.pofile(pofile)
                 for entry in po.translated_entries():
                     messages[entry.msgid] = entry.msgstr
