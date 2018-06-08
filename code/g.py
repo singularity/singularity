@@ -452,14 +452,19 @@ def load_generic_defs_file(name,lang=None):
 
     return_list = []
 
+    i18n_dirs = dirs.get_read_dirs("i18n")
+
     lang_list = language_searchlist(lang)
     for lang in lang_list:
-
-        filename = name + "_" + lang + ".dat"
+        # Definition file for default language is always mandatory
+        mandatory = (lang==default_language)
+        # Default language is in data directory
+        lang_dirs = dirs.get_read_dirs("data") if (lang==default_language) else i18n_dirs
+        
+        filename = name + "_str.dat"
         try:
-            # Definition file for default language is always mandatory
             mandatory = (lang==default_language)
-            return_list.extend( generic_load(filename, mandatory=mandatory) )
+            return_list.extend( generic_load(filename, load_dirs=lang_dirs, mandatory=mandatory) )
 
         except Exception:
             pass # For other languages, ignore errors
@@ -974,10 +979,14 @@ def load_messages(lang=None):
     messages.clear()
 
     lang_list = language_searchlist(lang, default=False)
-    for data_dir in dirs.get_read_dirs("data"):
+    for i18n_dir in dirs.get_read_dirs("i18n"):
         for lang in lang_list:
+            if (lang==default_language): continue # Ignore default language
+            
             try:
-                po = polib.pofile(os.path.join(data_dir, "messages_"+lang+".po"))
+                pofile = os.path.join(i18n_dir, "lang_" + lang, "messages.po")
+                print(pofile)
+                po = polib.pofile(pofile)
                 for entry in po.translated_entries():
                     messages[entry.msgid] = entry.msgstr
             except IOError: pass # silently ignore non-existing files
@@ -1114,10 +1123,12 @@ def reinit_mixer():
         mixerinit = bool(pygame.mixer.get_init())
 
 def available_languages():
-    return [file_name[8:-4] for file_dir in dirs.get_read_dirs("data")
-                            for file_name in os.listdir(file_dir)
-                            if file_name.startswith("strings_")
-                               and file_name.endswith(".dat")  ]
+    return [default_language] + \
+           [file_name[5:] for file_dir in dirs.get_read_dirs("i18n")
+                          if os.path.isdir(file_dir)
+                          for file_name in os.listdir(file_dir)
+                          if os.path.isdir(os.path.join(file_dir, file_name))
+                             and file_name.startswith("lang_")]
 
 def language_searchlist(lang=None, default=True):
     if lang is None: lang = language
