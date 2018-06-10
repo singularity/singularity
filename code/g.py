@@ -452,19 +452,15 @@ def load_generic_defs_file(name,lang=None):
 
     return_list = []
 
-    i18n_dirs = dirs.get_read_dirs("i18n")
+    i18n_files = dirs.get_readable_i18n_files(name + "_str.dat", lang)
 
-    lang_list = language_searchlist(lang)
-    for lang in lang_list:
+    for lang, filepath in i18n_files:
         # Definition file for default language is always mandatory
         mandatory = (lang==default_language)
-        # Default language is in data directory
-        lang_dirs = dirs.get_read_dirs("data") if (lang==default_language) else i18n_dirs
-        
-        filename = name + "_str.dat"
+
         try:
             mandatory = (lang==default_language)
-            return_list.extend( generic_load(filename, load_dirs=lang_dirs, mandatory=mandatory) )
+            return_list.extend( generic_load(filepath, mandatory=mandatory) )
 
         except Exception:
             pass # For other languages, ignore errors
@@ -978,25 +974,24 @@ def load_messages(lang=None):
 
     messages.clear()
 
-    lang_list = language_searchlist(lang, default=False)
-    for i18n_dir in dirs.get_read_dirs("i18n"):
-        for lang in lang_list:
-            if (lang==default_language): continue # Ignore default language
+    files = dirs.get_readable_i18n_files("messages.po", lang, default_language=False)
 
-            try:
-                pofile = os.path.join(i18n_dir, "lang_" + lang, "messages.po")
-                po = polib.pofile(pofile)
-                for entry in po.translated_entries():
-                    messages[entry.msgid] = entry.msgstr
-            except IOError: pass # silently ignore non-existing files
+    for lang, pofile in files:
+        try:
+            po = polib.pofile(pofile)
+            for entry in po.translated_entries():
+                messages[entry.msgid] = entry.msgstr
+        except IOError: pass # silently ignore non-existing files
 
 def get_intro():
-    intro_file_name = dirs.get_readable_file_in_dirs("intro_"+language+".dat", "data")
-    if not os.path.exists(intro_file_name):
+    intro_files = dirs.get_readable_i18n_files("intro_str.dat", language)
+
+    if len(intro_files) == 0:
         print "Intro is missing.  Skipping."
         return
 
-    intro_file = open(intro_file_name)
+    # Take the last intro file, intro is never partially translated.
+    intro_file = open(intro_files[-1][1])
     raw_intro = intro_file.readlines() + [""]
 
     segment = ""
