@@ -503,6 +503,7 @@ class MapScreen(dialog.Dialog):
         self.location_dialog.needs_rebuild = True
         self.options_dialog.needs_rebuild = True
         self.research_button.dialog.needs_rebuild = True
+        self.knowledge_button.dialog.needs_rebuild = True
         self.savename_dialog.text = _("Enter a name for this save.")
 
         # Update buttons translations

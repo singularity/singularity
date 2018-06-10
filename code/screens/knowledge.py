@@ -47,7 +47,7 @@ class KnowledgeScreen(dialog.Dialog):
 
         self.back_button = button.ExitDialogButton(self, (0.17, 0.46), (-.3, -.1),
                                                    anchor=constants.TOP_LEFT,
-                                                   text=_("&BACK"), autohotkey=True)
+                                                   autohotkey=True)
 
         #Set up the key handling.
         #This is likely not the best way to do it.
