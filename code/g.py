@@ -895,6 +895,8 @@ def load_themes():
     themes_dirs = dirs.get_read_dirs("themes")
 
     for themes_dir in themes_dirs:
+        if not os.path.isdir(themes_dir):
+            continue
         themes_list = [name for name in os.listdir(themes_dir)
                             if os.path.isdir(os.path.join(themes_dir, name))]
 
