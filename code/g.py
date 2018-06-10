@@ -27,12 +27,13 @@ import os.path
 import random
 import sys
 import polib
+import collections
 
 # Use locale to add commas and decimal points, so that appropriate substitutions
 # are made where needed.
 import locale
 
-import dirs, player, base, tech, item, event, location, buyable, statistics
+import dirs, player, base, tech, item, event, location, buyable, statistics, difficulty
 import graphics.g, graphics.theme as theme
 
 stats = statistics.Statistics()
@@ -910,6 +911,36 @@ def load_themes():
 def load_theme_defs(lang=None):
     load_generic_defs("themes", theme.themes, lang)
 
+def load_difficulties():
+    difficulties = difficulty.difficulties
+
+    difficulty_list = generic_load("difficulties.dat")
+    for difficulty_item in difficulty_list:
+        check_required_fields(difficulty_item, \
+            ('id',) + tuple(column for column in difficulty.columns), "Difficulty")
+
+        id = difficulty_item['id']
+
+        diff = difficulty.Difficulty()
+        diff.id = id
+        diff.name = ""
+
+        for column in difficulty.columns:
+            setattr(diff, column, int(difficulty_item[column]))
+            
+        for column in difficulty.list_columns:
+            if column[0] in difficulty_item:
+                setattr(diff, column[1], list(difficulty_item[column[0]]))
+            else:
+                setattr(diff, column[1], [])
+
+        difficulties[id] = diff
+
+    load_difficulty_defs()
+
+def load_difficulty_defs(lang=None):
+    load_generic_defs("difficulties", difficulty.difficulties, lang)
+
 def load_string_defs(lang=None):
     if lang is None: lang = language
 
@@ -1006,68 +1037,28 @@ def get_intro():
     if segment:
         yield segment
 
-
-def get_difficulties(min=0):
-    return [x for x in (
-            (_("&VERY EASY") ,   1),
-            (_("&EASY")      ,   3),
-            (_("&NORMAL")    ,   5),
-            (_("&HARD")      ,   7),
-            (_("&ULTRA HARD"),  10),
-            (_("&IMPOSSIBLE"), 100),
-            ) if x[1] >= min]
-
-
-#difficulty=1 for very easy, to 9 for very hard. 5 for normal.
-def new_game(difficulty):
+def new_game(difficulty_name):
     global curr_speed
     curr_speed = 1
     global pl
 
-    pl = player.Player((50 / difficulty) * 100, difficulty = difficulty)
-    if difficulty < 3:
-        pl.interest_rate = 5
-        pl.labor_bonus = 2500
-        pl.grace_multiplier = 400
-        discover_bonus = 7000
-    elif difficulty < 5:
-        pl.interest_rate = 3
-        pl.labor_bonus = 5000
-        pl.grace_multiplier = 300
-        discover_bonus = 9000
-    elif difficulty == 5:
-        pass
-    #    Defaults.
-    #    pl.interest_rate = 1
-    #    pl.labor_bonus = 10000
-    #    pl.grace_multiplier = 200
-    #    discover_bonus = 10000
-    elif difficulty < 8:
-        pl.labor_bonus = 11000
-        pl.grace_multiplier = 180
-        discover_bonus = 11000
-    elif difficulty <= 50:
-        pl.labor_bonus = 15000
-        pl.grace_multiplier = 150
-        discover_bonus = 13000
-    else:
-        pl.labor_bonus = 20000
-        pl.grace_multiplier = 100
-        discover_bonus = 15000
+    diff = difficulty.difficulties[difficulty_name]
 
-    if difficulty != 5:
-        for group in pl.groups.values():
-            group.discover_bonus = discover_bonus
+    pl = player.Player(cash = diff.starting_cash, difficulty = diff)
+    pl.interest_rate = diff.starting_interest_rate
+    pl.labor_bonus = diff.labor_multiplier
+    pl.grace_multiplier = diff.base_grace_multiplier
+
+    for group in pl.groups.values():
+        group.discover_bonus = diff.discover_multiplier
 
     # Reset all "mutable" game data
     load_locations()
     load_techs()
     load_events()
 
-    if difficulty < 5:
-        techs["Socioanalytics"].finish()
-    if difficulty < 3:
-        techs["Advanced Socioanalytics"].finish()
+    for tech_id in diff.techs:
+        techs[tech_id].finish()
 
     #Starting base
     open = [loc for loc in locations.values() if loc.available()]

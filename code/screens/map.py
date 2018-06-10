@@ -573,7 +573,7 @@ class MapScreen(dialog.Dialog):
 
         g.pl.recalc_cpu()
 
-        self.difficulty_display.text = g.pl.difficulty_name
+        self.difficulty_display.text = g.strip_hotkey(g.pl.difficulty.name)
         self.time_display.text = _("DAY") + " %04d, %02d:%02d:%02d" % \
               (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
         self.cash_display.text = _("CASH")+": %s (%s)" % \

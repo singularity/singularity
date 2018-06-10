@@ -264,6 +264,7 @@ graphics.g.init_graphics_system()
 
 #init data:
 g.load_strings()
+g.load_difficulties()
 g.load_events()
 g.load_locations()
 g.load_techs()

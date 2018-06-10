@@ -20,7 +20,7 @@
 
 import map
 from code.graphics import dialog, g as gg, button, text, constants
-import code.g as g
+import code.g as g, code.difficulty as difficulty
 
 import options, savegame
 
@@ -28,6 +28,11 @@ class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):
         super(MainMenu, self).__init__(*args, **kwargs)
 
+        self.difficulty_dialog = dialog.SimpleMenuDialog(self)
+
+        self.load_dialog = dialog.ChoiceDialog(self, (.5,.5), (.5,.5),
+                                               anchor=constants.MID_CENTER,
+                                               yes_type="load")
         self.map_screen = map.MapScreen(self)
         self.new_game_button = \
             button.FunctionButton(self, (.5, .20), (.25, .08),
@@ -76,12 +81,12 @@ class MainMenu(dialog.TopDialog):
         self.load_dialog.needs_rebuild = True
 
         difficulty_buttons = []
-        for name, difficulty in g.get_difficulties()+[(_("&BACK"), -1)]:
+        for name, diff in difficulty.get_difficulties() + [(_("&BACK"), None)]:
             difficulty_buttons.append(
                 button.ExitDialogButton(None, None, None, text=name,
                                         autohotkey=True,
-                                        exit_code=difficulty,
-                                        default=(difficulty == -1)))
+                                        exit_code=diff,
+                                        default=(diff == None)))
         self.difficulty_dialog.buttons = difficulty_buttons
 
         # Update buttons translations
@@ -95,7 +100,7 @@ class MainMenu(dialog.TopDialog):
 
     def new_game(self):
         difficulty = dialog.call_dialog(self.difficulty_dialog, self)
-        if difficulty > 0:
+        if difficulty is not None:
             g.new_game(difficulty)
             dialog.call_dialog(self.map_screen, self)
 

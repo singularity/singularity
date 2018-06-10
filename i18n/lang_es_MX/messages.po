@@ -479,33 +479,9 @@ msgstr "Búfer de sonido:"
 msgid "&LOW"
 msgstr "&BAJA"
 
-#: screens/options.py:283 screens/main_menu.py:32
-msgid "&NORMAL"
-msgstr "&NORMAL"
-
 #: screens/options.py:289
 msgid "&HIGH"
 msgstr "&ALTO"
-
-#: screens/main_menu.py:30
-msgid "&VERY EASY"
-msgstr "&MUY FÁCIL"
-
-#: screens/main_menu.py:31
-msgid "&EASY"
-msgstr "&FÁCIL"
-
-#: screens/main_menu.py:33
-msgid "&HARD"
-msgstr "&DIFÍCIL"
-
-#: screens/main_menu.py:34
-msgid "&ULTRA HARD"
-msgstr "&ULTRA DIFÍCIL"
-
-#: screens/main_menu.py:35
-msgid "&IMPOSSIBLE"
-msgstr "&IMPOSIBLE"
 
 #: screens/main_menu.py:53
 msgid "&NEW GAME"

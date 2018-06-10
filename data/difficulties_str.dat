@@ -1,0 +1,17 @@
+[very-easy]
+name = &VERY EASY
+
+[easy]
+name = &EASY
+
+[normal]
+name = &NORMAL
+
+[hard]
+name = &HARD
+
+[ultra-hard]
+name = &ULTRA HARD
+
+[impossible]
+name = &IMPOSSIBLE

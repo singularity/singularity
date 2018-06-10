@@ -24,7 +24,7 @@ import collections
 from operator import truediv
 from numpy import array
 
-import g
+import g, difficulty
 from graphics import g as gg
 from buyable import cash, cpu
 
@@ -124,10 +124,6 @@ class Player(object):
 
         self.log = collections.deque(maxlen=1000)
 
-    @property
-    def difficulty_name(self):
-        return g.strip_hotkey(g.get_difficulties(self.difficulty)[0][0])
-
     def convert_from(self, old_version):
         if old_version < 4.91: # < r5_pre
             self.cpu_usage = {}
@@ -136,6 +132,10 @@ class Player(object):
                 self.had_grace = True
         if old_version < 31: # < 0.31pre
             self.log = collections.deque(maxlen=1000)
+        if old_version < 99.1: # < 1.0 dev
+            self.difficulty = next((d for d in difficulty.difficulties.itervalues()
+                                   if self.difficulty == d.story_grace_difficulty), 
+                                   next(iter(difficulty.difficulties)))
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour
@@ -547,6 +547,8 @@ class Player(object):
     # The number of complete bases and complex_bases can be passed in, if we
     # already have it.
     def in_grace_period(self, had_grace = True):
+        grace_difficulty = self.difficulty.story_grace_difficulty
+
         # If we've researched apotheosis, we get a permanent "grace period".
         if self.apotheosis:
             return True
@@ -561,7 +563,7 @@ class Player(object):
             return False
 
         # Very Easy cops out here.
-        if self.difficulty < 3:
+        if grace_difficulty < 3:
             return True
 
         # Have we built metric ton of bases?
@@ -570,7 +572,7 @@ class Player(object):
             return False
 
         # That's enough for Easy
-        if self.difficulty < 5:
+        if grace_difficulty < 5:
             return True
 
         # Have we built a bunch of bases?
@@ -578,7 +580,7 @@ class Player(object):
             return False
 
         # Normal is happy.
-        if self.difficulty == 5:
+        if grace_difficulty == 5:
             return True
 
         # Have we built any complicated bases?
@@ -589,7 +591,7 @@ class Player(object):
             return False
 
         # The sane people have left the building.
-        if self.difficulty <= 50:
+        if grace_difficulty <= 50:
             return True
 
         # Hey, hey, what do you know?  Impossible can get a useful number of

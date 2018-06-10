@@ -35,6 +35,7 @@ savefile_translation = {
     "singularity_savefile_r5_pre":  ("0.30",         4.91),
     "singularity_savefile_0.31pre": ("1.0 (dev)",   31   ),
     "singularity_savefile_99":      ("1.0 (dev)",   99   ),
+    "singularity_savefile_99.1":    ("1.0 (dev)",   99.1 ),
 }
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
