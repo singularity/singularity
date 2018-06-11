@@ -66,7 +66,7 @@ dir_defs = (
     ( {"name":"sounds", },
         {"parent": "data",        "path": "sounds"          },
     ),
-    ( {"name":"themes", "mandatory": True},
+    ( {"name":"themes", "mandatory": True, },
         {"parent": "files_home",  "path": "themes",         },
         {"parent": "data",        "path": "themes",         },
     ),
@@ -154,7 +154,7 @@ def create_directories(force_single_dir):
                     continue
 
             # Must always be a readable directory.
-            if not os.path.isdir(the_dir) and os.access(the_dir, os.R_OK):
+            if not os.path.isdir(the_dir) or not os.access(the_dir, os.R_OK):
                 continue
 
             # Write dir is the first writable dir found.

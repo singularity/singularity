@@ -81,11 +81,11 @@ desired_soundbuf = g.soundbuf
 #load prefs from file:
 save_loc = dirs.get_readable_file_in_dirs("prefs.dat", "pref")
 
-if os.path.exists(save_loc):
+if save_loc is not None:
 
     prefs = ConfigParser.SafeConfigParser()
-    savefile = open(save_loc, "r")
     try:
+        savefile = open(save_loc, "r")
         prefs.readfp(savefile)
     except Exception, reason:
         sys.stderr.write("Cannot load preferences file %s! (%s)\n" % (save_loc, reason))
