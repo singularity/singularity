@@ -63,3 +63,24 @@ susp_list = Verdacht (Suspicion) | Wenn einer von meinen Stützpunkte entdeckt w
 money_list = Geld | Geld ist ein allgemeiner Begriff, was aus beide menschliche Zahlungsmittel und andere Ressourcen besteht.  Er wird benutzt, um Stützpunkte zu bauen und warten, Artikel zu bauen, und Forschung zu machen.  Er kann durch tägliche Zinsen so wie Jobs verdient werden.
 processors_list = Prozessoren | Prozessoren versorgen CPU-Zeit.  Sie können drei Arte von Aktionen machen: forschen, jobben, oder bauen.
 
+[buttons]
+yes = Ja
+yes_hotkey = a
+no = Nein
+no_hotkey = n
+ok = Okay
+ok_hotkey = o
+cancel = Abbrechen
+cancel_hotkey = a
+destroy = Zerstören
+destroy_hotkey = Z
+back = Zurück
+back_hotkey = u
+build = Bauen
+build_hotkey = n
+continue = Weiter
+continue_hotkey = W
+load = Laden
+load_hotkey = L
+skip = Überspringen
+skip_hotkey = b
