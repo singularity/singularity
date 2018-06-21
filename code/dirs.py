@@ -55,36 +55,38 @@ dir_defs = (
         {"parent": "root",        "path": "data",           },
     ),
     ( {"name":"i18n", "writable": True},
-        {"parent": "files_home",  "path": "i18n",           },
+        {"parent": "files_home",  "path": "i18n",           }, # New XDG dir
         {"parent": "root",        "path": "i18n",           },
     ),
     ( {"name":"music", },
-        {"parent": "files_home",  "path": "music",          },
-        {"parent": "old_home",    "path": "music",          },
+        {"parent": "files_home",  "path": "music",          }, # New XDG dir
+        {"parent": "old_home",    "path": "music",          }, # Old .endgame dir
         {"parent": "root",        "path": "music",          },
     ),
     ( {"name":"sounds", },
         {"parent": "data",        "path": "sounds"          },
     ),
-    ( {"name":"themes", "mandatory": True, },
-        {"parent": "files_home",  "path": "themes",         },
+    ( {"name":"themes", "mandatory": True, "writable": True},
+        {"parent": "files_home",  "path": "themes",         }, # New XDG dir
         {"parent": "data",        "path": "themes",         },
     ),
     ( {"name":"saves", "writable": True},
-        {"parent": "files_home",  "path": "saves",          },
+        {"parent": "files_home",  "path": "saves",          }, # New XDG dir
         {"parent": "config_home", "path": "saves",          },
-        {"parent": "old_home",    "path": "saves",          },
+        {"parent": "old_home",    "path": "saves",          }, # Old .endgame dir
+        {"parent": "root",        "path": "saves",          }, # Single dir
     ),
     ( {"name":"pref", "writable": True},
         {"parent": "config_home", "path": version_dir,      },
         {"parent": "config_home", "path": "",               },
-        {"parent": "old_home",    "path": "",               },
+        {"parent": "old_home",    "path": "",               }, # Old .endgame dir
+        {"parent": "root",        "path": "",               }, # Single dir
     ),
     ( {"name":"log", "writable": True},
-        {"parent": "files_home",  "path": "log",            },
+        {"parent": "files_home",  "path": "log",            }, # New XDG dir
         {"parent": "config_home", "path": "log",            },
-        {"parent": "old_home",    "path": "log",            },
-        {"parent": "root",        "path": "log",            },
+        {"parent": "old_home",    "path": "log",            }, # Old .endgame dir
+        {"parent": "root",        "path": "log",            }, # Single dir
     ),
 )
 
@@ -137,12 +139,11 @@ def create_directories(force_single_dir):
 
         for item in defs[1:]:
 
-            parent_dir = read_dirs[item["parent"]][0]
-
             # No parent directory, abort.
-            if (parent_dir is None):
+            if (item["parent"] not in read_dirs or read_dirs[item["parent"]] is None):
                 continue
 
+            parent_dir = read_dirs[item["parent"]][0]
             the_dir = os.path.join(parent_dir, item["path"])
 
             # Make directory if no writable directory exists.
