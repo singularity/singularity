@@ -137,6 +137,9 @@ def create_directories(force_single_dir):
         name = properties["name"]
         writable = properties.get("writable", False)
 
+        # Always set a default empty dirs list.
+        read_dirs.setdefault(name, [])
+
         for item in defs[1:]:
 
             # No parent directory, abort.
@@ -164,9 +167,9 @@ def create_directories(force_single_dir):
                 write_dirs[name] = the_dir
 
                 # Always read writable dir first.
-                read_dirs.setdefault(name, []).insert(0, the_dir)
+                read_dirs[name].insert(0, the_dir)
             else:
-                read_dirs.setdefault(name, []).append(the_dir)
+                read_dirs[name].append(the_dir)
 
     dirs_err = False
 
