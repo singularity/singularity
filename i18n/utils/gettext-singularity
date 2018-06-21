@@ -53,14 +53,17 @@ cat <<-USAGE
 	                print translation statistics (regardless of -q)
 	                If used, does not perform any other actions.
 
+	--dir         - The root directory of E:S where data file and i18n
+                    are found. Default: __file__/../..
+
+	By default this command reside in i18n/utils/ dir of E:S source tree,
+	so it can automatically find the source code files and output dir.
+
 	Uses the following GNU's gettext tools:
 	- xgettext : to create or update data/messages.pot template
 	- msgmerge : to update existing data/messages_ll_CC.po files
 	- msgfmt   : to check existing PO files for syntax errors
 	- msginit  : to create a new data/messages_ll_CC.po file
-
-	This command must reside in utils/ dir of E:S source tree, so it can
-	properly find the source code files and output dir.
 
 	Copyright (C) 2012 Rodrigo Silva (MestreLion) <linux@rodrigosilva.com>
 	License: GPLv3 or later. See <http://www.gnu.org/licenses/gpl.html>
@@ -88,9 +91,10 @@ check() {
 myname="${0##*/}"
 dir="$PWD"
 mydir=$(dirname "$(readlink -f "$0")")
-esdir="${mydir}/.."
+esdir="${mydir}/../.."
 datadir="${esdir}/data"
-potfile="${datadir}/messages.pot"
+i18ndir="${esdir}/i18n"
+potfile="${i18ndir}/messages.pot"
 verbose=1
 new=0
 quiet=()
@@ -104,6 +108,8 @@ while (( $# )); do
 	   --new      ) new=1 ; shift ; lang="$1"      ;;
 	   --check=*  ) check 1 "${1#*=}" ; exit       ;;
 	   --check    ) shift ; check 1 "$1"; exit     ;;
+	   --dir=*    ) esdir="${1#*=}"                ;;
+	   --dir      ) shift ; esdir="$1"             ;;
 	*             ) invalid "$1"                   ;;
 	esac
 	shift
@@ -114,7 +120,12 @@ done
 	[[ "$lang" =~ ^[[:lower:]][[:lower:]](_[[:upper:]][[:upper:]])?$ ]] ||
 		invalid "LANG format must be 'll' or 'll_CC'"
 }
-message "E:S root dir: $(rel "$esdir")"
+
+if [ -d "$esdir" ]; then
+	message "E:S root dir: $(rel "$esdir")"
+else
+	invalid "E:S root dir $(rel "$esdir") does not exist"
+fi
 
 # Create or update the POT template from source code
 message "updating template $(rel "$potfile") from sources in $(rel "$esdir")/code"
@@ -145,9 +156,9 @@ else
 fi
 
 # Update existing PO files with new entries
-pofiles=( "$datadir"/messages_*.po )
+pofiles=( "$i18ndir"/lang_*/messages.po )
 for pofile in "${pofiles[@]}"; do
-	[[ "$pofile" == "$datadir/messages_*.po" ]] && {
+	[[ "$pofile" == "$i18ndir"/lang_*/messages.po ]] && {
 		message "no translation .po files to update yet" ; break
 	}
 	message "updating translation $(rel "$pofile")"
@@ -164,8 +175,10 @@ done
 
 # Create a new PO file, if requested
 [[ "$lang" ]] && {
-	output="${datadir}/messages_${lang}.po"
+	output_dir="${i18ndir}/lang_${lang}"
+	output="$output_dir/messages.po"
 	[[ -f "$output" ]] && fatal "translation $(rel "$output") already exists!"
+	[[ -d "$output_dir" ]] || mkdir -p "$output_dir"
 	message "creating blank translation $(rel "$output")"
 	msginit --input="$potfile"               \
 		--output-file="$(rel "$output")" \
