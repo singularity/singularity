@@ -24,6 +24,7 @@
 import ConfigParser
 import optparse
 import os.path
+import errno
 import sys
 
 # A list of all available modes.
@@ -60,7 +61,8 @@ to properly run.
 
 For each option, the modes in which it works are listed in brackets at the
 end of the help text.  All options take the --directory option, which states
-which directory the translation files are in, as well as the --verbose option.
+the root directory where the translation files directory (i18n/lang_*/, data/) 
+are in, as well as the --verbose option.
 
 MODES
 
@@ -103,7 +105,7 @@ asterisks at the beginning and end.
      action="store_true", help="Be talkative [all]")
 
     parser.add_option("-d", "--directory", dest="directory", default=".",
-     help="Use language files out of directory DIR (default %default) [all]",
+     help="Use language files directory (i18n/lang_*/, data/) out of root directory DIR (default %default) [all]",
      metavar="DIR")
 
     parser.add_option("-s", "--source", dest="source", default=None,
@@ -135,12 +137,15 @@ verbout() is a shortcut for sys.stderr.write("V: " + message + "\n").
 
     sys.stderr.write("V: " + message + "\n")
 
-def update(trans_lang, trans_path, source, restart, verbose):
+def update(trans_lang, root_path, source, restart, verbose):
     """
 update() is an implementation of the 'update' option.
 
 TODO: Describe better.
 """
+
+    trans_path=os.path.join(root_path, "i18n")
+    data_path=os.path.join(root_path, "data")
 
     # First things first: For each file, we need to pull in the strings from
     # the en_US version, and then overwrite them with the source (if set).  In
@@ -149,15 +154,25 @@ TODO: Describe better.
     for trans_file_dict in TRANSLATION_LIST:
 
         prefix = trans_file_dict["prefix"]
+        filename = prefix + "_str.dat"
 
-        # Get all the filenames.
-        dest_filename = prefix + "_" + trans_lang + ".dat"
-        en_US_filename = prefix + "_en_US.dat"
+        # Get all the filepath.
+        dest_filepath = os.path.join(trans_path, "lang_" + trans_lang, filename)
+        en_US_filepath = os.path.join(data_path, filename)
         if source:
-            source_filename = prefix + "_" + source + ".dat"
+            source_filepath = os.path.join(trans_path, "lang_" + source, filename)
+
+        # Create dest directory.
+        dest_dir=os.path.dirname(dest_filepath)
+        try:
+            os.makedirs(dest_dir)
+        except OSError as osex:
+            if osex.errno == errno.EEXIST and os.path.isdir(dest_dir):
+                pass
+            else:
+                raise
 
         dest_parser = ConfigParser.RawConfigParser()
-        dest_filepath = os.path.join(trans_path, dest_filename)
 
         # If we're not restarting, try to preload the translation with what's
         # already there.  This may fail, which is fine; that should just mean
@@ -188,24 +203,23 @@ TODO: Describe better.
         read_list = []
         if source:
             read_list.append({
-             "filename": source_filename, "signal": "***", "required": False})
+             "filepath": source_filepath, "signal": "***", "required": False})
 
         # Add the en_US fallback at the end.
         read_list.append({
-         "filename": en_US_filename, "signal": "!!!", "required": True})
+         "filepath": en_US_filepath, "signal": "!!!", "required": True})
 
         for read_elem in read_list:
 
             # This seems ridiculous, but when you come back to code five years
             # later and forgot to document your formats, you'll thank yourself
             # for being this pedantic.
-            filename = read_elem["filename"]
+            source_filepath = read_elem["filepath"]
             signal = read_elem["signal"]
             required = read_elem["required"]
 
             # Read the data from this translation file.
             source_parser = ConfigParser.RawConfigParser()
-            source_filepath = os.path.join(trans_path, filename)
             try:
                 if verbose:
                     verbout("Loading translation from %s." % source_filepath)
@@ -277,10 +291,10 @@ if "__main__" == __name__:
     if (options.source or options.restart) and mode != "update":
         error_and_out("Cannot use --source or --restart unless in 'update' mode.")
 
-    trans_path=os.path.abspath(os.path.join(os.getcwd(), options.directory))
+    root_path=os.path.abspath(os.path.join(os.getcwd(), options.directory))
     if mode == "update":
-        update(trans_lang, trans_path, options.source, options.restart, options.verbose)
+        update(trans_lang, root_path, options.source, options.restart, options.verbose)
     elif mode == "verify":
-        verify(trans_lang, trans_path, options.verbose)
+        verify(trans_lang, root_path, options.verbose)
     elif mode == "package":
-        package(trans_lang, trans_path, options.filename, options.verbose)
+        package(trans_lang, root_path, options.filename, options.verbose)
