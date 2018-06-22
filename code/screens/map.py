@@ -185,8 +185,6 @@ class MapScreen(dialog.Dialog):
                 button_parent = self.map
             b = button.FunctionButton(button_parent, (loc.x, loc.y),
                                       anchor=constants.MID_CENTER,
-                                      text=loc.name,
-                                      hotkey=loc.hotkey,
                                       function=self.open_location,
                                       args=(loc.id,))
             self.location_buttons[loc.id] = b
@@ -661,6 +659,7 @@ class MapScreen(dialog.Dialog):
         for id, location_button in self.location_buttons.iteritems():
             location = g.locations[id]
             location_button.text = "%s (%d)" % (location.name, len(location.bases))
+            location_button.hotkey = location.hotkey
             location_button.visible = location.available()
 
     def load_game(self):
