@@ -48,6 +48,7 @@ class Button(text.SelectableText):
         self.parent = parent
 
         self.autohotkey = kwargs.pop('autohotkey',False)
+        self.hotkey = hotkey
 
         self.priority = priority
 
