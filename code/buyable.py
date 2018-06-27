@@ -190,8 +190,8 @@ class Buyable(object):
         # Find the least-complete resource.
         least_complete = self.min_valid(pct_complete)
 
-        # Let the other two be up to 5 percentage points closer to completion.
-        complete_cap = min(1, least_complete + .05)
+        # Limit the other two be up to the least-complete
+        complete_cap = min(1, least_complete)
         pct_complete[pct_complete > complete_cap] = complete_cap
 
         # Translate that back to the total amount complete.
