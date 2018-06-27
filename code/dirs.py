@@ -225,7 +225,8 @@ def get_writable_file_in_dirs(filename, dir_name, outer_paths=None):
     else:
         return None
 
-def get_readable_i18n_files(filename, lang=None, default_language=True, outer_paths=None):
+def get_readable_i18n_files(filename, lang=None, default_language=True, 
+        localized_item=True, only_last=False, outer_paths=None):
     files = []
 
     lang_list = g.language_searchlist(lang, default=default_language)
@@ -241,9 +242,15 @@ def get_readable_i18n_files(filename, lang=None, default_language=True, outer_pa
                 outer_paths.append(real_path)
 
             if os.path.isfile(real_path):
-                files.append((lang, real_path))
+                if localized_item:
+                    files.append((lang, real_path))
+                else:
+                    files.append(real_path)
 
-    return files
+    if (only_last):
+        return files[-1]
+    else:
+        return files
 
 def makedirs_if_not_exist(directory):
     try:
