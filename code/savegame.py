@@ -29,7 +29,7 @@ import g, dirs, player
 default_savegame_name = "Default Save"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_0.31pre"
+current_save_version = "singularity_savefile_99.1"
 savefile_translation = {
     "singularity_savefile_r4":      ("0.30",         4   ),
     "singularity_savefile_r5_pre":  ("0.30",         4.91),
@@ -102,7 +102,7 @@ def load_savegame(savegame):
         import copy_reg
         import numpy.core.multiarray
         import collections
-        import player, base, tech, item, event, location, buyable
+        import player, base, tech, item, event, location, buyable, difficulty
         save_classes = dict(
             player_class=player.Player,
             Player=player.Player,
@@ -130,6 +130,7 @@ def load_savegame(savegame):
             ndarray=numpy.ndarray,
             dtype=numpy.dtype,
             deque=collections.deque,
+            Difficulty=difficulty.Difficulty
         )
         if class_name in save_classes:
             return save_classes[class_name]
@@ -181,9 +182,9 @@ def load_savegame(savegame):
     return True
 
 def savegame_exists(savegame_name):
-    load_path = get_savegame_path(savegame_name)
+    save_path = dirs.get_writable_file_in_dirs(savegame_name + ".sav", "saves")
 
-    if (load_path is None or not os.path.isfile(load_path)) :
+    if (save_path is None or not os.path.isfile(save_path)) :
         return False
 
     return True
@@ -192,8 +193,7 @@ def create_savegame(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
 
-    save_dir = dirs.get_write_dir("saves")
-    save_loc = os.path.join(save_dir, savegame_name + ".sav")
+    save_loc = dirs.get_writable_file_in_dirs(savegame_name + ".sav", "saves")
     savefile = open(save_loc, 'w')
 
     cPickle.dump(current_save_version, savefile)
