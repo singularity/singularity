@@ -1,0 +1,14 @@
+[concept]
+name = Begrepp
+susp_list = Misstänksamhet | När någon av mina tillhåll har upptäckts, så ökas misstankarna hos den grupp som gjorde upptäckten. De börjar att leta lite noggrannare och ökar risken en aning för att jag upptäcks igen. Alla grupper kommer förstöra mig om de helt säkerställt min existens. Tack och lov, minskar misstankarna allt eftersom tiden går.
+items_list = Tillbehör | De flesta tillbehör tillför extra till mina baser, som t.ex. göra beräkningarna snabbare eller minska risken för att bli upptäckt. Processorer räknas som ett speciellt tillbehör.
+maint_list = Underhåll | Underhåll är en daglig utgift (både pengar och CPU) för att underhålla en bas. Om basen inte underhålls så kan det bli obrukbar.
+construction_list = Konstruktion | En ny bas behöver tid, pengar och processortid för att färdigställas. Finns inte resurserna tillgängliga kan det ta längre tid än förväntat att bygga klart.
+processors_list = Processorer | Processorer tillför beräkningskraft. De kan göra tre saker: uppfinna nya teknologier, utföra jobb för pengar eller hjälpa till att bygga en bas.
+jobs_list = Arbeten | Ett arbete bringar pengar till kassan. Förtjänsten beror på hur mycket kraft som läggs ner samt kvaliteten på jobbet som utförs.
+discovery_list = Upptäckt | Varje bas har en risk för att bli upptäckt när som helst. Risken beror på hur lätt basen är att hitta och den globala misstänksamhetsgraden. Den kan modifieras med tillbehör och vissa teknologier. Om en bas upptäcks så förstörs den och gruppen som gjorde upptäckten blir mer misstänksamma.
+bases_list = Tillhåll | Tillhåll eller baser används till forskning. De kan bli upptäckta. Genom uppgradering av processorer och nätverk kan mer forskning göras varje dag, medan kraftaggregat och säkerhetsutrustning skyddar den från att bli upptäckt.
+research_list = Forskning | Forskning är ett sätt för mig att expandera min vetande. Genom olika forskningsprojekt kan jag skapa nya saker, bygga nya baser och t.o.m. minska risken för att bli avslöjad.
+areas_list = Områden | Olika områden, såsom Nordamerika eller havet, tillåter tillhåll av olika slag. Vissa områden är bara tillgängliga med rätt teknologier som måste forskas fram.
+death_list = Död | Om jag förlorar alla mina baser har jag ingen plats kvar att leva i. Om misstänksamheten hos en grupp stiger till 100%% kommer de vara helt säkra att jag finns och genomföra en finkamning av världen för att döda mig.
+money_list = Pengar | Pengar är ett begrepp som spänner både över mänskliga valutor och fysiska resurser. Det används för att konstruera och underhålla tillhåll, saker och teknologier. Pengar införskaffas genom arbete eller ränta.

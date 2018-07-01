@@ -80,6 +80,7 @@ intro_shown = True
 # Initialization data
 messages = {}
 strings = {}
+knowledge = {}
 locations = {}
 regions = {}
 techs = {}
@@ -941,6 +942,37 @@ def load_difficulties():
 def load_difficulty_defs(lang=None):
     load_generic_defs("difficulties", difficulty.difficulties, lang)
 
+def load_knowledge_defs(lang=None):
+    global knowledge
+    knowledge = {}
+
+    if lang is None: lang = language
+
+    help_list = load_generic_defs_file("knowledge", lang)
+    for help_section in help_list:
+
+        knowledge_section = {}
+        knowledge_section["name"] = help_section["name"]
+
+        knowledge_id = help_section["id"]
+        knowledge[knowledge_id] = knowledge_section
+
+        knowledge_list = {}
+        knowledge_section["list"] = knowledge_list
+
+        # Load the knowledge lists.
+        help_keys = [x for x in help_section if x != "id" and x != "name"]
+        for help_key in help_keys:
+            help_entry = help_section[help_key]
+            if type(help_entry) != list or len(help_entry) != 2:
+                sys.stderr.write("Invalid knowledge entry %s." % repr(help_entry))
+                sys.exit(1)
+
+            knowledge_list[help_key] = help_entry
+
+def load_knowledge():
+    load_knowledge_defs()
+
 def load_string_defs(lang=None):
     if lang is None: lang = language
 
@@ -980,18 +1012,6 @@ def load_string_defs(lang=None):
             # Load button labels/hotkeys
             buttons.update(string_section)
             graphics.g.buttons.update(buttons)
-
-        elif string_section["id"] == "help":
-
-            # Load the help lists.
-            help_keys = [x for x in string_section if x != "id"]
-            for help_key in help_keys:
-                help_entry = string_section[help_key]
-                if type(help_entry) != list or len(help_entry) != 2:
-                    sys.stderr.write("Invalid help entry %s." % repr(help_entry))
-                    sys.exit(1)
-
-                help_strings[help_key] = string_section[help_key]
 
         else:
             sys.stderr.write("Invalid string section %s." % string_section["id"])

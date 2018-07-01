@@ -19,6 +19,7 @@
 #This file is used to display the knowledge lists.
 
 import pygame
+import collections
 from code import g
 from code.graphics import text, button, dialog, widget, constants, listbox, g as gg
 
@@ -69,14 +70,15 @@ class KnowledgeScreen(dialog.Dialog):
 
     def rebuild(self):
         # Update knowledge lists
-        self.knowledge_types = {_("Techs")   :"techs",
-                                _("Items")   :"items",
-                                _("Concepts"):"concepts"}
-        self.knowledge_inner_list_key, self.knowledge_inner_list = \
-            self.set_inner_list(self.cur_knowledge_type)
+        self.knowledge_types = collections.OrderedDict()
+        self.knowledge_types.update({_("Techs")   :"techs",
+                                     _("Items")   :"items",})
+        self.knowledge_types.update({ knowledge["name"]: knowledge_id
+                                      for knowledge_id, knowledge
+                                      in g.knowledge.iteritems() })
 
         self.knowledge_choice.list = self.knowledge_types.keys()
-        self.knowledge_inner.list = self.knowledge_inner_list
+        self.knowledge_choice.needs_rebuild = True
 
         # Update buttons translations
         self.back_button.text = _("&BACK")
@@ -102,17 +104,18 @@ class KnowledgeScreen(dialog.Dialog):
         item_type = self.knowledge_types.get(item_type)
 
         if item_type == "techs":
-            items = [tech for tech in g.techs.values() if tech.available()]
-        elif item_type == "concepts":
-            items = [ [item[1][0], item[0]] for item in g.help_strings.items()]
-            items.sort()
-        else:
-            items = [item for item in g.items.values()
-                        if item.available()]
+            items = [[tech.name, tech.id ] for tech in g.techs.values()
+                                           if tech.available()]
+        elif item_type == "items":
+            items = [[item.name, item.id ] for item in g.items.values()
+                                           if item.available()]
+        elif item_type != None:
+            items = [ [item[0], id] for id, item in g.knowledge[item_type]["list"].iteritems()]
 
-        if item_type != "concepts":
-            items = [ [item.name, item.id ] for item in items]
-            items.sort()
+        else:
+            items = []
+
+        items.sort()
 
         return_list1 = []
         return_list2 = []
@@ -155,9 +158,6 @@ class KnowledgeScreen(dialog.Dialog):
         knowledge_type = self.knowledge_types.get(knowledge_type)
         desc_text = ""
 
-        if knowledge_type == "concepts":
-            desc_text = g.help_strings[knowledge_key][0] + "\n\n" + \
-                        g.help_strings[knowledge_key][1]
         if knowledge_type == "techs":
             desc_text = g.techs[knowledge_key].name + "\n\n"
             #Cost
@@ -186,7 +186,7 @@ class KnowledgeScreen(dialog.Dialog):
             if g.techs[knowledge_key].done:
                 desc_text += "\n\n"+g.techs[knowledge_key].result
 
-        if knowledge_type == "items":
+        elif knowledge_type == "items":
             desc_text = g.items[knowledge_key].name + "\n\n"
             #Building cost
             desc_text += _("Building Cost:")+"\n"
@@ -208,6 +208,10 @@ class KnowledgeScreen(dialog.Dialog):
                 desc_text += g.to_percent(g.items[knowledge_key].item_qual)
 
             desc_text += "\n\n"+g.items[knowledge_key].description
+
+        elif knowledge_type != None:
+            desc_text = g.knowledge[knowledge_type]["list"][knowledge_key][0] + "\n\n" + \
+                        g.knowledge[knowledge_type]["list"][knowledge_key][1]
 
         text.Text(self.description_pane, (0, 0), (-1, -1), text=desc_text,
                     background_color=gg.colors["pane_background"], text_size=20,
