@@ -78,6 +78,7 @@ except: language = default_language
 intro_shown = True
 
 # Initialization data
+significant_numbers = []
 messages = {}
 strings = {}
 knowledge = {}
@@ -448,6 +449,27 @@ def all_bases(with_loc = False):
                 yield base
 
 
+def load_significant_numbers():
+    global significant_numbers
+    significant_numbers = []
+
+    numbers_file = dirs.get_readable_file_in_dirs("numbers.dat", "data")
+
+    if numbers_file is None:
+        sys.stderr.write("WARNING: Cannot read file: numbers.dat\n")
+        return
+
+    with open(numbers_file, 'r') as file:
+        for index, line in enumerate(file):
+            value = line.split("#")[0].strip()
+
+            if len(value) == 0: continue
+
+            try:
+                number = int(value)
+                significant_numbers.append(number)
+            except ValueError:
+                sys.stderr.write("WARNING: Invalid number in 'numbers.dat' line: %d\n" % index)
 
 def load_generic_defs_file(name,lang=None):
     if lang is None: lang = language

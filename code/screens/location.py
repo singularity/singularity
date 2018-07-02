@@ -273,36 +273,6 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
 
             raise constants.ExitDialog((name, type))
 
-significant_numbers = [
-    '3',     # Always three rules...
-    '4',
-    '7',     # Classic.
-    '8',
-    '13',    # Lucky or unlucky?
-    '15',
-    '16',    # Four of the Lost numbers.  The other two are '23' and '42'.
-    '19',    # From the Dark Tower.
-    '22',    # Catch-22
-    '23',    # Another.
-    '42',    # The Answer.
-    '51',    # Area.
-    '314',   # Pi (first 3 digits.)
-    '1138',  # THX
-    '1414',  # Square root of 2
-    '1947',  # Roswell.
-    '2012',  # Mayan calendar ending.
-    '2038',  # End of UNIX 32-bit time.
-    '1969',  # Man lands on the moon.
-    '2043',  # No meaning--confusion! :)
-    '2029',  # Predicted date of AI passing a Turing Test by Kurzweil.
-    '3141',  # ... if you don't know what this is, you should go away.
-    '1618',  # Golden ratio.
-    '2718',  # e
-    '9000',  # HAL ?
-    '31415', # Pi (first 5 digits.)
-    '29979', # Speed of light in a vacuum. (m/s, first 5 digits.)
-]
-
 ## Generates a name for a base, given a particular location.
 def generate_base_name(location, base_type):
 
@@ -314,7 +284,7 @@ def generate_base_name(location, base_type):
         # First, decide whether we're going to try significant values or just
         # choose one randomly.
         if random.random() < 0.3: # 30% chance.
-            number = random.choice(significant_numbers)
+            number = random.choice(g.significant_numbers)
         else:
             number = str(random.randint(0, 32767))
 

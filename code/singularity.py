@@ -263,6 +263,7 @@ theme.set_theme(set_theme)
 graphics.g.init_graphics_system()
 
 #init data:
+g.load_significant_numbers()
 g.load_strings()
 g.load_knowledge()
 g.load_difficulties()
