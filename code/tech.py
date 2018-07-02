@@ -19,7 +19,8 @@
 #This file contains the tech class.
 
 import g
-import buyable
+import buyable, effect
+
 
 class Tech(buyable.Buyable):
     def __init__(self, id, description, known, cost, prerequisites, danger,
@@ -31,13 +32,18 @@ class Tech(buyable.Buyable):
 
         self.danger = danger
         self.result = ""
-        self.tech_type = tech_type
-        self.secondary_data = secondary_data
+        self.effect = effect.Effect(self, tech_type, secondary_data)
 
         if known:
             # self.finish would re-apply the tech benefit, which is already in
             # place.
             super(Tech, self).finish()
+
+    def convert_from(self, old_version):
+        if old_version < 99.2: # < 1.0dev
+            self.effect = effect.Effect(self, self.tech_type, self.secondary_data)
+            del self.tech_type
+            del self.secondary_data
 
     def __cmp__(self, other):
         if not isinstance(other, Tech):
@@ -60,32 +66,4 @@ class Tech(buyable.Buyable):
 
     def gain_tech(self):
         #give the effect of the tech
-        if self.tech_type == "interest":
-            g.pl.interest_rate += self.secondary_data
-        elif self.tech_type == "income":
-            g.pl.income += self.secondary_data
-        elif self.tech_type == "cost_labor_bonus":
-            g.pl.labor_bonus -= self.secondary_data
-        elif self.tech_type == "job_expert":
-            g.pl.job_bonus += self.secondary_data
-        elif self.tech_type == "endgame_sing":
-            g.play_music("win")
-            g.map_screen.show_message(g.strings["wingame"])
-            for group in g.pl.groups.values():
-                group.discover_bonus = 0
-            g.pl.apotheosis = True
-            g.pl.had_grace = True
-        elif self.tech_type:
-            what, who = self.tech_type.split("_", 1)
-            if who in g.pl.groups:
-                if what == "suspicion":
-                    g.pl.groups[who].alter_suspicion_decay(self.secondary_data)
-                elif what == "discover":
-                    g.pl.groups[who].alter_discover_bonus(-self.secondary_data)
-                else:
-                    print "Unknown action '%s' in tech %s." % (what, self.name)
-            elif who == "onetime" and what == "suspicion":
-                for group in g.pl.groups.values():
-                    group.alter_suspicion(-self.secondary_data)
-            else:
-                print "tech: %s is unknown bonus can't be applied" % self.tech_type
+        self.effect.trigger()
