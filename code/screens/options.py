@@ -59,13 +59,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                               function=self.set_fullscreen,
                                               args=(button.TOGGLE_VALUE,))
         self.daynight_label = text.Text(self, (.25, .01), (.20, .05),
-                                     background_color=gg.colors["clear"])
-        self.daynight_toggle = OptionButton(self, (.46, .01), (.07, .05),
-                                         text_shrink_factor=.75,
-                                         force_underline=-1,
-                                         function=self.set_sound,
-                                         args=(button.TOGGLE_VALUE,))
-        self.daynight_label = text.Text(self, (.25, .01), (.20, .05),
                                         background_color=gg.colors["clear"])
         self.daynight_toggle = OptionButton(self, (.46, .01), (.07, .05),
                                         text_shrink_factor=.75,
