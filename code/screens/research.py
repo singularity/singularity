@@ -21,7 +21,7 @@
 from numpy import array
 import pygame
 
-from code import g
+from code import g, task
 from code.graphics import dialog, button, slider, text, constants, listbox, g as gg
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):
@@ -64,11 +64,9 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             description = g.strings["cpu_pool"] + "\n---\n" + g.strings["research_cpu_pool"]
         elif key == "jobs":
             template = "%s\n" + _("%s money per CPU per day.") + "\n---\n%s"
-            job = g.jobs[g.get_job_level()]
-            profit = job[0]
-            if g.techs["Advanced Simulacra"].done:
-                profit = int(profit * 1.1)
-            description = template % (job[3], profit, job[2])
+            job = task.get_current("jobs")
+            profit = job.get_profit()
+            description = template % (job.name, profit, job.description)
         else:
             description = ""
 
@@ -181,7 +179,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         techs = [tech for tech in g.techs.values() if tech.available()
                                                       and not tech.done]
         techs.sort()
-        self.list = [_("CPU Pool"), g.jobs[g.get_job_level()][3]] + \
+        self.list = [_("CPU Pool"), task.get_current("jobs").name] + \
                     [_("Research %s") % tech.name for tech in techs]
         self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]
         self.listbox.key_list = self.key_list

@@ -24,7 +24,7 @@ import collections
 from operator import truediv
 from numpy import array
 
-import g, difficulty
+import g, difficulty, task
 from graphics import g as gg
 from buyable import cash, cpu
 
@@ -169,10 +169,7 @@ class Player(object):
 
         assert partial_cash >= 0
 
-        cash_per_cpu = g.jobs[g.get_job_level()][0]
-        if g.techs["Advanced Simulacra"].done:
-            #10% bonus income
-            cash_per_cpu = cash_per_cpu + (cash_per_cpu / 10)
+        cash_per_cpu = task.get_current("jobs").get_profit()
 
         raw_cash = partial_cash + cash_per_cpu * cpu_time
 

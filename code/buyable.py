@@ -20,6 +20,7 @@
 
 from operator import truediv
 import g
+import prerequisite
 
 cash, cpu, labor = range(3)
 
@@ -27,12 +28,13 @@ import numpy
 numpy.seterr(all='ignore')
 array = numpy.array
 
-class BuyableClass(object):
+class BuyableClass(prerequisite.Prerequisite):
     def __init__(self, id, description, cost, prerequisites, type = ""):
+        super(BuyableClass, self).__init__(prerequisites)
+
         self.name = self.id = id
         self.description = description
         self._cost = cost
-        self.prerequisites = prerequisites
 
         if type:
             self.prefix = type + "_"
@@ -90,22 +92,6 @@ class BuyableClass(object):
         # to handle this properly for tuples.  The first element is price in
         # cash, which is the one we care about the most.
         return cmp(tuple(self.cost), tuple(other.cost))
-
-    def available(self):
-        or_mode = False
-        assert type(self.prerequisites) == list
-        for prerequisite in self.prerequisites:
-            if prerequisite == "OR":
-                or_mode = True
-            if prerequisite in g.techs and g.techs[prerequisite].done:
-                if or_mode:
-                    return True
-            else:
-                if not or_mode:
-                    return False
-        # If we're not in OR mode, we met all our prerequisites.  If we are, we
-        # didn't meet any of the OR prerequisites.
-        return not or_mode
 
 for stat in ("count", "complete_count", "total_count",
              "total_complete_count"):

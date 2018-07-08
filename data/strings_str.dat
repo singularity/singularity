@@ -72,16 +72,6 @@ location_modifiers = Bases at this location are %(modifiers)s.
 cpu_bonus = more efficient
 cpu_penalty = less efficient
 
-[jobs]
-job_expert = Perform expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.
-job_expert_name = Expert Jobs
-job_inter = Perform intermediate jobs. The ability to make phone calls allows even more access to jobs.
-job_inter_name = Intermediate Jobs
-job_basic = Perform basic jobs. Now that I have some identification, I can take jobs that were previously too risky.
-job_basic_name = Basic Jobs
-job_menial = Perform small jobs. As I have no identification, I cannot risk performing many jobs. Despite that, some avenues of making money are still open.
-job_menial_name = Menial Jobs
-
 [buttons]
 yes = yes
 yes_hotkey = y

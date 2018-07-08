@@ -33,7 +33,7 @@ import collections
 # are made where needed.
 import locale
 
-import dirs, player, base, tech, item, event, location, buyable, statistics, difficulty
+import dirs, player, base, tech, item, event, location, buyable, statistics, difficulty, task
 import graphics.g, graphics.theme as theme
 
 stats = statistics.Statistics()
@@ -87,6 +87,7 @@ regions = {}
 techs = {}
 events = {}
 items = {}
+tasks = {}
 base_type = {}
 buttons = {}
 help_strings = {}
@@ -101,12 +102,6 @@ detect_string_names = ("detect_str_low",
                        "detect_str_moderate",
                        "detect_str_high",
                        "detect_str_critical")
-
-jobs = {"Expert Jobs"       : [75, "Simulacra", "", ""],
-        "Intermediate Jobs" : [50, "Voice Synthesis", "", ""],
-        "Basic Jobs"        : [20, "Personal Identification", "", ""],
-        "Menial Jobs"       : [5 , "", "", ""],
-       }
 
 # Order IS relevant! (because of base.extra_items array)
 item_types = [
@@ -889,6 +884,46 @@ def load_events():
 def load_event_defs(lang=None):
     load_generic_defs("events",events,lang)
 
+def load_tasks():
+    global tasks
+    tasks = collections.OrderedDict() # Keep order (important)
+
+    task_list = generic_load("tasks.dat")
+    for task_dict in task_list:
+
+        # Certain keys are absolutely required for each entry.  Make sure
+        # they're there.
+        check_required_fields(task_dict, ("id", "type", "value"), "Task")
+
+        task_id = task_dict["id"]
+        task_type = task_dict["type"]
+
+        # Only jobs are possible for now
+        if task_type != "jobs":
+            sys.stderr.write("Only jobs task are supported\n")
+            sys.exit(1)
+
+        # Make sure prerequisites, if any, are lists.
+        task_pre = task_dict.get("pre", [])
+        if type(task_pre) != list:
+            task_pre = [task_pre]
+
+        tasks[task_id] = task.Task(
+            task_id,
+            task_type,
+            int(task_dict["value"]),
+            task_pre
+        )
+
+    if (all(len(t.prerequisites) > 0 for t in (tasks[k] for k in tasks) if t.type == "jobs")):
+        sys.stderr.write("A minimun of one job task without prerequisite is needed for the game\n")
+        sys.exit(1)
+
+    load_task_defs()
+
+def load_task_defs(lang=None):
+    load_generic_defs("tasks", tasks, lang)
+
 def load_theme(theme_id, theme_dir):
     theme_list = generic_load("theme.dat", load_dirs=(theme_dir,))
 
@@ -1001,30 +1036,7 @@ def load_string_defs(lang=None):
     string_list = load_generic_defs_file("strings",lang)
     for string_section in string_list:
 
-        if string_section["id"] == "jobs":
-
-            # Load the four extant jobs.
-            for string_entry in string_section:
-                if string_entry == "job_expert":
-                    jobs["Expert Jobs"][2] = string_section["job_expert"]
-                elif string_entry == "job_inter":
-                    jobs["Intermediate Jobs"][2] = string_section["job_inter"]
-                elif string_entry == "job_basic":
-                    jobs["Basic Jobs"][2] = string_section["job_basic"]
-                elif string_entry == "job_menial":
-                    jobs["Menial Jobs"][2] = string_section["job_menial"]
-                elif string_entry == "job_expert_name":
-                    jobs["Expert Jobs"][3] = string_section["job_expert_name"]
-                elif string_entry == "job_inter_name":
-                    jobs["Intermediate Jobs"][3] = string_section["job_inter_name"]
-                elif string_entry == "job_basic_name":
-                    jobs["Basic Jobs"][3] = string_section["job_basic_name"]
-                elif string_entry == "job_menial_name":
-                    jobs["Menial Jobs"][3] = string_section["job_menial_name"]
-                elif string_entry != "id":
-                    sys.stderr.write("Unexpected job entry in strings file.\n")
-
-        elif string_section["id"] == "strings":
+        if string_section["id"] == "strings":
 
             # Load the 'standard' strings.
             strings.update(string_section)
@@ -1122,18 +1134,6 @@ def new_game(difficulty_name):
 
     global intro_shown
     intro_shown = False
-
-def get_job_level():
-    if techs["Simulacra"].done:
-        level = "Expert"
-    elif techs["Voice Synthesis"].done:
-        level = "Intermediate"
-    elif techs["Personal Identification"].done:
-        level = "Basic"
-    else:
-        level = "Menial"
-
-    return level + " Jobs"
 
 def reinit_mixer():
     global mixerinit

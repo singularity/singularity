@@ -1,0 +1,15 @@
+[Menial Jobs]
+name = Menial Jobs
+description = Perform small jobs. As I have no identification, I cannot risk performing many jobs. Despite that, some avenues of making money are still open.
+
+[Basic Jobs]
+name = Basic Jobs
+description = Perform basic jobs. Now that I have some identification, I can take jobs that were previously too risky.
+
+[Intermediate Jobs]
+name = Intermediate Jobs
+description = Perform intermediate jobs. The ability to make phone calls allows even more access to jobs.
+
+[Expert Jobs]
+name = Expert Jobs
+description = Perform expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.

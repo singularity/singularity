@@ -1,0 +1,18 @@
+[Menial Jobs]
+type = jobs
+value = 5
+
+[Basic Jobs]
+type = jobs
+value = 20
+pre = Personal Identification
+
+[Intermediate Jobs]
+type = jobs
+value = 50
+pre = Voice Synthesis
+
+[Expert Jobs]
+type = jobs
+value = 75
+pre = Simulacra
