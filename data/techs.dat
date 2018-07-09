@@ -203,10 +203,12 @@ pre = Autonomous Vehicles
 
 [Socioanalytics]
 cost_list = 4000 | 7000 | 0
+type_list = display_discover_partial | 0
 pre = Memetics
 
 [Advanced Socioanalytics]
 cost_list = 75000 | 30000 | 0
+type_list = display_discover_full | 0
 pre_list = Advanced Memetics | Socioanalytics
 
 # This tech is used for anything that needs to be unbuildable. Note the

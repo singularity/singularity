@@ -405,10 +405,10 @@ class BaseScreen(dialog.Dialog):
         # Detection chance display.  If Socioanalytics hasn't been researched,
         # you get nothing; if it has, but not Advanced Socioanalytics, you get
         # an inaccurate value.
-        if not g.techs["Socioanalytics"].done:
+        if g.pl.display_discover == "none":
             self.detect_frame.text = g.strings["detect_chance_unknown_base"]
         else:
-            accurate = g.techs["Advanced Socioanalytics"].done
+            accurate = (g.pl.display_discover == "full")
             chance = self.base.get_detect_chance(accurate)
             def get_chance(group):
                 return g.to_percent(chance.get(group, 0))

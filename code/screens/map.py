@@ -631,7 +631,7 @@ class MapScreen(dialog.Dialog):
             color = gg.colors["danger_level_%d" % danger_level]
             danger_styles.append( (color, None, False) )
 
-            if g.techs["Advanced Socioanalytics"].done:
+            if g.pl.display_discover == "full":
                 suspicion_display_dict[group] = g.to_percent(suspicion, True)
                 danger_display_dict[group] = g.to_percent(detects*10000, True)
             else:

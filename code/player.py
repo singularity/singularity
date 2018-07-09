@@ -122,6 +122,8 @@ class Player(object):
         self.available_cpus = [1, 0, 0, 0, 0]
         self.sleeping_cpus = 0
 
+        self.display_discover = "none"
+
         self.log = collections.deque(maxlen=1000)
 
     def convert_from(self, old_version):

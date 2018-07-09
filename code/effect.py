@@ -37,6 +37,10 @@ class Effect(object):
             g.pl.labor_bonus -= self.effect_value
         elif self.effect_type == "job_expert":
             g.pl.job_bonus += self.effect_value
+        elif self.effect_type == "display_discover_partial":
+            g.pl.display_discover = "partial"
+        elif self.effect_type == "display_discover_full":
+            g.pl.display_discover = "full"
         elif self.effect_type == "endgame_sing":
             g.play_music("win")
             g.map_screen.show_message(g.strings["wingame"])
