@@ -38,8 +38,6 @@ class Task(prerequisite.Prerequisite):
     def get_profit(self):
         if (self.type != "jobs"): return 0
 
-        profit = self.value
-        if g.techs["Advanced Simulacra"].done:
-            profit = int(profit * 1.1) #10% bonus income
+        profit = int(self.value * g.pl.job_bonus / 10000)
 
         return profit
