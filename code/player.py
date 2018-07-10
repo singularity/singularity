@@ -138,6 +138,13 @@ class Player(object):
             self.difficulty = next((d for d in difficulty.difficulties.itervalues()
                                    if self.difficulty == d.story_grace_difficulty), 
                                    next(iter(difficulty.difficulties)))
+        if old_version < 99.2: # < 1.0 dev
+            if g.techs["Advanced Socioanalytics"].done:
+                self.display_discover = "full"
+            if g.techs["Socioanalytics"].done:
+                self.display_discover = "partial"
+            else:
+                self.display_discover = "none"
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour
