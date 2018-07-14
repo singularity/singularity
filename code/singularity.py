@@ -146,6 +146,15 @@ if save_loc is not None:
         except:
             pass # don't be picky (for now...)
 
+        try:
+            for name in g.soundvolumes:
+                g.soundvolumes[name] = prefs.getfloat("Preferences", name + "_volume")
+
+            if g.mixerinit:
+                pygame.mixer.music.set_volume(g.soundvolumes["music"])
+        except:
+            pass # don't be picky (for now...)
+
 
 #Handle the program arguments.
 desc = """Endgame: Singularity is a simulation of a true AI.

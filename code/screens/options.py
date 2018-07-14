@@ -23,8 +23,7 @@ import ConfigParser
 import pygame
 import json
 
-
-from code.graphics import constants, dialog, button, listbox, text, theme, g as gg
+from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
 import code.g as g, code.dirs as dirs
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
@@ -32,10 +31,9 @@ import code.g as g, code.dirs as dirs
 #TODO: Add dialog suggesting restart when language changes, so changes may apply
 #      at least until/if we find a way refresh all screens. Don't forget to
 #      remind user to save current game (if loaded from map menu)
-#TODO: Disable Sound button if mixer is not initialized
+#TODO: Disable Sound pane if mixer is not initialized
 #TODO: Create a dedicated button for Music
 #
-
 class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("yes_type", "ok")
@@ -43,35 +41,154 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         super(OptionsScreen, self).__init__(*args, **kwargs)
         self.yes_button.function = self.check_restart
 
-        self.size = (.80, .75)
+        self.size = (.80, .85)
         self.pos = (.5, .5)
         self.anchor = constants.MID_CENTER
         self.background_color = (0,0,50)
         self.borders = ()
 
+        # Tabs panel
+        self.general_pane   = GeneralPane(None, (0, .1), (.80, .75))
+        self.audio_pane     = AudioPane(None, (0, .1), (.80, .75))
+
+        self.tabs_panes = (self.general_pane, self.audio_pane)
+
+        # Tabs buttons
+        self.tabs_buttons = button.ButtonGroup()
+
+        self.general_tab = OptionButton(self, (-.5, .01), (.15, .05),
+                                         anchor = constants.TOP_RIGHT,
+                                         autohotkey=True,
+                                         function=self.set_tabs_pane, args=(self.general_pane,))
+        self.tabs_buttons.add(self.general_tab)
+
+        self.audio_tab = OptionButton(self, (-.5, .01), (.15, .05),
+                                       anchor = constants.TOP_LEFT,
+                                       autohotkey=True,
+                                       function=self.set_tabs_pane, args=(self.audio_pane,))
+        self.tabs_buttons.add(self.audio_tab)
+
+        self.general_tab.chosen_one()
+        self.set_tabs_pane(self.general_pane)
+
+        # YesNoDialog buttons
+        self.yes_button.size = (.15, .05)
+        self.no_button.size = (.15, .05)
+
+    def rebuild(self):
+        self.general_tab.text               = _("&General")
+        self.audio_tab.text                 = _("&Audio")
+
+        self.general_pane.needs_rebuild     = True
+        self.audio_pane.needs_rebuild       = True
+
+        super(OptionsScreen, self).rebuild()
+
+    def show(self):
+        self.initial_options = dict(
+            fullscreen      = gg.fullscreen,
+            grab            = pygame.event.get_grab(),
+            daynight        = g.daynight,
+            resolution      = gg.screen_size,
+            language        = g.language,
+            sound           = not g.nosound,
+            gui_volume      = int(g.soundvolumes["gui"] * 100.0),
+            music_volume    = int(g.soundvolumes["music"] * 100.0),
+            soundbuf        = g.soundbuf
+        )
+
+        self.set_options(self.initial_options)
+
+        retval = super(OptionsScreen, self).show()
+        if retval:
+            self.apply_options()
+            save_options()
+        else:
+            # Cancel, revert all options to initial state
+            self.set_options(self.initial_options)
+
+        return retval
+
+    def set_tabs_pane(self, tabs_pane):
+        for pane in self.tabs_panes:
+            pane.parent = None
+
+        tabs_pane.parent = self
+
+    def set_options(self, options):
+        self.general_pane.set_options(options)
+        self.audio_pane.set_options(options)
+
+    def apply_options(self):
+        self.general_pane.apply_options()
+        self.audio_pane.apply_options()
+
+    def check_restart(self):
+        # Test all changes that require a restart. Currently, none.
+        # We keep it for future need...
+        need_restart = False
+
+        # Add restart test here.
+
+        if not need_restart:
+            # No restart required. Simply exit the dialog respecting all hooks
+            self.yes_button.exit_dialog()
+            return
+
+        # Ask user about a restart
+        ask_restart = dialog.YesNoDialog(
+                self,
+                pos=(-.50, -.50),
+                anchor=constants.MID_CENTER,
+                text=_(
+"""You must restart for some of the changes to be fully applied.\n
+Would you like to restart the game now?"""),)
+        if dialog.call_dialog(ask_restart, self):
+            # YES, go for it
+            #TODO: check if there is an ongoing game, save it under a special
+            #      name and automatically load it after restart using a custom
+            #      command-line argument
+            save_options()
+            restart()
+        else:
+            # NO, revert "restart-able" changes
+            pass
+
+class GeneralPane(widget.Widget):
+    def __init__(self, *args, **kwargs):
+        super(GeneralPane, self).__init__(*args, **kwargs)
+
         # First row
-        self.fullscreen_label = text.Text(self, (.01, .01), (.14, .05),
-                                          align=constants.LEFT,
-                                          background_color=gg.colors["clear"])
+        self.fullscreen_label = button.HotkeyText(self, (.01, .01), (.14, .05),
+                                                  autohotkey=True,
+                                                  align=constants.LEFT,
+                                                  background_color=gg.colors["clear"])
         self.fullscreen_toggle = OptionButton(self, (.16, .01), (.07, .05),
                                               text_shrink_factor=.75,
                                               force_underline=-1,
                                               function=self.set_fullscreen,
                                               args=(button.TOGGLE_VALUE,))
-        self.daynight_label = text.Text(self, (.25, .01), (.20, .05),
-                                        background_color=gg.colors["clear"])
+        self.fullscreen_label.hotkey_target = self.fullscreen_toggle
+
+        self.daynight_label = button.HotkeyText(self, (.25, .01), (.20, .05),
+                                                autohotkey=True,
+                                                background_color=gg.colors["clear"])
         self.daynight_toggle = OptionButton(self, (.46, .01), (.07, .05),
                                         text_shrink_factor=.75,
                                         force_underline=-1,
                                         function=self.set_daynight,
                                         args=(button.TOGGLE_VALUE,))
-        self.grab_label = text.Text(self, (.55, .01), (.15, .05),
-                                    background_color=gg.colors["clear"])
+        self.daynight_label.hotkey_target = self.daynight_toggle
+
+        self.grab_label = button.HotkeyText(self, (.55, .01), (.15, .05),
+                                            autohotkey=True,
+                                            background_color=gg.colors["clear"])
         self.grab_toggle = OptionButton(self, (.71, .01), (.07, .05),
                                         text_shrink_factor=.75,
                                         force_underline=-1,
                                         function=self.set_grab,
                                         args=(button.TOGGLE_VALUE,))
+        self.grab_label.hotkey_target = self.grab_toggle
 
         # Second and third row
         self.resolution_label = text.Text(self, (.01, .08), (.14, .05),
@@ -145,35 +262,10 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                   update_func=theme.set_theme,
                                   list_pos=theme.get_theme_pos())
 
-        self.sound_label = text.Text(self, (.60, .30), (.10, .05),
-                                     background_color=gg.colors["clear"])
-        self.sound_toggle = OptionButton(self, (.71, .30), (.07, .05),
-                                         text_shrink_factor=.75,
-                                         force_underline=-1,
-                                         function=self.set_sound,
-                                         args=(button.TOGGLE_VALUE,))
-
     def rebuild(self):
-        labels = {
-            'fullscreen': g.hotkey(_("&Fullscreen:")),
-            'sound'     : g.hotkey(_("&Sound:")),
-            'mousegrab' : g.hotkey(_("&Mouse grab:")),
-            'daynight'  : g.hotkey(_("Da&y/night display:")),
-        }
-
-        self.fullscreen_label.text          = labels['fullscreen']['text']
-        self.fullscreen_label.underline     = labels['fullscreen']['pos']
-        self.fullscreen_toggle.hotkey       = labels['fullscreen']['key']
-        self.sound_label.text               = labels['sound']['text']
-        self.sound_label.underline          = labels['sound']['pos']
-        self.sound_toggle.hotkey            = labels['sound']['key']
-        self.grab_label.text                = labels['mousegrab']['text']
-        self.grab_label.underline           = labels['mousegrab']['pos']
-        self.grab_toggle.hotkey             = labels['mousegrab']['key']
-        self.daynight_label.text            = labels['daynight']['text']
-        self.daynight_label.underline       = labels['daynight']['pos']
-        self.daynight_toggle.hotkey         = labels['daynight']['key']
-
+        self.fullscreen_label.text          = _("&Fullscreen:")
+        self.grab_label.text                = _("&Mouse grab:")
+        self.daynight_label.text            = _("Da&y/night display:")
         self.language_label.text            = _("Language:")
         self.resolution_label.text          = _("Resolution:")
         self.resolution_custom.text         = _("&CUSTOM:")
@@ -182,54 +274,17 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             self.fullscreen_toggle.text = _("YES")
         else:
             self.fullscreen_toggle.text = _("NO")
-            
-        if not g.nosound:
-            self.sound_toggle.text = _("YES")
-        else:
-            self.sound_toggle.text = _("NO")
 
         if pygame.event.get_grab():
             self.grab_toggle.text = _("YES")
         else:
             self.grab_toggle.text = _("NO")
 
-        super(OptionsScreen, self).rebuild()
-
-    def show(self):
-        self.initial_options = dict(
-            fullscreen = gg.fullscreen,
-            sound      = not g.nosound,
-            grab       = pygame.event.get_grab(),
-            daynight   = g.daynight,
-            resolution = gg.screen_size,
-            language   = g.language,
-        )
-        self.set_options(self.initial_options)
-
-        retval = super(OptionsScreen, self).show()
-        if retval:
-            if self.resolution_custom.active:
-                try:
-                    old_size = gg.screen_size
-                    gg.set_screen_size((int(self.resolution_custom_horiz.text),
-                                        int(self.resolution_custom_vert.text)))
-                    if gg.screen_size != old_size:
-                        dialog.Dialog.top.needs_resize = True
-                except ValueError:
-                    pass
-            save_options()
-        else:
-            # Cancel, revert all options to initial state
-            self.set_options(self.initial_options)
-
-        return retval
+        super(GeneralPane, self).rebuild()
 
     def set_options(self, options):
         self.set_fullscreen(options['fullscreen'])
         self.fullscreen_toggle.set_active(options['fullscreen'])
-
-        self.set_sound(options['sound'])
-        self.sound_toggle.set_active(options['sound'])
 
         self.set_grab(options['grab'])
         self.grab_toggle.set_active(options['grab'])
@@ -255,6 +310,17 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         self.theme_choice.list_pos = theme.get_theme_pos()
 
+    def apply_options(self):
+        if self.resolution_custom.active:
+            try:
+                old_size = gg.screen_size
+                gg.set_screen_size((int(self.resolution_custom_horiz.text),
+                                    int(self.resolution_custom_vert.text)))
+                if gg.screen_size != old_size:
+                    dialog.Dialog.top.needs_resize = True
+            except ValueError:
+                pass
+
     def set_language(self, list_pos):
         if not getattr(self, "language_choice", None):
             return # Not yet initialized.
@@ -273,25 +339,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         if gg.fullscreen != value:
             gg.set_fullscreen(value)
             dialog.Dialog.top.needs_resize = True
-
-    def set_sound(self, value):
-        if value:
-            self.sound_toggle.text = _("YES")
-        else:
-            self.sound_toggle.text = _("NO")
-
-        if g.nosound == (not value):
-            # No transition requested, bail out
-            return
-
-        g.nosound = not value
-        if g.nosound:
-            if g.mixerinit:
-                pygame.mixer.music.stop()
-        else:
-            g.play_sound("click")
-            g.play_music(g.music_class)  # force music switch at same dir
-
 
     def set_grab(self, value):
         if value:
@@ -321,95 +368,134 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         except ValueError:
             pass
 
-    def check_restart(self):
-        # Test all changes that require a restart. Currently, none.
-        # We keep it for future need...
-        need_restart = False
-
-        # Add restart test here.
-
-        if not need_restart:
-            # No restart required. Simply exit the dialog respecting all hooks
-            self.yes_button.exit_dialog()
-            return
-
-        # Ask user about a restart
-        ask_restart = dialog.YesNoDialog(
-                self,
-                pos=(-.50, -.50),
-                anchor=constants.MID_CENTER,
-                text=_(
-"""You must restart for some of the changes to be fully applied.\n
-Would you like to restart the game now?"""),)
-        if dialog.call_dialog(ask_restart, self):
-            # YES, go for it
-            #TODO: check if there is an ongoing game, save it under a special
-            #      name and automatically load it after restart using a custom
-            #      command-line argument
-            save_options()
-            restart()
-        else:
-            # NO, revert "restart-able" changes
-            self.language_choice.list_pos = [
-                    i for i, (code, __)
-                    in enumerate(self.languages)
-                    if code == self.initial_options['language']][0] or 0
-            self.set_language(self.language_choice.list_pos)
-
-
-# For the future...
-class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
+class AudioPane(widget.Widget):
     def __init__(self, *args, **kwargs):
-        super(AdvancedOptionsScreen, self).__init__(*args, **kwargs)
+        super(AudioPane, self).__init__(*args, **kwargs)
+
+        self.sound_label = button.HotkeyText(self, (-.49, .01), (.10, .05),
+                                             anchor = constants.TOP_RIGHT,
+                                             align=constants.LEFT,
+                                             autohotkey=True,
+                                             background_color=gg.colors["clear"])
+        self.sound_toggle = OptionButton(self, (-.51, .01), (.07, .05),
+                                         anchor = constants.TOP_LEFT,
+                                         text_shrink_factor=.75,
+                                         force_underline=-1,
+                                         function=self.set_sound,
+                                         args=(button.TOGGLE_VALUE,))
+        self.sound_label.hotkey_target = self.sound_toggle
+
+        self.gui_label = text.Text(self, (.01, .08), (.22, .05),
+                                     anchor = constants.TOP_LEFT,
+                                     align=constants.LEFT,
+                                     background_color=gg.colors["clear"])
+        self.gui_slider = slider.UpdateSlider(self, (.24, .08), (.53, .05),
+                                              anchor = constants.TOP_LEFT,
+                                              horizontal=True, priority=150,
+                                              slider_max=100, slider_size=5)
+        self.gui_slider.update_func = self.on_gui_volume_change
+
+        self.music_label = text.Text(self, (.01, .15), (.22, .05),
+                                     anchor = constants.TOP_LEFT,
+                                     align=constants.LEFT,
+                                     background_color=gg.colors["clear"])
+        self.music_slider = slider.UpdateSlider(self, (.24, .15), (.53, .05),
+                                                anchor = constants.TOP_LEFT,
+                                                horizontal=True, priority=150,
+                                                slider_max=100, slider_size=5)
+        self.music_slider.update_func = self.on_music_volume_change
 
         self.soundbuf_label = text.Text(self, (.01, .22), (.25, .05),
                                         text=_("Sound buffering:"),
                                         align=constants.LEFT,
                                         background_color=gg.colors["clear"])
-
         self.soundbuf_group = button.ButtonGroup()
 
-        self.soundbuf_low = OptionButton(self, (.27, .22), (.14, .05),
+        self.soundbuf_low = OptionButton(self, (.24, .22), (.14, .05),
                                          text=_("&LOW"), autohotkey=True,
                                          function=self.set_soundbuf,
                                          args=(1024,))
         self.soundbuf_group.add(self.soundbuf_low)
 
-        self.soundbuf_normal = OptionButton(self, (.44, .22), (.17, .05),
+        self.soundbuf_normal = OptionButton(self, (.42, .22), (.17, .05),
                                             text=_("&NORMAL"), autohotkey=True,
                                             function=self.set_soundbuf,
                                             args=(1024*2,))
         self.soundbuf_group.add(self.soundbuf_normal)
 
-        self.soundbuf_high = OptionButton(self, (.64, .22), (.14, .05),
+        self.soundbuf_high = OptionButton(self, (.63, .22), (.14, .05),
                                           text=_("&HIGH"), autohotkey=True,
                                           function=self.set_soundbuf,
                                           args=(1024*4,))
         self.soundbuf_group.add(self.soundbuf_high)
 
-    def show(self):
-        for soundbuf_button in self.soundbuf_group:
-            soundbuf_button.set_active(soundbuf_button.args == (g.soundbuf,))
-        return super(AdvancedOptionsScreen, self).show()
+    def rebuild(self):
+        self.sound_label.text = _("&Sound:")
+        self.gui_label.text = _("GUI Volume:")
+        self.music_label.text = _("Music Volume:")
+
+        if not g.nosound:
+            self.sound_toggle.text = _("YES")
+        else:
+            self.sound_toggle.text = _("NO")
+
+        super(AudioPane, self).rebuild()
+
+    def set_options(self, options):
+        self.set_sound(options['sound'])
+        self.sound_toggle.set_active(options['sound'])
+
+        self.set_soundbuf(options["soundbuf"])
+        if (options["soundbuf"] == 1024*1):
+            self.soundbuf_low.chosen_one()
+        elif (options["soundbuf"] == 1024*2):
+            self.soundbuf_normal.chosen_one()
+        elif (options["soundbuf"] == 1024*4):
+            self.soundbuf_high.chosen_one()
+
+        self.gui_slider.slider_pos = options["gui_volume"]
+        self.music_slider.slider_pos = options["music_volume"]
+
+    def apply_options(self):
+        pass
+
+    def set_sound(self, value):
+        if value:
+            self.sound_toggle.text = _("YES")
+        else:
+            self.sound_toggle.text = _("NO")
+
+        if g.nosound == (not value):
+            # No transition requested, bail out
+            return
+
+        g.nosound = not value
+        if g.nosound:
+            if g.mixerinit:
+                pygame.mixer.music.stop()
+        else:
+            g.play_sound("click")
+            g.play_music(g.music_class)  # force music switch at same dir
+
+    def on_gui_volume_change(self, value):
+        g.soundvolumes["gui"] = value / float(100)
+
+    def on_music_volume_change(self, value):
+        g.soundvolumes["music"] = value / float(100)
+        if g.mixerinit:
+            pygame.mixer.music.set_volume(g.soundvolumes["music"])
 
     #TODO: Show a 2-second "Please wait" dialog when reinitializing mixer,
     #      otherwise its huge lag might confuse users
-    #TODO: Disable buffer buttons when g.nosound is set, because mixer will
-    #      /not/ be reinitialized, and desired buffer size will be discarded
-    #      Also, notice that (re-)enabling sound will /not/ reinitialize mixer,
-    #      so it won't apply any new buffer size.
-    #TODO: Also consider disabling buttons if g.mixerinit is not set, unless
-    #      changing buffer size is considered an attempt to make mixer work
     def set_soundbuf(self, value):
+        old_soundbuf = g.soundbuf
+        g.soundbuf = value
 
-        if not g.nosound and g.soundbuf != value:
-            g.soundbuf = value
+        if g.mixerinit and g.soundbuf != old_soundbuf:
             g.reinit_mixer()
-
 
 class OptionButton(button.ToggleButton, button.FunctionButton):
     pass
-
 
 def set_language_properly(language):
     g.set_language(language)
@@ -431,15 +517,18 @@ def save_options():
     # Build a ConfigParser for writing the various preferences out.
     prefs = ConfigParser.SafeConfigParser()
     prefs.add_section("Preferences")
-    prefs.set("Preferences", "fullscreen", str(bool(gg.fullscreen)))
-    prefs.set("Preferences", "nosound",    str(bool(g.nosound)))
-    prefs.set("Preferences", "grab",       str(bool(pygame.event.get_grab())))
-    prefs.set("Preferences", "daynight",   str(bool(g.daynight)))
-    prefs.set("Preferences", "xres",       str(int(gg.screen_size[0])))
-    prefs.set("Preferences", "yres",       str(int(gg.screen_size[1])))
-    prefs.set("Preferences", "soundbuf",   str(int(g.soundbuf)))
-    prefs.set("Preferences", "lang",       str(g.language))
-    prefs.set("Preferences", "theme",      str(theme.current.id))
+    prefs.set("Preferences", "fullscreen",   str(bool(gg.fullscreen)))
+    prefs.set("Preferences", "nosound",      str(bool(g.nosound)))
+    prefs.set("Preferences", "grab",         str(bool(pygame.event.get_grab())))
+    prefs.set("Preferences", "daynight",     str(bool(g.daynight)))
+    prefs.set("Preferences", "xres",         str(int(gg.screen_size[0])))
+    prefs.set("Preferences", "yres",         str(int(gg.screen_size[1])))
+    prefs.set("Preferences", "soundbuf",     str(int(g.soundbuf)))
+    prefs.set("Preferences", "lang",         str(g.language))
+    prefs.set("Preferences", "theme",        str(theme.current.id))
+
+    for name, value in g.soundvolumes.iteritems():
+        prefs.set("Preferences", name + "_volume", str(value))
 
     # Actually write the preferences out.
     save_loc = dirs.get_writable_file_in_dirs("prefs.dat", "pref")

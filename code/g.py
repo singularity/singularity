@@ -98,6 +98,7 @@ delay_time = 0
 curr_speed = 1
 soundbuf = 1024*2
 soundargs = (48000, -16, 2)  # sampling frequency, size, channels
+soundvolumes = {"gui": 1.0, "music": 1.0}
 detect_string_names = ("detect_str_low",
                        "detect_str_moderate",
                        "detect_str_high",
@@ -205,9 +206,9 @@ defined in sounds/sounds.dat.
                     sys.stderr.write("DEBUG: Loaded soundfile: %s\n" %
                                      real_file)
 
-def play_sound(sound_class):
+def play_sound(sound_class, sound_volume="gui"):
     """
-play_sound() plays a sound from a particular class.
+play_sound() plays a sound from a particular class and volume.
 """
 
     if nosound or not mixerinit:
@@ -224,6 +225,8 @@ play_sound() plays a sound from a particular class.
     random_sound = random.choice(sounds[sound_class])
     if debug:
         sys.stderr.write("DEBUG: Playing sound %s.\n" % random_sound["filename"])
+
+    random_sound["sound"].set_volume(soundvolumes[sound_volume])
     random_sound["sound"].play()
 
 def load_music():
