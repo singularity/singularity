@@ -428,7 +428,7 @@ class MapScreen(dialog.Dialog):
             if not dialog.call_dialog(intro_dialog, self):
                 break
 
-        intro_dialog.remove_hooks()
+        intro_dialog.parent = None
 
     def show(self):
         self.force_update()

@@ -86,14 +86,16 @@ def propogate_need(data_member):
         if getattr(self, data_member, False):
             self.needs_update = True
 
-            descendants = self.children[:]
-            while descendants:
-                child = descendants.pop()
-                # Propogate to this child and its descendants, if needed.
-                if not getattr(child, data_member, False):
-                    setattr(child, data_member, True)
-                    child._needs_update = True
-                    descendants += child.children
+            if hasattr(self, "children"):
+                descendants = self.children[:]
+                while descendants:
+                    child = descendants.pop()
+                    # Propogate to this child and its descendants, if needed.
+                    if not getattr(child, data_member, False):
+                        setattr(child, data_member, True)
+                        child._needs_update = True
+                        if hasattr(child, "children"):
+                            descendants += child.children
 
     return do_propogate
 
@@ -114,10 +116,11 @@ class Widget(object):
 
     def _propogate_update(self):
         if self._needs_update:
-            target = self.parent
-            while target and not target._needs_update:
-                target._needs_update = True
-                target = target.parent
+            if hasattr(self, "parent"):
+                target = self.parent
+                while target and not target._needs_update:
+                    target._needs_update = True
+                    target = target.parent
 
     needs_update = call_on_change("_needs_update", _propogate_update)
 
@@ -149,9 +152,35 @@ class Widget(object):
         #self.needs_redraw = True
         #self.needs_full_redraw = True
 
-    def add_hooks(self):
+    @property
+    def parent(self):
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent):
+        if hasattr(self, 'children'):
+            self.remove_hooks()
+
+        if (hasattr(self, '_parent') and self._parent is not None):
+            try:
+                self._parent.children.remove(self)
+            except ValueError:
+                pass # Wasn't there to start with.
+
+        self._parent = parent
+
         if self.parent is not None:
             self.parent.children.append(self)
+            self.parent.needs_rebuild = True
+            self.parent.needs_resize = True
+            self.parent.needs_reposition = True
+            self.parent.needs_redraw = True
+
+        if hasattr(self, 'children'):
+            self.add_hooks()
+
+    def add_hooks(self):
+        if self.parent is not None:
             # Won't trigger on the call from __init__, since there are no
             # children yet, but add_hooks may be explicitly called elsewhere to
             # undo remove_hooks.
@@ -161,17 +190,10 @@ class Widget(object):
     def remove_hooks(self):
         # Localize the children list to avoid index corruption and O(N^2) time.
         children = self.children
-        self.children = []
 
         # Recurse to the children.
         for child in children:
             child.remove_hooks()
-
-        if self.parent is not None:
-            try:
-                self.parent.children.remove(self)
-            except ValueError:
-                pass # Wasn't there to start with.
 
     def _parent_size(self):
         if self.parent == None:
@@ -478,8 +500,10 @@ class FocusWidget(Widget):
 
     def add_hooks(self):
         super(FocusWidget, self).add_hooks()
-        self.parent.add_focus_widget(self)
+        if self.parent is not None:
+            self.parent.add_focus_widget(self)
 
     def remove_hooks(self):
         super(FocusWidget, self).remove_hooks()
-        self.parent.remove_focus_widget(self)
+        if self.parent is not None:
+            self.parent.remove_focus_widget(self)

@@ -28,7 +28,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
         self.dirty_count = True
         super(ResearchScreen, self).__init__(parent, pos, size, *args, **kwargs)
-        self.listbox.remove_hooks()
+        self.listbox.parent = None
         self.listbox = listbox.CustomListbox(self, (0,0), (.53, .55),
                                              list_size=-40,
                                              remake_func=self.make_item,
@@ -43,7 +43,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
         self.help_dialog = dialog.MessageDialog(self)
 
-        self.yes_button.remove_hooks()
+        self.yes_button.parent = None
         self.no_button.pos = (-.5,-.99)
         self.no_button.anchor = constants.BOTTOM_CENTER
 

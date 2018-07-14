@@ -685,7 +685,6 @@ class SimpleMenuDialog(Dialog):
         if (hasattr(self, '_buttons') and not self._buttons is None):
             for button in self._buttons:
                 if button.parent is not None:
-                    button.remove_hooks()
                     button.parent = None
 
         self._buttons = buttons
@@ -699,10 +698,7 @@ class SimpleMenuDialog(Dialog):
 
         y_pos = .01
         for button in self.buttons:
-            if button.parent is not None:
-                button.remove_hooks()
             button.parent = self.button_panel
-            button.add_hooks()
 
             button.pos = (.01, y_pos)
             button.size = (self.width, .05)

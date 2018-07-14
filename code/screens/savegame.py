@@ -84,7 +84,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                                 anchor=constants.MID_CENTER,
                                 text=_("Are you sure to delete the saved game ?"))
         delete = dialog.call_dialog(yn, self)
-        yn.remove_hooks()
+        yn.parent = None
         if delete:
             index = self.return_list_pos()
             if 0 <= index < len(self.list):

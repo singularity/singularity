@@ -29,7 +29,7 @@ class LogScreen(dialog.ChoiceDialog):
         super(LogScreen, self).__init__(parent, pos, size, *args, **kwargs)
         self.anchor = constants.MID_CENTER
 
-        self.yes_button.remove_hooks()
+        self.yes_button.parent = None
         self.no_button.pos = (-.5,-.99)
         self.no_button.anchor = constants.BOTTOM_CENTER
 

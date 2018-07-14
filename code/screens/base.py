@@ -272,7 +272,7 @@ class BaseScreen(dialog.Dialog):
                                           anchor=constants.MID_CENTER,
                                           text=g.strings["nan"])
                 dialog.call_dialog(md, self)
-                md.remove_hooks()
+                md.parent = None
                 return
             
             if count > space_left:
@@ -291,7 +291,7 @@ class BaseScreen(dialog.Dialog):
                                             anchor=constants.MID_CENTER,
                                             text=g.strings["will_be_offline"])
                     go_ahead = dialog.call_dialog(yn, self)
-                    yn.remove_hooks()
+                    yn.parent = None
                     if not go_ahead:
                         return
 
@@ -304,7 +304,7 @@ class BaseScreen(dialog.Dialog):
                                         anchor=constants.MID_CENTER,
                                         text=g.strings["will_lose_cpus"])
                 go_ahead = dialog.call_dialog(yn, self)
-                yn.remove_hooks()
+                yn.parent = None
                 if not go_ahead:
                     return
 

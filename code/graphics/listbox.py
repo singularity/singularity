@@ -56,19 +56,21 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
     def add_hooks(self):
         super(Listbox, self).add_hooks()
-        self.parent.add_handler(constants.CLICK, self.on_click, 90)
-        self.parent.add_key_handler(pygame.K_UP, self.got_key)
-        self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
-        self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
-        self.parent.add_key_handler(pygame.K_PAGEDOWN, self.got_key)
+        if self.parent is not None:
+            self.parent.add_handler(constants.CLICK, self.on_click, 90)
+            self.parent.add_key_handler(pygame.K_UP, self.got_key)
+            self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
+            self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
+            self.parent.add_key_handler(pygame.K_PAGEDOWN, self.got_key)
 
     def remove_hooks(self):
         super(Listbox, self).remove_hooks()
-        self.parent.remove_handler(constants.CLICK, self.on_click)
-        self.parent.remove_key_handler(pygame.K_UP, self.got_key)
-        self.parent.remove_key_handler(pygame.K_DOWN, self.got_key)
-        self.parent.remove_key_handler(pygame.K_PAGEUP, self.got_key)
-        self.parent.remove_key_handler(pygame.K_PAGEDOWN, self.got_key)
+        if self.parent is not None:
+            self.parent.remove_handler(constants.CLICK, self.on_click)
+            self.parent.remove_key_handler(pygame.K_UP, self.got_key)
+            self.parent.remove_key_handler(pygame.K_DOWN, self.got_key)
+            self.parent.remove_key_handler(pygame.K_PAGEUP, self.got_key)
+            self.parent.remove_key_handler(pygame.K_PAGEDOWN, self.got_key)
 
     def on_scroll(self, scroll_pos):
         self.needs_rebuild = True
@@ -128,7 +130,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         if current_size > list_size:
             # Remove the excess ones.
             for child in self.display_elements[list_size:]:
-                child.remove_hooks()
+                child.parent = None
             del self.display_elements[list_size:]
         elif current_size < list_size:
             if current_size > 0:
