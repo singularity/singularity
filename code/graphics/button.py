@@ -26,29 +26,90 @@ import widget
 import text
 import image
 
-class Button(text.SelectableText):
-    hotkey = widget.causes_rebuild("_hotkey")
+class HotkeyText(text.Text):
+
     force_underline = widget.causes_rebuild("_force_underline")
 
-    # A second layer of property wraps .hotkey, to update key handlers.
-    __hotkey = ""
+    def __init__(self, *args, **kwargs):
+        self.hotkey_target = kwargs.pop('hotkey_target', None)
+        self.hotkey = kwargs.pop('hotkey', False)
+        self.autohotkey = kwargs.pop('autohotkey', False)
+        self.force_underline = kwargs.pop('force_underline', None)
+
+        super(HotkeyText, self).__init__(*args, **kwargs)
+
+    @property
+    def hotkey_target(self):
+        return self._hotkey_target
+
+    @hotkey_target.setter
+    def hotkey_target(self, target):
+        self._hotkey_target = target
+        if self.hotkey_target is not None:
+            self._hotkey_target.hotkey = self._hotkey
+
+    @property
+    def hotkey(self):
+        return self._hotkey
+
+    @hotkey.setter
+    def hotkey(self, hotkey):
+        self._hotkey = hotkey
+        if self.hotkey_target is not None:
+            self.hotkey_target.hotkey = self._hotkey
+        self.needs_rebuild = True
+
+    @property
+    def text(self):
+        return text.Text.text.fget(self)
+
+    @text.setter
+    def text(self, value):
+        if self.autohotkey and (value != None):
+            from code.g import get_hotkey, strip_hotkey
+            self.hotkey = get_hotkey(value)
+            text.Text.text.fset(self, strip_hotkey(value))
+        else:
+            text.Text.text.fset(self, value)
+
+    def calc_underline(self):
+        if self.force_underline != None:
+            self.underline = self.force_underline
+        elif self.text and self.hotkey and type(self.hotkey) in (str, unicode):
+            if self.hotkey in self.text:
+                self.underline = self.text.index(self.hotkey)
+            elif self.hotkey.lower() in self.text.lower():
+                self.underline = self.text.lower().index(self.hotkey.lower())
+        else:
+            self.underline = -1
+
+    def rebuild(self):
+        old_underline = self.underline
+        self.calc_underline()
+        if self.underline != old_underline:
+            self.needs_redraw = True
+
+        super(HotkeyText, self).rebuild()
+
+class Button(text.SelectableText, HotkeyText):
+
+    # Rewrite .hotkey, to update key handlers.
+    _hotkey = ""
     def _on_set_hotkey(self, value):
-        if self.parent and value != self.__hotkey:
-            if self.__hotkey:
-                self.parent.remove_key_handler(self.__hotkey, self.handle_event)
+        if self.parent and value != self._hotkey:
+            if self._hotkey:
+                self.parent.remove_key_handler(self._hotkey, self.handle_event)
             if value:
                 self.parent.add_key_handler(value, self.handle_event)
-        self.__hotkey = value
+        self._hotkey = value
+        self.needs_rebuild = True
 
-    _hotkey = property(lambda self: self.__hotkey, _on_set_hotkey)
+    hotkey = property(lambda self: self._hotkey, _on_set_hotkey)
 
     def __init__(self, parent, pos, size = (0, .045), base_font = None,
-                 borders = constants.ALL, hotkey = "", force_underline = None,
-                 text_shrink_factor = .825, priority = 100, **kwargs):
+                 borders = constants.ALL, text_shrink_factor = .825,
+                 priority = 100, **kwargs):
         self.parent = parent
-
-        self.autohotkey = kwargs.pop('autohotkey',False)
-        self.hotkey = hotkey
 
         self.priority = priority
 
@@ -57,8 +118,6 @@ class Button(text.SelectableText):
         self.base_font = base_font or g.fonts["special"]
         self.borders = borders
         self.shrink_factor = text_shrink_factor
-
-        self.force_underline = force_underline
 
         self.selected = False
 
@@ -80,25 +139,6 @@ class Button(text.SelectableText):
             self.parent.remove_handler(constants.CLICK, self.handle_event)
             if self.hotkey:
                 self.parent.remove_key_handler(self.hotkey, self.handle_event)
-
-    def rebuild(self):
-        old_underline = self.underline
-        self.calc_underline()
-        if self.underline != old_underline:
-            self.needs_redraw = True
-
-        super(Button, self).rebuild()
-
-    def calc_underline(self):
-        if self.force_underline != None:
-            self.underline = self.force_underline
-        elif self.text and self.hotkey and type(self.hotkey) in (str, unicode):
-            if self.hotkey in self.text:
-                self.underline = self.text.index(self.hotkey)
-            elif self.hotkey.lower() in self.text.lower():
-                self.underline = self.text.lower().index(self.hotkey.lower())
-        else:
-            self.underline = -1
 
     def watch_mouse(self, event):
         """Selects the button if the mouse is over it."""
@@ -130,20 +170,6 @@ class Button(text.SelectableText):
     def activated(self, event):
         """Called when the button is pressed or otherwise triggered."""
         raise constants.Handled
-
-    @property
-    def text(self):
-        return text.Text.text.fget(self)
-
-    @text.setter
-    def text(self, value):
-        if self.autohotkey and (value != None):
-            from code.g import get_hotkey, strip_hotkey
-            self.hotkey = get_hotkey(value)
-            text.Text.text.fset(self, strip_hotkey(value))
-        else:
-            text.Text.text.fset(self, value)
-
 
 class ImageButton(Button):
     def __init__(self, *args, **kwargs):
