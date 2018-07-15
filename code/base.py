@@ -78,10 +78,10 @@ class BaseClass(buyable.BuyableClass):
         return detect_chance
 
     def get_detect_info(self, location):
-        if not g.techs["Socioanalytics"].done:
+        if g.pl.display_discover == "none":
             return g.strings["detect_chance_unknown_base"].replace(" ", u"\xA0")
 
-        accurate = g.techs["Advanced Socioanalytics"].done
+        accurate = bool(g.pl.display_discover == "full")
         detect_modifier = 1 / location.modifiers.get("stealth", 1)
         chance = self.calc_discovery_chance(accurate, detect_modifier)
         detect_template = _("Detection chance:") + "\n" + \

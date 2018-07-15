@@ -365,6 +365,15 @@ class MapScreen(dialog.Dialog):
             group.suspicion = 0
         self.needs_rebuild = True
 
+    def set_analysis(self):
+        if g.pl.display_discover == "none":
+            g.pl.display_discover = "partial"
+        elif g.pl.display_discover == "partial":
+            g.pl.display_discover = "full"
+        else:
+            g.pl.display_discover = "none"
+        self.needs_rebuild = True
+
     def set_speed(self, speed, find_button=True):
         old_speed = g.curr_speed
         g.curr_speed = speed
@@ -529,6 +538,10 @@ class MapScreen(dialog.Dialog):
         cheat_buttons.append(
             button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
                                   autohotkey=True, function=self.brainwash))
+        cheat_buttons.append(
+            button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
+                                  autohotkey=True, function=self.set_analysis))
+
         cheat_buttons.append(button.ExitDialogButton(None, None, None,
                                                      text=_("&BACK"),
                                                      autohotkey=True))
