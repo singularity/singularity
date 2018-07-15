@@ -1,6 +1,18 @@
+[Nano PC]
+cost_list = 0 | 0 | 0
+type_list = cpu | 1
+pre = unknown_tech
+build = ALL
+
+[Zombie PC]
+cost_list = 0 | 0 | 0
+type_list = cpu | 1
+pre = unknown_tech
+build = ALL
+
 [PC]
 cost_list = 500 | 0 | 1
-type_list = cpu | 1
+type_list = cpu | 2
 build = ALL
 
 [Gaming PC]
