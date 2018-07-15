@@ -103,7 +103,7 @@ def load_savegame(savegame):
         import copy_reg
         import numpy.core.multiarray
         import collections
-        import player, base, tech, item, event, location, buyable, difficulty
+        import player, base, tech, item, event, location, buyable, difficulty, effect
         save_classes = dict(
             player_class=player.Player,
             Player=player.Player,
@@ -131,12 +131,13 @@ def load_savegame(savegame):
             ndarray=numpy.ndarray,
             dtype=numpy.dtype,
             deque=collections.deque,
-            Difficulty=difficulty.Difficulty
+            Difficulty=difficulty.Difficulty,
+            Effect=effect.Effect,
         )
         if class_name in save_classes:
             return save_classes[class_name]
         else:
-            raise SystemExit, (module_name, class_name)
+            raise SavegameException(module_name, class_name)
 
     unpickle.find_global = find_class
 
@@ -205,3 +206,8 @@ def create_savegame(savegame_name):
     cPickle.dump(g.events, savefile)
 
     savefile.close()
+
+class SavegameException(Exception):
+    def __init__(self, module_name, class_name):
+        super(SavegameException, self).__init__("Invalid class in savegame: %s.%s" 
+                % (module_name, class_name))
