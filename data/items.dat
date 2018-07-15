@@ -16,12 +16,12 @@ type_list = cpu | 2
 build = ALL
 
 [Gaming PC]
-cost_list = 1000 | 0 | 3
+cost_list = 1000 | 0 | 2
 type_list = cpu | 5
 build = ALL
 
 [Server]
-cost_list = 2000 | 0 | 3
+cost_list = 2000 | 0 | 2
 type_list = cpu | 10
 build = ALL
 
