@@ -2,10 +2,10 @@
 suspicion_decay = 150
 
 [science]
-suspicion_decay = 100
+suspicion_decay =  50
 
 [covert]
-suspicion_decay =  50
+suspicion_decay = 100
 
 [public]
 suspicion_decay = 200
