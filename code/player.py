@@ -109,8 +109,8 @@ class Player(object):
         self.partial_cash = 0
 
         self.groups = {"news":    Group("news",    suspicion_decay = 150),
-                       "science": Group("science", suspicion_decay = 100),
-                       "covert":  Group("covert",  suspicion_decay =  50),
+                       "science": Group("science", suspicion_decay =  50),
+                       "covert":  Group("covert",  suspicion_decay = 100),
                        "public":  Group("public",  suspicion_decay = 200)}
 
         self.grace_multiplier = 200
