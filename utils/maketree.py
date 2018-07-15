@@ -37,21 +37,23 @@ else:
     sys.path.append(esdir)
 
 try:
-    import code.g as g
+    import code.g as g, code.dirs as dirs
+    dirs.create_directories(False)
     g.set_language()
     g.load_techs()
     g.load_items()
+    g.load_tasks()
 except ImportError:
     sys.exit("Could not find game's code.g")
 
 so_far = ""
 
 def cost(c):
-    c = [ k/f for f,k in zip([1000, 86400, 24*60], c)]
+    c = [ k/f for f,k in zip([1, 86400, 24*60], c)]
     s = ', '.join(['%s %s' % (g.to_money(k), label) for label,k in zip(["money", "CPU", "days"], c) if k])
     return s and '\\n'+s or ''
 
-j = dict([ (v[1],',fillcolor="#ffcccc"') for k,v in g.jobs.items() ])
+j = dict([ (v.name,',fillcolor="#ffcccc"') for k,v in g.tasks.iteritems() if v.type != "jobs"])
 
 f = file("techs.dot", 'w')
 s = ("""\
