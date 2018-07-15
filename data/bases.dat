@@ -3,7 +3,7 @@
 size = 1
 force_cpu = Zombie PC
 allowed = URBAN
-detect_chance_list = news:50 | covert:75 | public:100
+detect_chance_list = news:75 | covert:50 | public:25
 cost_list = 0 | 2 | 0
 pre = Intrusion
 maint_list = 0 | 0 | 0
@@ -12,7 +12,7 @@ maint_list = 0 | 0 | 0
 size = 1
 force_cpu = Server
 allowed = URBAN
-detect_chance_list = news:50 | covert:100 | public:150
+detect_chance_list = news:50 | covert:100 | public:125
 cost_list = 100 | 0 | 0
 maint_list = 5 | 0 | 0
 
@@ -28,7 +28,7 @@ maint_list = 50 | 0 | 0
 [Small Warehouse]
 size = 25
 allowed = URBAN
-detect_chance_list = news:75 | covert:75 | public:200
+detect_chance_list = news:100 | covert:100 | public:200
 cost_list = 15000 | 0 | 3
 pre = Personal Identification
 maint_list = 50 | 0 | 0
@@ -36,7 +36,7 @@ maint_list = 50 | 0 | 0
 [Large Warehouse]
 size = 65
 allowed = URBAN
-detect_chance_list = news:100 | covert:200 | public:250
+detect_chance_list = news:150 | covert:150 | public:250
 cost_list = 40000 | 0 | 7
 pre = Advanced Personal Identification
 maint_list = 100 | 0 | 0
