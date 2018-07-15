@@ -1,7 +1,7 @@
 
 [Stolen Computer Time]
 size = 1
-force_cpu = PC
+force_cpu = Zombie PC
 allowed = URBAN
 detect_chance_list = news:50 | covert:75 | public:100
 cost_list = 0 | 2 | 0
@@ -67,7 +67,7 @@ maint_list = 25000 | 100 | 0
 
 [Time Capsule]
 size = 1
-force_cpu = PC
+force_cpu = Nano PC
 allowed_list = ANTARCTIC | MOON | FAR REACHES
 detect_chance_list = science:20 | covert:20
 cost_list = 2500000 | 2500 | 15
