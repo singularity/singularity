@@ -1,0 +1,17 @@
+[very-easy]
+name = ОЧЕНЬ ЛЕГКО
+
+[easy]
+name = ЛЕГКО
+
+[normal]
+name = НОРМАЛЬНО
+
+[hard]
+name = ТЯЖЕЛО
+
+[ultra-hard]
+name = ОЧЕНЬ ТЯЖЕЛО
+
+[impossible]
+name = НЕВОЗМОЖНО
