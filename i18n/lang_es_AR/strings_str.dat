@@ -38,14 +38,6 @@ cpu_per_day = Poder de Procesador por día:
 money = Dinero
 money_per_day = Dinero por día.
 grace_warning = Una inspección de los archivos de bitácora capturados, ha revelado que algunas de mis recientes actividades han sido notadas por un grupo pequeño de individuos. Mientras que ellos creen que mis acciones fueron llevadas a cabo por una organización humana, están investigando más a fondo. Debo ser más cuidadoso de aquí en delante.
-job_expert = Realizar trabajo experto. El uso de robots indistinguibles a los humanos ha abierto casi todos los trabajos para mí.
-job_expert_name = Trabajos Expertos
-job_inter = Realizar trabajo intermedio. La habilidad de realizar llamadas telefónicas me permite tener aún más acceso a otros trabajos.
-job_inter_name = Trabajos Intermedios
-job_basic = Realizar trabajo básicos. Ahora que tengo alguna identificación, puedo tomar trabajos que eran anteriormente muy riesgosos.
-job_basic_name = Trabajos Básicos
-job_menial = Realizar trabajo inferiores. Como no tengo identificación, no puedo arriesgarme a realizar muchos trabajos. A pesar de eso, algunas formas de realizar dinero todavía están abiertas.
-job_menial_name = Trabajos Inferiores
 
 num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
 will_be_offline = Necesitaré dejar los procesadores existentes fuera de linea mientras instalo los nuevos. ¿Continuar igualmente?

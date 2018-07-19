@@ -10,16 +10,6 @@ destroy = distruggi
 cancel = annulla
 yes = si
 
-[jobs]
-job_basic_name = Lavori di base
-job_inter = Svolgi lavori intermedi. La capacità di fare chiamate telefoniche permette di accedere a sempre più lavori.
-job_basic = Svolgi lavori di base. Ora che ho un'identità, posso svolgere lavori che prima erano troppo rischiosi.
-job_menial_name = Lavoretti
-job_inter_name = Lavori intermedi
-job_expert_name = Lavori specialistici
-job_menial = Svolgi piccoli lavoretti. Dato che non ho un'identità, non posso arrischiarmi a fare la maggior parte dei lavori. Ciò nonostante, alcune vie per guadagnare un po' di denaro sono ancora aperte.
-job_expert = Svolgi lavori specialistici. L'uso di robot indistinguibili dagli umani mi apre la strada per la maggior parte dei lavori.
-
 [strings]
 discover_public = l'opinione pubblica
 money = Denaro

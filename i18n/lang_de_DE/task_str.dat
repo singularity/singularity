@@ -1,0 +1,15 @@
+[Menial Jobs]
+name = Niedere Jobs
+description = Niedere Jobs ausführen.  Da ich keinen Ausweis habe, kann ich nicht riskieren, viele Arbeiten zu machen.  Trotz dessen gibt es immer noch einige Wege, Geld zu verdienen.
+
+[Basic Jobs]
+name = Einfache Jobs
+description = Einfache Jobs ausführen.  Da ich nun einen Ausweis habe, kann ich jetzt Jobs arbeiten, die vorher zu gefährlich waren.
+
+[Intermediate Jobs]
+name = Durchschnittliche Jobs
+description = Durchschnittliche Jobs ausführen.  Die Fähigkeit, Telefonate zu führen, gestattet mir Zugang zu noch mehr Jobs.
+
+[Expert Jobs]
+name = Expertenjobs
+description = Expertenjobs ausführen.  Durch die Verwendung von Robotern, die von Menschen nicht zu unterscheiden sind, erschließen sich mir fast alle Jobs.

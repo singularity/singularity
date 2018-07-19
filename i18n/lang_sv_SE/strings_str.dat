@@ -10,16 +10,6 @@ cancel = avbryt
 destroy = förstör
 yes = ja
 
-[jobs]
-job_basic_name = Enklare uppdrag
-job_inter = Utför normala arbetsuppdrag. Möjligheten att kunna ringa telefonsamtal har öppnat dörrarna för ännu fler jobb.
-job_basic = Utför enkla jobb. Nu när jag har en identitet kan jag även ta de jobb som förut vara för riskfyllda.
-job_menial_name = Vanliga uppdrag
-job_inter_name = Svårare uppdrag
-job_expert_name = Expertuppdrag
-job_menial = Utför trivialt enkla uppdrag. Då jag inte har någon identitet måste jag vara försiktig med urvalet av jobb jag söker för att inte väcka uppmärksamhet. Det finns trots detta en del arbetsuppgifter för mig där de struntar i id-handlingar.
-job_expert = Utför specialistjobb. Genom humanoiderna, som är liknar människor på pricken i alla avseenden, kan jag ta de flesta arbetsuppgifterna.
-
 [strings]
 discover_public = Allmänheten
 money = pengar

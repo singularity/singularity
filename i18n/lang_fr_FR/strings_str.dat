@@ -71,13 +71,3 @@ location_modifiers = Les bases situées à cet endroit sont des %(modifiers)s.
 cpu_bonus = plus efficace
 cpu_penalty = moins efficace
 
-[jobs]
-job_basic_name = Jobs simples
-job_inter = Execute des travaux moyens. La capacité à passer des appels téléphoniques m'offre encore plus de possibilités.
-job_basic = Execute des travaux simples. Maintenant que j'ai plusieurs identités, je peux accumuler des travaux qui étaient trop risqués par le passé. 
-job_menial_name = Jobs insignifiant
-job_inter_name = Jobs intermédiaire
-job_expert_name = Jobs experts
-job_menial = Execute des petits boulots. Comme je n'ai pas d'identité, je ne peux pas prendre le risque de faire beaucoup de travaux mais quelques moyens de gagner de l'argent me sont toujours possibles.
-job_expert = Execute des travaux d'expert. L'utilisation de robots indifférenciable des humains me donne accès à presque tout type de travaux.
-

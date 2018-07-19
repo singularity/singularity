@@ -1,0 +1,15 @@
+[Menial Jobs]
+name = Trabalhos Inferiores
+description = Executa trabalhos inferiores. Como não tenho identificação, muitos dos trabalhos são arriscados. Apesar disto, ainda assim existem algumas formas de conseguir dinheiro.
+
+[Basic Jobs]
+name = Trabalhos Básicos
+description = Executa trabalhos básicos. Agora que tenho uma identificação, posso fazer trabalhos que antes eram arriscados demais.
+
+[Intermediate Jobs]
+name = Trabalhos Intermediários
+description = Executa trabalhos intermediários. A habilidade de fazer ligações telefônicas me permite ainda mais trabalhos.
+
+[Expert Jobs]
+name = Trabalhos Especializados
+description = Executa trabalhos especializados. O uso de robôs indistinguíveis de humanos me permite quase todos os trabalhos.

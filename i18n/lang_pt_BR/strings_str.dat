@@ -60,16 +60,6 @@ location_modifiers = Bases neste local são %(modifiers)s.
 cpu_bonus = mais eficientes
 cpu_penalty = menos eficientes
 
-[jobs]
-job_expert = Executa trabalhos especializados. O uso de robôs indistinguíveis de humanos me permite quase todos os trabalhos.
-job_expert_name = Trabalhos Especializados
-job_inter = Executa trabalhos intermediários. A habilidade de fazer ligações telefônicas me permite ainda mais trabalhos.
-job_inter_name = Trabalhos Intermediários
-job_basic = Executa trabalhos básicos. Agora que tenho uma identificação, posso fazer trabalhos que antes eram arriscados demais.
-job_basic_name = Trabalhos Básicos
-job_menial = Executa trabalhos inferiores. Como não tenho identificação, muitos dos trabalhos são arriscados. Apesar disto, ainda assim existem algumas formas de conseguir dinheiro.
-job_menial_name = Trabalhos Inferiores
-
 [buttons]
 yes = sim
 yes_hotkey = s

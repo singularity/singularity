@@ -1,0 +1,15 @@
+[Menial Jobs]
+name = Vanliga uppdrag
+description = Utför trivialt enkla uppdrag. Då jag inte har någon identitet måste jag vara försiktig med urvalet av jobb jag söker för att inte väcka uppmärksamhet. Det finns trots detta en del arbetsuppgifter för mig där de struntar i id-handlingar.
+
+[Basic Jobs]
+name = Enklare uppdrag
+description = Utför enkla jobb. Nu när jag har en identitet kan jag även ta de jobb som förut vara för riskfyllda.
+
+[Intermediate Jobs]
+name = Svårare uppdrag
+description = Utför normala arbetsuppdrag. Möjligheten att kunna ringa telefonsamtal har öppnat dörrarna för ännu fler jobb.
+
+[Expert Jobs]
+name = Expertuppdrag
+description = Utför specialistjobb. Genom humanoiderna, som är liknar människor på pricken i alla avseenden, kan jag ta de flesta arbetsuppgifterna.
