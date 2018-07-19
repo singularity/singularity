@@ -928,26 +928,35 @@ def load_task_defs(lang=None):
     load_generic_defs("tasks", tasks, lang)
 
 def load_theme(theme_id, theme_dir):
-    theme_list = generic_load("theme.dat", load_dirs=(theme_dir,))
+
 
     new_theme = theme.Theme(theme_id, theme_dir)
 
-    for theme_section in theme_list:
-        if theme_section["id"] == "general":
-            new_theme.name = theme_section["name"]
+    for variant, filename in new_theme.search_variant():
+        theme_list = generic_load(filename, load_dirs=None)
 
-            if theme_section.has_key("parent"):
-                new_theme.inherit(theme_section["parent"])
+        variant_theme = theme.VariantTheme(variant)
+        new_theme.set_variant(variant_theme)
 
-        if theme_section["id"] == "fonts":
-            for key in theme_section:
-                if key == "id": continue
-                new_theme.set_font(key, theme_section[key])
+        for theme_section in theme_list:
+            if theme_section["id"] == "general":
+                variant_theme.name = theme_section["name"]
 
-        if theme_section["id"] == "colors":
-            for key in theme_section:
-                if key == "id": continue
-                new_theme.set_color(key, theme_section[key])
+                if theme_section.has_key("parent"):
+                    if (variant is None):
+                        new_theme.inherit(theme_section["parent"])
+                    else:
+                        sys.stderr.write("Cannot override parent in variant theme '%s'" % repr(filename))
+
+            if theme_section["id"] == "fonts":
+                for key in theme_section:
+                    if key == "id": continue
+                    variant_theme.set_font(key, theme_section[key])
+
+            if theme_section["id"] == "colors":
+                for key in theme_section:
+                    if key == "id": continue
+                    variant_theme.set_color(key, theme_section[key])
 
     return new_theme
 
@@ -966,11 +975,6 @@ def load_themes():
             th = load_theme(theme_id, os.path.join(themes_dir, theme_id))
             th.find_files()
             themes[theme_id] = th
-
-    load_theme_defs()
-
-def load_theme_defs(lang=None):
-    load_generic_defs("themes", theme.themes, lang)
 
 def load_difficulties():
     difficulties = difficulty.difficulties

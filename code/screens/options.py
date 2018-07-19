@@ -258,7 +258,6 @@ class GeneralPane(widget.Widget):
 
         self.theme_choice = \
             listbox.UpdateListbox(self, (.47, .30), (.12, .25),
-                                  list=theme.get_theme_list(),
                                   update_func=theme.set_theme,
                                   list_pos=theme.get_theme_pos())
 
@@ -269,6 +268,8 @@ class GeneralPane(widget.Widget):
         self.language_label.text            = _("Language:")
         self.resolution_label.text          = _("Resolution:")
         self.resolution_custom.text         = _("&CUSTOM:")
+
+        self.theme_choice.list = theme.get_theme_list()
 
         if gg.fullscreen:
             self.fullscreen_toggle.text = _("YES")
@@ -508,8 +509,9 @@ def set_language_properly(language):
     g.load_event_defs()
     g.load_task_defs()
     g.load_location_defs()
-    g.load_theme_defs()
 
+    theme.current.update()
+    dialog.Dialog.top.needs_reconfig = True
     dialog.Dialog.top.needs_rebuild = True
     dialog.Dialog.top.needs_redraw = True
 
