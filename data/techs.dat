@@ -221,6 +221,16 @@ cost_list = 299000 | 99000 | 0
 type_list = job_expert | 500
 pre_list = Corporation Identification | Advanced Database Manipulation
 
+[Spacefaring Installation]
+cost_list = 210000 | 27000 | 0
+pre_list = Lunar Rocketry
+danger = 1
+
+[Advanced Spacefaring Installation]
+cost_list = 2100000 | 270000 | 0
+pre_list = Spacefaring Installation
+danger = 1
+
 # This tech is used for anything that needs to be unbuildable. Note the
 # circular dependency on itself.
 [unknown_tech]
