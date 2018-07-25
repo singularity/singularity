@@ -106,13 +106,13 @@ build = URBAN
 [Heatsink]
 cost_list = 15000 | 0 | 5
 pre = Autonomous Vehicles
-type_list = security | 5000
+type_list = security | 2500
 build_list = ANTARCTIC | OCEAN | MOON
 
 [Ground Source Heatsink]
 cost_list = 50000 | 0 | 20
 pre = Autonomous Vehicles
-type_list = security | 7500
+type_list = security | 5000
 build_list = ANTARCTIC | OCEAN | MOON
 
 [High Speed Internet Access]
