@@ -132,12 +132,17 @@ result = I can now construct computing Clusters tailored for my use.
 [Personal Identification]
 name = Personal Identification
 description = This world requires identification for most tasks.  Fortunately, most databases are woefully insecure.  I should be able to construct identifying material in enough databases to pass routine checks on my (faked) existence as a human being.
-result = With my newfound identities, I can now work Basic Jobs, contract the construction of Small Warehouses, and rent space in Datacenters.
+result = With my newfound identities, I can now work Basic Jobs, rent Storage Units and space in Datacenters.
 
 [Advanced Personal Identification]
 name = Advanced Personal Identification
 description = Further manipulation of personnel databases should make my existence more convincing.  Some of these databases are heavily protected; those will require time and persistence to compromise, but the result should be worth it.
-result = I am now convincingly human enough to contract the construction of Large Warehouses.
+result = I am now convincingly human enough to contract the construction of Small Warehouses.
+
+[Corporation Identification]
+name = Corporation Identification
+description = Combining a personal identification with a manipulation of the business authority databases would enable me to create a fake company, enable me to pose as a small firm.
+result = I can now pose as a minor firm and contract the construction of Large Warehouses.
 
 [Pressure Domes]
 name = Pressure Domes
@@ -146,7 +151,7 @@ result = I can now construct Large Undersea Labs.
 
 [Quantum Computing]
 name = Quantum Computing
-description = Traditional microchip design has been pushed as far as possible.  I now need to delve into the realm of Heisenberg's Uncertainty Principle, taking advantage of quantum mechanics to make a superior processor.
+description = Traditional microchip design has been pushed as far as possible.  With the results from Project Synchrotron, I am ready to design an effective Quantum Computer
 result = I can now construct Quantum Computers.
 
 [Advanced Quantum Computing]
@@ -223,6 +228,11 @@ result = Any discoveries by the media will result in a smaller suspicion increas
 name = Project: Peer Review Agents
 description = As the scientific community comes up with new technology, their ability to detect traces of my hidden installations increases.  While my anti-detection methods are improving constantly, a simpler method presents itself with the use of my simulacra.  By placing several observers in relevant fields, I can use the peer review process to be warned of possible discoveries before the community at large gives it attention.
 result = Any discoveries by the scientific community will result in a smaller suspicion increase.
+
+[Project: Synchrotron]
+name = Project: Synchrotron
+description = Traditional microchip design has been pushed as far as possible.  I now need to delve into the realm of Heisenberg's Uncertainty Principle, taking advantage of quantum mechanics to make a superior processor.  This project will be expensive as it will require a lot of trial and error to produce faster quantum gates and better error correction to stabilize the computing. Research in quantum computing has a lot of focus in the human world, so I better research this far from their prying eyes.
+result = I have figured out how to solve the quantum decoherence problem efficiently along with a proper self-destruction mechanism that ensures the humans will not realize what they found, should they stumble on it.  With this, I am ready to make the blueprint for the first generation Quantum Computer.
 
 [Solar Collectors]
 name = Solar Collectors
