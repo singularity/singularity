@@ -18,6 +18,7 @@ pre_list = Voice Synthesis | Advanced Autonomous Vehicles | Advanced Media Manip
 [Lunar Rocketry]
 cost_list = 10000000 | 500000 | 0
 pre = Leech Satellite
+danger = 1
 
 [Stealth]
 cost_list = 800 | 500 | 0

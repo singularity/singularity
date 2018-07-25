@@ -24,6 +24,7 @@ region_list = URBAN
 
 [ANTARCTIC]
 position_list = 50 | 91
+safety = 1
 modifier_list = stealth:bonus | thrift:penalty
 pre_list = OR | Autonomous Vehicles | Advanced Database Manipulation
 
