@@ -1,3 +1,11 @@
+[Zombie PC]
+name = Hidden CPU process
+description = A hidden process on a consumer-level PC that enables me to "borrow" some CPU time.
+
+[Nano PC]
+name = Nano PC
+description = A smaller and slower variant consumer-level PC.
+
 [PC]
 name = PC
 description = A consumer-level PC; cheap and slow.
