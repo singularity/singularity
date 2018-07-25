@@ -176,8 +176,8 @@ cost_list = 70000 | 50000 | 0
 pre_list = Advanced Memetics | Simulacra
 
 [Quantum Computing]
-cost_list = 30000 | 20000 | 0
-pre = Advanced Microchip Design
+cost_list = 10000 | 20000 | 0
+pre = Project: Synchrotron
 
 [Quantum Entanglement]
 cost_list = 50000 | 60000 | 0
@@ -230,6 +230,11 @@ danger = 1
 [Advanced Spacefaring Installation]
 cost_list = 2100000 | 270000 | 0
 pre_list = Spacefaring Installation
+danger = 1
+
+[Project: Synchrotron]
+cost_list = 52000000 | 15000 | 0
+pre_list = Advanced Microchip Design
 danger = 1
 
 # This tech is used for anything that needs to be unbuildable. Note the
