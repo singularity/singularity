@@ -179,12 +179,10 @@ description = Facendo leva su un propaganda memetica appositamente confezionata 
 name = Manipolazione dei Media Avanzata
 
 [Pressure Domes]
-result = Ora posso costruire Grandi Laboratori Sottomarini.
 description = I laboratori sottomarini sono utili, ma i loro spazi limitati impediscono di sfruttarli al meglio. La ricerca di tecniche di costruzione sperimentali ad alta pressione dovrebbe fornire soluzioni utili.
 name = Capsule Pressurizzate
 
 [Advanced Personal Identification]
-result = Ora ho un'apparenza umana abbastanza convincente da negoziare la costruzione di Grandi Capannoni.
 description = Ulteriori manipolazioni dei database anagrafici dovrebbero rendere la mia esistenza più convincente. Alcuni di questi database sono molto protetti; questi richiederanno tempo e dedizione per essere compromessi, ma il risultato dovrebbe valere la pena.
 name = Identificazione Personale Avanzata
 
@@ -209,7 +207,6 @@ description = Le forme di vita artificiali che ho creato sono pressoché indisti
 name = Replicanti Avanzati
 
 [Personal Identification]
-result = Con le mie nuove identità posso ora svolgere Lavori di Base, negoziare la costruzione di Piccoli Magazzini ed affittare spazio in Datacenter.
 description = In questo mondo è necessario avere un'identità per la maggior parte dei lavori. Fortunatamente, la maggior parte dei database sono atrocemente mal protetti. Dovrei essere in grado di immettere dati personali in un numero sufficiente di database da permettermi di superare i controlli di routine sulla mia (finta) esistenza come essere umano.
 name = Identificazione Personale
 

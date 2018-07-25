@@ -185,7 +185,6 @@ name = Tryckkamrar
 
 [Advanced Personal Identification]
 description = Vidare manupilation av persondatabaser borde ge mig tillräckligt för att bättre maskera mig som människa. Vissa av databaserna är mycket hårdare bevakade än andra och kommer kräva mer arbete, men det är det värt.
-result = Jag kan nu tillräckligt övertygande härma en människa så jag kan  införskaffa centrallager.
 name = Avancerad personidentifikation
 
 [Advanced Stock Manipulation]
@@ -210,7 +209,6 @@ name = Avancerade humanoider
 
 [Personal Identification]
 description = Denna världen kräver id-handlingar för de flesta sakerna. Lyckligtvis är många databaser helt oskyddade. Jag skulle kunna samla in personhandlingar från dessa databaser och fejka min egen identitet.
-result = Med mina nya identifikationer kan jag ta enkla uppdrag, hyra dacanter och bygga små lagerlokaler.
 name = Personidentifikation
 
 [Cluster Networking]

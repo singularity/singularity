@@ -15,12 +15,10 @@ flavor_list = Centro de cómputos | Centro de datos | Hosting
 
 [Small Warehouse]
 name = Almacén Pequeño
-description = Alquila un pequeño almacén en un lugar alejado. Necesitaré una identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
 flavor_list = Oficina Alquilada | Almacén Pequeño | Depósito Pequeño
 
 [Large Warehouse]
 name = Almacén Grande
-description = Alquila un gran almacén en un lugar alejado. Necesitaré una buena identificación falsa para el papeleo, y preparar el almacén para mis necesidades llevará algún tiempo.
 flavor_list = Almacén Grande | Depósito Grande
 
 [Covert Base]

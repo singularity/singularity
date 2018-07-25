@@ -11,12 +11,10 @@ description = (1 CPU) Ta över någons dator. Jag kan inte bygga något här och
 [Small Warehouse]
 flavor_list = Upplag | Liten lagerlokal | Förrådslokal
 name = Liten lagerlokal
-description = Hyr en liten lagerlokal på en avsides plats. Jag behöver falska identifikationshandlingar för pappersarbetet samt anpassningar för att utrymmet skall passa mina speciella behov.
 
 [Covert Base]
 flavor_list = Bunker | Hemlig bas
 name = Gömställe
-description = Den unika designen oh dess kamoflerade utsida får den att smälta in i naturen runt omkring. Byggnaden är också specialgjord för att vara självförsörjande. Denna basen är idealisk för att spara backuper i fall om att.
 
 [Server Access]
 flavor_list = Dedikerad Server | Serverutrymme | Hosting

@@ -126,12 +126,10 @@ result = Ahora puedo construir Clusters a la medida para mi uso.
 [Personal Identification]
 name = Identificación Personal
 description = Este mundo requiere de identificación para la mayoría de las tareas. Afortunadamente, la mayoría de las bases de datos son terriblemente inseguras. Debo ser capaz de fabricar material identificatorio en suficientes bases de datos para pasar revisiones de rutina sobre mi (falsa) existencia como un ser humano.
-result = Con mis nuevas identidades, ahora puedo realizar Trabajos Básicos y contratar la construcción de Almacenes Pequeños.
 
 [Advanced Personal Identification]
 name = Identificación Personal Avanzada
 description = Una mayor manipulación de bases de datos personales harán mi existencia más convincente. Algunas de estas bases de datos están fuertemente protegidas. Estas requerirán de tiempo y persistencia para comprometerlas, pero el resultado recompensará el esfuerzo.
-result = Ahora soy un suficientemente convincente un humano para contratar la construcción de Almacenes Grandes.
 
 [Pressure Domes]
 name = Domos de Presión

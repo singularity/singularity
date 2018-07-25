@@ -126,12 +126,10 @@ result = Ich kann jetzt Computer-Cluster bauen, die an meine Bedürfnisse angepa
 [Personal Identification]
 name = Personalausweis
 description = Diese Welt verlangt Identifizierung für die meisten Aufgaben.  Glücklicherweise sind die meisten Datenbanken beklagenswert unsicher.  Ich sollte identifizierende Einträge in genug Datenbanken einfügen können, um routinemäßige Kontrollen auf meine (vorgetäuschte) Existenz als Mensch zu bestehen.
-result = Aufgrund meiner neugewonnenen Identitäten kann ich jetzt Einfache Jobs arbeiten, Kleine Lagerhäuser bauen lassen und Rechenzentren mieten.
 
 [Advanced Personal Identification]
 name = Erweiterter Personalausweis
 description = Weitere Manipulation von Personaldatenbanken sollte meine Existenz noch überzeugender machen.  Einige dieser Datenbanken sind stark gesichert; es wird Zeit und Hartnäckigkeit erfordern, in diese einzudringen, es sollte sich aber lohnen.
-result = Ich bin jetzt überzeugend genug menschlich um Große Lagerhäuser bauen zu lassen.
 
 [Pressure Domes]
 name = Druckkuppeln
