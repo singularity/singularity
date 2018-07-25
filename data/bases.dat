@@ -53,7 +53,7 @@ maint_list = 100 | 0 | 0
 size = 2
 allowed_list = URBAN | ANTARCTIC
 detect_chance_list = news:50 | science:75 | covert:75
-cost_list = 400000 | 100 | 21
+cost_list = 400000 | 100 | 10
 pre = Advanced Database Manipulation
 maint_list = 3500 | 9 | 0
 
@@ -61,7 +61,7 @@ maint_list = 3500 | 9 | 0
 size = 8
 allowed = OCEAN
 detect_chance_list = news:50 | science:100 | covert:125
-cost_list = 8000000 | 1000 | 20
+cost_list = 8000000 | 1000 | 8
 pre = Autonomous Vehicles
 maint_list = 10000 | 30 | 0
 
@@ -69,7 +69,7 @@ maint_list = 10000 | 30 | 0
 size = 32
 allowed = OCEAN
 detect_chance_list = news:100 | science:175 | covert:175
-cost_list = 20000000 | 3000 | 40
+cost_list = 20000000 | 3000 | 16
 pre = Pressure Domes
 maint_list = 25000 | 100 | 0
 
