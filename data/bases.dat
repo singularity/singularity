@@ -82,20 +82,44 @@ cost_list = 2500000 | 2500 | 15
 pre = Autonomous Vehicles
 maint_list = 0 | 1 | 0
 
-[Lunar Facility]
-size = 600
+[Lunar Module]
+size = 21
 allowed = MOON
 detect_chance_list = news:33 | science:167 | covert:7
-cost_list = 400000000 | 150000 | 20
+cost_list = 100000000 | 35000 | 20
 pre = Lunar Rocketry
+maint_list = 25000 | 125 | 0
+
+[Small Lunar Facility]
+size = 70
+allowed = MOON
+detect_chance_list = news:55 | science:207 | covert:17
+cost_list = 200000000 | 75000 | 20
+pre = Spacefaring Installation
+maint_list = 100000 | 250 | 0
+
+[Large Lunar Facility]
+size = 210
+allowed = MOON
+detect_chance_list = news:77 | science:257 | covert:27
+cost_list = 400000000 | 150000 | 20
+pre = Advanced Spacefaring Installation
 maint_list = 500000 | 500 | 0
 
 [Scientific Outpost]
-size = 225
+size = 25
 allowed = FAR REACHES
 detect_chance_list = news:20 | science:350
-cost_list = 1000000000 | 3000000 | 5
+cost_list = 1000000000 | 150000 | 5
 pre = Fusion Rocketry
+maint_list = 450000 | 75 | 0
+
+[Large Scientific Outpost]
+size = 125
+allowed = FAR REACHES
+detect_chance_list = news:30 | science:450
+cost_list = 2000000000 | 3000000 | 5
+pre_list = Fusion Rocketry | Advanced Spacefaring Installation
 maint_list = 900000 | 150 | 0
 
 [Reality Bubble]
