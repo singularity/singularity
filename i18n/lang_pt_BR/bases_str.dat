@@ -15,12 +15,10 @@ flavor_list = Centro de Dados | Centro de Dados | Hospedagem Premium
 
 [Small Warehouse]
 name = Pequeno Armazém
-description = Aluga um pequeno armazém em algum lugar discreto. Preciso de uma identidade falsa para a papelada, e além disso vai levar algum tempo para preparar o armazém pra se adequar aos meus propósitos particulares.
 flavor_list = Aluguel de Escritório | Pequeno Armazém | Pequeno Depósito
 
 [Large Warehouse]
 name = Grande Armazém
-description = Aluga um grande armazém em algum lugar discreto. Preciso de uma boa identidade falsa pra papelada, e além disso vai levar algum tempo para preparar o armazém pra se adequar aos meus propósitos particulares.
 # Commented out till we get cities done right.
 # flavor = Shipping Dock
 flavor_list = Grande Armazém | Grande Depósito

@@ -15,17 +15,17 @@ flavor_list = Datacenter | Data Center | Premium Hosting
 
 [Storage Unit]
 name = Storage Unit
-description = 
-flavor_list = Garage Rental | Furniture Storage | Self-Storage
+description = Rent a small closed room from a storage company. I will need a fake ID for some of the paperwork .
+flavor_list = Garage Rental | Furniture Storage | Self-Storage
 
 [Small Warehouse]
 name = Small Warehouse
-description = Rent a small warehouse someplace out of the way. I will need a fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+description = Rent a small warehouse someplace out of the way. I will need a good fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
 flavor_list = Office Lease | Small Warehouse | Small Storage
 
 [Large Warehouse]
 name = Large Warehouse
-description = Rent a large warehouse someplace out of the way. I will need a good fake ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
+description = Rent a large warehouse someplace out of the way. I will need a fake company ID for some of the paperwork, and preparing the warehouse to suit my unique needs will take some time.
 # Commented out till we get cities done right.
 # flavor = Shipping Dock
 flavor_list = Large Warehouse | Large Storage

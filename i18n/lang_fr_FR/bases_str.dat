@@ -15,12 +15,10 @@ flavor_list = Centre de Données | Hébergement de première qualité
 
 [Small Warehouse]
 name = Petit Entrepôt
-description = Louer un petit entrepôt dans un endroit peu connu. Je vais avoir besoin d'une fausse identité pour la paperasse et de préparer l'entrepôt pour qu'il corresponde à mes besoins particuliers va prendre quelque temps.
 flavor_list = Petit Entrepôt
 
 [Large Warehouse]
 name = Grand Entrepôt
-description = Louer un grand entrepôt dans un endroit peu connu. Je vais avoir besoin d'une fausse identité de qualité pour la paperasse et de préparer l'entrepôt pour qu'il corresponde à mes besoins particuliers va prendre quelque temps.
 # Commented out till we get cities done right.
 # flavor = Shipping Dock
 flavor_list = Grand Entrepôt
