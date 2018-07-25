@@ -37,7 +37,6 @@ building = In Costruzione
 detect_chance_unknown_base = PROBABILITÀ DI INDIVIDUAZIONE SCONOSCIUTE
 danger_4 = al di fuori dell'Universo
 unbuildable = Non posso costruire in questa base. Non dispongo di accesso fisico.
-danger_1 = nelle profondità marine o nello spazio
 danger_2 = nello spazio
 danger_3 = lontano da questo pianeta
 discover_covert = diversi servizi segreti governativi
