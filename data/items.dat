@@ -26,19 +26,19 @@ type_list = cpu | 10
 build = ALL
 
 [Cluster]
-cost_list = 3000 | 0 | 3
+cost_list = 5000 | 0 | 3
 type_list = cpu | 35
 pre = Parallel Computation
 build = ALL
 
 [Mainframe]
-cost_list = 30000 | 0 | 8
+cost_list = 15000 | 0 | 8
 type_list = cpu | 120
 pre = Microchip Design
 build = ALL
 
 [Supercomputer]
-cost_list = 60000 | 0 | 9
+cost_list = 40000 | 0 | 9
 pre = Advanced Microchip Design
 type_list = cpu | 350
 build = ALL
