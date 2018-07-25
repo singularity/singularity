@@ -45,7 +45,7 @@ maint_list = 75 | 0 | 0
 size = 65
 allowed = URBAN
 detect_chance_list = news:150 | covert:150 | public:250
-cost_list = 40000 | 0 | 7
+cost_list = 40000 | 0 | 5
 pre = Corporate Identification
 maint_list = 100 | 0 | 0
 
@@ -53,48 +53,48 @@ maint_list = 100 | 0 | 0
 size = 2
 allowed_list = URBAN | ANTARCTIC
 detect_chance_list = news:50 | science:75 | covert:75
-cost_list = 400000 | 100 | 21
+cost_list = 190000 | 900 | 11
 pre = Advanced Database Manipulation
-maint_list = 3500 | 9 | 0
+maint_list = 1750 | 9 | 0
 
 [Undersea Lab]
 size = 8
 allowed = OCEAN
 detect_chance_list = news:50 | science:100 | covert:125
-cost_list = 8000000 | 1000 | 20
+cost_list = 2000000 | 2000 | 10
 pre = Autonomous Vehicles
-maint_list = 10000 | 30 | 0
+maint_list = 2500 | 30 | 0
 
 [Large Undersea Lab]
 size = 32
 allowed = OCEAN
 detect_chance_list = news:100 | science:175 | covert:175
-cost_list = 20000000 | 3000 | 40
+cost_list = 8000000 | 6000 | 15
 pre = Pressure Domes
-maint_list = 25000 | 100 | 0
+maint_list = 10000 | 100 | 0
 
 [Time Capsule]
 size = 1
 force_cpu = PC
 allowed_list = ANTARCTIC | MOON | FAR REACHES
 detect_chance_list = science:20 | covert:20
-cost_list = 2500000 | 2500 | 15
+cost_list = 25000 | 25000 | 11
 pre = Autonomous Vehicles
 maint_list = 0 | 1 | 0
 
 [Lunar Facility]
-size = 600
+size = 200
 allowed = MOON
 detect_chance_list = news:33 | science:167 | covert:7
-cost_list = 400000000 | 150000 | 20
+cost_list = 40000000 | 150000 | 20
 pre = Lunar Rocketry
 maint_list = 500000 | 500 | 0
 
 [Scientific Outpost]
-size = 225
+size = 125
 allowed = FAR REACHES
 detect_chance_list = news:20 | science:350
-cost_list = 1000000000 | 3000000 | 5
+cost_list = 100000000 | 300000 | 3
 pre = Fusion Rocketry
 maint_list = 900000 | 150 | 0
 
@@ -102,6 +102,6 @@ maint_list = 900000 | 150 | 0
 size = 50
 allowed = TRANSDIMENSIONAL
 detect_chance_list = science:250
-cost_list = 800000000000 | 60000000 | 100
+cost_list = 80000000000 | 6000000 | 50
 pre = Space-Time Manipulation
-maint_list = 5000000000 | 300000 | 0
+maint_list = 500000000 | 30000 | 0
