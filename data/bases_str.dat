@@ -15,8 +15,8 @@ flavor_list = Datacenter | Data Center | Premium Hosting
 
 [Storage Unit]
 name = Storage Unit
-description = 
-flavor_list = Garage Rental | Furniture Storage | Self-Storage
+description = A small closed room rented from a storage company with power and minor cooling capabilities.
+flavor_list = Garage Rental | Furniture Storage | Self-Storage
 
 [Small Warehouse]
 name = Small Warehouse
@@ -52,23 +52,28 @@ flavor_list = Time Capsule | Capsule
 
 [Lunar Module]
 name = Lunar Module
-description =
+description = This base is a small independent computing module hidden in a cavern dug into the Moon's surface.
 flavor_list = Lunar Module | Lunar Capsule
 
 [Small Lunar Facility]
 name = Small Lunar Facility
-description = This base is a series of caverns dug into the Moon's surface. Due to the lack of neighbors, this base is quite large.
+description = This base is a small facility built into caverns dug in the surface of the Moon.  It can host about three times as much computing compared to the Lunar Module.
 flavor_list = Small Lunar Facility | Small Lunar Base
 
 [Large Lunar Facility]
 name = Large Lunar Facility
-description =
+description = This base is a series of facilities hidden in caverns dug into the surface of the Moon.
 flavor_list = Large Lunar Facility | Large Lunar Base
 
 [Scientific Outpost]
 name = Scientific Outpost
 description = This base is placed as far from Earth as practical, providing a safer location to conduct some of my more dangerous experiments.
-flavor_list = Satellite | Outpost | Scientific Outpost
+flavor_list = Small Satellite | Small Outpost | Small Scientific Outpost
+
+[Large Scientific Outpost]
+name = Large Scientific Outpost
+description = This base is similar to the regular scientific output but larger, giving more room for experiments.
+flavor_list = Large Satellite | Large Outpost | Large Scientific Outpost
 
 [Large Scientific Outpost]
 name = Large Scientific Outpost
