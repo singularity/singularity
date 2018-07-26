@@ -543,12 +543,20 @@ class Player(object):
 
         # If we don't have enough to meet our CPU usage, we reduce each task's
         # usage proportionately.
-        needed_cpu = sum(self.cpu_usage.values())
-        if needed_cpu > self.available_cpus[0]:
-            pct_left = truediv(self.available_cpus[0], needed_cpu)
-            for task, cpu_assigned in self.cpu_usage.iteritems():
-                self.cpu_usage[task] = int(cpu_assigned * pct_left)
-            g.map_screen.needs_rebuild = True
+        # It must be computed separalty for each danger.
+        needed_cpus = array([0,0,0,0,0], long)
+        for task_id, cpu in g.pl.cpu_usage.iteritems():
+            danger = task.danger_for(task_id)
+            needed_cpus[:danger+1] += cpu
+        for danger, (available_cpu, needed_cpu) in enumerate(zip(self.available_cpus, needed_cpus)):
+            if needed_cpu > available_cpu:
+                pct_left = truediv(available_cpu, needed_cpu)
+                print(pct_left)
+                for task_id, cpu_assigned in self.cpu_usage.iteritems():
+                    task_danger = task.danger_for(task_id)
+                    if (danger == task_danger):
+                        self.cpu_usage[task_id] = int(cpu_assigned * pct_left)
+                g.map_screen.needs_rebuild = True
 
 
     # Are we still in the grace period?

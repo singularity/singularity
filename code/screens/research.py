@@ -105,12 +105,6 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def cpu_for(self, key):
         return g.pl.cpu_usage.get(key, 0)
 
-    def danger_for(self, key):
-        if key in ["jobs", "cpu_pool"]:
-            return 0
-        else:
-            return g.techs[key].danger
-
     def update_item(self, canvas, name, key):
         visible = (key is not None)
         canvas.research_name.visible = visible
@@ -123,7 +117,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         if not visible:
             return
 
-        danger = self.danger_for(key)
+        danger = task.danger_for(key)
         if danger > 0 and g.pl.available_cpus[danger] == 0:
             canvas.help_button.visible = True
             canvas.help_button.args = (danger,)
@@ -155,8 +149,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
     def calc_cpu_left(self):
         cpu_count = array(g.pl.available_cpus, long)
-        for task, cpu in g.pl.cpu_usage.iteritems():
-            danger = self.danger_for(task)
+        for task_id, cpu in g.pl.cpu_usage.iteritems():
+            danger = task.danger_for(task_id)
             cpu_count[:danger+1] -= cpu
 
         for i in range(1, 4):
