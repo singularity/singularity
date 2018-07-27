@@ -288,8 +288,8 @@ def generate_base_name(location, base_type):
         else:
             number = str(random.randint(0, 32767))
 
-        city   = random.choice(location.cities)
-        flavor = random.choice(base_type.flavor)
+        city   = random.choice(location.cities) if location.cities else None
+        flavor = random.choice(base_type.flavor) if base_type.flavor else base_type.name
 
         if city:
             #Translators: Format string for the name of a new base
