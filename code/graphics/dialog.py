@@ -438,7 +438,7 @@ class TextDialog(Dialog):
         kwargs.setdefault("valign", constants.TOP)
         kwargs.setdefault("align", constants.LEFT)
         kwargs.setdefault("shrink_factor", .88)
-        kwargs.setdefault("background_color", g.colors["dark_blue"])
+        kwargs.setdefault("background_color", "dark_blue")
         kwargs.setdefault("borders", constants.ALL)
 
         super(TextDialog, self).__init__(parent, pos, size, anchor, **kwargs)
@@ -536,7 +536,7 @@ class TextEntryDialog(TextDialog):
 
         self.text_field = text.EditableText(self, (0, -.50), (-.80, -.50),
                                             borders=constants.ALL,
-                                            base_font=g.fonts["normal"])
+                                            base_font="normal")
 
         self.ok_button = button.FunctionButton(self, (-.82, -.50), (-.18, -.50),
                                                text=g.buttons["ok"],
@@ -569,7 +569,7 @@ class ChoiceDialog(YesNoDialog):
         self.default = kwargs.pop("default", None)
         kwargs.setdefault("yes_type", "ok")
         kwargs.setdefault("no_type", "back")
-        kwargs.setdefault("background_color", g.colors["clear"])
+        kwargs.setdefault("background_color", "clear")
 
         super(ChoiceDialog, self).__init__(parent, *args, **kwargs)
 
@@ -670,8 +670,8 @@ class SimpleMenuDialog(Dialog):
         self.button_panel = \
             widget.BorderedWidget(self, (-.5, -.5), (0.22, 0.43),
                                   anchor=constants.MID_CENTER,
-                                  background_color=g.colors["dark_blue"],
-                                  border_color=g.colors["white"],
+                                  background_color="dark_blue",
+                                  border_color="white",
                                   borders=constants.ALL)
 
         self.buttons = buttons

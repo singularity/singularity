@@ -660,7 +660,7 @@ class Player(object):
 
             self.pause_game()
             base.destroy()
-            g.map_screen.show_message(dialog_string, color=gg.colors["red"])
+            g.map_screen.show_message(dialog_string, color="red")
 
         # Now we update the internal information about what locations had
         # the most recent discovery and the nextmost recent one.  First,

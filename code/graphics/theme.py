@@ -171,13 +171,9 @@ class Theme(object):
                 if (variant in parent._variants):
                     parent._variants[variant].init_cache()
 
-        # Resolve aliased colors
-        for color_name, color in g.colors.iteritems():
-            g.colors[color_name] = g.resolve_color_alias(color)
-
     def update(self):
         self.init_cache()
-        dialog.Dialog.top.needs_reconfig
+        dialog.Dialog.top.needs_reconfig = True
 
     @property
     def name(self):

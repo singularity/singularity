@@ -21,7 +21,6 @@
 
 import os.path
 import pygame
-import theme
 
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
@@ -111,6 +110,7 @@ def init_graphics_system(size=None):
     set_mode()
 
     # Initialize the cache of the current theme.
+    import theme
     theme.current.init_cache()
 
     init_alpha()
@@ -118,7 +118,6 @@ def init_graphics_system(size=None):
     # Set the application icon and caption
     pygame.display.set_icon(images["icon"])
     pygame.display.set_caption("Endgame: Singularity")
-
 
 def set_fullscreen(value):
     set_screen_size(fs=value)
@@ -187,8 +186,20 @@ def init_alpha():
     global ALPHA
     ALPHA = pygame.Surface((0,0)).convert_alpha()
 
+def resolve_image_alias(image):
+    if (isinstance(image, basestring)):
+        return resolve_color_alias(images[image])
+    else:
+        return image
+
 def resolve_color_alias(color):
     if (isinstance(color, basestring)):
         return resolve_color_alias(colors[color])
     else:
         return color
+
+def resolve_font_alias(font):
+    if (isinstance(font, basestring)):
+        return resolve_color_alias(fonts[font])
+    else:
+        return font

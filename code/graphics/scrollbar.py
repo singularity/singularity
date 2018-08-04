@@ -35,6 +35,9 @@ class _ArrowButton(button.FunctionButton, button.ImageButton):
         kwargs["args"] = (self.first,)
         super(_ArrowButton, self).__init__(parent, *args, **kwargs)
 
+    def reconfig(self):
+        super(_ArrowButton, self).reconfig()
+
         base_image = g.images['arrow']
         if self.first and self.horizontal:
             angle = 90

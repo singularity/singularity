@@ -162,7 +162,7 @@ class GeneralPane(widget.Widget):
         self.fullscreen_label = button.HotkeyText(self, (.01, .01), (.14, .05),
                                                   autohotkey=True,
                                                   align=constants.LEFT,
-                                                  background_color=gg.colors["clear"])
+                                                  background_color="clear")
         self.fullscreen_toggle = OptionButton(self, (.16, .01), (.07, .05),
                                               text_shrink_factor=.75,
                                               force_underline=-1,
@@ -172,7 +172,7 @@ class GeneralPane(widget.Widget):
 
         self.daynight_label = button.HotkeyText(self, (.25, .01), (.20, .05),
                                                 autohotkey=True,
-                                                background_color=gg.colors["clear"])
+                                                background_color="clear")
         self.daynight_toggle = OptionButton(self, (.46, .01), (.07, .05),
                                         text_shrink_factor=.75,
                                         force_underline=-1,
@@ -182,7 +182,7 @@ class GeneralPane(widget.Widget):
 
         self.grab_label = button.HotkeyText(self, (.55, .01), (.15, .05),
                                             autohotkey=True,
-                                            background_color=gg.colors["clear"])
+                                            background_color="clear")
         self.grab_toggle = OptionButton(self, (.71, .01), (.07, .05),
                                         text_shrink_factor=.75,
                                         force_underline=-1,
@@ -193,7 +193,7 @@ class GeneralPane(widget.Widget):
         # Second and third row
         self.resolution_label = text.Text(self, (.01, .08), (.14, .05),
                                           align=constants.LEFT,
-                                          background_color=gg.colors["clear"])
+                                          background_color="clear")
 
         self.resolution_group = button.ButtonGroup()
 
@@ -224,27 +224,27 @@ class GeneralPane(widget.Widget):
             text.EditableText(self, (xpos(1), ypos(index+1)), (.14, .05),
                               text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
-                              border_color=gg.colors["widget_border"],
+                              border_color="widget_border",
                               background_color=(0,0,50,255))
 
         self.resolution_custom_X = text.Text(self,
                                              (xpos(2)-.02, ypos(index+1)),
                                              (.02, .05),
                                              text="X",
-                                             base_font=gg.fonts["special"],
-                                             background_color=gg.colors["clear"])
+                                             base_font="special",
+                                             background_color="clear")
 
         self.resolution_custom_vert = \
             text.EditableText(self, (xpos(2), ypos(index+1)), (.14, .05),
                               text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
-                              border_color=gg.colors["widget_border"],
+                              border_color="widget_border",
                               background_color=(0,0,50,255))
 
         # Fifth row
         self.language_label = text.Text(self, (.01, .30), (.14, .05),
                                         align=constants.LEFT,
-                                        background_color=gg.colors["clear"])
+                                        background_color="clear")
 
         self.languages = get_languages_list()
         self.language_choice = \
@@ -254,7 +254,7 @@ class GeneralPane(widget.Widget):
 
         self.theme_label = text.Text(self, (.37, .30), (.09, .05),
                                      text=_("Theme:"), align=constants.LEFT,
-                                     background_color=gg.colors["clear"])
+                                     background_color="clear")
 
         self.theme_choice = \
             listbox.UpdateListbox(self, (.47, .30), (.12, .25),
@@ -377,7 +377,7 @@ class AudioPane(widget.Widget):
                                              anchor = constants.TOP_RIGHT,
                                              align=constants.LEFT,
                                              autohotkey=True,
-                                             background_color=gg.colors["clear"])
+                                             background_color="clear")
         self.sound_toggle = OptionButton(self, (-.51, .01), (.07, .05),
                                          anchor = constants.TOP_LEFT,
                                          text_shrink_factor=.75,
@@ -389,7 +389,7 @@ class AudioPane(widget.Widget):
         self.gui_label = text.Text(self, (.01, .08), (.22, .05),
                                      anchor = constants.TOP_LEFT,
                                      align=constants.LEFT,
-                                     background_color=gg.colors["clear"])
+                                     background_color="clear")
         self.gui_slider = slider.UpdateSlider(self, (.24, .08), (.53, .05),
                                               anchor = constants.TOP_LEFT,
                                               horizontal=True, priority=150,
@@ -399,7 +399,7 @@ class AudioPane(widget.Widget):
         self.music_label = text.Text(self, (.01, .15), (.22, .05),
                                      anchor = constants.TOP_LEFT,
                                      align=constants.LEFT,
-                                     background_color=gg.colors["clear"])
+                                     background_color="clear")
         self.music_slider = slider.UpdateSlider(self, (.24, .15), (.53, .05),
                                                 anchor = constants.TOP_LEFT,
                                                 horizontal=True, priority=150,
@@ -409,7 +409,7 @@ class AudioPane(widget.Widget):
         self.soundbuf_label = text.Text(self, (.01, .22), (.25, .05),
                                         text=_("Sound buffering:"),
                                         align=constants.LEFT,
-                                        background_color=gg.colors["clear"])
+                                        background_color="clear")
         self.soundbuf_group = button.ButtonGroup()
 
         self.soundbuf_low = OptionButton(self, (.24, .22), (.14, .05),

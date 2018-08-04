@@ -71,7 +71,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             description = ""
 
         text.Text(self.description_pane, (0,0), (-1,-1), text=description,
-                  background_color=gg.colors["pane_background"], text_size=18,
+                  background_color="pane_background", text_size=18,
                   align=constants.LEFT, valign=constants.TOP,
                   borders=constants.ALL)
 
@@ -79,17 +79,17 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         # Dirty, underhanded trick to make the canvas into a progress bar.
         canvas.__class__ = text.ProgressText
         canvas.progress = 0
-        canvas.progress_color = gg.colors["progress_background_progress"]
+        canvas.progress_color = "progress_background_progress"
 
         canvas.research_name = text.Text(canvas, (-.01, -.01), (-.70, -.5),
                                          align=constants.LEFT,
-                                         background_color=gg.colors["clear"])
+                                         background_color="clear")
         canvas.research_name.visible = False
         canvas.alloc_cpus = text.Text(canvas, (-.99, -.01), (-.21, -.5),
                                       anchor=constants.TOP_RIGHT,
                                       text="1,000,000,000",
                                       align=constants.RIGHT,
-                                      background_color=gg.colors["clear"])
+                                      background_color="clear")
         canvas.alloc_cpus.visible = False
         canvas.slider = slider.UpdateSlider(canvas, (-.01, -.55), (-.98, -.40),
                                             anchor=constants.TOP_LEFT,
@@ -99,7 +99,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.help_button = button.FunctionButton(canvas, (-.11, -.55),
                                                    (0, -.40), text=" ??? ",
                                                    text_shrink_factor=1,
-                                                   base_font=gg.fonts["normal"],
+                                                   base_font="normal",
                                                    function=self.show_help)
 
     def cpu_for(self, key):

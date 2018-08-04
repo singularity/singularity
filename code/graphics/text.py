@@ -192,28 +192,30 @@ def resize_redraw(self):
 
 class Text(widget.BorderedWidget):
     text = widget.call_on_change("_text", resize_redraw)
-    base_font = widget.call_on_change("_base_font", resize_redraw)
     shrink_factor = widget.call_on_change("_shrink_factor", resize_redraw)
     underline = widget.call_on_change("_underline", resize_redraw)
     wrap = widget.call_on_change("_wrap", resize_redraw)
     bold = widget.call_on_change("_bold", resize_redraw)
 
-    color = widget.causes_redraw("_color")
     align = widget.causes_redraw("_align")
     valign = widget.causes_redraw("_valign")
 
+    color = widget.auto_reconfig("_color", g.resolve_color_alias)
+    _color = widget.causes_redraw("__color")
+    base_font = widget.auto_reconfig("_base_font", g.resolve_font_alias)
+    _base_font = widget.call_on_change("__base_font", resize_redraw)
 
     def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
                  text=None, base_font=None, shrink_factor=1,
                  color=None, align=constants.CENTER, valign=constants.MID,
                  underline=-1, wrap=True, bold=False, text_size=36, **kwargs):
-        kwargs.setdefault("background_color", g.colors["text_background"])
-        kwargs.setdefault("border_color", g.colors["text_border"])
+        kwargs.setdefault("background_color", "text_background")
+        kwargs.setdefault("border_color", "text_border")
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.text = text
-        self.base_font = base_font or g.fonts["normal"]
-        self.color = color or g.colors["text"]
+        self.base_font = base_font or "normal"
+        self.color = color or "text"
         self.shrink_factor = shrink_factor
         self.underline = underline
         self.align = align
@@ -571,16 +573,19 @@ class UpdateEditableText(EditableText):
 
 class SelectableText(Text):
     selected = widget.causes_redraw("_selected")
-    selected_color = widget.causes_redraw("_selected_color")
-    unselected_color = widget.causes_redraw("_unselected_color")
+
+    selected_color = widget.auto_reconfig("_selected_color", g.resolve_color_alias)
+    _selected_color = widget.causes_redraw("__selected_color")
+    unselected_color = widget.auto_reconfig("_unselected_color", g.resolve_color_alias)
+    unselected_color = widget.causes_redraw("__unselected_color")
 
     def __init__(self, parent, pos, size, border_color = None,
                  unselected_color = None, selected_color = None, **kwargs):
         super(SelectableText, self).__init__(parent, pos, size, **kwargs)
 
-        self.border_color = border_color or g.colors["text_border"]
-        self.selected_color = selected_color or g.colors["text_background_selected"]
-        self.unselected_color = unselected_color or g.colors["text_background_unselected"]
+        self.border_color = border_color or "text_border"
+        self.selected_color = selected_color or "text_background_selected"
+        self.unselected_color = unselected_color or "text_background_unselected"
 
         self.selected = False
 
@@ -594,14 +599,18 @@ class SelectableText(Text):
 
 class ProgressText(SelectableText):
     progress = widget.causes_redraw("_progress")
-    progress_color = widget.causes_redraw("_progress_color")
+    
+    progress_color = widget.auto_reconfig("_progress_color", g.resolve_color_alias)
+    _progress_color = widget.causes_redraw("__progress_color")
+
+
     def __init__(self, parent, pos, size, *args, **kwargs):
         self.parent = parent
         self.progress = kwargs.pop("progress", 0)
-        self.progress_color = kwargs.pop("progress", g.colors["progress_background_progress"])
-        kwargs.setdefault("border_color", g.colors["progress_border"])
-        kwargs.setdefault("selected_color", g.colors["progress_background_selected"])
-        kwargs.setdefault("unselected_color", g.colors["progress_background_unselected"])
+        self.progress_color = kwargs.pop("progress", "progress_background_progress")
+        kwargs.setdefault("border_color", "progress_border")
+        kwargs.setdefault("selected_color", "progress_background_selected")
+        kwargs.setdefault("unselected_color", "progress_background_unselected")
         super(ProgressText, self).__init__(parent, pos, size, **kwargs)
 
     def redraw(self):

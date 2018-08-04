@@ -20,6 +20,7 @@
 
 import pygame
 from numpy import array
+from inspect import getmembers
 
 import g
 import constants
@@ -98,6 +99,30 @@ def propogate_need(data_member):
                             descendants += child.children
 
     return do_propogate
+
+class auto_reconfig(object):
+
+    __slots__ = ["data_member", "reconfig_datamember", "reconfig_func"] # Avoid __dict__.
+
+    def __init__(self, data_member, reconfig_func):
+        self.data_member = data_member
+        self.reconfig_datamember = "_RECONFIG_" + data_member
+        self.reconfig_func = reconfig_func
+
+    def __get__(self, obj, objtype=None):
+        if obj is None:
+            return self
+        return getattr(obj, self.data_member)
+
+    def __set__(self, obj, my_value):
+        new_value = self.reconfig_func(my_value)
+
+        setattr(obj, self.reconfig_datamember, my_value)
+        setattr(obj, self.data_member, new_value)
+
+    def reconfig(self, obj):
+        updated_value = self.reconfig_func(getattr(obj, self.reconfig_datamember))
+        setattr(obj, self.data_member, updated_value)
 
 class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
@@ -387,7 +412,11 @@ class Widget(object):
         return check_mask
 
     def reconfig(self):
-        pass
+        # Find reconfig property and update them.
+        clazz = self.__class__
+        for prop_name, prop in getmembers(clazz):
+            if (isinstance(prop, auto_reconfig)):
+                prop.reconfig(self)
 
     def rebuild(self):
         pass
@@ -455,16 +484,17 @@ class Widget(object):
 
 
 class BorderedWidget(Widget):
-    borders = causes_redraw("_borders")
-    border_color = causes_redraw("_border_color")
-    background_color = causes_redraw("_background_color")
+    borders = causes_redraw("__borders")
+
+    border_color = auto_reconfig("_border_color", g.resolve_color_alias)
+    background_color = auto_reconfig("_background_color", g.resolve_color_alias)
+    _border_color = causes_redraw("__border_color")
+    _background_color = causes_redraw("__background_color")
 
     def __init__(self, parent, *args, **kwargs):
-        self.parent = parent
-        self.children = []
         self.borders = kwargs.pop("borders", ())
-        self.border_color = kwargs.pop("border_color", g.colors["widget_border"])
-        self.background_color = kwargs.pop("background_color", g.colors["widget_background"])
+        self.border_color = kwargs.pop("border_color", "widget_border")
+        self.background_color = kwargs.pop("background_color", "widget_background")
 
         super(BorderedWidget, self).__init__(parent, *args, **kwargs)
 
