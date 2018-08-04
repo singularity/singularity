@@ -45,16 +45,15 @@ class EarthImage(image.Image):
         self.night_image = image.scale(gg.images['earth_night'],
                                        self.real_size).convert_alpha()
 
-    def on_theme(self):
+    def reconfig(self):
+        super(EarthImage, self).reconfig()
+
         self.image = gg.images['earth']
-        try:
-            self.rescale()
-            self.needs_rebuild = True
-            self.needs_resize = True
-            self.needs_redraw = True
-        except AttributeError:
-            # Map not initialized yet (theme set before start/load game)
-            pass
+
+        self.rescale()
+        self.needs_rebuild = True
+        self.needs_resize = True
+        self.needs_redraw = True
 
     night_mask_day_of_year = None
     night_mask_dim = None

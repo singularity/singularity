@@ -171,6 +171,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
         self.scrollbar.resize()
 
+        # FIXME: resize should not call rebuild
+        self.needs_resize = False
         self.rebuild()
 
     def rebuild(self):

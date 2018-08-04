@@ -124,6 +124,9 @@ class Widget(object):
 
     needs_update = call_on_change("_needs_update", _propogate_update)
 
+    needs_reconfig = call_on_change("_needs_reconfig",
+                                    propogate_need("_needs_reconfig"))
+
     pos = causes_reposition("_pos")
     size = causes_resize("_size")
     anchor = causes_reposition("_anchor")
@@ -151,6 +154,7 @@ class Widget(object):
         # Set automatically by other properties.
         #self.needs_redraw = True
         #self.needs_full_redraw = True
+        self.needs_reconfig = True
 
     @property
     def parent(self):
@@ -301,21 +305,31 @@ class Widget(object):
             g.fade_mask.fill( (0,0,0,175) )
 
     def prepare_for_redraw(self):
-        # First we handle any substance changes.
+        # First, we handle config changes.
+        if self.needs_reconfig:
+            self.reconfig()
+            self.needs_reconfig = False
+
+        # Then any substance changes.
         if self.needs_rebuild:
             self.rebuild()
+            self.needs_rebuild = False
 
         # Then size changes.
         if self.needs_resize:
             self.resize()
+            self.needs_resize = False
+            self.needs_reposition = True
+            self.needs_redraw = True
 
         # Then position changes.
         if self.needs_reposition:
+            self.needs_reposition = False
             self.reposition()
 
         # And finally we recurse to our descendants.
         for child in self.children:
-            if child.needs_update and child.visible:
+            if child.visible:
                 child.prepare_for_redraw()
 
     def maybe_update(self):
@@ -372,17 +386,16 @@ class Widget(object):
 
         return check_mask
 
+    def reconfig(self):
+        pass
+
     def rebuild(self):
-        self.needs_rebuild = False
+        pass
 
     def resize(self):
         self._real_size = self._calc_size()
-        self.needs_resize = False
-        self.needs_reposition = True
-        self.needs_redraw = True
 
     def reposition(self):
-        self.needs_reposition = False
         old_rect = self.collision_rect
         self.collision_rect = self._make_collision_rect()
 
@@ -399,7 +412,6 @@ class Widget(object):
         elif self.collision_rect != old_rect:
             self.remake_surfaces()
             self.needs_redraw = True
-
 
     def redraw(self):
         self.needs_redraw = False

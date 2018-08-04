@@ -18,8 +18,8 @@
 
 #This file contains the theme class.
 
-import g, code.g
 import os, sys, collections, numbers, itertools, traceback
+import g, code.g, dialog
 
 default_theme = 'default'
 
@@ -177,8 +177,7 @@ class Theme(object):
 
     def update(self):
         self.init_cache()
-        # TODO: Theme should not call map_screen directly.
-        code.g.map_screen.on_theme()
+        dialog.Dialog.top.needs_reconfig
 
     @property
     def name(self):
