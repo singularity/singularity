@@ -55,10 +55,9 @@ def set_theme(key):
         sys.stderr.write("WARNING: The key '%s' does not exist in theme dictionnary. Use default theme.\n" % key)
         theme = themes[default_theme]
 
-    if theme.id != current:
-        if not current == None:
-            theme.update()
-        current = theme
+    if (not current == None and theme.id != current.id):
+        theme.update()
+    current = theme
 
 def current_variants():
     variants = [None]
@@ -156,6 +155,8 @@ class Theme(object):
 
     def init_cache(self):
         g.images.clear()
+        # Manually delete font to avoid the font limitation. 
+        for font in g.fonts.itervalues(): del font
         g.fonts.clear()
         g.colors.clear()
 
@@ -166,7 +167,7 @@ class Theme(object):
             if (variant in self._variants):
                 self._variants[variant].init_cache()
 
-            # Let's inherit images from parents.
+            # Let's inherit from parents.
             for parent in self.iter_parents():
                 if (variant in parent._variants):
                     parent._variants[variant].init_cache()
