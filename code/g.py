@@ -1229,7 +1229,7 @@ def hotkey(string):
 
     def remove_accents(text):
         from unicodedata import normalize, combining
-        nfkd_form = normalize('NFKD', unicode(text.encode('utf-8')))
+        nfkd_form = normalize('NFKD', unicode(text))
         return u"".join([c for c in nfkd_form if not combining(c)])
 
     text = string
