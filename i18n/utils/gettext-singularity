@@ -158,9 +158,6 @@ fi
 # Update existing PO files with new entries
 pofiles=( "$i18ndir"/lang_*/messages.po )
 for pofile in "${pofiles[@]}"; do
-	[[ "$pofile" == "$i18ndir"/lang_*/messages.po ]] && {
-		message "no translation .po files to update yet" ; break
-	}
 	message "updating translation $(rel "$pofile")"
 	msgmerge --no-fuzzy-matching \
 	         --backup=off        \
