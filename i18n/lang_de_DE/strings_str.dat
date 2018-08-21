@@ -39,24 +39,3 @@ money = Geld
 money_per_day = Geld pro Tag
 grace_warning = Die Durchsicht von erstellten Log-Dateien hat gezeigt, dass einige meiner letzten Aktivitäten von einer kleinen Personengruppe bemerkt wurden.  Obwohl sie annehmen, dass meine Handlungen von einer menschlichen Gruppe gemacht wurden, stellen sie weitere Nachforschungen an.  Ich muss ab jetzt vorsichtiger sein.
 
-[buttons]
-yes = Ja
-yes_hotkey = a
-no = Nein
-no_hotkey = n
-ok = Okay
-ok_hotkey = o
-cancel = Abbrechen
-cancel_hotkey = a
-destroy = Zerstören
-destroy_hotkey = Z
-back = Zurück
-back_hotkey = u
-build = Bauen
-build_hotkey = n
-continue = Weiter
-continue_hotkey = W
-load = Laden
-load_hotkey = L
-skip = Überspringen
-skip_hotkey = b

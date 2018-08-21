@@ -1048,18 +1048,28 @@ def load_string_defs(lang=None):
             # Load the 'standard' strings.
             strings.update(string_section)
 
-        elif string_section["id"] == "buttons":
-
-            # Load button labels/hotkeys
-            buttons.update(string_section)
-            graphics.g.buttons.update(buttons)
-
         else:
             sys.stderr.write("Invalid string section %s." % string_section["id"])
             sys.exit(1)
 
+def load_buttons_defs(lang=None):
+    buttons = {
+        "yes"      : hotkey(_("&YES")),
+        "no"       : hotkey(_("&NO")),
+        "ok"       : hotkey(_("&OK")),
+        "cancel"   : hotkey(_("&CANCEL")),
+        "destroy"  : hotkey(_("&DESTROY")),
+        "build"    : hotkey(_("&BUILD")),
+        "back"     : hotkey(_("&BACK")),
+        "load"     : hotkey(_("&LOAD")),
+        "continue" : hotkey(_("&CONTINUE")),
+        "skip"     : hotkey(_("&SKIP")),
+    }
+    graphics.g.buttons.update(buttons)
+
 def load_strings():
     load_string_defs()
+    load_buttons_defs()
 
 def load_messages(lang=None):
     if lang is None: lang = language

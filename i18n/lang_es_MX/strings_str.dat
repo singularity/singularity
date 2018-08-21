@@ -59,25 +59,3 @@ grace_warning = Una inspección de los archivos de registro capturados, ha revel
 location_modifiers = Bases en este lugar son %(modifiers)s.
 cpu_bonus = más eficientes
 cpu_penalty = menos eficientes
-
-[buttons]
-yes = sí
-yes_hotkey = s
-no = no
-no_hotkey = n
-ok = ok
-ok_hotkey = o
-cancel = cancelar
-cancel_hotkey = a
-destroy = destruir
-destroy_hotkey = d
-back = volver
-back_hotkey = v
-build = construir
-build_hotkey = t
-continue = continuar
-continue_hotkey = c
-load = cargar
-load_hotkey = r
-skip = pasar
-skip_hotkey = p

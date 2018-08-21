@@ -61,25 +61,3 @@ location_modifiers = Базы в этом месте %(modifiers)s.
 cpu_bonus = более эффективны
 cpu_penalty = менее эффективны
 
-[buttons]
-yes = да
-yes_hotkey = д
-no = нет
-no_hotkey = н
-ok = ок
-ok_hotkey = о
-cancel = отмена
-cancel_hotkey = т
-destroy = уничтожить
-destroy_hotkey = у
-back = назад
-back_hotkey = н
-build = строить
-build_hotkey = с
-continue = продолжить
-continue_hotkey = п
-load = загрузить
-load_hotkey = з
-skip_hotkey = р
-skip = пропустить
-

@@ -475,10 +475,12 @@ class YesNoDialog(TextDialog):
     def rebuild(self):
         super(YesNoDialog, self).rebuild()
 
-        self.yes_button.text = g.buttons[self.yes_type]
-        self.yes_button.hotkey = g.buttons[self.yes_type + "_hotkey"]
-        self.no_button.text = g.buttons[self.no_type]
-        self.no_button.hotkey = g.buttons[self.no_type + "_hotkey"]
+        self.yes_button.text      = g.buttons[self.yes_type]['text']
+        self.yes_button.underline = g.buttons[self.yes_type]['pos']
+        self.yes_button.hotkey    = g.buttons[self.yes_type]['key']
+        self.no_button.text       = g.buttons[self.no_type]['text']
+        self.no_button.underline  = g.buttons[self.no_type]['pos']
+        self.no_button.hotkey     = g.buttons[self.no_type]['key']
 
     def on_return(self, event):
         if event and event.type == pygame.KEYUP:
@@ -521,8 +523,9 @@ class MessageDialog(TextDialog):
     def rebuild(self):
         super(MessageDialog, self).rebuild()
 
-        self.ok_button.text = g.buttons[self.ok_type]
-        self.ok_button.hotkey = g.buttons[self.ok_type + "_hotkey"]
+        self.ok_button.text      = g.buttons[self.ok_type]['text']
+        self.ok_button.underline = g.buttons[self.ok_type]['pos']
+        self.ok_button.hotkey    = g.buttons[self.ok_type]['key']
 
 
 class TextEntryDialog(TextDialog):
@@ -539,12 +542,18 @@ class TextEntryDialog(TextDialog):
                                             base_font="normal")
 
         self.ok_button = button.FunctionButton(self, (-.82, -.50), (-.18, -.50),
-                                               text=g.buttons["ok"],
                                                function=self.return_text)
 
         self.add_key_handler(pygame.K_RETURN, self.return_text)
         self.add_key_handler(pygame.K_KP_ENTER, self.return_text)
         self.add_key_handler(pygame.K_ESCAPE, self.return_nothing)
+
+    def rebuild(self):
+        super(MessageDialog, self).rebuild()
+        
+        self.ok_button.text      = g.buttons[self.ok_type]['text']
+        self.ok_button.underline = g.buttons[self.ok_type]['pos']
+        self.ok_button.hotkey    = g.buttons[self.ok_type]['key']
 
     def show(self):
         self.text_field.text = self.default_text

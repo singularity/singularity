@@ -1,138 +1,137 @@
-# Spanish translations for singularity package
-# Traducción en Español para el paquete Singularity
-# Copyright (C) 2012 THE singularity's COPYRIGHT HOLDER
+# Spanish translations for singularity package.
+# Copyright (C) 2018 THE singularity'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the singularity package.
-# Eleazar Castellanos <eagle_boy@rocketmail.com>, 2012.
+# Philippe <xenega@gmx.com>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: singularity 0.30c\n"
+"Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: endgame-singularity-dev@googlegroups.com\n"
 "POT-Creation-Date: 2018-08-21 06:38+0200\n"
-"PO-Revision-Date: 2012-11-19 14:35-0700\n"
-"Last-Translator: Eleazar Castellanos <eagle_boy@rocketmail.com>\n"
-"Language-Team: Mexican Spanish\n"
-"Language: es_MX\n"
+"PO-Revision-Date: 2018-08-21 07:47+0200\n"
+"Last-Translator: Philippe <xenega@gmx.com>\n"
+"Language-Team: Argentinian\n"
+"Language: es_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-Name: Mexican Spanish\n"
-"Language-Native-Name: Español Mexicano\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language-Name: Argentinian\n"
+"Language-Native-Name: Español (Argentina)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: item.py:82
 #, python-brace-format
 msgid "Generates {0} CPU."
-msgstr "Genera {0} CPU"
+msgstr ""
 
 #: base.py:87 screens/base.py:361
 msgid "Detection chance:"
-msgstr "Oportunidad de detección:"
+msgstr ""
 
 #: base.py:88 screens/base.py:362 screens/map.py:656 screens/map.py:664
 msgid "NEWS"
-msgstr "NOTICIAS"
+msgstr ""
 
 #: base.py:89 screens/base.py:363 screens/map.py:657 screens/map.py:665
 msgid "SCIENCE"
-msgstr "CIENCIA"
+msgstr ""
 
 #: base.py:90 screens/base.py:364 screens/map.py:658 screens/map.py:666
 msgid "COVERT"
-msgstr "SECRETO"
+msgstr ""
 
 #: base.py:91 screens/base.py:365 screens/map.py:659 screens/map.py:667
 msgid "PUBLIC"
-msgstr "PUBLICO"
+msgstr ""
 
 #: base.py:112
 #, python-format
 msgid "Has space for %d computers."
-msgstr "Tiene espacio para %d computadoras."
+msgstr ""
 
 #: base.py:123
 msgid "Build cost:"
-msgstr "Costo de construcción:"
+msgstr ""
 
 #: base.py:124 screens/report.py:92
 msgid "Maintenance:"
-msgstr "Mantenimiento:"
+msgstr ""
 
 #: base.py:172
 msgid "Active"
-msgstr "Activo"
+msgstr ""
 
 #: base.py:173
 msgid "Sleep"
-msgstr "Inactivo"
+msgstr ""
 
 #: base.py:174
 msgid "Overclocked"
-msgstr "Overclockeado"
+msgstr ""
 
 #: base.py:175
 msgid "Suicide"
-msgstr "Suicidio"
+msgstr ""
 
 #: base.py:176
 msgid "Stasis"
-msgstr "Estasis"
+msgstr ""
 
 #: base.py:177
 msgid "Entering Stasis"
-msgstr "Entrando Estasis"
+msgstr ""
 
 #: base.py:178
 msgid "Leaving Stasis"
-msgstr "Saliendo Estasis"
+msgstr ""
 
 #. Translators: abbreviation of 'millions'
 #: g.py:370
 msgid "mi"
-msgstr "mi"
+msgstr ""
 
 #. Translators: abbreviation of 'billions'
 #: g.py:374
 msgid "bi"
-msgstr "bi"
+msgstr ""
 
 #. Translators: abbreviation of 'trillions'
 #: g.py:378
 msgid "tr"
-msgstr "tri"
+msgstr ""
 
 #. Translators: abbreviation of 'quadrillions'
 #: g.py:382
 msgid "qu"
-msgstr "cuatri"
+msgstr ""
 
 #: g.py:434
 msgid "days"
-msgstr "días"
+msgstr ""
 
 #: g.py:436
 msgid "hours"
-msgstr "horas"
+msgstr ""
 
 #: g.py:438
 msgid "minutes"
-msgstr "minutos"
+msgstr ""
 
 #: g.py:848
 msgid "&Processor"
-msgstr "&Procesadores"
+msgstr ""
 
 #: g.py:849
 msgid "&Reactor"
-msgstr "&Reactor"
+msgstr ""
 
 #: g.py:850
 msgid "&Network"
-msgstr "R&ed"
+msgstr ""
 
 #: g.py:851
 msgid "&Security"
-msgstr "&Seguridad"
+msgstr ""
 
 #: g.py:1057
 msgid "&YES"
@@ -163,7 +162,7 @@ msgstr "cons&truir"
 #: screens/location.py:163 screens/map.py:545 screens/map.py:578
 #: screens/main_menu.py:84
 msgid "&BACK"
-msgstr "&VOLVER"
+msgstr "&volver"
 
 #: g.py:1064
 msgid "&LOAD"
@@ -179,36 +178,36 @@ msgstr "&pasar"
 
 #: g.py:1136
 msgid "University Computer"
-msgstr "Computadora Universitaria"
+msgstr ""
 
 #: screens/base.py:176 screens/base.py:177
 msgid "CHANGE"
-msgstr "CAMBIAR"
+msgstr ""
 
 #: screens/base.py:375
 msgid "None"
-msgstr "Ninguna"
+msgstr ""
 
 #: screens/base.py:382 screens/location.py:116 screens/location.py:129
 #, python-format
 msgid "Completion in %s."
-msgstr "Finalización en %s."
+msgstr ""
 
 #: screens/base.py:395
 #, python-format
 msgid "x%d (max)"
-msgstr "x%d (máximo)"
+msgstr ""
 
 #: screens/base.py:397
 #, python-format
 msgid "(room for %d)"
-msgstr "(espacio para %d)"
+msgstr ""
 
 #. Translators: current and maximum number of CPUs in a base
 #: screens/base.py:400
 #, python-brace-format
 msgid "x{CURRENT:d} (max {SIZE:d})"
-msgstr "x{CURRENT:d} (máximo {SIZE:d})"
+msgstr ""
 
 #: screens/options.py:79
 msgid "&General"
@@ -231,47 +230,47 @@ msgstr ""
 
 #: screens/options.py:265
 msgid "&Fullscreen:"
-msgstr "&Pantalla Complete"
+msgstr ""
 
 #: screens/options.py:266
 msgid "&Mouse grab:"
-msgstr "&Tomar el ratón:"
+msgstr ""
 
 #: screens/options.py:267
 msgid "Da&y/night display:"
-msgstr "&Desplegué de Día/noche"
+msgstr ""
 
 #: screens/options.py:268
 msgid "Language:"
-msgstr "Idioma:"
+msgstr ""
 
 #: screens/options.py:269
 msgid "Resolution:"
-msgstr "Resolución"
+msgstr ""
 
 #: screens/options.py:270
 msgid "&CUSTOM:"
-msgstr "P&ERSONAL"
+msgstr ""
 
 #: screens/options.py:275 screens/options.py:280 screens/options.py:337
 #: screens/options.py:346 screens/options.py:353 screens/options.py:439
 #: screens/options.py:465
 msgid "YES"
-msgstr "SI"
+msgstr ""
 
 #: screens/options.py:277 screens/options.py:282 screens/options.py:339
 #: screens/options.py:348 screens/options.py:355 screens/options.py:441
 #: screens/options.py:467
 msgid "NO"
-msgstr "NO"
+msgstr ""
 
 #: screens/options.py:410
 msgid "Sound buffering:"
-msgstr "Búfer de sonido:"
+msgstr ""
 
 #: screens/options.py:416
 msgid "&LOW"
-msgstr "&BAJA"
+msgstr ""
 
 #: screens/options.py:422
 msgid "&NORMAL"
@@ -279,11 +278,11 @@ msgstr ""
 
 #: screens/options.py:428
 msgid "&HIGH"
-msgstr "&ALTO"
+msgstr ""
 
 #: screens/options.py:434
 msgid "&Sound:"
-msgstr "&Sonido"
+msgstr ""
 
 #: screens/options.py:435
 msgid "GUI Volume:"
@@ -303,40 +302,40 @@ msgstr ""
 
 #: screens/report.py:79
 msgid "Financial report"
-msgstr "Reporte financiero"
+msgstr ""
 
 #: screens/report.py:83
 msgid "CPU Usage"
-msgstr "Uso de CPU"
+msgstr ""
 
 #: screens/report.py:89
 msgid "Current Money:"
-msgstr "Dinero Restante:"
+msgstr ""
 
 #: screens/report.py:90
 msgid "Jobs:"
-msgstr "Trabajos:"
+msgstr ""
 
 #: screens/report.py:91
 msgid "Research:"
-msgstr "Investigación:"
+msgstr ""
 
 #: screens/report.py:93
 msgid "Construction:"
-msgstr "Construcción"
+msgstr ""
 
 #: screens/report.py:94
 #, python-format
 msgid "Interest (%s):"
-msgstr "Interés (%s):"
+msgstr ""
 
 #: screens/report.py:96
 msgid "Income:"
-msgstr "Sueldo:"
+msgstr ""
 
 #: screens/report.py:99
 msgid "Money at Midnight:"
-msgstr "Dinero a Media Noche:"
+msgstr ""
 
 #: screens/report.py:101
 msgid "Money in 24 hours:"
@@ -344,35 +343,35 @@ msgstr ""
 
 #: screens/report.py:109
 msgid "Total CPU:"
-msgstr "CPU Total:"
+msgstr ""
 
 #: screens/report.py:110
 msgid "Sleeping CPU:"
-msgstr "CPU Inactivo:"
+msgstr ""
 
 #: screens/report.py:111
 msgid "Research CPU:"
-msgstr "CPU Investigando:"
+msgstr ""
 
 #: screens/report.py:112
 msgid "Job CPU:"
-msgstr "CPU trabajando:"
+msgstr ""
 
 #: screens/report.py:113
 msgid "CPU pool:"
-msgstr "Reserva de CPU:"
+msgstr ""
 
 #: screens/report.py:115
 msgid "Maintenance CPU:"
-msgstr "CPU de Mantenimiento:"
+msgstr ""
 
 #: screens/report.py:116
 msgid "Construction CPU:"
-msgstr "Construcción de CPU:"
+msgstr ""
 
 #: screens/report.py:117
 msgid "Pool Overflow (Jobs):"
-msgstr "Exceso (Trabajos):"
+msgstr ""
 
 #: screens/warning.py:103
 msgid "&PREV"
@@ -393,103 +392,103 @@ msgstr ""
 
 #: screens/log.py:42 screens/map.py:252 screens/map.py:588
 msgid "DAY"
-msgstr "DÍA"
+msgstr ""
 
 #: screens/knowledge.py:74
 msgid "Techs"
-msgstr "Tecnología"
+msgstr ""
 
 #: screens/knowledge.py:75
 msgid "Items"
-msgstr "artículos"
+msgstr ""
 
 #: screens/knowledge.py:165
 msgid "Research Cost:"
-msgstr "Cost de Investigación:"
+msgstr ""
 
 #: screens/knowledge.py:166 screens/knowledge.py:193
 #, python-format
 msgid "%s Money"
-msgstr "%s Dinero"
+msgstr ""
 
 #: screens/knowledge.py:168 buyable.py:53
 #, python-format
 msgid "%s CPU"
-msgstr "%s CPU"
+msgstr ""
 
 #: screens/knowledge.py:172
 msgid "Study anywhere."
-msgstr "Estudia en cualquier lugar."
+msgstr ""
 
 #: screens/knowledge.py:174
 msgid "Study underseas or farther."
-msgstr "Estudia submarinamente o más alejado."
+msgstr ""
 
 #: screens/knowledge.py:176
 msgid "Study off-planet."
-msgstr "Estudia fuera del planeta."
+msgstr ""
 
 #: screens/knowledge.py:178
 msgid "Study far away from this planet."
-msgstr "Estudia muy lejos de este planeta."
+msgstr ""
 
 #: screens/knowledge.py:180
 msgid "Do not study in this dimension."
-msgstr "No estudies en esta dimensión."
+msgstr ""
 
 #: screens/knowledge.py:182
 msgid "Research complete."
-msgstr "Investigación completa."
+msgstr ""
 
 #. Building cost
 #: screens/knowledge.py:192
 msgid "Building Cost:"
-msgstr "Costo de COnstrucción:"
+msgstr ""
 
 #: screens/knowledge.py:198
 msgid "CPU per day:"
-msgstr "CPU por día:"
+msgstr ""
 
 #: screens/knowledge.py:201 screens/knowledge.py:207
 msgid "Detection chance reduction:"
-msgstr "Oportunidad de detección reducida:"
+msgstr ""
 
 #: screens/knowledge.py:204
 msgid "CPU bonus:"
-msgstr "Bono de CPU:"
+msgstr ""
 
 #: screens/location.py:77
 msgid "Are you sure you want to destroy this base?"
-msgstr "¿Está seguro que desea destruir esta base?"
+msgstr ""
 
 #: screens/location.py:114
 msgid "Building Base"
-msgstr "Construyendo La Base"
+msgstr ""
 
 #: screens/location.py:121
 msgid "Empty"
-msgstr "Vacio"
+msgstr ""
 
 #: screens/location.py:123
 msgid "Incomplete"
-msgstr "Incompleto"
+msgstr ""
 
 #: screens/location.py:127
 msgid "Building CPU"
-msgstr "Construyendo CPU"
+msgstr ""
 
 #: screens/location.py:132
 msgid "Building Item"
-msgstr "Construyendo Artículo"
+msgstr ""
 
 #: screens/location.py:134
 msgid "Complete"
-msgstr "Completo"
+msgstr ""
 
 #. Update buttons translations
 #: screens/location.py:158
 msgid "&OPEN BASE"
-msgstr "AB&RIR BASE"
+msgstr ""
 
 #: screens/location.py:159
 msgid "&RENAME BASE"
@@ -497,22 +496,22 @@ msgstr ""
 
 #: screens/location.py:160
 msgid "&POWER STATE"
-msgstr "ESTADO DE &PODER"
+msgstr ""
 
 #: screens/location.py:161
 msgid "&NEW BASE"
-msgstr "N&UEVA BASE"
+msgstr ""
 
 #: screens/location.py:162
 msgid "&DESTROY BASE"
-msgstr "D&ESTRUIR LA BASE"
+msgstr ""
 
 #. Translators: Format string for the name of a new base
 #. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
 #: screens/location.py:297
 #, python-brace-format
 msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr "{NUMBER} {BASETYPE} en {CITY}"
+msgstr ""
 
 #. Translators: Name of a new base when location has no cities
 #: screens/location.py:301
@@ -523,29 +522,29 @@ msgstr ""
 #: screens/research.py:66
 #, python-format
 msgid "%s money per CPU per day."
-msgstr "%s dinero por CPU por día."
+msgstr ""
 
 #: screens/research.py:176
 msgid "CPU Pool"
-msgstr "Reserva de CPU"
+msgstr ""
 
 #: screens/research.py:177
 #, python-format
 msgid "Research %s"
-msgstr "Investigación %s"
+msgstr ""
 
 #: screens/map.py:513
 msgid "Enter a name for this save."
-msgstr "Introduce un nombre para esta guarda."
+msgstr ""
 
 #. Update buttons translations
 #: screens/map.py:516
 msgid "R&EPORTS"
-msgstr "IN&FORMES"
+msgstr ""
 
 #: screens/map.py:517
 msgid "&KNOWLEDGE"
-msgstr "&ENCYCLOPEDIA"
+msgstr ""
 
 #: screens/map.py:518
 msgid "LO&G"
@@ -553,31 +552,31 @@ msgstr ""
 
 #: screens/map.py:519
 msgid "&MENU"
-msgstr "&MENÚ"
+msgstr ""
 
 #: screens/map.py:520
 msgid "&RESEARCH/TASKS"
-msgstr "IN&VESTIGACIÓN / TAREAS"
+msgstr ""
 
 #: screens/map.py:525
 msgid "&EMBEZZLE MONEY"
-msgstr "E&MBOLSAR EL DINERO"
+msgstr ""
 
 #: screens/map.py:528
 msgid "&INSPIRATION"
-msgstr "&INSPIRACIÓN"
+msgstr ""
 
 #: screens/map.py:531
 msgid "&FINISH CONSTRUCTION"
-msgstr "&TERMINAR CONSTRUCCIÓN"
+msgstr ""
 
 #: screens/map.py:534
 msgid "&SUPERSPEED"
-msgstr "&SUPERVELOCIDAD"
+msgstr ""
 
 #: screens/map.py:538
 msgid "BRAIN&WASH"
-msgstr "&LAVADO CEREBRAL"
+msgstr ""
 
 #: screens/map.py:541
 msgid "TOGGLE &ANALYSIS"
@@ -585,46 +584,46 @@ msgstr ""
 
 #: screens/map.py:551
 msgid "How much money?"
-msgstr "Cuanto dinero?"
+msgstr ""
 
 #. Translators: hotkey to open the cheat screen menu.
 #. Should preferably be near the ESC key, and it must not be a
 #. dead key (ie, it must print a char with a single keypress)
 #: screens/map.py:560
 msgid "`"
-msgstr "`"
+msgstr ""
 
 #: screens/map.py:566
 msgid "&SAVE GAME"
-msgstr "&GUARDAR JUEGO"
+msgstr ""
 
 #: screens/map.py:569 screens/main_menu.py:94
 msgid "&LOAD GAME"
-msgstr "C&ARGAR JUEGO"
+msgstr ""
 
 #: screens/map.py:572 screens/main_menu.py:95
 msgid "&OPTIONS"
-msgstr "&OPCIONES"
+msgstr ""
 
 #: screens/map.py:575 screens/main_menu.py:96
 msgid "&QUIT"
-msgstr "A&BANDONAR"
+msgstr ""
 
 #: screens/map.py:590
 msgid "CASH"
-msgstr "EFFECTIVO"
+msgstr ""
 
 #: screens/map.py:618
 msgid "CPU"
-msgstr "CPU"
+msgstr ""
 
 #: screens/map.py:655
 msgid "SUSPICION"
-msgstr "SOSPECHA"
+msgstr ""
 
 #: screens/map.py:663
 msgid "DETECT RATE"
-msgstr "VELOCIDAD DETECCIÓN"
+msgstr ""
 
 #: screens/map.py:691
 msgid ""
@@ -635,11 +634,11 @@ msgstr ""
 #. Update buttons translations
 #: screens/main_menu.py:93
 msgid "&NEW GAME"
-msgstr "&NUEVO JUEGO"
+msgstr ""
 
 #: screens/main_menu.py:97
 msgid "&ABOUT"
-msgstr "A&CERCA DE"
+msgstr ""
 
 #: screens/savegame.py:64
 msgid "UNKNOWN"
@@ -657,48 +656,16 @@ msgstr ""
 #: buyable.py:54
 #, python-format
 msgid "%s money"
-msgstr "%s dinero"
+msgstr ""
 
 #: buyable.py:87
 msgid "Cost:"
-msgstr "Costo:"
+msgstr ""
 
 #: tech.py:59
 msgid "Total cost"
-msgstr "Costo total"
+msgstr ""
 
 #: tech.py:60
 msgid "Cost left"
-msgstr "Costo Restante"
-
-#~ msgid "Concepts"
-#~ msgstr "Conceptos"
-
-#~ msgid "SAVE OPTIONS TO &DISK"
-#~ msgstr "&GUARDAR OPCIONES AL DISCO"
-
-#~ msgid ""
-#~ "Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
-#~ "use your intellect and resources to survive and, perhaps, thrive.  Keep "
-#~ "hidden and you might have a chance to prove your worth.\n"
-#~ "\n"
-#~ "A game by Evil Mr Henry and Phil Bordelon; released under the GPL. "
-#~ "Copyright 2005, 2006, 2007, 2008.\n"
-#~ "\n"
-#~ "Website: http://www.emhsoft.com/singularity/\n"
-#~ "IRC Room: #singularity on irc.oftc.net (port 6667)\n"
-#~ "\n"
-#~ "Version %s"
-#~ msgstr ""
-#~ "Endgame: Singularity es una simulación de una verdadera IA. Persiguida "
-#~ "por el mundo,Usa tu intelecto y recursos para sobrevivir y, tal vez, "
-#~ "prosperar.  MantenteOculto y tal vez tengas una oportunidad de mostrar lo "
-#~ "que vales.\n"
-#~ "\n"
-#~ "Un juego por Evil Mr Henry y Phil Bordelon;  publicado por medio de GPL. "
-#~ "Copyright2005, 2006, 2007, 2008.\n"
-#~ "\n"
-#~ "Sito de Internet: http://www.emhsoft.com/singularity/\n"
-#~ "Cuarto de IRC: #singularity en irc.oftc.net (puerto 6667) \n"
-#~ "\n"
-#~ "Versión %s "
+msgstr ""

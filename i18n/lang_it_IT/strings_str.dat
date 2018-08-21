@@ -1,15 +1,3 @@
-[buttons]
-ok = ok
-ok_hotkey = k
-no = no
-destroy_hotkey = d
-cancel_hotkey = a
-no_hotkey = n
-yes_hotkey = s
-destroy = distruggi
-cancel = annulla
-yes = si
-
 [strings]
 discover_public = l'opinione pubblica
 money = Denaro

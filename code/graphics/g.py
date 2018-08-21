@@ -67,18 +67,8 @@ fonts = {}
 # Cache image dictionnary.
 images = {}
 
-# This should be overridden by code.g.py
-buttons = dict(yes = "YES", yes_hotkey = "y",
-               no = "NO", no_hotkey = "n",
-               ok = "OK", ok_hotkey = "o",
-               cancel = "CANCEL", cancel_hotkey = "c",
-               destroy = "DESTROY", destroy_hotkey = "d",
-               build = "BUILD", build_hotkey = "b",
-               back = "BACK", back_hotkey = "b",
-               load = "LOAD", load_hotkey = "l",
-               continue_hotkey = "c",
-               skip = "SKIP", skip_hotkey = "s")
-buttons["continue"] = "CONTINUE"
+# TODO: Remove the needs of this dict.
+buttons = {}
 
 # Used to initialize surfaces that should have transparency.
 # Why the SRCALPHA parameter isn't working, I have no idea.

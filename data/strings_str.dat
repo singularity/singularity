@@ -71,25 +71,3 @@ grace_warning = Inspection of captured log files has revealed that some of my re
 location_modifiers = Bases at this location are %(modifiers)s.
 cpu_bonus = more efficient
 cpu_penalty = less efficient
-
-[buttons]
-yes = yes
-yes_hotkey = y
-no = no
-no_hotkey = n
-ok = ok
-ok_hotkey = o
-cancel = cancel
-cancel_hotkey = c
-destroy = destroy
-destroy_hotkey = d
-back = back
-back_hotkey = b
-build = build
-build_hotkey = b
-continue = continue
-continue_hotkey = c
-load = load
-load_hotkey = l
-skip_hotkey = s
-skip = skip

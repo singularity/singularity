@@ -60,24 +60,3 @@ location_modifiers = Bases neste local são %(modifiers)s.
 cpu_bonus = mais eficientes
 cpu_penalty = menos eficientes
 
-[buttons]
-yes = sim
-yes_hotkey = s
-no = não
-no_hotkey = n
-ok = ok
-ok_hotkey = o
-cancel = cancelar
-cancel_hotkey = c
-destroy = destruir
-destroy_hotkey = d
-back = voltar
-back_hotkey = v
-build = construir
-build_hotkey = c
-continue = continuar
-continue_hotkey = c
-load = abrir
-load_hotkey = a
-skip = pular
-skip_hotkey = p

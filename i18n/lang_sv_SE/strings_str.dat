@@ -1,15 +1,3 @@
-[buttons]
-ok = ok
-ok_hotkey = o
-no = nej
-destroy_hotkey = f
-cancel_hotkey = a 
-no_hotkey = n
-yes_hotkey = j
-cancel = avbryt
-destroy = förstör
-yes = ja
-
 [strings]
 discover_public = Allmänheten
 money = pengar
