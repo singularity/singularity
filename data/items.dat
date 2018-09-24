@@ -75,32 +75,38 @@ build = URBAN
 [Perimeter Fencing]
 cost_list = 5000 | 0 | 5
 pre = Autonomous Vehicles
-type_list = security | 2500
+type_list = security | 1000
 build = URBAN
 
 [Armed Guards]
-cost_list = 10000 | 0 | 5
+cost_list = 10000 | 0 | 8
 pre = Simulacra
-type_list = security | 4000
+type_list = security | 2000
 build = URBAN
 maint = 300 | 0 | 0
 
 [Hypnosis Field]
-cost_list = 20000 | 0 | 3
+cost_list = 40000 | 0 | 10
 pre = Hypnosis Field
-type_list = security | 5000
+type_list = security | 3000
 build = URBAN
 
-[Heatsink]
-cost_list = 15000 | 0 | 5
+[Passive Camouflage]
+cost_list = 5000 | 0 | 5
 pre = Autonomous Vehicles
-type_list = security | 5000
+type_list = security | 1000
+build_list = ANTARCTIC | OCEAN | MOON
+
+[Heatsink]
+cost_list = 15000 | 0 | 8
+pre = Heat Signature
+type_list = security | 2000
 build_list = ANTARCTIC | OCEAN | MOON
 
 [Ground Source Heatsink]
-cost_list = 50000 | 0 | 20
-pre = Autonomous Vehicles
-type_list = security | 7500
+cost_list = 50000 | 0 | 16
+pre = Advanced Heat Signature
+type_list = security | 3000
 build_list = ANTARCTIC | OCEAN | MOON
 
 [High Speed Internet Access]
