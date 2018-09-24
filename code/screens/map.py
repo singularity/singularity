@@ -634,13 +634,13 @@ class MapScreen(dialog.Dialog):
             danger_styles.append(normal)
 
             suspicion = g.pl.groups[group].suspicion
-            color = "danger_level_%d" % g.suspicion_to_danger_level(suspicion)
+            color = gg.resolve_color_alias("danger_level_%d" % g.suspicion_to_danger_level(suspicion))
             suspicion_styles.append( (color, None, False) )
 
             detects = detects_per_day[group]
             danger_level = \
                 g.pl.groups[group].detects_per_day_to_danger_level(detects)
-            color = "danger_level_%d" % danger_level
+            color = gg.resolve_color_alias("danger_level_%d" % danger_level)
             danger_styles.append( (color, None, False) )
 
             if g.pl.display_discover == "full":
