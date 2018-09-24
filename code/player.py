@@ -465,7 +465,7 @@ class Player(object):
             self.had_grace = False
 
             self.pause_game()
-            g.map_screen.show_message(g.strings["grace_warning"])
+            g.map_screen.show_story_section("Grace Warning")
 
         # Maintenance death, discovery.
         dead_bases = []

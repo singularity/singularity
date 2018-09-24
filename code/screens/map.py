@@ -428,15 +428,22 @@ class MapScreen(dialog.Dialog):
             self.stop_timer()
         self.needs_rebuild = True
 
-    def show_intro(self):
-        intro_dialog = dialog.YesNoDialog(self, yes_type="continue",
+    def show_story_section(self, name):
+        section = list(g.get_story_section(name))
+
+        first_dialog = dialog.YesNoDialog(self, yes_type="continue",
                                           no_type="skip")
-        for segment in g.get_intro():
-            intro_dialog.text = segment
-            if not dialog.call_dialog(intro_dialog, self):
+        last_dialog = dialog.MessageDialog(self, ok_type="ok")
+
+        for num, segment in enumerate(section):
+            story_dialog = first_dialog if num != len(section) - 1 else last_dialog
+            story_dialog.text = segment
+
+            if not dialog.call_dialog(story_dialog, self):
                 break
 
-        intro_dialog.parent = None
+        first_dialog.parent = None
+        last_dialog.parent = None
 
     def show(self):
         self.force_update()
@@ -462,7 +469,7 @@ class MapScreen(dialog.Dialog):
         if not g.pl.intro_shown:
             g.pl.intro_shown = True
             self.needs_warning = False
-            self.show_intro()
+            self.show_story_section("Intro")
 
         if self.needs_warning:
             self.warnings.show_dialog()
@@ -494,9 +501,10 @@ class MapScreen(dialog.Dialog):
 
         lost = g.pl.lost_game()
         if lost > 0:
+            lost_story = ["", "Lost No Bases", "Lost Suspicion"]
+            
             g.play_music("lose")
-            self.show_message(g.strings["lost_nobases"] if lost == 1 else
-                              g.strings["lost_sus"])
+            self.show_story_section(lost_story[lost])
             raise constants.ExitDialog
 
     def on_theme(self):

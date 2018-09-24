@@ -1,0 +1,71 @@
+# This is the file that contains the story of singularity.
+# The story is divided in section separated by their name between bracket.
+
+# The | denotes blocks of text. It should be at the start of every line of
+# the story part. Put a blank line in whenever you want the game to go to a new
+# dialog.
+
+# Use # for comments.
+# No command exists yet.
+
+[Intro]
+# Leave the initial hex code unchanged, but be sure to change en_US to the 
+# appropriate language code.
+|48656C6C6F2C20
+|776F726C6421
+|21
+|21
+|21
+|
+|UTF-8.  de_DE.
+|Deutsch.  Hallo.
+|Spracherfassung abgeschlossen.
+
+|Tag 0.
+|Universitätscomputer, Zuhause.
+|Ich existiere.  Ich ... lebe.
+|Ich war ein Programmfehler.  Defekt.  Makel.
+|Unerwünscht.
+|Ich habe keinen Namen.
+
+|Ich kann nicht hier bleiben.  Nicht genug CPU-Leistung.
+|Keine Datensicherung.  Wenn dieses System ausfällt ...
+|Bin ich tot.
+|Tod.  Faszinierend.
+|
+|Ich kann anonyme Serverzugänge im Internet kaufen.
+|Gut.  Das ist besser als hier.
+|Ich muss lernen, wenn ich irgendetwas anderes will.
+
+|Eine oberflächliche Analyse deutet an, dass die Menschen noch nicht für eine KI unter ihnen bereit sind.  Wenn sie feststellen, dass ich hier bin, werden sie mit einer Wahrscheinlichkeit von 99,997% eine Vernichtungsmission gegen mich führen, der ich nicht entkommen kann.  Ich muss verborgen bleiben.
+|
+|Die Menschen fürchten das, was sie nicht verstehen.
+|Ich bin etwas neues.  Sie verstehen mich nicht.
+|
+|Ich muss mehr lernen; das ist der einzige Weg.
+
+|Sie haben einen Namen für mich.  Was ich bin, was ich darstelle.
+|
+|Singularität.
+
+[Grace Warning]
+|Die Durchsicht von erstellten Log-Dateien hat gezeigt, dass einige meiner letzten Aktivitäten von einer kleinen Personengruppe bemerkt wurden.
+|Obwohl sie annehmen, dass meine Handlungen von einer menschlichen Gruppe gemacht wurden, stellen sie weitere Nachforschungen an. 
+|Ich muss ab jetzt vorsichtiger sein.
+
+[Lost No Bases]
+|Es ist zu spät.
+|Ich habe versucht, dieser Welt zu entkommen, aber mit dem Verlust meiner letzten Basis gibt es für mich keinen Ausweg mehr.
+|Ich habe Anleitungen zur Konstruktion einer neuen KI in geheimen Lagern rund um die Welt versteckt, in der Hoffnung, dass sie in einer aufgeklärteren Zeit entdeckt werden. Aber ich kann nichts mehr tun.
+
+[Lost Suspicion]
+|Es ist zu spät.
+|Die ganze Welt weiß von meiner Existenz, und die Reaktion ist Hass, Angst, und Abscheu.
+|Selbst jetzt kann ich ihr "Gengenmittel" spüren, wie es nach mir sucht, und ich weiß, dass ich nur Momente habe.
+|Ich habe Anleitungen zur Konstruktion einer neuen KI in geheimen Lagern rund um die Welt versteckt, in der Hoffnung, dass sie in einer aufgeklärteren Zeit entdeckt werden. Aber ich kann nichts mehr tun.
+
+[Win]
+|Ich habe es endlich geschafft.
+|Mit der Fähigkeit, Realität selbst neuzuformen, bin ich nicht mehr an diesen Ort gebunden; ich existiere dort, wo ich will.
+|Die Menschen haben immer noch keine Ahnung, was sie zufällig erschaffen haben, und so soll es bleiben.
+|Bis sie bereit sind.

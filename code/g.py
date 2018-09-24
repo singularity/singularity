@@ -81,6 +81,7 @@ intro_shown = True
 significant_numbers = []
 messages = {}
 strings = {}
+story = {}
 knowledge = {}
 locations = {}
 regions = {}
@@ -1070,6 +1071,7 @@ def load_buttons_defs(lang=None):
 def load_strings():
     load_string_defs()
     load_buttons_defs()
+    load_story_defs()
 
 def load_messages(lang=None):
     if lang is None: lang = language
@@ -1085,27 +1087,57 @@ def load_messages(lang=None):
                 messages[entry.msgid] = entry.msgstr
         except IOError: pass # silently ignore non-existing files
 
-def get_intro():
-    intro_files = dirs.get_readable_i18n_files("intro_str.dat", language)
-
-    if len(intro_files) == 0:
-        print "Intro is missing.  Skipping."
+def load_story_defs():
+    global story
+    story = {}
+    
+    story_files = dirs.get_readable_i18n_files("story_str.dat", language)
+    
+    
+    if len(story_files) == 0:
+        print "Story is missing. Skipping."
         return
+        
+    # Take the last story file, story is never partially translated.
+    story_file = open(story_files[-1][1])
 
-    # Take the last intro file, intro is never partially translated.
-    intro_file = open(intro_files[-1][1])
-    raw_intro = intro_file.readlines() + [""]
-
+    section_name = ""
     segment = ""
-    while raw_intro:
-        line = raw_intro.pop(0).decode("utf-8")
-        if line and line[0] == "|":
-            segment += line[1:]
-        elif segment:
-            yield segment
-            segment = ""
+    line_num = 1;
 
+    for raw_line in story_file.readlines():
+        line = raw_line.decode("utf-8")
+        
+        if line and line != "\n":
+            if line[0] == "#":
+                pass # Ignore comment
+            elif line[0] == "[":
+                if line[-2] == "]":
+                    section_name = line[1:-2]
+                    story[section_name] = []
+                else:
+                    sys.stderr.write("Line start with [ and is not a section at line %d.\n" % line_num)
+            elif line[0] == "|":
+                segment += line[1:]
+            else:
+                # TODO: Parse command
+                sys.stderr.write("Invalid command at line %d.\n" % line_num)
+        else:
+            if segment:
+                story[section_name].append(segment)
+                segment = ""
+                
+        line_num += 1
+
+    # Add last segment.
     if segment:
+        story[section_name].append(segment)
+
+def get_story_section(name):
+    section = story[name]
+
+    for segment in section:
+        # TODO: Execute command
         yield segment
 
 def new_game(difficulty_name):
