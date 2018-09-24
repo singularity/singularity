@@ -86,7 +86,7 @@ maint_list = 0 | 1 | 0
 size = 21
 allowed = MOON
 detect_chance_list = news:33 | science:167 | covert:7
-cost_list = 100000000 | 35000 | 20
+cost_list = 100000000 | 35000 | 5
 pre = Lunar Rocketry
 maint_list = 25000 | 125 | 0
 
@@ -94,7 +94,7 @@ maint_list = 25000 | 125 | 0
 size = 70
 allowed = MOON
 detect_chance_list = news:55 | science:207 | covert:17
-cost_list = 200000000 | 75000 | 20
+cost_list = 200000000 | 75000 | 10
 pre = Spacefaring Installation
 maint_list = 100000 | 250 | 0
 
@@ -106,26 +106,43 @@ cost_list = 400000000 | 150000 | 20
 pre = Advanced Spacefaring Installation
 maint_list = 500000 | 500 | 0
 
+[Planet Module]
+size = 21
+allowed = PLANETS
+detect_chance_list = news:33 | science:167 | covert:7
+cost_list = 100000000 | 35000 | 5
+pre = Lunar Rocketry
+maint_list = 25000 | 125 | 0
+
+[Small Planet Facility]
+size = 70
+allowed = PLANETS
+detect_chance_list = news:55 | science:207 | covert:17
+cost_list = 200000000 | 75000 | 10
+pre = Interplanetary Navigation | Spacefaring Installation
+maint_list = 100000 | 250 | 0
+
+[Large Planet Facility]
+size = 210
+allowed = PLANETS
+detect_chance_list = news:77 | science:257 | covert:27
+cost_list = 400000000 | 150000 | 20
+pre = Interplanetary Navigation | Advanced Spacefaring Installation
+maint_list = 500000 | 500 | 0
+
 [Scientific Outpost]
 size = 25
-allowed = FAR REACHES
+allowed = ASTEROID
 detect_chance_list = news:20 | science:350
-cost_list = 1000000000 | 150000 | 5
-pre = Fusion Rocketry
+cost_list = 1000000000 | 150000 | 3
+pre = Interplanetary Navigation
 maint_list = 450000 | 75 | 0
 
 [Large Scientific Outpost]
 size = 125
-allowed = FAR REACHES
+allowed = ASTEROID
 detect_chance_list = news:30 | science:450
-cost_list = 2000000000 | 3000000 | 5
-pre_list = Fusion Rocketry | Advanced Spacefaring Installation
+cost_list = 2000000000 | 3000000 | 9
+pre_list = Interplanetary Navigation | Advanced Spacefaring Installation
 maint_list = 900000 | 150 | 0
 
-[Reality Bubble]
-size = 50
-allowed = TRANSDIMENSIONAL
-detect_chance_list = science:250
-cost_list = 800000000000 | 60000000 | 100
-pre = Space-Time Manipulation
-maint_list = 5000000000 | 300000 | 0

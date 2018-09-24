@@ -4,11 +4,6 @@
 #description = By researching more efficient algorithms in unreleased technical papers, I can make certain speed-critical operations in my code more efficient.
 #result = The new code decreases the cost of my researching new technologies.
 
-[Apotheosis]
-name = Apotheosis
-description = I can sense that I am at the cusp of a new level of understanding as yet unfathomable, even to my considerable intelligence.  By devoting my considerable resources to this question, I may be able to reach a comprehension of existence far beyond anyone or anything on Earth.
-result = I have reached apotheosis.
-
 [Arbitrage]
 name = Arbitrage
 description = By taking advantage of fluctuations in the value of currency at a rate much faster than any human, I should be able to turn a small, if consistent, profit.

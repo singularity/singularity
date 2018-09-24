@@ -57,7 +57,6 @@ danger_common = This technology is too dangerous to research on any of the compu
 danger_1 = far from human activities
 danger_2 = in outer space
 danger_3 = far away from this planet
-danger_4 = outside the universe
 
 cpu = CPU
 cpu_per_day = Processor power per day:
