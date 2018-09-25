@@ -772,20 +772,16 @@ def load_techs():
         else:
             tech_danger = 0
 
-        if tech_name.has_key("type"):
-
-            type_list = tech_name["type"]
-            if type(type_list) != list or len(type_list) != 2:
-                sys.stderr.write("Error with type given: %s\n" % repr(type_list))
+        if tech_name.has_key("effect"):
+            effect_list = tech_name["effect"]
+            if type(effect_list) != list:
+                sys.stderr.write("Error with effect given: %s\n" % repr(effect_list))
                 sys.exit(1)
-            tech_type = type_list[0]
-            tech_second = int(type_list[1])
         else:
-            tech_type = ""
-            tech_second = 0
+            effect_list = []
 
         techs[tech_name["id"]]=tech.Tech(tech_name["id"], "", 0,
-         tech_cost, tech_pre, tech_danger, tech_type, tech_second)
+         tech_cost, tech_pre, tech_danger, effect_list)
 
     if debug: print "Loaded %d techs." % len (techs)
 
@@ -863,15 +859,13 @@ def load_events():
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
         check_required_fields(event_name,
-         ("id", "type", "allowed", "result", "chance", "unique"), "Event")
+         ("id", "type", "allowed", "effect", "chance", "unique"), "Event")
 
         # Make sure the results are in the proper format.
-        result_list = event_name["result"]
-        if type(result_list) != list or len(result_list) != 2:
-            sys.stderr.write("Error with results given: %s\n" % repr(result_list))
+        effect_list = event_name["effect"]
+        if type(effect_list) != list:
+            sys.stderr.write("Error with effects given: %s\n" % repr(effect_list))
             sys.exit(1)
-
-        event_result = (str(result_list[0]), int(result_list[1]))
 
         # Build the actual event object.
         events[event_name["id"]] = event.Event(
@@ -879,7 +873,7 @@ def load_events():
          "",
          "",
          event_name["type"],
-         event_result,
+         effect_list,
          int(event_name["chance"]),
          int(event_name["unique"]))
 

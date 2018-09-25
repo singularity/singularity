@@ -24,7 +24,7 @@ import buyable, effect
 
 class Tech(buyable.Buyable):
     def __init__(self, id, description, known, cost, prerequisites, danger,
-                 tech_type, secondary_data):
+                 effect_data):
         # A bit silly, but it does the trick.
         type = buyable.BuyableClass(id, description, cost, prerequisites,
                                      type="tech")
@@ -32,7 +32,7 @@ class Tech(buyable.Buyable):
 
         self.danger = danger
         self.result = ""
-        self.effect = effect.Effect(self, tech_type, secondary_data)
+        self.effect = effect.Effect(self, effect_data)
 
         if known:
             # self.finish would re-apply the tech benefit, which is already in

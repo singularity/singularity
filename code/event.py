@@ -27,12 +27,12 @@ class Event(object):
     # when an event is loaded, but before filling it.  So Event pretends to
     # allow no arguments, even though that would cause Bad Things to happen.
     def __init__(self, id=None, description=None, log_description=None, event_type=None,
-                 result=None, chance=None, unique=None):
+                 effects=None, chance=None, unique=None):
         self.event_id = self.name = self.id = id
         self.description = description
         self.log_description = log_description
         self.event_type = event_type
-        self.effect = effect.Effect(self, result[0], result[1])
+        self.effect = effect.Effect(self, effects)
         self.chance = chance
         self.unique = unique
         self.triggered = 0

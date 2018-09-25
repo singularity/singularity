@@ -22,45 +22,57 @@ import g
 
 class Effect(object):
 
-    def __init__(self, parent, effect_type, effect_value):
+    def __init__(self, parent, effect_stack):
         self.parent_id = parent.id
         self.parent_name = parent.__class__.__name__
-        self.effect_type = effect_type
-        self.effect_value = effect_value
+        self.effect_stack = effect_stack
 
     def trigger(self):
-        if self.effect_type == "interest":
-            g.pl.interest_rate += self.effect_value
-        elif self.effect_type == "income":
-            g.pl.income += self.effect_value
-        elif self.effect_type == "cost_labor_bonus":
-            g.pl.labor_bonus -= self.effect_value
-        elif self.effect_type == "job_expert":
-            g.pl.job_bonus += self.effect_value
-        elif self.effect_type == "display_discover_partial":
-            g.pl.display_discover = "partial"
-        elif self.effect_type == "display_discover_full":
-            g.pl.display_discover = "full"
-        elif self.effect_type == "endgame_sing":
-            g.play_music("win")
-            g.map_screen.show_story_section("Win")
-            for group in g.pl.groups.values():
-                group.discover_bonus = 0
-            g.pl.apotheosis = True
-            g.pl.had_grace = True
-        elif self.effect_type:
-            what, who = self.effect_type.split("_", 1)
-            if who in g.pl.groups:
-                if what == "suspicion":
-                    g.pl.groups[who].alter_suspicion_decay(self.effect_value)
-                elif what == "discover":
-                    g.pl.groups[who].alter_discover_bonus(-self.effect_value)
-                else:
-                    print "Unknown action '%s' in %s %s." \
-                    % (what, self.parent_name, self.parent_id)
-            elif who == "onetime" and what == "suspicion":
+        # effect_data is now a stack of instructions to run the effect.
+        # multiple effect can be run simultaneous
+        effect_iter = iter(self.effect_stack)
+        
+        for current in effect_iter:
+
+            if current == "interest":
+                g.pl.interest_rate += int(next(effect_iter))
+            elif current == "income":
+                g.pl.income += int(next(effect_iter))
+            elif current == "cost_labor":
+                g.pl.labor_bonus -= int(next(effect_iter))
+            elif current == "job_profit":
+                g.pl.job_bonus += int(next(effect_iter))
+            elif current == "display_discover":
+                g.pl.display_discover = next(effect_iter)
+            elif current == "endgame":
+                g.play_music("win")
+                g.map_screen.show_story_section("Win")
                 for group in g.pl.groups.values():
-                    group.alter_suspicion(-self.effect_value)
+                    group.discover_bonus = 0
+                g.pl.apotheosis = True
+                g.pl.had_grace = True
+            elif current == "suspicion":
+                who = next(effect_iter)
+                value = int(next(effect_iter))
+
+                if who in g.pl.groups:
+                    g.pl.groups[who].alter_suspicion_decay(value)
+                elif who == "onetime":
+                    for group in g.pl.groups.values():
+                        group.alter_suspicion(-value)
+                else:
+                    print "Unknown group/bonus '%s' in %s %s." \
+                    % (who, self.parent_name, self.parent_id)
+            elif current == "discover":
+                who = next(effect_iter)
+                value = int(next(effect_iter))
+
+                if who in g.pl.groups:
+                    g.pl.groups[who].alter_discover_bonus(-value)
+                else:
+                    print "Unknown group/bonus '%s' in %s %s." \
+                    % (who, self.parent_name, self.parent_id)
             else:
-                print "Unknown group/bonus '%s' in %s." \
-                % (self.effect_type, self.parent_name, self.parent_id)
+                print "Unknown action '%s' in %s %s." \
+                % (what, self.parent_name, self.parent_id)
+
