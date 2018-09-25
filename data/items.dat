@@ -57,8 +57,20 @@ build = ALL
 [Solar Collector]
 cost_list = 5000 | 0 | 5
 pre = Solar Collectors
-type_list = reactor | 1000
+type_list = reactor | 500
 build_list = URBAN | ANTARCTIC | MOON | FAR REACHES
+
+[Fuel Cell]
+cost_list = 5000 | 0 | 5
+pre = Electrochemical Fuel
+type_list = reactor | 1000
+build_list = ALL
+
+[Solid Fuel Cell]
+cost_list = 5000 | 0 | 5
+pre = Advanced Electrochemical Fuel
+type_list = reactor | 1500
+build_list = ALL
 
 [Fusion Reactor]
 cost_list = 10000 | 0 | 5
