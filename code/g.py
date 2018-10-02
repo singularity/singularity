@@ -1154,6 +1154,7 @@ def new_game(difficulty_name):
 
     for group in pl.groups.values():
         group.discover_bonus = diff.discover_multiplier
+        group.suspicion_bonus = diff.suspicion_multiplier
 
     # Reset all "mutable" game data
     load_locations()

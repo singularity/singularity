@@ -30,13 +30,17 @@ from buyable import cash, cpu
 
 group_list = ("news", "science", "covert", "public")
 class Group(object):
-    discover_suspicion = 1000
+    base_discover_suspicion=1000
     def __init__(self, name, suspicion = 0, suspicion_decay = 100,
-                 discover_bonus = 10000):
+                 discover_bonus = 10000, suspicion_bonus = 10000):
         self.name = name
         self.suspicion = suspicion
         self.suspicion_decay = suspicion_decay
         self.discover_bonus = discover_bonus
+
+    @property
+    def discover_suspicion(self):
+        return (self.base_discover_suspicion * self.suspicion_bonus) // 10000
 
     def decay_rate(self):
         # Suspicion reduction is now quadratic.  You get a certain percentage
