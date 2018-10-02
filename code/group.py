@@ -34,12 +34,14 @@ class GroupClass(object):
 
 class Group(object):
 
-    def __init__(self, type, suspicion = 0, discover_bonus = 10000):
+    def __init__(self, type, suspicion = 0, discover_bonus = 10000, discover_suspicion = 10000):
         self.type = type
         self.suspicion = suspicion
         self.changed_suspicion_decay = 0
         self.base_discover_bonus = discover_bonus
         self.changed_discover_bonus = 0
+        self.base_discover_suspicion = discover_suspicion
+        self.changed_discover_suspicion = 0
 
     def convert_from(self, old_version):
         if old_version < 99.6: # < 1.0 dev
@@ -64,6 +66,10 @@ class Group(object):
         return max(1, self.base_discover_bonus + self.changed_discover_bonus)
 
     @property
+    def discover_suspicion(self):
+        return max(1, (self.type.discover_suspicion * (self.base_discover_suspicion + self.changed_discover_suspicion)) // 10000)
+
+    @property
     def decay_rate(self):
         # Suspicion reduction is now quadratic.  You get a certain percentage
         # reduction, or a base .01% reduction, whichever is better.
@@ -81,8 +87,11 @@ class Group(object):
     def alter_discover_bonus(self, change):
         self.changed_discover_bonus += change
 
+    def alter_discover_suspicion(self, change):
+        self.changed_discover_suspicion += change
+
     def discovered_a_base(self):
-        self.alter_suspicion(self.type.discover_suspicion)
+        self.alter_suspicion(self.discover_suspicion)
 
     # percent_to_danger_level takes a suspicion level and returns an int in range(5)
     # that represents whether it is low, moderate, high, or critically high.
@@ -103,7 +112,7 @@ class Group(object):
         return g.danger_level_to_detect_str(self.suspicion_to_danger_level())
 
     def detects_per_day_to_danger_level(self, detects_per_day):
-        raw_suspicion_per_day = detects_per_day * self.type.discover_suspicion
+        raw_suspicion_per_day = detects_per_day * self.discover_suspicion
         suspicion_per_day = raw_suspicion_per_day - self.decay_rate
 
         # +1%/day or death within 10 days

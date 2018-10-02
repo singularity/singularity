@@ -30,6 +30,7 @@ columns = (
     'starting_interest_rate',
     'labor_multiplier',
     'discover_multiplier',
+    'suspicion_multiplier',
     'base_grace_multiplier',
     'story_grace_difficulty',
     'grace_period_cpu'
