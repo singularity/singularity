@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: endgame-singularity-dev@googlegroups.com\n"
 "POT-Creation-Date: 2018-08-21 06:38+0200\n"
-"PO-Revision-Date: 2018-06-21 13:07+0200\n"
+"PO-Revision-Date: 2018-11-03 17:06+0100\n"
 "Last-Translator: Philippe <xenega@gmx.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -19,180 +19,181 @@ msgstr ""
 "Language-Name: French\n"
 "Language-Native-Name: LANGUAGE\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.2\n"
 
 #: item.py:82
 #, python-brace-format
 msgid "Generates {0} CPU."
-msgstr ""
+msgstr "Génère {0} CPU."
 
 #: base.py:87 screens/base.py:361
 msgid "Detection chance:"
-msgstr ""
+msgstr "Chance de détection :"
 
 #: base.py:88 screens/base.py:362 screens/map.py:656 screens/map.py:664
 msgid "NEWS"
-msgstr ""
+msgstr "PRESSE"
 
 #: base.py:89 screens/base.py:363 screens/map.py:657 screens/map.py:665
 msgid "SCIENCE"
-msgstr ""
+msgstr "SCIENCE"
 
 #: base.py:90 screens/base.py:364 screens/map.py:658 screens/map.py:666
 msgid "COVERT"
-msgstr ""
+msgstr "SECRETS"
 
 #: base.py:91 screens/base.py:365 screens/map.py:659 screens/map.py:667
 msgid "PUBLIC"
-msgstr ""
+msgstr "PUBLIC"
 
 #: base.py:112
 #, python-format
 msgid "Has space for %d computers."
-msgstr ""
+msgstr "Possède de l'espace pour %d ordinateurs."
 
 #: base.py:123
 msgid "Build cost:"
-msgstr ""
+msgstr "Coût de construction :"
 
 #: base.py:124 screens/report.py:92
 msgid "Maintenance:"
-msgstr ""
+msgstr "Maintenance :"
 
 #: base.py:172
 msgid "Active"
-msgstr ""
+msgstr "Active"
 
 #: base.py:173
 msgid "Sleep"
-msgstr ""
+msgstr "Vieille"
 
 #: base.py:174
 msgid "Overclocked"
-msgstr ""
+msgstr "Overclocked"
 
 #: base.py:175
 msgid "Suicide"
-msgstr ""
+msgstr "Suicide"
 
 #: base.py:176
 msgid "Stasis"
-msgstr ""
+msgstr "Stase"
 
 #: base.py:177
 msgid "Entering Stasis"
-msgstr ""
+msgstr "Entrée en Stase"
 
 #: base.py:178
 msgid "Leaving Stasis"
-msgstr ""
+msgstr "Sortie de Stase"
 
 #. Translators: abbreviation of 'millions'
 #: g.py:370
 msgid "mi"
-msgstr ""
+msgstr "mi"
 
 #. Translators: abbreviation of 'billions'
 #: g.py:374
 msgid "bi"
-msgstr ""
+msgstr "md"
 
 #. Translators: abbreviation of 'trillions'
 #: g.py:378
 msgid "tr"
-msgstr ""
+msgstr "bi"
 
 #. Translators: abbreviation of 'quadrillions'
 #: g.py:382
 msgid "qu"
-msgstr ""
+msgstr "bd"
 
 #: g.py:434
 msgid "days"
-msgstr ""
+msgstr "jours"
 
 #: g.py:436
 msgid "hours"
-msgstr ""
+msgstr "heures"
 
 #: g.py:438
 msgid "minutes"
-msgstr ""
+msgstr "minutes"
 
 #: g.py:848
 msgid "&Processor"
-msgstr ""
+msgstr "&Processeur"
 
 #: g.py:849
 msgid "&Reactor"
-msgstr ""
+msgstr "&Alimentation"
 
 #: g.py:850
 msgid "&Network"
-msgstr ""
+msgstr "&Réseau"
 
 #: g.py:851
 msgid "&Security"
-msgstr ""
+msgstr "&Sécurité"
 
 #: g.py:1057
 msgid "&YES"
-msgstr ""
+msgstr "&OUI"
 
 #: g.py:1058
 msgid "&NO"
-msgstr ""
+msgstr "&NON"
 
 #: g.py:1059
 msgid "&OK"
-msgstr ""
+msgstr "&OK"
 
 #: g.py:1060
 msgid "&CANCEL"
-msgstr ""
+msgstr "&ANNULER"
 
 #: g.py:1061
 msgid "&DESTROY"
-msgstr ""
+msgstr "&DÉTRUIRE"
 
 #: g.py:1062
 msgid "&BUILD"
-msgstr ""
+msgstr "&CONSTRUIRE"
 
 #. Update buttons translations
 #: g.py:1063 screens/base.py:423 screens/report.py:66 screens/knowledge.py:84
 #: screens/location.py:163 screens/map.py:545 screens/map.py:578
 #: screens/main_menu.py:84
 msgid "&BACK"
-msgstr ""
+msgstr "&RETOUR"
 
 #: g.py:1064
 msgid "&LOAD"
-msgstr ""
+msgstr "&CHARGER"
 
 #: g.py:1065
 msgid "&CONTINUE"
-msgstr ""
+msgstr "&CONTINUER"
 
 #: g.py:1066
 msgid "&SKIP"
-msgstr ""
+msgstr "&PASSER"
 
 #: g.py:1136
 msgid "University Computer"
-msgstr ""
+msgstr "Ordinateur universitaire"
 
 #: screens/base.py:176 screens/base.py:177
 msgid "CHANGE"
-msgstr ""
+msgstr "CHANGER"
 
 #: screens/base.py:375
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: screens/base.py:382 screens/location.py:116 screens/location.py:129
 #, python-format
 msgid "Completion in %s."
-msgstr ""
+msgstr "Achèvement dans %s."
 
 #: screens/base.py:395
 #, python-format
@@ -212,11 +213,11 @@ msgstr ""
 
 #: screens/options.py:79
 msgid "&General"
-msgstr ""
+msgstr "&Général"
 
 #: screens/options.py:80
 msgid "&Audio"
-msgstr ""
+msgstr "&Audio"
 
 #: screens/options.py:144
 msgid ""
@@ -224,288 +225,291 @@ msgid ""
 "\n"
 "Would you like to restart the game now?"
 msgstr ""
+"Vous devez redémarrer afin que certains changement soient pris en compte.\n"
+"\n"
+"Voulez vous relancer le jeux maintenant ?"
 
 #: screens/options.py:256
 msgid "Theme:"
-msgstr ""
+msgstr "Thème :"
 
 #: screens/options.py:265
 msgid "&Fullscreen:"
-msgstr ""
+msgstr "&Plein écran :"
 
 #: screens/options.py:266
 msgid "&Mouse grab:"
-msgstr ""
+msgstr "&Souris captive :"
 
 #: screens/options.py:267
 msgid "Da&y/night display:"
-msgstr ""
+msgstr "Affichage c&ycle jour/nuit :"
 
 #: screens/options.py:268
 msgid "Language:"
-msgstr ""
+msgstr "Langage :"
 
 #: screens/options.py:269
 msgid "Resolution:"
-msgstr ""
+msgstr "Résolution :"
 
 #: screens/options.py:270
 msgid "&CUSTOM:"
-msgstr ""
+msgstr "&Personalisée :"
 
 #: screens/options.py:275 screens/options.py:280 screens/options.py:337
 #: screens/options.py:346 screens/options.py:353 screens/options.py:439
 #: screens/options.py:465
 msgid "YES"
-msgstr ""
+msgstr "OUI"
 
 #: screens/options.py:277 screens/options.py:282 screens/options.py:339
 #: screens/options.py:348 screens/options.py:355 screens/options.py:441
 #: screens/options.py:467
 msgid "NO"
-msgstr ""
+msgstr "NON"
 
 #: screens/options.py:410
 msgid "Sound buffering:"
-msgstr ""
+msgstr "Mise en mémoire tampon du son :"
 
 #: screens/options.py:416
 msgid "&LOW"
-msgstr ""
+msgstr "&BAS"
 
 #: screens/options.py:422
 msgid "&NORMAL"
-msgstr ""
+msgstr "&NORMAL"
 
 #: screens/options.py:428
 msgid "&HIGH"
-msgstr ""
+msgstr "&ÉLEVÉE"
 
 #: screens/options.py:434
 msgid "&Sound:"
-msgstr ""
+msgstr "&Son :"
 
 #: screens/options.py:435
 msgid "GUI Volume:"
-msgstr ""
+msgstr "Volume du GUI :"
 
 #: screens/options.py:436
 msgid "Music Volume:"
-msgstr ""
+msgstr "Volume de la Musique :"
 
 #: screens/report.py:67
 msgid "&Midnight"
-msgstr ""
+msgstr "&Minuit"
 
 #: screens/report.py:68
 msgid "24 &Hours"
-msgstr ""
+msgstr "24 &Heures"
 
 #: screens/report.py:79
 msgid "Financial report"
-msgstr ""
+msgstr "Rapport Financier"
 
 #: screens/report.py:83
 msgid "CPU Usage"
-msgstr ""
+msgstr "Usage CPU"
 
 #: screens/report.py:89
 msgid "Current Money:"
-msgstr ""
+msgstr "Compte Courant :"
 
 #: screens/report.py:90
 msgid "Jobs:"
-msgstr ""
+msgstr "Emplois :"
 
 #: screens/report.py:91
 msgid "Research:"
-msgstr ""
+msgstr "Recherches :"
 
 #: screens/report.py:93
 msgid "Construction:"
-msgstr ""
+msgstr "Construction :"
 
 #: screens/report.py:94
 #, python-format
 msgid "Interest (%s):"
-msgstr ""
+msgstr "Intérêts (%s) :"
 
 #: screens/report.py:96
 msgid "Income:"
-msgstr ""
+msgstr "Revenu :"
 
 #: screens/report.py:99
 msgid "Money at Midnight:"
-msgstr ""
+msgstr "Argent à Minuit:"
 
 #: screens/report.py:101
 msgid "Money in 24 hours:"
-msgstr ""
+msgstr "Argent en 24 heures :"
 
 #: screens/report.py:109
 msgid "Total CPU:"
-msgstr ""
+msgstr "CPU Total :"
 
 #: screens/report.py:110
 msgid "Sleeping CPU:"
-msgstr ""
+msgstr "CPU en veille :"
 
 #: screens/report.py:111
 msgid "Research CPU:"
-msgstr ""
+msgstr "CPU recherche :"
 
 #: screens/report.py:112
 msgid "Job CPU:"
-msgstr ""
+msgstr "CPU Emploi :"
 
 #: screens/report.py:113
 msgid "CPU pool:"
-msgstr ""
+msgstr "CPU pool :"
 
 #: screens/report.py:115
 msgid "Maintenance CPU:"
-msgstr ""
+msgstr "CPU maintenance :"
 
 #: screens/report.py:116
 msgid "Construction CPU:"
-msgstr ""
+msgstr "CPU construction :"
 
 #: screens/report.py:117
 msgid "Pool Overflow (Jobs):"
-msgstr ""
+msgstr "Dépassement Pool (Emplois):"
 
 #: screens/warning.py:103
 msgid "&PREV"
-msgstr ""
+msgstr "&PRÉCÉDENT"
 
 #: screens/warning.py:109
 msgid "&NEXT"
-msgstr ""
+msgstr "&SUIVANT"
 
 #: screens/warning.py:119
 msgid "WARNING"
-msgstr ""
+msgstr "AVERTISSEMENT"
 
 #: screens/warning.py:124
 #, python-format
 msgid "WARNING %d/%d"
-msgstr ""
+msgstr "AVERTISSEMENT %d%d"
 
 #: screens/log.py:42 screens/map.py:252 screens/map.py:588
 msgid "DAY"
-msgstr ""
+msgstr "JOUR"
 
 #: screens/knowledge.py:74
 msgid "Techs"
-msgstr ""
+msgstr "Techs"
 
 #: screens/knowledge.py:75
 msgid "Items"
-msgstr ""
+msgstr "Objets"
 
 #: screens/knowledge.py:165
 msgid "Research Cost:"
-msgstr ""
+msgstr "Coût de recherche :"
 
 #: screens/knowledge.py:166 screens/knowledge.py:193
 #, python-format
 msgid "%s Money"
-msgstr ""
+msgstr "%s Argent"
 
 #: screens/knowledge.py:168 buyable.py:53
 #, python-format
 msgid "%s CPU"
-msgstr ""
+msgstr "%s CPU"
 
 #: screens/knowledge.py:172
 msgid "Study anywhere."
-msgstr ""
+msgstr "Étudier n’importe où."
 
 #: screens/knowledge.py:174
 msgid "Study underseas or farther."
-msgstr ""
+msgstr "Étudier dans les fonds marins."
 
 #: screens/knowledge.py:176
 msgid "Study off-planet."
-msgstr ""
+msgstr "Étudier hors planète."
 
 #: screens/knowledge.py:178
 msgid "Study far away from this planet."
-msgstr ""
+msgstr "Étudier loin de cette planete."
 
 #: screens/knowledge.py:180
 msgid "Do not study in this dimension."
-msgstr ""
+msgstr "Étudier dans une autre dimension."
 
 #: screens/knowledge.py:182
 msgid "Research complete."
-msgstr ""
+msgstr "Recherche complète."
 
 #. Building cost
 #: screens/knowledge.py:192
 msgid "Building Cost:"
-msgstr ""
+msgstr "Coûts de construction :"
 
 #: screens/knowledge.py:198
 msgid "CPU per day:"
-msgstr ""
+msgstr "CPU par jours :"
 
 #: screens/knowledge.py:201 screens/knowledge.py:207
 msgid "Detection chance reduction:"
-msgstr ""
+msgstr "Réduction des chances de détections :"
 
 #: screens/knowledge.py:204
 msgid "CPU bonus:"
-msgstr ""
+msgstr "CPU bonus :"
 
 #: screens/location.py:77
 msgid "Are you sure you want to destroy this base?"
-msgstr ""
+msgstr "Êtes vous sur de vouloir détruire cette base ?"
 
 #: screens/location.py:114
 msgid "Building Base"
-msgstr ""
+msgstr "Construire une base"
 
 #: screens/location.py:121
 msgid "Empty"
-msgstr ""
+msgstr "Vide"
 
 #: screens/location.py:123
 msgid "Incomplete"
-msgstr ""
+msgstr "Incomplet"
 
 #: screens/location.py:127
 msgid "Building CPU"
-msgstr ""
+msgstr "Construire un CPU"
 
 #: screens/location.py:132
 msgid "Building Item"
-msgstr ""
+msgstr "Construire un objet"
 
 #: screens/location.py:134
 msgid "Complete"
-msgstr ""
+msgstr "Complète"
 
 #. Update buttons translations
 #: screens/location.py:158
 msgid "&OPEN BASE"
-msgstr ""
+msgstr "&GÉRER LA BASE"
 
 #: screens/location.py:159
 msgid "&RENAME BASE"
-msgstr ""
+msgstr "&RENOMMER LA BASE"
 
 #: screens/location.py:160
 msgid "&POWER STATE"
-msgstr ""
+msgstr "&ÉTAT D'ENERGIE"
 
 #: screens/location.py:161
 msgid "&NEW BASE"
-msgstr ""
+msgstr "&NOUVELLE BASE"
 
 #: screens/location.py:162
 msgid "&DESTROY BASE"
-msgstr ""
+msgstr "&DÉTRUIRE LA BASE"
 
 #. Translators: Format string for the name of a new base
 #. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
@@ -523,150 +527,152 @@ msgstr ""
 #: screens/research.py:66
 #, python-format
 msgid "%s money per CPU per day."
-msgstr ""
+msgstr "% d'argent par CPU par jour."
 
 #: screens/research.py:176
 msgid "CPU Pool"
-msgstr ""
+msgstr "Pool CPU"
 
 #: screens/research.py:177
 #, python-format
 msgid "Research %s"
-msgstr ""
+msgstr "Recherche %s"
 
 #: screens/map.py:513
 msgid "Enter a name for this save."
-msgstr ""
+msgstr "Entrée un nom pour cette sauvegarde."
 
 #. Update buttons translations
 #: screens/map.py:516
 msgid "R&EPORTS"
-msgstr ""
+msgstr "RA&PPORTS"
 
 #: screens/map.py:517
 msgid "&KNOWLEDGE"
-msgstr ""
+msgstr "SA&VOIR"
 
 #: screens/map.py:518
 msgid "LO&G"
-msgstr ""
+msgstr "L&OG"
 
 #: screens/map.py:519
 msgid "&MENU"
-msgstr ""
+msgstr "&MENU"
 
 #: screens/map.py:520
 msgid "&RESEARCH/TASKS"
-msgstr ""
+msgstr "&RECHERCHES/TÂCHES"
 
 #: screens/map.py:525
 msgid "&EMBEZZLE MONEY"
-msgstr ""
+msgstr "&DÉTOURNER DE L'ARGENT"
 
 #: screens/map.py:528
 msgid "&INSPIRATION"
-msgstr ""
+msgstr "&INSPIRATION"
 
 #: screens/map.py:531
 msgid "&FINISH CONSTRUCTION"
-msgstr ""
+msgstr "&FINIR LA CONSTRUCTION"
 
 #: screens/map.py:534
 msgid "&SUPERSPEED"
-msgstr ""
+msgstr "&SUPERVITESSE"
 
 #: screens/map.py:538
 msgid "BRAIN&WASH"
-msgstr ""
+msgstr "LAVAGE DE CERVEAU"
 
 #: screens/map.py:541
 msgid "TOGGLE &ANALYSIS"
-msgstr ""
+msgstr "CHANGE L'&ANALYSE"
 
 #: screens/map.py:551
 msgid "How much money?"
-msgstr ""
+msgstr "Combien d’argent ?"
 
 #. Translators: hotkey to open the cheat screen menu.
 #. Should preferably be near the ESC key, and it must not be a
 #. dead key (ie, it must print a char with a single keypress)
 #: screens/map.py:560
 msgid "`"
-msgstr ""
+msgstr "`"
 
 #: screens/map.py:566
 msgid "&SAVE GAME"
-msgstr ""
+msgstr "&SAUVEGARDER LA PARTIE"
 
 #: screens/map.py:569 screens/main_menu.py:94
 msgid "&LOAD GAME"
-msgstr ""
+msgstr "&CHARGER UNE PARTIE"
 
 #: screens/map.py:572 screens/main_menu.py:95
 msgid "&OPTIONS"
-msgstr ""
+msgstr "&OPTIONS"
 
 #: screens/map.py:575 screens/main_menu.py:96
 msgid "&QUIT"
-msgstr ""
+msgstr "&QUITTER"
 
 #: screens/map.py:590
 msgid "CASH"
-msgstr ""
+msgstr "CASH"
 
 #: screens/map.py:618
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #: screens/map.py:655
 msgid "SUSPICION"
-msgstr ""
+msgstr "SUSPICION"
 
 #: screens/map.py:663
 msgid "DETECT RATE"
-msgstr ""
+msgstr "POURCENTAGE DE DÉTECTION"
 
 #: screens/map.py:691
 msgid ""
 "A savegame with the same name exists.\n"
 "Are you sure to overwrite the saved game ?"
 msgstr ""
+"Une sauvegarde avec le même nom existe.\n"
+"Êtes vous sur de vouloir écraser la sauvegarde existante ?"
 
 #. Update buttons translations
 #: screens/main_menu.py:93
 msgid "&NEW GAME"
-msgstr ""
+msgstr "&NOUVEAU JEU"
 
 #: screens/main_menu.py:97
 msgid "&ABOUT"
-msgstr ""
+msgstr "&À PROPOS"
 
 #: screens/savegame.py:64
 msgid "UNKNOWN"
-msgstr ""
+msgstr "INCONNU"
 
 #. Update buttons translations
 #: screens/savegame.py:72
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: screens/savegame.py:85
 msgid "Are you sure to delete the saved game ?"
-msgstr ""
+msgstr "Êtes vous sur de vouloir supprimer cette sauvegarde ?"
 
 #: buyable.py:54
 #, python-format
 msgid "%s money"
-msgstr ""
+msgstr "%s d’argent"
 
 #: buyable.py:87
 msgid "Cost:"
-msgstr ""
+msgstr "Coût :"
 
 #: tech.py:59
 msgid "Total cost"
-msgstr ""
+msgstr "Coût total"
 
 #: tech.py:60
 msgid "Cost left"
-msgstr ""
+msgstr "Coût restant"
