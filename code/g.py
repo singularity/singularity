@@ -60,6 +60,9 @@ mixerinit = False
 # Enables day/night display.
 daynight = True
 
+# Warn about unused CPUs
+cpu_warning = True
+
 #Gives debug info at various points.
 debug = 0
 

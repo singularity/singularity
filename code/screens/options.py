@@ -89,6 +89,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             fullscreen      = gg.fullscreen,
             grab            = pygame.event.get_grab(),
             daynight        = g.daynight,
+            cpu_warning     = g.cpu_warning,
             resolution      = gg.screen_size,
             language        = i18n.language,
             sound           = not g.nosound,
@@ -261,10 +262,22 @@ class GeneralPane(widget.Widget):
                                   update_func=theme.set_theme,
                                   list_pos=theme.get_theme_pos())
 
+        # Sixth row
+        self.cpu_warning_label = button.HotkeyText(self, (.01, .60), (.20, .05),
+                                                autohotkey=True,
+                                                background_color="clear")
+        self.cpu_warning_toggle = OptionButton(self, (.23, .60), (.07, .05),
+                                        text_shrink_factor=.75,
+                                        force_underline=-1,
+                                        function=self.set_cpu_warning,
+                                        args=(button.TOGGLE_VALUE,))
+        self.cpu_warning_label.hotkey_target = self.cpu_warning_toggle
+
     def rebuild(self):
         self.fullscreen_label.text          = _("&Fullscreen:")
         self.grab_label.text                = _("&Mouse grab:")
         self.daynight_label.text            = _("Da&y/night display:")
+        self.cpu_warning_label.text         = _("Unused &CPU Warnings:")
         self.language_label.text            = _("Language:")
         self.resolution_label.text          = _("Resolution:")
         self.resolution_custom.text         = _("&CUSTOM:")
@@ -292,6 +305,9 @@ class GeneralPane(widget.Widget):
 
         self.set_daynight(options['daynight'])
         self.daynight_toggle.set_active(options['daynight'])
+
+        self.set_cpu_warning(options['cpu_warning'])
+        self.cpu_warning_toggle.set_active(options['cpu_warning'])
 
         custom = True
         for res_button in self.resolution_group:
@@ -354,6 +370,13 @@ class GeneralPane(widget.Widget):
         else:
             self.daynight_toggle.text = _("NO")
         g.daynight = value
+
+    def set_cpu_warning(self, value):
+        if value:
+            self.cpu_warning_toggle.text = _("YES")
+        else:
+            self.cpu_warning_toggle.text = _("NO")
+        g.cpu_warning = value
 
     def set_resolution(self, value):
         if gg.screen_size != value:
@@ -523,6 +546,7 @@ def save_options():
     prefs.set("Preferences", "nosound",      str(bool(g.nosound)))
     prefs.set("Preferences", "grab",         str(bool(pygame.event.get_grab())))
     prefs.set("Preferences", "daynight",     str(bool(g.daynight)))
+    prefs.set("Preferences", "cpu_warning",  str(bool(g.cpu_warning)))
     prefs.set("Preferences", "xres",         str(int(gg.screen_size[0])))
     prefs.set("Preferences", "yres",         str(int(gg.screen_size[1])))
     prefs.set("Preferences", "soundbuf",     str(int(g.soundbuf)))

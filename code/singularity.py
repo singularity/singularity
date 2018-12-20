@@ -118,6 +118,11 @@ if save_loc is not None:
             sys.stderr.write("Invalid or missing 'daynight' setting in preferences.\n")
 
         try:
+            g.cpu_warning = prefs.getboolean("Preferences", "cpu_warning")
+        except:
+            sys.stderr.write("Invalid or missing 'cpu_warning' setting in preferences.\n")
+
+        try:
             desired_soundbuf = prefs.getint("Preferences", "soundbuf")
         except:
             sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
@@ -166,6 +171,10 @@ parser.add_option("--daynight", action="store_true", dest="daynight",
                   help="enable day/night display (default)")
 parser.add_option("--nodaynight", action="store_false", dest="daynight",
                   help="disable day/night display")
+parser.add_option("--cpu_warning", action="store_true", dest="cpu_warning",
+                  help="Warn about unused CPUs (default)")
+parser.add_option("--no-cpu_warning", action="store_false", dest="cpu_warning",
+                  help="Disable unused CPU warnings")
 parser.add_option("-l", "--lang", "--language", dest="language", type="choice",
                   choices=langs, metavar="LANG",
                   help="set the language to LANG (available languages: " +
@@ -241,6 +250,8 @@ if options.sound is not None:
     g.nosound = not options.sound
 if options.daynight is not None:
     g.daynight = options.daynight
+if options.cpu_warning is not None:
+    g.cpu_warning = options.cpu_warning
 if options.soundbuf is not None:
     g.soundbuf = options.soundbuf
 

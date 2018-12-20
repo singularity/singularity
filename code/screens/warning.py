@@ -53,12 +53,13 @@ class WarningDialogs(object):
     def refresh_warnings(self):
         warnings = []
 
-        cpu_usage = sum(g.pl.cpu_usage.values())
-        cpu_available = g.pl.available_cpus[0]
+        if g.cpu_warning:
+            cpu_usage = sum(g.pl.cpu_usage.values())
+            cpu_available = g.pl.available_cpus[0]
 
-        # Verify the cpu usage (error 1%)
-        if (cpu_usage < cpu_available * 0.99):
-            warnings.append(Warning("warning_cpu_usage"))
+            # Verify the cpu usage (error 1%)
+            if (cpu_usage < cpu_available * 0.99):
+                warnings.append(Warning("warning_cpu_usage"))
 
         # Verify I have two base build (or one base will be build next tick)
         # Base must have one cpu build (or one cpu will be build next tick)
