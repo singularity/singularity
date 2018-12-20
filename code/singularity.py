@@ -60,13 +60,6 @@ import graphics.g, graphics.theme as theme
 
 set_theme = None
 
-pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
-pygame.init()
-#pygame.mixer.quit()  # simulate mixer init failure (eg, no soundcard available)
-g.mixerinit = bool(pygame.mixer.get_init())
-pygame.font.init()
-pygame.key.set_repeat(1000, 50)
-
 #configure global logger
 logfile = dirs.get_writable_file_in_dirs("error.log", "log")
 if len(logging.getLogger().handlers) == 0:
@@ -249,17 +242,23 @@ if options.sound is not None:
 if options.daynight is not None:
     g.daynight = options.daynight
 if options.soundbuf is not None:
-    desired_soundbuf = options.soundbuf
-
-# If needed, reinit_mixer() only once after parsing both prefs file and options
-if desired_soundbuf != g.soundbuf:
-    g.soundbuf = desired_soundbuf
-    g.reinit_mixer()
+    g.soundbuf = options.soundbuf
 
 graphics.g.ebook_mode = options.ebook
 
 g.cheater = options.cheater
 g.debug = options.debug
+
+# PYGAME INITIALIZATION  
+#
+# Only initiliaze after reading all arguments and preferences to avoid to
+# reinitialize something again (mixer,...).
+#
+pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
+pygame.init()
+g.mixerinit = bool(pygame.mixer.get_init())
+pygame.font.init()
+pygame.key.set_repeat(1000, 50)
 
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.
