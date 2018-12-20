@@ -28,6 +28,7 @@ num_cpu_prompt = Enter a number of %s to build. (max %d)
 will_be_offline = I'll need to take the existing processors offline while I install the new ones. Continue anyway?
 will_lose_cpus = I'll need to remove the existing different processors while I install the new type. Continue anyway?
 nan = That doesn't seem to be a valid number.
+item_number_invalid = You cannot build this number of base.
 log_destroy = Base %s of type %s destroyed at location %s.
 log_destroy_maint = Base %s of type %s destroyed at location %s. Maintenance failed.
 log_destroy_news = Base %s of type %s discovered at location %s by some news organizations.

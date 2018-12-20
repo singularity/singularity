@@ -112,12 +112,8 @@ class MultipleBuildDialog(BuildDialog):
     def on_change(self, description_pane, item):
         super(MultipleBuildDialog, self).on_change(description_pane, item)
 
-        space_left = self.parent.base.type.size
-
-        if self.parent.base.cpus is not None \
-                and self.parent.base.cpus.type == item:
-            space_left -= self.parent.base.cpus.count
-
+        space_left = self.parent.base.space_left_for(item)
+        
         self.count_slider.slider_size = space_left // 10 + 1
         self.count_slider.slider_max = space_left
 
@@ -262,7 +258,7 @@ class BaseScreen(dialog.Dialog):
 
     def set_current(self, type, item_type, count):
         if type == "cpu":
-            space_left = self.base.type.size
+            space_left = self.base.space_left_for(item_type)
             
             try:
                 count = int(count)
@@ -275,9 +271,13 @@ class BaseScreen(dialog.Dialog):
                 md.parent = None
                 return
             
-            if count > space_left:
-                count = space_left
-            elif count <= 0:
+            if count > space_left or count <= 0 or space_left == 0:
+                md = dialog.MessageDialog(self, pos=(-.5, -.5),
+                          size=(-.5, -1),
+                          anchor=constants.MID_CENTER,
+                          text=g.strings["item_number_invalid"])
+                dialog.call_dialog(md, self)
+                md.parent = None
                 return
             
             # If there are any existing CPUs of this type, warn that they will

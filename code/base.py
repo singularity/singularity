@@ -178,6 +178,16 @@ class Base(buyable.Buyable):
         if self.power_state == "leaving_stasis" : return _("Leaving Stasis")
         return ""
 
+    def space_left_for(self, item_type):
+        space_left = self.type.size
+
+        # Different cpus will replace the previous one, so these take full space.
+        if self.cpus is not None \
+                and self.cpus.type == item_type:
+            space_left -= self.cpus.count
+            
+        return space_left
+
     def check_power(self):
         if self.power_state == "sleep":
             if self.done:
