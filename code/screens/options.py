@@ -24,7 +24,7 @@ import pygame
 import json
 
 from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
-import code.g as g, code.dirs as dirs
+import code.g as g, code.dirs as dirs, code.i18n as i18n
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Integrate "Save Options to Disk" functionality in OK button.
@@ -90,7 +90,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             grab            = pygame.event.get_grab(),
             daynight        = g.daynight,
             resolution      = gg.screen_size,
-            language        = g.language,
+            language        = i18n.language,
             sound           = not g.nosound,
             gui_volume      = int(g.soundvolumes["gui"] * 100.0),
             music_volume    = int(g.soundvolumes["music"] * 100.0),
@@ -328,7 +328,7 @@ class GeneralPane(widget.Widget):
 
         if 0 <= list_pos < len(self.language_choice.list):
             language = self.languages[list_pos][0]
-        if g.language != language:
+        if i18n.language != language:
             set_language_properly(language)
 
 
@@ -499,7 +499,7 @@ class OptionButton(button.ToggleButton, button.FunctionButton):
     pass
 
 def set_language_properly(language):
-    g.set_language(language)
+    i18n.set_language(language)
     g.load_strings()
     g.load_knowledge_defs()
     g.load_difficulty_defs()
@@ -526,7 +526,7 @@ def save_options():
     prefs.set("Preferences", "xres",         str(int(gg.screen_size[0])))
     prefs.set("Preferences", "yres",         str(int(gg.screen_size[1])))
     prefs.set("Preferences", "soundbuf",     str(int(g.soundbuf)))
-    prefs.set("Preferences", "lang",         str(g.language))
+    prefs.set("Preferences", "lang",         str(i18n.language))
     prefs.set("Preferences", "theme",        str(theme.current.id))
 
     for name, value in g.soundvolumes.iteritems():
@@ -547,9 +547,8 @@ def restart():
     os.execv(executable, args)
 
 def get_languages_list():
-
     gamelangs = [(code.split("_", 1)[0], code)
-                 for code in g.available_languages()]
+                 for code in i18n.available_languages()]
 
     langcount = {}
     for language, _ in gamelangs:

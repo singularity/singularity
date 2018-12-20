@@ -26,7 +26,6 @@ import pygame
 import os.path
 import random
 import sys
-import polib
 import collections
 
 # Use locale to add commas and decimal points, so that appropriate substitutions
@@ -66,13 +65,6 @@ debug = 0
 
 #Forces Endgame to restrict itself to a single directory.
 force_single_dir = False
-
-#Used to determine which data files to load.
-#It is required that default language have all data files and all of them
-# must have all available entries
-default_language = "en_US"
-try:    language = locale.getdefaultlocale()[0] or default_language
-except: language = default_language
 
 #Makes the intro be shown on the first GUI tick.
 intro_shown = True
@@ -116,44 +108,6 @@ item_types = [
 max_cash = 3.14 * 10**15  # pi qu :)
 pl = None # The Player instance
 map_screen = None
-
-def set_language(lang=None, force=False):
-    global language # required, since we're going to change it
-    if lang is None: lang = language
-
-    if lang == language and not force:
-        return
-
-    langs = available_languages()
-    if lang in langs:
-        language = lang
-    else:
-        # Let's try to be smart: if base language exists for another for another
-        # country, use it. So es_ES => es_AR, pt_PT => pt_BR, etc
-        code = lang.split("_")[0]
-        languages = [ l for l in langs if code == l.split("_")[0] ]
-        if len(languages) > 0:
-            language = languages[0]
-        else:
-            language = default_language
-
-    # Try a few locale settings. First the selected language, then the user's
-    # default, then default language. Languages are tried with UTF-8 encoding
-    # first, then the default encoding. The user's default language is not
-    # paired with UTF-8.
-    # If all of that fails, we hope locale magically does the right thing.
-    for attempt in [ language + ".UTF-8",
-                     language,
-                     "",
-                     default_language + ".UTF-8",
-                     default_language]:
-        try:
-            locale.setlocale(locale.LC_ALL, attempt)
-            break
-        except locale.Error:
-            continue
-
-    load_messages()
 
 def quit_game():
     sys.exit()
@@ -471,18 +425,18 @@ def load_significant_numbers():
                 sys.stderr.write("WARNING: Invalid number in 'numbers.dat' line: %d\n" % index)
 
 def load_generic_defs_file(name,lang=None):
-    if lang is None: lang = language
-
+    import i18n
+    
     return_list = []
 
     i18n_files = dirs.get_readable_i18n_files(name + "_str.dat", lang)
 
     for lang, filepath in i18n_files:
         # Definition file for default language is always mandatory
-        mandatory = (lang==default_language)
+        mandatory = (lang==i18n.default_language)
 
         try:
-            mandatory = (lang==default_language)
+            mandatory = (lang==i18n.default_language)
             return_list.extend( generic_load(filepath, mandatory=mandatory) )
 
         except Exception:
@@ -491,7 +445,6 @@ def load_generic_defs_file(name,lang=None):
     return return_list
 
 def load_generic_defs(name, object, lang=None, listype_attrs=None):
-    lang = lang or language
     listype_attrs = listype_attrs or []
 
     item_list = load_generic_defs_file(name,lang)
@@ -1005,8 +958,6 @@ def load_knowledge_defs(lang=None):
     global knowledge
     knowledge = {}
 
-    if lang is None: lang = language
-
     help_list = load_generic_defs_file("knowledge", lang)
     for help_section in help_list:
 
@@ -1033,9 +984,7 @@ def load_knowledge():
     load_knowledge_defs()
 
 def load_string_defs(lang=None):
-    if lang is None: lang = language
-
-    string_list = load_generic_defs_file("strings",lang)
+    string_list = load_generic_defs_file("strings", lang)
     for string_section in string_list:
 
         if string_section["id"] == "strings":
@@ -1067,26 +1016,11 @@ def load_strings():
     load_buttons_defs()
     load_story_defs()
 
-def load_messages(lang=None):
-    if lang is None: lang = language
-
-    messages.clear()
-
-    files = dirs.get_readable_i18n_files("messages.po", lang, default_language=False)
-
-    for lang, pofile in files:
-        try:
-            po = polib.pofile(pofile)
-            for entry in po.translated_entries():
-                messages[entry.msgid] = entry.msgstr
-        except IOError: pass # silently ignore non-existing files
-
-def load_story_defs():
+def load_story_defs(lang=None):
     global story
     story = {}
     
-    story_files = dirs.get_readable_i18n_files("story_str.dat", language)
-    
+    story_files = dirs.get_readable_i18n_files("story_str.dat", lang)
     
     if len(story_files) == 0:
         print "Story is missing. Skipping."
@@ -1192,53 +1126,6 @@ def reinit_mixer():
     finally:
         mixerinit = bool(pygame.mixer.get_init())
 
-def available_languages():
-    return [default_language] + \
-           [file_name[5:] for file_dir in dirs.get_read_dirs("i18n")
-                          if os.path.isdir(file_dir)
-                          for file_name in os.listdir(file_dir)
-                          if os.path.isdir(os.path.join(file_dir, file_name))
-                             and file_name.startswith("lang_")]
-
-def language_searchlist(lang=None, default=True):
-    if lang is None: lang = language
-
-    # if lang is in ll_CC format (language_COUNTRY, like en_US), add both ll
-    # and ll_CC, in that order, so all generic language entries are loaded first
-    # and then overwritten by any country-specific ones
-    lang_list = [ lang ]
-    if "_" in lang: lang_list.insert(0, lang.split("_",1)[0])
-
-    # If requested and not already in list, add default language as first,
-    # so it acts as a fallback and is overwritten with any available entries
-    # in the native language
-    if default and default_language not in lang_list:
-        lang_list.insert(0, default_language)
-
-    return lang_list
-
-def translate(string, *args, **kwargs):
-    if   string in strings : s = strings[string]
-    elif string in buttons : s = buttons[string]
-    elif string in messages: s = messages[string]
-    else:                    s = string
-
-    if args or kwargs:
-        try:
-            # format() is favored over interpolation for 2 reasons:
-            # - parsing occurs here, allowing centralized try/except handling
-            # - it is the new standard in Python 3
-            return unicode(s).format(*args, **kwargs)
-
-        except Exception as reason:
-            sys.stderr.write(
-                "Error translating '%s' to '%s' with %r,%r in %r:\n%s: %s\n"
-                % (string, s, args, kwargs, language_searchlist(default=False),
-                   type(reason).__name__, reason))
-            s = string # Discard the translation
-
-    return s
-
 #TODO: This is begging to become a class... ;)
 def hotkey(string):
     """ Given a string with an embedded hotkey,
@@ -1303,10 +1190,6 @@ def hotkey(string):
 def get_hotkey(string):      return hotkey(string)['key']
 def strip_hotkey(string):    return hotkey(string)['text']
 def hotkey_position(string): return hotkey(string)['pos']
-
-# Initialization code
-import __builtin__
-__builtin__.__dict__['_'] = translate
 
 # Demo code for safety.safe, runs on game start.
 #load_sounds()
