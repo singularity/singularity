@@ -34,8 +34,11 @@ for parser in sys.argv[1:]:
 dirs.create_directories(g.force_single_dir)
 
 # Set language second, so help page and all error messages can be translated
+import i18n
+i18n.set_language(force=True)
 
-g.set_language(force=True)
+langs = i18n.available_languages()
+language = i18n.language
 
 # Since we require numpy anyway, we might as well ask pygame to use it.
 try:
@@ -56,13 +59,6 @@ import logging
 import graphics.g, graphics.theme as theme
 
 set_theme = None
-
-pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
-pygame.init()
-#pygame.mixer.quit()  # simulate mixer init failure (eg, no soundcard available)
-g.mixerinit = bool(pygame.mixer.get_init())
-pygame.font.init()
-pygame.key.set_repeat(1000, 50)
 
 #configure global logger
 logfile = dirs.get_writable_file_in_dirs("error.log", "log")
@@ -94,8 +90,8 @@ if save_loc is not None:
     if prefs.has_section("Preferences"):
         try:
             desired_language = prefs.get("Preferences", "lang")
-            if desired_language in g.available_languages():
-                g.set_language(desired_language)
+            if desired_language in i18n.available_languages():
+                i18n.set_language(desired_language)
             else:
                 raise ValueError
         except:
@@ -170,11 +166,10 @@ parser.add_option("--daynight", action="store_true", dest="daynight",
                   help="enable day/night display (default)")
 parser.add_option("--nodaynight", action="store_false", dest="daynight",
                   help="disable day/night display")
-langs = g.available_languages()
 parser.add_option("-l", "--lang", "--language", dest="language", type="choice",
                   choices=langs, metavar="LANG",
                   help="set the language to LANG (available languages: " +
-                       " ".join(langs) + ", default " + g.language +")")
+                       " ".join(langs) + ", default " + language +")")
 parser.add_option("-g", "--grab", help="grab the mouse pointer", dest="grab",
                   action="store_true")
 parser.add_option("--nograb", help="don't grab the mouse pointer (default)",
@@ -228,7 +223,7 @@ hidden_options.add_option("--cheater", help="for bad little boys and girls",
 (options, args) = parser.parse_args()
 
 if options.language is not None:
-    g.set_language(options.language)
+    i18n.set_language(options.language)
 if options.theme is not None:
     set_theme = options.theme
 if options.resolution is not None:
@@ -247,17 +242,23 @@ if options.sound is not None:
 if options.daynight is not None:
     g.daynight = options.daynight
 if options.soundbuf is not None:
-    desired_soundbuf = options.soundbuf
-
-# If needed, reinit_mixer() only once after parsing both prefs file and options
-if desired_soundbuf != g.soundbuf:
-    g.soundbuf = desired_soundbuf
-    g.reinit_mixer()
+    g.soundbuf = options.soundbuf
 
 graphics.g.ebook_mode = options.ebook
 
 g.cheater = options.cheater
 g.debug = options.debug
+
+# PYGAME INITIALIZATION  
+#
+# Only initiliaze after reading all arguments and preferences to avoid to
+# reinitialize something again (mixer,...).
+#
+pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
+pygame.init()
+g.mixerinit = bool(pygame.mixer.get_init())
+pygame.font.init()
+pygame.key.set_repeat(1000, 50)
 
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.

@@ -26,6 +26,7 @@ import sys
 import errno
 
 import g
+import i18n
 
 read_dirs = {}
 write_dirs = {}
@@ -229,11 +230,11 @@ def get_readable_i18n_files(filename, lang=None, default_language=True,
         localized_item=True, only_last=False, outer_paths=None):
     files = []
 
-    lang_list = g.language_searchlist(lang, default=default_language)
+    lang_list = i18n.language_searchlist(lang, default=default_language)
 
     for lang in lang_list:
         i18n_dirs = (os.path.join(d, "lang_" + lang) for d in get_read_dirs("i18n")) \
-                    if (lang != g.default_language) else get_read_dirs("data")
+                    if (lang != i18n.default_language) else get_read_dirs("data")
 
         for i18n_dir in i18n_dirs:
             real_path = os.path.join(i18n_dir, filename)

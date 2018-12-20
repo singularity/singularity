@@ -63,7 +63,8 @@ def current_variants():
     variants = [None]
 
     # Add language variants
-    lang_list = code.g.language_searchlist()
+    import code.i18n
+    lang_list = code.i18n.language_searchlist()
     for lang in lang_list:
         variants.insert(0, lang)
 
