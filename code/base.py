@@ -21,6 +21,7 @@
 
 
 import g
+import item
 import buyable
 from buyable import cash, cpu, labor
 
@@ -146,15 +147,8 @@ class Base(buyable.Buyable):
 
         self.cpus = None
         if self.type.force_cpu:
-            # 1% chance for a Stolen Computer Time base to have a Gaming PC
-            # instead.  If the base is pre-built, ignore this.
-            if self.type.id == "Stolen Computer Time" and g.roll_percent(100) \
-                    and not built:
-                self.cpus = g.item.Item(g.items["Gaming PC"], base=self,
-                                        count=self.type.size)
-            else:
-                self.cpus = g.item.Item(g.items[self.type.force_cpu],
-                                        base=self, count=self.type.size)
+            self.cpus = item.Item(g.items[self.type.force_cpu],
+                                  base=self, count=self.type.size)
             self.cpus.finish()
 
         if built:
