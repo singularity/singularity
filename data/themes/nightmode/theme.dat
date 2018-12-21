@@ -1,0 +1,90 @@
+[general]
+name = Nightmode
+
+[colors]
+# General color alias
+white           = #ffffffff
+black           = #000000ff
+red             = #ff0000ff
+green           = #00ff00ff
+blue            = #0000ffff
+yellow          = #ffff00ff
+orange          = #ff8000ff
+gray            = #808080ff
+dark_red        = #800000ff
+dark_green      = #008000ff
+dark_blue       = #000080ff
+darker_blue     = #000032ff
+light_red       = #ff3232ff
+light_green     = #32ff32ff
+light_blue      = #3232ffff
+clear           = #00000000
+
+# Screen colors
+main_menu_background     = black
+map_background           = black
+options_background       = black
+singularity_title        = dark_red
+
+# Pane colors
+pane_background          = black
+pane_background_empty    = black
+
+# Dialog colors
+text_dialog_background   = black
+text_dialog_border       = dark_red
+
+# Widget colors
+widget_background          = dark_red
+widget_border              = white
+
+# Text colors
+text_background            = black
+text_background_unselected = black
+text_background_selected   = dark_red
+text_border                = dark_red
+text                       = red
+
+# Progress colors
+progress_background_unselected = black
+progress_background_selected   = dark_red
+progress_background_progress   = red
+progress_border                = white
+
+# Slider colors
+slider_background = black
+slider_background_slider = dark_red
+slider_border = red
+
+# Scrollbar colors
+scrollbar_background = black
+scrollbar_background_slider = dark_red
+scrollbar_border = red
+scrollbar_arrow_background_selected = dark_red
+scrollbar_arrow_background_unselected = black
+
+# Danger colors
+danger_level_0      = #0000ffff
+danger_level_1      = #5500AAff
+danger_level_2      = #AA0055ff
+danger_level_3      = #ff0000ff
+
+# CPU display colors
+cpu_normal      = white
+cpu_warning     = red
+
+# Save colors
+save_valid      = green
+save_invalid    = red
+
+# Base state colors
+base_state_active          = green
+base_state_sleep           = yellow
+base_state_overclocked     = orange
+base_state_suicide         = red
+base_state_stasis          = gray
+base_state_entering_stasis = gray
+base_state_leaving_stasis  = gray
+
+simple_menu_background = #400000ff
+simple_menu_border     = red
