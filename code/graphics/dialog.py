@@ -438,7 +438,8 @@ class TextDialog(Dialog):
         kwargs.setdefault("valign", constants.TOP)
         kwargs.setdefault("align", constants.LEFT)
         kwargs.setdefault("shrink_factor", .88)
-        kwargs.setdefault("background_color", "dark_blue")
+        kwargs.setdefault("background_color", "text_dialog_background")
+        kwargs.setdefault("border_color", "text_dialog_border")
         kwargs.setdefault("borders", constants.ALL)
 
         super(TextDialog, self).__init__(parent, pos, size, anchor, **kwargs)

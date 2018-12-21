@@ -31,6 +31,10 @@ class _ArrowButton(button.FunctionButton, button.ImageButton):
         self.first = kwargs.pop("first", True)
         self.horizontal = kwargs.pop("horizontal", False)
 
+        kwargs.setdefault("border_color", "scrollbar_border")
+        kwargs.setdefault("selected_color", "scrollbar_arrow_background_selected")
+        kwargs.setdefault("unselected_color", "scrollbar_arrow_background_unselected")
+
         kwargs["function"] = parent.adjust
         kwargs["args"] = (self.first,)
         super(_ArrowButton, self).__init__(parent, *args, **kwargs)
@@ -71,6 +75,9 @@ class Scrollbar(widget.Widget):
         self.horizontal = horizontal
 
         self.slider = slider.UpdateSlider(self, (-.5,-.5), None,
+                                          border_color = "scrollbar_border",
+                                          background_color = "scrollbar_background",
+                                          slider_color = "scrollbar_background_slider",
                                           anchor = constants.MID_CENTER,
                                           horizontal = horizontal,
                                           update_func = self.on_change)

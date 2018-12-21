@@ -18,6 +18,7 @@ gray            = #808080ff
 dark_red        = #800000ff
 dark_green      = #008000ff
 dark_blue       = #000080ff
+darker_blue     = #000032ff
 light_red       = #ff3232ff
 light_green     = #32ff32ff
 light_blue      = #3232ffff
@@ -26,11 +27,16 @@ clear           = #00000000
 # Screen colors
 main_menu_background     = black
 map_background           = black
+options_background       = darker_blue
 singularity_title        = dark_red
 
 # Pane colors
 pane_background          = dark_blue
 pane_background_empty    = black
+
+# Dialog colors
+text_dialog_background   = dark_blue
+text_dialog_border       = white
 
 # Widget colors
 widget_background          = blue
@@ -48,6 +54,18 @@ progress_background_unselected = dark_blue
 progress_background_selected   = light_blue
 progress_background_progress   = blue
 progress_border                = white
+
+# Slider colors dark_blue light_blue white
+slider_background = dark_blue 
+slider_background_slider = light_blue
+slider_border = white
+
+# Scrollbar colors
+scrollbar_background = dark_blue
+scrollbar_background_slider = light_blue
+scrollbar_border = white
+scrollbar_arrow_background_selected = dark_blue
+scrollbar_arrow_background_unselected = light_blue
 
 # Danger colors
 danger_level_0      = #0000ffff

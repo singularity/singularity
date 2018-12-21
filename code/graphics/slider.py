@@ -45,9 +45,9 @@ class Slider(button.Button):
         kwargs.setdefault("priority", 80)
         super(Slider, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
-        border_color = border_color or "white"
-        background_color = background_color or "dark_blue"
-        slider_color = slider_color or "light_blue"
+        border_color = border_color or "slider_border"
+        background_color = background_color or "slider_background"
+        slider_color = slider_color or "slider_background_slider"
 
         self.borders = borders
         self.border_color = border_color

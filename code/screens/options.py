@@ -44,7 +44,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.size = (.80, .85)
         self.pos = (.5, .5)
         self.anchor = constants.MID_CENTER
-        self.background_color = (0,0,50)
+        self.background_color = "options_background"
         self.borders = ()
 
         # Tabs panel
@@ -156,6 +156,7 @@ Would you like to restart the game now?"""),)
 
 class GeneralPane(widget.Widget):
     def __init__(self, *args, **kwargs):
+        
         super(GeneralPane, self).__init__(*args, **kwargs)
 
         # First row
