@@ -3,7 +3,6 @@ research_nothing = Remove a tarefa atual da base. Se eu não der outra tarefa, e
 research_sleep = Interrompe a pesquisa e deixa a base em modo de espera. Isto torna a existência da base muito mais fácil de esconder.
 research_cpu_pool = Interrompe a pesquisa. Usarei o poder de processamento disponível para manter minhas bases e ajudar a construir novas. Se ainda houver algum tempo livre de CPU, usarei ele para fazer qualquer Trabalho que eu puder.
 construction = %(base)s está pronta para uso.
-lucky_hack = Que sorte! %(base)s não é um computador comum, é uma máquina para jogos!
 item_construction_single = A construção de %(item)s em %(base)s está completa.
 item_construction_batch = O primeiro lote de %(item)s em %(base)s foi concluído.
 tech_gained = Meu estudo sobre %(tech)s foi concluído. %(tech_message)s

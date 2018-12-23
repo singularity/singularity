@@ -434,11 +434,6 @@ class Player(object):
             self.pause_game()
             g.map_screen.show_message(text)
 
-            if base.type.id == "Stolen Computer Time" and \
-                    base.cpus.type.id == "Gaming PC":
-                text = g.strings["lucky_hack"] % {"base": base.name}
-                g.map_screen.show_message(text)
-
         # CPU complete dialogs.
         for base, __ in cpus_constructed:
             if base.cpus.count == base.type.size: # Finished all CPUs.

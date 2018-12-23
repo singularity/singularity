@@ -19,7 +19,6 @@ research_construction = Stoppa forskningen och allokera resurserna till att bygg
 detect_chance = [RISK FÖR AVSLÖJANDE]
 research_cpu_pool = Avbryt forskningen. Jag kommer att använda den ledia kraften för att hjälpa till att bygga och underhålla anläggningar. Om jag fortfarande har kraft kvar kommer jag ta an så mycket arbete som möjligt.
 cpu_bonus = effektivare
-lucky_hack = Vilken tur! %(base)s drivs inte av vilken dator som helst. Det är en speldator!
 research_sleep = Avbryter forskning och placerar basen i viloläge. Detta gör basen enklare att dölja.
 detect_str_high = HÖG
 cpu_pool = CPU-pool

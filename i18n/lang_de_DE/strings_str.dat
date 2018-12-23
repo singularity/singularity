@@ -3,7 +3,6 @@ research_nothing = Löcht den geläufigen Auftrag dem Stützpunkt.  Wenn ich ihm
 research_sleep = Forschung aufhalten und der Stützpunkt in Reserve versetzen.  Der Stützpunkt wird viel leichter geheim zu halten werden.
 research_cpu_pool = Forschung anhalten.  Ich werde die verfügbare CPU-Zeit dazu benutzen, meine Stützpunkte zu warten und neue zu bauen.  Wenn noch CPU-Zeit übrig bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
 construction = %(base)s ist für meine Nutzung bereit.
-lucky_hack = Glück gehabt!  %(base)s ist kein normaler Computer, es ist ein Spiele-PC!
 item_construction_single = Der Bau von %(item)s in %(base)s wurde abgeschlossen.
 item_construction_batch = Die erste Menge von %(item)s in %(base)s wurde fertiggestellt.
 tech_gained = Meine Forschung im Bereich "%(tech)s" ist abgeschlossen.  %(tech_message)s

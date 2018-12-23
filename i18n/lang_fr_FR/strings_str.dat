@@ -22,7 +22,6 @@ detect_chance = [PROBABILITE DE DETECTION]
 research_cpu_pool = Interrompt les recherches. J'utiliserai la capacité de calcul disponible pour maintenir mes bases et en construire d'autres. Si j'ai encore des ressources disponibles après ça, je l'utiliserai pour gagner de l'argent.
 danger_common = Cette technologie est trop dangereuse à développer avec les ordinateurs que je possède. Je dois la développer %s.
 cpu_bonus = plus efficace
-lucky_hack = Quelle chance! %(base)s n'est pas un ordinateur ordinaire, c'est une machine de jeu.
 research_sleep = Interrompt les recherches et plonge la base en sommeil. Cela la rend plus simple à cacher.
 detect_str_high = ÉLEVÉ
 cpu_pool = Groupe de CPU
