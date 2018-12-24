@@ -42,7 +42,7 @@ class Event(object):
             self.log_description = ""
         if old_version < 99.2: # < 1.0dev
             self.id = self.name
-            self.effect = effect.Effect(self, self.result[0], self.result[1])
+            self.effect = effect.Effect(self, [self.result[0], self.result[1]])
             del self.result
 
     def trigger(self):

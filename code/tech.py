@@ -41,7 +41,7 @@ class Tech(buyable.Buyable):
 
     def convert_from(self, old_version):
         if old_version < 99.2: # < 1.0dev
-            self.effect = effect.Effect(self, self.tech_type, self.secondary_data)
+            self.effect = effect.Effect(self, [self.tech_type, self.secondary_data])
             del self.tech_type
             del self.secondary_data
 

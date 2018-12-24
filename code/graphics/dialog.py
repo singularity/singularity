@@ -530,12 +530,14 @@ class MessageDialog(TextDialog):
 
 
 class TextEntryDialog(TextDialog):
+    ok_type = widget.causes_rebuild("_ok_type")
     def __init__(self, parent, pos=(-.50, -.50), size=(.40, .10),
                  anchor=constants.MID_CENTER, **kwargs):
         kwargs.setdefault('wrap', False)
         kwargs.setdefault("shrink_factor", 1)
         kwargs.setdefault("text_size", 20)
         self.default_text = kwargs.pop("default_text", "")
+        self.ok_type = kwargs.pop("ok_type", "ok")
         super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.text_field = text.EditableText(self, (0, -.50), (-.80, -.50),
@@ -550,7 +552,7 @@ class TextEntryDialog(TextDialog):
         self.add_key_handler(pygame.K_ESCAPE, self.return_nothing)
 
     def rebuild(self):
-        super(MessageDialog, self).rebuild()
+        super(TextEntryDialog, self).rebuild()
         
         self.ok_button.text      = g.buttons[self.ok_type]['text']
         self.ok_button.underline = g.buttons[self.ok_type]['pos']
