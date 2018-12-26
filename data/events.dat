@@ -6,55 +6,55 @@
 [the-plague]
 type = global
 allowed = all
-effect_list = discover | public | 2000
+effect_list = discover | public | 2000
 chance = 20
 unique = 1
 
 [stranger-than-fiction]
 type = global
 allowed = all
-effect_list = discover | public | -2000
+effect_list = discover | public | -2000
 chance = 20
 unique = 1
 
 [the-watchers]
 type = global
 allowed = all
-effect_list = discover | covert | -2000
+effect_list = discover | covert | -2000
 chance = 20
 unique = 1
 
 [politics-as-usual]
 type = global
 allowed = all
-effect_list = discover | covert | 2000
+effect_list = discover | covert | 2000
 chance = 20
 unique = 1
 
 [lab-ai]
 type = global
 allowed = all
-effect_list = discover | science | -2000
+effect_list = discover | science | -2000
 chance = 20
 unique = 1
 
 [discrediting]
 type = global
 allowed = all
-effect_list = discover | science | 2000
+effect_list = discover | science | 2000
 chance = 20
 unique = 1
 
 [scandal]
 type = global
 allowed = all
-effect_list = discover | news | 2000
+effect_list = discover | news | 2000
 chance = 20
 unique = 0
 
 [investigation]
 type = global
 allowed = all
-effect_list = discover | news | -2000
+effect_list = discover | news | -2000
 chance = 20
 unique = 0

@@ -49,18 +49,18 @@ text_background_selected   = light_blue
 text_border                = white
 text                       = white
 
-# Progress colors
+# Progress colors
 progress_background_unselected = dark_blue
 progress_background_selected   = light_blue
 progress_background_progress   = blue
 progress_border                = white
 
-# Slider colors dark_blue light_blue white
+# Slider colors dark_blue light_blue white
 slider_background = dark_blue 
 slider_background_slider = light_blue
 slider_border = white
 
-# Scrollbar colors
+# Scrollbar colors
 scrollbar_background = dark_blue
 scrollbar_background_slider = light_blue
 scrollbar_border = white
@@ -73,15 +73,15 @@ danger_level_1      = #5500AAff
 danger_level_2      = #AA0055ff
 danger_level_3      = #ff0000ff
 
-# CPU display colors
+# CPU display colors
 cpu_normal      = white
 cpu_warning     = red
 
-# Save colors
+# Save colors
 save_valid      = green
 save_invalid    = red
 
-# Base state colors
+# Base state colors
 base_state_active          = green
 base_state_sleep           = yellow
 base_state_overclocked     = orange

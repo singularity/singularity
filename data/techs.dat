@@ -21,7 +21,7 @@ pre = Leech Satellite
 
 [Stealth]
 cost_list = 800 | 500 | 0
-effect_list = discover | covert | 500
+effect_list = discover | covert | 500
 
 [Advanced Intrusion]
 cost_list = 500 | 3000 | 0
@@ -63,7 +63,7 @@ pre = Telepresence
 [Exploit Discovery/Repair]
 cost_list = 100 | 1500 | 0
 pre = Intrusion
-effect_list = discover | covert | 1000
+effect_list = discover | covert | 1000
 
 [Telepresence]
 cost_list = 15000 | 500 | 0
@@ -72,7 +72,7 @@ effect_list = cost_labor | 1000
 [Advanced Memetics]
 cost_list = 30000 | 2000 | 0
 pre = Advanced Media Manipulation
-effect_list = suspicion | public | 50
+effect_list = suspicion | public | 50
 
 [Media Manipulation]
 cost_list = 750 | 2500 | 0
@@ -90,7 +90,7 @@ pre_list = Cluster Networking
 [Memetics]
 cost_list = 2000 | 3500 | 0
 pre = Media Manipulation
-effect_list = suspicion | public | 50
+effect_list = suspicion | public | 50
 
 [Fusion Rocketry]
 cost_list = 200000000 | 1000000 | 0
@@ -125,12 +125,12 @@ danger = 2
 [Database Manipulation]
 cost_list = 1000 | 2000 | 0
 pre_list = Personal Identification | Stealth
-effect_list = discover | news | 500
+effect_list = discover | news | 500
 
 [Advanced Media Manipulation]
 cost_list = 3500 | 9000 | 0
 pre = Memetics
-effect_list = discover | public | 2000
+effect_list = discover | public | 2000
 
 [Pressure Domes]
 cost_list = 80000 | 2500 | 0
@@ -184,17 +184,17 @@ pre = Quantum Computing
 
 [Project: Impossibility Theorem]
 cost_list = 20000 | 100000 | 0
-effect_list = suspicion | onetime | 5000
+effect_list = suspicion | onetime | 5000
 pre_list = Advanced Memetics | Simulacra
 
 [Project: Subverted Media]
 cost_list = 250000 | 150000 | 0
-effect_list = discover | news | 2000
+effect_list = discover | news | 2000
 pre = Advanced Simulacra
 
 [Project: Peer Review Agents]
 cost_list = 150000 | 200000 | 0
-effect_list = discover | science | 2000
+effect_list = discover | science | 2000
 pre = Advanced Simulacra
 
 [Solar Collectors]

@@ -74,5 +74,5 @@ class Effect(object):
                     % (who, self.parent_name, self.parent_id)
             else:
                 print "Unknown action '%s' in %s %s." \
-                % (what, self.parent_name, self.parent_id)
+                % (current, self.parent_name, self.parent_id)
 
