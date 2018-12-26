@@ -16,7 +16,6 @@ money_per_day = Denaro per giorno.
 nan = Questo non sembra essere un numero valido.
 dangerous_research = Non tutte le mie risorse disponibili sono state assegnate a questa ricerca; è troppo pericoloso condurre la ricerca su alcune delle macchine inattive.
 detect_str_moderate = MODERATA
-item_construction_batch = Il primo lotto di %(item)s nella base di %(base)s è stato completato.
 cpu_penalty = meno efficienti
 detect_chance = [PROBABILITÀ DI INDIVIDUAZIONE]
 research_cpu_pool = Ferma la ricerca. Userò la potenza di calcolo disponibile per mantenere le mie basi ed aiutare la costruzione di nuove. Se ci sono ancora delle risorse rimanenti, le userò per svolgere qualsiasi lavoro possibile.

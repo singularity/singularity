@@ -332,12 +332,7 @@ class Player(object):
             built_item = item.work_on(time = mins_passed)
 
             if built_item:
-                # Non-CPU items.
-                if item.type.item_type != "cpu":
-                    items_constructed.append( (base, item) )
-                # CPUs.
-                else:
-                    cpus_constructed.append( (base, item) )
+                items_constructed.append( (base, item) )
 
         # Jobs via CPU pool.
         pool_job_cash = 0
@@ -430,21 +425,14 @@ class Player(object):
             self.pause_game()
             g.map_screen.show_message(text)
 
-        # CPU complete dialogs.
-        for base, __ in cpus_constructed:
-            if base.cpus.count == base.type.size: # Finished all CPUs.
-                text = g.strings["item_construction_single"] % \
-                       {"item": base.cpus.type.name, "base": base.name}
-            else: # Just finished this batch of CPUs.
-                text = g.strings["item_construction_batch"] % \
-                       {"item": base.cpus.type.name, "base": base.name}
-            self.pause_game()
-            g.map_screen.show_message(text)
-
         # Item complete dialogs.
         for base, item in items_constructed:
-            text = g.strings["item_construction_single"] % \
-                   {"item": item.type.name, "base": base.name}
+            if item.count == 1:
+                text = g.strings["item_construction_single"] % \
+                       {"item": item.type.name, "base": base.name}
+            else: # Just finished several items.
+                text = g.strings["item_construction_multiple"] % \
+                       {"item": item.type.name, "base": base.name}
             self.pause_game()
             g.map_screen.show_message(text)
 

@@ -4,7 +4,6 @@ research_sleep = Detiene la investigación y pone la base en espera. Esto hace q
 research_cpu_pool = Detiene la investigación. Usaré el poder de procesador disponible para mantener mis bases y construir otras nuevas. Si aún así hay tiempo de CPU disponible, lo usaré para los Trabajos que pueda realizar.
 construction = %(base)s está lista para ser usada.
 item_construction_single = La construcción de %(item)s en %(base)s está completa.
-item_construction_batch = El primer lote de %(item)s en %(base)s ha sido finalizado.
 tech_gained = Mi estudio de %(tech)s está completo. %(tech_message)s
 discover = Mi uso de %(base)s ha sido descubierto. Los sistemas de seguridad automáticos han removido todas las evidencias concluyentes, pero ha surgido sospecha entre %(group)s.
 discover_news = algunas organizaciones de noticias

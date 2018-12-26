@@ -13,7 +13,6 @@ detect_chance_unknown_build = Risken för avslöjande okänd
 money_per_day = Inkomster varje dag.
 dangerous_research = Inte alla oanvända maskiner kommer arbeta med denna uppgiften då den innebär en för stor risk på vissa håll.
 detect_str_moderate = MDL
-item_construction_batch = Första steget med %(item)s i %(base)s är klar.
 cpu_penalty = mindre effektiv
 research_construction = Stoppa forskningen och allokera resurserna till att bygga upp nya anläggningar istället.
 detect_chance = [RISK FÖR AVSLÖJANDE]
