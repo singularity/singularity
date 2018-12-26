@@ -352,9 +352,7 @@ class MapScreen(dialog.Dialog):
     def end_construction(self):
         for base in g.all_bases():
             base.finish()
-            if base.cpus is not None:
-                base.cpus.finish()
-            for item in base.extra_items:
+            for item in base.items.itervalues():
                 if item is not None:
                     item.finish()
         self.needs_rebuild = True

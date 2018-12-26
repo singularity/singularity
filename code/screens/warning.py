@@ -74,7 +74,7 @@ class WarningDialogs(object):
         building_base = sum(1 for base in g.all_bases()
                     if (not base.done and base.cost_left[cpu] > 0))
         building_item = sum(1 for base in g.all_bases()
-                    for item in [base.cpus,] + base.extra_items
+                    for item in base.items.itervalues()
                     if item is not None and not item.done
                     and item.cost_left[cpu] > 0)
         if ((building_base + building_item > 0) and g.pl.cpu_usage.get("cpu_pool", 0) == 0):

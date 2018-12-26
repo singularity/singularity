@@ -236,12 +236,8 @@ class Player(object):
             if not base.done:
                 bases_under_construction.append(base)
             else:
-                if base.cpus is not None and not base.cpus.done:
-                    items_under_construction += [(base, base.cpus)]
-                unfinished_items = [(base, item) for item in base.extra_items
-                                                 if item and not item.done]
-                items_under_construction += unfinished_items
-
+                items_under_construction += [(base, item) for item in base.items.itervalues()
+                                                          if item and not item.done]
                 self.maintenance_cost += base.maintenance
 
         # Maintenance?  Gods don't need no stinking maintenance!

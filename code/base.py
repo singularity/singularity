@@ -19,6 +19,7 @@
 
 #This file contains the base class.
 
+import collections
 
 import g
 import item
@@ -151,6 +152,8 @@ class Base(buyable.Buyable):
                                   base=self, count=self.type.size)
             self.cpus.finish()
 
+        self.items = Base.Items(self)
+
         if built:
             self.finish()
 
@@ -185,7 +188,7 @@ class Base(buyable.Buyable):
     def check_power(self):
         if self.power_state == "sleep":
             if self.done:
-                for item in [self.cpus,] + self.extra_items:
+                for item in self.items.itervalues():
                     if item is not None and not item.done:
                         self.power_state = "active"
             else:
@@ -297,8 +300,17 @@ class Base(buyable.Buyable):
 
         return detect_chance
 
+    def is_empty(self):
+        return self.cpus is None and self.extra_items == [None] * 3
+
     def is_building(self):
-        for item in [self.cpus] + self.extra_items:
+        for item in self.items.itervalues():
+            if item and not item.done:
+                return True
+        return False
+        
+    def is_building_extra(self):
+        for item in self.extra_items:
             if item and not item.done:
                 return True
         return False
@@ -343,10 +355,7 @@ class Base(buyable.Buyable):
         if self.location:
             self.location.bases.remove(self)
 
-        if self.cpus is not None:
-            self.cpus.destroy()
-
-        for item in self.extra_items:
+        for item in self.items.itervalues():
             if item is not None:
                 item.destroy()
 
@@ -376,6 +385,46 @@ class Base(buyable.Buyable):
             return cmp(self.sort_tuple(), other.sort_tuple())
         else:
             return -1
+
+    class Items(collections.MutableMapping):
+        """A mapping of all base items"""
+        
+        def __init__(self, base):
+            super(Base.Items, self).__init__()
+            self.base = base
+        
+        def __getitem__(self, type):
+            if type == "cpu":
+                return self.base.cpus
+            else:
+                index = ["reactor", "network", "security"].index(type)
+                return self.base.extra_items[index]
+                
+        def __setitem__(self, type, value):
+            if type == "cpu":
+                self.base.cpus = value
+            else:
+                index = ["reactor", "network", "security"].index(type)
+                self.base.extra_items[index] = value
+                
+        def __delitem__(self, type, value):
+            if type == "cpu":
+                self.base.cpus = None
+            else:
+                index = ["reactor", "network", "security"].index(type)
+                self.base.extra_items[index] = None
+
+        def __iter__(self):
+            for item_type in ["cpu", "reactor", "network", "security"]:
+                yield item_type
+            
+        def itervalues(self):
+            yield self.base.cpus
+            for item in self.base.extra_items:
+                yield item
+
+        def __len__(self):
+            return 4
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.  If

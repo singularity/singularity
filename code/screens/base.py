@@ -248,13 +248,7 @@ class BaseScreen(dialog.Dialog):
                     ItemPane(self.contents_frame, (.01, .01+.08*i), type=type))
 
     def get_current(self, type):
-        if type == "cpu":
-            target = self.base.cpus
-        else:
-            index = ["reactor", "network", "security"].index(type)
-            target = self.base.extra_items[index]
-        if target is not None:
-            return target
+        return self.base.items[type]
 
     def set_current(self, type, item_type, count):
         if type == "cpu":
@@ -315,11 +309,9 @@ class BaseScreen(dialog.Dialog):
                 self.base.cpus = new_cpus
             self.base.check_power()
         else:
-            index = ["reactor", "network", "security"].index(type)
-            if self.base.extra_items[index] is None \
-                     or self.base.extra_items[index].type != item_type:
-                self.base.extra_items[index] = \
-                    g.item.Item(item_type, base=self.base)
+            old_item = self.base.items[type]
+            if old_item is None or old_item.type != item_type:
+                self.base.items[type] = g.item.Item(item_type, base=self.base)
                 self.base.check_power()
 
         self.base.recalc_cpu()
