@@ -37,6 +37,7 @@ log_destroy_public = Base %s of type %s discovered at location %s by the general
 warning_cpu_usage = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
 warning_one_base = Only one base can hold my conscience. I am in danger to lose the last place left to survive.
 warning_cpu_pool_zero = My cpu pool is empty. Some of my bases or items cannot be build without CPU.
+warning_cpu_maintenance = My cpu pool is not enough to maintain some of my bases. I may lost them.
 number_of_items = Number of items
 
 

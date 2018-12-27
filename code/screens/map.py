@@ -603,11 +603,8 @@ class MapScreen(dialog.Dialog):
             cpu_left -= cpu_assigned
         cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
 
-        maint_cpu = 0
         detects_per_day = dict([(group, 0) for group in g.player.group_list])
         for base in g.all_bases():
-            if base.done:
-                maint_cpu += base.maintenance[1]
             if base.has_grace():
                 # It cannot be detected, so it doesn't contribute to
                 # detection odds calculation
@@ -617,10 +614,7 @@ class MapScreen(dialog.Dialog):
                 detects_per_day[group] = \
                     g.add_chance(detects_per_day[group], detect_chance[group] / 10000.)
 
-        if cpu_pool < maint_cpu:
-            self.cpu_display.color = "cpu_warning"
-        else:
-            self.cpu_display.color = "cpu_normal"
+        self.cpu_display.color = "cpu_normal"
         self.cpu_display.text = _("CPU")+": %s (%s)" % \
               (g.to_money(total_cpu), g.to_money(cpu_pool))
 
