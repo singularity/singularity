@@ -83,9 +83,9 @@ class WarningDialogs(object):
         # Verify the cpu pool provides the maintenance CPU 
         cpu_maintenance = sum(base.maintenance[1] for base in g.all_bases() if base.done)
         if (g.pl.cpu_usage.get("cpu_pool", 0) < cpu_maintenance):
-            warnings.append(Warning("warning_cpu_maintenance")
+            warnings.append(Warning("warning_cpu_maintenance"))
 
-        # TODO: Verify the maintenance cash 
+        # TODO: Verify the maintenance cash
 
         return warnings
 
