@@ -22,9 +22,8 @@
 import locale
 import pygame
 
-import code.g as g
-import code.graphics.g as gg
-from code.graphics import constants, widget, dialog, text, button, listbox, slider
+from code import g, item
+from code.graphics import g as gg, constants, widget, dialog, text, button, listbox, slider
 
 state_colors = dict(
     active          = "base_state_active",
@@ -147,10 +146,8 @@ class ItemPane(widget.BorderedWidget):
 
         super(ItemPane, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
-        if type is None:
-            for type in g.item_types:
-                if type.id == 'cpu':
-                    break
+        if type is None or not isinstance(type, item.ItemType):
+            raise ValueError('Type must be of class ItemType.')
 
         self.type = type
 
@@ -173,7 +170,7 @@ class ItemPane(widget.BorderedWidget):
             force_underline=len(_("CHANGE")) + 2,
             autohotkey=True,
             function=self.parent.parent.build_item,
-            kwargs={'type': self.type.id},
+            kwargs={'type': self.type},
         )
 
 class BaseScreen(dialog.Dialog):
@@ -248,10 +245,10 @@ class BaseScreen(dialog.Dialog):
                     ItemPane(self.contents_frame, (.01, .01+.08*i), type=type))
 
     def get_current(self, type):
-        return self.base.items[type]
+        return self.base.items[type.id]
 
     def set_current(self, type, item_type, count):
-        if type == "cpu":
+        if type.id == "cpu":
             space_left = self.base.space_left_for(item_type)
             
             try:
@@ -309,15 +306,15 @@ class BaseScreen(dialog.Dialog):
                 self.base.cpus = new_cpus
             self.base.check_power()
         else:
-            old_item = self.base.items[type]
+            old_item = self.base.items[type.id]
             if old_item is None or old_item.type != item_type:
-                self.base.items[type] = g.item.Item(item_type, base=self.base)
+                self.base.items[type.id] = g.item.Item(item_type, base=self.base)
                 self.base.check_power()
 
         self.base.recalc_cpu()
 
     def build_item(self, type):
-        if (type == "cpu"):
+        if (type.id == "cpu"):
             build_dialog = self.multiple_build_dialog
         else:
             build_dialog = self.build_dialog
@@ -329,7 +326,7 @@ class BaseScreen(dialog.Dialog):
             item_type = build_dialog.key_list[result]
             
             count = 1
-            if (type == "cpu"):
+            if (type.id == "cpu"):
                 count = build_dialog.count
             
             self.set_current(type, item_type, count)
@@ -362,7 +359,7 @@ class BaseScreen(dialog.Dialog):
         for item in g.item_types:
             pane = getattr(self, item.id + "_pane")
             pane.change_button.visible = mutable
-            current = self.get_current(item.id)
+            current = self.get_current(item)
             if current is None:
                 current_name = _("None")
                 current_build = ""
