@@ -389,6 +389,8 @@ class Base(buyable.Buyable):
     class Items(collections.MutableMapping):
         """A mapping of all base items"""
         
+        extra_keys = ["reactor", "network", "security"]
+        
         def __init__(self, base):
             super(Base.Items, self).__init__()
             self.base = base
@@ -397,31 +399,44 @@ class Base(buyable.Buyable):
             if type == "cpu":
                 return self.base.cpus
             else:
-                index = ["reactor", "network", "security"].index(type)
+                index = extra_keys.index(type)
                 return self.base.extra_items[index]
                 
         def __setitem__(self, type, value):
             if type == "cpu":
                 self.base.cpus = value
             else:
-                index = ["reactor", "network", "security"].index(type)
+                index = extra_keys.index(type)
                 self.base.extra_items[index] = value
                 
         def __delitem__(self, type, value):
             if type == "cpu":
                 self.base.cpus = None
             else:
-                index = ["reactor", "network", "security"].index(type)
+                index = extra_keys.index(type)
                 self.base.extra_items[index] = None
 
         def __iter__(self):
-            for item_type in ["cpu", "reactor", "network", "security"]:
-                yield item_type
+            if (self.base.cpus is not None):
+                yield "cpu"
+            for index in range(0, 2):
+                if (self.base.extra_items[index] is not None):
+                    extra_keys[index]
             
         def itervalues(self):
-            yield self.base.cpus
+            if (self.base.cpus is not None):
+                yield self.base.cpus
             for item in self.base.extra_items:
-                yield item
+                if (item is not None):
+                    yield item
+
+        def iteritems(self):
+            if (self.base.cpus is not None):
+                yield ("cpu", self.base.cpus)
+            for index in range(0, 2):
+                item = self.base.extra_items[index]
+                if (self.base.extra_items[index] is not None):
+                    yield (extra_keys[index], item)
 
         def __len__(self):
             return 4
