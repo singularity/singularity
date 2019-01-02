@@ -24,6 +24,7 @@ import collections
 import g
 import item
 import buyable
+from item import cpu_type, reactor_type, network_type, security_type
 from buyable import cash, cpu, labor
 
 
@@ -388,37 +389,37 @@ class Base(buyable.Buyable):
 
     class Items(collections.MutableMapping):
         """A mapping of all base items"""
-        
-        extra_keys = ["reactor", "network", "security"]
+
+        extra_keys = [reactor_type, network_type, security_type]
         
         def __init__(self, base):
             super(Base.Items, self).__init__()
             self.base = base
         
         def __getitem__(self, type):
-            if type == "cpu":
+            if type == cpu_type:
                 return self.base.cpus
             else:
-                index = extra_keys.index(type)
+                index = self.extra_keys.index(type)
                 return self.base.extra_items[index]
                 
         def __setitem__(self, type, value):
-            if type == "cpu":
+            if type == cpu_type:
                 self.base.cpus = value
             else:
-                index = extra_keys.index(type)
+                index = self.extra_keys.index(type)
                 self.base.extra_items[index] = value
                 
         def __delitem__(self, type, value):
-            if type == "cpu":
+            if type == cpu_type:
                 self.base.cpus = None
             else:
-                index = extra_keys.index(type)
+                index = self.extra_keys.index(type)
                 self.base.extra_items[index] = None
 
         def __iter__(self):
             if (self.base.cpus is not None):
-                yield "cpu"
+                yield cpu_type
             for index in range(0, 2):
                 if (self.base.extra_items[index] is not None):
                     extra_keys[index]
@@ -432,7 +433,7 @@ class Base(buyable.Buyable):
 
         def iteritems(self):
             if (self.base.cpus is not None):
-                yield ("cpu", self.base.cpus)
+                yield (cpu_type, self.base.cpus)
             for index in range(0, 2):
                 item = self.base.extra_items[index]
                 if (self.base.extra_items[index] is not None):

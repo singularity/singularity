@@ -97,14 +97,6 @@ detect_string_names = ("detect_str_low",
                        "detect_str_high",
                        "detect_str_critical")
 
-# Order IS relevant! (because of base.extra_items array)
-item_types = [
-    item.ItemType('cpu'),
-    item.ItemType('reactor'),
-    item.ItemType('network'),
-    item.ItemType('security'),
-]
-
 max_cash = 3.14 * 10**15  # pi qu :)
 pl = None # The Player instance
 map_screen = None
@@ -794,7 +786,7 @@ def load_items():
 
 def load_item_defs(lang=None):
 
-    for type in item_types:
+    for type in item.item_types:
         if type.id == 'cpu'     : type.text = _("&Processor")
         if type.id == 'reactor' : type.text = _("&Reactor")
         if type.id == 'network' : type.text = _("&Network")

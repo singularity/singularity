@@ -239,10 +239,10 @@ class BaseScreen(dialog.Dialog):
                                   background_color="pane_background",
                                   borders=range(6))
 
-        for i, type in enumerate(g.item_types):
+        for i, item_type in enumerate(item.item_types):
             setattr(self,
-                    type.id + "_pane",
-                    ItemPane(self.contents_frame, (.01, .01+.08*i), type=type))
+                    item_type.id + "_pane",
+                    ItemPane(self.contents_frame, (.01, .01+.08*i), type=item_type))
 
     def get_current(self, type):
         return self.base.items[type.id]
@@ -299,7 +299,7 @@ class BaseScreen(dialog.Dialog):
                 if not go_ahead:
                     return
 
-            new_cpus = g.item.Item(item_type, base=self.base, count=count)
+            new_cpus = item.Item(item_type, base=self.base, count=count)
             if cpu_added:
                 self.base.cpus += new_cpus
             else:
@@ -308,7 +308,7 @@ class BaseScreen(dialog.Dialog):
         else:
             old_item = self.base.items[type.id]
             if old_item is None or old_item.type != item_type:
-                self.base.items[type.id] = g.item.Item(item_type, base=self.base)
+                self.base.items[type.id] = item.Item(item_type, base=self.base)
                 self.base.check_power()
 
         self.base.recalc_cpu()
@@ -356,10 +356,10 @@ class BaseScreen(dialog.Dialog):
         self.state_display.text = self.base.power_state_name
 
         mutable = not self.base.type.force_cpu
-        for item in g.item_types:
-            pane = getattr(self, item.id + "_pane")
+        for item_type in item.item_types:
+            pane = getattr(self, item_type.id + "_pane")
             pane.change_button.visible = mutable
-            current = self.get_current(item)
+            current = self.get_current(item_type)
             if current is None:
                 current_name = _("None")
                 current_build = ""
@@ -370,7 +370,7 @@ class BaseScreen(dialog.Dialog):
                 else:
                     current_build = _("Completion in %s.") % \
                         g.to_time(current.cost_left[2])
-            pane.name_panel.text = "%s: %s" % (item.label,
+            pane.name_panel.text = "%s: %s" % (item_type.label,
                                                current_name)
             pane.build_panel.text = current_build
 

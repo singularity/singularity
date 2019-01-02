@@ -64,6 +64,21 @@ class ItemType(object):
     def __repr__(self):
         return self.id
 
+# TODO: Deharcode ItemType
+
+cpu_type = "cpu"
+reactor_type = "reactor"
+network_type = "network"
+security_type = "security"
+
+# Order IS relevant! (because of base.extra_items array)
+item_types = [
+    ItemType(cpu_type),
+    ItemType(reactor_type),
+    ItemType(network_type),
+    ItemType(security_type),
+]
+
 class ItemClass(buyable.BuyableClass):
     """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
 
@@ -78,7 +93,7 @@ class ItemClass(buyable.BuyableClass):
 
     def get_info(self):
         basic_text = super(ItemClass, self).get_info()
-        if self.item_type == "cpu":
+        if self.item_type == cpu_type:
             return basic_text.replace("---", _("Generates {0} CPU.",
                                                g.add_commas(self.item_qual)) + \
                                       "\n---")
@@ -87,16 +102,16 @@ class ItemClass(buyable.BuyableClass):
     def get_bonus_info(self):
         bonus_text = ""
         
-        if self.item_type == "cpu":
+        if self.item_type == cpu_type:
             bonus_text += _("CPU per day:")+" "
             bonus_text += g.add_commas(self.item_qual)
-        elif self.item_type == "reactor":
+        elif self.item_type == reactor_type:
             bonus_text += _("Detection chance reduction:")+" "
             bonus_text += g.to_percent(self.item_qual)
-        elif self.item_type == "network":
+        elif self.item_type == network_type:
             bonus_text += _("CPU bonus:")+" "
             bonus_text += g.to_percent(self.item_qual)
-        elif self.item_type == "security":
+        elif self.item_type == security_type:
             bonus_text += _("Detection chance reduction:")+" "
             bonus_text += g.to_percent(self.item_qual)
 
@@ -118,7 +133,7 @@ class Item(buyable.Buyable):
     def finish(self):
         super(Item, self).finish()
         if self.base:
-            if self.type.item_type == "cpu":
+            if self.type.item_type == cpu_type:
                 self.base.raw_cpu = self.item_qual * self.count
             self.base.recalc_cpu()
 
