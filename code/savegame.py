@@ -42,6 +42,18 @@ savefile_translation = {
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
 
+import base, item
+
+# List of class we want pickled by id.
+pickle_by_id = {
+    "item": (item.ItemClass, lambda: g.items),
+    "base": (base.BaseClass, lambda: g.base_type),
+}
+
+def find_by_id(type, id):
+    list = pickle_by_id[type][1]()
+    return list[id]
+
 def get_savegames():
     all_dirs = dirs.get_read_dirs("saves")
 
@@ -106,6 +118,7 @@ def load_savegame(savegame):
         import collections
         import player, base, tech, item, event, location, buyable, difficulty, effect
         save_classes = dict(
+            find_by_id=find_by_id,
             player_class=player.Player,
             Player=player.Player,
             _reconstructor = copy_reg._reconstructor,
@@ -159,6 +172,14 @@ def load_savegame(savegame):
     g.locations = unpickle.load()
     g.events = unpickle.load()
 
+    # Overwrite pickled class that must be done by id.
+    for my_location in g.locations.values():
+        for my_base in my_location.bases:
+            my_base.type = g.base_type.get(my_base.type.id, my_base.type)
+            
+            for my_item in my_base.items.itervalues():
+                my_item.type = g.items.get(my_item.type.id, my_item.type)
+
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         g.pl.convert_from(load_version)
@@ -195,6 +216,18 @@ def savegame_exists(savegame_name):
 def create_savegame(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
+        
+    # Register pickle function to find by id.
+    import copy_reg
+    import base, item
+    
+    def get_pickle(type):
+        return lambda o: (find_by_id, (type, o.id))
+    
+    for type in pickle_by_id:
+        pickle_type = type
+        print(type, pickle_by_id[type][0])
+        copy_reg.pickle(pickle_by_id[type][0], get_pickle(type))
 
     save_loc = dirs.get_writable_file_in_dirs(savegame_name + ".sav", "saves")
     savefile = open(save_loc, 'w')
