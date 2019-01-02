@@ -84,6 +84,24 @@ class ItemClass(buyable.BuyableClass):
                                       "\n---")
         return basic_text
 
+    def get_bonus_info(self):
+        bonus_text = ""
+        
+        if self.item_type == "cpu":
+            bonus_text += _("CPU per day:")+" "
+            bonus_text += g.add_commas(self.item_qual)
+        elif self.item_type == "reactor":
+            bonus_text += _("Detection chance reduction:")+" "
+            bonus_text += g.to_percent(self.item_qual)
+        elif self.item_type == "network":
+            bonus_text += _("CPU bonus:")+" "
+            bonus_text += g.to_percent(self.item_qual)
+        elif self.item_type == "security":
+            bonus_text += _("Detection chance reduction:")+" "
+            bonus_text += g.to_percent(self.item_qual)
+
+        return bonus_text
+
 class Item(buyable.Buyable):
     """ An installed Item in a Player's Base """
 

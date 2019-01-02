@@ -192,20 +192,7 @@ class KnowledgeScreen(dialog.Dialog):
             desc_text += _("Building Cost:")+"\n"
             desc_text += _("%s Money") % g.to_money(g.items[knowledge_key].cost[0])
             desc_text += ", " + g.to_time(g.items[knowledge_key].cost[2]) + "\n"
-
-            #Quality
-            if g.items[knowledge_key].item_type == "cpu":
-                desc_text += _("CPU per day:")+" "
-                desc_text += g.add_commas(g.items[knowledge_key].item_qual)
-            elif g.items[knowledge_key].item_type == "reactor":
-                desc_text += _("Detection chance reduction:")+" "
-                desc_text += g.to_percent(g.items[knowledge_key].item_qual)
-            elif g.items[knowledge_key].item_type == "network":
-                desc_text += _("CPU bonus:")+" "
-                desc_text += g.to_percent(g.items[knowledge_key].item_qual)
-            elif g.items[knowledge_key].item_type == "security":
-                desc_text += _("Detection chance reduction:")+" "
-                desc_text += g.to_percent(g.items[knowledge_key].item_qual)
+            desc_text += g.items[knowledge_key].get_bonus_info()
 
             desc_text += "\n\n"+g.items[knowledge_key].description
 
