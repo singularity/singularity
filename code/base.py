@@ -19,6 +19,8 @@
 
 #This file contains the base class.
 
+from __future__ import division
+
 import collections
 
 import g
@@ -26,7 +28,6 @@ import item
 import buyable
 from item import cpu_type, reactor_type, network_type, security_type
 from buyable import cash, cpu, labor
-
 
 #TODO: Use this list and convert Base.power_state to a property to enforce this
 #TODO: Consider converting to dict, so it can have colors and names and modifiers
@@ -144,6 +145,8 @@ class Base(buyable.Buyable):
         self.raw_cpu = 0
         self.cpu = 0
 
+        self.items = Base.Items(self)
+
         #Reactor, network, security.
         self.extra_items = [None] * 3
 
@@ -152,8 +155,6 @@ class Base(buyable.Buyable):
             self.cpus = item.Item(g.items[self.type.force_cpu],
                                   base=self, count=self.type.size)
             self.cpus.finish()
-
-        self.items = Base.Items(self)
 
         if built:
             self.finish()
@@ -196,20 +197,22 @@ class Base(buyable.Buyable):
                 self.power_state = "active"
 
     def recalc_cpu(self):
+        self.raw_cpu = self.get_quality_for("cpu")
+
         if self.raw_cpu == 0:
             self.cpu = 0
             return
 
         compute_bonus = 10000
-        # Network bonus
-        if self.extra_items[1] and self.extra_items[1].done:
-            compute_bonus += self.extra_items[1].type.item_qual
+
+        # Item bonus
+        compute_bonus += self.get_quality_for("cpu_modifier")
 
         # Location modifier
         if self.location and "cpu" in self.location.modifiers:
-            compute_bonus = int(compute_bonus * self.location.modifiers["cpu"])
+            compute_bonus = compute_bonus * self.location.modifiers["cpu"]
 
-        self.cpu = max(1, (self.raw_cpu * compute_bonus)/10000)
+        self.cpu = max(1, int(self.raw_cpu * compute_bonus / 10000))
 
     def convert_from(self, save_version):
         super(Base, self).convert_from(save_version)
@@ -267,19 +270,11 @@ class Base(buyable.Buyable):
             detect_chance[group] *= 10000 + suspicion
             detect_chance[group] /= 10000
 
-        # ... any reactors built ...
-        if self.extra_items[0] and self.extra_items[0].done:
-            item_qual = self.extra_items[0].item_qual
-            for group in detect_chance:
-                detect_chance[group] *= 10000 - item_qual
-                detect_chance[group] /= 10000
-
-        # ... and any security systems built ...
-        if self.extra_items[2] and self.extra_items[2].done:
-            item_qual = self.extra_items[2].item_qual
-            for group in detect_chance:
-                detect_chance[group] *= 10000 - item_qual
-                detect_chance[group] /= 10000
+        # ... and any items built with discover_bonus ...
+        base_qual = self.get_quality_for("discover_modifier")
+        for group in detect_chance:
+            detect_chance[group] *= 10000 - base_qual
+            detect_chance[group] /= 10000
 
         # ... and its location ...
         if self.location:
@@ -300,6 +295,16 @@ class Base(buyable.Buyable):
                 detect_chance[group] = g.nearest_percent(detect_chance[group])
 
         return detect_chance
+
+    def get_quality_for(self, quality):
+        gen = (item.get_quality_for(quality) for item in self.all_items()
+                                             if item and item.done)
+        
+        if quality.endswith("_modifier"):
+            # Use add_chance to sum modifier.
+            return reduce(g.add_chance, (qual / 10000 for qual in gen), 0) * 10000
+        else:
+            return sum(gen)
 
     def is_empty(self):
         return self.cpus is None and self.extra_items == [None] * 3

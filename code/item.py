@@ -103,7 +103,19 @@ class ItemClass(buyable.BuyableClass):
                                       "\n---")
         return basic_text
 
-    def get_bonus_info(self):
+    def get_quality_for(self, quality):
+        
+        # TODO: Deharcode quality to item type.
+        
+        if (quality == "cpu" and self.item_type == cpu_type) or \
+           (quality == "cpu_modifier" and self.item_type == network_type) or \
+           (quality == "discover_modifier" and (self.item_type == reactor_type or \
+                                                self.item_type == security_type)):
+            return self.item_qual
+        
+        return 0
+
+    def get_quality_info(self):
         bonus_text = ""
         
         if self.item_type == cpu_type:
@@ -134,11 +146,19 @@ class Item(buyable.Buyable):
         if load_version < 4.91: # < r5_pre
             self.type = g.items[self.type.id]
 
+    def get_quality_for(self, quality):
+        item_qual = self.type.get_quality_for(quality)
+        
+        # Modifiers are not affected by count.
+        # TODO: Allow modifiers to be multiplied by count. Need a custom function.
+        if quality.endswith("_modifier"):
+            return item_qual
+            
+        return item_qual * self.count
+
     def finish(self):
         super(Item, self).finish()
         if self.base:
-            if self.type.item_type == cpu_type:
-                self.base.raw_cpu = self.item_qual * self.count
             self.base.recalc_cpu()
 
     def __iadd__(self, other):
