@@ -71,7 +71,8 @@ reactor_type = "reactor"
 network_type = "network"
 security_type = "security"
 
-# Order IS relevant! (because of base.extra_items array)
+# Order IS NOT relevant!
+# Because the ugly extra_items are gone and I am happy. :)))
 item_types = [
     ItemType(cpu_type),
     ItemType(reactor_type),

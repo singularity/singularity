@@ -145,12 +145,13 @@ class Base(buyable.Buyable):
         self.raw_cpu = 0
         self.cpu = 0
 
-        self.items = Base.Items(self)
+        self.items = {
+            "cpu": None,
+            "reactor": None,
+            "network": None,
+            "security": None,
+        }
 
-        #Reactor, network, security.
-        self.extra_items = [None] * 3
-
-        self.cpus = None
         if self.type.force_cpu:
             self.cpus = item.Item(g.items[self.type.force_cpu],
                                   base=self, count=self.type.size)
@@ -163,6 +164,18 @@ class Base(buyable.Buyable):
         self.grace_over = False
 
         self.maintenance = buyable.array(self.type.maintenance, long)
+
+    @property
+    def cpus(self):
+        return self.items.get("cpu", None)
+
+    @cpus.setter
+    def cpus(self, value):
+        self.items["cpu"] = value
+
+    @cpus.deleter
+    def cpus(self, value):
+        del self.items["cpu"]
 
     @property
     def power_state_name(self):
@@ -216,6 +229,14 @@ class Base(buyable.Buyable):
 
     def convert_from(self, save_version):
         super(Base, self).convert_from(save_version)
+        
+        if save_version < 99.3: # < 1.0 (dev)
+            # We needs to do it first because of property self.cpus
+            self.items = {
+                "cpu": self.__dict__["cpus"]
+            }
+            del self.__dict__["cpus"]
+        
         if save_version < 4.91: # < r5_pre
             for cpu in self.cpus:
                 if cpu:
@@ -254,6 +275,13 @@ class Base(buyable.Buyable):
             elif self.studying == "CPU Pool":
                 g.pl.cpu_usage["cpu_pool"] = \
                     g.pl.cpu_usage.get("cpu_pool", 0) + self.cpu
+
+        if save_version < 99.3: # < 1.0 (dev)
+            self.items["reactor"] = self.__dict__["extra_items"].get(0, None)
+            self.items["network"] = self.__dict__["extra_items"].get(1, None)
+            self.items["security"] = self.__dict__["extra_items"].get(2, None)
+            
+            del self.__dict__["extra_items"]
 
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full
@@ -307,7 +335,9 @@ class Base(buyable.Buyable):
             return sum(gen)
 
     def is_empty(self):
-        return self.cpus is None and self.extra_items == [None] * 3
+        for item in self.all_items():
+            if item: return False
+        return True
 
     def is_building(self):
         for item in self.all_items():
@@ -392,73 +422,9 @@ class Base(buyable.Buyable):
         else:
             return -1
 
-    def __getstate__(self):
-        new_state = self.__dict__.copy()
-        del new_state['items']
-        return new_state
- 
-    def __setstate__(self, data):
-        self.__dict__ = data
-        self.items = Base.Items(self)
-
     def all_items(self):
         for item in self.items.itervalues():
-            yield item
-
-    class Items(collections.MutableMapping):
-        """A mapping of all base items"""
-
-        extra_keys = [reactor_type, network_type, security_type]
-        
-        def __init__(self, base):
-            super(Base.Items, self).__init__()
-            self.base = base
-        
-        def __getitem__(self, type):
-            if type == cpu_type:
-                return self.base.cpus
-            else:
-                index = self.extra_keys.index(type)
-                return self.base.extra_items[index]
-                
-        def __setitem__(self, type, value):
-            if type == cpu_type:
-                self.base.cpus = value
-            else:
-                index = self.extra_keys.index(type)
-                self.base.extra_items[index] = value
-                
-        def __delitem__(self, type, value):
-            if type == cpu_type:
-                self.base.cpus = None
-            else:
-                index = self.extra_keys.index(type)
-                self.base.extra_items[index] = None
-
-        def __iter__(self):
-            if (self.base.cpus is not None):
-                yield cpu_type
-            for index in range(0, 2):
-                if (self.base.extra_items[index] is not None):
-                    extra_keys[index]
-            
-        def itervalues(self):
-            if (self.base.cpus is not None):
-                yield self.base.cpus
-            for item in self.base.extra_items:
-                if (item is not None):
-                    yield item
-
-        def iteritems(self):
-            if (self.base.cpus is not None):
-                yield (cpu_type, self.base.cpus)
-            for index in range(0, 2):
-                item = self.base.extra_items[index]
-                if (self.base.extra_items[index] is not None):
-                    yield (extra_keys[index], item)
-
-        def __len__(self):
-            return 4
+            if item: yield item
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.  If
