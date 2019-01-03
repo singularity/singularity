@@ -786,7 +786,7 @@ def load_items():
 
 def load_item_defs(lang=None):
 
-    for type in item.item_types:
+    for type in item.all_types():
         if type.id == 'cpu'     : type.text = _("&Processor")
         if type.id == 'reactor' : type.text = _("&Reactor")
         if type.id == 'network' : type.text = _("&Network")

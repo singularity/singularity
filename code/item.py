@@ -79,6 +79,10 @@ item_types = [
     ItemType(security_type),
 ]
 
+def all_types():
+    for item_type in item_types:
+        yield item_type
+
 class ItemClass(buyable.BuyableClass):
     """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
 

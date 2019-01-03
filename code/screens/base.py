@@ -239,7 +239,7 @@ class BaseScreen(dialog.Dialog):
                                   background_color="pane_background",
                                   borders=range(6))
 
-        for i, item_type in enumerate(item.item_types):
+        for i, item_type in enumerate(item.all_types()):
             setattr(self,
                     item_type.id + "_pane",
                     ItemPane(self.contents_frame, (.01, .01+.08*i), type=item_type))
@@ -356,7 +356,7 @@ class BaseScreen(dialog.Dialog):
         self.state_display.text = self.base.power_state_name
 
         mutable = not self.base.type.force_cpu
-        for item_type in item.item_types:
+        for item_type in item.all_types():
             pane = getattr(self, item_type.id + "_pane")
             pane.change_button.visible = mutable
             current = self.get_current(item_type)

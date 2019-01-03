@@ -236,7 +236,7 @@ class Player(object):
             if not base.done:
                 bases_under_construction.append(base)
             else:
-                items_under_construction += [(base, item) for item in base.items.itervalues()
+                items_under_construction += [(base, item) for item in base.all_items()
                                                           if item and not item.done]
                 self.maintenance_cost += base.maintenance
 
@@ -687,9 +687,7 @@ class Player(object):
         result_cash = self.cash
         for base in g.all_bases():
             result_cash -= base.cost_left[cash]
-            if base.cpus and not base.cpus.done:
-                result_cash -= base.cpus.cost_left[cash]
-            for item in base.extra_items:
+            for item in base.all_items():
                 if item: result_cash -= item.cost_left[cash]
             result_cash = max(result_cash, -g.max_cash)
         for task, cpus in self.cpu_usage.items():

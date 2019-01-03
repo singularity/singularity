@@ -189,7 +189,7 @@ class Base(buyable.Buyable):
     def check_power(self):
         if self.power_state == "sleep":
             if self.done:
-                for item in self.items.itervalues():
+                for item in self.all_items():
                     if item is not None and not item.done:
                         self.power_state = "active"
             else:
@@ -305,7 +305,7 @@ class Base(buyable.Buyable):
         return self.cpus is None and self.extra_items == [None] * 3
 
     def is_building(self):
-        for item in self.items.itervalues():
+        for item in self.all_items():
             if item and not item.done:
                 return True
         return False
@@ -356,7 +356,7 @@ class Base(buyable.Buyable):
         if self.location:
             self.location.bases.remove(self)
 
-        for item in self.items.itervalues():
+        for item in self.all_items():
             if item is not None:
                 item.destroy()
 
@@ -386,6 +386,19 @@ class Base(buyable.Buyable):
             return cmp(self.sort_tuple(), other.sort_tuple())
         else:
             return -1
+
+    def __getstate__(self):
+        new_state = self.__dict__.copy()
+        del new_state['items']
+        return new_state
+ 
+    def __setstate__(self, data):
+        self.__dict__ = data
+        self.items = Base.Items(self)
+
+    def all_items(self):
+        for item in self.items.itervalues():
+            yield item
 
     class Items(collections.MutableMapping):
         """A mapping of all base items"""
