@@ -38,6 +38,7 @@ savefile_translation = {
     "singularity_savefile_99.1":    ("1.0 (dev)",   99.1 ),
     "singularity_savefile_99.2":    ("1.0 (dev)",   99.2 ),
     "singularity_savefile_99.3":    ("1.0 (dev)",   99.3 ),
+    "singularity_savefile_99.4":    ("1.0 (dev)",   99.4 ),
 }
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
@@ -53,6 +54,11 @@ pickle_by_id = {
 def find_by_id(type, id):
     list = pickle_by_id[type][1]()
     return list[id]
+
+def convert_type(save_version, type, obj):
+    if save_version < 99.4: # < 1.0 (dev)
+        list = pickle_by_id[type][1]()
+        obj.type = list.get(obj.type.id, obj.type)
 
 def get_savegames():
     all_dirs = dirs.get_read_dirs("saves")
@@ -172,20 +178,18 @@ def load_savegame(savegame):
     g.locations = unpickle.load()
     g.events = unpickle.load()
 
-    # Overwrite pickled class that must be done by id.
-    for my_location in g.locations.values():
-        for my_base in my_location.bases:
-            my_base.type = g.base_type.get(my_base.type.id, my_base.type)
-            
-            for my_item in my_base.items.itervalues():
-                my_item.type = g.items.get(my_item.type.id, my_item.type)
-
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         g.pl.convert_from(load_version)
         for my_location in g.locations.values():
             for my_base in my_location.bases:
+                convert_type(load_version, "base", my_base)
                 my_base.convert_from(load_version)
+
+                for my_item in my_base.all_items():
+                    convert_type(load_version, "item", my_item)
+                    my_item.convert_from(load_version)
+
         for my_tech in g.techs.values():
             my_tech.convert_from(load_version)
         for my_event in g.events.values():
