@@ -276,11 +276,14 @@ class Base(buyable.Buyable):
                 g.pl.cpu_usage["cpu_pool"] = \
                     g.pl.cpu_usage.get("cpu_pool", 0) + self.cpu
 
+
         if save_version < 99.3: # < 1.0 (dev)
-            self.items["reactor"] = self.__dict__["extra_items"].get(0, None)
-            self.items["network"] = self.__dict__["extra_items"].get(1, None)
-            self.items["security"] = self.__dict__["extra_items"].get(2, None)
+            extra_items = iter(self.__dict__["extra_items"])
             
+            self.items["reactor"] = next(extra_items, None)
+            self.items["network"] = next(extra_items, None)
+            self.items["security"] = next(extra_items, None)
+                        
             del self.__dict__["extra_items"]
 
     # Get the detection chance for the base, applying bonuses as needed.  If
