@@ -24,7 +24,7 @@ import pygame
 import json
 
 from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
-import code.g as g, code.dirs as dirs, code.i18n as i18n
+import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Integrate "Save Options to Disk" functionality in OK button.
@@ -91,10 +91,10 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             daynight        = g.daynight,
             resolution      = gg.screen_size,
             language        = i18n.language,
-            sound           = not g.nosound,
-            gui_volume      = int(g.soundvolumes["gui"] * 100.0),
-            music_volume    = int(g.soundvolumes["music"] * 100.0),
-            soundbuf        = g.soundbuf
+            sound           = not mixer.nosound,
+            gui_volume      = int(mixer.soundvolumes["gui"] * 100.0),
+            music_volume    = int(mixer.soundvolumes["music"] * 100.0),
+            soundbuf        = mixer.soundbuf
         )
 
         self.set_options(self.initial_options)
@@ -103,6 +103,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         if retval:
             self.apply_options()
             save_options()
+            
         else:
             # Cancel, revert all options to initial state
             self.set_options(self.initial_options)
@@ -436,7 +437,7 @@ class AudioPane(widget.Widget):
         self.gui_label.text = _("GUI Volume:")
         self.music_label.text = _("Music Volume:")
 
-        if not g.nosound:
+        if not mixer.nosound:
             self.sound_toggle.text = _("YES")
         else:
             self.sound_toggle.text = _("NO")
@@ -467,34 +468,18 @@ class AudioPane(widget.Widget):
         else:
             self.sound_toggle.text = _("NO")
 
-        if g.nosound == (not value):
-            # No transition requested, bail out
-            return
-
-        g.nosound = not value
-        if g.nosound:
-            if g.mixerinit:
-                pygame.mixer.music.stop()
-        else:
-            g.play_sound("click")
-            g.play_music(g.music_class)  # force music switch at same dir
+        mixer.set_sound(value)
 
     def on_gui_volume_change(self, value):
-        g.soundvolumes["gui"] = value / float(100)
+        mixer.set_volume("gui", value)
 
     def on_music_volume_change(self, value):
-        g.soundvolumes["music"] = value / float(100)
-        if g.mixerinit:
-            pygame.mixer.music.set_volume(g.soundvolumes["music"])
+        mixer.set_volume("music", value)
 
     #TODO: Show a 2-second "Please wait" dialog when reinitializing mixer,
     #      otherwise its huge lag might confuse users
     def set_soundbuf(self, value):
-        old_soundbuf = g.soundbuf
-        g.soundbuf = value
-
-        if g.mixerinit and g.soundbuf != old_soundbuf:
-            g.reinit_mixer()
+        mixer.set_soundbuf(value)
 
 class OptionButton(button.ToggleButton, button.FunctionButton):
     pass
@@ -521,16 +506,16 @@ def save_options():
     prefs = ConfigParser.SafeConfigParser()
     prefs.add_section("Preferences")
     prefs.set("Preferences", "fullscreen",   str(bool(gg.fullscreen)))
-    prefs.set("Preferences", "nosound",      str(bool(g.nosound)))
+    prefs.set("Preferences", "nosound",      str(bool(mixer.nosound)))
     prefs.set("Preferences", "grab",         str(bool(pygame.event.get_grab())))
     prefs.set("Preferences", "daynight",     str(bool(g.daynight)))
     prefs.set("Preferences", "xres",         str(int(gg.screen_size[0])))
     prefs.set("Preferences", "yres",         str(int(gg.screen_size[1])))
-    prefs.set("Preferences", "soundbuf",     str(int(g.soundbuf)))
+    prefs.set("Preferences", "soundbuf",     str(int(mixer.soundbuf)))
     prefs.set("Preferences", "lang",         str(i18n.language))
     prefs.set("Preferences", "theme",        str(theme.current.id))
 
-    for name, value in g.soundvolumes.iteritems():
+    for name, value in mixer.soundvolumes.iteritems():
         prefs.set("Preferences", name + "_volume", str(value))
 
     # Actually write the preferences out.

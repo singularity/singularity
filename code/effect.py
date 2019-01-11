@@ -18,7 +18,7 @@
 
 #This file contains the effect class.
 
-import g
+import g, mixer
 
 class Effect(object):
 
@@ -45,7 +45,7 @@ class Effect(object):
             elif current == "display_discover":
                 g.pl.display_discover = next(effect_iter)
             elif current == "endgame":
-                g.play_music("win")
+                mixer.play_music("win")
                 g.map_screen.show_story_section("Win")
                 for group in g.pl.groups.values():
                     group.discover_bonus = 0

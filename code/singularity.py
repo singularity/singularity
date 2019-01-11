@@ -72,7 +72,8 @@ if len(logging.getLogger().handlers) == 0:
             pass
 
 # keep g's defaults intact so we can compare after parsing options and prefs
-desired_soundbuf = g.soundbuf
+import mixer
+desired_soundbuf = mixer.soundbuf
 
 desired_set_grab = None
 
@@ -105,7 +106,7 @@ if save_loc is not None:
             sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
 
         try:
-            g.nosound = prefs.getboolean("Preferences", "nosound")
+            mixer.nosound = prefs.getboolean("Preferences", "nosound")
         except:
             sys.stderr.write("Invalid or missing 'nosound' setting in preferences.\n")
 
@@ -145,11 +146,9 @@ if save_loc is not None:
             pass # don't be picky (for now...)
 
         try:
-            for name in g.soundvolumes:
-                g.soundvolumes[name] = prefs.getfloat("Preferences", name + "_volume")
+            for name in mixer.soundvolumes:
+                mixer.setvolume(name, prefs.getfloat("Preferences", name + "_volume"))
 
-            if g.mixerinit:
-                pygame.mixer.music.set_volume(g.soundvolumes["music"])
         except:
             pass # don't be picky (for now...)
 
@@ -185,7 +184,7 @@ parser.add_option("--multidir", dest="singledir",
 parser.add_option("--soundbuf", type="int",
                   help="""set the size of the sound buffer (default %s).
                     Discarded if --nosound is specified."""
-                    % g.soundbuf)
+                    % mixer.soundbuf)
 
 display_options = optparse.OptionGroup(parser, "Display Options")
 display_options.add_option("-t", "--theme", dest="theme", type="string",
@@ -240,11 +239,11 @@ if options.grab is not None:
 if options.fullscreen is not None:
     graphics.g.set_fullscreen(options.fullscreen)
 if options.sound is not None:
-    g.nosound = not options.sound
+    mixer.nosound = not options.sound
 if options.daynight is not None:
     g.daynight = options.daynight
 if options.soundbuf is not None:
-    g.soundbuf = options.soundbuf
+    desired_soundbuf = options.soundbuf
 
 graphics.g.ebook_mode = options.ebook
 
@@ -256,9 +255,10 @@ g.debug = options.debug
 # Only initiliaze after reading all arguments and preferences to avoid to
 # reinitialize something again (mixer,...).
 #
-pygame.mixer.pre_init(*g.soundargs, buffer=g.soundbuf)
+pygame.mixer.pre_init(*mixer.soundargs, buffer=desired_soundbuf)
 pygame.init()
-g.mixerinit = bool(pygame.mixer.get_init())
+mixer.init = bool(pygame.mixer.get_init())
+mixer.soundbuf = desired_soundbuf
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
 pygame.event.set_grab(desired_set_grab)
@@ -286,9 +286,12 @@ g.load_locations()
 g.load_techs()
 g.load_items()
 g.load_bases()
-g.load_sounds()
-g.load_music()
-g.play_music("music")
+
+# Init music
+import mixer
+mixer.load_sounds()
+mixer.load_music()
+mixer.play_music("music")
 
 #Display the main menu
 #Import is delayed until now so selected language via command-line options or

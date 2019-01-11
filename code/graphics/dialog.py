@@ -177,7 +177,7 @@ class Dialog(text.Text):
 
     def show(self):
         """Shows the dialog and enters an event-handling loop."""
-        from code.g import play_music
+        from code.mixer import play_music
 
         self.visible = True
         self.key_down = None

@@ -22,7 +22,7 @@ import cPickle
 import collections
 import os
 
-import g, dirs, player
+import g, mixer, dirs, player
 
 #name given when the savegame button is pressed. This is changed when the
 #game is loaded or saved.
@@ -177,9 +177,9 @@ def load_savegame(savegame):
 
     # Play the appropriate music
     if g.pl.apotheosis:
-        g.play_music("win")
+        mixer.play_music("win")
     else:
-        g.play_music("music")
+        mixer.play_music("music")
 
     loadfile.close()
     return True

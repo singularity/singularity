@@ -162,7 +162,7 @@ class Button(text.SelectableText, HotkeyText):
            This method is called directly by the GUI handler, and should be
            overwritten only to remove the click it plays."""
 
-        from code.g import play_sound
+        from code.mixer import play_sound
         play_sound("click")
         self.activated(event)
 

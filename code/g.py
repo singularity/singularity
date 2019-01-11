@@ -48,15 +48,6 @@ seconds_per_day = 24 * 60 * 60
 #Allows access to the cheat menu.
 cheater = 0
 
-#Disables sound playback (and, currently, music too)
-nosound = False
-
-#Indicates if mixer is initialized
-#Unlike nosound, which user may change at any time via options screen,
-#this deals with hardware capability and mixer initialization status
-#In a nutshell: nosound is what user /wants/, mixerinit is what user /has/
-mixerinit = False
-
 # Enables day/night display.
 daynight = True
 
@@ -84,14 +75,8 @@ tasks = {}
 base_type = {}
 buttons = {}
 help_strings = {}
-sounds = {}
-music_class = None  # currently playing music "class" (ie, dir)
-music_dict = {}
 delay_time = 0
 curr_speed = 1
-soundbuf = 1024*2
-soundargs = (48000, -16, 2)  # sampling frequency, size, channels
-soundvolumes = {"gui": 1.0, "music": 1.0}
 detect_string_names = ("detect_str_low",
                        "detect_str_moderate",
                        "detect_str_high",
@@ -103,145 +88,6 @@ map_screen = None
 
 def quit_game():
     sys.exit()
-
-def load_sounds():
-    """
-load_sounds() loads all of the sounds in the data/sounds/ directory,
-defined in sounds/sounds.dat.
-"""
-
-    if not mixerinit:
-        # Sound is not initialized. Warn if user wanted sound
-        if not nosound:
-            sys.stderr.write("WARNING: Sound is requested, but mixer is not initialized!\n")
-        return
-
-    sound_class_list = generic_load("sounds.dat", load_dirs="sounds")
-    for sound_class in sound_class_list:
-
-        # Make sure the sound class has the filename defined.
-        check_required_fields(sound_class, ("filename",), "Sound")
-
-        # Load each sound in the list, inserting it into the sounds dictionary.
-        if type(sound_class["filename"]) != list:
-            filenames = [sound_class["filename"]]
-        else:
-            filenames = sound_class["filename"]
-
-        for filename in filenames:
-            all_paths = []
-            real_file = dirs.get_readable_file_in_dirs(filename, "sounds", 
-                                                       outer_paths=all_paths)
-
-            # Check to make sure it's a real file; bail if not.
-            if real_file is None:
-                sys.stderr.write("ERROR: Cannot load nonexistent soundfile: %s!\n" %
-                                 "\n".join(paths))
-                sys.exit(1)
-            else:
-
-                # Load it via the mixer ...
-                sound = pygame.mixer.Sound(real_file)
-
-                # And shove it into the sounds dictionary.
-                if not sounds.has_key(sound_class["id"]):
-                    sounds[sound_class["id"]] = []
-                sounds[sound_class["id"]].append({
-                    "filename": real_file,
-                    "sound": sound})
-                if debug:
-                    sys.stderr.write("DEBUG: Loaded soundfile: %s\n" %
-                                     real_file)
-
-def play_sound(sound_class, sound_volume="gui"):
-    """
-play_sound() plays a sound from a particular class and volume.
-"""
-
-    if nosound or not mixerinit:
-        return
-
-    # Don't crash if someone requests the wrong sound class, but print a
-    # warning.
-    if sound_class not in sounds:
-        sys.stderr.write("WARNING: Requesting a sound of unavailable class: %s\n" %
-                         sound_class)
-        return
-
-    # Play a random choice of sounds from the sound class.
-    random_sound = random.choice(sounds[sound_class])
-    if debug:
-        sys.stderr.write("DEBUG: Playing sound %s.\n" % random_sound["filename"])
-
-    random_sound["sound"].set_volume(soundvolumes[sound_volume])
-    random_sound["sound"].play()
-
-def load_music():
-    """
-load_music() loads music for the game.  It looks in multiple locations:
-
-* music/ in the install directory for E:S.
-* music/ in user's XDG_DATA_HOME/singularity folder.
-"""
-
-    global music_dict
-    music_dict = {}
-
-    # Build the set of paths we'll check for music.
-    music_paths = dirs.get_read_dirs("music")
-
-    # Main loop for music_paths
-    for music_path in music_paths:
-        if os.path.isdir(music_path):
-
-            # Loop through the files in music_path and add the ones
-            # that are .mp3s and .oggs.
-            for entry in os.walk(music_path):
-                root  = entry[0]
-                files = entry[2]
-                (head, tail) = os.path.split(root)
-                if (tail.lower() != ".svn"):
-                    if not music_dict.has_key(tail):
-                        music_dict[tail]=[]
-                    for file_name in files:
-                        if (len(file_name) > 5 and
-                        (file_name[-3:] == "ogg" or file_name[-3:] == "mp3")):
-                            music_dict[tail].append(os.path.join(head, tail, file_name))
-                            if debug:
-                                sys.stderr.write("D: Loaded musicfile %s\n"
-                                        % music_dict[tail][-1])
-
-def play_music(musicdir=None):
-
-    global delay_time
-    global music_class
-
-    if musicdir:
-        music_class = musicdir
-        delay_time = 0  # unset delay to force music switch
-    else:
-        musicdir = music_class
-
-    # Don't bother if the user doesn't want or have sound,
-    # there's no music available at all or for that musicdir,
-    # or the delay has not yet expired
-    if (nosound
-        or not mixerinit
-        or not music_dict.get(musicdir)
-        or delay_time > pygame.time.get_ticks()):
-        return
-
-    # If music mixer is currently busy and switch was not forced, renew delay
-    if pygame.mixer.music.get_busy() and delay_time:
-        delay_time = pygame.time.get_ticks() + int(random.random()*10000)+2000
-        return
-
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load(random.choice(music_dict[musicdir]))
-    pygame.mixer.music.play()
-    delay_time = 1  # set a (dummy) delay
-
-
 
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number):
@@ -1099,24 +945,11 @@ def new_game(difficulty_name):
             print "%s gets modifiers %s" % (open_loc.name, modifier_sets[i])
 
     # Reset music
-    play_music("music")
+    import mixer
+    mixer.play_music("music")
 
     global intro_shown
     intro_shown = False
-
-def reinit_mixer():
-    global mixerinit
-
-    if nosound:
-        return
-
-    try:
-        pygame.mixer.quit()
-        pygame.mixer.init(*soundargs, buffer=soundbuf)
-    except Exception as reason:
-        sys.stderr.write("Failure starting sound system. Disabling. (%s)\n" % reason)
-    finally:
-        mixerinit = bool(pygame.mixer.get_init())
 
 #TODO: This is begging to become a class... ;)
 def hotkey(string):

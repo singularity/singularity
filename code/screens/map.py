@@ -21,7 +21,7 @@
 
 import pygame
 
-from code import g, savegame as sv
+from code import g, savegame as sv, mixer
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
@@ -501,7 +501,7 @@ class MapScreen(dialog.Dialog):
         if lost > 0:
             lost_story = ["", "Lost No Bases", "Lost Suspicion"]
             
-            g.play_music("lose")
+            mixer.play_music("lose")
             self.show_story_section(lost_story[lost])
             raise constants.ExitDialog
 
