@@ -349,8 +349,8 @@ class Base(buyable.Buyable):
         return False
         
     def is_building_extra(self):
-        for item in self.extra_items:
-            if item and not item.done:
+        for item in self.all_items():
+            if item and item.type.item_type != "cpu" and not item.done:
                 return True
         return False
 

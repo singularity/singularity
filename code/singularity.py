@@ -74,6 +74,8 @@ if len(logging.getLogger().handlers) == 0:
 # keep g's defaults intact so we can compare after parsing options and prefs
 desired_soundbuf = g.soundbuf
 
+desired_set_grab = None
+
 #load prefs from file:
 save_loc = dirs.get_readable_file_in_dirs("prefs.dat", "pref")
 
@@ -108,7 +110,7 @@ if save_loc is not None:
             sys.stderr.write("Invalid or missing 'nosound' setting in preferences.\n")
 
         try:
-            pygame.event.set_grab(prefs.getboolean("Preferences", "grab"))
+            desired_set_grab = prefs.getboolean("Preferences", "grab")
         except:
             sys.stderr.write("Invalid or missing 'grab' setting in preferences.\n")
 
@@ -234,7 +236,7 @@ if options.resolution is not None:
         parser.error("Resolution must be of the form <h>x<v>, e.g. %dx%d." %
                      graphics.g.default_screen_size)
 if options.grab is not None:
-    pygame.event.set_grab(options.grab)
+    desired_set_grab = options.grab
 if options.fullscreen is not None:
     graphics.g.set_fullscreen(options.fullscreen)
 if options.sound is not None:
@@ -259,6 +261,7 @@ pygame.init()
 g.mixerinit = bool(pygame.mixer.get_init())
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
+pygame.event.set_grab(desired_set_grab)
 
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.

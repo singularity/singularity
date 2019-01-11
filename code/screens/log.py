@@ -71,5 +71,4 @@ class LogScreen(dialog.ChoiceDialog):
 
     def create_log_event_text(self, log_name, log_data):
         event = g.events[log_data[0]] # event.id
-        print(event)
         return event.log_description

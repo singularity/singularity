@@ -184,7 +184,7 @@ pre = Quantum Computing
 
 [Project: Impossibility Theorem]
 cost_list = 20000 | 100000 | 0
-effect_list = suspicion | onetime | 5000
+effect_list = suspicion | onetime | 5000
 pre_list = Advanced Memetics | Simulacra
 
 [Project: Subverted Media]

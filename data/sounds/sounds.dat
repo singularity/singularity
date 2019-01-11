@@ -1,7 +1,0 @@
-# This file defines the various sounds and classes that they belong to.
-# Ostensibly, if sounds share the same class, the game will pick one
-# sound randomly from that class to play every time the class is
-# requested.
-
-[click]
-filename_list = click0.wav | click1.wav | click2.wav | click3.wav

@@ -684,7 +684,6 @@ class MapScreen(dialog.Dialog):
         self.savename_dialog.default_text = sv.default_savegame_name
         name = dialog.call_dialog(self.savename_dialog, self.menu_dialog)
         if name:
-            print(sv.savegame_exists(name))
             if sv.savegame_exists(name):
                 yn = dialog.YesNoDialog(self.menu_dialog, pos=(-.5,-.5), size=(-.5,-.5),
                                         anchor=constants.MID_CENTER,

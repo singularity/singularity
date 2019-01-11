@@ -29,7 +29,7 @@ import g, dirs, player
 default_savegame_name = "Default Save"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_99.2"
+current_save_version = "singularity_savefile_99.3"
 savefile_translation = {
     "singularity_savefile_r4":      ("0.30",         4   ),
     "singularity_savefile_r5_pre":  ("0.30",         4.91),
