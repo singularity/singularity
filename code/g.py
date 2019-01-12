@@ -632,11 +632,10 @@ def load_items():
 
 def load_item_defs(lang=None):
 
-    for type in item.all_types():
-        if type.id == 'cpu'     : type.text = _("&Processor")
-        if type.id == 'reactor' : type.text = _("&Reactor")
-        if type.id == 'network' : type.text = _("&Network")
-        if type.id == 'security': type.text = _("&Security")
+    item.item_types['cpu'].text = _("&Processor")
+    item.item_types['reactor'].text = _("&Reactor")
+    item.item_types['network'].text = _("&Network")
+    item.item_types['security'].text = _("&Security")
 
     load_generic_defs("items",items,lang)
 

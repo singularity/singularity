@@ -26,7 +26,6 @@ import collections
 import g
 import item
 import buyable
-from item import cpu_type, reactor_type, network_type, security_type
 from buyable import cash, cpu, labor
 
 #TODO: Use this list and convert Base.power_state to a property to enforce this
@@ -350,7 +349,7 @@ class Base(buyable.Buyable):
         
     def is_building_extra(self):
         for item in self.all_items():
-            if item and item.type.item_type != "cpu" and not item.done:
+            if item and item.type.item_type.is_extra() and not item.done:
                 return True
         return False
 

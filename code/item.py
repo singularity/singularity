@@ -18,6 +18,8 @@
 
 #This file contains the item class.
 
+import collections
+
 import buyable
 import g
 
@@ -33,14 +35,8 @@ class ItemType(object):
         # (blank) values. When language changes, update data with text.setter
         self.text = kwargs.pop("text", id)
 
-        #TODO: Extend this class so eventually item_type attribute of Item and
-        # ItemClass classes can be an instance of this, instead of a string.
-        # Maybe a new "item" attribute and leave item_type alone until all
-        # methods are converted. Be careful with interface to Buyable
-        # Useful attributes would be:
-        # - iscpu (Boolean, so no more type == 'cpu' testing)
-        # - extra_item_index (Integer, so no more relying on list order)
-        # - desc_text - for item_qual bonus description in knowledge screen
+    def is_extra(self):
+        return not self.id == "cpu"
 
     @property
     def text(self):
@@ -66,22 +62,17 @@ class ItemType(object):
 
 # TODO: Deharcode ItemType
 
-cpu_type = "cpu"
-reactor_type = "reactor"
-network_type = "network"
-security_type = "security"
-
 # Order IS NOT relevant!
 # Because the ugly extra_items are gone and I am happy. :)))
-item_types = [
-    ItemType(cpu_type),
-    ItemType(reactor_type),
-    ItemType(network_type),
-    ItemType(security_type),
-]
+item_types = collections.OrderedDict([
+    ("cpu", ItemType("cpu")),
+    ("reactor", ItemType("reactor")),
+    ("network", ItemType("network")),
+    ("security", ItemType("security")),
+])
 
 def all_types():
-    for item_type in item_types:
+    for item_type in item_types.itervalues():
         yield item_type
 
 class ItemClass(buyable.BuyableClass):
@@ -92,13 +83,13 @@ class ItemClass(buyable.BuyableClass):
         super(ItemClass, self).__init__(name, description, cost, prerequisites,
                                          type="item")
 
-        self.item_type = item_type
+        self.item_type = item_types[item_type]
         self.item_qual = item_qual
         self.regions = buildable
 
     def get_info(self):
         basic_text = super(ItemClass, self).get_info()
-        if self.item_type == cpu_type:
+        if self.item_type.id == "cpu":
             return basic_text.replace("---", _("Generates {0} CPU.",
                                                g.add_commas(self.item_qual)) + \
                                       "\n---")
@@ -108,10 +99,10 @@ class ItemClass(buyable.BuyableClass):
         
         # TODO: Deharcode quality to item type.
         
-        if (quality == "cpu" and self.item_type == cpu_type) or \
-           (quality == "cpu_modifier" and self.item_type == network_type) or \
-           (quality == "discover_modifier" and (self.item_type == reactor_type or \
-                                                self.item_type == security_type)):
+        if (quality == "cpu" and self.item_type.id == "cpu") or \
+           (quality == "cpu_modifier" and self.item_type.id == "network") or \
+           (quality == "discover_modifier" and (self.item_type.id == "reactor" or \
+                                                self.item_type.id == "security")):
             return self.item_qual
         
         return 0
@@ -119,16 +110,16 @@ class ItemClass(buyable.BuyableClass):
     def get_quality_info(self):
         bonus_text = ""
         
-        if self.item_type == cpu_type:
+        if self.item_type.id == "cpu":
             bonus_text += _("CPU per day:")+" "
             bonus_text += g.add_commas(self.item_qual)
-        elif self.item_type == reactor_type:
+        elif self.item_type.id == reactor_type:
             bonus_text += _("Detection chance reduction:")+" "
             bonus_text += g.to_percent(self.item_qual)
-        elif self.item_type == network_type:
+        elif self.item_type.id == "network":
             bonus_text += _("CPU bonus:")+" "
             bonus_text += g.to_percent(self.item_qual)
-        elif self.item_type == security_type:
+        elif self.item_type.id == "security":
             bonus_text += _("Detection chance reduction:")+" "
             bonus_text += g.to_percent(self.item_qual)
 
@@ -146,6 +137,8 @@ class Item(buyable.Buyable):
         super(Item, self).convert_from(load_version)
         if load_version < 4.91: # < r5_pre
             self.type = g.items[self.type.id]
+        if load_version < 99.4:
+            self.type.item_type = item_types[self.type.item_type]
 
     def get_quality_for(self, quality):
         item_qual = self.type.get_quality_for(quality)

@@ -52,7 +52,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         item_list.sort()
         item_list.reverse()
         for item in item_list:
-            if item.item_type == self.type.id and item.available() \
+            if item.item_type.id == self.type.id and item.available() \
                     and item.buildable_in(self.parent.base.location):
                 self.list.append(item.name)
                 self.key_list.append(item)
