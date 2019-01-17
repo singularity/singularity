@@ -391,19 +391,8 @@ class BaseScreen(dialog.Dialog):
 
         self.cpu_pane.name_panel.text += " " + count
 
-        # Detection chance display.  If Socioanalytics hasn't been researched,
-        # you get nothing; if it has, but not Advanced Socioanalytics, you get
-        # an inaccurate value.
-        if g.pl.display_discover == "none":
-            self.detect_frame.text = g.strings["detect_chance_unknown_base"]
-        else:
-            accurate = (g.pl.display_discover == "full")
-            chance = self.base.get_detect_chance(accurate)
-            def get_chance(group):
-                return g.to_percent(chance.get(group, 0))
-            self.detect_frame.text = discovery_template % \
-                (get_chance("news"), get_chance("science"),
-                 get_chance("covert"), get_chance("public"))
+        # Detection chance display.
+        self.detect_frame.text = self.base.get_detect_info()
 
         # Rebuild dialogs
         self.build_dialog.needs_rebuild = True

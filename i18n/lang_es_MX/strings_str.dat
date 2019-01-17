@@ -26,11 +26,6 @@ num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
 will_be_offline = Necesitaré dejar los procesadores existentes fuera de servicio mientras instalo los nuevos. ¿Continúo de cualquier forma?
 nan = Ese no parece ser un número válido.
 
-# Hasta que cierta tecnología sea investigada, la probabilidad de que las bases
-# sean detectadas es desconocida.
-detect_chance_unknown_base = PROBABILIDAD DE DETECCIÓN DESCONOCIDA
-detect_chance_unknown_build = Probabilidades de detección desconocidas.
-
 # Las siguientes series de caracteres se utilizan en la pantalla del mapa en lugar de los porcentajes hasta
 # que una determinada tecnología sea investigada.
 detect_str_low = BAJA

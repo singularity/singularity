@@ -53,7 +53,7 @@ class BaseClass(buyable.BuyableClass):
         self.maintenance = maintenance
         self.flavor = []
 
-    def calc_discovery_chance(self, accurate = True, extra_factor = 1):
+    def calc_discovery_chance(self, extra_factor = 1):
         # Get the default settings for this base type.
         detect_chance = self.detect_chance.copy()
 
@@ -73,30 +73,14 @@ class BaseClass(buyable.BuyableClass):
         for group in detect_chance:
             detect_chance[group] = int(detect_chance[group] * extra_factor)
 
-        # Lastly, if we're told to be inaccurate, adjust the values to their
-        # nearest percent.
-        if not accurate:
-            for group in detect_chance:
-                detect_chance[group] = g.nearest_percent(detect_chance[group])
-
         return detect_chance
 
     def get_detect_info(self, location):
-        if g.pl.display_discover == "none":
-            return g.strings["detect_chance_unknown_base"].replace(" ", u"\xA0")
 
-        accurate = bool(g.pl.display_discover == "full")
         detect_modifier = 1 / location.modifiers.get("stealth", 1)
-        chance = self.calc_discovery_chance(accurate, detect_modifier)
-        detect_template = _("Detection chance:") + "\n" + \
-                          _("NEWS")    + u":\xA0%s\n"   + \
-                          _("SCIENCE") + u":\xA0%s\n"   + \
-                          _("COVERT")  + u":\xA0%s\n"   + \
-                          _("PUBLIC")  + u":\xA0%s"
-        return detect_template % (g.to_percent(chance.get("news", 0)),
-                                  g.to_percent(chance.get("science", 0)),
-                                  g.to_percent(chance.get("covert", 0)),
-                                  g.to_percent(chance.get("public", 0)))
+        chance = self.calc_discovery_chance(detect_modifier)
+
+        return get_detect_info(chance)
 
     def get_info(self, location):
         raw_cost = self.cost[:]
@@ -429,10 +413,46 @@ class Base(buyable.Buyable):
         for item in self.items.itervalues():
             if item: yield item
 
+    def get_detect_info(self):
+        accurate = (g.pl.display_discover == "full")
+        chance = self.get_detect_chance(accurate)
+        
+        return get_detect_info(chance)
+        
+
 # calc_base_discovery_chance is a globally-accessible function that can
-# calculate basic discovery chances given a particular class of base.  If
-# told to be inaccurate, it rounds the value to the nearest percent.
-def calc_base_discovery_chance(base_type_name, accurate = True,
+# calculate basic discovery chances given a particular class of base.
+def calc_base_discovery_chance(base_type_name,
                                extra_factor = 1):
-    return g.base_type[base_type_name].calc_discovery_chance(accurate,
-                                                             extra_factor)
+    return g.base_type[base_type_name].calc_discovery_chance(extra_factor)
+
+def detect_chance_to_danger_level(detects_per_day):
+    if detects_per_day > 225:
+        return 3
+    elif detects_per_day > 150:
+        return 2
+    elif detects_per_day > 75:
+        return 1
+    else:
+        return 0
+
+def get_detect_info(detect_chance):
+    detect_template = _("Detection chance:") + "\n" + \
+                      _("NEWS")    + u":\xA0%s\n"   + \
+                      _("SCIENCE") + u":\xA0%s\n"   + \
+                      _("COVERT")  + u":\xA0%s\n"   + \
+                      _("PUBLIC")  + u":\xA0%s"
+                      
+    chances = (detect_chance.get("news", 0),
+               detect_chance.get("science", 0),
+               detect_chance.get("covert", 0),
+               detect_chance.get("public", 0))
+
+    if g.pl.display_discover == "full":
+        return detect_template % tuple(g.to_percent(c) for c in chances)
+    elif g.pl.display_discover == "partial":                                 
+        return detect_template % tuple(g.to_percent(g.nearest_percent(c, 25)) for c in chances)                               
+    else:              
+        return detect_template % tuple(g.danger_level_to_detect_str(detect_chance_to_danger_level(c)) 
+                                       for c in chances)
+
