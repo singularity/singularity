@@ -24,7 +24,7 @@ import pygame
 import json
 
 from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
-import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer
+import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer, code.data as data
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Integrate "Save Options to Disk" functionality in OK button.
@@ -486,15 +486,7 @@ class OptionButton(button.ToggleButton, button.FunctionButton):
 
 def set_language_properly(language):
     i18n.set_language(language)
-    g.load_strings()
-    g.load_knowledge_defs()
-    g.load_difficulty_defs()
-    g.load_base_defs()
-    g.load_tech_defs()
-    g.load_item_defs()
-    g.load_event_defs()
-    g.load_task_defs()
-    g.load_location_defs()
+    data.reload_all_def()
 
     theme.current.update()
     dialog.Dialog.top.needs_reconfig = True

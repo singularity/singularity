@@ -21,7 +21,7 @@
 
 import pygame
 
-from code import g, savegame as sv, mixer
+from code import g, savegame as sv, mixer, player
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
@@ -603,14 +603,14 @@ class MapScreen(dialog.Dialog):
             cpu_left -= cpu_assigned
         cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
 
-        detects_per_day = dict([(group, 0) for group in g.player.group_list])
+        detects_per_day = dict([(group, 0) for group in player.group_list])
         for base in g.all_bases():
             if base.has_grace():
                 # It cannot be detected, so it doesn't contribute to
                 # detection odds calculation
                 continue
             detect_chance = base.get_detect_chance()
-            for group in g.player.group_list:
+            for group in player.group_list:
                 detects_per_day[group] = \
                     g.add_chance(detects_per_day[group], detect_chance[group] / 10000.)
 
@@ -629,7 +629,7 @@ class MapScreen(dialog.Dialog):
         normal = (self.suspicion_bar.color, None, False)
         suspicion_styles = [normal]
         danger_styles = [normal]
-        for group in g.player.group_list:
+        for group in player.group_list:
             suspicion_styles.append(normal)
             danger_styles.append(normal)
 

@@ -269,23 +269,16 @@ if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
 
+import data
+
 #init themes:
-g.load_themes()
+data.load_themes()
 theme.set_theme(set_theme)
 
 graphics.g.init_graphics_system()
 
 #init data:
-g.load_significant_numbers()
-g.load_strings()
-g.load_knowledge()
-g.load_difficulties()
-g.load_tasks()
-g.load_events()
-g.load_locations()
-g.load_techs()
-g.load_items()
-g.load_bases()
+data.reload_all()
 
 # Init music
 import mixer

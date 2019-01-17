@@ -171,10 +171,8 @@ def load_savegame(savegame):
         for my_event in g.events.values():
             my_event.convert_from(load_version)
 
-    # Apply current language
-    g.load_tech_defs()
-    g.load_location_defs()
-    g.load_event_defs()
+    import data
+    data.reload_all_mutable_def()
 
     # Play the appropriate music
     if g.pl.apotheosis:

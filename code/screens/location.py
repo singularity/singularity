@@ -196,7 +196,7 @@ class LocationScreen(dialog.Dialog):
         result = dialog.call_dialog(self.new_base_dialog, self)
         if result:
             base_type, base_name = result
-            new_base = g.base.Base(base_type, base_name)
+            new_base = base.Base(base_type, base_name)
             self.location.add_base(new_base)
             self.needs_rebuild = True
             self.parent.needs_rebuild = True
