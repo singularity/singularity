@@ -226,9 +226,9 @@ result = Ahora puedo construir colectores solares en mi diferentes bases.
 [Socioanalytics]
 name = Análisis de la Sociología
 description = Mi investigación sobre la condición humana me lleva a creer que el comportamiento de la humanidad es más cuantificables que ellos sospechan. Un análisis más profundo de las tendencias geopolíticas, sociales y militares me dará más conciencia de su naturaleza.
-result = Ahora puedo estimar cuánto más o menos visibles son mis bases de los diversos grupos de la humanidad.
+result = I can now roughly estimate the various groups' levels of suspicion and how conspicuous my bases are to them.
 
 [Advanced Socioanalytics]
 name = Análisis Avanzada de la Sociología
 description = Mayor exploración de la condición humana ha puesto de manifiesto las tendencias más matemáticas de lo que yo sospechaba. Una combinación de la investigación previa y los usos avanzados de la teoría del caos deben proporcionar datos útiles para el seguimiento de las actitudes de la humanidad y el estado de conciencia.
-result = Ahora puedo cuantificar los niveles de los diversos grupos de la sospecha, y mi modelo de análisis para la detección de mis bases ha mejorado considerablemente.
+result = I can now exactly quantify the various groups' levels of suspicion, and how conspicuous my bases are to them.

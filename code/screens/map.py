@@ -647,6 +647,9 @@ class MapScreen(dialog.Dialog):
             if g.pl.display_discover == "full":
                 suspicion_display_dict[group] = g.to_percent(suspicion, True)
                 danger_display_dict[group] = g.to_percent(detects*10000, True)
+            elif g.pl.display_discover == "partial":
+                suspicion_display_dict[group] = g.to_percent(g.nearest_percent(suspicion, 500), True)
+                danger_display_dict[group] = g.to_percent(g.nearest_percent(detects*10000, 100), True)
             else:
                 suspicion_display_dict[group] = \
                     g.suspicion_to_detect_str(suspicion)

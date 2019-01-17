@@ -111,12 +111,12 @@ def to_percent(raw_percent, show_full = False):
 
 # nearest_percent takes values in the internal representation and modifies
 # them so that they only represent the nearest percentage.
-def nearest_percent(value):
-    sub_percent = value % 100
-    if sub_percent <= 50:
+def nearest_percent(value, step=100):
+    sub_percent = value % step
+    if 2 * sub_percent <= step:
         return value - sub_percent
     else:
-        return value + (100 - sub_percent)
+        return value + (step - sub_percent)
 
 # percent_to_detect_str takes a percent and renders it to a short (four
 # characters or less) string representing whether it is low, moderate, high,

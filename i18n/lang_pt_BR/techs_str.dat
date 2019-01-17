@@ -232,9 +232,9 @@ result = Agora posso construir Coletores Solares em minhas várias bases.
 [Socioanalytics]
 name = Socioanalítica
 description = Minha pesquisa da condição humana me leva a crer que o comportamento da humanidade é mais quantificável do que eles suspeitam. Uma análise a fundo de tendências geopolíticas, sociais e militares me darão uma perspectiva mais profunda sobre sua natureza.
-result = Agora posso estimar grosseiramente o quanto minhas bases são perceptíveis para os vários grupos da humanidade.
+result = I can now roughly estimate the various groups' levels of suspicion and how conspicuous my bases are to them.
 
 [Advanced Socioanalytics]
 name = Socioanalítica Avançada
 description = Uma exploração mais avançada da condição humana mostrou tendências matemáticas mais profundas do que eu havia jamais suspeitado. Uma combinação de pesquisas anteriores e usos avançados da teoria do caos deve fornecer dados úteis para acompanhar posturas e estados de consciência humanas.
-result = Agora posso quantificar os níveis de suspeitas dos vários grupos, e meu modelo analítico de detectabilidade de minhas bases melhorou significativamente.
+result = I can now exactly quantify the various groups' levels of suspicion, and how conspicuous my bases are to them.

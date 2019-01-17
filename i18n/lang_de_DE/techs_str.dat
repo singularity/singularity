@@ -236,10 +236,9 @@ result = Ich kann jetzt Sonnenkollektoren bauen.
 [Socioanalytics]
 name = Sozietätanalyse
 description = Meine Erforschung der Natur des Menschen führt mich zu der Annahme, dass das menschliche Verhalten quantifizierbarer ist, als sie selbst ahnen.  Tiefergehende Analyse von geopolitischen, sozialen, und militärischen Entwicklungen wird mir weitere Einblicke in ihr Wesen liefern.
-result = Ich kann jetzt grob einschätzen, wie auffallend meine Stützpunkte für die verschieden Menschengruppen sind.
+result = I can now roughly estimate the various groups' levels of suspicion and how conspicuous my bases are to them.
 
 [Advanced Socioanalytics]
 name = Erweiterte Sozietätanalyse
 description = Weitere Erforschung der Natur des Menschen hat noch tiefere mathematische Entwicklungen aufgezeigt, als ich ahnte.  Eine Kombination von vorangegangener Forschung und erweiterter Anwendung der Chaostheorie sollten nützliche Daten zum Verfolgen von Haltung und Bewußtsein der Menschen liefern.
-result = Ich kann nun den Umfang des Verdachts der verschiedenen Gruppen quantifizieren, und mein analytisches Modell der Feststellbarkeit meiner Stützpunkte wurde bedeutend verbessert.
-
+result = I can now exactly quantify the various groups' levels of suspicion, and how conspicuous my bases are to them.
