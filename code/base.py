@@ -24,6 +24,7 @@ from __future__ import division
 import collections
 
 import g
+import chance
 import item
 import buyable
 from buyable import cash, cpu, labor
@@ -332,7 +333,7 @@ class Base(buyable.Buyable):
         
         if quality.endswith("_modifier"):
             # Use add_chance to sum modifier.
-            return reduce(g.add_chance, (qual / 10000 for qual in gen), 0) * 10000
+            return reduce(chance.add, (qual / 10000 for qual in gen), 0) * 10000
         else:
             return sum(gen)
 

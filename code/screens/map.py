@@ -21,7 +21,8 @@
 
 import pygame
 
-from code import g, savegame as sv, mixer, player
+from code import g, savegame as sv, mixer
+from code import chance, player
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
@@ -612,7 +613,7 @@ class MapScreen(dialog.Dialog):
             detect_chance = base.get_detect_chance()
             for group in player.group_list:
                 detects_per_day[group] = \
-                    g.add_chance(detects_per_day[group], detect_chance[group] / 10000.)
+                    chance.add(detects_per_day[group], detect_chance[group] / 10000.)
 
         self.cpu_display.color = "cpu_normal"
         self.cpu_display.text = _("CPU")+": %s (%s)" % \

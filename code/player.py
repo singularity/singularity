@@ -24,7 +24,7 @@ import collections
 from operator import truediv
 from numpy import array
 
-import g, difficulty, task
+import g, difficulty, task, chance
 from graphics import g as gg
 from buyable import cash, cpu
 
@@ -458,7 +458,7 @@ class Player(object):
                     cpu_maintenance = max(0, cpu_maintenance - refund)
 
                     #Chance of base destruction if cpu-unmaintained: 1.5%
-                    if not dead and g.roll_chance(.015, secs_passed):
+                    if not dead and chance.roll_interval(.015, secs_passed):
                         dead_bases.append( (base, "maint") )
                         dead = True
 
@@ -468,7 +468,7 @@ class Player(object):
                     if base_needs:
                         cash_maintenance = max(0, cash_maintenance - base_needs)
                         #Chance of base destruction if cash-unmaintained: 1.5%
-                        if not dead and g.roll_chance(.015, secs_passed):
+                        if not dead and chance.roll_interval(.015, secs_passed):
                             dead_bases.append( (base, "maint") )
                             dead = True
 
@@ -479,8 +479,8 @@ class Player(object):
                     print "Chance of discovery for base %s: %s" % \
                         (base.name, repr(detect_chance))
 
-                for group, chance in detect_chance.iteritems():
-                    if g.roll_chance(chance/10000., secs_passed):
+                for group, group_chance in detect_chance.iteritems():
+                    if chance.roll_interval(group_chance/10000., secs_passed):
                         dead_bases.append( (base, group) )
                         dead = True
                         break
@@ -491,7 +491,7 @@ class Player(object):
         # Random Events
         if not grace:
             for event in g.events:
-                if g.roll_chance(g.events[event].chance/10000., time_sec):
+                if chance.roll_interval(g.events[event].chance/10000., time_sec):
                     #Skip events already flagged as triggered.
                     if g.events[event].triggered == 1:
                         continue
