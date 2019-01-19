@@ -225,7 +225,7 @@ class BaseScreen(dialog.Dialog):
                                     anchor = constants.BOTTOM_CENTER,
                                     autohotkey=True)
 
-        self.detect_frame = text.Text(self, (-1, .09), (.21, .33),
+        self.info_frame = text.Text(self, (-1, .09), (.21, .33),
                                       anchor=constants.TOP_RIGHT,
                                       background_color="pane_background",
                                       borders=constants.ALL,
@@ -346,12 +346,6 @@ class BaseScreen(dialog.Dialog):
         # different language than current
         self.name_display.text="%s (%s)" % (self.base.name,
                                             g.base_type[self.base.type.id].name)
-        discovery_template = \
-            _("Detection chance:").upper() + "\n" + \
-            _("NEWS").title()    + u":\xA0%s\n"   + \
-            _("SCIENCE").title() + u":\xA0%s\n"   + \
-            _("COVERT").title()  + u":\xA0%s\n"   + \
-            _("PUBLIC").title()  + u":\xA0%s"
         self.state_display.color = state_colors[self.base.power_state]
         self.state_display.text = self.base.power_state_name
 
@@ -391,8 +385,20 @@ class BaseScreen(dialog.Dialog):
 
         self.cpu_pane.name_panel.text += " " + count
 
+        info_text = ""
+
+        # Base Total CPU.
+        info_text += _("CPU: %d") % self.base.cpu + "\n"
+
+        # Maintenace cost.
+        info_text += _("Maintenance:") + "\n"
+        info_text += self.base.type.describe_cost(self.base.maintenance, True) 
+        info_text += "\n"
+    
         # Detection chance display.
-        self.detect_frame.text = self.base.get_detect_info()
+        info_text += self.base.get_detect_info()
+
+        self.info_frame.text = info_text
 
         # Rebuild dialogs
         self.build_dialog.needs_rebuild = True
