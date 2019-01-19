@@ -261,7 +261,9 @@ mixer.init = bool(pygame.mixer.get_init())
 mixer.soundbuf = desired_soundbuf
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
-pygame.event.set_grab(desired_set_grab)
+
+if desired_set_grab is not None:
+    pygame.event.set_grab(desired_set_grab)
 
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.

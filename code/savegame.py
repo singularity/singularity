@@ -166,6 +166,8 @@ def load_savegame(savegame):
         for my_location in g.locations.values():
             for my_base in my_location.bases:
                 my_base.convert_from(load_version)
+                for my_item in my_base.all_items():
+                    my_item.convert_from(load_version)
         for my_tech in g.techs.values():
             my_tech.convert_from(load_version)
         for my_event in g.events.values():

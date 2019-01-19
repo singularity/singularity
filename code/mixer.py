@@ -208,12 +208,12 @@ def set_sound(value):
         return
 
     nosound = not value
-    if nosound:
-        if init:
+    if init:
+        if nosound:
             pygame.mixer.music.stop()
-    else:
-        play_sound("click")
-        play_music(music_class)  # force music switch at same dir
+        else:
+            play_sound("click")
+            play_music(music_class)  # force music switch at same dir
 
 def set_soundbuf(value):
     global soundbuf
