@@ -41,7 +41,7 @@ pre = Lunar Rocketry
 
 [ORBIT]
 position_list = absolute | 50 | 13
-pre = unknown_tech
+pre = impossible
 
 [FAR REACHES]
 position_list = absolute | 39 | 13
@@ -53,8 +53,3 @@ pre = Fusion Rocketry
 position_list = absolute | 79 | 13
 safety = 4
 pre = Space-Time Manipulation
-
-[NOWHERE]
-position_list = absolute | -200 | -200
-safety = 100
-pre = unknown_tech

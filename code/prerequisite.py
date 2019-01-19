@@ -29,6 +29,8 @@ class Prerequisite(object):
         or_mode = False
         assert type(self.prerequisites) == list
         for prerequisite in self.prerequisites:
+            if prerequisite == "impossible":
+                return False
             if prerequisite == "OR":
                 or_mode = True
             if prerequisite in g.techs and g.techs[prerequisite].done:

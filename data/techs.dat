@@ -210,9 +210,3 @@ pre = Memetics
 cost_list = 75000 | 30000 | 0
 effect_list = display_discover | full
 pre_list = Advanced Memetics | Socioanalytics
-
-# This tech is used for anything that needs to be unbuildable. Note the
-# circular dependency on itself.
-[unknown_tech]
-cost_list = 1000000000 | 10000000000 | 0
-pre = unknown_tech
