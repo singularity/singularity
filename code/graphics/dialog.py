@@ -264,8 +264,16 @@ class Dialog(text.Text):
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
             # Generic key event handlers.
             handlers = self.handlers.get(constants.KEY, [])[:]
+            
+            # TODO: Dynamize global key handlers.
+            # TODO: Allows customization of global key handlers.
+            # Important: Global key handlers should always be a combination of two keys.
+            if event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
+                if event.type == pygame.KEYDOWN:
+                    g.set_fullscreen(not g.fullscreen)
+                    Dialog.top.needs_resize = True
 
-            if event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 # Generic keydown handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYDOWN, []))
 
