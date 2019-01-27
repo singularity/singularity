@@ -24,13 +24,13 @@ region_list = URBAN
 
 [ANTARCTIC]
 position_list = 50 | 91
-modifier_list = stealth:bonus | thrift:penalty
+modifier_list = stealth:6/5 | thrift:5/6
 pre_list = OR | Autonomous Vehicles | Advanced Database Manipulation
 
 [OCEAN]
 position_list = 55 | 76
 safety = 1
-modifier_list = cpu:bonus
+modifier_list = cpu:6/5
 pre = Autonomous Vehicles
 
 [MOON]

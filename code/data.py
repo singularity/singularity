@@ -24,7 +24,7 @@ import collections
 
 import g
 import dirs
-import player, base, tech, item, event, location, difficulty, task
+import player, base, tech, item, event, location, difficulty, task, region
 import graphics.g, graphics.theme as theme
 
 def generic_load(filename, load_dirs="data", mandatory=True):
@@ -117,6 +117,27 @@ the type of object it is processing; this should be passed in via 'name'.
         if field not in dict:
             sys.stderr.write("%s %s lacks key %s.\n" % (name, repr(dict), field))
             sys.exit(1)
+
+def read_modifiers_dict(modifiers_info):
+    modifiers_dict = {}
+    
+    if modifiers_info is list:
+        modifiers_info = [modifiers_info]
+        
+    for modifier_str in modifiers_info:
+        key, value = modifier_str.split(":")
+        key = key.lower().strip()
+        value_str = value.lower().strip()
+        
+        if "/" in value_str:
+            left, right = value_str.split("/")
+            value = float(left.strip()) / float(right.strip())
+        else:
+            value = float(value_str)
+        
+        modifiers_dict[key] = float(value)
+
+    return modifiers_dict
 
 def load_generic_defs_file(name,lang=None):
     import i18n
@@ -241,12 +262,39 @@ def load_bases():
 
     load_base_defs()
 
+def load_regions():
+    regions = g.regions = {}
+    
+    region_infos = generic_load("regions.dat")
+
+    for region_info in region_infos:
+        # Certain keys are absolutely required for each entry.  Make sure
+        # they're there.
+        check_required_fields(region_info, ("id",), "Region")
+        
+        id = region_info["id"]
+        
+        modifiers_list = []
+        
+        i = 0
+        while True:
+            i += 1
+            modifiers_name = "modifier%d" % i
+            if not region_info.has_key(modifiers_name):
+                break
+            
+            modifiers_dict = read_modifiers_dict(region_info.get(modifiers_name, []))
+            modifiers_list.append(modifiers_dict)
+        
+        regions[id] = region.RegionClass(id, modifiers_list)
+    
+
 def load_location_defs(lang=None):
     load_generic_defs("locations", g.locations, lang, ["cities"])
 
 def load_locations():
     locations = g.locations = {}
-    regions = g.regions = {}
+    regions = g.regions
 
     location_infos = generic_load("locations.dat")
 
@@ -286,21 +334,7 @@ def load_locations():
         if type(pre) != list:
             pre = [pre]
 
-        modifiers_list = location_info.get("modifier", [])
-        if type(modifiers_list) != list:
-            sys.stderr.write("Error with modifier(s) given: %s\n" % repr(modifiers_list))
-            sys.exit(1)
-        modifiers_dict = {}
-        for modifier_str in modifiers_list:
-            key, value = modifier_str.split(":")
-            key = key.lower().strip()
-            value = value.lower().strip()
-            if value.lower() == "bonus":
-                modifiers_dict[key] = location.bonus_levels[key]
-            elif value.lower() == "penalty":
-                modifiers_dict[key] = location.penalty_levels[key]
-            else:
-                modifiers_dict[key] = float(value)
+        modifiers_dict = read_modifiers_dict(location_info.get("modifier", []))
 
         # Create the location.
         locations[id] = location.Location(id, position, absolute, safety, pre)
@@ -308,10 +342,11 @@ def load_locations():
 
         # Add the location to regions it is in them.
         region_list = location_info.get("region", [])
-        for region in region_list:
-            if (region not in regions):
-                regions[region] = []
-            regions[region].append(id)
+        for region_id in region_list:
+            if (region_id not in regions):
+                sys.stderr.write("Error with region given: %s\n" % repr(region_id))
+                sys.exit(1)
+            regions[region_id].locations.append(id)
 
     load_location_defs()
 
@@ -682,6 +717,7 @@ def reload_all():
     load_difficulties()
     load_tasks()
     load_events()
+    load_regions()
     load_locations()
     load_techs()
     load_items()

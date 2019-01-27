@@ -72,7 +72,7 @@ class BuyableClass(prerequisite.Prerequisite):
             if "ALL" in value:
                 region_all = True
             elif region in g.regions:
-                regions.extend(g.regions[region])
+                regions.extend(g.regions[region].locations)
             else:
                 regions.append(region)
 

@@ -1,0 +1,6 @@
+[URBAN]
+modifier1_list = cpu:     6/5 | stealth: 5/6
+modifier2_list = stealth: 6/5 | cpu:     5/6
+modifier3_list = thrift:  6/5 | speed:   5/6
+modifier4_list = speed:   6/5 | thrift:  5/6
+modifier5_list = cpu:     6/5 | thrift:  5/6
