@@ -437,16 +437,12 @@ def detect_chance_to_danger_level(detects_per_day):
         return 0
 
 def get_detect_info(detect_chance):
-    detect_template = _("Detection chance:") + "\n" + \
-                      _("NEWS")    + u":\xA0%s\n"   + \
-                      _("SCIENCE") + u":\xA0%s\n"   + \
-                      _("COVERT")  + u":\xA0%s\n"   + \
-                      _("PUBLIC")  + u":\xA0%s"
-                      
-    chances = (detect_chance.get("news", 0),
-               detect_chance.get("science", 0),
-               detect_chance.get("covert", 0),
-               detect_chance.get("public", 0))
+    detect_template = _("Detection chance:") + "\n"
+    chances = []
+    
+    for group in g.pl.groups.itervalues():
+        detect_template += group.name + u":\xA0%s\n"
+        chances.append(detect_chance.get(group.id, 0))
 
     if g.pl.display_discover == "full":
         return detect_template % tuple(g.to_percent(c) for c in chances)

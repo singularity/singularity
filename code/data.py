@@ -203,6 +203,14 @@ def load_significant_numbers():
             except ValueError:
                 sys.stderr.write("WARNING: Invalid number in 'numbers.dat' line: %d\n" % index)
 
+def load_groups_def():
+    player.group_list = {
+        "news":    _("NEWS"),
+        "science": _("SCIENCE"),
+        "covert":  _("COVERT"),
+        "public":  _("PUBLIC"),
+    }
+
 def load_base_defs(lang=None):
     load_generic_defs("bases", g.base_type, lang, ["flavor"])
 
@@ -713,6 +721,7 @@ def load_story_defs(lang=None):
 def reload_all():
     load_significant_numbers()
     load_strings()
+    load_groups_def()
     load_knowledge()
     load_difficulties()
     load_tasks()
@@ -731,6 +740,7 @@ def reload_all_mutable():
     
 def reload_all_def():
     load_strings()
+    load_groups_def()
     load_knowledge_defs()
     load_difficulty_defs()
     load_base_defs()

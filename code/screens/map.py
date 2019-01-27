@@ -604,16 +604,16 @@ class MapScreen(dialog.Dialog):
             cpu_left -= cpu_assigned
         cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
 
-        detects_per_day = dict([(group, 0) for group in player.group_list])
+        detects_per_day = dict([(group_id, 0) for group_id in g.pl.groups])
         for base in g.all_bases():
             if base.has_grace():
                 # It cannot be detected, so it doesn't contribute to
                 # detection odds calculation
                 continue
             detect_chance = base.get_detect_chance()
-            for group in player.group_list:
-                detects_per_day[group] = \
-                    chance.add(detects_per_day[group], detect_chance[group] / 10000.)
+            for group_id in g.pl.groups:
+                detects_per_day[group_id] = \
+                    chance.add(detects_per_day[group_id], detect_chance[group_id] / 10000.)
 
         self.cpu_display.color = "cpu_normal"
         self.cpu_display.text = _("CPU")+": %s (%s)" % \
@@ -625,51 +625,37 @@ class MapScreen(dialog.Dialog):
         # string that gives a range of 25% as to what the suspicions
         # are.
         # A similar system applies to the danger levels shown.
-        suspicion_display_dict = {}
-        danger_display_dict = {}
         normal = (self.suspicion_bar.color, None, False)
-        suspicion_styles = [normal]
-        danger_styles = [normal]
-        for group in player.group_list:
-            suspicion_styles.append(normal)
-            danger_styles.append(normal)
-
-            suspicion = g.pl.groups[group].suspicion
+        self.suspicion_bar.chunks = ("  ["+_("SUSPICION")+"]",)
+        self.suspicion_bar.styles = (normal,)
+        self.danger_bar.chunks = ("["+_("DETECT RATE")+"]",)
+        self.danger_bar.styles = (normal,)
+        
+        for group in g.pl.groups.itervalues():
+            suspicion = group.suspicion
             color = gg.resolve_color_alias("danger_level_%d" % g.suspicion_to_danger_level(suspicion))
-            suspicion_styles.append( (color, None, False) )
 
-            detects = detects_per_day[group]
-            danger_level = \
-                g.pl.groups[group].detects_per_day_to_danger_level(detects)
+            detects = detects_per_day[group.id]
+            danger_level = group.detects_per_day_to_danger_level(detects)
             color = gg.resolve_color_alias("danger_level_%d" % danger_level)
-            danger_styles.append( (color, None, False) )
-
+ 
             if g.pl.display_discover == "full":
-                suspicion_display_dict[group] = g.to_percent(suspicion, True)
-                danger_display_dict[group] = g.to_percent(detects*10000, True)
+                suspicion_display = g.to_percent(suspicion, True)
+                danger_display = g.to_percent(detects*10000, True)
             elif g.pl.display_discover == "partial":
-                suspicion_display_dict[group] = g.to_percent(g.nearest_percent(suspicion, 500), True)
-                danger_display_dict[group] = g.to_percent(g.nearest_percent(detects*10000, 100), True)
+                suspicion_display = g.to_percent(g.nearest_percent(suspicion, 500), True)
+                danger_display = g.to_percent(g.nearest_percent(detects*10000, 100), True)
             else:
-                suspicion_display_dict[group] = \
-                    g.suspicion_to_detect_str(suspicion)
-                danger_display_dict[group] = \
-                    g.danger_level_to_detect_str(danger_level)
+                suspicion_display = g.suspicion_to_detect_str(suspicion)
+                danger_display = g.danger_level_to_detect_str(danger_level)
 
-        self.suspicion_bar.chunks = ("  ["+_("SUSPICION")+"]",
-            " " +_("NEWS")   +u":\xA0", suspicion_display_dict["news"],
-            "  "+_("SCIENCE")+u":\xA0", suspicion_display_dict["science"],
-            "  "+_("COVERT") +u":\xA0", suspicion_display_dict["covert"],
-            "  "+_("PUBLIC") +u":\xA0", suspicion_display_dict["public"],)
-        self.suspicion_bar.styles = tuple(suspicion_styles)
+            self.suspicion_bar.chunks += (" " + group.name + u":\xA0", suspicion_display)
+            self.suspicion_bar.styles += (normal, (color, None, False) )
+        
+            self.danger_bar.chunks += (" " + group.name + u":\xA0", danger_display)
+            self.danger_bar.styles += (normal, (color, None, False) )
+        
         self.suspicion_bar.visible = not g.pl.had_grace
-
-        self.danger_bar.chunks = ("["+_("DETECT RATE")+"]",
-            " " +_("NEWS")   +u":\xA0", danger_display_dict["news"],
-            "  "+_("SCIENCE")+u":\xA0", danger_display_dict["science"],
-            "  "+_("COVERT") +u":\xA0", danger_display_dict["covert"],
-            "  "+_("PUBLIC") +u":\xA0", danger_display_dict["public"],)
-        self.danger_bar.styles = tuple(danger_styles)
         self.danger_bar.visible = not g.pl.had_grace
 
         for id, location_button in self.location_buttons.iteritems():

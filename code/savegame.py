@@ -29,7 +29,7 @@ import g, mixer, dirs, player
 default_savegame_name = "Default Save"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_99.4"
+current_save_version = "singularity_savefile_99.5"
 savefile_translation = {
     "singularity_savefile_r4":      ("0.30",         4   ),
     "singularity_savefile_r5_pre":  ("0.30",         4.91),
@@ -39,6 +39,7 @@ savefile_translation = {
     "singularity_savefile_99.2":    ("1.0 (dev)",   99.2 ),
     "singularity_savefile_99.3":    ("1.0 (dev)",   99.3 ),
     "singularity_savefile_99.4":    ("1.0 (dev)",   99.4 ),
+    "singularity_savefile_99.5":    ("1.0 (dev)",   99.5 ),
 }
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])

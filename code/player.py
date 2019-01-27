@@ -28,15 +28,19 @@ import g, difficulty, task, chance
 from graphics import g as gg
 from buyable import cash, cpu
 
-group_list = ("news", "science", "covert", "public")
+group_list = {}
 class Group(object):
     discover_suspicion = 1000
-    def __init__(self, name, suspicion = 0, suspicion_decay = 100,
+    def __init__(self, id, suspicion = 0, suspicion_decay = 100,
                  discover_bonus = 10000):
-        self.name = name
+        self.id = id   
         self.suspicion = suspicion
         self.suspicion_decay = suspicion_decay
         self.discover_bonus = discover_bonus
+
+    @property
+    def name(self):
+        return group_list[self.id]
 
     def decay_rate(self):
         # Suspicion reduction is now quadratic.  You get a certain percentage
@@ -108,10 +112,12 @@ class Player(object):
 
         self.partial_cash = 0
 
-        self.groups = {"news":    Group("news",    suspicion_decay = 150),
-                       "science": Group("science", suspicion_decay = 100),
-                       "covert":  Group("covert",  suspicion_decay =  50),
-                       "public":  Group("public",  suspicion_decay = 200)}
+        self.groups = collections.OrderedDict([
+            ("news",    Group("news",    suspicion_decay = 150)),
+            ("science", Group("science", suspicion_decay = 100)),
+            ("covert",  Group("covert",  suspicion_decay =  50)),
+            ("public",  Group("public",  suspicion_decay = 200))
+        ])
 
         self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""
@@ -145,6 +151,17 @@ class Player(object):
                 self.display_discover = "partial"
             else:
                 self.display_discover = "none"
+        if old_version < 99.5: # < 1.0 dev
+            for id, gr in self.groups.iteritems():
+                gr.__dict__["id"] = gr.__dict__["name"]
+                del gr.__dict__["name"]
+            # Reset groups items order.
+            new_groups = collections.OrderedDict()
+            new_groups["news"] = self.groups["news"]
+            new_groups["science"] = self.groups["science"]
+            new_groups["covert"] = self.groups["covert"]
+            new_groups["public"] = self.groups["public"]
+            self.groups = new_groups
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour
