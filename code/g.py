@@ -226,6 +226,9 @@ def new_game(difficulty_name):
     curr_speed = 1
     global pl
 
+    import data    
+    data.reload_all_mutable()
+
     import difficulty
     diff = difficulty.difficulties[difficulty_name]
 

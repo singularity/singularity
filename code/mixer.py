@@ -20,6 +20,7 @@
 #This file contains sound and musics function.
 
 import os
+import sys
 import random
 import pygame
 
