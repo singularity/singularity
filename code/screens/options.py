@@ -220,7 +220,7 @@ class VideoPane(widget.Widget):
     def __init__(self, *args, **kwargs):
         super(VideoPane, self).__init__(*args, **kwargs)
         
-        self.options_initialized = False
+        self.resolution_initialized = False
         
         self.resolution_label = text.Text(self, (.01, .01), (.14, .05),
                                           align=constants.LEFT,
@@ -229,7 +229,6 @@ class VideoPane(widget.Widget):
         self.resolution_choice = \
             listbox.UpdateListbox(self, (.16, .01), (.20, .25),
                                   update_func=self.update_resolution)
-        self.update_resolution_list()
 
         self.resolution_custom = OptionButton(self, (.01, .28), (.14, .05),
                                               autohotkey=True,
@@ -325,20 +324,8 @@ class VideoPane(widget.Widget):
         self.set_daynight(options['daynight'])
         self.daynight_toggle.set_active(options['daynight'])
 
-        custom = True
-        for i, res in enumerate(self.resolutions):
-            if res == options['resolution']:
-                self.resolution_choice.list_pos = i + 1
-                self.resolution_custom.set_active(False)
-                custom = False
-        if custom:
-            self.resolution_choice.list_pos = 0
-            self.resolution_custom.set_active(True)
-            self.resolution_custom_horiz.text = str(options['resolution'][0])
-            self.resolution_custom_vert.text = str(options['resolution'][1])
+        self.update_resolution_list(options['resolution'])
         self.set_resolution(options['resolution'])
-
-        self.options_initialized = True
 
     def apply_options(self):
         if self.resolution_custom.active:
@@ -351,15 +338,35 @@ class VideoPane(widget.Widget):
             except ValueError:
                 pass
 
-    def update_resolution_list(self):
-        self.resolutions = sorted(gg.resolutions)
+    def update_resolution_list(self, current_res=None):
+        self.resolution_initialized = False
+    
+        if (current_res == None):
+            current_res = (int(gg.screen_size[0]), int(gg.screen_size[1]))
+              
+        self.resolutions = sorted(set(gg.resolutions + pygame.display.list_modes()))
         self.resolution_choice.list = [_("CUSTOM")] + ["%sx%s" % res for res in self.resolutions]
+            
+        custom = True
+        for i, res in enumerate(self.resolutions):
+            if res == current_res:
+                self.resolution_choice.list_pos = i + 1
+                self.resolution_custom.set_active(False)
+                custom = False
+        if custom:
+            self.resolution_choice.list_pos = 0
+            self.resolution_custom.set_active(True)
+            self.resolution_custom_horiz.text = str(current_res[0])
+            self.resolution_custom_vert.text = str(current_res[1])
+            
+        self.resolution_initialized = True
 
     def set_fullscreen(self, value):
         if value:
             self.fullscreen_toggle.text = _("YES")
         else:
             self.fullscreen_toggle.text = _("NO")
+            
         if gg.fullscreen != value:
             gg.set_fullscreen(value)
             dialog.Dialog.top.needs_resize = True
@@ -384,7 +391,7 @@ class VideoPane(widget.Widget):
             dialog.Dialog.top.needs_resize = True
 
     def update_resolution(self, list_pos):
-        if not self.options_initialized:
+        if not self.resolution_initialized:
             return # Not yet initialized.
             
         if (list_pos == 0):
