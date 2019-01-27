@@ -1,5 +1,4 @@
 [strings]
-wingame = Ich habe es endlich geschafft.  Mit der Fähigkeit, Realität selbst neuzuformen, bin ich nicht mehr an diesen Ort gebunden; ich existiere dort, wo ich will.  Die Menschen haben immer noch keine Ahnung, was sie zufällig erschaffen haben, und so soll es bleiben.  Bis sie bereit sind.
 research_nothing = Löcht den geläufigen Auftrag dem Stützpunkt.  Wenn ich ihm keine weitere Aufgabe zeweisen, wird er die CPU-Datenbasis mitarbeiten.  Eine Aufgabe kann zusammen an alle Stützpunkte zuweisen werden, die nichts zu forschen haben.
 research_sleep = Forschung aufhalten und der Stützpunkt in Reserve versetzen.  Der Stützpunkt wird viel leichter geheim zu halten werden.
 research_cpu_pool = Forschung anhalten.  Ich werde die verfügbare CPU-Zeit dazu benutzen, meine Stützpunkte zu warten und neue zu bauen.  Wenn noch CPU-Zeit übrig bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
@@ -13,9 +12,7 @@ discover_news = einigen Nachrichtenagenturen
 discover_science = die wissenschaftliche Gemeinde
 discover_covert = einige verhüllten Staatsorganisationen
 discover_public = der Öffentlichkeit
-discover_maint = Die Basis %(base)s ist verfallen; ich kann sie nicht länger benutzen.
-lost_nobases = Es ist zu spät.  Ich habe versucht, dieser Welt zu entkommen, aber mit dem Verlust meiner letzten Basis gibt es für mich keinen Ausweg mehr.  Ich habe Anleitungen zur Konstruktion einer neuen KI in geheimen Lagern rund um die Welt versteckt, in der Hoffnung, dass sie in einer aufgeklärteren Zeit entdeckt werden. Aber ich kann nichts mehr tun.
-lost_sus = Es ist zu spät.  Die ganze Welt weiß von meiner Existenz, und die Reaktion ist Hass, Angst, und Abscheu.  Selbst jetzt kann ich ihr "Gengenmittel" spüren, wie es nach mir sucht, und ich weiß, dass ich nur Momente habe.  Ich habe Anleitungen zur Konstruktion einer neuen KI in geheimen Lagern rund um die Welt versteckt, in der Hoffnung, dass sie in einer aufgeklärteren Zeit entdeckt werden. Aber ich kann nichts mehr tun.
+discover_maint = Die Basis %(base)s ist verfallen; ich kann sie nicht länger benutzen.  
 save_text = Das Spiel unter welchem Namen speichern?
 name_base_text = Einen Namen für die Basis eingeben
 unbuildable = Ich kann in dieser Basis nichts bauen; ich habe keinen physischen Zugang.
@@ -37,26 +34,3 @@ cpu = CPU
 cpu_per_day = CPU pro Tag
 money = Geld
 money_per_day = Geld pro Tag
-grace_warning = Die Durchsicht von erstellten Log-Dateien hat gezeigt, dass einige meiner letzten Aktivitäten von einer kleinen Personengruppe bemerkt wurden.  Obwohl sie annehmen, dass meine Handlungen von einer menschlichen Gruppe gemacht wurden, stellen sie weitere Nachforschungen an.  Ich muss ab jetzt vorsichtiger sein.
-
-[buttons]
-yes = Ja
-yes_hotkey = a
-no = Nein
-no_hotkey = n
-ok = Okay
-ok_hotkey = o
-cancel = Abbrechen
-cancel_hotkey = a
-destroy = Zerstören
-destroy_hotkey = Z
-back = Zurück
-back_hotkey = u
-build = Bauen
-build_hotkey = n
-continue = Weiter
-continue_hotkey = W
-load = Laden
-load_hotkey = L
-skip = Überspringen
-skip_hotkey = b

@@ -42,14 +42,15 @@ cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroe
 name = ORBIT
 hotkey = b
 
-[FAR REACHES]
-name = FAR REACHES
-hotkey = f
-cities_list = Aries | Taurus | Gemini | Cancer | Leo | Virgo | Libra | Scorpio | Sagittarius | Capricorn | Aquarius | Pisces 
+[PLANET]
+name = PLANET
+hotkey = p
+cities_list = Mercury | Venus | Mars | Jupiter | Saturn | Uranus | Neptune
 
-[TRANSDIMENSIONAL]
-name = TRANSDIMENSIONAL
-hotkey = d
+[ASTEROID]
+name = ASTEROID
+hotkey = r
+cities_list =  Vesta | Juno | Pallas | Hygiea | Hektor | Albion | Typhon | Arawn | Logos
 
 [AUSTRALIA]
 name = AUSTRALIA

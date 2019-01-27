@@ -29,11 +29,13 @@ def calc_max(elements, size):
     return max(elements - size, 0)
 
 class Slider(button.Button):
-    slider_color = widget.causes_redraw("_slider_color")
     slider_pos = widget.causes_rebuild("_slider_pos")
     slider_max = widget.causes_rebuild("_slider_max")
     slider_size = widget.causes_rebuild("_slider_size")
     horizontal = widget.causes_rebuild("_horizontal")
+
+    slider_color = widget.auto_reconfig("_slider_color", g.resolve_color_alias)
+    _slider_color = widget.causes_redraw("__slider_color")
 
     def __init__(self, parent, pos = (-1,0), size = (-.1, -1),
                  anchor = constants.TOP_RIGHT, borders = constants.ALL,
@@ -43,12 +45,16 @@ class Slider(button.Button):
         kwargs.setdefault("priority", 80)
         super(Slider, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
+        border_color = border_color or "white"
+        background_color = background_color or "dark_blue"
+        slider_color = slider_color or "light_blue"
+
         self.borders = borders
-        self.border_color = border_color or g.colors["white"]
-        self.background_color = background_color or g.colors["dark_blue"]
-        self.selected_color = self.background_color
-        self.unselected_color = self.background_color
-        self.slider_color = slider_color or g.colors["light_blue"]
+        self.border_color = border_color
+        self.background_color = background_color
+        self.selected_color = background_color
+        self.unselected_color = background_color
+        self.slider_color = slider_color
 
         self.slider_pos = slider_pos
         self.slider_max = slider_max
@@ -58,9 +64,9 @@ class Slider(button.Button):
         self.drag_state = None
         self.button = button.Button(self, pos = None, size = None,
                                     anchor = constants.TOP_LEFT,
-                                    border_color = self.border_color,
-                                    selected_color = self.slider_color,
-                                    unselected_color = self.slider_color,
+                                    border_color = border_color,
+                                    selected_color = slider_color,
+                                    unselected_color = slider_color,
                                     priority = self.priority - 5)
 
     def redraw(self):

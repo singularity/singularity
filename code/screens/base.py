@@ -27,13 +27,13 @@ import code.graphics.g as gg
 from code.graphics import constants, widget, dialog, text, button, listbox, slider
 
 state_colors = dict(
-    active          = gg.colors["base_state_active"],
-    sleep           = gg.colors["base_state_sleep"],
-    overclocked     = gg.colors["base_state_overclocked"],
-    suicide         = gg.colors["base_state_suicide"],
-    stasis          = gg.colors["base_state_stasis"],
-    entering_stasis = gg.colors["base_state_entering_stasis"],
-    leaving_stasis  = gg.colors["base_state_leaving_stasis"],
+    active          = "base_state_active",
+    sleep           = "base_state_sleep",
+    overclocked     = "base_state_overclocked",
+    suicide         = "base_state_suicide",
+    stasis          = "base_state_stasis",
+    entering_stasis = "base_state_entering_stasis",
+    leaving_stasis  = "base_state_leaving_stasis",
 )
 class BuildDialog(dialog.ChoiceDescriptionDialog):
     type = widget.causes_rebuild("_type")
@@ -70,12 +70,12 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
     def on_change(self, description_pane, item):
         if item is not None:
             text.Text(description_pane, (0, 0), (-1, -1), text=item.get_info(),
-                      background_color=gg.colors["pane_background"],
+                      background_color="pane_background",
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
         else:
             text.Text(description_pane, (0, 0), (-1, -1), text="",
-                      background_color=gg.colors["pane_background"],
+                      background_color="pane_background",
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
 
@@ -91,14 +91,14 @@ class MultipleBuildDialog(BuildDialog):
                                      anchor=constants.BOTTOM_LEFT, valign=constants.MID,
                                      borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                      shrink_factor=.88,
-                                     background_color=gg.colors["pane_background"],
+                                     background_color="pane_background",
                                      text=g.strings["number_of_items"])
 
         self.count_field = text.UpdateEditableText(self, (-.26, -.87), (-.10, -.1),
                                              anchor=constants.BOTTOM_LEFT,
                                              borders=constants.ALL,
                                              update_func=self.on_field_change,
-                                             base_font=gg.fonts["normal"])
+                                             base_font="normal")
 
         self.count_slider = slider.UpdateSlider(self, (-.37, -.87), (-.62, -.1),
                                                 anchor=constants.BOTTOM_LEFT,
@@ -147,7 +147,7 @@ class ItemPane(widget.BorderedWidget):
     def __init__(self, parent, pos, size=(.48, .06), anchor=constants.TOP_LEFT,
                  type=None, **kwargs):
 
-        kwargs.setdefault("background_color", gg.colors["pane_background"])
+        kwargs.setdefault("background_color", "pane_background")
 
         super(ItemPane, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
@@ -199,8 +199,8 @@ class BaseScreen(dialog.Dialog):
         self.name_display = text.Text(self.header, (-.5,0), (-1, -.5),
                                       anchor=constants.TOP_CENTER,
                                       borders=constants.ALL,
-                                      border_color=gg.colors["pane_background"],
-                                      background_color=gg.colors["pane_background_empty"],
+                                      border_color="pane_background",
+                                      background_color="pane_background_empty",
                                       shrink_factor=.85, bold=True)
 
         self.next_base_button = \
@@ -223,8 +223,8 @@ class BaseScreen(dialog.Dialog):
                                        anchor=constants.TOP_CENTER,
                                        borders=(constants.LEFT,constants.RIGHT,
                                                 constants.BOTTOM),
-                                       border_color=gg.colors["pane_background"],
-                                       background_color=gg.colors["pane_background_empty"],
+                                       border_color="pane_background",
+                                       background_color="pane_background_empty",
                                        shrink_factor=.8, bold=True)
 
         self.back_button = \
@@ -234,7 +234,7 @@ class BaseScreen(dialog.Dialog):
 
         self.detect_frame = text.Text(self, (-1, .09), (.21, .33),
                                       anchor=constants.TOP_RIGHT,
-                                      background_color=gg.colors["pane_background"],
+                                      background_color="pane_background",
                                       borders=constants.ALL,
                                       bold=True,
                                       align=constants.LEFT,
@@ -243,7 +243,7 @@ class BaseScreen(dialog.Dialog):
         self.contents_frame = \
             widget.BorderedWidget(self, (0, .09), (.50, .33),
                                   anchor=constants.TOP_LEFT,
-                                  background_color=gg.colors["pane_background"],
+                                  background_color="pane_background",
                                   borders=range(6))
 
         for i, type in enumerate(g.item_types):

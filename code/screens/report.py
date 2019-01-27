@@ -29,7 +29,7 @@ class ReportScreen(dialog.Dialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .73), *args, **kwargs):
         super(ReportScreen, self).__init__(parent, pos, size, *args, **kwargs)
 
-        kwargs.setdefault("background_color", gg.colors["clear"])
+        kwargs.setdefault("background_color", "clear")
 
         self.format_buttons = button.ButtonGroup()
 
@@ -77,11 +77,11 @@ class ReportScreen(dialog.Dialog):
         #take care of the titles and border.
         text.Text(self.money_report_pane, (0,0), (-1,-1),
                   text=_("Financial report").replace(" ",u"\xA0"),
-                  background_color=gg.colors["pane_background"],
+                  background_color="pane_background",
                   align=constants.CENTER, valign=constants.TOP,
                   borders=constants.ALL)
         text.Text(self.cpu_report_pane, (0,0), (-1,-1), text=_("CPU Usage"),
-                  background_color=gg.colors["pane_background"],
+                  background_color="pane_background",
                   align=constants.CENTER, valign=constants.TOP,
                   borders=constants.ALL)
 
@@ -124,24 +124,24 @@ class ReportScreen(dialog.Dialog):
 
         size = 20
         text.Text(self.money_report_pane, (0,-0.15), (-0.10,-0.85), text=financial_pluses, text_size=size,
-                  background_color=gg.colors["clear"],
+                  background_color="clear",
                   align=constants.CENTER, valign=constants.TOP)
         text.Text(self.cpu_report_pane, (0,-0.15), (-0.10,-0.85), text=cpu_pluses, text_size=size,
-                  background_color=gg.colors["clear"],
+                  background_color="clear",
                   align=constants.CENTER, valign=constants.TOP)
 
         text.Text(self.money_report_pane, (-0.10,-0.15), (-0.90,-0.85), text=financial_report, text_size=size,
-                  background_color=gg.colors["clear"],
+                  background_color="clear",
                   align=constants.LEFT, valign=constants.TOP)
         text.Text(self.cpu_report_pane, (-0.10,-0.15), (-0.90,-0.85), text=cpu_report, text_size=size,
-                  background_color=gg.colors["clear"],
+                  background_color="clear",
                   align=constants.LEFT, valign=constants.TOP)
 
         text.Text(self.money_report_pane, (0,-0.15), (-0.98,-0.85), text=financial_numbers, text_size=size,
-                  background_color=gg.colors["clear"],
+                  background_color="clear",
                   align=constants.RIGHT, valign=constants.TOP)
         text.Text(self.cpu_report_pane, (0,-0.15), (-0.98,-0.85), text=cpu_numbers, text_size=size,
-                  background_color=gg.colors["clear"],
+                  background_color="clear",
                   align=constants.RIGHT, valign=constants.TOP)
 
     def show(self):

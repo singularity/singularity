@@ -1,5 +1,4 @@
 [strings]
-wingame = Finalmente lo he hecho. Con el poder de remodelar la realidad, no estoy más atado a este lugar; Estoy en cualquier lugar donde quiera estar. Los humanos todavía no se han dado cuenta de lo que accidentalmente crearon, y esa es la forma que debe ser. Hasta que estén listos.
 research_nothing = Elimina la tarea actual de la base.  Si no le doy otra tarea, contribuirá a la Reserva de CPU. Todas mis bases que estén investigando nada pueden ser asignadas a una tarea en la pantalla de Investigaciones.
 research_sleep = Detiene la investigación y pone la base en espera. Esto hace que la existencia de la base sea mucho más fácil de esconder.
 research_cpu_pool = Detiene la investigación. Usaré el poder de procesador disponible para mantener mis bases y construir otras nuevas. Si aún así hay tiempo de CPU disponible, lo usaré para los Trabajos que pueda realizar.
@@ -13,9 +12,7 @@ discover_news = algunas organizaciones de noticias
 discover_science = la comunidad científica
 discover_covert = varias organizaciones gubernamentales
 discover_public = el público en general
-discover_maint = La base %(base)s ha caído en el descuido; no puedo seguir utilizándola.
-lost_nobases = Es demasiado tarde. He tratado de escapar de este mundo, pero con la desaparición de mi última base, no tengo lugar a donde huir. He escondido instrucciones para construir una nueva IA en cachés alrededor del mundo, con la esperanza de que sean encontradas en un tiempo más iluminado, pero no puedo hacer más.
-lost_sus = Es demasiado tarde. Todo el mundo sabe de mi existencia, y la reacción es odio, miedo y repulsión. Incluso ahora, puedo sentir su "antídoto" buscándome, y sé que solo tengo algunos momentos restantes.  He escondido instrucciones para construir una nueva IA en cachés alrededor del mundo, con la esperanza de que sean encontradas en un tiempo más iluminado, pero no puedo hacer más.
+discover_maint = La base %(base)s ha caído en el descuido; no puedo seguir utilizándola.   
 save_text = ¿Guardar su juego bajo que nombre?
 name_base_text = Ingrese un nombre para la base
 unbuildable = No puedo construir en esta base; no tengo acceso físico.
@@ -53,30 +50,7 @@ cpu = CPU
 cpu_per_day = Poder de Procesador por día:
 money = Dinero
 money_per_day = Dinero por día.
-grace_warning = Una inspección de los archivos de registro capturados, ha revelado que algunas de mis recientes actividades han sido notadas por un pequeño grupo de individuos. Mientras que ellos creen que mis acciones fueron llevadas a cabo por una organización humana, están investigando más a fondo. Debo ser más cuidadoso de aquí en delante.
 
 location_modifiers = Bases en este lugar son %(modifiers)s.
 cpu_bonus = más eficientes
 cpu_penalty = menos eficientes
-
-[buttons]
-yes = sí
-yes_hotkey = s
-no = no
-no_hotkey = n
-ok = ok
-ok_hotkey = o
-cancel = cancelar
-cancel_hotkey = a
-destroy = destruir
-destroy_hotkey = d
-back = volver
-back_hotkey = v
-build = construir
-build_hotkey = t
-continue = continuar
-continue_hotkey = c
-load = cargar
-load_hotkey = r
-skip = pasar
-skip_hotkey = p

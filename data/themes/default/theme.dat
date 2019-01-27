@@ -1,3 +1,6 @@
+[general]
+name = Default
+
 [fonts]
 normal = DejaVuSans.ttf
 special = acknowtt.ttf

@@ -36,7 +36,7 @@ class LocationScreen(dialog.Dialog):
         self.anchor = constants.MID_CENTER
         self.size = (-.75, -.5)
         self.name_display = text.Text(self, (0,0), (-1, -.08),
-                                      background_color=gg.colors["clear"])
+                                      background_color="clear")
         self.listbox = listbox.CustomListbox(self, (0,-.08), (-1, -.70),
                                              remake_func=self.make_item,
                                              rebuild_func=self.update_item)
@@ -89,12 +89,12 @@ class LocationScreen(dialog.Dialog):
     def make_item(self, canvas):
         canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.45, -.99),
                                           align=constants.LEFT,
-                                          background_color=gg.colors["clear"])
+                                          background_color="clear")
         canvas.status_display = text.Text(canvas, (-.46,-.05), (-.44, -.99),
                                           align=constants.LEFT,
-                                          background_color=gg.colors["clear"])
+                                          background_color="clear")
         canvas.power_display  = text.Text(canvas, (-.90,-.05), (-.10, -.99),
-                                          background_color=gg.colors["clear"])
+                                          background_color="clear")
 
 
     def update_item(self, canvas, name, base):
@@ -225,13 +225,13 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
                                           anchor=constants.BOTTOM_LEFT,
                                           borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                           shrink_factor=.88,
-                                          background_color=gg.colors["pane_background"],
+                                          background_color="pane_background",
                                           text=g.strings["name_base_text"])
 
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
                                             anchor=constants.BOTTOM_LEFT,
                                             borders=constants.ALL,
-                                            base_font=gg.fonts["normal"])
+                                            base_font="normal")
 
         self.desc_func = self.on_change
 
@@ -241,7 +241,7 @@ class NewBaseDialog(dialog.ChoiceDescriptionDialog):
         if base_type is not None:
             base_info = base_type.get_info(self.parent.location)
             text.Text(description_pane, (0, 0), (-1, -1), text=base_info,
-                      background_color=gg.colors["pane_background"],
+                      background_color="pane_background",
                       align=constants.LEFT, valign=constants.TOP,
                       borders=constants.ALL)
 
@@ -288,8 +288,8 @@ def generate_base_name(location, base_type):
         else:
             number = str(random.randint(0, 32767))
 
-        city   = random.choice(location.cities)
-        flavor = random.choice(base_type.flavor)
+        city   = random.choice(location.cities) if location.cities else None
+        flavor = random.choice(base_type.flavor) if base_type.flavor else base_type.name
 
         if city:
             #Translators: Format string for the name of a new base

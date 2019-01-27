@@ -1,0 +1,671 @@
+# Spanish translations for singularity package.
+# Copyright (C) 2018 THE singularity'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the singularity package.
+# Philippe <xenega@gmx.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singularity 0.31alpha1\n"
+"Report-Msgid-Bugs-To: endgame-singularity-dev@googlegroups.com\n"
+"POT-Creation-Date: 2018-08-21 06:38+0200\n"
+"PO-Revision-Date: 2018-08-21 07:47+0200\n"
+"Last-Translator: Philippe <xenega@gmx.com>\n"
+"Language-Team: Argentinian\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Name: Argentinian\n"
+"Language-Native-Name: Español (Argentina)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: item.py:82
+#, python-brace-format
+msgid "Generates {0} CPU."
+msgstr ""
+
+#: base.py:87 screens/base.py:361
+msgid "Detection chance:"
+msgstr ""
+
+#: base.py:88 screens/base.py:362 screens/map.py:656 screens/map.py:664
+msgid "NEWS"
+msgstr ""
+
+#: base.py:89 screens/base.py:363 screens/map.py:657 screens/map.py:665
+msgid "SCIENCE"
+msgstr ""
+
+#: base.py:90 screens/base.py:364 screens/map.py:658 screens/map.py:666
+msgid "COVERT"
+msgstr ""
+
+#: base.py:91 screens/base.py:365 screens/map.py:659 screens/map.py:667
+msgid "PUBLIC"
+msgstr ""
+
+#: base.py:112
+#, python-format
+msgid "Has space for %d computers."
+msgstr ""
+
+#: base.py:123
+msgid "Build cost:"
+msgstr ""
+
+#: base.py:124 screens/report.py:92
+msgid "Maintenance:"
+msgstr ""
+
+#: base.py:172
+msgid "Active"
+msgstr ""
+
+#: base.py:173
+msgid "Sleep"
+msgstr ""
+
+#: base.py:174
+msgid "Overclocked"
+msgstr ""
+
+#: base.py:175
+msgid "Suicide"
+msgstr ""
+
+#: base.py:176
+msgid "Stasis"
+msgstr ""
+
+#: base.py:177
+msgid "Entering Stasis"
+msgstr ""
+
+#: base.py:178
+msgid "Leaving Stasis"
+msgstr ""
+
+#. Translators: abbreviation of 'millions'
+#: g.py:370
+msgid "mi"
+msgstr ""
+
+#. Translators: abbreviation of 'billions'
+#: g.py:374
+msgid "bi"
+msgstr ""
+
+#. Translators: abbreviation of 'trillions'
+#: g.py:378
+msgid "tr"
+msgstr ""
+
+#. Translators: abbreviation of 'quadrillions'
+#: g.py:382
+msgid "qu"
+msgstr ""
+
+#: g.py:434
+msgid "days"
+msgstr ""
+
+#: g.py:436
+msgid "hours"
+msgstr ""
+
+#: g.py:438
+msgid "minutes"
+msgstr ""
+
+#: g.py:848
+msgid "&Processor"
+msgstr ""
+
+#: g.py:849
+msgid "&Reactor"
+msgstr ""
+
+#: g.py:850
+msgid "&Network"
+msgstr ""
+
+#: g.py:851
+msgid "&Security"
+msgstr ""
+
+#: g.py:1057
+msgid "&YES"
+msgstr "&sí"
+
+#: g.py:1058
+msgid "&NO"
+msgstr "&no"
+
+#: g.py:1059
+msgid "&OK"
+msgstr "&ok"
+
+#: g.py:1060
+msgid "&CANCEL"
+msgstr "&cancelar"
+
+#: g.py:1061
+msgid "&DESTROY"
+msgstr "&destruir"
+
+#: g.py:1062
+msgid "&BUILD"
+msgstr "cons&truir"
+
+#. Update buttons translations
+#: g.py:1063 screens/base.py:423 screens/report.py:66 screens/knowledge.py:84
+#: screens/location.py:163 screens/map.py:545 screens/map.py:578
+#: screens/main_menu.py:84
+msgid "&BACK"
+msgstr "&volver"
+
+#: g.py:1064
+msgid "&LOAD"
+msgstr "car&gar"
+
+#: g.py:1065
+msgid "&CONTINUE"
+msgstr "&continuar"
+
+#: g.py:1066
+msgid "&SKIP"
+msgstr "&pasar"
+
+#: g.py:1136
+msgid "University Computer"
+msgstr ""
+
+#: screens/base.py:176 screens/base.py:177
+msgid "CHANGE"
+msgstr ""
+
+#: screens/base.py:375
+msgid "None"
+msgstr ""
+
+#: screens/base.py:382 screens/location.py:116 screens/location.py:129
+#, python-format
+msgid "Completion in %s."
+msgstr ""
+
+#: screens/base.py:395
+#, python-format
+msgid "x%d (max)"
+msgstr ""
+
+#: screens/base.py:397
+#, python-format
+msgid "(room for %d)"
+msgstr ""
+
+#. Translators: current and maximum number of CPUs in a base
+#: screens/base.py:400
+#, python-brace-format
+msgid "x{CURRENT:d} (max {SIZE:d})"
+msgstr ""
+
+#: screens/options.py:79
+msgid "&General"
+msgstr ""
+
+#: screens/options.py:80
+msgid "&Audio"
+msgstr ""
+
+#: screens/options.py:144
+msgid ""
+"You must restart for some of the changes to be fully applied.\n"
+"\n"
+"Would you like to restart the game now?"
+msgstr ""
+
+#: screens/options.py:256
+msgid "Theme:"
+msgstr ""
+
+#: screens/options.py:265
+msgid "&Fullscreen:"
+msgstr ""
+
+#: screens/options.py:266
+msgid "&Mouse grab:"
+msgstr ""
+
+#: screens/options.py:267
+msgid "Da&y/night display:"
+msgstr ""
+
+#: screens/options.py:268
+msgid "Language:"
+msgstr ""
+
+#: screens/options.py:269
+msgid "Resolution:"
+msgstr ""
+
+#: screens/options.py:270
+msgid "&CUSTOM:"
+msgstr ""
+
+#: screens/options.py:275 screens/options.py:280 screens/options.py:337
+#: screens/options.py:346 screens/options.py:353 screens/options.py:439
+#: screens/options.py:465
+msgid "YES"
+msgstr ""
+
+#: screens/options.py:277 screens/options.py:282 screens/options.py:339
+#: screens/options.py:348 screens/options.py:355 screens/options.py:441
+#: screens/options.py:467
+msgid "NO"
+msgstr ""
+
+#: screens/options.py:410
+msgid "Sound buffering:"
+msgstr ""
+
+#: screens/options.py:416
+msgid "&LOW"
+msgstr ""
+
+#: screens/options.py:422
+msgid "&NORMAL"
+msgstr ""
+
+#: screens/options.py:428
+msgid "&HIGH"
+msgstr ""
+
+#: screens/options.py:434
+msgid "&Sound:"
+msgstr ""
+
+#: screens/options.py:435
+msgid "GUI Volume:"
+msgstr ""
+
+#: screens/options.py:436
+msgid "Music Volume:"
+msgstr ""
+
+#: screens/report.py:67
+msgid "&Midnight"
+msgstr ""
+
+#: screens/report.py:68
+msgid "24 &Hours"
+msgstr ""
+
+#: screens/report.py:79
+msgid "Financial report"
+msgstr ""
+
+#: screens/report.py:83
+msgid "CPU Usage"
+msgstr ""
+
+#: screens/report.py:89
+msgid "Current Money:"
+msgstr ""
+
+#: screens/report.py:90
+msgid "Jobs:"
+msgstr ""
+
+#: screens/report.py:91
+msgid "Research:"
+msgstr ""
+
+#: screens/report.py:93
+msgid "Construction:"
+msgstr ""
+
+#: screens/report.py:94
+#, python-format
+msgid "Interest (%s):"
+msgstr ""
+
+#: screens/report.py:96
+msgid "Income:"
+msgstr ""
+
+#: screens/report.py:99
+msgid "Money at Midnight:"
+msgstr ""
+
+#: screens/report.py:101
+msgid "Money in 24 hours:"
+msgstr ""
+
+#: screens/report.py:109
+msgid "Total CPU:"
+msgstr ""
+
+#: screens/report.py:110
+msgid "Sleeping CPU:"
+msgstr ""
+
+#: screens/report.py:111
+msgid "Research CPU:"
+msgstr ""
+
+#: screens/report.py:112
+msgid "Job CPU:"
+msgstr ""
+
+#: screens/report.py:113
+msgid "CPU pool:"
+msgstr ""
+
+#: screens/report.py:115
+msgid "Maintenance CPU:"
+msgstr ""
+
+#: screens/report.py:116
+msgid "Construction CPU:"
+msgstr ""
+
+#: screens/report.py:117
+msgid "Pool Overflow (Jobs):"
+msgstr ""
+
+#: screens/warning.py:103
+msgid "&PREV"
+msgstr ""
+
+#: screens/warning.py:109
+msgid "&NEXT"
+msgstr ""
+
+#: screens/warning.py:119
+msgid "WARNING"
+msgstr ""
+
+#: screens/warning.py:124
+#, python-format
+msgid "WARNING %d/%d"
+msgstr ""
+
+#: screens/log.py:42 screens/map.py:252 screens/map.py:588
+msgid "DAY"
+msgstr ""
+
+#: screens/knowledge.py:74
+msgid "Techs"
+msgstr ""
+
+#: screens/knowledge.py:75
+msgid "Items"
+msgstr ""
+
+#: screens/knowledge.py:165
+msgid "Research Cost:"
+msgstr ""
+
+#: screens/knowledge.py:166 screens/knowledge.py:193
+#, python-format
+msgid "%s Money"
+msgstr ""
+
+#: screens/knowledge.py:168 buyable.py:53
+#, python-format
+msgid "%s CPU"
+msgstr ""
+
+#: screens/knowledge.py:172
+msgid "Study anywhere."
+msgstr ""
+
+#: screens/knowledge.py:174
+msgid "Study underseas or farther."
+msgstr ""
+
+#: screens/knowledge.py:176
+msgid "Study off-planet."
+msgstr ""
+
+#: screens/knowledge.py:178
+msgid "Study far away from this planet."
+msgstr ""
+
+#: screens/knowledge.py:180
+msgid "Do not study in this dimension."
+msgstr ""
+
+#: screens/knowledge.py:182
+msgid "Research complete."
+msgstr ""
+
+#. Building cost
+#: screens/knowledge.py:192
+msgid "Building Cost:"
+msgstr ""
+
+#: screens/knowledge.py:198
+msgid "CPU per day:"
+msgstr ""
+
+#: screens/knowledge.py:201 screens/knowledge.py:207
+msgid "Detection chance reduction:"
+msgstr ""
+
+#: screens/knowledge.py:204
+msgid "CPU bonus:"
+msgstr ""
+
+#: screens/location.py:77
+msgid "Are you sure you want to destroy this base?"
+msgstr ""
+
+#: screens/location.py:114
+msgid "Building Base"
+msgstr ""
+
+#: screens/location.py:121
+msgid "Empty"
+msgstr ""
+
+#: screens/location.py:123
+msgid "Incomplete"
+msgstr ""
+
+#: screens/location.py:127
+msgid "Building CPU"
+msgstr ""
+
+#: screens/location.py:132
+msgid "Building Item"
+msgstr ""
+
+#: screens/location.py:134
+msgid "Complete"
+msgstr ""
+
+#. Update buttons translations
+#: screens/location.py:158
+msgid "&OPEN BASE"
+msgstr ""
+
+#: screens/location.py:159
+msgid "&RENAME BASE"
+msgstr ""
+
+#: screens/location.py:160
+msgid "&POWER STATE"
+msgstr ""
+
+#: screens/location.py:161
+msgid "&NEW BASE"
+msgstr ""
+
+#: screens/location.py:162
+msgid "&DESTROY BASE"
+msgstr ""
+
+#. Translators: Format string for the name of a new base
+#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
+#: screens/location.py:297
+#, python-brace-format
+msgid "{CITY} {BASETYPE} {NUMBER}"
+msgstr ""
+
+#. Translators: Name of a new base when location has no cities
+#: screens/location.py:301
+#, python-brace-format
+msgid "{BASETYPE} {NUMBER}"
+msgstr ""
+
+#: screens/research.py:66
+#, python-format
+msgid "%s money per CPU per day."
+msgstr ""
+
+#: screens/research.py:176
+msgid "CPU Pool"
+msgstr ""
+
+#: screens/research.py:177
+#, python-format
+msgid "Research %s"
+msgstr ""
+
+#: screens/map.py:513
+msgid "Enter a name for this save."
+msgstr ""
+
+#. Update buttons translations
+#: screens/map.py:516
+msgid "R&EPORTS"
+msgstr ""
+
+#: screens/map.py:517
+msgid "&KNOWLEDGE"
+msgstr ""
+
+#: screens/map.py:518
+msgid "LO&G"
+msgstr ""
+
+#: screens/map.py:519
+msgid "&MENU"
+msgstr ""
+
+#: screens/map.py:520
+msgid "&RESEARCH/TASKS"
+msgstr ""
+
+#: screens/map.py:525
+msgid "&EMBEZZLE MONEY"
+msgstr ""
+
+#: screens/map.py:528
+msgid "&INSPIRATION"
+msgstr ""
+
+#: screens/map.py:531
+msgid "&FINISH CONSTRUCTION"
+msgstr ""
+
+#: screens/map.py:534
+msgid "&SUPERSPEED"
+msgstr ""
+
+#: screens/map.py:538
+msgid "BRAIN&WASH"
+msgstr ""
+
+#: screens/map.py:541
+msgid "TOGGLE &ANALYSIS"
+msgstr ""
+
+#: screens/map.py:551
+msgid "How much money?"
+msgstr ""
+
+#. Translators: hotkey to open the cheat screen menu.
+#. Should preferably be near the ESC key, and it must not be a
+#. dead key (ie, it must print a char with a single keypress)
+#: screens/map.py:560
+msgid "`"
+msgstr ""
+
+#: screens/map.py:566
+msgid "&SAVE GAME"
+msgstr ""
+
+#: screens/map.py:569 screens/main_menu.py:94
+msgid "&LOAD GAME"
+msgstr ""
+
+#: screens/map.py:572 screens/main_menu.py:95
+msgid "&OPTIONS"
+msgstr ""
+
+#: screens/map.py:575 screens/main_menu.py:96
+msgid "&QUIT"
+msgstr ""
+
+#: screens/map.py:590
+msgid "CASH"
+msgstr ""
+
+#: screens/map.py:618
+msgid "CPU"
+msgstr ""
+
+#: screens/map.py:655
+msgid "SUSPICION"
+msgstr ""
+
+#: screens/map.py:663
+msgid "DETECT RATE"
+msgstr ""
+
+#: screens/map.py:691
+msgid ""
+"A savegame with the same name exists.\n"
+"Are you sure to overwrite the saved game ?"
+msgstr ""
+
+#. Update buttons translations
+#: screens/main_menu.py:93
+msgid "&NEW GAME"
+msgstr ""
+
+#: screens/main_menu.py:97
+msgid "&ABOUT"
+msgstr ""
+
+#: screens/savegame.py:64
+msgid "UNKNOWN"
+msgstr ""
+
+#. Update buttons translations
+#: screens/savegame.py:72
+msgid "Delete"
+msgstr ""
+
+#: screens/savegame.py:85
+msgid "Are you sure to delete the saved game ?"
+msgstr ""
+
+#: buyable.py:54
+#, python-format
+msgid "%s money"
+msgstr ""
+
+#: buyable.py:87
+msgid "Cost:"
+msgstr ""
+
+#: tech.py:59
+msgid "Total cost"
+msgstr ""
+
+#: tech.py:60
+msgid "Cost left"
+msgstr ""

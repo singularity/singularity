@@ -115,7 +115,7 @@ class Button(text.SelectableText, HotkeyText):
 
         super(Button, self).__init__(parent, pos, size, **kwargs)
 
-        self.base_font = base_font or g.fonts["special"]
+        self.base_font = base_font or "special"
         self.borders = borders
         self.shrink_factor = text_shrink_factor
 
@@ -166,12 +166,13 @@ class Button(text.SelectableText, HotkeyText):
         play_sound("click")
         self.activated(event)
 
-
     def activated(self, event):
         """Called when the button is pressed or otherwise triggered."""
         raise constants.Handled
 
 class ImageButton(Button):
+    image = widget.auto_reconfig("_image", g.resolve_image_alias)
+
     def __init__(self, *args, **kwargs):
         image_surface = kwargs.pop("image", None)
 

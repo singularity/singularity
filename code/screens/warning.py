@@ -88,13 +88,13 @@ class WarningDialog(dialog.YesNoDialog):
         super(WarningDialog, self).__init__(*args, **kwargs)
         
         self.title = text.Text(self, (-.01, -.01), (-.98, -.1),
-                               background_color=gg.colors["clear"],
+                               background_color="clear",
                                anchor=constants.TOP_LEFT,
                                valign=constants.MID, align=constants.LEFT,
-                               base_font=gg.fonts["special"], text_size=28)
+                               base_font="special", text_size=28)
 
         self.body = text.Text(self, (-.01, -.11), (-.98, -.83),
-                               background_color=gg.colors["clear"],
+                               background_color="clear",
                                anchor=constants.TOP_LEFT,
                                valign=constants.TOP, align=constants.LEFT,
                                text_size=20)

@@ -21,6 +21,12 @@
 import g
 import prerequisite
 
+def danger_for(task_id):
+    if task_id in ["jobs", "cpu_pool"]:
+        return 0
+    else:
+        return g.techs[task_id].danger
+
 def get_current(type):
     return next((t for t in (g.tasks[k] for k in reversed(g.tasks))
                    if t.available() and t.type == type)

@@ -38,23 +38,22 @@ class EarthImage(image.Image):
     def __init__(self, parent):
         super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
                                          constants.MID_CENTER,
-                                         gg.images['earth'])
+                                         'earth')
 
     def rescale(self):
         super(EarthImage, self).rescale()
         self.night_image = image.scale(gg.images['earth_night'],
                                        self.real_size).convert_alpha()
 
-    def on_theme(self):
-        self.image = gg.images['earth']
-        try:
-            self.rescale()
-            self.needs_rebuild = True
-            self.needs_resize = True
-            self.needs_redraw = True
-        except AttributeError:
-            # Map not initialized yet (theme set before start/load game)
-            pass
+    def reconfig(self):
+        super(EarthImage, self).reconfig()
+
+        self.resize()
+
+        self.rescale()
+        self.needs_rebuild = True
+        self.needs_resize = True
+        self.needs_redraw = True
 
     night_mask_day_of_year = None
     night_mask_dim = None
@@ -172,7 +171,7 @@ class MapScreen(dialog.Dialog):
 
         g.map_screen = self
 
-        self.background_color = gg.colors["map_background"]
+        self.background_color = "map_background"
         self.add_handler(constants.TICK, self.on_tick)
 
         self.map = EarthImage(self)
@@ -192,18 +191,18 @@ class MapScreen(dialog.Dialog):
         self.location_dialog = location.LocationScreen(self)
 
         self.suspicion_bar = \
-            text.FastStyledText(self, (0,.92), (1, .04), base_font=gg.fonts["special"],
+            text.FastStyledText(self, (0,.92), (1, .04), base_font="special",
                                 wrap=False,
-                                background_color=gg.colors["pane_background_empty"],
-                                border_color=gg.colors["pane_background"],
+                                background_color="pane_background_empty",
+                                border_color="pane_background",
                                 borders=constants.ALL, align=constants.LEFT)
         widget.unmask_all(self.suspicion_bar)
 
         self.danger_bar = \
-            text.FastStyledText(self, (0,.96), (1, .04), base_font=gg.fonts["special"],
+            text.FastStyledText(self, (0,.96), (1, .04), base_font="special",
                                 wrap=False,
-                                background_color=gg.colors["pane_background_empty"],
-                                border_color=gg.colors["pane_background"],
+                                background_color="pane_background_empty",
+                                border_color="pane_background",
                                 borders=constants.ALL, align=constants.LEFT)
         widget.unmask_all(self.danger_bar)
 
@@ -244,16 +243,16 @@ class MapScreen(dialog.Dialog):
         self.difficulty_display = \
             text.FastText(self, (0, 0.05), (0.13, 0.04),
                           wrap=False,
-                          base_font=gg.fonts["special"],
-                          background_color=gg.colors["pane_background_empty"],
-                          border_color=gg.colors["pane_background"])
+                          base_font="special",
+                          background_color="pane_background_empty",
+                          border_color="pane_background")
 
         self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
                                           wrap=False,
                                           text=_("DAY")+" 0000, 00:00:00",
-                                          base_font=gg.fonts["special"],
-                                          background_color=gg.colors["pane_background_empty"],
-                                          border_color=gg.colors["pane_background"],
+                                          base_font="special",
+                                          background_color="pane_background_empty",
+                                          border_color="pane_background",
                                           borders=constants.ALL)
 
         self.research_button = \
@@ -273,7 +272,7 @@ class MapScreen(dialog.Dialog):
             hotkey = str(index)
             b = SpeedButton(self, (hpos, 0), (hsize, .04),
                             text=text_, hotkey=hotkey,
-                            base_font=gg.fonts["normal"], text_shrink_factor=.75,
+                            base_font="normal", text_shrink_factor=.75,
                             align=constants.CENTER,
                             function=self.set_speed, args=(speed, False))
             hpos += hsize
@@ -281,27 +280,27 @@ class MapScreen(dialog.Dialog):
 
         self.info_window = \
             widget.BorderedWidget(self, (.56, 0), (.44, .08),
-                                  background_color=gg.colors["pane_background_empty"],
-                                  border_color=gg.colors["pane_background"],
+                                  background_color="pane_background_empty",
+                                  border_color="pane_background",
                                   borders=constants.ALL)
         widget.unmask_all(self.info_window)
 
         self.cash_display = \
             text.FastText(self.info_window, (0,0), (-1, -.5),
                           wrap=False,
-                          base_font=gg.fonts["special"], shrink_factor = .7,
+                          base_font="special", shrink_factor = .7,
                           borders=constants.ALL,
-                          background_color=gg.colors["pane_background_empty"],
-                          border_color=gg.colors["pane_background"])
+                          background_color="pane_background_empty",
+                          border_color="pane_background")
 
         self.cpu_display = \
             text.FastText(self.info_window, (0,-.5), (-1, -.5),
                           wrap=False,
-                          base_font=gg.fonts["special"], shrink_factor=.7,
+                          base_font="special", shrink_factor=.7,
                           borders=
                            (constants.LEFT, constants.RIGHT, constants.BOTTOM),
-                          background_color=gg.colors["pane_background_empty"],
-                          border_color=gg.colors["pane_background"])
+                          background_color="pane_background_empty",
+                          border_color="pane_background")
 
         self.message_dialog = dialog.MessageDialog(self, text_size=20)
 
@@ -331,7 +330,7 @@ class MapScreen(dialog.Dialog):
     def show_message(self, message, color=None):
         self.message_dialog.text = message
         if color == None:
-            color = gg.colors["text"]
+            color = "text"
         self.message_dialog.color = color
         dialog.call_dialog(self.message_dialog, self)
 
@@ -429,15 +428,22 @@ class MapScreen(dialog.Dialog):
             self.stop_timer()
         self.needs_rebuild = True
 
-    def show_intro(self):
-        intro_dialog = dialog.YesNoDialog(self, yes_type="continue",
+    def show_story_section(self, name):
+        section = list(g.get_story_section(name))
+
+        first_dialog = dialog.YesNoDialog(self, yes_type="continue",
                                           no_type="skip")
-        for segment in g.get_intro():
-            intro_dialog.text = segment
-            if not dialog.call_dialog(intro_dialog, self):
+        last_dialog = dialog.MessageDialog(self, ok_type="ok")
+
+        for num, segment in enumerate(section):
+            story_dialog = first_dialog if num != len(section) - 1 else last_dialog
+            story_dialog.text = segment
+
+            if not dialog.call_dialog(story_dialog, self):
                 break
 
-        intro_dialog.parent = None
+        first_dialog.parent = None
+        last_dialog.parent = None
 
     def show(self):
         self.force_update()
@@ -463,7 +469,7 @@ class MapScreen(dialog.Dialog):
         if not g.pl.intro_shown:
             g.pl.intro_shown = True
             self.needs_warning = False
-            self.show_intro()
+            self.show_story_section("Intro")
 
         if self.needs_warning:
             self.warnings.show_dialog()
@@ -495,9 +501,10 @@ class MapScreen(dialog.Dialog):
 
         lost = g.pl.lost_game()
         if lost > 0:
+            lost_story = ["", "Lost No Bases", "Lost Suspicion"]
+            
             g.play_music("lose")
-            self.show_message(g.strings["lost_nobases"] if lost == 1 else
-                              g.strings["lost_sus"])
+            self.show_story_section(lost_story[lost])
             raise constants.ExitDialog
 
     def on_theme(self):
@@ -613,9 +620,9 @@ class MapScreen(dialog.Dialog):
                     g.add_chance(detects_per_day[group], detect_chance[group] / 10000.)
 
         if cpu_pool < maint_cpu:
-            self.cpu_display.color = gg.colors["cpu_warning"]
+            self.cpu_display.color = "cpu_warning"
         else:
-            self.cpu_display.color = gg.colors["cpu_normal"]
+            self.cpu_display.color = "cpu_normal"
         self.cpu_display.text = _("CPU")+": %s (%s)" % \
               (g.to_money(total_cpu), g.to_money(cpu_pool))
 
@@ -635,13 +642,13 @@ class MapScreen(dialog.Dialog):
             danger_styles.append(normal)
 
             suspicion = g.pl.groups[group].suspicion
-            color = gg.colors["danger_level_%d" % g.suspicion_to_danger_level(suspicion)]
+            color = gg.resolve_color_alias("danger_level_%d" % g.suspicion_to_danger_level(suspicion))
             suspicion_styles.append( (color, None, False) )
 
             detects = detects_per_day[group]
             danger_level = \
                 g.pl.groups[group].detects_per_day_to_danger_level(detects)
-            color = gg.colors["danger_level_%d" % danger_level]
+            color = gg.resolve_color_alias("danger_level_%d" % danger_level)
             danger_styles.append( (color, None, False) )
 
             if g.pl.display_discover == "full":

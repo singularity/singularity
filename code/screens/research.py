@@ -71,7 +71,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             description = ""
 
         text.Text(self.description_pane, (0,0), (-1,-1), text=description,
-                  background_color=gg.colors["pane_background"], text_size=18,
+                  background_color="pane_background", text_size=18,
                   align=constants.LEFT, valign=constants.TOP,
                   borders=constants.ALL)
 
@@ -79,17 +79,17 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         # Dirty, underhanded trick to make the canvas into a progress bar.
         canvas.__class__ = text.ProgressText
         canvas.progress = 0
-        canvas.progress_color = gg.colors["progress_background_progress"]
+        canvas.progress_color = "progress_background_progress"
 
         canvas.research_name = text.Text(canvas, (-.01, -.01), (-.70, -.5),
                                          align=constants.LEFT,
-                                         background_color=gg.colors["clear"])
+                                         background_color="clear")
         canvas.research_name.visible = False
         canvas.alloc_cpus = text.Text(canvas, (-.99, -.01), (-.21, -.5),
                                       anchor=constants.TOP_RIGHT,
                                       text="1,000,000,000",
                                       align=constants.RIGHT,
-                                      background_color=gg.colors["clear"])
+                                      background_color="clear")
         canvas.alloc_cpus.visible = False
         canvas.slider = slider.UpdateSlider(canvas, (-.01, -.55), (-.98, -.40),
                                             anchor=constants.TOP_LEFT,
@@ -99,17 +99,11 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.help_button = button.FunctionButton(canvas, (-.11, -.55),
                                                    (0, -.40), text=" ??? ",
                                                    text_shrink_factor=1,
-                                                   base_font=gg.fonts["normal"],
+                                                   base_font="normal",
                                                    function=self.show_help)
 
     def cpu_for(self, key):
         return g.pl.cpu_usage.get(key, 0)
-
-    def danger_for(self, key):
-        if key in ["jobs", "cpu_pool"]:
-            return 0
-        else:
-            return g.techs[key].danger
 
     def update_item(self, canvas, name, key):
         visible = (key is not None)
@@ -123,7 +117,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         if not visible:
             return
 
-        danger = self.danger_for(key)
+        danger = task.danger_for(key)
         if danger > 0 and g.pl.available_cpus[danger] == 0:
             canvas.help_button.visible = True
             canvas.help_button.args = (danger,)
@@ -155,8 +149,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
     def calc_cpu_left(self):
         cpu_count = array(g.pl.available_cpus, long)
-        for task, cpu in g.pl.cpu_usage.iteritems():
-            danger = self.danger_for(task)
+        for task_id, cpu in g.pl.cpu_usage.iteritems():
+            danger = task.danger_for(task_id)
             cpu_count[:danger+1] -= cpu
 
         for i in range(1, 4):

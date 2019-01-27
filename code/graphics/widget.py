@@ -20,6 +20,7 @@
 
 import pygame
 from numpy import array
+from inspect import getmembers
 
 import g
 import constants
@@ -99,6 +100,30 @@ def propogate_need(data_member):
 
     return do_propogate
 
+class auto_reconfig(object):
+
+    __slots__ = ["data_member", "reconfig_datamember", "reconfig_func"] # Avoid __dict__.
+
+    def __init__(self, data_member, reconfig_func):
+        self.data_member = data_member
+        self.reconfig_datamember = "_RECONFIG_" + data_member
+        self.reconfig_func = reconfig_func
+
+    def __get__(self, obj, objtype=None):
+        if obj is None:
+            return self
+        return getattr(obj, self.data_member)
+
+    def __set__(self, obj, my_value):
+        new_value = self.reconfig_func(my_value)
+
+        setattr(obj, self.reconfig_datamember, my_value)
+        setattr(obj, self.data_member, new_value)
+
+    def reconfig(self, obj):
+        updated_value = self.reconfig_func(getattr(obj, self.reconfig_datamember))
+        setattr(obj, self.data_member, updated_value)
+
 class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
        children."""
@@ -123,6 +148,9 @@ class Widget(object):
                     target = target.parent
 
     needs_update = call_on_change("_needs_update", _propogate_update)
+
+    needs_reconfig = call_on_change("_needs_reconfig",
+                                    propogate_need("_needs_reconfig"))
 
     pos = causes_reposition("_pos")
     size = causes_resize("_size")
@@ -151,6 +179,7 @@ class Widget(object):
         # Set automatically by other properties.
         #self.needs_redraw = True
         #self.needs_full_redraw = True
+        self.needs_reconfig = True
 
     @property
     def parent(self):
@@ -301,21 +330,31 @@ class Widget(object):
             g.fade_mask.fill( (0,0,0,175) )
 
     def prepare_for_redraw(self):
-        # First we handle any substance changes.
+        # First, we handle config changes.
+        if self.needs_reconfig:
+            self.reconfig()
+            self.needs_reconfig = False
+
+        # Then any substance changes.
         if self.needs_rebuild:
             self.rebuild()
+            self.needs_rebuild = False
 
         # Then size changes.
         if self.needs_resize:
             self.resize()
+            self.needs_resize = False
+            self.needs_reposition = True
+            self.needs_redraw = True
 
         # Then position changes.
         if self.needs_reposition:
+            self.needs_reposition = False
             self.reposition()
 
         # And finally we recurse to our descendants.
         for child in self.children:
-            if child.needs_update and child.visible:
+            if child.visible:
                 child.prepare_for_redraw()
 
     def maybe_update(self):
@@ -372,17 +411,20 @@ class Widget(object):
 
         return check_mask
 
+    def reconfig(self):
+        # Find reconfig property and update them.
+        clazz = self.__class__
+        for prop_name, prop in getmembers(clazz):
+            if (isinstance(prop, auto_reconfig)):
+                prop.reconfig(self)
+
     def rebuild(self):
-        self.needs_rebuild = False
+        pass
 
     def resize(self):
         self._real_size = self._calc_size()
-        self.needs_resize = False
-        self.needs_reposition = True
-        self.needs_redraw = True
 
     def reposition(self):
-        self.needs_reposition = False
         old_rect = self.collision_rect
         self.collision_rect = self._make_collision_rect()
 
@@ -399,7 +441,6 @@ class Widget(object):
         elif self.collision_rect != old_rect:
             self.remake_surfaces()
             self.needs_redraw = True
-
 
     def redraw(self):
         self.needs_redraw = False
@@ -443,16 +484,17 @@ class Widget(object):
 
 
 class BorderedWidget(Widget):
-    borders = causes_redraw("_borders")
-    border_color = causes_redraw("_border_color")
-    background_color = causes_redraw("_background_color")
+    borders = causes_redraw("__borders")
+
+    border_color = auto_reconfig("_border_color", g.resolve_color_alias)
+    background_color = auto_reconfig("_background_color", g.resolve_color_alias)
+    _border_color = causes_redraw("__border_color")
+    _background_color = causes_redraw("__background_color")
 
     def __init__(self, parent, *args, **kwargs):
-        self.parent = parent
-        self.children = []
         self.borders = kwargs.pop("borders", ())
-        self.border_color = kwargs.pop("border_color", g.colors["widget_border"])
-        self.background_color = kwargs.pop("background_color", g.colors["widget_background"])
+        self.border_color = kwargs.pop("border_color", "widget_border")
+        self.background_color = kwargs.pop("background_color", "widget_background")
 
         super(BorderedWidget, self).__init__(parent, *args, **kwargs)
 

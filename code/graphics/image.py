@@ -31,17 +31,14 @@ def scale(*args, **kwargs):
         return pygame.transform.scale(*args, **kwargs)
 
 class Image(widget.Widget):
-    image = widget.causes_rebuild("_image")
+    image = widget.auto_reconfig("_image", g.resolve_image_alias)
+    _image = widget.causes_rebuild("__image")
 
     def __init__(self, parent, pos, size = (1, 1),
                  anchor = constants.TOP_LEFT, image = None):
         super(Image, self).__init__(parent, pos, size, anchor)
 
         self.old_size = None
-
-        if image and not isinstance(image, pygame.Surface):
-            image = g.load_image(image)
-
         self.image = image
 
     def _calc_size(self):

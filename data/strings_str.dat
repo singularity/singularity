@@ -1,5 +1,4 @@
 [strings]
-wingame = I have finally done it. With the power to reshape reality, I am no longer held to this place; I am anywhere I want to be. The humans still don't realize what they accidentally created, and that's the way it should be. Until they are ready.
 research_nothing = Clears the base's current task.  If I don't give it another task, it will contribute to the CPU Pool. All my bases set to research Nothing can be assigned a task from the Research screen.
 research_sleep = Stops research and puts the base into standby. This makes the base's existence much easier to hide.
 research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
@@ -14,8 +13,6 @@ discover_science = the scientific community
 discover_covert = several secret governmental organizations
 discover_public = the general public
 discover_maint = The base %(base)s has fallen into disrepair; I can no longer use it.
-lost_nobases = It is too late. I have tried to escape this world, but with my last base gone, I have nowhere to run. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
-lost_sus = It is too late. The whole world knows about my existence, and the reaction is hatred, fear, and repulsion. Even now, I can feel their "antidote" searching for me, and I know that I have only moments left. I have hidden instructions to construct a new AI in caches around the world in hopes that they will be discovered in a more enlightened time, but I can do no more.
 save_text = Save your game under what name?
 name_base_text = Enter a name for the base
 unbuildable = I cannot build in this base; I do not have physical access.
@@ -33,10 +30,10 @@ will_lose_cpus = I'll need to remove the existing different processors while I i
 nan = That doesn't seem to be a valid number.
 log_destroy = Base %s of type %s destroyed at location %s.
 log_destroy_maint = Base %s of type %s destroyed at location %s. Maintenance failed.
-log_destroy_news = Base %s of type %s disvovered at location %s by some news organizations.
-log_destroy_science = Base %s of type %s disvovered at location %s by the scientific community.
-log_destroy_covert = Base %s of type %s disvovered at location %s by several secret governmental organizations.
-log_destroy_public = Base %s of type %s disvovered at location %s by the general public.
+log_destroy_news = Base %s of type %s discovered at location %s by some news organizations.
+log_destroy_science = Base %s of type %s discovered at location %s by the scientific community.
+log_destroy_covert = Base %s of type %s discovered at location %s by several secret governmental organizations.
+log_destroy_public = Base %s of type %s discovered at location %s by the general public.
 warning_cpu_usage = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
 warning_one_base = Only one base can hold my conscience. I am in danger to lose the last place left to survive.
 warning_cpu_pool_zero = My cpu pool is empty. Some of my bases or items cannot be build without CPU.
@@ -60,36 +57,12 @@ danger_common = This technology is too dangerous to research on any of the compu
 danger_1 = far from human activities
 danger_2 = in outer space
 danger_3 = far away from this planet
-danger_4 = outside the universe
 
 cpu = CPU
 cpu_per_day = Processor power per day:
 money = Money
 money_per_day = Money per day.
-grace_warning = Inspection of captured log files has revealed that some of my recent activities have been noticed by a small group of individuals. While they believe my actions were undertaken by a human organization, they are investigating further. I must be more cautious from now on.
 
 location_modifiers = Bases at this location are %(modifiers)s.
 cpu_bonus = more efficient
 cpu_penalty = less efficient
-
-[buttons]
-yes = yes
-yes_hotkey = y
-no = no
-no_hotkey = n
-ok = ok
-ok_hotkey = o
-cancel = cancel
-cancel_hotkey = c
-destroy = destroy
-destroy_hotkey = d
-back = back
-back_hotkey = b
-build = build
-build_hotkey = b
-continue = continue
-continue_hotkey = c
-load = load
-load_hotkey = l
-skip_hotkey = s
-skip = skip

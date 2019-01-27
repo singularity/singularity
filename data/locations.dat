@@ -44,16 +44,17 @@ pre = Lunar Rocketry
 position_list = absolute | 50 | 13
 pre = unknown_tech
 
-[FAR REACHES]
+[PLANET]
 position_list = absolute | 39 | 13
 safety = 3
-modifier_list = stealth:2 | thrift:.1 | speed:.1
-pre = Fusion Rocketry
+modifier_list = stealth:2 | thrift:.2 | speed:.2
+pre = Interplanetary Navigation
 
-[TRANSDIMENSIONAL]
+[ASTEROID]
 position_list = absolute | 79 | 13
-safety = 4
-pre = Space-Time Manipulation
+safety = 3
+modifier_list = stealth:2.5 | thrift:.1 | speed:.1
+pre = Interplanetary Navigation
 
 [NOWHERE]
 position_list = absolute | -200 | -200

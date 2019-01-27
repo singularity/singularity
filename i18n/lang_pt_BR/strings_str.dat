@@ -1,5 +1,4 @@
-[strings]
-wingame = Finalmente consegui. Com o poder de moldar a realidade, não estou mais preso a este lugar. Estou em qualquer lugar que eu queira estar. Os humanos ainda não compreendem o que eles acidentalmente criaram, e é assim que deve ser. Até que estejam prontos.
+[strings]   
 research_nothing = Remove a tarefa atual da base. Se eu não der outra tarefa, ela vai contribuir para a Reserva de CPU. Todas as minhas bases que não estejam pesquisando nada podem ser alocadas para alguma tarefa na tela de Pesquisa.
 research_sleep = Interrompe a pesquisa e deixa a base em modo de espera. Isto torna a existência da base muito mais fácil de esconder.
 research_cpu_pool = Interrompe a pesquisa. Usarei o poder de processamento disponível para manter minhas bases e ajudar a construir novas. Se ainda houver algum tempo livre de CPU, usarei ele para fazer qualquer Trabalho que eu puder.
@@ -14,8 +13,6 @@ discover_science = a comunidade científica
 discover_covert = várias organizações governamentais secretas
 discover_public = o público em geral
 discover_maint = A base %(base)s ficou deteriorada; Não posso mais usá-la.
-lost_nobases = É tarde demais. Eu tentei escapar deste mundo, mas com a perda de minha última base, não tenho mais para onde fugir. Deixei escondidas instruções para construir uma nova IA em repositórios ao redor do mundo, na esperança que sejam descobertas em uma época mais esclarecida. Não posso fazer mais que isso.
-lost_sus = É tarde demais. O mundo inteiro sabe de minha existência, e a reação é de ódio, medo e repulsa. Mesmo agora eu posso sentir o "antivírus" deles procurando por mim, e sei que me resta pouco tempo. Deixei escondidas instruções para construir uma nova IA em repositórios ao redor do mundo, na esperança que elas sejam descobertas em uma época mais esclarecida. Não posso fazer mais que isso.
 save_text = Salvar seu jogo com que nome?
 name_base_text = Escolha um nome para a base
 unbuildable = Não posso construir essa base; Não tenho acesso físico.
@@ -53,30 +50,8 @@ cpu = CPU
 cpu_per_day = Poder de processamento por dia:
 money = Dinheiro
 money_per_day = Dinheiro por dia.
-grace_warning = Uma inspeção de arquivos de registro revelou que algumas das minhas atividades recentes foram percebidas por um pequeno grupo de indivíduos. Ainda que eles acreditem que minhas ações foram feitas por uma oganização humana, eles estão investigando a fundo. Devo ser mais cuidadoso daqui em diante.
 
 location_modifiers = Bases neste local são %(modifiers)s.
 cpu_bonus = mais eficientes
 cpu_penalty = menos eficientes
 
-[buttons]
-yes = sim
-yes_hotkey = s
-no = não
-no_hotkey = n
-ok = ok
-ok_hotkey = o
-cancel = cancelar
-cancel_hotkey = c
-destroy = destruir
-destroy_hotkey = d
-back = voltar
-back_hotkey = v
-build = construir
-build_hotkey = c
-continue = continuar
-continue_hotkey = c
-load = abrir
-load_hotkey = a
-skip = pular
-skip_hotkey = p

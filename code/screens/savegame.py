@@ -48,11 +48,11 @@ class SavegameScreen(dialog.ChoiceDialog):
         item.name_display     = text.Text(item, (-.01,-.05), (-.45, -.99),
                                           anchor=constants.TOP_LEFT,
                                           align=constants.LEFT,
-                                          background_color=gg.colors["clear"])
+                                          background_color="clear")
         item.version_display  = text.Text(item, (-.99,-.05), (-.45, -.99),
                                           anchor=constants.TOP_RIGHT,
                                           align=constants.RIGHT,
-                                          background_color=gg.colors["clear"])
+                                          background_color="clear")
 
     def update_item(self, item, save):
         if save is None:
@@ -62,10 +62,10 @@ class SavegameScreen(dialog.ChoiceDialog):
             item.name_display.text = save.name
             if save.version is None:
                 item.version_display.text  = _("UNKNOWN")
-                item.version_display.color = gg.colors["save_invalid"]
+                item.version_display.color = "save_invalid"
             else:
                 item.version_display.text  = save.version
-                item.version_display.color = gg.colors["save_valid"]
+                item.version_display.color = "save_valid"
 
     def rebuild(self):
         # Update buttons translations

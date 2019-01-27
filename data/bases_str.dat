@@ -65,22 +65,28 @@ name = Large Lunar Facility
 description = This base is a series of facilities hidden in caverns dug into the surface of the Moon.
 flavor_list = Large Lunar Facility | Large Lunar Base
 
+[Planet Module]
+name = Lunar Module
+description =
+flavor_list = Planet Module | Planet Capsule
+
+[Small Planet Facility]
+name = Small Lunar Facility
+description = 
+flavor_list = Small Planet Facility | Small Planet Base
+
+[Large Planet Facility]
+name = Large Lunar Facility
+description =
+flavor_list = Large Planet Facility | Large Planet Base
+
 [Scientific Outpost]
 name = Scientific Outpost
-description = This base is placed as far from Earth as practical, providing a safer location to conduct some of my more dangerous experiments.
-flavor_list = Small Satellite | Small Outpost | Small Scientific Outpost
-
-[Large Scientific Outpost]
-name = Large Scientific Outpost
-description = This base is similar to the regular scientific output but larger, giving more room for experiments.
-flavor_list = Large Satellite | Large Outpost | Large Scientific Outpost
+description = 
+flavor_list = Satellite | Outpost | Scientific Outpost
 
 [Large Scientific Outpost]
 name = Large Scientific Outpost
 description =
 flavor_list = Large Outpost | Large Scientific Outpost
 
-[Reality Bubble]
-name = Reality Bubble
-description = This base is outside the Universe itself, making it safe to conduct experiments that may destroy reality.
-flavor_list = Reality Bubble | Existence

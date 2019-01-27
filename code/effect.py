@@ -43,7 +43,7 @@ class Effect(object):
             g.pl.display_discover = "full"
         elif self.effect_type == "endgame_sing":
             g.play_music("win")
-            g.map_screen.show_message(g.strings["wingame"])
+            g.map_screen.show_story_section("Win")
             for group in g.pl.groups.values():
                 group.discover_bonus = 0
             g.pl.apotheosis = True

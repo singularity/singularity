@@ -81,6 +81,7 @@ intro_shown = True
 significant_numbers = []
 messages = {}
 strings = {}
+story = {}
 knowledge = {}
 locations = {}
 regions = {}
@@ -928,26 +929,35 @@ def load_task_defs(lang=None):
     load_generic_defs("tasks", tasks, lang)
 
 def load_theme(theme_id, theme_dir):
-    theme_list = generic_load("theme.dat", load_dirs=(theme_dir,))
+
 
     new_theme = theme.Theme(theme_id, theme_dir)
 
-    for theme_section in theme_list:
-        if theme_section["id"] == "general":
-            new_theme.name = theme_section["name"]
+    for variant, filename in new_theme.search_variant():
+        theme_list = generic_load(filename, load_dirs=None)
 
-            if theme_section.has_key("parent"):
-                new_theme.inherit(theme_section["parent"])
+        variant_theme = theme.VariantTheme(variant)
+        new_theme.set_variant(variant_theme)
 
-        if theme_section["id"] == "fonts":
-            for key in theme_section:
-                if key == "id": continue
-                new_theme.set_font(key, theme_section[key])
+        for theme_section in theme_list:
+            if theme_section["id"] == "general":
+                variant_theme.name = theme_section["name"]
 
-        if theme_section["id"] == "colors":
-            for key in theme_section:
-                if key == "id": continue
-                new_theme.set_color(key, theme_section[key])
+                if theme_section.has_key("parent"):
+                    if (variant is None):
+                        new_theme.inherit(theme_section["parent"])
+                    else:
+                        sys.stderr.write("Cannot override parent in variant theme '%s'" % repr(filename))
+
+            if theme_section["id"] == "fonts":
+                for key in theme_section:
+                    if key == "id": continue
+                    variant_theme.set_font(key, theme_section[key])
+
+            if theme_section["id"] == "colors":
+                for key in theme_section:
+                    if key == "id": continue
+                    variant_theme.set_color(key, theme_section[key])
 
     return new_theme
 
@@ -966,11 +976,6 @@ def load_themes():
             th = load_theme(theme_id, os.path.join(themes_dir, theme_id))
             th.find_files()
             themes[theme_id] = th
-
-    load_theme_defs()
-
-def load_theme_defs(lang=None):
-    load_generic_defs("themes", theme.themes, lang)
 
 def load_difficulties():
     difficulties = difficulty.difficulties
@@ -1044,18 +1049,29 @@ def load_string_defs(lang=None):
             # Load the 'standard' strings.
             strings.update(string_section)
 
-        elif string_section["id"] == "buttons":
-
-            # Load button labels/hotkeys
-            buttons.update(string_section)
-            graphics.g.buttons.update(buttons)
-
         else:
             sys.stderr.write("Invalid string section %s." % string_section["id"])
             sys.exit(1)
 
+def load_buttons_defs(lang=None):
+    buttons = {
+        "yes"      : hotkey(_("&YES")),
+        "no"       : hotkey(_("&NO")),
+        "ok"       : hotkey(_("&OK")),
+        "cancel"   : hotkey(_("&CANCEL")),
+        "destroy"  : hotkey(_("&DESTROY")),
+        "build"    : hotkey(_("&BUILD")),
+        "back"     : hotkey(_("&BACK")),
+        "load"     : hotkey(_("&LOAD")),
+        "continue" : hotkey(_("&CONTINUE")),
+        "skip"     : hotkey(_("&SKIP")),
+    }
+    graphics.g.buttons.update(buttons)
+
 def load_strings():
     load_string_defs()
+    load_buttons_defs()
+    load_story_defs()
 
 def load_messages(lang=None):
     if lang is None: lang = language
@@ -1071,27 +1087,57 @@ def load_messages(lang=None):
                 messages[entry.msgid] = entry.msgstr
         except IOError: pass # silently ignore non-existing files
 
-def get_intro():
-    intro_files = dirs.get_readable_i18n_files("intro_str.dat", language)
-
-    if len(intro_files) == 0:
-        print "Intro is missing.  Skipping."
+def load_story_defs():
+    global story
+    story = {}
+    
+    story_files = dirs.get_readable_i18n_files("story_str.dat", language)
+    
+    
+    if len(story_files) == 0:
+        print "Story is missing. Skipping."
         return
+        
+    # Take the last story file, story is never partially translated.
+    story_file = open(story_files[-1][1])
 
-    # Take the last intro file, intro is never partially translated.
-    intro_file = open(intro_files[-1][1])
-    raw_intro = intro_file.readlines() + [""]
-
+    section_name = ""
     segment = ""
-    while raw_intro:
-        line = raw_intro.pop(0).decode("utf-8")
-        if line and line[0] == "|":
-            segment += line[1:]
-        elif segment:
-            yield segment
-            segment = ""
+    line_num = 1;
 
+    for raw_line in story_file.readlines():
+        line = raw_line.decode("utf-8")
+        
+        if line and line != "\n":
+            if line[0] == "#":
+                pass # Ignore comment
+            elif line[0] == "[":
+                if line[-2] == "]":
+                    section_name = line[1:-2]
+                    story[section_name] = []
+                else:
+                    sys.stderr.write("Line start with [ and is not a section at line %d.\n" % line_num)
+            elif line[0] == "|":
+                segment += line[1:]
+            else:
+                # TODO: Parse command
+                sys.stderr.write("Invalid command at line %d.\n" % line_num)
+        else:
+            if segment:
+                story[section_name].append(segment)
+                segment = ""
+                
+        line_num += 1
+
+    # Add last segment.
     if segment:
+        story[section_name].append(segment)
+
+def get_story_section(name):
+    section = story[name]
+
+    for segment in section:
+        # TODO: Execute command
         yield segment
 
 def new_game(difficulty_name):
@@ -1108,6 +1154,7 @@ def new_game(difficulty_name):
 
     for group in pl.groups.values():
         group.discover_bonus = diff.discover_multiplier
+        group.suspicion_bonus = diff.suspicion_multiplier
 
     # Reset all "mutable" game data
     load_locations()
@@ -1225,7 +1272,7 @@ def hotkey(string):
 
     def remove_accents(text):
         from unicodedata import normalize, combining
-        nfkd_form = normalize('NFKD', unicode(text.encode('utf-8')))
+        nfkd_form = normalize('NFKD', unicode(text))
         return u"".join([c for c in nfkd_form if not combining(c)])
 
     text = string

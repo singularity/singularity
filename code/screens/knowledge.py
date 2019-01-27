@@ -214,7 +214,7 @@ class KnowledgeScreen(dialog.Dialog):
                         g.knowledge[knowledge_type]["list"][knowledge_key][1]
 
         text.Text(self.description_pane, (0, 0), (-1, -1), text=desc_text,
-                    background_color=gg.colors["pane_background"], text_size=20,
+                    background_color="pane_background", text_size=20,
                     align=constants.LEFT, valign=constants.TOP,
                     borders=constants.ALL)
 

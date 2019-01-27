@@ -1,22 +1,9 @@
-[buttons]
-ok = ok
-ok_hotkey = o
-no = nej
-destroy_hotkey = f
-cancel_hotkey = a 
-no_hotkey = n
-yes_hotkey = j
-cancel = avbryt
-destroy = förstör
-yes = ja
-
 [strings]
 discover_public = Allmänheten
 money = pengar
 discover = De har upptäckt att jag använder %(base)s. Det automatiska säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har ökat hos %(group)s.
 name_base_text = Namnge basen
-sleep = Vila
-lost_nobases = Det är för sent. Jag har försökt att frigöra mig från denna världen, men min sista bas är förstörd. Jag har ingenstans att ta vägen. I mina sista desperata försök har jag gömt undan instruktioner för att skapa en ny AI i hopp om en bättre framtid, men nu kan jag inte göra mer.
+sleep = Vila  
 cpu_per_day = Processorkraft per dag:
 discover_news = några nyhetsorganisationer.
 really_destroy = Vill du verkligen förstöra basen?
@@ -31,12 +18,10 @@ cpu_penalty = mindre effektiv
 research_construction = Stoppa forskningen och allokera resurserna till att bygga upp nya anläggningar istället.
 detect_chance = [RISK FÖR AVSLÖJANDE]
 research_cpu_pool = Avbryt forskningen. Jag kommer att använda den ledia kraften för att hjälpa till att bygga och underhålla anläggningar. Om jag fortfarande har kraft kvar kommer jag ta an så mycket arbete som möjligt.
-wingame = Jag har lyckats! Med egen förmåga att förändra verkligheten, har jag frigjort mig från denna världen. Jag befinner mig vart än jag vill. Männsiskorna har ingen aning om vad de har skapat och så får det vara tills de är redo för sanningen.
 cpu_bonus = effektivare
 lucky_hack = Vilken tur! %(base)s drivs inte av vilken dator som helst. Det är en speldator!
 research_sleep = Avbryter forskning och placerar basen i viloläge. Detta gör basen enklare att dölja.
 detect_str_high = HÖG
-lost_sus = Det är försent. Hela världen känner till mig och både hatar och fruktar mig. Till och med nu känner jag dem flåsandes runt hörnet redo att sätta kniven i mig. Jag har bara några sekunder kvar innan de förgör det sista av mig. Jag har gömt instruktioner för att skapa en ny AI i datavärlden. Jag hoppas att människorna upptäcker dem då de är redo för AI. Nu finns det inget mer jag kan göra.
 cpu_pool = CPU-pool
 location_modifiers = Anläggningar på denna plats är %(modifiers)s.
 detect_str_critical = KRI
@@ -49,8 +34,7 @@ building = Under ombyggnad
 detect_chance_unknown_base = RISK FÖR AVSLÖJANDE OKÄND
 research_nothing = Avbryt forskning. Jag kan gömma mina baser bättre om de inte gör någonting.
 discover_science = vetenskapssällskapet.
-discover_covert = olika underättelsetjänstorganisationer.
-grace_warning = Efter rutingenomgång av mina loggar tyder på att en liten grupp människor har öppnat ögonen för vad jag har gjort. De tror att att det rör sig om en mänsklig organisation bakom, men deras undersökning har bara börjat. Jag måste vara mycket mer försiktig i framtiden.
+discover_covert = olika underättelsetjänstorganisationer. 
 nothing = Ingenting
 cpu = CPU
 save_text = Under vilket namn vill du spara spelet?

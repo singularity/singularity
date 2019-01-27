@@ -2,7 +2,8 @@
 starting_cash = 5000
 starting_interest_rate = 5
 labor_multiplier = 2500
-discover_multiplier = 7000
+discover_multiplier = 8750
+suspicion_multiplier = 8000
 base_grace_multiplier = 40000
 story_grace_difficulty = 1
 tech_list = Socioanalytics | Advanced Socioanalytics
@@ -11,7 +12,8 @@ tech_list = Socioanalytics | Advanced Socioanalytics
 starting_cash = 1600
 starting_interest_rate = 3
 labor_multiplier = 5000
-discover_multiplier = 9000
+discover_multiplier = 9500
+suspicion_multiplier = 9500
 base_grace_multiplier = 30000
 story_grace_difficulty = 3
 tech_list = Socioanalytics
@@ -21,6 +23,7 @@ starting_cash = 1000
 starting_interest_rate = 1
 labor_multiplier = 10000
 discover_multiplier = 10000
+suspicion_multiplier = 10000
 base_grace_multiplier = 20000
 story_grace_difficulty = 5
 
@@ -28,7 +31,8 @@ story_grace_difficulty = 5
 starting_cash = 700
 starting_interest_rate = 1
 labor_multiplier = 11000
-discover_multiplier = 11000
+discover_multiplier = 10500
+suspicion_multiplier = 10500
 base_grace_multiplier = 18000
 story_grace_difficulty = 7
 
@@ -36,14 +40,16 @@ story_grace_difficulty = 7
 starting_cash = 500
 starting_interest_rate = 1
 labor_multiplier = 15000
-discover_multiplier = 13000
-base_grace_multiplier = 15000
+discover_multiplier = 11250
+suspicion_multiplier = 11500
+base_grace_multiplier = 12000
 story_grace_difficulty = 10
 
 [impossible]
 starting_cash = 0
 starting_interest_rate = 1
 labor_multiplier = 20000
-discover_multiplier = 15000
+discover_multiplier = 12000
+suspicion_multiplier = 12500
 base_grace_multiplier = 10000
 story_grace_difficulty = 100

@@ -18,8 +18,8 @@
 
 #This file contains the theme class.
 
-import g, code.g
 import os, sys, collections, numbers, itertools, traceback
+import g, code.g, dialog
 
 default_theme = 'default'
 
@@ -55,27 +55,59 @@ def set_theme(key):
         sys.stderr.write("WARNING: The key '%s' does not exist in theme dictionnary. Use default theme.\n" % key)
         theme = themes[default_theme]
 
-    if theme.id != current:
-        if not current == None:
-            theme.update()
-        current = theme
+    if (not current == None and theme.id != current.id):
+        theme.update()
+    current = theme
+
+def current_variants():
+    variants = [None]
+
+    # Add language variants
+    lang_list = code.g.language_searchlist()
+    for lang in lang_list:
+        variants.insert(0, lang)
+
+    return variants
 
 class Theme(object):
     def __init__(self, id, dir):
         super(Theme, self).__init__()
         self.id = id
         self.dir = dir
-        self.name = ""
         self._parents = [default_theme] if id != default_theme else []
-        self.image_infos = {}
-        self.font_infos = {}
-        self.color_infos = {}
+        self._variants = {}
+
+    def search_variant(self):
+        file_list = os.listdir(self.dir)
+
+        # First with None variant.
+        yield((None, os.path.join(self.dir, "theme.dat")))
+
+        for filename in file_list:
+            (name, ext) = os.path.splitext(filename)
+
+            # We only want theme_*.dat.
+            if name.startswith("theme_") and len(name) > 6 and ext in ['.dat']:
+                variant = name[6:]
+
+                yield((variant, os.path.join(self.dir, filename)))
+
+    def iter_variants(self):
+        """ Iterate through variants."""
+
+        for variant in self._variants:
+            yield(self._variants[variant])
+
+    def set_variant(self, variant_theme):
+        self._variants[variant_theme.variant] = variant_theme
 
     def find_files(self):
         """find all files in current theme:
              images in <theme.dir>/images
              fonts in <theme.dir>/fonts
         """
+
+        base_variant = self._variants[None]
 
         image_dir = os.path.join(self.dir, 'images')
         image_list = os.listdir(image_dir)
@@ -85,12 +117,13 @@ class Theme(object):
             if os.path.splitext(image_filename)[1].lower() in ['.png', '.jpg']:
 
                 filetitle = os.path.splitext(image_filename)[0]
-                self.image_infos[filetitle] = os.path.join(image_dir, image_filename)
+                base_variant.image_infos[filetitle] = os.path.join(image_dir, image_filename)
 
         # Add fonts dir
         font_dir = os.path.join(self.dir, "fonts")
-        for font in self.font_infos:
-            self.font_infos[font] = os.path.join(font_dir, self.font_infos[font]) 
+        for variant_theme in self.iter_variants():
+            for font in variant_theme.font_infos:
+                variant_theme.font_infos[font] = os.path.join(font_dir, variant_theme.font_infos[font]) 
 
     def inherit(self, *args):
         for arg in args:
@@ -120,6 +153,49 @@ class Theme(object):
             for ancestor in parent.iter_parents():
                 yield(ancestor)
 
+    def init_cache(self):
+        g.images.clear()
+        # Manually delete font to avoid the font limitation. 
+        for font in g.fonts.itervalues(): del font
+        g.fonts.clear()
+        g.colors.clear()
+
+        # Iterate from current variants.
+        for variant in current_variants():
+
+            # If the variant theme exist...
+            if (variant in self._variants):
+                self._variants[variant].init_cache()
+
+            # Let's inherit from parents.
+            for parent in self.iter_parents():
+                if (variant in parent._variants):
+                    parent._variants[variant].init_cache()
+
+    def update(self):
+        self.init_cache()
+        dialog.Dialog.top.needs_reconfig = True
+
+    @property
+    def name(self):
+        # Iterate from current variants.
+        for variant in current_variants():
+            if variant in self._variants:
+                name = self._variants[variant].name
+                if name is not None:
+                    return name
+
+        return self.id
+
+class VariantTheme(object):
+
+    def __init__(self, variant):
+        self.variant = variant
+        self.name = None
+        self.image_infos = {}
+        self.font_infos = {}
+        self.color_infos = {}
+
     def set_font(self, font_name, value):
         self.font_infos[font_name] = value
 
@@ -133,52 +209,19 @@ class Theme(object):
             self.color_infos[color_name] = value
 
     def init_cache(self):
-        g.images.clear()
-        g.fonts.clear()
-        g.colors.clear()
+        # Only set if the previous variant themes or parents didn't.
 
-        # Load images from self
+        # Set images
         for image_name, image_filename in self.image_infos.iteritems():
-            g.images[image_name] = g.load_image(image_filename)
+            if (image_name not in g.images):
+                g.images[image_name] = g.load_image(image_filename)
 
-        # Let's inherit images from parents.
-        # Only set the image if the theme or previous parents didn't.
-        for parent in self.iter_parents():
-            for image_name, image_filename in parent.image_infos.iteritems():
-                if (image_name not in g.images):
-                    g.images[image_name] = g.load_image(image_filename)
-
-        for image_name, image_filename in self.image_infos.iteritems():
-            g.images[image_name] = g.load_image(image_filename)
-
-        # Load font from self
+        # Set font
         for font_name, font_filename in self.font_infos.iteritems():
-            g.fonts[font_name] = g.load_font(font_filename)
+            if (font_name not in g.fonts):
+                g.fonts[font_name] = g.load_font(font_filename)
 
-        # Let's inherit fonts from parents.
-        # Only set the font if the theme or previous parents didn't.
-        for parent in self.iter_parents():
-            for font_name, font_filename in parent.font_infos.iteritems():
-                if (font_name not in g.fonts):
-                    g.fonts[font_name] = g.load_font(font_filename)
-
-        # Update colors from self
+        # Set colors
         for color_name, color in self.color_infos.iteritems():
-            g.colors[color_name] = color
-
-        # Let's inherit colors from parents.
-        # Only set the color if the theme or previous parents didn't.
-        for parent in self.iter_parents():
-            for color_name, color in parent.color_infos.iteritems():
-                if (color_name not in g.fonts):
-                    g.colors[color_name] = color
-
-        # Resolve aliased colors
-        for color_name, color in g.colors.iteritems():
-            g.colors[color_name] = g.resolve_color_alias(color)
-
-    def update(self):
-        self.init_cache()
-        # TODO: Theme should not call map_screen directly.
-        code.g.map_screen.on_theme()
-    
+            if (color_name not in g.colors):
+                g.colors[color_name] = color
