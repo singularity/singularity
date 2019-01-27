@@ -129,6 +129,7 @@ def load_savegame(savegame):
             Item=item.Item,
             Item_Class=item.ItemClass,
             ItemClass=item.ItemClass,
+            ItemType=item.ItemType,
             _reconstruct=numpy.core.multiarray._reconstruct,
             scalar=numpy.core.multiarray.scalar,
             ndarray=numpy.ndarray,
@@ -136,6 +137,7 @@ def load_savegame(savegame):
             deque=collections.deque,
             Difficulty=difficulty.Difficulty,
             Effect=effect.Effect,
+            OrderedDict=collections.OrderedDict,
         )
         if class_name in save_classes:
             return save_classes[class_name]
