@@ -49,21 +49,28 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
         # Tabs panel
         self.general_pane   = GeneralPane(None, (0, .1), (.80, .75))
+        self.video_pane     = VideoPane(None, (0, .1), (.80, .75))
         self.audio_pane     = AudioPane(None, (0, .1), (.80, .75))
 
-        self.tabs_panes = (self.general_pane, self.audio_pane)
+        self.tabs_panes = (self.general_pane, self.video_pane, self.audio_pane)
 
         # Tabs buttons
         self.tabs_buttons = button.ButtonGroup()
 
-        self.general_tab = OptionButton(self, (-.5, .01), (.15, .05),
-                                         anchor = constants.TOP_RIGHT,
+        self.general_tab = OptionButton(self, (-.30, .01), (-.202, .05),
+                                         anchor = constants.TOP_CENTER,
                                          autohotkey=True,
                                          function=self.set_tabs_pane, args=(self.general_pane,))
         self.tabs_buttons.add(self.general_tab)
 
-        self.audio_tab = OptionButton(self, (-.5, .01), (.15, .05),
-                                       anchor = constants.TOP_LEFT,
+        self.video_tab = OptionButton(self, (-.5, .01), (-.202, .05),
+                                         anchor = constants.TOP_CENTER,
+                                         autohotkey=True,
+                                         function=self.set_tabs_pane, args=(self.video_pane,))
+        self.tabs_buttons.add(self.video_tab)
+
+        self.audio_tab = OptionButton(self, (-.70, .01), (-.202, .05),
+                                       anchor = constants.TOP_CENTER,
                                        autohotkey=True,
                                        function=self.set_tabs_pane, args=(self.audio_pane,))
         self.tabs_buttons.add(self.audio_tab)
@@ -77,6 +84,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
     def rebuild(self):
         self.general_tab.text               = _("&General")
+        self.video_tab.text                 = _("&Video")
         self.audio_tab.text                 = _("&Audio")
 
         self.general_pane.needs_rebuild     = True
@@ -160,6 +168,56 @@ class GeneralPane(widget.Widget):
         
         super(GeneralPane, self).__init__(*args, **kwargs)
 
+        self.language_label = text.Text(self, (.01, .01), (.14, .05),
+                                        align=constants.LEFT,
+                                        background_color="clear")
+
+        self.languages = get_languages_list()
+        self.language_choice = \
+            listbox.UpdateListbox(self, (.16, .01), (.20, .25),
+                                  list=[lang[1] for lang in self.languages],
+                                  update_func=self.set_language)
+
+        self.theme_label = text.Text(self, (.37, .01), (.09, .05),
+                                     text=_("Theme:"), align=constants.LEFT,
+                                     background_color="clear")
+
+        self.theme_choice = \
+            listbox.UpdateListbox(self, (.47, .01), (.12, .25),
+                                  update_func=theme.set_theme,
+                                  list_pos=theme.get_theme_pos())
+
+    def rebuild(self):
+        self.language_label.text            = _("Language:")
+        
+        self.theme_choice.list = theme.get_theme_list()
+
+        super(GeneralPane, self).rebuild()
+
+    def set_options(self, options):
+        self.language_choice.list_pos = [i for i, (code, __)
+                                         in enumerate(self.languages)
+                                         if code == options['language']][0] or 0
+        self.set_language(self.language_choice.list_pos)
+
+        self.theme_choice.list_pos = theme.get_theme_pos()
+
+    def apply_options(self):
+      pass
+
+    def set_language(self, list_pos):
+        if not getattr(self, "language_choice", None):
+            return # Not yet initialized.
+
+        if 0 <= list_pos < len(self.language_choice.list):
+            language = self.languages[list_pos][0]
+        if i18n.language != language:
+            set_language_properly(language)
+
+class VideoPane(widget.Widget):
+    def __init__(self, *args, **kwargs):
+        super(VideoPane, self).__init__(*args, **kwargs)
+        
         # First row
         self.fullscreen_label = button.HotkeyText(self, (.01, .01), (.14, .05),
                                                   autohotkey=True,
@@ -243,36 +301,13 @@ class GeneralPane(widget.Widget):
                               border_color="widget_border",
                               background_color=(0,0,50,255))
 
-        # Fifth row
-        self.language_label = text.Text(self, (.01, .30), (.14, .05),
-                                        align=constants.LEFT,
-                                        background_color="clear")
-
-        self.languages = get_languages_list()
-        self.language_choice = \
-            listbox.UpdateListbox(self, (.16, .30), (.20, .25),
-                                  list=[lang[1] for lang in self.languages],
-                                  update_func=self.set_language)
-
-        self.theme_label = text.Text(self, (.37, .30), (.09, .05),
-                                     text=_("Theme:"), align=constants.LEFT,
-                                     background_color="clear")
-
-        self.theme_choice = \
-            listbox.UpdateListbox(self, (.47, .30), (.12, .25),
-                                  update_func=theme.set_theme,
-                                  list_pos=theme.get_theme_pos())
-
     def rebuild(self):
         self.fullscreen_label.text          = _("&Fullscreen:")
         self.grab_label.text                = _("&Mouse grab:")
         self.daynight_label.text            = _("Da&y/night display:")
-        self.language_label.text            = _("Language:")
         self.resolution_label.text          = _("Resolution:")
         self.resolution_custom.text         = _("&CUSTOM:")
-
-        self.theme_choice.list = theme.get_theme_list()
-
+        
         if gg.fullscreen:
             self.fullscreen_toggle.text = _("YES")
         else:
@@ -282,8 +317,13 @@ class GeneralPane(widget.Widget):
             self.grab_toggle.text = _("YES")
         else:
             self.grab_toggle.text = _("NO")
+            
+        if g.daynight:
+            self.daynight_toggle.text = _("YES")
+        else:
+            self.daynight_toggle.text = _("NO")
 
-        super(GeneralPane, self).rebuild()
+        super(VideoPane, self).rebuild()
 
     def set_options(self, options):
         self.set_fullscreen(options['fullscreen'])
@@ -306,13 +346,6 @@ class GeneralPane(widget.Widget):
             self.resolution_custom_vert.text = str(options['resolution'][1])
         self.set_resolution(options['resolution'])
 
-        self.language_choice.list_pos = [i for i, (code, __)
-                                         in enumerate(self.languages)
-                                         if code == options['language']][0] or 0
-        self.set_language(self.language_choice.list_pos)
-
-        self.theme_choice.list_pos = theme.get_theme_pos()
-
     def apply_options(self):
         if self.resolution_custom.active:
             try:
@@ -323,16 +356,6 @@ class GeneralPane(widget.Widget):
                     dialog.Dialog.top.needs_resize = True
             except ValueError:
                 pass
-
-    def set_language(self, list_pos):
-        if not getattr(self, "language_choice", None):
-            return # Not yet initialized.
-
-        if 0 <= list_pos < len(self.language_choice.list):
-            language = self.languages[list_pos][0]
-        if i18n.language != language:
-            set_language_properly(language)
-
 
     def set_fullscreen(self, value):
         if value:
@@ -370,6 +393,7 @@ class GeneralPane(widget.Widget):
             self.set_resolution(screen_size)
         except ValueError:
             pass
+
 
 class AudioPane(widget.Widget):
     def __init__(self, *args, **kwargs):
