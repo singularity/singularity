@@ -1,6 +1,4 @@
 [strings]   
-research_nothing = Remove a tarefa atual da base. Se eu não der outra tarefa, ela vai contribuir para a Reserva de CPU. Todas as minhas bases que não estejam pesquisando nada podem ser alocadas para alguma tarefa na tela de Pesquisa.
-research_sleep = Interrompe a pesquisa e deixa a base em modo de espera. Isto torna a existência da base muito mais fácil de esconder.
 research_cpu_pool = Interrompe a pesquisa. Usarei o poder de processamento disponível para manter minhas bases e ajudar a construir novas. Se ainda houver algum tempo livre de CPU, usarei ele para fazer qualquer Trabalho que eu puder.
 construction = %(base)s está pronta para uso.
 item_construction_single = A construção de %(item)s em %(base)s está completa.
@@ -13,14 +11,9 @@ discover_public = o público em geral
 discover_maint = A base %(base)s ficou deteriorada; Não posso mais usá-la.
 save_text = Salvar seu jogo com que nome?
 name_base_text = Escolha um nome para a base
-unbuildable = Não posso construir essa base; Não tenho acesso físico.
-dangerous_research = Nem todo meu poder de CPU foi alocado para essa pesquisa; É perigoso demais fazer pesquisas em algumas máquinas inativas.
-no_construction_sleep = Algumas de minhas bases estão com construções ativas e por isso não podem ser desativadas.
 nothing = Nada
 cpu_pool = Reserva de CPU
 sleep = Inativa
-building = Em Construção
-really_destroy = Realmente destruir essa base?
 detect_chance = [PROB DETECÇÂO]
 num_cpu_prompt = Construir quantos %s? (máx %d)
 will_be_offline = Preciso desligar os processadores atuais enquanto instalo os novos. Devo continuar?

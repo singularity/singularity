@@ -1,6 +1,4 @@
 [strings]
-research_nothing = Löcht den geläufigen Auftrag dem Stützpunkt.  Wenn ich ihm keine weitere Aufgabe zeweisen, wird er die CPU-Datenbasis mitarbeiten.  Eine Aufgabe kann zusammen an alle Stützpunkte zuweisen werden, die nichts zu forschen haben.
-research_sleep = Forschung aufhalten und der Stützpunkt in Reserve versetzen.  Der Stützpunkt wird viel leichter geheim zu halten werden.
 research_cpu_pool = Forschung anhalten.  Ich werde die verfügbare CPU-Zeit dazu benutzen, meine Stützpunkte zu warten und neue zu bauen.  Wenn noch CPU-Zeit übrig bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
 construction = %(base)s ist für meine Nutzung bereit.
 item_construction_single = Der Bau von %(item)s in %(base)s wurde abgeschlossen.
@@ -13,14 +11,9 @@ discover_public = der Öffentlichkeit
 discover_maint = Die Basis %(base)s ist verfallen; ich kann sie nicht länger benutzen.  
 save_text = Das Spiel unter welchem Namen speichern?
 name_base_text = Einen Namen für die Basis eingeben
-unbuildable = Ich kann in dieser Basis nichts bauen; ich habe keinen physischen Zugang.
-dangerous_research = Nicht alle von meine vorliegende CPU-Zeit würde deiser Forschung zuteilt; sie ist zu gefährlich, auf einige von den inaktiven Computer laufen zu lassen.
-no_construction_sleep = Einige Stützpunkte sind zum Teil im Bau und können deshalb nicht einschlafen.
 nothing = Nichts
 cpu_pool = CPU-Datenbasis
 sleep = Schlafen
-building = Im Bau
-really_destroy = Diesen Stützpunkt wirklich zerstören?
 detect_chance = [ENTDECKUNGSWK.]
 detect_str_low = NIEDR
 detect_str_moderate = MODR
