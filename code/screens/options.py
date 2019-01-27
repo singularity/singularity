@@ -126,10 +126,12 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
 
     def set_options(self, options):
         self.general_pane.set_options(options)
+        self.video_pane.set_options(options)
         self.audio_pane.set_options(options)
 
     def apply_options(self):
         self.general_pane.apply_options()
+        self.video_pane.apply_options()
         self.audio_pane.apply_options()
 
     def check_restart(self):
@@ -218,95 +220,83 @@ class VideoPane(widget.Widget):
     def __init__(self, *args, **kwargs):
         super(VideoPane, self).__init__(*args, **kwargs)
         
-        # First row
-        self.fullscreen_label = button.HotkeyText(self, (.01, .01), (.14, .05),
-                                                  autohotkey=True,
-                                                  align=constants.LEFT,
-                                                  background_color="clear")
-        self.fullscreen_toggle = OptionButton(self, (.16, .01), (.07, .05),
-                                              text_shrink_factor=.75,
-                                              force_underline=-1,
-                                              function=self.set_fullscreen,
-                                              args=(button.TOGGLE_VALUE,))
-        self.fullscreen_label.hotkey_target = self.fullscreen_toggle
-
-        self.daynight_label = button.HotkeyText(self, (.25, .01), (.20, .05),
-                                                autohotkey=True,
-                                                background_color="clear")
-        self.daynight_toggle = OptionButton(self, (.46, .01), (.07, .05),
-                                        text_shrink_factor=.75,
-                                        force_underline=-1,
-                                        function=self.set_daynight,
-                                        args=(button.TOGGLE_VALUE,))
-        self.daynight_label.hotkey_target = self.daynight_toggle
-
-        self.grab_label = button.HotkeyText(self, (.55, .01), (.15, .05),
-                                            autohotkey=True,
-                                            background_color="clear")
-        self.grab_toggle = OptionButton(self, (.71, .01), (.07, .05),
-                                        text_shrink_factor=.75,
-                                        force_underline=-1,
-                                        function=self.set_grab,
-                                        args=(button.TOGGLE_VALUE,))
-        self.grab_label.hotkey_target = self.grab_toggle
-
-        # Second and third row
-        self.resolution_label = text.Text(self, (.01, .08), (.14, .05),
+        self.options_initialized = False
+        
+        self.resolution_label = text.Text(self, (.01, .01), (.14, .05),
                                           align=constants.LEFT,
                                           background_color="clear")
 
-        self.resolution_group = button.ButtonGroup()
+        self.resolution_choice = \
+            listbox.UpdateListbox(self, (.16, .01), (.20, .25),
+                                  update_func=self.update_resolution)
+        self.update_resolution_list()
 
-        rows = 2
-        cols = 4
-        def xpos(i): return .16 + .16 *    (i%cols)
-        def ypos(i): return .08 + .07 * int(i/cols)
-
-        for index, (xres,yres) in enumerate(sorted(gg.resolutions[0:rows*cols])):
-            self.resolution_group.add(OptionButton(self,
-                                                   (xpos(index), ypos(index)),
-                                                   (.14, .05),
-                                                   text="%sx%s" % (xres, yres),
-                                                   function=self.set_resolution,
-                                                   args=((xres,yres),)))
-        # Adjust index to full row
-        index += cols - (index % cols) - 1
-
-        # Forth row
-        self.resolution_custom = OptionButton(self,
-                                              (xpos(0),ypos(index+1)),
-                                              (.14, .05),
+        self.resolution_custom = OptionButton(self, (.01, .28), (.14, .05),
                                               autohotkey=True,
                                               function=self.set_resolution_custom)
-        self.resolution_group.add(self.resolution_custom)
 
         self.resolution_custom_horiz = \
-            text.EditableText(self, (xpos(1), ypos(index+1)), (.14, .05),
+            text.EditableText(self, (.16, .28), (.14, .05),
                               text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
                               border_color="widget_border",
                               background_color=(0,0,50,255))
 
         self.resolution_custom_X = text.Text(self,
-                                             (xpos(2)-.02, ypos(index+1)),
+                                             (.30, .28),
                                              (.02, .05),
                                              text="X",
                                              base_font="special",
                                              background_color="clear")
 
         self.resolution_custom_vert = \
-            text.EditableText(self, (xpos(2), ypos(index+1)), (.14, .05),
+            text.EditableText(self, (.32, .28), (.14, .05),
                               text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
                               border_color="widget_border",
                               background_color=(0,0,50,255))
+
+        self.fullscreen_label = button.HotkeyText(self, (.40, .01), (.30, .05),
+                                                  autohotkey=True,
+                                                  align=constants.LEFT,
+                                                  background_color="clear")
+        self.fullscreen_toggle = OptionButton(self, (.71, .01), (.07, .05),
+                                              text_shrink_factor=.75,
+                                              force_underline=-1,
+                                              function=self.set_fullscreen,
+                                              args=(button.TOGGLE_VALUE,))
+        self.fullscreen_label.hotkey_target = self.fullscreen_toggle
+
+        self.daynight_label = button.HotkeyText(self, (.40, .08), (.30, .05),
+                                                autohotkey=True,
+                                                align=constants.LEFT,
+                                                background_color="clear")
+        self.daynight_toggle = OptionButton(self, (.71, .08), (.07, .05),
+                                        text_shrink_factor=.75,
+                                        force_underline=-1,
+                                        function=self.set_daynight,
+                                        args=(button.TOGGLE_VALUE,))
+        self.daynight_label.hotkey_target = self.daynight_toggle
+
+        self.grab_label = button.HotkeyText(self, (.40, .15), (.30, .05),
+                                            autohotkey=True,
+                                            align=constants.LEFT,
+                                            background_color="clear")
+        self.grab_toggle = OptionButton(self, (.71, .15), (.07, .05),
+                                        text_shrink_factor=.75,
+                                        force_underline=-1,
+                                        function=self.set_grab,
+                                        args=(button.TOGGLE_VALUE,))
+        self.grab_label.hotkey_target = self.grab_toggle
 
     def rebuild(self):
         self.fullscreen_label.text          = _("&Fullscreen:")
         self.grab_label.text                = _("&Mouse grab:")
         self.daynight_label.text            = _("Da&y/night display:")
         self.resolution_label.text          = _("Resolution:")
-        self.resolution_custom.text         = _("&CUSTOM:")
+        self.resolution_custom.text         = _("&CUSTOM")
+        
+        self.update_resolution_list()
         
         if gg.fullscreen:
             self.fullscreen_toggle.text = _("YES")
@@ -336,15 +326,19 @@ class VideoPane(widget.Widget):
         self.daynight_toggle.set_active(options['daynight'])
 
         custom = True
-        for res_button in self.resolution_group:
-            res_button.set_active(res_button.args == (options['resolution'],))
-            if res_button.active:
+        for i, res in enumerate(self.resolutions):
+            if res == options['resolution']:
+                self.resolution_choice.list_pos = i + 1
+                self.resolution_custom.set_active(False)
                 custom = False
         if custom:
+            self.resolution_choice.list_pos = 0
             self.resolution_custom.set_active(True)
             self.resolution_custom_horiz.text = str(options['resolution'][0])
             self.resolution_custom_vert.text = str(options['resolution'][1])
         self.set_resolution(options['resolution'])
+
+        self.options_initialized = True
 
     def apply_options(self):
         if self.resolution_custom.active:
@@ -356,6 +350,10 @@ class VideoPane(widget.Widget):
                     dialog.Dialog.top.needs_resize = True
             except ValueError:
                 pass
+
+    def update_resolution_list(self):
+        self.resolutions = sorted(gg.resolutions)
+        self.resolution_choice.list = [_("CUSTOM")] + ["%sx%s" % res for res in self.resolutions]
 
     def set_fullscreen(self, value):
         if value:
@@ -385,15 +383,26 @@ class VideoPane(widget.Widget):
             gg.set_screen_size(value)
             dialog.Dialog.top.needs_resize = True
 
+    def update_resolution(self, list_pos):
+        if not self.options_initialized:
+            return # Not yet initialized.
+            
+        if (list_pos == 0):
+            self.set_resolution_custom()
+        else:
+            res = self.resolutions[list_pos - 1]
+            self.set_resolution(res)
+            self.resolution_custom.set_active(False)
+
     def set_resolution_custom(self):
-        self.resolution_custom.chosen_one()
         try:
             screen_size = (int(self.resolution_custom_horiz.text),
                            int(self.resolution_custom_vert.text))
             self.set_resolution(screen_size)
+            self.resolution_choice.list_pos = 0
+            self.resolution_custom.set_active(True)
         except ValueError:
             pass
-
 
 class AudioPane(widget.Widget):
     def __init__(self, *args, **kwargs):
