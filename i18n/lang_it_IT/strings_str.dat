@@ -1,12 +1,8 @@
 [strings]
-discover_public = l'opinione pubblica
 money = Denaro
-discover = Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra %(group)s.
 name_base_text = Inserire un nome per la base
 sleep = Dormiente
-discover_science = la comunità scientifica
 cpu_per_day = Potenza di calcolo per giorno
-discover_news = alcune agenzie di informazione
 detect_str_low = BASSA
 money_per_day = Denaro per giorno.
 nan = Questo non sembra essere un numero valido.
@@ -23,16 +19,12 @@ detect_str_critical = CRITICA
 item_construction_single = La costruzione di %(item)s nella base di %(base)s è completa.
 construction = La base %(base)s è pronta all'uso.
 tech_gained = Il mio studio di %(tech)s è completo.  %(tech_message)s
-discover_maint = Alla base %(base)s non è stata eseguita la manutenzione; non posso più usarla.
 will_be_offline = Avrò bisogno di disconnettere i processori attuali mentre installo quelli nuovi.  Continuare comunque?
 danger_4 = al di fuori dell'Universo
 danger_1 = nelle profondità marine o nello spazio
 danger_2 = nello spazio
 danger_3 = lontano da questo pianeta
-discover_covert = diversi servizi segreti governativi
 nothing = Niente
 num_cpu_prompt = Inserire il numero di %s da costruire. (max %d)
 cpu = CPU
 save_text = Con che nome salvare la partita?
-
-
