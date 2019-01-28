@@ -22,6 +22,7 @@
 #IMPORTANT: A portion of translation is still done with data files in g.
 
 import os
+import sys
 import polib
 import locale
 
