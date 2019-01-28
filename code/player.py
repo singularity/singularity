@@ -28,6 +28,36 @@ import g, difficulty, task, chance
 from graphics import g as gg
 from buyable import cash, cpu
 
+
+BASE_DESTROYED_MESSAGE = {
+    'maint': {
+        'log_entry': N_('Base %(base)s of type %(base_type)s destroyed at location %(location)s. Maintenance failed.'),
+        'warning': N_('The base %(base)s has fallen into disrepair; I can no longer use it.'),
+    },
+    'news': {
+        'log_entry': N_('Base %(base)s of type %(base_type)s discovered at location %(location)s by some news organizations.'),
+        'warning': N_('My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among some news organizations.'),
+    },
+    'science': {
+        'log_entry': N_('Base %(base)s of type %(base_type)s discovered at location %(location)s by the scientific community.'),
+        'warning': N_('My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among the scientific community.'),
+    },
+    'covert': {
+        'log_entry': N_('Base %(base)s of type %(base_type)s discovered at location %(location)s by several secret governmental organizations.'),
+        'warning': N_('My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among several secret governmental organizations'),
+    },
+    'public': {
+        'log_entry': N_('Base %(base)s of type %(base_type)s discovered at location %(location)s by the general public.'),
+        'warning': N_('My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among the general public.'),
+    },
+    # Fallback message if none of the others match (should not happen)
+    'unknown': {
+        'log_entry': N_('Base %(base)s of type %(base_type)s discovered at location %(location)s by ???.'),
+        'warning': N_('My use of %(base)s has been discovered. The automatic security systems removed all conclusive evidence, but suspicions have arisen among ???.'),
+    }
+}
+
+
 group_list = {}
 class Group(object):
     discover_suspicion = 1000
@@ -634,25 +664,23 @@ class Player(object):
     def remove_bases(self, dead_bases):
         discovery_locs = []
         for base, reason in dead_bases:
-            base_name = base.name
+            dialog_string_args = {
+                'base': base.name,
+                'location': base.location.id,
+                'base_type': base.type.id,
+            }
+            try:
+                destroy_messages = BASE_DESTROYED_MESSAGE[reason]
+            except KeyError:
+                print "Error: base destroyed for unknown reason: " + reason
+                destroy_messages = BASE_DESTROYED_MESSAGE['unknown']
 
-            if reason == "maint":
-                dialog_string = g.strings["discover_maint"] % \
-                                {"base": base_name}
-
-            elif reason in self.groups:
+            if reason in self.groups:
                 discovery_locs.append(base.location)
                 self.groups[reason].discovered_a_base()
-                detect_phrase = g.strings["discover_" + reason]
 
-                dialog_string = g.strings["discover"] % \
-                                {"base": base_name, "group": detect_phrase}
-            else:
-                print "Error: base destroyed for unknown reason: " + reason
-                dialog_string = g.strings["discover"] % \
-                                {"base": base_name, "group": "???"}
-
-            self.add_log("log_destroy", reason, base.name, base.type.id, base.location.id)
+            self.add_log("log_destroy", destroy_messages['log_entry'], dialog_string_args)
+            dialog_string = _(destroy_messages['warning']) % dialog_string_args
 
             self.pause_game()
             base.destroy()

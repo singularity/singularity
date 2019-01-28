@@ -58,16 +58,10 @@ class LogScreen(dialog.ChoiceDialog):
         return method(log_name, log_data)
         
     def create_log_destroy_text(self, log_name, log_data):
-        reason = log_data[0] # reason
-        name = log_data[1] # base.name
-        
-        log_format = log_name + '_' + reason if reason else log_name
-        
-        # Get BASE and LOCATION from id
-        base_type = g.base_type[log_data[2]] # base.type.id
-        location = g.locations[log_data[3]] # base.location.id
-        
-        return g.strings[log_format] % (name, base_type.name, location.name)
+        msg = log_data[0]
+        format_args = log_data[1]
+
+        return _(msg) % format_args
 
     def create_log_event_text(self, log_name, log_data):
         event = g.events[log_data[0]] # event.id
