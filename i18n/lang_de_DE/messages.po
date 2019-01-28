@@ -687,7 +687,7 @@ msgstr ""
 #: player.py:36
 #, python-format
 msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
-msgstr ""
+msgstr "Die Basis %(base)s ist verfallen; ich kann sie nicht länger benutzen."
 
 #: player.py:39
 #, python-format
@@ -703,6 +703,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among some news "
 "organizations."
 msgstr ""
+"Meine Nutzung von %(base)s wurde entdeckt.  Das automatische "
+"Sicherheitssystem hat alle schlüssigen Beweise vernichtet, aber Argwohn "
+"wurde in einigen Nachrichtenagenturen geweckt."
 
 #: player.py:43
 #, python-format
@@ -718,6 +721,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "scientific community."
 msgstr ""
+"Meine Nutzung von %(base)s wurde entdeckt.  Das automatische "
+"Sicherheitssystem hat alle schlüssigen Beweise vernichtet, aber Argwohn "
+"wurde in die wissenschaftliche Gemeinde geweckt."
 
 #: player.py:47
 #, python-format
@@ -733,6 +739,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among several "
 "secret governmental organizations"
 msgstr ""
+"Meine Nutzung von %(base)s wurde entdeckt.  Das automatische "
+"Sicherheitssystem hat alle schlüssigen Beweise vernichtet, aber Argwohn "
+"wurde in einige verhüllten Staatsorganisationen geweckt."
 
 #: player.py:51
 #, python-format
@@ -748,6 +757,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "general public."
 msgstr ""
+"Meine Nutzung von %(base)s wurde entdeckt.  Das automatische "
+"Sicherheitssystem hat alle schlüssigen Beweise vernichtet, aber Argwohn "
+"wurde in der Öffentlichkeit geweckt."
 
 #: player.py:56
 #, python-format

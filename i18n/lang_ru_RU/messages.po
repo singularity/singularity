@@ -689,19 +689,21 @@ msgstr "Стоимость:"
 msgid ""
 "Base %(base)s of type %(base_type)s destroyed at location %(location)s. "
 "Maintenance failed."
-msgstr ""
+msgstr "База %(base)s пришла в негодность. Я больше не могу её использовать."
 
 #: player.py:36
 #, python-format
 msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
-msgstr ""
+msgstr "Не удалось выполнить техническое обслуживание. База %(base)s типа "
+"%(base_type)s уничтожена в %(location)s."
 
 #: player.py:39
 #, python-format
 msgid ""
 "Base %(base)s of type %(base_type)s discovered at location %(location)s by "
 "some news organizations."
-msgstr ""
+msgstr "Некоторыми СМИ была раскрыта база %(base)s типа %(base_type)s в "
+"%(location)s."
 
 #: player.py:40
 #, python-format
@@ -709,14 +711,17 @@ msgid ""
 "My use of %(base)s has been discovered. The automatic security systems "
 "removed all conclusive evidence, but suspicions have arisen among some news "
 "organizations."
-msgstr ""
+msgstr "Было обнаружено мое использование %(base)s. Автоматические системы "
+"безопасности удалили все убедительные доказательства, но подозрения возникли "
+"среди некоторых СМИ."
 
 #: player.py:43
 #, python-format
 msgid ""
 "Base %(base)s of type %(base_type)s discovered at location %(location)s by "
 "the scientific community."
-msgstr ""
+msgstr "Научным сообществом была обнаружена база %(base)s типа %(base_type)s "
+"в %(location)s."
 
 #: player.py:44
 #, python-format
@@ -725,13 +730,17 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "scientific community."
 msgstr ""
+"Было обнаружено мое использование %(base)s. Автоматические системы "
+"безопасности удалили все убедительные доказательства, но подозрения "
+"возникли среди научного сообщества."
 
 #: player.py:47
 #, python-format
 msgid ""
 "Base %(base)s of type %(base_type)s discovered at location %(location)s by "
 "several secret governmental organizations."
-msgstr ""
+msgstr "Некоторыми правительственными спец-службами была обнаружена база "
+"%(base)s типа %(base_type)s в %(location)s."
 
 #: player.py:48
 #, python-format
@@ -740,13 +749,17 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among several "
 "secret governmental organizations"
 msgstr ""
+"Было обнаружено мое использование %(base)s. Автоматические системы "
+"безопасности удалили все убедительные доказательства, но подозрения возникли "
+"среди некоторых правительственных спец-служб."
 
 #: player.py:51
 #, python-format
 msgid ""
 "Base %(base)s of type %(base_type)s discovered at location %(location)s by "
 "the general public."
-msgstr ""
+msgstr "Общественность обнаружила базу %(base)s типа %(base_type)s в "
+"%(location)s."
 
 #: player.py:52
 #, python-format
@@ -755,6 +768,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "general public."
 msgstr ""
+"Было обнаружено мое использование %(base)s. Автоматические системы "
+"безопасности удалили все убедительные доказательства, но подозрения "
+"возникли среди общественности."
 
 #: player.py:56
 #, python-format

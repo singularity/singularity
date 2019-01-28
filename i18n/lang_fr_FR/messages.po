@@ -694,7 +694,7 @@ msgstr ""
 #: player.py:36
 #, python-format
 msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
-msgstr ""
+msgstr "La base %(base)s est irrécupérable; Je ne peux plus l'utiliser."
 
 #: player.py:39
 #, python-format
@@ -710,6 +710,8 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among some news "
 "organizations."
 msgstr ""
+"Ma cachette %(base)s a été découverte. Le système de sécurité a effacé toutes "
+"les preuves flagrantes mais la suspicion de la presse vient d'augmenter."
 
 #: player.py:43
 #, python-format
@@ -725,6 +727,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "scientific community."
 msgstr ""
+"Ma cachette %(base)s a été découverte. Le système de sécurité a effacé toutes "
+"les preuves flagrantes mais la suspicion de la communauté scientifique vient "
+"d'augmenter."
 
 #: player.py:47
 #, python-format
@@ -740,6 +745,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among several "
 "secret governmental organizations"
 msgstr ""
+"Ma cachette %(base)s a été découverte. Le système de sécurité a effacé toutes "
+"les preuves flagrantes mais la suspicion de plusieurs organisation "
+"gouvernementales secrètes vient d'augmenter."
 
 #: player.py:51
 #, python-format
@@ -755,6 +763,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "general public."
 msgstr ""
+"Ma cachette %(base)s a été découverte. Le système de sécurité a effacé toutes "
+"les preuves flagrantes mais la suspicion de l'opinion publique vient "
+"d'augmenter."
 
 #: player.py:56
 #, python-format

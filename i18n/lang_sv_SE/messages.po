@@ -687,7 +687,7 @@ msgstr ""
 #: player.py:36
 #, python-format
 msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
-msgstr ""
+msgstr "%(base)s har förfalligt och är nu oanvändbar för mig."
 
 #: player.py:39
 #, python-format
@@ -703,6 +703,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among some news "
 "organizations."
 msgstr ""
+"De har upptäckt att jag använder %(base)s. Det automatiska "
+"säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har "
+"ökat hos några nyhetsorganisationer."
 
 #: player.py:43
 #, python-format
@@ -718,6 +721,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "scientific community."
 msgstr ""
+"De har upptäckt att jag använder %(base)s. Det automatiska "
+"säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har "
+"ökat hos vetenskapssällskapet."
 
 #: player.py:47
 #, python-format
@@ -733,6 +739,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among several "
 "secret governmental organizations"
 msgstr ""
+"De har upptäckt att jag använder %(base)s. Det automatiska "
+"säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har "
+"ökat hos olika underättelsetjänstorganisationer."
 
 #: player.py:51
 #, python-format
@@ -748,6 +757,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "general public."
 msgstr ""
+"De har upptäckt att jag använder %(base)s. Det automatiska "
+"säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har "
+"ökat hos Allmänheten."
 
 #: player.py:56
 #, python-format

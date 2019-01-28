@@ -688,7 +688,7 @@ msgstr ""
 #: player.py:36
 #, python-format
 msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
-msgstr ""
+msgstr "La base %(base)s ha caído en el descuido; no puedo seguir utilizándola."
 
 #: player.py:39
 #, python-format
@@ -704,6 +704,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among some news "
 "organizations."
 msgstr ""
+"Mi uso de %(base)s ha sido descubierto. Los sistemas de seguridad "
+"automáticos han removido todas las evidencias concluyentes, pero ha "
+"surgido sospecha entre algunas organizaciones de noticias."
 
 #: player.py:43
 #, python-format
@@ -719,6 +722,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "scientific community."
 msgstr ""
+"Mi uso de %(base)s ha sido descubierto. Los sistemas de seguridad "
+"automáticos han removido todas las evidencias concluyentes, pero ha "
+"surgido sospecha entre la comunidad científica."
 
 #: player.py:47
 #, python-format
@@ -734,6 +740,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among several "
 "secret governmental organizations"
 msgstr ""
+"Mi uso de %(base)s ha sido descubierto. Los sistemas de seguridad "
+"automáticos han removido todas las evidencias concluyentes, pero ha "
+"surgido sospecha entre varias organizaciones gubernamentales."
 
 #: player.py:51
 #, python-format
@@ -749,6 +758,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "general public."
 msgstr ""
+"Mi uso de %(base)s ha sido descubierto. Los sistemas de seguridad "
+"automáticos han removido todas las evidencias concluyentes, pero ha "
+"surgido sospecha entre el público en general."
 
 #: player.py:56
 #, python-format

@@ -687,7 +687,8 @@ msgstr ""
 #: player.py:36
 #, python-format
 msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
-msgstr ""
+msgstr "Alla base %(base)s non è stata eseguita la manutenzione; non posso "
+"più usarla."
 
 #: player.py:39
 #, python-format
@@ -703,6 +704,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among some news "
 "organizations."
 msgstr ""
+"Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici "
+"hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra "
+"alcune agenzie di informazione."
 
 #: player.py:43
 #, python-format
@@ -718,6 +722,10 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "scientific community."
 msgstr ""
+"Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici "
+"hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra la "
+"comunità scientifica."
+
 
 #: player.py:47
 #, python-format
@@ -733,6 +741,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among several "
 "secret governmental organizations"
 msgstr ""
+"Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici "
+"hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra "
+"diversi servizi segreti governativi."
 
 #: player.py:51
 #, python-format
@@ -748,6 +759,9 @@ msgid ""
 "removed all conclusive evidence, but suspicions have arisen among the "
 "general public."
 msgstr ""
+"Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici "
+"hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra "
+"l'opinione pubblica."
 
 #: player.py:56
 #, python-format
