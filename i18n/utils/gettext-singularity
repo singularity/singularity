@@ -136,6 +136,7 @@ xgettext --language=Python \
          --from-code=UTF-8 \
          --force-po        \
          --add-comments    \
+         --keyword=N_      \
          --package-name=singularity \
          --package-version=$(awk -F'['\'\"']' '/^version *= */{print $2}' g.py) \
          --msgid-bugs-address="endgame-singularity-dev@googlegroups.com" \

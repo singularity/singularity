@@ -135,6 +135,15 @@ def translate(string, *args, **kwargs):
 
     return s
 
+def N_(x):
+    """Identify function used for marking a string for translation
+
+    Useful for marking "constant" strings for translation but leaving the actual
+    translation for later.
+    """
+    return x
+
 # Initialization code
 import __builtin__
 __builtin__.__dict__['_'] = translate
+__builtin__.__dict__['N_'] = N_
