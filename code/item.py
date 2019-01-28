@@ -113,7 +113,7 @@ class ItemClass(buyable.BuyableClass):
         if self.item_type.id == "cpu":
             bonus_text += _("CPU per day:")+" "
             bonus_text += g.add_commas(self.item_qual)
-        elif self.item_type.id == reactor_type:
+        elif self.item_type.id == "reactor":
             bonus_text += _("Detection chance reduction:")+" "
             bonus_text += g.to_percent(self.item_qual)
         elif self.item_type.id == "network":
