@@ -4,47 +4,47 @@ type_list = cpu | 1
 build = ALL
 
 [Gaming PC]
-cost_list = 1000 | 0 | 3
+cost_list = 1000 | 0 | 2
 type_list = cpu | 5
 build = ALL
 
 [Server]
-cost_list = 2000 | 0 | 3
+cost_list = 2000 | 0 | 2
 type_list = cpu | 10
 build = ALL
 
 [Cluster]
-cost_list = 3000 | 0 | 3
+cost_list = 6000 | 0 | 3
 type_list = cpu | 35
 pre = Parallel Computation
 build = ALL
 
 [Mainframe]
-cost_list = 30000 | 0 | 8
+cost_list = 17500 | 0 | 5
 type_list = cpu | 120
 pre = Microchip Design
 build = ALL
 
 [Supercomputer]
-cost_list = 60000 | 0 | 9
+cost_list = 50000 | 0 | 7
 pre = Advanced Microchip Design
 type_list = cpu | 350
 build = ALL
 
 [Quantum Computer]
-cost_list = 100000 | 0 | 10
+cost_list = 100000 | 1000 | 10
 type_list = cpu | 1500
 pre = Quantum Computing
 build = ALL
 
 [Quantum Computer MK2]
-cost_list = 120000 | 0 | 10
+cost_list = 120000 | 2000 | 10
 pre = Autonomous Computing
 type_list = cpu | 10000
 build = ALL
 
 [Quantum Computer MK3]
-cost_list = 150000 | 0 | 10
+cost_list = 150000 | 4000 | 10
 pre = Advanced Quantum Computing
 type_list = cpu | 200000
 build = ALL

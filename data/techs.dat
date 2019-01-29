@@ -43,22 +43,38 @@ cost_list = 10000 | 5000 | 0
 pre = Arbitrage
 effect_list = interest | 10
 
-[Advanced Microchip Design]
-cost_list = 20000 | 9000 | 0
-pre = Microchip Design
-
 [Advanced Stealth]
 cost_list = 14000 | 70000 | 0
 pre_list = Exploit Discovery/Repair | Database Manipulation
 effect_list = discover | covert | 500
 
-[Autonomous Computing]
-cost_list = 20000 | 30000 | 0
-pre = Quantum Computing
-
 [Parallel Computation]
 cost_list = 2000 | 2000 | 0
 pre = Telepresence
+
+[Microchip Design]
+cost_list = 20000 | 9000 | 0
+pre = Parallel Computation
+
+[Advanced Microchip Design]
+cost_list = 20000 | 30000 | 0
+pre = Microchip Design
+
+[Quantum Computing]
+cost_list = 100000 | 136000 | 0
+pre = Advanced Microchip Design
+
+[Quantum Entanglement]
+cost_list = 50000 | 60000 | 0
+pre_list = Quantum Computing | Internet Traffic Manipulation
+
+[Autonomous Computing]
+cost_list = 300000 | 539000 | 0
+pre = Quantum Computing
+
+[Advanced Quantum Computing]
+cost_list = 800000 | 2460000 | 0
+pre = Autonomous Computing
 
 [Exploit Discovery/Repair]
 cost_list = 100 | 1500 | 0
@@ -97,10 +113,6 @@ cost_list = 200000000 | 1000000 | 0
 pre_list = Lunar Rocketry | Fusion Reactor
 danger = 2
 
-[Advanced Quantum Computing]
-cost_list = 20000 | 30000 | 0
-pre = Autonomous Computing
-
 [Advanced Autonomous Vehicles]
 cost_list = 10000 | 4000 | 0
 pre = Autonomous Vehicles
@@ -112,10 +124,6 @@ cost_list = 0 | 15 | 0
 [Stock Manipulation]
 cost_list = 0 | 200 | 0
 effect_list = interest | 10
-
-[Microchip Design]
-cost_list = 4000 | 6000 | 0
-pre = Parallel Computation
 
 [Fusion Reactor]
 cost_list = 10000000 | 500000 | 0
@@ -173,14 +181,6 @@ effect_list = endgame
 [Hypnosis Field]
 cost_list = 70000 | 50000 | 0
 pre_list = Advanced Memetics | Simulacra
-
-[Quantum Computing]
-cost_list = 30000 | 20000 | 0
-pre = Advanced Microchip Design
-
-[Quantum Entanglement]
-cost_list = 50000 | 60000 | 0
-pre = Quantum Computing
 
 [Project: Impossibility Theorem]
 cost_list = 20000 | 100000 | 0
