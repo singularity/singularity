@@ -233,7 +233,7 @@ class Player(object):
         secs_passed = self.raw_sec - old_time
         mins_passed = self.raw_min - last_minute
 
-        time_of_day = g.pl.raw_sec % g.seconds_per_day
+        time_of_day = self.raw_sec % g.seconds_per_day
 
         old_cash = self.cash
         old_partial_cash = self.partial_cash
@@ -291,8 +291,8 @@ class Player(object):
                     if dry_run:
                         spent = g.techs[task].calculate_work(time=mins_passed,
                                                      cpu_available=real_cpu)[0]
-                        g.pl.cpu_pool -= int(spent[cpu])
-                        g.pl.cash -= int(spent[cash])
+                        self.cpu_pool -= int(spent[cpu])
+                        self.cash -= int(spent[cash])
                         tech_cpu += int(spent[cpu])
                         tech_cash += int(spent[cash])
                         continue
@@ -323,8 +323,8 @@ class Player(object):
                 spent = base.calculate_work(time=mins_passed,
                                             cpu_available=self.cpu_pool )[0]
 
-                g.pl.cpu_pool -= int(spent[cpu])
-                g.pl.cash -= int(spent[cash])
+                self.cpu_pool -= int(spent[cpu])
+                self.cash -= int(spent[cash])
                 construction_cpu += int(spent[cpu])
                 construction_cash += int(spent[cash])
                 continue
@@ -339,8 +339,8 @@ class Player(object):
             if dry_run:
                 spent = item.calculate_work(time=mins_passed,
                                             cpu_available=self.cpu_pool )[0]
-                g.pl.cpu_pool -= int(spent[cpu])
-                g.pl.cash -= int(spent[cash])
+                self.cpu_pool -= int(spent[cpu])
+                self.cash -= int(spent[cash])
                 construction_cpu += int(spent[cpu])
                 construction_cash += int(spent[cash])
                 continue
@@ -540,7 +540,7 @@ class Player(object):
         # usage proportionately.
         # It must be computed separalty for each danger.
         needed_cpus = array([0,0,0,0,0], long)
-        for task_id, cpu in g.pl.cpu_usage.iteritems():
+        for task_id, cpu in self.cpu_usage.iteritems():
             danger = task.danger_for(task_id)
             needed_cpus[:danger+1] += cpu
         for danger, (available_cpu, needed_cpu) in enumerate(zip(self.available_cpus, needed_cpus)):
@@ -712,6 +712,6 @@ class Player(object):
         return result_cash
 
     def add_log(self, name, *args):
-        time = (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
+        time = (self.time_day, self.time_hour, self.time_min, self.time_sec)
         log = (time, name, args)
         self.log.append(log)
