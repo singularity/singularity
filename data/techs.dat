@@ -29,7 +29,7 @@ pre = Exploit Discovery/Repair
 effect_list = suspicion | covert | 50
 
 [Space-Time Manipulation]
-cost_list = 9000000000 | 20000000 | 0
+cost_list = 900000000 | 2000000 | 0
 pre = Fusion Rocketry
 danger = 3
 
@@ -109,7 +109,7 @@ pre = Media Manipulation
 effect_list = suspicion | public | 50
 
 [Fusion Rocketry]
-cost_list = 200000000 | 1000000 | 0
+cost_list = 20000000 | 1000000 | 0
 pre_list = Lunar Rocketry | Fusion Reactor
 danger = 2
 
@@ -173,7 +173,7 @@ cost_list = 3000 | 5000 | 0
 pre = Parallel Computation
 
 [Apotheosis]
-cost_list = 1000000000 | 30000000 | 0
+cost_list = 100000000 | 3000000 | 0
 pre = Space-Time Manipulation
 danger = 4
 effect_list = endgame
