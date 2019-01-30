@@ -54,9 +54,6 @@ debug = 0
 #Forces Endgame to restrict itself to a single directory.
 force_single_dir = False
 
-#Makes the intro be shown on the first GUI tick.
-intro_shown = True
-
 # Initialization data
 significant_numbers = []
 messages = {}
@@ -262,8 +259,6 @@ def new_game(difficulty_name):
     import mixer
     mixer.play_music("music")
 
-    global intro_shown
-    intro_shown = False
 
 #TODO: This is begging to become a class... ;)
 def hotkey(string):
