@@ -84,8 +84,9 @@ class Group(object):
 class DryRunInfo(object):
     pass
 
+
 class Player(object):
-    intro_shown = False
+
     def __init__(self, cash=0, time_sec=0, time_min=0, time_hour=0, time_day=0,
                  difficulty = 5):
         self.difficulty = difficulty
@@ -111,6 +112,9 @@ class Player(object):
         self.job_bonus = 10000
 
         self.partial_cash = 0
+
+        #Makes the intro be shown on the first GUI tick.
+        self.intro_shown = False
 
         self.groups = collections.OrderedDict([
             ("news",    Group("news",    suspicion_decay = 150)),
