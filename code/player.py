@@ -180,12 +180,6 @@ class Player(object):
         # Overflow
         self.time_day = self.raw_day
 
-    def mins_to_next_day(self):
-        return (-self.raw_min % g.minutes_per_day) or g.minutes_per_day
-
-    def seconds_to_next_day(self):
-        return (-self.raw_sec % g.seconds_per_day) or g.seconds_per_day
-
     def do_jobs(self, cpu_time):
         earned, self.partial_cash = self.get_job_info(cpu_time)
         self.cash += earned
