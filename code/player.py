@@ -240,7 +240,6 @@ class Player(object):
 
         techs_researched = []
         bases_constructed = []
-        cpus_constructed = []
         items_constructed = []
 
         bases_under_construction = []
