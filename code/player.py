@@ -122,8 +122,6 @@ class Player(object):
         self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""
 
-        self.maintenance_cost = array((0,0,0), long)
-
         self.cpu_usage = {}
         self.available_cpus = [1, 0, 0, 0, 0]
         self.sleeping_cpus = 0
@@ -247,25 +245,25 @@ class Player(object):
         self.cpu_pool = 0
 
         # Collect base info, including maintenance.
-        self.maintenance_cost = array( (0,0,0), long )
+        maintenance_cost = array((0, 0, 0), long)
         for base in g.all_bases():
             if not base.done:
                 bases_under_construction.append(base)
             else:
                 items_under_construction += [(base, item) for item in base.all_items()
                                                           if item and not item.done]
-                self.maintenance_cost += base.maintenance
+                maintenance_cost += base.maintenance
 
         # Maintenance?  Gods don't need no stinking maintenance!
         if self.apotheosis:
-            self.maintenance_cost = array( (0,0,0), long )
+            maintenance_cost = array((0, 0, 0), long)
 
         # Any CPU explicitly assigned to jobs earns its dough.
         job_cpu = self.cpu_usage.get("jobs", 0) * secs_passed
         explicit_job_cash = self.do_jobs(job_cpu)
 
         # Pay maintenance cash, if we can.
-        cash_maintenance = g.current_share(int(self.maintenance_cost[cash]),
+        cash_maintenance = g.current_share(int(maintenance_cost[cash]),
                                            time_of_day, secs_passed)
         full_cash_maintenance = cash_maintenance
         if cash_maintenance > self.cash:
@@ -307,7 +305,7 @@ class Player(object):
 
         # And now we use the CPU pool.
         # Maintenance CPU.
-        cpu_maintenance = self.maintenance_cost[cpu] * secs_passed
+        cpu_maintenance = maintenance_cost[cpu] * secs_passed
         if cpu_maintenance > self.cpu_pool:
             cpu_maintenance -= self.cpu_pool
             self.cpu_pool = 0
@@ -405,7 +403,7 @@ class Player(object):
             cpu_info.tech = tech_cpu * cpu_ratio_secs
             cpu_info.construction = construction_cpu * cpu_ratio_secs
 
-            cpu_info.maintenance_needed = self.maintenance_cost[cpu] * cpu_ratio
+            cpu_info.maintenance_needed = maintenance_cost[cpu] * cpu_ratio
             cpu_info.maintenance_shortfall = cpu_maintenance * cpu_ratio_secs
             cpu_info.maintenance = cpu_info.maintenance_needed \
                                    - cpu_info.maintenance_shortfall
