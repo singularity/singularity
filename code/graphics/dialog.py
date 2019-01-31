@@ -690,8 +690,8 @@ class SimpleMenuDialog(Dialog):
         self.button_panel = \
             widget.BorderedWidget(self, (-.5, -.5), (0.22, 0.43),
                                   anchor=constants.MID_CENTER,
-                                  background_color="dark_blue",
-                                  border_color="white",
+                                  background_color="simple_menu_background",
+                                  border_color="simple_menu_border",
                                   borders=constants.ALL)
 
         self.buttons = buttons
