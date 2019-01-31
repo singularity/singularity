@@ -26,9 +26,14 @@ clear           = #00000000
 
 # Screen colors
 main_menu_background     = black
+about_dialog_background  = darker_blue
 map_background           = black
 options_background       = darker_blue
 singularity_title        = dark_red
+
+# The simple menu dialog (e.g. difficult or the in game menu)
+simple_menu_background     = dark_blue
+simple_menu_border         = white
 
 # Pane colors
 pane_background          = dark_blue
