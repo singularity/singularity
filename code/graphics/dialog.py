@@ -267,11 +267,21 @@ class Dialog(text.Text):
             
             # TODO: Dynamize global key handlers.
             # TODO: Allows customization of global key handlers.
-            # Important: Global key handlers should always be a combination of two keys.
+            # Important: Global key handlers should always be a combination 
+            # of two keys or F# keys.
             if event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
                 if event.type == pygame.KEYDOWN:
                     g.set_fullscreen(not g.fullscreen)
                     Dialog.top.needs_resize = True
+
+            elif event.key == pygame.K_F5:
+                if event.type == pygame.KEYDOWN:
+                    import code.graphics.theme as theme
+                    if theme.current:
+                        import code.data as data
+                        theme_id = theme.current.id
+                        data.load_themes()
+                        theme.set_theme(theme_id, force_reload=True)
 
             elif event.type == pygame.KEYDOWN:
                 # Generic keydown handlers.

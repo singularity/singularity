@@ -569,7 +569,7 @@ def load_theme(theme_id, theme_dir):
     return new_theme
 
 def load_themes():
-    themes = theme.themes
+    themes = theme.themes = {}
     themes_dirs = dirs.get_read_dirs("themes")
 
     for themes_dir in themes_dirs:
