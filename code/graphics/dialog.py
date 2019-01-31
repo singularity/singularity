@@ -273,6 +273,18 @@ class Dialog(text.Text):
                     g.set_fullscreen(not g.fullscreen)
                     Dialog.top.needs_resize = True
 
+            elif event.key == pygame.K_F5:
+                if event.type == pygame.KEYDOWN:
+                    import code.graphics.theme as theme
+                    if theme.current:
+                        import code.data as data
+                        theme_id = theme.current.id
+                        theme.themes.clear()
+                        data.load_themes()
+                        # Use set_theme with force to ensure the theme is reloaded
+                        # NB: theme.current points to the "pre-reload" version, so
+                        # theme.current.update() will not work here.
+                        theme.set_theme(theme_id, force_reload=True)
             elif event.type == pygame.KEYDOWN:
                 # Generic keydown handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYDOWN, []))

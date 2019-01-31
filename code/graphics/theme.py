@@ -32,7 +32,7 @@ def get_theme_list():
 def get_theme_pos():
     return (i[0] for i in enumerate(themes) if i[1] == current.id).next()
 
-def set_theme(key):
+def set_theme(key, force_reload=False):
     global current
     theme = None
 
@@ -55,7 +55,7 @@ def set_theme(key):
         sys.stderr.write("WARNING: The key '%s' does not exist in theme dictionnary. Use default theme.\n" % key)
         theme = themes[default_theme]
 
-    if (not current == None and theme.id != current.id):
+    if force_reload or (not current == None and theme.id != current.id):
         theme.update()
     current = theme
 
