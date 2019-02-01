@@ -123,8 +123,11 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             list_size = max(1, self._make_collision_rect().height // min_height)
         return list_size
 
-    def remake_elements(self):
+    def remake_elements(self, force_remake=False):
         list_size = self.num_elements()
+        if force_remake:
+            # Discard all of them first
+            del self.display_elements[:]
         current_size = len(self.display_elements)
 
         if current_size > list_size:
@@ -214,6 +217,12 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
         self.needs_redraw = True
         super(Listbox, self).rebuild()
+
+    def reconfig(self):
+        super(Listbox, self).reconfig()
+        if self.display_elements:
+            self.remake_elements(force_remake=True)
+            self.rebuild()
 
     def update_element(self, element, list_index):
         if 0 <= list_index < len(self.list):
