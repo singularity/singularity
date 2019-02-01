@@ -664,6 +664,18 @@ class MapScreen(dialog.Dialog):
             location_button.hotkey = location.hotkey
             location_button.visible = location.available()
 
+    def reconfig(self):
+        super(MapScreen, self).reconfig()
+        needs_rebuild = False
+        if self.danger_bar:
+            self.danger_bar.reconfig()
+            needs_rebuild |= self.danger_bar.visible
+        if self.suspicion_bar:
+            self.suspicion_bar.reconfig()
+            needs_rebuild |= self.suspicion_bar.visible
+        if needs_rebuild:
+            self.rebuild()
+
     def load_game(self):
         did_load = dialog.call_dialog(self.load_dialog, self.menu_dialog)
         if did_load:
