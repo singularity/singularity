@@ -12,7 +12,6 @@ TODO:
     - Add more items.
     - Covert most data/strings_ll_CC.dat entries to new messages_ll_CC.po style
       Long entries like [help] and [jobs] section could have their own files
-    - Make it so that double-click is equivalent to 'OK' in dialogs. (rubikcube)
     - Consistent use of stderr and print, preferably using available Logger
     - Fix hotkeys and reload all dialogs and buttons when language changes, or
       provide Options Screen a way to restart the game
