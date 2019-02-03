@@ -150,7 +150,7 @@ class Button(text.SelectableText, HotkeyText):
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP:
-            if self.visible and getattr(self, "collision_rect", None) and self.is_over(event.pos):
+            if self.visible and self.is_over(event.pos):
                 self.activate_with_sound(event)
         elif event.type == pygame.KEYDOWN:
             if self.visible and self.hotkey in (event.unicode, event.key):

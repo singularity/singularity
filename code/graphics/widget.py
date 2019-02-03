@@ -305,6 +305,9 @@ class Widget(object):
         return pygame.Rect(pos, self.real_size)
 
     def is_over(self, position):
+        if not getattr(self, "collision_rect", None):
+            return False
+            
         if position != (0,0):
             return self.collision_rect.collidepoint(position)
         else:
@@ -488,6 +491,11 @@ class Widget(object):
         """Focus pass-through."""
         if self.parent:
             self.parent.took_focus(*args, **kwargs)
+            
+    def clear_focus(self, *args, **kwargs):
+        """Focus pass-through."""
+        if self.parent:
+            self.parent.clear_focus(*args, **kwargs)
 
 
 class BorderedWidget(Widget):
@@ -545,6 +553,8 @@ class FocusWidget(Widget):
     def __init__(self, *args, **kwargs):
         super(FocusWidget, self).__init__(*args, **kwargs)
         self.has_focus = False
+        
+        self.add_handler(constants.CLICK, self.handle_click, 0)
 
     def add_hooks(self):
         super(FocusWidget, self).add_hooks()
@@ -555,3 +565,7 @@ class FocusWidget(Widget):
         super(FocusWidget, self).remove_hooks()
         if self.parent is not None:
             self.parent.remove_focus_widget(self)
+
+    def handle_click(self, event):
+        if not self.is_over(event.pos):
+            self.clear_focus(self)

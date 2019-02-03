@@ -395,6 +395,12 @@ class FocusDialog(Dialog):
         if self.current_focus is not None and self.current_focus is not widget:
             self.current_focus.has_focus = False
         self.current_focus = widget
+        widget.has_focus = True
+
+    def clear_focus(self, widget):
+        if self.current_focus is not None and self.current_focus is not widget:
+            self.current_focus.has_focus = False
+        self.current_focus = None
 
     def change_focus(self, event):
         if event is not None and event.type != pygame.KEYDOWN:
