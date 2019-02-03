@@ -390,6 +390,8 @@ class FastText(Text):
 class EditableText(widget.FocusWidget, Text):
     cursor_pos = widget.causes_redraw("_cursor_pos")
     def __init__(self, parent, *args, **kwargs):
+        self.allows_new_line = kwargs.pop("allows_new_line", False)
+        
         super(EditableText, self).__init__(parent, *args, **kwargs)
 
         if self.text is None:
@@ -399,7 +401,7 @@ class EditableText(widget.FocusWidget, Text):
 
     def add_hooks(self):
         super(EditableText, self).add_hooks()
-        self.parent.add_handler(constants.KEYDOWN, self.handle_key, 150)
+        self.parent.add_handler(constants.KEYDOWN, self.handle_key, 10)
         self.parent.add_handler(constants.CLICK, self.handle_click)
 
     def remove_hooks(self):
@@ -430,8 +432,12 @@ class EditableText(widget.FocusWidget, Text):
             self.cursor_pos = len(self.text)
         elif event.unicode:
             char = event.unicode
-            if char == "\r":
+            if char in (u"\r\n", u"\n", u"\r", u"\v", u"\f", u"\x1e", 
+                        u"\x1c", u"\x1d", u"\x85", u"\u2028", u"\u2029"):
+                if not self.allows_new_line:
+                    return
                 char = "\n"
+        
             self.text = self.text[:self.cursor_pos] + char \
                         + self.text[self.cursor_pos:]
             self.cursor_pos += len(char)

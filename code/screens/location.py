@@ -210,7 +210,7 @@ class LocationScreen(dialog.Dialog):
                 base.name = name
                 self.needs_rebuild = True
 
-class NewBaseDialog(dialog.ChoiceDescriptionDialog):
+class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(0, 0), size = (-1, -1),
                  anchor=constants.TOP_LEFT, *args, **kwargs):
         kwargs["yes_type"] = "ok"

@@ -544,8 +544,7 @@ class FocusWidget(Widget):
     has_focus = causes_redraw("_has_focus")
     def __init__(self, *args, **kwargs):
         super(FocusWidget, self).__init__(*args, **kwargs)
-        self.has_focus = True
-        self.took_focus(self)
+        self.has_focus = False
 
     def add_hooks(self):
         super(FocusWidget, self).add_hooks()

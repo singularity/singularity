@@ -79,7 +79,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                       borders=constants.ALL)
 
 
-class MultipleBuildDialog(BuildDialog):
+class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
     def __init__(self, parent, *args, **kwargs):
         super(MultipleBuildDialog, self).__init__(parent, *args, **kwargs)
 

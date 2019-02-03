@@ -403,8 +403,15 @@ class FocusDialog(Dialog):
         if len(self.focus_list) == 0:
             raise constants.Handled
         elif len(self.focus_list) == 1:
-            self.focus_list[0].has_focus = True
-            self.current_focus = self.focus_list[0]
+            
+            has_focus = not self.focus_list[0].has_focus
+            self.focus_list[0].has_focus = has_focus
+            
+            if has_focus:
+                self.current_focus = self.focus_list[0]
+            else:
+                self.current_focus = None
+                
             raise constants.Handled
 
         backwards = bool(pygame.key.get_mods() & pygame.KMOD_SHIFT)
@@ -414,7 +421,7 @@ class FocusDialog(Dialog):
 
         if self.current_focus not in self.focus_list:
             if backwards:
-                index = -1
+                index = len(self.focus_list) - 1
             else:
                 index = 0
         else:
@@ -423,11 +430,14 @@ class FocusDialog(Dialog):
                 index = old_index - 1 # Correctly wraps to -1
             else:
                 index = old_index + 1
-                if index == len(self.focus_list):
+                if index > len(self.focus_list):
                     index = 0
-
-        self.current_focus = self.focus_list[index]
-        self.current_focus.has_focus = True
+        
+        if index == -1 or index == len(self.focus_list):
+            self.current_focus = None
+        else:
+            self.current_focus = self.focus_list[index]
+            self.current_focus.has_focus = True
 
         raise constants.Handled
 
@@ -547,7 +557,7 @@ class MessageDialog(TextDialog):
         self.ok_button.hotkey    = g.buttons[self.ok_type]['key']
 
 
-class TextEntryDialog(TextDialog):
+class TextEntryDialog(TextDialog, FocusDialog):
     ok_type = widget.causes_rebuild("_ok_type")
     def __init__(self, parent, pos=(-.50, -.50), size=(.40, .10),
                  anchor=constants.MID_CENTER, **kwargs):
