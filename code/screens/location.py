@@ -37,15 +37,19 @@ class LocationScreen(dialog.Dialog):
         self.size = (-.75, -.5)
         self.name_display = text.Text(self, (0,0), (-1, -.08),
                                       background_color="clear")
-        self.listbox = listbox.CustomListbox(self, (0,-.08), (-1, -.70),
-                                             remake_func=self.make_item,
-                                             rebuild_func=self.update_item)
 
         self.open_button = \
             button.FunctionButton(self, (0, -.8), (-.3, -.09),
                                   anchor=constants.TOP_LEFT,
                                   autohotkey=True,
                                   function=self.open_base)
+
+
+        self.listbox = listbox.CustomListbox(self, (0,-.08), (-1, -.70),
+                                             remake_func=self.make_item,
+                                             rebuild_func=self.update_item,
+                                             on_double_click_on_item=self.open_button.activated,
+                                             )
 
         self.rename_button = \
             button.FunctionButton(self, (-.50, -.8), (-.3, -.09),
