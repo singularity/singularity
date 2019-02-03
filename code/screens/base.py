@@ -23,6 +23,7 @@ import locale
 import pygame
 
 from code import g, item
+from code.buyable import cash
 from code.graphics import g as gg, constants, widget, dialog, text, button, listbox, slider
 
 state_colors = dict(
@@ -83,27 +84,36 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
     def __init__(self, parent, *args, **kwargs):
         super(MultipleBuildDialog, self).__init__(parent, *args, **kwargs)
 
-        self.listbox.size = (-.53, -.75)
-        self.description_pane.size = (-.45, -.75)
+        self.listbox.size = (-.53, -.63)
+        self.description_pane.size = (-.45, -.63)
 
-        self.count_label = text.Text(self, (.01, -.87), (-.25, -.1),
+        self.count_label = text.Text(self, (.01, -.75), (-.25, -.1),
                                      anchor=constants.BOTTOM_LEFT, valign=constants.MID,
                                      borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                      shrink_factor=.88,
                                      background_color="pane_background",
                                      text=g.strings["number_of_items"])
 
-        self.count_field = text.UpdateEditableText(self, (-.26, -.87), (-.10, -.1),
+        self.count_field = text.UpdateEditableText(self, (-.26, -.75), (-.10, -.1),
                                              anchor=constants.BOTTOM_LEFT,
                                              borders=constants.ALL,
                                              update_func=self.on_field_change,
                                              base_font="normal")
 
-        self.count_slider = slider.UpdateSlider(self, (-.37, -.87), (-.62, -.1),
+        self.count_slider = slider.UpdateSlider(self, (-.37, -.75), (-.62, -.1),
                                                 anchor=constants.BOTTOM_LEFT,
                                                 horizontal=True, priority=150,
                                                 update_func=self.on_slider_change,
                                                 slider_size=2)
+
+        self.total_cost_label = text.Text(self, (.01, -.87), (-.36, -.1),
+                                          anchor=constants.BOTTOM_LEFT, valign=constants.MID, align=constants.LEFT,
+                                          borders=(constants.TOP, constants.BOTTOM, constants.LEFT, constants.RIGHT),
+                                          background_color="pane_background")
+
+        # Ensures the total_cost_label has a defined text
+        self._compute_new_total_price(None, 0)
+
     @property
     def count(self):
         return self.count_field.text
@@ -119,9 +129,16 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
         self.count_slider.slider_pos = 0
         if (space_left > 0):
             self.count_slider.slider_pos = 1
+        self._compute_new_total_price(item, self.count_slider.slider_pos)
+
+    def _compute_new_total_price(self, item, item_count):
+        cash_needed = 0
+        if item is not None and item_count > 0:
+            cash_needed = item_count * item.cost[cash]
+        self.total_cost_label.text = " " + _("Total cash cost: %(price)s") % {"price": g.to_money(cash_needed)}
 
     def on_field_change(self, value):
-        if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")): 
+        if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")) or not hasattr(self, 'total_cost_label'):
             return # Not initialized
         
         try:
@@ -129,12 +146,20 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
         except ValueError:
             self.count_slider.slider_pos = 0
 
+        item = None
+        if 0 <= self.listbox.list_pos < len(self.key_list):
+            item = self.key_list[self.listbox.list_pos]
+        self._compute_new_total_price(item, self.count_slider.slider_pos)
 
     def on_slider_change(self, value):
-        if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")): 
+        if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")) or not hasattr(self, 'total_cost_label'):
             return # Not initialized
         
         self.count_field.text = str(self.count_slider.slider_pos)
+        item = None
+        if 0 <= self.listbox.list_pos < len(self.key_list):
+            item = self.key_list[self.listbox.list_pos]
+        self._compute_new_total_price(item, self.count_slider.slider_pos)
 
 
 class ItemPane(widget.BorderedWidget):
