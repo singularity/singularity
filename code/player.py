@@ -547,7 +547,6 @@ class Player(object):
         for danger, (available_cpu, needed_cpu) in enumerate(zip(self.available_cpus, needed_cpus)):
             if needed_cpu > available_cpu:
                 pct_left = truediv(available_cpu, needed_cpu)
-                print(pct_left)
                 for task_id, cpu_assigned in self.cpu_usage.iteritems():
                     task_danger = task.danger_for(task_id)
                     if (danger == task_danger):
