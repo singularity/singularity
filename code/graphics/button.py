@@ -171,7 +171,6 @@ class Button(text.SelectableText, HotkeyText):
         raise constants.Handled
 
 class ImageButton(Button):
-    image = widget.auto_reconfig("_image", g.resolve_image_alias)
 
     def __init__(self, *args, **kwargs):
         image_surface = kwargs.pop("image", None)

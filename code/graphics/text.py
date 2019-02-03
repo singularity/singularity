@@ -200,10 +200,10 @@ class Text(widget.BorderedWidget):
     align = widget.causes_redraw("_align")
     valign = widget.causes_redraw("_valign")
 
-    color = widget.auto_reconfig("_color", g.resolve_color_alias)
-    _color = widget.causes_redraw("__color")
-    base_font = widget.auto_reconfig("_base_font", g.resolve_font_alias)
-    _base_font = widget.call_on_change("__base_font", resize_redraw)
+    color = widget.auto_reconfig("_color", "resolved", g.resolve_color_alias)
+    resolved_color = widget.causes_redraw("_resolved_color")
+    base_font = widget.auto_reconfig("_base_font", "resolved", g.resolve_font_alias)
+    resolved_base_font = widget.call_on_change("_resolved_base_font", resize_redraw)
 
     def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
                  text=None, base_font=None, shrink_factor=1,
@@ -224,7 +224,7 @@ class Text(widget.BorderedWidget):
         self.bold = bold
         self.text_size = text_size
 
-    max_size = property(lambda self: min(len(self.base_font)-1,
+    max_size = property(lambda self: min(len(self.resolved_base_font)-1,
                                          convert_font_size(self.text_size)))
     font = property(lambda self: self._font)
 
@@ -234,14 +234,14 @@ class Text(widget.BorderedWidget):
 
         size = max(nice_size, mean_size - convert_font_size(5))
 
-        return self.base_font[size]
+        return self.resolved_base_font[size]
 
     def font_bisect(self, test_font):
         left = 0
-        right = (self.max_size or len(self.base_font)-1) + 1
+        right = (self.max_size or len(self.resolved_base_font)-1) + 1
 
         def test_size(size):
-            font = self.base_font[size]
+            font = self.resolved_base_font[size]
 
             font.set_bold(self.bold)
             result = test_font(font)
@@ -301,7 +301,7 @@ class Text(widget.BorderedWidget):
             if not self.max_size:
                 raise ValueError("No font size given, but a dimension is 0.")
 
-            max_font = self.base_font[self.max_size]
+            max_font = self.resolved_base_font[self.max_size]
             if initial_dimensions[0] == initial_dimensions[1] == 0:
                 # No size specified, use the natural size of the max font.
                 width, height = self.size_using_font(max_font)
@@ -328,7 +328,7 @@ class Text(widget.BorderedWidget):
                         return height <= initial_dimensions[1]
 
                     font_size = self.font_bisect(test_size)
-                    font = self.base_font[font_size]
+                    font = self.resolved_base_font[font_size]
                     width, height = self.size_using_font(font)
 
                     return (width, initial_dimensions[1]), font
@@ -355,8 +355,8 @@ class Text(widget.BorderedWidget):
 
     def print_text(self):
         # Mark the character to be underlined (if any).
-        no_underline = [self.color, None, False]
-        underline = [self.color, None, True]
+        no_underline = [self.resolved_color, None, False]
+        underline = [self.resolved_color, None, True]
         styles = [no_underline + [0]]
         if 0 <= self.underline < len(self.text):
             styles.insert(0, underline + [self.underline + 1])
@@ -554,7 +554,7 @@ class EditableText(widget.FocusWidget, Text):
 
         line_x += self.font.size(line[:after_char])[0]
 
-        self.surface.fill( self.color, (line_x, line_y, 1, line_size))
+        self.surface.fill( self.resolved_color, (line_x, line_y, 1, line_size))
 
         if DEBUG:
             s = pygame.Surface(self.hitbox[2:]).convert_alpha()
@@ -574,10 +574,10 @@ class UpdateEditableText(EditableText):
 class SelectableText(Text):
     selected = widget.causes_redraw("_selected")
 
-    selected_color = widget.auto_reconfig("_selected_color", g.resolve_color_alias)
-    _selected_color = widget.causes_redraw("__selected_color")
-    unselected_color = widget.auto_reconfig("_unselected_color", g.resolve_color_alias)
-    unselected_color = widget.causes_redraw("__unselected_color")
+    selected_color = widget.auto_reconfig("_selected_color", "resolved", g.resolve_color_alias)
+    resolved_selected_color = widget.causes_redraw("_resolved_selected_color")
+    unselected_color = widget.auto_reconfig("_unselected_color", "resolved", g.resolve_color_alias)
+    resolved_unselected_color = widget.causes_redraw("_resolved_unselected_color")
 
     def __init__(self, parent, pos, size, border_color = None,
                  unselected_color = None, selected_color = None, **kwargs):
@@ -600,8 +600,8 @@ class SelectableText(Text):
 class ProgressText(SelectableText):
     progress = widget.causes_redraw("_progress")
     
-    progress_color = widget.auto_reconfig("_progress_color", g.resolve_color_alias)
-    _progress_color = widget.causes_redraw("__progress_color")
+    progress_color = widget.auto_reconfig("_progress_color", "resolved", g.resolve_color_alias)
+    resolved_progress_color = widget.causes_redraw("_resolved_progress_color")
 
 
     def __init__(self, parent, pos, size, *args, **kwargs):
@@ -616,7 +616,7 @@ class ProgressText(SelectableText):
     def redraw(self):
         super(ProgressText, self).redraw()
         width, height = self.real_size
-        self.surface.fill(self.progress_color,
+        self.surface.fill(self.resolved_progress_color,
                           (0, 0, width * self.progress, height))
         self.draw_borders()
 
@@ -625,7 +625,7 @@ class ChunkedText(Text):
     def update_text(self):
         self.text = "".join(self.chunks)
 
-    chunks = widget.call_on_change("_chunks", update_text)
+    chunks = widget.call_on_change("__chunks", update_text)
 
     def __init__(self, *args, **kwargs):
         chunks = kwargs.pop("chunks", ())
@@ -634,7 +634,11 @@ class ChunkedText(Text):
         self.chunks = chunks
 
 class StyledText(ChunkedText):
-    styles = widget.causes_redraw("_styles")
+    def resolve_styles(value):
+        return tuple((g.resolve_color_alias(c), bg, u) for c, bg, u in value)
+    
+    styles = widget.auto_reconfig("_styles", "resolved", resolve_styles)
+    resolved_styles = widget.causes_redraw("_resolved_styles")
 
     def __init__(self, *args, **kwargs):
         styles = kwargs.pop("styles", ())
@@ -646,7 +650,7 @@ class StyledText(ChunkedText):
         if self.styles:
             offset = 0
             styles = []
-            for chunk, style in zip(self.chunks, self.styles):
+            for chunk, style in zip(self.chunks, self.resolved_styles):
                 offset += len(chunk)
                 styles.append(list(style) + [offset])
             styles[-1][-1] = 0

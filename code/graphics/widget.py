@@ -100,13 +100,20 @@ def propogate_need(data_member):
 
     return do_propogate
 
+# Previous attempt was to hide the raw value by resolving
+# the value before returning it. However, there are legitimate
+# reason to access the raw value. So, we need two property.
+# Using a wrapper is not worth the trouble.
+# I choose to let the unresolved value the default because
+# in majority of it's what we want, and in other case,
+# you must handle reconfig anyways.
 class auto_reconfig(object):
 
     __slots__ = ["data_member", "reconfig_datamember", "reconfig_func"] # Avoid __dict__.
 
-    def __init__(self, data_member, reconfig_func):
+    def __init__(self, data_member, reconfig_prefix, reconfig_func):
         self.data_member = data_member
-        self.reconfig_datamember = "_RECONFIG_" + data_member
+        self.reconfig_datamember = reconfig_prefix + data_member
         self.reconfig_func = reconfig_func
 
     def __get__(self, obj, objtype=None):
@@ -117,12 +124,12 @@ class auto_reconfig(object):
     def __set__(self, obj, my_value):
         new_value = self.reconfig_func(my_value)
 
-        setattr(obj, self.reconfig_datamember, my_value)
-        setattr(obj, self.data_member, new_value)
+        setattr(obj, self.reconfig_datamember, new_value)
+        setattr(obj, self.data_member, my_value)
 
     def reconfig(self, obj):
-        updated_value = self.reconfig_func(getattr(obj, self.reconfig_datamember))
-        setattr(obj, self.data_member, updated_value)
+        updated_value = self.reconfig_func(getattr(obj, self.data_member))
+        setattr(obj, self.reconfig_datamember, updated_value)
 
 class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
@@ -486,10 +493,10 @@ class Widget(object):
 class BorderedWidget(Widget):
     borders = causes_redraw("__borders")
 
-    border_color = auto_reconfig("_border_color", g.resolve_color_alias)
-    background_color = auto_reconfig("_background_color", g.resolve_color_alias)
-    _border_color = causes_redraw("__border_color")
-    _background_color = causes_redraw("__background_color")
+    border_color = auto_reconfig("_border_color", "resolved", g.resolve_color_alias)
+    background_color = auto_reconfig("_background_color", "resolved", g.resolve_color_alias)
+    resolved_border_color = causes_redraw("_resolved_border_color")
+    resolved_background_color = causes_redraw("_resolved_background_color")
 
     def __init__(self, parent, *args, **kwargs):
         self.borders = kwargs.pop("borders", ())
@@ -500,20 +507,20 @@ class BorderedWidget(Widget):
 
     def rebuild(self):
         super(BorderedWidget, self).rebuild()
-        if self.parent and self.background_color == g.colors["clear"]:
+        if self.parent and self.resolved_background_color == g.colors["clear"]:
             self.parent.needs_redraw = True
 
     def reposition(self):
         super(BorderedWidget, self).reposition()
-        if self.parent and self.background_color == g.colors["clear"]:
+        if self.parent and self.resolved_background_color == g.colors["clear"]:
             self.parent.needs_redraw = True
 
     def redraw(self):
         super(BorderedWidget, self).redraw()
 
         # Fill the background.
-        if self.background_color != g.colors["clear"]:
-            self.surface.fill( self.background_color )
+        if self.resolved_background_color != g.colors["clear"]:
+            self.surface.fill( self.resolved_background_color )
 
         self.draw_borders()
 
@@ -522,14 +529,14 @@ class BorderedWidget(Widget):
 
         for edge in self.borders:
             if edge == constants.TOP:
-                self.surface.fill(self.border_color, (0, 0, my_size[0], 1) )
+                self.surface.fill(self.resolved_border_color, (0, 0, my_size[0], 1) )
             elif edge == constants.LEFT:
-                self.surface.fill(self.border_color, (0, 0, 1, my_size[1]) )
+                self.surface.fill(self.resolved_border_color, (0, 0, 1, my_size[1]) )
             elif edge == constants.RIGHT:
-                self.surface.fill(self.border_color,
+                self.surface.fill(self.resolved_border_color,
                                   (my_size[0]-1, 0) + my_size)
             elif edge == constants.BOTTOM:
-                self.surface.fill(self.border_color,
+                self.surface.fill(self.resolved_border_color,
                                   (0, my_size[1]-1) + my_size)
 
 

@@ -34,8 +34,8 @@ class Slider(button.Button):
     slider_size = widget.causes_rebuild("_slider_size")
     horizontal = widget.causes_rebuild("_horizontal")
 
-    slider_color = widget.auto_reconfig("_slider_color", g.resolve_color_alias)
-    _slider_color = widget.causes_redraw("__slider_color")
+    slider_color = widget.auto_reconfig("_slider_color", "resolved", g.resolve_color_alias)
+    resolved_slider_color = widget.causes_redraw("_resolved_slider_color")
 
     def __init__(self, parent, pos = (-1,0), size = (-.1, -1),
                  anchor = constants.TOP_RIGHT, borders = constants.ALL,

@@ -31,8 +31,8 @@ def scale(*args, **kwargs):
         return pygame.transform.scale(*args, **kwargs)
 
 class Image(widget.Widget):
-    image = widget.auto_reconfig("_image", g.resolve_image_alias)
-    _image = widget.causes_rebuild("__image")
+    image = widget.auto_reconfig("_image", "resolved", g.resolve_image_alias)
+    resolved_image = widget.causes_rebuild("_resolved_image")
 
     def __init__(self, parent, pos, size = (1, 1),
                  anchor = constants.TOP_LEFT, image = None):
@@ -46,7 +46,7 @@ class Image(widget.Widget):
         if size[0] == size[1] == 0:
             raise ValueError, "One image dimension must be specified!"
 
-        image_size = self.image.get_size()
+        image_size = self.resolved_image.get_size()
         ratio = image_size[0] / float(image_size[1])
         if size[0] == 0:
             size[0] = int(size[1] * ratio)
@@ -56,7 +56,7 @@ class Image(widget.Widget):
         return tuple(size)
 
     def rescale(self):
-        self.scaled_image = scale(self.image, self.real_size)
+        self.resolved_scaled_image = scale(self.resolved_image, self.real_size)
 
     def resize(self):
         super(Image, self).resize()
@@ -66,4 +66,4 @@ class Image(widget.Widget):
 
     def redraw(self):
         super(Image, self).redraw()
-        self.surface.blit(self.scaled_image, (0,0))
+        self.surface.blit(self.resolved_scaled_image, (0,0))
