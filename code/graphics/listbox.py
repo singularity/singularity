@@ -34,7 +34,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
                  list_pos=0, list_size=-20, borders=constants.ALL,
                  item_borders=True, item_selectable=True,
-                 align=constants.CENTER, **kwargs):
+                 align=constants.CENTER, on_double_click_on_item=None, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
 
@@ -51,6 +51,11 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.list = list or []
 
         self.auto_scroll = True
+        if item_selectable:
+            self.on_double_click_on_item = on_double_click_on_item
+            self.add_handler(constants.DOUBLECLICK, self.on_double_click, 200)
+        elif on_double_click_on_item:
+            raise ValueError("The on_double_click_on_item handler only works for a listbox with selectable items")
         self.scrollbar = scrollbar.UpdateScrollbar(self,
                                                    update_func = self.on_scroll)
 
@@ -82,12 +87,25 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
             if (self.item_selectable):
                 # Figure out which element was clicked...
-                local_vert_abs = event.pos[1] - self.collision_rect[1]
-                local_vert_pos = local_vert_abs / float(self.collision_rect.height)
-                index = int(local_vert_pos * len(self.display_elements))
-
+                index = self.find_item_under_mouse(event)
                 # ... and select it.
                 self.list_pos = self.safe_pos(index + self.scrollbar.scroll_pos)
+
+    def on_double_click(self, event):
+        if self.on_double_click_on_item is None:
+            return
+        if self.collision_rect.collidepoint(event.pos) and self.item_selectable:
+            index = self.find_item_under_mouse(event)
+            if index > -1:
+                self.on_double_click_on_item(event)
+
+    def find_item_under_mouse(self, event):
+        local_vert_abs = event.pos[1] - self.collision_rect[1]
+        local_vert_pos = local_vert_abs / float(self.collision_rect.height)
+        index = int(local_vert_pos * len(self.display_elements))
+        if 0 <= index < len(self.list):
+            return index
+        return -1
 
     def safe_pos(self, raw_pos):
         return max(0, min(len(self.list) - 1, raw_pos))
