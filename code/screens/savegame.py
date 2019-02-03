@@ -42,7 +42,9 @@ class SavegameScreen(dialog.ChoiceDialog):
         return listbox.CustomListbox(self, (0, 0), (-1, -.85),
                                      anchor=constants.TOP_LEFT,
                                      remake_func=self.make_item,
-                                     rebuild_func=self.update_item)
+                                     rebuild_func=self.update_item,
+                                     on_double_click_on_item=self.yes_button.activated,
+                                     )
 
     def make_item(self, item):
         item.name_display     = text.Text(item, (-.01,-.05), (-.45, -.99),

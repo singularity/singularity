@@ -619,19 +619,15 @@ class ChoiceDialog(YesNoDialog):
 
         super(ChoiceDialog, self).__init__(parent, *args, **kwargs)
 
-        self.listbox = self.make_listbox()
-        self.add_handler(constants.DOUBLECLICK, self.handle_double_click, 200)
-
         self.yes_button.exit_code_func = self.return_list_pos
         self.no_button.exit_code = None
-
-    def handle_double_click(self, event):
-        if self.listbox.is_over(event.pos):
-            self.yes_button.activated(None)
+        self.listbox = self.make_listbox()
 
     def make_listbox(self):
         return listbox.Listbox(self, (0, 0), (-1, -.85),
-                               anchor=constants.TOP_LEFT)
+                               anchor=constants.TOP_LEFT,
+                               on_double_click_on_item=self.yes_button.activated,
+                               )
 
     def return_list_pos(self):
         return self.listbox.list_pos
