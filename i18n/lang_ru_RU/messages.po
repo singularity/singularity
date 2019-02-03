@@ -182,9 +182,29 @@ msgstr "п&ропустить"
 msgid "University Computer"
 msgstr "Университетский компьютер"
 
+#: screens/base.py:95
+msgid "Number of items"
+msgstr "Количество элементов"
+
 #: screens/base.py:176 screens/base.py:177
 msgid "CHANGE"
 msgstr "ИЗМЕНИТЬ"
+
+#: screens/base.py:316
+msgid ""
+"I will need to take the existing processors offline while I install the new "
+"ones. Continue anyway?"
+msgstr ""
+"Мне нужно будет отключить существующие процессоры, пока я устанавливаю новые. "
+"Продолжать в любом случае?"
+
+#: screens/base.py:330
+msgid ""
+"I will need to remove the existing different processors while I install the "
+"new type. Continue anyway?"
+msgstr ""
+"Мне нужно удалить существующие разные процессоры, пока я устанавливаю новый "
+"тип. Продолжать в любом случае?
 
 #: screens/base.py:375
 msgid "None"

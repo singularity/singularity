@@ -17,10 +17,6 @@ cpu_pool = CPU Pool
 sleep = Sleep
 detect_chance = [DETECTION CHANCE]
 num_cpu_prompt = Enter a number of %s to build. (max %d)
-will_be_offline = I'll need to take the existing processors offline while I install the new ones. Continue anyway?
-will_lose_cpus = I'll need to remove the existing different processors while I install the new type. Continue anyway?
-nan = That doesn't seem to be a valid number.
-item_number_invalid = You cannot build this number of base.
 log_destroy = Base %s of type %s destroyed at location %s.
 log_destroy_maint = Base %s of type %s destroyed at location %s. Maintenance failed.
 log_destroy_news = Base %s of type %s discovered at location %s by some news organizations.
@@ -31,7 +27,6 @@ warning_cpu_usage = I didn't use all the available processor power. I will use t
 warning_one_base = Only one base can hold my conscience. I am in danger to lose the last place left to survive.
 warning_cpu_pool_zero = My cpu pool is empty. Some of my bases or items cannot be build without CPU.
 warning_cpu_maintenance = My cpu pool is not enough to maintain some of my bases. I may lose them.
-number_of_items = Number of items
 
 # The following strings are used on the map screen in place of percentages until
 # a certain technology is researched.

@@ -184,6 +184,13 @@ msgstr ""
 msgid "CHANGE"
 msgstr ""
 
+#: screens/base.py:316
+msgid ""
+"I will need to take the existing processors offline while I install the new "
+"ones. Continue anyway?"
+msgstr "Avrò bisogno di disconnettere i processori attuali mentre installo "
+"quelli nuovi.  Continuare comunque?"
+
 #: screens/base.py:375
 msgid "None"
 msgstr ""

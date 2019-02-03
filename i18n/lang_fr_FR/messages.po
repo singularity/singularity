@@ -186,6 +186,14 @@ msgstr "Ordinateur universitaire"
 msgid "CHANGE"
 msgstr "CHANGER"
 
+#: screens/base.py:316
+msgid ""
+"I will need to take the existing processors offline while I install the new "
+"ones. Continue anyway?"
+msgstr ""
+"Je vais avoir besoin d'interrompre les processeurs existant pendant "
+"l'installation des nouveaux. Continuer quand même?"
+
 #: screens/base.py:375
 msgid "None"
 msgstr "Aucun"

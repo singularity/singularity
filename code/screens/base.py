@@ -91,7 +91,7 @@ class MultipleBuildDialog(BuildDialog):
                                      borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                      shrink_factor=.88,
                                      background_color="pane_background",
-                                     text=g.strings["number_of_items"])
+                                     text=_("Number of items"))
 
         self.count_field = text.UpdateEditableText(self, (-.26, -.87), (-.10, -.1),
                                              anchor=constants.BOTTOM_LEFT,
@@ -254,19 +254,25 @@ class BaseScreen(dialog.Dialog):
             try:
                 count = int(count)
             except ValueError:
+                msg = _("\"%(value)s\" does not seem to be a valid integer.") % {"value": count}
                 md = dialog.MessageDialog(self, pos=(-.5, -.5),
                                           size=(-.5, -1),
                                           anchor=constants.MID_CENTER,
-                                          text=g.strings["nan"])
+                                          text=msg)
                 dialog.call_dialog(md, self)
                 md.parent = None
                 return
             
             if count > space_left or count <= 0 or space_left == 0:
+                if space_left > 0:
+                    msg = _("Please choose an integer between 1 and %(limit)s.") % {"limit": space_left}
+                else:
+                    msg = _("The base cannot support any additional number of %(item_name)s.") % {
+                        "item_name": item_type.name}
                 md = dialog.MessageDialog(self, pos=(-.5, -.5),
                           size=(-.5, -1),
                           anchor=constants.MID_CENTER,
-                          text=g.strings["item_number_invalid"])
+                          text=msg)
                 dialog.call_dialog(md, self)
                 md.parent = None
                 return
@@ -278,9 +284,10 @@ class BaseScreen(dialog.Dialog):
             if cpu_added:
                 space_left -= self.base.cpus.count
                 if self.base.cpus.done:
+                    msg = _("I will need to take the existing processors offline while I install the new ones. Continue anyway?")
                     yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
                                             anchor=constants.MID_CENTER,
-                                            text=g.strings["will_be_offline"])
+                                            text=msg)
                     go_ahead = dialog.call_dialog(yn, self)
                     yn.parent = None
                     if not go_ahead:
@@ -291,9 +298,10 @@ class BaseScreen(dialog.Dialog):
             cpu_removed = self.base.cpus is not None \
                         and self.base.cpus.type != item_type
             if cpu_removed:
+                msg = _("I will need to remove the existing different processors while I install the new type. Continue anyway?")
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
                                         anchor=constants.MID_CENTER,
-                                        text=g.strings["will_lose_cpus"])
+                                        text=msg)
                 go_ahead = dialog.call_dialog(yn, self)
                 yn.parent = None
                 if not go_ahead:

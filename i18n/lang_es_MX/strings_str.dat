@@ -16,8 +16,6 @@ cpu_pool = Reserva de CPU
 sleep = Dormir
 detect_chance = [DETECTION CHANCE]
 num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
-will_be_offline = Necesitaré dejar los procesadores existentes fuera de servicio mientras instalo los nuevos. ¿Continúo de cualquier forma?
-nan = Ese no parece ser un número válido.
 
 # Las siguientes series de caracteres se utilizan en la pantalla del mapa en lugar de los porcentajes hasta
 # que una determinada tecnología sea investigada.

@@ -25,8 +25,6 @@ money = Dinero
 money_per_day = Dinero por día.
 
 num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
-will_be_offline = Necesitaré dejar los procesadores existentes fuera de linea mientras instalo los nuevos. ¿Continuar igualmente?
-nan = Ese no parece ser un número válido.
 
 
 # Describes the various danger levels.
