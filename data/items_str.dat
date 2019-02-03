@@ -89,3 +89,11 @@ description = Armed guards can aid in keeping suspicious individuals away from s
 [Passive Camouflage]
 name = Passive Camouflage
 description = A simple camouflage relying on the environment around the base to better mask the heat and sounds from the base.
+
+[Fuel Cell]
+name = Fuel Cell
+description = A cell that convert the electrochemical energy from a fuel into electricity. Reduces discovery chance by preventing suspicious power drains.
+
+[Solid Fuel Cell]
+name = Solid Fuel Cell
+description = A better cell using solid oxide that convert the electrochemical energy from a fuel into electricity. Reduces discovery chance by preventing suspicious power drains.
