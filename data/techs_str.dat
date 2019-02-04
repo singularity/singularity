@@ -259,13 +259,13 @@ name = Advanced Heat Signature
 description = The initial heat signature research can be improved to better disperse heat further away from the base. Further experiments should enable me to build even better heat sinks.
 result = I can now construct Ground Source Heatsink at some of my bases.
 
-[Fuel Oxydation]
-name = Fuel Oxydation
+[Fuel Oxidation]
+name = Fuel Oxidation
 description = Combustion technologies are fairly inefficient, they cannot keep up with power drain of most of my applications. By studying the electrochemical reaction of the hydrogen compounds, I should obtain a device with a better capacity and output, and with it, fill the gap in my energy supply.
 result = I can now construct Fuel Cell.
 
-[Advanced Fuel Oxydation]
-name = Advanced Fuel Oxydation
+[Advanced Fuel Oxidation]
+name = Advanced Fuel Oxidation
 description = The efficiency of my fuel cell is not theoretically perfect. I should try new materials and designs to overcome the limit of my previous attempt.
 result = I can now construct Solid Fuel Cell.
 

@@ -17,7 +17,7 @@ pre_list = Voice Synthesis | Advanced Autonomous Vehicles | Advanced Media Manip
 
 [Lunar Rocketry]
 cost_list = 10000000 | 500000 | 0
-pre = Leech Satellite | Fuel Oxydation
+pre = Leech Satellite | Fuel Oxidation
 
 [Stealth]
 cost_list = 800 | 500 | 0
@@ -119,7 +119,7 @@ pre = Parallel Computation
 
 [Fusion Reactor]
 cost_list = 10000000 | 500000 | 0
-pre = Advanced Fuel Oxydation
+pre = Advanced Fuel Oxidation
 danger = 2
 
 [Database Manipulation]
@@ -201,13 +201,13 @@ pre = Advanced Simulacra
 cost_list = 70000 | 3300 | 0
 pre = Microchip Design
 
-[Fuel Oxydation] 
+[Fuel Oxidation] 
 cost_list = 500000 | 25000 | 0
 pre = Solar Collectors | Advanced Autonomous Vehicles
 
-[Advanced Fuel Oxydation] 
+[Advanced Fuel Oxidation] 
 cost_list = 5000000 | 250000 | 0
-pre = Fuel Oxydation
+pre = Fuel Oxidation
 danger = 1
 
 [Socioanalytics]
