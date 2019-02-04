@@ -163,9 +163,15 @@ def load_savegame(savegame):
     # Changes to overall structure go here.
     g.pl = unpickle.load()
     g.curr_speed = unpickle.load()
-    g.techs = unpickle.load()
+    loaded_techs = unpickle.load()
     g.locations = unpickle.load()
     g.events = unpickle.load()
+
+    import data
+    # Reload the techs from the data files.  This ensures we always have *all*
+    # the technologies from the current version of the game.  We will then merge
+    # relevant state from the save game into the g.techs table below.
+    data.load_techs()
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
@@ -177,12 +183,26 @@ def load_savegame(savegame):
                     my_item.convert_from(load_version)
         for my_group in g.pl.groups.values():
             my_group.convert_from(load_version)
-        for my_tech in g.techs.values():
+        for my_tech in loaded_techs.values():
             my_tech.convert_from(load_version)
         for my_event in g.events.values():
             my_event.convert_from(load_version)
 
-    import data
+    # Merge relevant parts of the restored techs into the g.techs structure
+    for tech_id, tech_from_savegame in loaded_techs.items():
+        if tech_id not in g.techs:
+            # Discard obsolete tech
+            continue
+        tech = g.techs[tech_id]
+        # Restore the "done" flag.  We do not use finish, because the effect is
+        # already applied on the player job (and finish then apply it again).
+        tech.done = tech_from_savegame.done
+        # Properly set the "cost_paid" to match.
+        if tech.done:
+            tech.cost_paid = tech.total_cost
+        else:
+            tech.cost_paid = tech_from_savegame.cost_paid
+
     data.reload_all_mutable_def()
 
     # Play the appropriate music
