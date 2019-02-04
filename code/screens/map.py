@@ -18,11 +18,11 @@
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #This file is used to display the World Map.
-
+import collections
 import pygame
 
 from code import g, savegame as sv, mixer
-from code import chance, player
+from code import chance, difficulty
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
@@ -429,6 +429,85 @@ class MapScreen(dialog.Dialog):
             g.pl.display_discover = "none"
         self.needs_rebuild = True
 
+    def hidden_state(self):
+
+        from code.location import Location
+
+        presenters = {
+            float: lambda x: round(x, 4),
+            Location: lambda x: x.id,
+        }
+
+        def _dump_dict(prefix, mapping):
+            if isinstance(mapping, collections.OrderedDict):
+                keys = mapping.iterkeys()
+            else:
+                keys = sorted(mapping)
+            for key in keys:
+                prop_name = '%s["%s"]' % (prefix, key)
+                value = mapping[key]
+                presenter = presenters.get(type(value), repr)
+                yield "%s = %s" % (prop_name, presenter(value))
+
+        def _properties_from_object(name, object, properties):
+            for p in properties:
+                value = getattr(object, p)
+                prop_name = '%s.%s' % (name, p)
+                if callable(value):
+                    value = value()
+                    prop_name += '()'
+                if isinstance(value, collections.Mapping):
+                    for v in _dump_dict(prop_name, value):
+                        yield v
+                else:
+                    presenter = presenters.get(type(value), repr)
+                    yield "%s = %s" % (prop_name, presenter(value))
+
+        bases = []
+        state_prop = []
+        state_prop.extend(_properties_from_object('player.difficulty', g.pl.difficulty, difficulty.columns))
+        state_prop.extend(_properties_from_object('player', g.pl, [
+            'cash', 'partial_cash', 'labor_bonus', 'job_bonus', 'future_cash',
+            'last_discovery', 'prev_discovery', 'used_cpu',
+        ]))
+
+        for group in g.pl.groups.values():
+            name = 'groups["%s"]' % group.type.id
+            state_prop.extend(_properties_from_object(name, group, [
+                'suspicion', 'suspicion_decay', 'discover_bonus', 'discover_suspicion', 'decay_rate',
+            ]))
+
+        for location_id in sorted(g.locations):
+            location = g.locations[location_id]
+            name = 'locations["%s"]' % location.id
+            state_prop.extend(_properties_from_object(name, location, [
+                'safety', 'modifiers', 'discovery_bonus'
+            ]))
+            bases.extend((x, location) for x in location.bases)
+
+        for event_id in sorted(g.events):
+            event = g.events[event_id]
+            name = 'events["%s"]' % event.id
+            state_prop.extend(_properties_from_object(name, event, [
+                'event_type', 'chance', 'unique', 'triggered',
+            ]))
+
+        for i, base_w_loc in enumerate(bases):
+            base, location = base_w_loc
+            name = 'bases[%d]' % i
+            state_prop.extend(_properties_from_object(name, base, [
+                'name',
+            ]))
+            state_prop.append("%s.location = %s" % (name, location.id))
+            state_prop.extend(_properties_from_object(name, base, [
+                'started_at', 'grace_over', 'get_detect_chance', 'is_complex',
+            ]))
+
+        state_dialog = dialog.ChoiceDialog(self, list=state_prop, background_color='hidden_state_menu')
+        state_dialog.listbox.item_selectable = False
+        state_dialog.listbox.align = constants.LEFT
+        dialog.call_dialog(state_dialog, self)
+
     def set_speed(self, speed, find_button=True):
         old_speed = g.curr_speed
         g.curr_speed = speed
@@ -604,6 +683,9 @@ class MapScreen(dialog.Dialog):
             cheat_buttons.append(
                 button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
                                       autohotkey=True, function=self.set_analysis))
+
+            cheat_buttons.append(button.FunctionButton(None, None, None, text=_("HIDDEN S&TATE"),
+                                                       autohotkey=True, function=self.hidden_state))
 
             cheat_buttons.append(button.ExitDialogButton(None, None, None,
                                                          text=_("&BACK"),

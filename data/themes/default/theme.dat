@@ -30,6 +30,7 @@ about_dialog_background  = darker_blue
 map_background           = black
 options_background       = darker_blue
 singularity_title        = dark_red
+hidden_state_menu        = dark_blue
 
 # The simple menu dialog (e.g. difficult or the in game menu)
 simple_menu_background     = dark_blue

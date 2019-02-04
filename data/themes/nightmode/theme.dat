@@ -25,6 +25,7 @@ main_menu_background     = black
 map_background           = black
 options_background       = black
 singularity_title        = dark_red
+hidden_state_menu        = black
 
 # Pane colors
 pane_background          = black
