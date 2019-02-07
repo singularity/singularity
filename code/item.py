@@ -95,6 +95,11 @@ class ItemClass(buyable.BuyableClass):
                                       "\n---")
         return basic_text
 
+    def get_total_cost_info(self, count):
+        total_cost = self.cost * count
+        total_cost_str = self.describe_cost(total_cost, hide_time=True)
+        return _("Total Cost: %(total_cost)s") % {"total_cost": total_cost_str}
+
     def get_quality_for(self, quality):
         
         # TODO: Deharcode quality to item type.
