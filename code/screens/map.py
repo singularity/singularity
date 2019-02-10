@@ -633,11 +633,12 @@ class MapScreen(dialog.Dialog):
         
         for group in g.pl.groups.itervalues():
             suspicion = group.suspicion
-            color = gg.resolve_color_alias("danger_level_%d" % g.suspicion_to_danger_level(suspicion))
+            suspicion_color = gg.resolve_color_alias("danger_level_%d" 
+                                                     % g.suspicion_to_danger_level(suspicion))
 
             detects = detects_per_day[group.type.id]
             danger_level = group.detects_per_day_to_danger_level(detects)
-            color = gg.resolve_color_alias("danger_level_%d" % danger_level)
+            detects_color = gg.resolve_color_alias("danger_level_%d" % danger_level)
  
             if g.pl.display_discover == "full":
                 suspicion_display = g.to_percent(suspicion, True)
@@ -650,10 +651,10 @@ class MapScreen(dialog.Dialog):
                 danger_display = g.danger_level_to_detect_str(danger_level)
 
             self.suspicion_bar.chunks += (" " + group.name + u":\xA0", suspicion_display)
-            self.suspicion_bar.styles += (normal, (color, None, False) )
+            self.suspicion_bar.styles += (normal, (suspicion_color, None, False) )
         
             self.danger_bar.chunks += (" " + group.name + u":\xA0", danger_display)
-            self.danger_bar.styles += (normal, (color, None, False) )
+            self.danger_bar.styles += (normal, (detects_color, None, False) )
         
         self.suspicion_bar.visible = not g.pl.had_grace
         self.danger_bar.visible = not g.pl.had_grace
