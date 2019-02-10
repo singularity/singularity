@@ -43,6 +43,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                                           **kwargs)
 
         self.type = None
+        self.item = None
         self.desc_func = self.on_change
 
     def show(self):
