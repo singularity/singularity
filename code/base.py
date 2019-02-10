@@ -38,14 +38,14 @@ power_states = ['active','sleep']
 #power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
 
 
-class BaseClass(buyable.BuyableClass):
+class BaseSpec(buyable.BuyableSpec):
     """Base as a buyable item (New Base in Location menu)"""
 
     spec_type = 'base'
 
     def __init__(self, name, size, force_cpu, regions,
                         detect_chance, cost, prerequisites, maintenance):
-        super(BaseClass, self).__init__(name, cost, prerequisites)
+        super(BaseSpec, self).__init__(name, cost, prerequisites)
         self.size = size
         self.force_cpu = force_cpu
         self.regions = regions
