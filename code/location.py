@@ -36,7 +36,7 @@ class Location(prerequisite.Prerequisite):
     def __init__(self, id, position, absolute, safety, prerequisites):
         # Kinda hackish, but it works.
         super(Location, self).__init__(prerequisites)
-        self.id = id
+        self.name = self.id = id
 
         self.x, self.y = position[0] / -100., position[1] / -100.
         self.absolute = absolute
