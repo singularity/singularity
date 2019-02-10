@@ -283,7 +283,7 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
         ]))
 
         for group in g.pl.groups.values():
-            name = 'groups["%s"]' % group.type.id
+            name = 'groups["%s"]' % group.spec.id
             state_prop.extend(_properties_from_object(name, group, [
                 'suspicion', 'suspicion_decay', 'discover_bonus', 'discover_suspicion', 'decay_rate',
             ]))
@@ -767,7 +767,7 @@ class MapScreen(dialog.Dialog):
             suspicion_color = gg.resolve_color_alias("danger_level_%d" 
                                                      % g.suspicion_to_danger_level(suspicion))
 
-            detects = detects_per_day[group.type.id]
+            detects = detects_per_day[group.spec.id]
             danger_level = group.detects_per_day_to_danger_level(detects)
             detects_color = gg.resolve_color_alias("danger_level_%d" % danger_level)
  
