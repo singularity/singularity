@@ -18,7 +18,7 @@
 
 #This file contains the Region class.
 
-class RegionClass(object):
+class RegionSpec(object):
     
     def __init__(self, id, modifiers_list):
         self.id = id

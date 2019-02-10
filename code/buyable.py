@@ -28,9 +28,9 @@ import numpy
 numpy.seterr(all='ignore')
 array = numpy.array
 
-class BuyableClass(prerequisite.Prerequisite):
+class BuyableSpec(prerequisite.Prerequisite):
     def __init__(self, id, cost, prerequisites):
-        super(BuyableClass, self).__init__(prerequisites)
+        super(BuyableSpec, self).__init__(prerequisites)
 
         self.name = self.id = id
         # This will be set when languages are (re)loaded
@@ -98,7 +98,7 @@ for stat in ("count", "complete_count", "total_count",
         return g.stats.set_statistic(self.spec_type + '_' + self.id + "_" + stat, value)
 
     stat_prop = property(get, set)
-    setattr(BuyableClass, stat, stat_prop)
+    setattr(BuyableSpec, stat, stat_prop)
 
 class Buyable(object):
     def __init__(self, type, count=1):

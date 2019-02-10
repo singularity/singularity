@@ -218,7 +218,7 @@ def load_groups():
         group_id = group_info["id"]
         suspicion_decay = int(group_info.get("suspicion_decay"))
         
-        groups[group_id] = group.GroupClass(
+        groups[group_id] = group.GroupSpec(
             group_id,
             suspicion_decay
         )
@@ -278,9 +278,9 @@ def load_bases():
         else:
             allowed_list = [base_name["allowed"]]
 
-        base_type[base_name["id"]]=base.BaseClass(base_name["id"],
-            base_size, force_cpu, allowed_list, chance_dict, cost_list,
-            base_pre, maint_list)
+        base_type[base_name["id"]]=base.BaseSpec(base_name["id"],
+                                                 base_size, force_cpu, allowed_list, chance_dict, cost_list,
+                                                 base_pre, maint_list)
 
     load_base_defs()
 
@@ -308,7 +308,7 @@ def load_regions():
             modifiers_dict = read_modifiers_dict(region_info.get(modifiers_name, []))
             modifiers_list.append(modifiers_dict)
         
-        regions[id] = region.RegionClass(id, modifiers_list)
+        regions[id] = region.RegionSpec(id, modifiers_list)
     
 
 def load_location_defs(lang=None):
@@ -465,8 +465,8 @@ def load_items():
         else:
             build_list = []
 
-        items[item_name["id"]]=item.ItemClass( item_name["id"],
-         item_cost, item_pre, item_type, item_second, build_list)
+        items[item_name["id"]]=item.ItemSpec(item_name["id"],
+                                             item_cost, item_pre, item_type, item_second, build_list)
 
     load_item_defs()
 

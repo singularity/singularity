@@ -22,7 +22,7 @@ import g
 import buyable, effect
 
 
-class TechClass(buyable.BuyableClass):
+class TechSpec(buyable.BuyableSpec):
     spec_type = 'tech'
 
 
@@ -30,7 +30,7 @@ class Tech(buyable.Buyable):
     def __init__(self, id, known, cost, prerequisites, danger,
                  effect_data):
         # A bit silly, but it does the trick.
-        type = TechClass(id, cost, prerequisites)
+        type = TechSpec(id, cost, prerequisites)
         super(Tech, self).__init__(type)
 
         self.danger = danger

@@ -75,21 +75,21 @@ def all_types():
     for item_type in item_types.itervalues():
         yield item_type
 
-class ItemClass(buyable.BuyableClass):
+class ItemSpec(buyable.BuyableSpec):
     """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
 
     spec_type = 'item'
 
     def __init__(self, name, cost, prerequisites, item_type,
             item_qual, buildable):
-        super(ItemClass, self).__init__(name, cost, prerequisites)
+        super(ItemSpec, self).__init__(name, cost, prerequisites)
 
         self.item_type = item_types[item_type]
         self.item_qual = item_qual
         self.regions = buildable
 
     def get_info(self):
-        basic_text = super(ItemClass, self).get_info()
+        basic_text = super(ItemSpec, self).get_info()
         if self.item_type.id == "cpu":
             return basic_text.replace("---", _("Generates {0} CPU.",
                                                g.add_commas(self.item_qual)) + \

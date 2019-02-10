@@ -21,7 +21,7 @@
 
 import g
 
-class GroupClass(object):
+class GroupSpec(object):
 
     def __init__(self, people_id, suspicion_decay = 100):
         self.id = people_id
@@ -45,7 +45,7 @@ class Group(object):
 
     def convert_from(self, old_version):
         if old_version < 99.6: # < 1.0 dev
-            self.type = GroupClass(
+            self.type = GroupSpec(
                 self.__dict__['id'], 
                 self.__dict__['suspicion_decay'])
             del self.__dict__['id'], self.__dict__['name'], self.__dict__['suspicion_decay']
