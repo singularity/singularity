@@ -26,6 +26,8 @@ import g, mixer, dirs, player
 
 #name given when the savegame button is pressed. This is changed when the
 #game is loaded or saved.
+from code import group
+
 default_savegame_name = "Default Save"
 
 #savefile version; update whenever the data saved changes.
@@ -122,6 +124,7 @@ def load_savegame(savegame):
             Event=event.Event,
             group=group.Group,
             Group=group.Group,
+            GroupClass=group.GroupClass,
             Buyable_Class=buyable.BuyableClass,
             BuyableClass=buyable.BuyableClass,
             Base=base.Base,
