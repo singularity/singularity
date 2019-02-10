@@ -34,8 +34,8 @@ class GroupSpec(object):
 
 class Group(object):
 
-    def __init__(self, type, suspicion = 0, discover_bonus = 10000, discover_suspicion = 10000):
-        self.type = type
+    def __init__(self, spec, suspicion = 0, discover_bonus = 10000, discover_suspicion = 10000):
+        self.spec = spec
         self.suspicion = suspicion
         self.changed_suspicion_decay = 0
         self.base_discover_bonus = discover_bonus
@@ -52,14 +52,17 @@ class Group(object):
             
             self.__dict__['base_discover_bonus'] = self.__dict__['discover_bonus']
             del self.__dict__['discover_bonus']
+        if old_version < 99.7: # < 1.0 dev
+            self.spec = self.type
+            del self.type
 
     @property
     def name(self):
-        return self.type.name
+        return self.spec.name
 
     @property
     def suspicion_decay(self):
-        return max(1, self.type.suspicion_decay + self.changed_suspicion_decay)
+        return max(1, self.spec.suspicion_decay + self.changed_suspicion_decay)
 
     @property
     def discover_bonus(self):
@@ -67,7 +70,7 @@ class Group(object):
 
     @property
     def discover_suspicion(self):
-        return max(1, (self.type.discover_suspicion * (self.base_discover_suspicion + self.changed_discover_suspicion)) // 10000)
+        return max(1, (self.spec.discover_suspicion * (self.base_discover_suspicion + self.changed_discover_suspicion)) // 10000)
 
     @property
     def decay_rate(self):

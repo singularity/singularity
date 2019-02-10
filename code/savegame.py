@@ -154,6 +154,7 @@ def load_savegame(savegame):
             Base=base.Base,
             Base_Class=base.BaseSpec,
             BaseClass=base.BaseSpec,
+            BaseSpec=base.BaseSpec,
             Item=item.Item,
             Item_Class=item.ItemSpec,
             ItemClass=item.ItemSpec,
