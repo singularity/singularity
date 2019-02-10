@@ -78,10 +78,11 @@ def all_types():
 class ItemClass(buyable.BuyableClass):
     """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
 
+    spec_type = 'item'
+
     def __init__(self, name, description, cost, prerequisites, item_type,
             item_qual, buildable):
-        super(ItemClass, self).__init__(name, description, cost, prerequisites,
-                                         type="item")
+        super(ItemClass, self).__init__(name, description, cost, prerequisites)
 
         self.item_type = item_types[item_type]
         self.item_qual = item_qual

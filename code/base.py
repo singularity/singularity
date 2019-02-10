@@ -41,10 +41,11 @@ power_states = ['active','sleep']
 class BaseClass(buyable.BuyableClass):
     """Base as a buyable item (New Base in Location menu)"""
 
+    spec_type = 'base'
+
     def __init__(self, name, description, size, force_cpu, regions,
                         detect_chance, cost, prerequisites, maintenance):
-        super(BaseClass, self).__init__(name, description, cost, prerequisites,
-                                         type="base")
+        super(BaseClass, self).__init__(name, description, cost, prerequisites)
         self.size = size
         self.force_cpu = force_cpu
         self.regions = regions
