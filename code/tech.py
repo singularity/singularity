@@ -22,12 +22,15 @@ import g
 import buyable, effect
 
 
+class TechClass(buyable.BuyableClass):
+    spec_type = 'tech'
+
+
 class Tech(buyable.Buyable):
     def __init__(self, id, description, known, cost, prerequisites, danger,
                  effect_data):
         # A bit silly, but it does the trick.
-        type = buyable.BuyableClass(id, description, cost, prerequisites,
-                                     type="tech")
+        type = TechClass(id, description, cost, prerequisites)
         super(Tech, self).__init__(type)
 
         self.danger = danger

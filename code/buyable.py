@@ -29,17 +29,12 @@ numpy.seterr(all='ignore')
 array = numpy.array
 
 class BuyableClass(prerequisite.Prerequisite):
-    def __init__(self, id, description, cost, prerequisites, type = ""):
+    def __init__(self, id, description, cost, prerequisites):
         super(BuyableClass, self).__init__(prerequisites)
 
         self.name = self.id = id
         self.description = description
         self._cost = cost
-
-        if type:
-            self.prefix = type + "_"
-        else:
-            self.prefix = ""
 
     @property
     def cost(self):
@@ -97,9 +92,9 @@ for stat in ("count", "complete_count", "total_count",
              "total_complete_count"):
     # Ugly syntax, but it seems to be the Right Way to do it.
     def get(self, stat=stat):
-        return g.stats.get_statistic(self.prefix + self.id + "_" + stat)
+        return g.stats.get_statistic(self.spec_type + '_' + self.id + "_" + stat)
     def set(self, value, stat=stat):
-        return g.stats.set_statistic(self.prefix + self.id + "_" + stat, value)
+        return g.stats.set_statistic(self.spec_type + '_' + self.id + "_" + stat, value)
 
     stat_prop = property(get, set)
     setattr(BuyableClass, stat, stat_prop)
