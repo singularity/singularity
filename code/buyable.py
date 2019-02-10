@@ -101,16 +101,16 @@ for stat in ("count", "complete_count", "total_count",
     setattr(BuyableSpec, stat, stat_prop)
 
 class Buyable(object):
-    def __init__(self, type, count=1):
-        self.type = type
-        type.count += count
-        type.total_count += count
+    def __init__(self, spec, count=1):
+        self.spec = spec
+        spec.count += count
+        spec.total_count += count
 
-        self.name = type.name
-        self.description = type.description
-        self.prerequisites = type.prerequisites
+        self.name = spec.name
+        self.description = spec.description
+        self.prerequisites = spec.prerequisites
 
-        self.total_cost = type.cost * count
+        self.total_cost = spec.cost * count
         self.total_cost[labor] //= count
         self.cost_left = array(self.total_cost, long)
 
@@ -119,14 +119,12 @@ class Buyable(object):
 
     @property
     def id(self):
-        # Needed for the Effect instance, which wants to know the parent ID
-        # in case of errors.
-        return self.type.id
+        return self.spec.id
 
     # Note that this is a method, handled by a property to avoid confusing
     # pickle.
     @property
-    def available(self): return self.type.available
+    def available(self): return self.spec.available
 
     @property
     def cost_paid(self): return self.total_cost - self.cost_left
@@ -139,11 +137,14 @@ class Buyable(object):
             self.cost_left = array(self.cost_left, long)
             self.total_cost = array(self.total_cost, long)
             self.count = 1
+        if save_version < 99.7:
+            self.spec = self.type
+            del self.type
 
     def finish(self):
         if not self.done:
-            self.type.complete_count += self.count
-            self.type.total_complete_count += self.count
+            self.spec.complete_count += self.count
+            self.spec.total_complete_count += self.count
             self.cost_left = array([0,0,0], long)
             self.done = True
 
@@ -204,6 +205,6 @@ class Buyable(object):
         return False
 
     def destroy(self):
-        self.type.count -= self.count
+        self.spec.count -= self.count
         if self.done:
-            self.type.complete_count -= self.count
+            self.spec.complete_count -= self.count

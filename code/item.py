@@ -134,9 +134,9 @@ class ItemSpec(buyable.BuyableSpec):
 class Item(buyable.Buyable):
     """ An installed Item in a Player's Base """
 
-    def __init__(self, item_type, base=None, count=1):
-        super(Item, self).__init__(item_type, count)
-        self.item_qual = item_type.item_qual
+    def __init__(self, item_spec, base=None, count=1):
+        super(Item, self).__init__(item_spec, count)
+        self.item_qual = item_spec.item_qual
         self.base = base
 
     def convert_from(self, load_version):
@@ -147,7 +147,7 @@ class Item(buyable.Buyable):
             self.type.item_type = item_types[self.type.item_type]
 
     def get_quality_for(self, quality):
-        item_qual = self.type.get_quality_for(quality)
+        item_qual = self.spec.get_quality_for(quality)
         
         # Modifiers are not affected by count.
         # TODO: Allow modifiers to be multiplied by count. Need a custom function.
@@ -163,7 +163,7 @@ class Item(buyable.Buyable):
 
     def __iadd__(self, other):
         if isinstance(other, Item) and self.base == other.base \
-                and self.type == other.type:
+                and self.spec == other.spec:
             if other.count == 0:
                 return self
 

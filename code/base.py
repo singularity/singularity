@@ -116,8 +116,8 @@ class BaseSpec(buyable.BuyableSpec):
 class Base(buyable.Buyable):
     """A Player's Base in a Location (Open Base in Location menu)"""
 
-    def __init__(self, name, type, built=False):
-        super(Base, self).__init__(type)
+    def __init__(self, name, spec, built=False):
+        super(Base, self).__init__(spec)
 
         self.name = name
         self.started_at = g.pl.raw_min
@@ -137,9 +137,9 @@ class Base(buyable.Buyable):
             "security": None,
         }
 
-        if self.type.force_cpu:
-            self.cpus = item.Item(g.items[self.type.force_cpu],
-                                  base=self, count=self.type.size)
+        if self.spec.force_cpu:
+            self.cpus = item.Item(g.items[self.spec.force_cpu],
+                                  base=self, count=self.spec.size)
             self.cpus.finish()
 
         if built:
@@ -148,7 +148,7 @@ class Base(buyable.Buyable):
         self.power_state = "active"
         self.grace_over = False
 
-        self.maintenance = buyable.array(self.type.maintenance, long)
+        self.maintenance = buyable.array(self.spec.maintenance, long)
 
     @property
     def cpus(self):
@@ -176,11 +176,11 @@ class Base(buyable.Buyable):
         return ""
 
     def space_left_for(self, item_type):
-        space_left = self.type.size
+        space_left = self.spec.size
 
         # Different cpus will replace the previous one, so these take full space.
         if self.cpus is not None \
-                and self.cpus.type == item_type:
+                and self.cpus.spec == item_type:
             space_left -= self.cpus.count
             
         return space_left
@@ -276,7 +276,7 @@ class Base(buyable.Buyable):
     # percent.
     def get_detect_chance(self, accurate = True):
         # Get the base chance from the universal function.
-        detect_chance = calc_base_discovery_chance(self.type.id)
+        detect_chance = calc_base_discovery_chance(self.spec.id)
 
         for group in g.pl.groups:
             detect_chance.setdefault(group, 0)
@@ -335,7 +335,7 @@ class Base(buyable.Buyable):
         
     def is_building_extra(self):
         for item in self.all_items():
-            if item and item.type.item_type.is_extra() and not item.done:
+            if item and item.spec.item_type.is_extra() and not item.done:
                 return True
         return False
 
@@ -353,7 +353,7 @@ class Base(buyable.Buyable):
                 return self.location.safety >= g.techs[tech_name].danger
 
             # Should only happen for the fake base.
-            for region in self.type.regions:
+            for region in self.spec.regions:
                 if g.locations[region].safety >= g.techs[tech_name].danger:
                     return True
             return False
@@ -371,7 +371,7 @@ class Base(buyable.Buyable):
             return True
 
     def is_complex(self):
-        return self.type.size > 1 or self.raw_cpu > 20
+        return self.spec.size > 1 or self.raw_cpu > 20
 
     def destroy(self):
         super(Base, self).destroy()
@@ -402,7 +402,7 @@ class Base(buyable.Buyable):
         # then name (ascending).
         # id(self) is thrown in at the end to make sure identical-looking
         # bases aren't considered equal.
-        return (-self.type.size, -self.cpu, self.name, id(self))
+        return (-self.spec.size, -self.cpu, self.name, id(self))
 
     def __cmp__(self, other):
         if isinstance(other, Base):

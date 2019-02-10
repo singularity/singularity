@@ -63,7 +63,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         if current is None:
             self.default = None
         else:
-            self.default = self.parent.get_current(self.type).type.id
+            self.default = self.parent.get_current(self.type).spec.id
 
         self.needs_rebuild = True
         return super(BuildDialog, self).show()
@@ -150,18 +150,18 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
 
 
 class ItemPane(widget.BorderedWidget):
-    type = widget.causes_rebuild("_type")
+    item_type = widget.causes_rebuild("_item_type")
     def __init__(self, parent, pos, size=(.48, .06), anchor=constants.TOP_LEFT,
-                 type=None, **kwargs):
+                 item_type=None, **kwargs):
 
         kwargs.setdefault("background_color", "pane_background")
 
         super(ItemPane, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
-        if type is None or not isinstance(type, item.ItemType):
+        if item_type is None or not isinstance(item_type, item.ItemType):
             raise ValueError('Type must be of class ItemType.')
 
-        self.type = type
+        self.item_type = item_type
 
         self.name_panel = text.Text(self, (0,0), (.35, .03),
                                     anchor=constants.TOP_LEFT,
@@ -178,11 +178,11 @@ class ItemPane(widget.BorderedWidget):
         self.change_button = button.FunctionButton(
             self, (.36,.01), (.12, .04),
             anchor=constants.TOP_LEFT,
-            text="%s (&%s)" % (_("CHANGE"), self.type.hotkey.upper()),
+            text="%s (&%s)" % (_("CHANGE"), self.item_type.hotkey.upper()),
             force_underline=len(_("CHANGE")) + 2,
             autohotkey=True,
             function=self.parent.parent.build_item,
-            kwargs={'type': self.type},
+            kwargs={'type': self.item_type},
         )
 
 class BaseScreen(dialog.Dialog):
@@ -254,7 +254,7 @@ class BaseScreen(dialog.Dialog):
         for i, item_type in enumerate(item.all_types()):
             setattr(self,
                     item_type.id + "_pane",
-                    ItemPane(self.contents_frame, (.01, .01+.08*i), type=item_type))
+                    ItemPane(self.contents_frame, (.01, .01+.08*i), item_type=item_type))
 
     def get_current(self, type):
         return self.base.items[type.id]
@@ -292,7 +292,7 @@ class BaseScreen(dialog.Dialog):
             # If there are any existing CPUs of this type, warn that they will
             # be taken offline until construction finishes.
             cpu_added = self.base.cpus is not None \
-                        and self.base.cpus.type == item_type
+                        and self.base.cpus.spec == item_type
             if cpu_added:
                 space_left -= self.base.cpus.count
                 if self.base.cpus.done:
@@ -308,7 +308,7 @@ class BaseScreen(dialog.Dialog):
             # If there are already existing CPUs of other type, warn that they will
             # be taken removed.
             cpu_removed = self.base.cpus is not None \
-                        and self.base.cpus.type != item_type
+                        and self.base.cpus.spec != item_type
             if cpu_removed:
                 msg = _("I will need to remove the existing different processors while I install the new type. Continue anyway?")
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
@@ -327,7 +327,7 @@ class BaseScreen(dialog.Dialog):
             self.base.check_power()
         else:
             old_item = self.base.items[type.id]
-            if old_item is None or old_item.type != item_type:
+            if old_item is None or old_item.spec != item_type:
                 self.base.items[type.id] = item.Item(item_type, base=self.base)
                 self.base.check_power()
 
@@ -365,11 +365,11 @@ class BaseScreen(dialog.Dialog):
         # Cannot use self.base.type.name directly because it may contain a
         # different language than current
         self.name_display.text="%s (%s)" % (self.base.name,
-                                            g.base_type[self.base.type.id].name)
+                                            g.base_type[self.base.spec.id].name)
         self.state_display.color = state_colors[self.base.power_state]
         self.state_display.text = self.base.power_state_name
 
-        mutable = not self.base.type.force_cpu
+        mutable = not self.base.spec.force_cpu
         for item_type in item.all_types():
             pane = getattr(self, item_type.id + "_pane")
             pane.change_button.visible = mutable
@@ -389,10 +389,10 @@ class BaseScreen(dialog.Dialog):
             pane.build_panel.text = current_build
 
         count = ""
-        if self.base.type.size > 1:
+        if self.base.spec.size > 1:
             current = getattr(self.base.cpus, "count", 0)
 
-            size = self.base.type.size
+            size = self.base.spec.size
 
             if size == current:
                 count = _("x%d (max)") % current
@@ -412,7 +412,7 @@ class BaseScreen(dialog.Dialog):
 
         # Maintenace cost.
         info_text += _("Maintenance:") + "\n"
-        info_text += self.base.type.describe_cost(self.base.maintenance, True) 
+        info_text += self.base.spec.describe_cost(self.base.maintenance, True)
         info_text += "\n"
     
         # Detection chance display.

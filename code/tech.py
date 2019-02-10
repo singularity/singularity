@@ -30,8 +30,8 @@ class Tech(buyable.Buyable):
     def __init__(self, id, known, cost, prerequisites, danger,
                  effect_data):
         # A bit silly, but it does the trick.
-        type = TechSpec(id, cost, prerequisites)
-        super(Tech, self).__init__(type)
+        spec = TechSpec(id, cost, prerequisites)
+        super(Tech, self).__init__(spec)
 
         self.danger = danger
         self.result = ""
@@ -43,6 +43,7 @@ class Tech(buyable.Buyable):
             super(Tech, self).finish()
 
     def convert_from(self, old_version):
+        super(Tech, self).convert_from(old_version)
         if old_version < 99.2: # < 1.0dev
             self.effect = effect.Effect(self, [self.tech_type, self.secondary_data])
             del self.tech_type
@@ -52,11 +53,11 @@ class Tech(buyable.Buyable):
         if not isinstance(other, Tech):
             return -1
         else:
-            return cmp(self.type, other.type)
+            return cmp(self.spec, other.spec)
 
     def get_info(self):
-        cost = self.type.describe_cost(self.total_cost, True)
-        left = self.type.describe_cost(self.cost_left, True)
+        cost = self.spec.describe_cost(self.total_cost, True)
+        left = self.spec.describe_cost(self.cost_left, True)
         return ("%s\n%s: %s\n%s: %s\n---\n%s" %
                 (self.name,
                  _("Total cost"), cost,
