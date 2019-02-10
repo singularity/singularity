@@ -29,11 +29,12 @@ numpy.seterr(all='ignore')
 array = numpy.array
 
 class BuyableClass(prerequisite.Prerequisite):
-    def __init__(self, id, description, cost, prerequisites):
+    def __init__(self, id, cost, prerequisites):
         super(BuyableClass, self).__init__(prerequisites)
 
         self.name = self.id = id
-        self.description = description
+        # This will be set when languages are (re)loaded
+        self.description = ''
         self._cost = cost
 
     @property
