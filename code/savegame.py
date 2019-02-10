@@ -31,7 +31,7 @@ from code import group
 default_savegame_name = u"Default Save"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_99.6"
+current_save_version = "singularity_savefile_99.7"
 savefile_translation = {
     "singularity_savefile_r4":      ("0.30",         4   ),
     "singularity_savefile_r5_pre":  ("0.30",         4.91),
@@ -43,6 +43,7 @@ savefile_translation = {
     "singularity_savefile_99.4":    ("1.0 (dev)",   99.4 ),
     "singularity_savefile_99.5":    ("1.0 (dev)",   99.5 ),
     "singularity_savefile_99.6":    ("1.0 (dev)",   99.6 ),
+    "singularity_savefile_99.7":    ("1.0 (dev)",   99.7 ),
 }
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])

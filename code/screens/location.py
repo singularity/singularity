@@ -119,7 +119,7 @@ class LocationScreen(dialog.Dialog):
                     int(base.percent_complete() * 100),
                     _("Completion in %s.") % g.to_time(base.cost_left[2]),)
 
-            elif base.type.force_cpu:
+            elif base.spec.force_cpu:
                 canvas.status_display.text = ""
             elif base.is_empty():
                 canvas.status_display.text = _("Empty")

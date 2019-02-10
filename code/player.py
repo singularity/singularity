@@ -400,10 +400,10 @@ class Player(object):
         for base, item in items_constructed:
             if item.count == 1:
                 text = g.strings["item_construction_single"] % \
-                       {"item": item.type.name, "base": base.name}
+                       {"item": item.spec.name, "base": base.name}
             else: # Just finished several items.
                 text = g.strings["item_construction_multiple"] % \
-                       {"item": item.type.name, "base": base.name}
+                       {"item": item.spec.name, "base": base.name}
             self.pause_game()
             g.map_screen.show_message(text)
 
@@ -581,7 +581,7 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 
-            self.add_log("log_destroy", reason, base.name, base.type.id, base.location.id)
+            self.add_log("log_destroy", reason, base.name, base.spec.id, base.location.id)
 
             self.pause_game()
             base.destroy()

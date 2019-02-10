@@ -64,7 +64,7 @@ class LogScreen(dialog.ChoiceDialog):
         log_format = log_name + '_' + reason if reason else log_name
         
         # Get BASE and LOCATION from id
-        base_type = g.base_type[log_data[2]] # base.type.id
+        base_type = g.base_type[log_data[2]] # base.spec.id
         location = g.locations[log_data[3]] # base.location.id
         
         return g.strings[log_format] % (name, base_type.name, location.name)
