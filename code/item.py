@@ -80,9 +80,9 @@ class ItemClass(buyable.BuyableClass):
 
     spec_type = 'item'
 
-    def __init__(self, name, description, cost, prerequisites, item_type,
+    def __init__(self, name, cost, prerequisites, item_type,
             item_qual, buildable):
-        super(ItemClass, self).__init__(name, description, cost, prerequisites)
+        super(ItemClass, self).__init__(name, cost, prerequisites)
 
         self.item_type = item_types[item_type]
         self.item_qual = item_qual

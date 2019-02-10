@@ -43,9 +43,9 @@ class BaseClass(buyable.BuyableClass):
 
     spec_type = 'base'
 
-    def __init__(self, name, description, size, force_cpu, regions,
+    def __init__(self, name, size, force_cpu, regions,
                         detect_chance, cost, prerequisites, maintenance):
-        super(BaseClass, self).__init__(name, description, cost, prerequisites)
+        super(BaseClass, self).__init__(name, cost, prerequisites)
         self.size = size
         self.force_cpu = force_cpu
         self.regions = regions

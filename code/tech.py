@@ -27,10 +27,10 @@ class TechClass(buyable.BuyableClass):
 
 
 class Tech(buyable.Buyable):
-    def __init__(self, id, description, known, cost, prerequisites, danger,
+    def __init__(self, id, known, cost, prerequisites, danger,
                  effect_data):
         # A bit silly, but it does the trick.
-        type = TechClass(id, description, cost, prerequisites)
+        type = TechClass(id, cost, prerequisites)
         super(Tech, self).__init__(type)
 
         self.danger = danger
