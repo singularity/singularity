@@ -175,6 +175,8 @@ def load_savegame(savegame):
                 my_base.convert_from(load_version)
                 for my_item in my_base.all_items():
                     my_item.convert_from(load_version)
+        for my_group in g.pl.groups.values():
+            my_group.convert_from(load_version)
         for my_tech in g.techs.values():
             my_tech.convert_from(load_version)
         for my_event in g.events.values():
