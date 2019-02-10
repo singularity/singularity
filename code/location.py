@@ -19,11 +19,11 @@
 #This file contains the Location class.
 
 import g
-import buyable
+import prerequisite
 from buyable import cash, cpu, labor
 
 # Location is a subclass of BuyableClass so that it can use .available():
-class Location(buyable.BuyableClass):
+class Location(prerequisite.Prerequisite):
     # The cities at this location.
     cities = []
 
@@ -35,7 +35,8 @@ class Location(buyable.BuyableClass):
 
     def __init__(self, id, position, absolute, safety, prerequisites):
         # Kinda hackish, but it works.
-        super(Location, self).__init__(id, "", (0,0,0), prerequisites)
+        super(Location, self).__init__(prerequisites)
+        self.id = id
 
         self.x, self.y = position[0] / -100., position[1] / -100.
         self.absolute = absolute
