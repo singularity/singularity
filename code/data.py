@@ -25,7 +25,7 @@ import collections
 
 import g
 import dirs
-import player, base, tech, item, event, location, difficulty, task, region
+import player, group, base, tech, item, event, location, difficulty, task, region
 import graphics.g, graphics.theme as theme
 
 def generic_load(filename, load_dirs="data", mandatory=True):
@@ -204,13 +204,26 @@ def load_significant_numbers():
             except ValueError:
                 sys.stderr.write("WARNING: Invalid number in 'numbers.dat' line: %d\n" % index)
 
-def load_groups_def():
-    player.group_list = {
-        "news":    _("NEWS"),
-        "science": _("SCIENCE"),
-        "covert":  _("COVERT"),
-        "public":  _("PUBLIC"),
-    }
+def load_groups_defs(lang=None):
+    load_generic_defs("groups", g.groups, lang, [])
+
+def load_groups():
+    groups = g.groups = collections.OrderedDict()
+
+    group_list = generic_load("groups.dat")
+    
+    for group_info in group_list:
+        check_required_fields(group_info, ("id", "suspicion_decay"), "Group")
+        
+        group_id = group_info["id"]
+        suspicion_decay = int(group_info.get("suspicion_decay"))
+        
+        groups[group_id] = group.GroupClass(
+            group_id,
+            suspicion_decay
+        )
+        
+    load_groups_defs()
 
 def load_base_defs(lang=None):
     load_generic_defs("bases", g.base_type, lang, ["flavor"])
@@ -722,7 +735,7 @@ def load_story_defs(lang=None):
 def reload_all():
     load_significant_numbers()
     load_strings()
-    load_groups_def()
+    load_groups()
     load_knowledge()
     load_difficulties()
     load_tasks()
@@ -741,7 +754,7 @@ def reload_all_mutable():
     
 def reload_all_def():
     load_strings()
-    load_groups_def()
+    load_groups_defs()
     load_knowledge_defs()
     load_difficulty_defs()
     load_base_defs()

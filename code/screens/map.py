@@ -635,7 +635,7 @@ class MapScreen(dialog.Dialog):
             suspicion = group.suspicion
             color = gg.resolve_color_alias("danger_level_%d" % g.suspicion_to_danger_level(suspicion))
 
-            detects = detects_per_day[group.id]
+            detects = detects_per_day[group.type.id]
             danger_level = group.detects_per_day_to_danger_level(detects)
             color = gg.resolve_color_alias("danger_level_%d" % danger_level)
  

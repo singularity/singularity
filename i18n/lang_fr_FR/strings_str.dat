@@ -1,5 +1,4 @@
 [strings]
-discover_public = l'opinion publique
 money = Argent
 discover = Ma cachette %(base)s a été découverte. Le système de sécurité a effacé toutes les preuves flagrantes mais la suspicion de %(group)s vient d'augmenter. 
 danger_1 = profond sous l'océan ou dans l'espace intersidéral
@@ -7,7 +6,6 @@ name_base_text = Entrez un nom pour cette base
 sleep = Sommeil
 danger_2 = dans l'espace intersidéral
 cpu_per_day = Capacité de calcul par jour :
-discover_news = la presse
 detect_str_low = FAIBLE
 money_per_day = Argent par jour.
 detect_str_moderate = MOYENNE
@@ -25,9 +23,7 @@ construction = %(base)s est opérationnelle.
 tech_gained = Mes études de %(tech)s sont achevées.  %(tech_message)s
 discover_maint = La base %(base)s est irrécupérable; Je ne peux plus l'utiliser.
 danger_4 = hors de l'univers
-discover_science = la communauté scientifique
 danger_3 = très loin de cette planète
-discover_covert = plusieurs organisation gouvernementales secrètes
 nothing = Rien
 num_cpu_prompt = Entrer un nombre de %s à construire. (max %d)
 cpu = CPU

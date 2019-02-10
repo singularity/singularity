@@ -60,6 +60,7 @@ messages = {}
 strings = {}
 story = {}
 knowledge = {}
+groups = {}
 locations = {}
 regions = {}
 techs = {}
@@ -235,8 +236,9 @@ def new_game(difficulty_name):
     pl.labor_bonus = diff.labor_multiplier
     pl.grace_multiplier = diff.base_grace_multiplier
 
-    for group in pl.groups.values():
-        group.discover_bonus = diff.discover_multiplier
+    import group
+    for group_id in groups:
+        pl.groups[group_id] = group.Group(groups[group_id], 0, diff.discover_multiplier)
 
     for tech_id in diff.techs:
         techs[tech_id].finish()

@@ -1,12 +1,9 @@
 [strings]
-discover_public = l'opinione pubblica
 money = Denaro
 discover = Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra %(group)s.
 name_base_text = Inserire un nome per la base
 sleep = Dormiente
-discover_science = la comunità scientifica
 cpu_per_day = Potenza di calcolo per giorno
-discover_news = alcune agenzie di informazione
 detect_str_low = BASSA
 money_per_day = Denaro per giorno.
 detect_str_moderate = MODERATA
@@ -27,7 +24,6 @@ danger_4 = al di fuori dell'Universo
 danger_1 = nelle profondità marine o nello spazio
 danger_2 = nello spazio
 danger_3 = lontano da questo pianeta
-discover_covert = diversi servizi segreti governativi
 nothing = Niente
 num_cpu_prompt = Inserire il numero di %s da costruire. (max %d)
 cpu = CPU

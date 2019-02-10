@@ -1,11 +1,9 @@
 [strings]
-discover_public = Allmänheten
 money = pengar
 discover = De har upptäckt att jag använder %(base)s. Det automatiska säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har ökat hos %(group)s.
 name_base_text = Namnge basen
 sleep = Vila  
 cpu_per_day = Processorkraft per dag:
-discover_news = några nyhetsorganisationer.
 detect_str_low = LÅG
 money_per_day = Inkomster varje dag.
 detect_str_moderate = MDL
@@ -21,9 +19,7 @@ detect_str_critical = KRI
 item_construction_single = Koonstruktion av %(item)s i %(base)s är klar.
 construction = %(base)s redo för användning.
 tech_gained = Min forskning inom %(tech)s är klar. %(tech_message)s
-discover_maint = %(base)s har förfalligt och är nu oanvändbar för mig.
-discover_science = vetenskapssällskapet.
-discover_covert = olika underättelsetjänstorganisationer. 
+discover_maint = %(base)s har förfalligt och är nu oanvändbar för mig. 
 nothing = Ingenting
 cpu = CPU
 save_text = Under vilket namn vill du spara spelet?

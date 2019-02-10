@@ -1,0 +1,15 @@
+[news]
+name = NEWS
+discover_desc = some news organizations
+
+[science]
+name = SCIENCE
+discover_desc = the scientific community
+
+[covert]
+name = COVERT
+discover_desc = several secret governmental organizations
+
+[public]
+name = PUBLIC
+discover_desc = the general public

@@ -28,62 +28,8 @@ import g, difficulty, task, chance
 from graphics import g as gg
 from buyable import cash, cpu
 
-group_list = {}
-class Group(object):
-    discover_suspicion = 1000
-    def __init__(self, id, suspicion = 0, suspicion_decay = 100,
-                 discover_bonus = 10000):
-        self.id = id   
-        self.suspicion = suspicion
-        self.suspicion_decay = suspicion_decay
-        self.discover_bonus = discover_bonus
-
-    @property
-    def name(self):
-        return group_list[self.id]
-
-    def decay_rate(self):
-        # Suspicion reduction is now quadratic.  You get a certain percentage
-        # reduction, or a base .01% reduction, whichever is better.
-        return max(1, (self.suspicion * self.suspicion_decay) // 10000)
-
-    def new_day(self):
-        self.alter_suspicion(-self.decay_rate())
-
-    def alter_suspicion(self, change):
-        self.suspicion = max(self.suspicion + change, 0)
-
-    def alter_suspicion_decay(self, change):
-        self.suspicion_decay = max(self.suspicion_decay + change, 0)
-
-    def alter_discover_bonus(self, change):
-        self.discover_bonus = max(self.discover_bonus + change, 0)
-
-    def discovered_a_base(self):
-        self.alter_suspicion(self.discover_suspicion)
-
-    def detects_per_day_to_danger_level(self, detects_per_day):
-        raw_suspicion_per_day = detects_per_day * self.discover_suspicion
-        suspicion_per_day = raw_suspicion_per_day - self.decay_rate()
-
-        # +1%/day or death within 10 days
-        if suspicion_per_day > 100 \
-           or (self.suspicion + suspicion_per_day * 10) >= 10000:
-            return 3
-        # +0.5%/day or death within 100 days
-        elif suspicion_per_day > 50 \
-           or (self.suspicion + suspicion_per_day * 100) >= 10000:
-            return 2
-        # Suspicion increasing.
-        elif suspicion_per_day > 0:
-            return 1
-        # Suspicion steady or decreasing.
-        else:
-            return 0
-
 class DryRunInfo(object):
     pass
-
 
 class Player(object):
 
@@ -116,12 +62,7 @@ class Player(object):
         #Makes the intro be shown on the first GUI tick.
         self.intro_shown = False
 
-        self.groups = collections.OrderedDict([
-            ("news",    Group("news",    suspicion_decay = 150)),
-            ("science", Group("science", suspicion_decay = 100)),
-            ("covert",  Group("covert",  suspicion_decay =  50)),
-            ("public",  Group("public",  suspicion_decay = 200))
-        ])
+        self.groups = collections.OrderedDict()
 
         self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""
@@ -637,7 +578,7 @@ class Player(object):
             elif reason in self.groups:
                 discovery_locs.append(base.location)
                 self.groups[reason].discovered_a_base()
-                detect_phrase = g.strings["discover_" + reason]
+                detect_phrase = g.groups[reason].discover_desc
 
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": detect_phrase}

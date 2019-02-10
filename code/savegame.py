@@ -29,7 +29,7 @@ import g, mixer, dirs, player
 default_savegame_name = "Default Save"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_99.5"
+current_save_version = "singularity_savefile_99.6"
 savefile_translation = {
     "singularity_savefile_r4":      ("0.30",         4   ),
     "singularity_savefile_r5_pre":  ("0.30",         4.91),
@@ -40,6 +40,7 @@ savefile_translation = {
     "singularity_savefile_99.3":    ("1.0 (dev)",   99.3 ),
     "singularity_savefile_99.4":    ("1.0 (dev)",   99.4 ),
     "singularity_savefile_99.5":    ("1.0 (dev)",   99.5 ),
+    "singularity_savefile_99.6":    ("1.0 (dev)",   99.6 ),
 }
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
@@ -119,8 +120,8 @@ def load_savegame(savegame):
             Tech=tech.Tech,
             event_class=event.Event,
             Event=event.Event,
-            group=player.Group,
-            Group=player.Group,
+            group=group.Group,
+            Group=group.Group,
             Buyable_Class=buyable.BuyableClass,
             BuyableClass=buyable.BuyableClass,
             Base=base.Base,

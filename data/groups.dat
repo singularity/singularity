@@ -1,0 +1,11 @@
+[news]
+suspicion_decay = 150
+
+[science]
+suspicion_decay = 100
+
+[covert]
+suspicion_decay =  50
+
+[public]
+suspicion_decay = 200

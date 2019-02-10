@@ -442,7 +442,7 @@ def get_detect_info(detect_chance):
     
     for group in g.pl.groups.itervalues():
         detect_template += group.name + u":\xA0%s\n"
-        chances.append(detect_chance.get(group.id, 0))
+        chances.append(detect_chance.get(group.type.id, 0))
 
     if g.pl.display_discover == "full":
         return detect_template % tuple(g.to_percent(c) for c in chances)
