@@ -190,17 +190,15 @@ def load_savegame(savegame):
     g.pl = unpickle.load()
     g.curr_speed = unpickle.load()
     g.techs = unpickle.load()
-    g.locations = unpickle.load()
+    if load_version < 99.7:
+        # In >= 99.8 locations are saved as a part of the player object, but earlier
+        # it was stored as a separate part of the stream.
+        g.pl.locations = unpickle.load()
     g.events = unpickle.load()
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         g.pl.convert_from(load_version)
-        for my_location in g.locations.values():
-            for my_base in my_location.bases:
-                my_base.convert_from(load_version)
-                for my_item in my_base.all_items():
-                    my_item.convert_from(load_version)
         for my_group in g.pl.groups.values():
             my_group.convert_from(load_version)
         for my_tech in g.techs.values():
@@ -239,7 +237,6 @@ def create_savegame(savegame_name):
         cPickle.dump(g.pl, savefile)
         cPickle.dump(g.curr_speed, savefile)
         cPickle.dump(g.techs, savefile)
-        cPickle.dump(g.locations, savefile)
         cPickle.dump(g.events, savefile)
 
 

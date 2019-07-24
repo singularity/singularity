@@ -359,7 +359,7 @@ def load_locations():
         modifiers_dict = read_modifiers_dict(location_info.get("modifier", []))
 
         # Create the location.
-        locations[id] = location.Location(id, position, absolute, safety, pre)
+        locations[id] = location.LocationSpec(id, position, absolute, safety, pre)
         locations[id].modifiers = modifiers_dict
 
         # Add the location to regions it is in them.

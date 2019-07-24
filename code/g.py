@@ -205,7 +205,7 @@ def to_time(raw_time):
 
 # Generator function for iterating through all bases.
 def all_bases(with_loc = False):
-    for base_loc in locations.values():
+    for base_loc in pl.locations.values():
         for base in base_loc.bases:
             if with_loc:
                 yield (base, base_loc)
@@ -242,7 +242,7 @@ def new_game(difficulty_name):
 
     #Starting base
     import base
-    open = [loc for loc in locations.values() if loc.available()]
+    open = [loc for loc in pl.locations.values() if loc.available()]
     random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
 
@@ -250,7 +250,7 @@ def new_game(difficulty_name):
     for reg in regions.itervalues():
         random.shuffle(reg.modifiers_list)
         for mod, loc in zip(reg.modifiers_list, reg.locations):
-            locations[loc].modifiers = mod
+            pl.locations[loc].modifiers = mod
             if debug:
                 print "%s gets modifiers %s" % (loc, mod)
 

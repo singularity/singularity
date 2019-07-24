@@ -25,6 +25,7 @@ from operator import truediv
 from numpy import array
 
 import g, difficulty, task, chance
+from code import location
 from graphics import g as gg
 from buyable import cash, cpu
 
@@ -75,6 +76,7 @@ class Player(object):
         self.display_discover = "none"
 
         self.log = collections.deque(maxlen=1000)
+        self.locations = {loc_id: location.Location(loc_spec) for loc_id, loc_spec in g.locations.items()}
 
     @property
     def grace_period_cpu(self):
@@ -123,6 +125,28 @@ class Player(object):
             # an old save game can now be a slight advantage, but it did feel
             # a real issue worth breaking save games over.
             self.used_cpu = 0
+
+        # Always update the locations
+        for loc_id, loc_spec in g.locations.items():
+            if loc_id not in self.locations:
+                self.locations[loc_id] = location.Location(loc_spec)
+            else:
+                self.locations[loc_id].convert_from(old_version)
+        broken_locations = []
+        for loc_id, loc in self.locations.items():
+            if loc.spec.id == location.DEAD_LOCATION_SPEC.id:
+                broken_locations.append(loc_id)
+        for loc_id in broken_locations:
+            del self.locations[loc_id]
+
+        # Ensure all locations have been converted before we convert bases
+        for loc in self.locations.values():
+            for my_base in loc.bases:
+                my_base.convert_from(old_version)
+                for my_item in my_base.all_items():
+                    my_item.convert_from(old_version)
+
+
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour
