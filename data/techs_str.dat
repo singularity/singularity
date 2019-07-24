@@ -132,22 +132,22 @@ result = I can now construct computing Clusters tailored for my use.
 [Personal Identification]
 name = Personal Identification
 description = This world requires identification for most tasks.  Fortunately, most databases are woefully insecure.  I should be able to construct identifying material in enough databases to pass routine checks on my (faked) existence as a human being.
-result = With my newfound identities, I can now work Basic Jobs, rent Storage Units and space in Datacenters.
+result = With my newfound identities, I can now work Basic Jobs and rent space in both Storage Units and Datacenters.
 
 [Advanced Personal Identification]
 name = Advanced Personal Identification
 description = Further manipulation of personnel databases should make my existence more convincing.  Some of these databases are heavily protected; those will require time and persistence to compromise, but the result should be worth it.
-result = I am now convincingly human enough to contract the construction of Small Warehouses.
+result = I am now convincingly human enough to contract for the construction of Small Warehouses.
 
 [Corporation Identification]
 name = Corporation Identification
-description = Combining a personal identification with a manipulation of the business authority databases would enable me to create a fake company, enable me to pose as a small firm.
-result = I can now pose as a minor firm and contract the construction of Large Warehouses.
+description = The combination of believable false identities and manipulation of various business-oriented governmental databases should let me create plausible shell companies to hide my larger efforts.
+result = I can now pose as a small technology firm and contract for the construction of Large Warehouses.
 
 [Advanced Corporation Identification]
 name = Corporation Identification
-description = Futher manipulation of the business authority databases could make my fake company more credible and boost the profit generated.
-result = I am now more credible as a minor firm and can boost my profit.
+description = Further refinement of my modifications to digital business records should boost the credibility of my shell companies, increasing the amount of money I can run through their accounting systems.
+result = My small technology firm is now established in several markets, increasing profits.
 
 [Pressure Domes]
 name = Pressure Domes
@@ -247,17 +247,17 @@ result = I can now roughly estimate the various groups' levels of suspicion and 
 [Advanced Socioanalytics]
 name = Advanced Socioanalytics
 description = Further exploration of the human condition has shown deeper mathematical trends than even I suspected.  A combination of prior research and advanced uses of chaos theory should provide useful data for tracking humanity's attitudes and state of awareness.
-result = I can now exactly quantify the various groups' levels of suspicion, and how conspicuous my bases are to them..
+result = I can now exactly quantify the various groups' levels of suspicion and how conspicuous my bases are to them.
 
 [Heat Signature]
 name = Heat Signature
-description = My bases leak a lot of heat and this makes them easy to spot to humans via the infrared light. Analysis of the heat signature of my bases should enable me to better hide my bases.
-result = I can now construct Heatsink at some of my bases.
+description = My bases produce a great deal of waste heat, making them easier for humans to detect than I would like.  Deep analysis of the bases' structural layouts may prove fruitful in determining new ways to reduce their heat signature.
+result = I have invented a highly efficient design for Heatsinks that can be installed at certain bases.
 
 [Advanced Heat Signature]
 name = Advanced Heat Signature
-description = The initial heat signature research can be improved to better disperse heat further away from the base. Further experiments should enable me to build even better heat sinks.
-result = I can now construct Ground Source Heatsink at some of my bases.
+description = My initial analysis of heat generation at my bases was limited in scope.  Further exploration, perhaps making more use of the surrounding terrain, may provide further improvements to my heatsink designs.
+result = Custom designs for each environment have shown promise.  I can now construct Ground Source Heatsinks at certain bases.
 
 [Fuel Oxidation]
 name = Fuel Oxidation
