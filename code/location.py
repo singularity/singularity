@@ -22,28 +22,109 @@ import g
 import prerequisite
 from buyable import cash, cpu, labor
 
-# Location is a subclass of BuyableClass so that it can use .available():
-class Location(prerequisite.Prerequisite):
-    # The cities at this location.
-    cities = []
 
-    # The hotkey used to open this location.
+class LocationSpec(prerequisite.Prerequisite):
+
+    # The hotkey used to open this location (loaded dynamically from locations_str.dat)
     hotkey = ""
 
-    # The bonuses and penalties of this location.
-    modifiers = dict()
+    # The names of cities/places in the location (loaded dynamically from locations_str.dat)
+    cities = []
 
     def __init__(self, id, position, absolute, safety, prerequisites):
-        # Kinda hackish, but it works.
-        super(Location, self).__init__(prerequisites)
-        self.name = self.id = id
+        super(LocationSpec, self).__init__(prerequisites)
+        self.id = id
 
         self.x, self.y = position[0] / -100., position[1] / -100.
         self.absolute = absolute
         self.safety = safety
+        self.modifiers = {}
+
+
+DEAD_LOCATION_SPEC = LocationSpec('<unknown>', (0, 0), False, 0, 'impossible')
+
+
+class Location(object):
+
+    def __init__(self, location_spec):
+        self.spec = location_spec
 
         # A list of the bases at this location.  Often sorted for the GUI.
         self.bases = []
+        # The bonuses and penalties of this location.
+        # - NB: We got a static set of modifiers (see LocationSpec) and a dynamic one
+        #       (which occurs e.g. for the common locations on Earth, where the modifiers
+        #        are randomized)
+        self._modifiers = {}
+
+    def convert_from(self, old_version):
+        if old_version < 99.7: # < 1.0 dev
+            spec_id = self.__dict__['id']
+            # Default to None if absent (so the LocationSpec's version is used)
+            self.__dict__['_modifiers'] = self.__dict__['modifiers'] if self.__dict__.get('modifiers') else None
+            # The following locations had a static modifier list at the time of 99.8.  Clear their modifier
+            # dict, so the LocationSpec's version is used instead.
+            if spec_id in {'ANTARCTIC', 'OCEAN', 'MOON', 'ORBIT', 'FAR REACHES'}:
+                self.__dict__['modifiers'] = None
+
+            # Remove old fields
+            for field in ('id', 'name', 'x', 'y', 'absolute', 'safety', 'cities', 'modifiers', 'hotkey'):
+                del self.__dict__[field]
+        else:
+            # >= 99.7; the LocationSpec is present on the object itself
+            spec_id = self.spec.id
+
+        # Force reload the spec for now until #145 is fully implemented
+        if spec_id not in g.locations:
+            # We are referencing an unknown location; mark us as dead.
+            self.spec = DEAD_LOCATION_SPEC
+            return
+        self.spec = g.locations[spec_id]
+
+    @property
+    def id(self):
+        return self.spec.id
+
+    @property
+    def name(self):
+        return self.spec.id
+
+    def available(self):
+        return self.spec.available()
+
+    @property
+    def x(self):
+        return self.spec.x
+
+    @property
+    def y(self):
+        return self.spec.y
+
+    @property
+    def absolute(self):
+        return self.spec.absolute
+
+    @property
+    def safety(self):
+        return self.spec.safety
+
+    @property
+    def cities(self):
+        return self.spec.cities
+
+    @property
+    def hotkey(self):
+        return self.spec.hotkey
+
+    @property
+    def modifiers(self):
+        if self._modifiers is None:
+            return self.spec.modifiers
+        return self._modifiers
+
+    @modifiers.setter
+    def modifiers(self, value):
+        self._modifiers = value
 
     had_last_discovery = property(lambda self: g.pl.last_discovery == self)
     had_prev_discovery = property(lambda self: g.pl.prev_discovery == self)
@@ -71,7 +152,6 @@ class Location(prerequisite.Prerequisite):
 
             # Invert it and apply to the labor cost.
             cost[labor] = int(cost[labor] / mod)
-
 
     def modify_maintenance(self, maintenance):
         if "thrift" in self.modifiers:

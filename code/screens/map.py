@@ -583,7 +583,7 @@ class MapScreen(dialog.Dialog):
         self.set_speed(speeds[new_index])
 
     def open_location(self, location):
-        self.location_dialog.location = g.locations[location]
+        self.location_dialog.location = g.pl.locations[location]
         dialog.call_dialog(self.location_dialog, self)
         return
 
@@ -791,7 +791,7 @@ class MapScreen(dialog.Dialog):
         self.danger_bar.visible = not g.pl.had_grace
 
         for id, location_button in self.location_buttons.iteritems():
-            location = g.locations[id]
+            location = g.pl.locations[id]
             location_button.text = "%s (%d)" % (location.name, len(location.bases))
             location_button.hotkey = location.hotkey
             location_button.visible = location.available()
