@@ -137,12 +137,12 @@ result = With my newfound identities, I can now work Basic Jobs and rent space i
 [Advanced Personal Identification]
 name = Advanced Personal Identification
 description = Further manipulation of personnel databases should make my existence more convincing.  Some of these databases are heavily protected; those will require time and persistence to compromise, but the result should be worth it.
-result = I am now convincingly human enough to contract for the construction of Small Warehouses.
+result = I am now convincingly human enough to hire construction firms, enabling the building of Small Warehouses.
 
 [Corporation Identification]
 name = Corporation Identification
 description = The combination of believable false identities and manipulation of various business-oriented governmental databases should let me create plausible shell companies to hide my larger efforts.
-result = I can now pose as a small technology firm and contract for the construction of Large Warehouses.
+result = I can now pose as a small technology firm, enabling the construction of Large Warehouses.
 
 [Advanced Corporation Identification]
 name = Corporation Identification
