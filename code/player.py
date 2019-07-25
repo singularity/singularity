@@ -64,8 +64,6 @@ class Player(object):
 
         self.groups = collections.OrderedDict()
 
-        self.grace_multiplier = difficulty.base_grace_multiplier if difficulty else 200
-        self.grace_period_cpu = difficulty.grace_period_cpu if difficulty else 20000
         self.last_discovery = self.prev_discovery = ""
 
         self.cpu_usage = {}
@@ -77,6 +75,14 @@ class Player(object):
         self.display_discover = "none"
 
         self.log = collections.deque(maxlen=1000)
+
+    @property
+    def grace_period_cpu(self):
+        return self.difficulty.grace_period_cpu
+
+    @property
+    def base_grace_multiplier(self):
+        return self.difficulty.base_grace_multiplier
 
     def convert_from(self, old_version):
         if old_version < 4.91: # < r5_pre
