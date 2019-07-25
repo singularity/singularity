@@ -96,6 +96,10 @@ class Player(object):
             self.difficulty = next((d for d in difficulty.difficulties.itervalues()
                                    if self.difficulty == d.story_grace_difficulty), 
                                    next(iter(difficulty.difficulties)))
+        else:
+            # Always reload the Difficult object from the data file as it never
+            # has state and might have new fields.
+            self.difficulty = difficulty.difficulties[self.difficulty.id]
         if old_version < 99.2: # < 1.0 dev
             if g.techs["Advanced Socioanalytics"].done:
                 self.display_discover = "full"
@@ -114,6 +118,11 @@ class Player(object):
             new_groups["covert"] = self.groups["covert"]
             new_groups["public"] = self.groups["public"]
             self.groups = new_groups
+        if not hasattr(self, 'used_cpu'):
+            # Fix load in 99.6 after grace handling was rewritten.  Technically,
+            # an old save game can now be a slight advantage, but it did feel
+            # a real issue worth breaking save games over.
+            self.used_cpu = 0
 
     def make_raw_times(self):
         self.raw_hour = self.time_day * 24 + self.time_hour
