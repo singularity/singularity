@@ -34,7 +34,7 @@ class DryRunInfo(object):
 class Player(object):
 
     def __init__(self, cash=0, time_sec=0, time_min=0, time_hour=0, time_day=0,
-                 difficulty = 5):
+                 difficulty=None):
         self.difficulty = difficulty
 
         self.time_sec = time_sec
@@ -50,11 +50,11 @@ class Player(object):
         self.apotheosis = False
 
         self.cash = cash
-        self.interest_rate = 1
+        self.interest_rate = difficulty.starting_interest_rate if difficulty else 1
         self.income = 0
 
         self.cpu_pool = 0
-        self.labor_bonus = 10000
+        self.labor_bonus = difficulty.labor_multiplier if difficulty else 10000
         self.job_bonus = 10000
 
         self.partial_cash = 0
@@ -64,8 +64,8 @@ class Player(object):
 
         self.groups = collections.OrderedDict()
 
-        self.grace_multiplier = 200
-        self.grace_period_cpu = 20000
+        self.grace_multiplier = difficulty.base_grace_multiplier if difficulty else 200
+        self.grace_period_cpu = difficulty.grace_period_cpu if difficulty else 20000
         self.last_discovery = self.prev_discovery = ""
 
         self.cpu_usage = {}
@@ -502,8 +502,6 @@ class Player(object):
     # The number of complete bases and complex_bases can be passed in, if we
     # already have it.
     def in_grace_period(self, had_grace = True):
-        grace_difficulty = self.difficulty.story_grace_difficulty
-
         # If we've researched apotheosis, we get a permanent "grace period".
         if self.apotheosis:
             return True
