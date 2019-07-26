@@ -362,7 +362,7 @@ class Base(buyable.Buyable):
             return False
 
         age = g.pl.raw_min - self.started_at
-        grace_time = (self.total_cost[buyable.labor] * g.pl.grace_multiplier) / 10000
+        grace_time = (self.total_cost[buyable.labor] * g.pl.base_grace_multiplier) / 10000
         if age > grace_time:
             self.grace_over = True
             return False
