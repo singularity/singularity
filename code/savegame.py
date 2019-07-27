@@ -165,14 +165,14 @@ def load_savegame(savegame):
     g.curr_speed = unpickle.load()
     loaded_techs = unpickle.load()
     loaded_locations = unpickle.load()
-    g.events = unpickle.load()
+    loaded_events = unpickle.load()
 
     import data
-    # Reload the techs from the data files.  This ensures we always have *all*
-    # the technologies from the current version of the game.  We will then merge
-    # relevant state from the save game into the g.techs table below.
-    data.load_techs()
-    data.load_locations()
+    # Reload the techs, locations and events from the data files.  This ensures
+    # we always have *all* of the data items from the current version of the game.
+    # We will then merge relevant state from the save game into the global tables
+    # below.
+    data.reload_all_mutable()
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
@@ -186,7 +186,7 @@ def load_savegame(savegame):
             my_group.convert_from(load_version)
         for my_tech in loaded_techs.values():
             my_tech.convert_from(load_version)
-        for my_event in g.events.values():
+        for my_event in loaded_events.values():
             my_event.convert_from(load_version)
 
     # Merge relevant parts of the restored techs into the g.techs structure
@@ -211,6 +211,16 @@ def load_savegame(savegame):
             continue
         # We avoid "add_base" because savegames have pre-applied bonuses
         location.bases.extend(location_from_savegame.bases)
+
+    for event_id, event_from_savegame in loaded_events.items():
+        event = g.events.get(event_id)
+        if event is None:
+            continue
+        # For unique events, we restore the triggered field
+        # but we do not "trigger" events that are active as
+        # savegames have pre-applied effects.
+        if event.unique:
+            event.triggered = event_from_savegame.triggered
 
     data.reload_all_mutable_def()
 
