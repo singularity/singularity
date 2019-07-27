@@ -164,7 +164,7 @@ def load_savegame(savegame):
     g.pl = unpickle.load()
     g.curr_speed = unpickle.load()
     loaded_techs = unpickle.load()
-    g.locations = unpickle.load()
+    loaded_locations = unpickle.load()
     g.events = unpickle.load()
 
     import data
@@ -172,11 +172,12 @@ def load_savegame(savegame):
     # the technologies from the current version of the game.  We will then merge
     # relevant state from the save game into the g.techs table below.
     data.load_techs()
+    data.load_locations()
 
     # Changes to individual pieces go here.
     if load_version != savefile_translation[current_save_version]:
         g.pl.convert_from(load_version)
-        for my_location in g.locations.values():
+        for my_location in loaded_locations.values():
             for my_base in my_location.bases:
                 my_base.convert_from(load_version)
                 for my_item in my_base.all_items():
@@ -202,6 +203,14 @@ def load_savegame(savegame):
             tech.cost_paid = tech.total_cost
         else:
             tech.cost_paid = tech_from_savegame.cost_paid
+
+    for location_id, location_from_savegame in loaded_locations.items():
+        location = g.locations.get(location_id)
+        if location is None:
+            # Discard bases at (now) unknown locations.
+            continue
+        # We avoid "add_base" because savegames have pre-applied bonuses
+        location.bases.extend(location_from_savegame.bases)
 
     data.reload_all_mutable_def()
 
