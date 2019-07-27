@@ -24,7 +24,7 @@ import pygame
 import json
 
 from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
-import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer, code.data as data
+import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer, code.data as data, code.warning as warning
 
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Integrate "Save Options to Disk" functionality in OK button.
@@ -51,29 +51,36 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.general_pane   = GeneralPane(None, (0, .1), (.80, .75))
         self.video_pane     = VideoPane(None, (0, .1), (.80, .75))
         self.audio_pane     = AudioPane(None, (0, .1), (.80, .75))
+        self.gui_pane       = GUIPane(None, (0, .1), (.80, .75))
 
-        self.tabs_panes = (self.general_pane, self.video_pane, self.audio_pane)
+        self.tabs_panes = (self.general_pane, self.video_pane, self.audio_pane, self.gui_pane)
 
         # Tabs buttons
         self.tabs_buttons = button.ButtonGroup()
 
-        self.general_tab = OptionButton(self, (-.30, .01), (-.202, .05),
+        self.general_tab = OptionButton(self, (-.20, .01), (-.20, .05),
                                          anchor = constants.TOP_CENTER,
                                          autohotkey=True,
                                          function=self.set_tabs_pane, args=(self.general_pane,))
         self.tabs_buttons.add(self.general_tab)
 
-        self.video_tab = OptionButton(self, (-.5, .01), (-.202, .05),
+        self.video_tab = OptionButton(self, (-.40, .01), (-.20, .05),
                                          anchor = constants.TOP_CENTER,
                                          autohotkey=True,
                                          function=self.set_tabs_pane, args=(self.video_pane,))
         self.tabs_buttons.add(self.video_tab)
 
-        self.audio_tab = OptionButton(self, (-.70, .01), (-.202, .05),
+        self.audio_tab = OptionButton(self, (-.60, .01), (-.20, .05),
                                        anchor = constants.TOP_CENTER,
                                        autohotkey=True,
                                        function=self.set_tabs_pane, args=(self.audio_pane,))
         self.tabs_buttons.add(self.audio_tab)
+        
+        self.gui_tab = OptionButton(self, (-.80, .01), (-.202, .05),
+                                    anchor = constants.TOP_CENTER,
+                                    autohotkey=True,
+                                    function=self.set_tabs_pane, args=(self.gui_pane,))
+        self.tabs_buttons.add(self.gui_tab)
 
         self.general_tab.chosen_one()
         self.set_tabs_pane(self.general_pane)
@@ -86,7 +93,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.general_tab.text               = _("&General")
         self.video_tab.text                 = _("&Video")
         self.audio_tab.text                 = _("&Audio")
-
+        self.gui_tab.text                   = _("&Interface")
+        
         self.general_pane.needs_rebuild     = True
         self.audio_pane.needs_rebuild       = True
 
@@ -102,7 +110,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             sound           = not mixer.nosound,
             gui_volume      = int(mixer.soundvolumes["gui"] * 100.0),
             music_volume    = int(mixer.soundvolumes["music"] * 100.0),
-            soundbuf        = mixer.soundbuf
+            soundbuf        = mixer.soundbuf,
+            warnings        = {warn.id: warn.active for warn in warning.warnings.itervalues()}
         )
 
         self.set_options(self.initial_options)
@@ -125,14 +134,12 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         tabs_pane.parent = self
 
     def set_options(self, options):
-        self.general_pane.set_options(options)
-        self.video_pane.set_options(options)
-        self.audio_pane.set_options(options)
+        for pane in self.tabs_panes:
+            pane.set_options(options)
 
     def apply_options(self):
-        self.general_pane.apply_options()
-        self.video_pane.apply_options()
-        self.audio_pane.apply_options()
+        for pane in self.tabs_panes:
+            pane.apply_options()
 
     def check_restart(self):
         # Test all changes that require a restart. Currently, none.
@@ -521,6 +528,60 @@ class AudioPane(widget.Widget):
     def set_soundbuf(self, value):
         mixer.set_soundbuf(value)
 
+class GUIPane(widget.Widget):
+    def __init__(self, *args, **kwargs):
+        super(GUIPane, self).__init__(*args, **kwargs)
+        
+        self.warning_title = text.Text(self, (.13, .01), (.14, .05),
+                                       align=constants.LEFT,
+                                       background_color="clear")
+        
+        self.warning_labels = {}
+        self.warning_toggles = {}
+        
+        for i, (warn_id, warn) in enumerate(warning.warnings.iteritems()):
+            x = .01
+            y = .08 + i * .06
+            
+            self.warning_labels[warn_id] = button.HotkeyText(self, (x, y), (.30, .05),
+                                                             autohotkey=True,
+                                                             align=constants.LEFT,
+                                                             background_color="clear")
+            self.warning_toggles[warn_id] = OptionButton(self, (x + .30, y), (.07, .05),
+                                                          text_shrink_factor=.75,
+                                                          force_underline=-1,
+                                                          function=self.set_warning,
+                                                          args=(button.WIDGET_SELF, button.TOGGLE_VALUE, warn))
+            self.warning_labels[warn_id].hotkey_target = self.warning_toggles[warn_id]
+ 
+    def rebuild(self):
+        super(GUIPane, self).rebuild()
+
+        self.warning_title.text = _("WARNING")
+
+        for warn_id, warn in warning.warnings.iteritems():
+            self.warning_labels[warn_id].text = g.strings[warn.name]
+
+            if warn.active:
+                self.warning_toggles[warn_id].text = _("YES")
+            else:
+                self.warning_toggles[warn_id].text = _("NO")
+
+    def set_warning(self, widget, value, warn):
+        if value:
+            widget.text = _("YES")
+        else:
+            widget.text = _("NO")
+
+        warn.active = value
+
+    def set_options(self, options):
+        for warn_id, warn_active in options["warnings"].iteritems():
+            self.warning_toggles[warn_id].set_active(warn_active)
+        
+    def apply_options(self):
+        pass
+
 class OptionButton(button.ToggleButton, button.FunctionButton):
     pass
 
@@ -549,6 +610,10 @@ def save_options():
 
     for name, value in mixer.soundvolumes.iteritems():
         prefs.set("Preferences", name + "_volume", str(value))
+
+    prefs.add_section("Warning")
+    for warn_id, warn in warning.warnings.iteritems():
+        prefs.set("Warning", warn_id, str(bool(warn.active)))
 
     # Actually write the preferences out.
     save_loc = dirs.get_writable_file_in_dirs("prefs.dat", "pref")

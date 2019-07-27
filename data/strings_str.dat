@@ -19,10 +19,14 @@ log_destroy_news = Base %s of type %s discovered at location %s by some news org
 log_destroy_science = Base %s of type %s discovered at location %s by the scientific community.
 log_destroy_covert = Base %s of type %s discovered at location %s by several secret governmental organizations.
 log_destroy_public = Base %s of type %s discovered at location %s by the general public.
-warning_cpu_usage = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
-warning_one_base = Only one base can hold my conscience. I am in danger to lose the last place left to survive.
-warning_cpu_pool_zero = My cpu pool is empty. Some of my bases or items cannot be build without CPU.
-warning_cpu_maintenance = My cpu pool is not enough to maintain some of my bases. I may lose them.
+warning_cpu_usage_name = Do not use all the available CPU.
+warning_cpu_usage_desc = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
+warning_one_base_name = Only one base remaining.
+warning_one_base_desc = Only one base can hold my conscience. I am in danger to lose the last place left to survive.
+warning_cpu_pool_zero_name = CPU POOL is empty.
+warning_cpu_pool_zero_desc = My cpu pool is empty. Some of my bases or items cannot be build without CPU.
+warning_cpu_maintenance_name = CPU POOL not enough for maintenance.
+warning_cpu_maintenance_desc = My cpu pool is not enough to maintain some of my bases. I may lose them.
 
 # The following strings are used on the map screen in place of percentages until
 # a certain technology is researched.

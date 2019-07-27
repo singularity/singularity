@@ -19,7 +19,7 @@
 
 #This file is used to display warning.
 
-from code import g
+from code import g, warning
 from code.graphics import g as gg
 from code.graphics import dialog, constants, text, button
 
@@ -58,7 +58,7 @@ class WarningDialogs(object):
 
         # Verify the cpu usage (error 1%)
         if (cpu_usage < cpu_available * 0.99):
-            warnings.append(Warning("warning_cpu_usage"))
+            warnings.append(warning.cpu_usage)
 
         # Verify I have two base build (or one base will be build next tick)
         # Base must have one cpu build (or one cpu will be build next tick)
@@ -68,7 +68,7 @@ class WarningDialogs(object):
                     and (base.cpus.done or base.cpus.cost_left[labor]) <= 1)
 
         if (bases == 1):
-            warnings.append(Warning("warning_one_base"))
+            warnings.append(warning.one_base)
 
         # Verify the cpu pool is not 0 if base or item building need CPU
         building_base = sum(1 for base in g.all_bases()
@@ -78,14 +78,16 @@ class WarningDialogs(object):
                     if item is not None and not item.done
                     and item.cost_left[cpu] > 0)
         if ((building_base + building_item > 0) and g.pl.cpu_usage.get("cpu_pool", 0) == 0):
-            warnings.append(Warning("warning_cpu_pool_zero"))
+            warnings.append(warning.cpu_pool_zero)
 
         # Verify the cpu pool provides the maintenance CPU 
         cpu_maintenance = sum(base.maintenance[1] for base in g.all_bases() if base.done)
         if (g.pl.cpu_usage.get("cpu_pool", 0) < cpu_maintenance):
-            warnings.append(Warning("warning_cpu_maintenance"))
+            warnings.append(warning.cpu_maintenance)
 
         # TODO: Verify the maintenance cash
+
+        warnings = filter(lambda w: w.active, warnings)
 
         return warnings
 
@@ -118,6 +120,7 @@ class WarningDialog(dialog.YesNoDialog):
                                                  text_size=28,
                                                  function=self.next_warning)            
                                
+        # TODO: Add button "Do not show this message again"
 
     def rebuild(self):
         super(WarningDialog, self).rebuild()
@@ -147,7 +150,5 @@ class WarningDialog(dialog.YesNoDialog):
         self.needs_rebuild = True
         return super(WarningDialog, self).show()
 
-class Warning(object):
-    def __init__(self, message):
-        self.message = message
+
 

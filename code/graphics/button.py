@@ -243,17 +243,22 @@ class DialogButton(FunctionButton):
             raise constants.Handled, dialog.call_dialog(self.dialog, self)
 
 TOGGLE_VALUE = object()
+WIDGET_SELF = object()
 class ToggleButton(Button):
     active = False
     button_group = None
 
-    def replace_toggle(self, value):
+    def replace_args(self, value):
         if value is TOGGLE_VALUE:
             return self.active
+        elif value is WIDGET_SELF:
+            return self
         else:
             return value
+            
     def get_args(self):
-        return tuple(self.replace_toggle(value) for value in self._args)
+        return tuple(self.replace_args(value) for value in self._args)
+        
     def set_args(self, args):
         self._args = args
     args = property(get_args, set_args)

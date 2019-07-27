@@ -150,6 +150,23 @@ if save_loc is not None:
                 mixer.setvolume(name, prefs.getfloat("Preferences", name + "_volume"))
 
         except:
+            pass # don't be picky (for now...
+            
+    if prefs.has_section("Warning"):
+        try:
+            import warning
+
+            for key in prefs.options('Warning'):
+
+                if key in prefs.defaults(): # Filter default key
+                    continue
+
+                if key not in warning.warnings: # Filter invalid warning
+                    continue # TODO: Return error
+                
+                warning.warnings[key].active = prefs.getboolean("Warning", key)
+
+        except:
             pass # don't be picky (for now...)
 
 
