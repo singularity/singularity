@@ -24,7 +24,6 @@ name = Grand Entrepôt
 flavor_list = Grand Entrepôt
 
 [Covert Base]
-name = Base Camouflée
 description = Cette base d'un type unique est destinée à se fondre dans le décor tout en nécessitant des ressources extérieures limitées. Elle pourrait être utile pour stocker une sauvegarde, au cas où.
 flavor_list = Bunker | Base Camouflée
 

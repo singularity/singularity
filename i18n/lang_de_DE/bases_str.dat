@@ -24,7 +24,6 @@ description = Ein großes, abgelegenes Lagerhaus mieten. Ich werde einen gut gef
 flavor_list = Großes Lagerhaus | Große Lagerung
 
 [Covert Base]
-name = Getarnter Stützpunkt
 description = Dieser spezielle Stützpunkt ist dafür ausgelegt, in der Landschaft kaum aufzufallen und er benötigt nur sehr wenige Ressourcen von aussen. Dadurch ist er gut dafür geeignet, eine Datensicherung aufzubewahren... nur für alle Fälle.
 flavor_list = Bunker | Getarnter Stützpunkt
 

@@ -15,7 +15,6 @@ description = Affittare un piccolo magazzino in un posto isolato. Avrò bisogno 
 
 [Covert Base]
 flavor_list = Bunker | Base Segreta
-name = Base Segreta
 description = Questa base unica è progettata per mimetizzarsi nel paesaggio, con pochi bisogni in termini di risorse esterne. Questo la rende utile per immagazzinare un backup, non si sa mai.
 
 [Server Access]

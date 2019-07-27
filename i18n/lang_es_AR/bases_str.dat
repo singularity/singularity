@@ -22,7 +22,6 @@ name = Almacén Grande
 flavor_list = Almacén Grande | Depósito Grande
 
 [Covert Base]
-name = Base Encubierta
 description = Esta base especial está diseñada para confundirse con el ambiente y utilizar pocos recursos externos. Esto la hace útil para almacenar backups, por si acaso.
 flavor_list = Bunker | Base Encubierta
 

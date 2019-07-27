@@ -24,7 +24,6 @@ name = Grande Armazém
 flavor_list = Grande Armazém | Grande Depósito
 
 [Covert Base]
-name = Base Secreta
 description = Esta base exclusiva é projetada para se confundir com a paisagem, e precisa de muito pouco em termos de recursos externos. Isto a torna útil pra armazenar uma cópia de segurança, só por precaução.
 flavor_list = Bunker | Base Secreta
 

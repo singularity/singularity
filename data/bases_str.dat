@@ -31,9 +31,9 @@ description = Rent a large warehouse someplace out of the way. I will need a fak
 flavor_list = Large Warehouse | Large Storage
 
 [Covert Base]
-name = Covert Base
+name = Hideout
 description = This unique base is designed to blend into the scenery, while needing little in the way of outside resources. This makes it useful for storing a backup, just in case.
-flavor_list = Bunker | Covert Base
+flavor_list = Hideout | Hideaway | Bunker | Covert Base
 
 [Undersea Lab]
 name = Undersea Lab
