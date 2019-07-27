@@ -111,7 +111,6 @@ class Buyable(object):
         type.total_count += count
 
         self.name = type.name
-        self.id = type.id
         self.description = type.description
         self.prerequisites = type.prerequisites
 
@@ -121,6 +120,12 @@ class Buyable(object):
 
         self.count = count
         self.done = False
+
+    @property
+    def id(self):
+        # Needed for the Effect instance, which wants to know the parent ID
+        # in case of errors.
+        return self.type.id
 
     # Note that this is a method, handled by a property to avoid confusing
     # pickle.
