@@ -64,7 +64,7 @@ class Player(object):
 
         self.groups = collections.OrderedDict()
 
-        self.last_discovery = self.prev_discovery = ""
+        self.last_discovery = self.prev_discovery = None
 
         self.cpu_usage = {}
         self.available_cpus = [1, 0, 0, 0, 0]

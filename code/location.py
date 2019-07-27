@@ -91,11 +91,15 @@ class Location(prerequisite.Prerequisite):
         # Make sure the location's CPU modifier is applied.
         base.recalc_cpu()
 
+    def __eq__(self, other):
+        if self is other:
+            return True
+        if other is None or not isinstance(other, self.__class__):
+            return False
+        return self.id == other.id
+
     def __hash__(self):
         return hash(self.id)
 
     def __cmp__(self, other):
-        if type(other) in (str, unicode):
-            return cmp(self.id, other)
-        else:
-            return cmp(self.id, other.id)
+        return cmp(self.id, other.id)
