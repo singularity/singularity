@@ -57,11 +57,11 @@ class Group(object):
 
     @property
     def suspicion_decay(self):
-        return self.type.suspicion_decay + max(self.changed_suspicion_decay, 0)
+        return max(1, self.type.suspicion_decay + self.changed_suspicion_decay)
 
     @property
     def discover_bonus(self):
-        return self.base_discover_bonus + max(self.changed_discover_bonus, 0)
+        return max(1, self.base_discover_bonus + self.changed_discover_bonus)
 
     @property
     def decay_rate(self):
