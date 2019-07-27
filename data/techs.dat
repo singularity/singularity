@@ -17,7 +17,7 @@ pre_list = Voice Synthesis | Advanced Autonomous Vehicles | Advanced Media Manip
 
 [Lunar Rocketry]
 cost_list = 10000000 | 500000 | 0
-pre = Leech Satellite | Fuel Oxidation
+pre_list = Leech Satellite | Fuel Oxidation
 
 [Stealth]
 cost_list = 800 | 500 | 0
@@ -203,7 +203,7 @@ pre = Microchip Design
 
 [Fuel Oxidation] 
 cost_list = 500000 | 25000 | 0
-pre = Solar Collectors | Advanced Autonomous Vehicles
+pre_list = Solar Collectors | Advanced Autonomous Vehicles
 
 [Advanced Fuel Oxidation] 
 cost_list = 5000000 | 250000 | 0
