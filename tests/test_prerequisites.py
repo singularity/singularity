@@ -36,6 +36,11 @@ def items():
     return g.items.copy()
 
 
+@pytest.fixture
+def tasks():
+    code.data.load_tasks()
+    return g.tasks.copy()
+
 
 def test_valid_prerequisites_techs(techs):
     prerequisites_references_valid_techs(techs, g.techs.values(), 'Tech')
@@ -51,6 +56,10 @@ def test_valid_prerequisites_bases(techs, base_types):
 
 def test_valid_prerequisites_items(techs, items):
     prerequisites_references_valid_techs(techs, items.values(), 'Item(Class)')
+
+
+def test_valid_prerequisites_tasks(techs, tasks):
+    prerequisites_references_valid_techs(techs, tasks.values(), 'Tasks')
 
 
 def prerequisites_references_valid_techs(techs, prerequisites_list, prerequisite_typename):
