@@ -1,0 +1,16 @@
+language: python
+dist: bionic
+python:
+  - "2.7"
+virtualenv:
+  system_site_packages: true
+addons:
+  apt:
+    packages:
+      - python-py.test
+      - python-numpy
+      - python-pygame
+install: skip
+script: PYTHONPATH=. py.test
+git:
+  submodules: false
