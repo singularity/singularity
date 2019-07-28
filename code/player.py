@@ -232,7 +232,25 @@ class Player(object):
 
         tech_cpu = 0
         tech_cash = 0
-        
+
+        construction_cpu = 0
+        construction_cash = 0
+
+        def work_on(buyable, available_cash, available_cpu, time_passed):
+            if dry_run:
+                spent = buyable.calculate_work(available_cash,
+                                               available_cpu,
+                                               time=time_passed)[0]
+
+                self.cpu_pool -= int(spent[cpu])
+                self.cash -= int(spent[cash])
+                return False, spent
+            else:
+                complete = buyable.work_on(available_cash,
+                                           available_cpu,
+                                           time=time_passed)
+                return complete, None
+
         # Do research, fill the CPU pool.
         default_cpu = self.available_cpus[0]
         
@@ -245,23 +263,15 @@ class Player(object):
             if task != "jobs":
                 self.cpu_pool += real_cpu
                 if task != "cpu_pool":
-                    if dry_run:
-                        spent = g.techs[task].calculate_work(self.cash,
-                                                             real_cpu,
-                                                             time=mins_passed)[0]
-                        self.cpu_pool -= int(spent[cpu])
-                        self.cash -= int(spent[cash])
-                        tech_cpu += int(spent[cpu])
-                        tech_cash += int(spent[cash])
-                        continue
-
+                    tech = g.techs[task]
                     # Note that we restrict the CPU available to prevent
                     # the tech from pulling from the rest of the CPU pool.
-                    tech_gained = g.techs[task].work_on(self.cash,
-                                                        real_cpu,
-                                                        time=mins_passed)
-                    if tech_gained:
-                        techs_researched.append(g.techs[task])
+                    complete, spent_dryrun = work_on(tech, self.cash, real_cpu, mins_passed)
+                    if spent_dryrun is not None:
+                        tech_cpu += int(spent_dryrun[cpu])
+                        tech_cash += int(spent_dryrun[cash])
+                    if complete:
+                        techs_researched.append(tech)
         self.cpu_pool += default_cpu * secs_passed
 
         # And now we use the CPU pool.
@@ -274,46 +284,23 @@ class Player(object):
             self.cpu_pool -= int(cpu_maintenance)
             cpu_maintenance = 0
 
-        construction_cpu = 0
-        construction_cash = 0
         # Base construction.
         for base in bases_under_construction:
-            if dry_run:
-                spent = base.calculate_work(self.cash,
-                                            self.cpu_pool,
-                                            time=mins_passed)[0]
-
-                self.cpu_pool -= int(spent[cpu])
-                self.cash -= int(spent[cash])
-                construction_cpu += int(spent[cpu])
-                construction_cash += int(spent[cash])
-                continue
-
-            built_base = base.work_on(self.cash,
-                                      self.cpu_pool,
-                                      time=mins_passed)
-
-            if built_base:
+            complete, spent_dryrun = work_on(base, self.cash, self.cpu_pool, mins_passed)
+            if spent_dryrun is not None:
+                construction_cpu += int(spent_dryrun[cpu])
+                construction_cash += int(spent_dryrun[cash])
+            if complete:
                 bases_constructed.append(base)
 
         # Item construction.
         for base, item in items_under_construction:
-            if dry_run:
-                spent = item.calculate_work(self.cash,
-                                            self.cpu_pool,
-                                            time=mins_passed)[0]
-                self.cpu_pool -= int(spent[cpu])
-                self.cash -= int(spent[cash])
-                construction_cpu += int(spent[cpu])
-                construction_cash += int(spent[cash])
-                continue
-
-            built_item = item.work_on(self.cash,
-                                      self.cpu_pool,
-                                      time=mins_passed)
-
-            if built_item:
-                items_constructed.append( (base, item) )
+            complete, spent_dryrun = work_on(item, self.cash, self.cpu_pool, mins_passed)
+            if spent_dryrun is not None:
+                construction_cpu += int(spent_dryrun[cpu])
+                construction_cash += int(spent_dryrun[cash])
+            if complete:
+                items_constructed.append((base, item))
 
         # Jobs via CPU pool.
         pool_job_cash = 0
