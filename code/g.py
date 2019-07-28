@@ -332,10 +332,3 @@ def hotkey_position(string): return hotkey(string)['pos']
 #   raise Exception, "Aaaaaargh!"
 #
 #print raises_exception()
-
-#Unit test
-if __name__ == "__main__":
-    # Hotkey
-    for test in ["E&XIT","&Play D&&D","Romeo & &Juliet","Trailing&",
-                 "&Multiple&Keys","M&&&M",]:
-        print 'hotkey(%s)=%r' % (test,hotkey(test))
