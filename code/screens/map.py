@@ -162,7 +162,73 @@ class EarthImage(image.Image):
             if child.visible:
                 child.redraw()
 
+
+class GameMenuDialog(dialog.SimpleMenuDialog):
+
+    def __init__(self, map_screen):
+        super(GameMenuDialog, self).__init__(parent=map_screen)
+        self._map_screen = map_screen
+        from options import OptionsScreen
+        self.options_dialog = OptionsScreen(self)
+        self.savename_dialog = dialog.TextEntryDialog(self)
+        self.load_dialog = savegame.SavegameScreen(self,
+                                                   (.5,.5), (.5,.5),
+                                                   anchor=constants.MID_CENTER)
+
+        self._rebuild_menu_buttons()
+        self.needs_rebuild = True
+
+    def _rebuild_menu_buttons(self):
+        menu_buttons = [
+            button.FunctionButton(None, None, None,
+                                  text=_("&SAVE GAME"), autohotkey=True,
+                                  function=self.save_game),
+            button.FunctionButton(None, None, None,
+                                  text=_("&LOAD GAME"), autohotkey=True,
+                                  function=self.load_game),
+            button.DialogButton(None, None, None,
+                                text=_("&OPTIONS"), autohotkey=True,
+                                dialog=self.options_dialog),
+            button.ExitDialogButton(None, None, None,
+                                    text=_("&QUIT"), autohotkey=True,
+                                    exit_code=True, default=False),
+            button.ExitDialogButton(None, None, None, text=_("&BACK"), autohotkey=True,
+                                    exit_code=False),
+        ]
+        self._buttons = menu_buttons
+
+    def rebuild(self):
+        self._rebuild_menu_buttons()
+        self.options_dialog.needs_rebuild = True
+        self.savename_dialog.text = _("Enter a name for this save.")
+        super(GameMenuDialog, self).rebuild()
+
+    def load_game(self):
+        did_load = dialog.call_dialog(self.load_dialog, self)
+        if did_load:
+            self._map_screen.force_update()
+            raise constants.ExitDialog, False
+
+    def save_game(self):
+        self.savename_dialog.default_text = sv.default_savegame_name
+        name = dialog.call_dialog(self.savename_dialog, self)
+        if name:
+            if sv.savegame_exists(name):
+                yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
+                                        anchor=constants.MID_CENTER,
+                                        text=_("A savegame with the same name exists.\n"
+                                               "Are you sure to overwrite the saved game ?"))
+                overwrite = dialog.call_dialog(yn, self)
+                if not overwrite:
+                    return
+
+            sv.create_savegame(name)
+            raise constants.ExitDialog, False
+
+
 speeds = [0, 1, 60, 7200, 432000]
+
+
 class MapScreen(dialog.Dialog):
     def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
                  anchor = constants.TOP_LEFT,  *args, **kwargs):
@@ -223,7 +289,7 @@ class MapScreen(dialog.Dialog):
                                               anchor=constants.TOP_CENTER,
                                               dialog=log.LogScreen(self))
 
-        self.menu_dialog = dialog.SimpleMenuDialog(self)
+        self.menu_dialog = GameMenuDialog(self)
         def show_menu():
             exit = dialog.call_dialog(self.menu_dialog, self)
             if exit:
@@ -231,13 +297,6 @@ class MapScreen(dialog.Dialog):
         self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
                                                  autohotkey=True,
                                                  function=show_menu)
-
-        self.load_dialog = savegame.SavegameScreen(self.menu_dialog,
-                                                   (.5,.5), (.5,.5),
-                                                   anchor=constants.MID_CENTER)
-
-        from options import OptionsScreen
-        self.options_dialog = OptionsScreen(self.menu_dialog)
 
         # Display current game difficulty right below the 'Menu' button
         # An alternative location is above 'Reports': (0, 0.84), (0.15, 0.04)
@@ -304,8 +363,6 @@ class MapScreen(dialog.Dialog):
                           border_color="pane_background")
 
         self.message_dialog = dialog.MessageDialog(self, text_size=20)
-
-        self.savename_dialog = dialog.TextEntryDialog(self.menu_dialog)
 
         self.warnings = warning.WarningDialogs(self)
         self.needs_warning = True
@@ -514,10 +571,9 @@ class MapScreen(dialog.Dialog):
     def rebuild(self):
         # Rebuild dialogs
         self.location_dialog.needs_rebuild = True
-        self.options_dialog.needs_rebuild = True
         self.research_button.dialog.needs_rebuild = True
         self.knowledge_button.dialog.needs_rebuild = True
-        self.savename_dialog.text = _("Enter a name for this save.")
+        self.menu_dialog.needs_rebuild = True
 
         # Update buttons translations
         self.report_button.text = _("R&EPORTS")
@@ -566,26 +622,6 @@ class MapScreen(dialog.Dialog):
                 # dead key (ie, it must print a char with a single keypress)
                 hotkey=_("`"),
                 dialog=self.cheat_dialog)
-
-        # Create menu
-        menu_buttons = []
-        menu_buttons.append(button.FunctionButton(None, None, None,
-                                                  text=_("&SAVE GAME"), autohotkey=True,
-                                                  function=self.save_game))
-        menu_buttons.append(button.FunctionButton(None, None, None,
-                                                  text=_("&LOAD GAME"), autohotkey=True,
-                                                  function=self.load_game))
-        menu_buttons.append(button.DialogButton(None, None, None,
-                                                text=_("&OPTIONS"), autohotkey=True,
-                                                dialog=self.options_dialog))
-        menu_buttons.append(button.ExitDialogButton(None, None, None,
-                                                    text=_("&QUIT"), autohotkey=True,
-                                                    exit_code=True, default=False))
-        menu_buttons.append(
-            button.ExitDialogButton(None, None, None, text=_("&BACK"), autohotkey=True,
-                                    exit_code=False))
-
-        self.menu_dialog.buttons = menu_buttons
 
         super(MapScreen, self).rebuild()
 
@@ -665,26 +701,6 @@ class MapScreen(dialog.Dialog):
             location_button.hotkey = location.hotkey
             location_button.visible = location.available()
 
-    def load_game(self):
-        did_load = dialog.call_dialog(self.load_dialog, self.menu_dialog)
-        if did_load:
-            self.force_update()
-            raise constants.ExitDialog, False
-
-    def save_game(self):
-        self.savename_dialog.default_text = sv.default_savegame_name
-        name = dialog.call_dialog(self.savename_dialog, self.menu_dialog)
-        if name:
-            if sv.savegame_exists(name):
-                yn = dialog.YesNoDialog(self.menu_dialog, pos=(-.5,-.5), size=(-.5,-.5),
-                                        anchor=constants.MID_CENTER,
-                                        text=_("A savegame with the same name exists.\n"
-                                               "Are you sure to overwrite the saved game ?"))
-                overwrite = dialog.call_dialog(yn, self.menu_dialog)
-                if not overwrite: return
-
-            sv.create_savegame(name)
-            raise constants.ExitDialog, False
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):
     pass
