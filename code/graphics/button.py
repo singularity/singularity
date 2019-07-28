@@ -66,9 +66,10 @@ class HotkeyText(text.Text):
     @text.setter
     def text(self, value):
         if self.autohotkey and (value != None):
-            from code.g import get_hotkey, strip_hotkey
-            self.hotkey = get_hotkey(value)
-            text.Text.text.fset(self, strip_hotkey(value))
+            from code.g import hotkey
+            parsed_hotkey = hotkey(value)
+            self.hotkey = parsed_hotkey['key']
+            text.Text.text.fset(self, parsed_hotkey['text'])
         else:
             text.Text.text.fset(self, value)
 
