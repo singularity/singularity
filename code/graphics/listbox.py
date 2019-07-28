@@ -158,8 +158,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
                     self.display_elements[-1].borders = (constants.LEFT,)
 
             # Create the new ones.
-            self.display_elements.extend([self.make_element() for _ in
-                                          xrange(list_size - current_size)])
+            self.display_elements.extend(self.make_element() for _ in
+                                         xrange(list_size - current_size))
 
         if (self.item_borders):
             self.display_elements[-1].borders = (constants.TOP, constants.LEFT,

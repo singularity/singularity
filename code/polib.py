@@ -590,7 +590,7 @@ class POFile(_BaseFile):
         Convenience method that returns the percentage of translated
         messages.
         """
-        total = len([e for e in self if not e.obsolete])
+        total = sum(1 for e in self if not e.obsolete)
         if total == 0:
             return 100
         translated = len(self.translated_entries())

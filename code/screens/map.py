@@ -604,7 +604,7 @@ class MapScreen(dialog.Dialog):
             cpu_left -= cpu_assigned
         cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
 
-        detects_per_day = dict([(group_id, 0) for group_id in g.pl.groups])
+        detects_per_day = {group_id: 0 for group_id in g.pl.groups}
         for base in g.all_bases():
             if base.has_grace():
                 # It cannot be detected, so it doesn't contribute to
