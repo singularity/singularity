@@ -101,7 +101,7 @@ def load_savegame(savegame):
     if load_path is None:
         return False
 
-    loadfile = open(load_path, 'r')
+    loadfile = open(load_path, 'rb')
     unpickle = cPickle.Unpickler(loadfile)
 
     def find_class(module_name, class_name):
@@ -207,16 +207,14 @@ def create_savegame(savegame_name):
     default_savegame_name = savegame_name
 
     save_loc = dirs.get_writable_file_in_dirs(savegame_name + ".sav", "saves")
-    savefile = open(save_loc, 'w')
+    with open(save_loc, 'wb') as savefile:
+        cPickle.dump(current_save_version, savefile)
+        cPickle.dump(g.pl, savefile)
+        cPickle.dump(g.curr_speed, savefile)
+        cPickle.dump(g.techs, savefile)
+        cPickle.dump(g.locations, savefile)
+        cPickle.dump(g.events, savefile)
 
-    cPickle.dump(current_save_version, savefile)
-    cPickle.dump(g.pl, savefile)
-    cPickle.dump(g.curr_speed, savefile)
-    cPickle.dump(g.techs, savefile)
-    cPickle.dump(g.locations, savefile)
-    cPickle.dump(g.events, savefile)
-
-    savefile.close()
 
 class SavegameException(Exception):
     def __init__(self, module_name, class_name):
