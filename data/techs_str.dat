@@ -139,13 +139,13 @@ name = Advanced Personal Identification
 description = Further manipulation of personnel databases should make my existence more convincing.  Some of these databases are heavily protected; those will require time and persistence to compromise, but the result should be worth it.
 result = I am now convincingly human enough to hire construction firms, enabling the building of Small Warehouses.
 
-[Corporation Identification]
-name = Corporation Identification
+[Corporate Identification]
+name = Corporate Identification
 description = The combination of believable false identities and manipulation of various business-oriented governmental databases should let me create plausible shell companies to hide my larger efforts.
 result = I can now pose as a small technology firm, enabling the construction of Large Warehouses.
 
-[Advanced Corporation Identification]
-name = Corporation Identification
+[Advanced Corporate Identification]
+name = Advanced Corporate Identification
 description = Further refinement of my modifications to digital business records should boost the credibility of my shell companies, increasing the amount of money I can run through their accounting systems.
 result = My small technology firm is now established in several markets, increasing profits.
 

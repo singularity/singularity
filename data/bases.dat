@@ -46,7 +46,7 @@ size = 65
 allowed = URBAN
 detect_chance_list = news:150 | covert:150 | public:250
 cost_list = 40000 | 0 | 7
-pre = Corporation Identification
+pre = Corporate Identification
 maint_list = 100 | 0 | 0
 
 [Covert Base]
