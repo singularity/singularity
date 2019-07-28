@@ -2,6 +2,7 @@ import pytest
 
 from code import g
 
+
 @pytest.mark.parametrize("input_text,hotkey_chars,cleaned_text", [
     ("E&XIT", 'x', 'EXIT'),
     ("&Play D&&D", 'p', 'Play D&D'),
