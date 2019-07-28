@@ -20,6 +20,7 @@
 #This file contains all global objects.
 
 import os.path
+import io
 import pygame
 
 # User desktop size. Set at init_graphics_system()
@@ -158,15 +159,20 @@ def set_mode():
 
 
 class LazyFontList(object):
-    """Lazy loader for fonts to reduce the file descriptor pressure
+    """Lazy loader for fonts to reduce the file descriptor and memory
+    pressure
 
-    Each font item apparently reserves a file descriptor (see GH#156)
+    Each font item apparently reserves a file descriptor when read
+    from an OS filehandle (see GH#156).  To solve that, we cache the
+    font contents in memory and then pass it on to pygame's Font
+    class as an io.BytesIO instance.
     """
 
     def __init__(self, filename, max_size=100):
         self._filename = filename
         self._font_cache = {}
         self._max_size = max_size
+        self._font_content = None
 
     def __len__(self):
         return self._max_size
@@ -179,7 +185,10 @@ class LazyFontList(object):
         if font is None:
             if item < 0 or self._max_size <= item:
                 raise IndexError(item)
-            font = pygame.font.Font(self._filename, item)
+            if self._font_content is None:
+                with open(self._filename, 'rb') as fd:
+                    self._font_content = fd.read()
+            font = pygame.font.Font(io.BytesIO(self._font_content), item)
             self._font_cache[item] = font
         return font
 
