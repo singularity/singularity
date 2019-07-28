@@ -62,13 +62,13 @@ build_list = URBAN | ANTARCTIC | MOON | FAR REACHES
 
 [Fuel Cell]
 cost_list = 5000 | 0 | 5
-pre = Electrochemical Fuel
+pre = Fuel Oxidation
 type_list = reactor | 1000
 build_list = ALL
 
 [Solid Fuel Cell]
 cost_list = 5000 | 0 | 5
-pre = Advanced Electrochemical Fuel
+pre = Advanced Fuel Oxidation
 type_list = reactor | 1500
 build_list = ALL
 
