@@ -222,12 +222,12 @@ pre_list = Advanced Memetics | Socioanalytics
 
 [Corporation Identification]
 cost_list = 25000 | 9000 | 0
-type_list = job_expert | 500
+effect_list = job_profit | 500
 pre_list = Database Manipulation | Advanced Personal Identification
 
 [Advanced Corporation Identification]
 cost_list = 299000 | 99000 | 0
-type_list = job_expert | 500
+effect_list = job_profit | 500
 pre_list = Corporation Identification | Advanced Database Manipulation
 
 [Heat Signature]
