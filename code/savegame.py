@@ -28,7 +28,7 @@ import g, mixer, dirs, player
 #game is loaded or saved.
 from code import group
 
-default_savegame_name = "Default Save"
+default_savegame_name = u"Default Save"
 
 #savefile version; update whenever the data saved changes.
 current_save_version = "singularity_savefile_99.6"
@@ -46,6 +46,27 @@ savefile_translation = {
 }
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
+
+
+def convert_string_to_path_name(name):
+    # Some filesystems require unicode (e.g. Windows) whereas Linux needs bytes.
+    # Python 2 is rather forgiving which works as long as you work with ASCII,
+    # but some people might like non-ASCII in their savegame names
+    # (https://bugs.debian.org/718447)
+    if os.path.supports_unicode_filenames:
+        return name
+    return name.encode('utf-8')
+
+
+def convert_path_name_to_str(path):
+    # Some filesystems require unicode (e.g. Windows) whereas Linux needs bytes.
+    # Python 2 is rather forgiving which works as long as you work with ASCII,
+    # but some people might like non-ASCII in their savegame names
+    # (https://bugs.debian.org/718447)
+    if os.path.supports_unicode_filenames:
+        return path
+    return path.decode('utf-8', errors='replace')
+
 
 def get_savegames():
     all_dirs = dirs.get_read_dirs("saves")
@@ -75,8 +96,7 @@ def get_savegames():
                             version_name = savefile_translation[load_version][0]
                     except:
                         version_name = None # To be sure.
-
-                    savegame = Savegame(name, filepath, version_name)
+                    savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
                     all_savegames.append(savegame)
 
     return all_savegames
@@ -194,19 +214,20 @@ def load_savegame(savegame):
     loadfile.close()
     return True
 
+
 def savegame_exists(savegame_name):
-    save_path = dirs.get_writable_file_in_dirs(savegame_name + ".sav", "saves")
+    save_path = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".sav", "saves")
 
     if (save_path is None or not os.path.isfile(save_path)) :
         return False
 
     return True
 
+
 def create_savegame(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
-
-    save_loc = dirs.get_writable_file_in_dirs(savegame_name + ".sav", "saves")
+    save_loc = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".sav", "saves")
     with open(save_loc, 'wb') as savefile:
         cPickle.dump(current_save_version, savefile)
         cPickle.dump(g.pl, savefile)
