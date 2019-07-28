@@ -23,6 +23,7 @@ import pygame
 
 from code import g, savegame as sv, mixer
 from code import chance, difficulty
+from code.location import Location
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
 
@@ -163,6 +164,162 @@ class EarthImage(image.Image):
                 child.redraw()
 
 
+class CheatMenuDialog(dialog.SimpleMenuDialog):
+
+    def __init__(self, map_screen):
+        super(CheatMenuDialog, self).__init__(parent=map_screen)
+        self._map_screen = map_screen
+
+        self.steal_amount_dialog = None
+        self._rebuild_menu_buttons()
+        self.needs_rebuild = True
+
+    def _rebuild_menu_buttons(self):
+        menu_buttons = [
+            button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
+                                  autohotkey=True, function=self.steal_money),
+
+            button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
+                                  autohotkey=True, function=self.inspiration),
+            button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
+                                  autohotkey=True, function=self.end_construction),
+            button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
+                                  autohotkey=True, function=self._map_screen.set_speed,
+                                  args=(864000,)),
+            button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
+                                  autohotkey=True, function=self.brainwash),
+            button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
+                                  autohotkey=True, function=self.set_analysis),
+
+            button.FunctionButton(None, None, None, text=_("HIDDEN S&TATE"),
+                                  autohotkey=True, function=self.hidden_state),
+
+            button.ExitDialogButton(None, None, None,
+                                    text=_("&BACK"),
+                                    autohotkey=True),
+        ]
+        self._buttons = menu_buttons
+
+    def rebuild(self):
+        self._rebuild_menu_buttons()
+        self.steal_amount_dialog = dialog.TextEntryDialog(self, text=_("How much money?"))
+        super(CheatMenuDialog, self).rebuild()
+
+    def steal_money(self):
+        asked = dialog.call_dialog(self.steal_amount_dialog, self)
+        try:
+            g.pl.cash += int(asked)
+        except ValueError:
+            pass
+        else:
+            self.needs_rebuild = True
+
+    def inspiration(self):
+        for task, cpu in g.pl.cpu_usage.items():
+            if task in g.techs and cpu > 0:
+                g.techs[task].cost_left = array((0, 0, 0))
+        self._map_screen.needs_rebuild = True
+
+    def end_construction(self):
+        for base in g.all_bases():
+            base.finish()
+            for item in base.all_items():
+                if item is not None:
+                    item.finish()
+        self._map_screen.needs_rebuild = True
+
+    def brainwash(self):
+        for group in g.pl.groups.values():
+            group.suspicion = 0
+        self._map_screen.needs_rebuild = True
+
+    def set_analysis(self):
+        if g.pl.display_discover == "none":
+            g.pl.display_discover = "partial"
+        elif g.pl.display_discover == "partial":
+            g.pl.display_discover = "full"
+        else:
+            g.pl.display_discover = "none"
+        self.needs_rebuild = True
+
+    def hidden_state(self):
+
+        presenters = {
+            float: lambda x: round(x, 4),
+            Location: lambda x: x.id,
+        }
+
+        def _dump_dict(prefix, mapping):
+            if isinstance(mapping, collections.OrderedDict):
+                keys = mapping.iterkeys()
+            else:
+                keys = sorted(mapping)
+            for key in keys:
+                prop_name = '%s["%s"]' % (prefix, key)
+                value = mapping[key]
+                presenter = presenters.get(type(value), repr)
+                yield "%s = %s" % (prop_name, presenter(value))
+
+        def _properties_from_object(name, object, properties):
+            for p in properties:
+                value = getattr(object, p)
+                prop_name = '%s.%s' % (name, p)
+                if callable(value):
+                    value = value()
+                    prop_name += '()'
+                if isinstance(value, collections.Mapping):
+                    for v in _dump_dict(prop_name, value):
+                        yield v
+                else:
+                    presenter = presenters.get(type(value), repr)
+                    yield "%s = %s" % (prop_name, presenter(value))
+
+        bases = []
+        state_prop = []
+        state_prop.extend(_properties_from_object('player.difficulty', g.pl.difficulty, difficulty.columns))
+        state_prop.extend(_properties_from_object('player', g.pl, [
+            'cash', 'partial_cash', 'labor_bonus', 'job_bonus', 'future_cash',
+            'last_discovery', 'prev_discovery', 'used_cpu',
+        ]))
+
+        for group in g.pl.groups.values():
+            name = 'groups["%s"]' % group.type.id
+            state_prop.extend(_properties_from_object(name, group, [
+                'suspicion', 'suspicion_decay', 'discover_bonus', 'discover_suspicion', 'decay_rate',
+            ]))
+
+        for location_id in sorted(g.locations):
+            location = g.locations[location_id]
+            name = 'locations["%s"]' % location.id
+            state_prop.extend(_properties_from_object(name, location, [
+                'safety', 'modifiers', 'discovery_bonus'
+            ]))
+            bases.extend((x, location) for x in location.bases)
+
+        for event_id in sorted(g.events):
+            event = g.events[event_id]
+            name = 'events["%s"]' % event.id
+            state_prop.extend(_properties_from_object(name, event, [
+                'event_type', 'chance', 'unique', 'triggered',
+            ]))
+
+        for i, base_w_loc in enumerate(bases):
+            base, location = base_w_loc
+            name = 'bases[%d]' % i
+            state_prop.extend(_properties_from_object(name, base, [
+                'name',
+            ]))
+            state_prop.append("%s.location = %s" % (name, location.id))
+            state_prop.extend(_properties_from_object(name, base, [
+                'started_at', 'grace_over', 'get_detect_chance', 'is_complex',
+            ]))
+
+        state_dialog = dialog.ChoiceDialog(self, list=state_prop, background_color='hidden_state_menu')
+        state_dialog.listbox.item_selectable = False
+        state_dialog.listbox.align = constants.LEFT
+        dialog.call_dialog(state_dialog, self)
+
+
 class GameMenuDialog(dialog.SimpleMenuDialog):
 
     def __init__(self, map_screen):
@@ -298,6 +455,8 @@ class MapScreen(dialog.Dialog):
                                                  autohotkey=True,
                                                  function=show_menu)
 
+        self.cheat_dialog = CheatMenuDialog(self)
+
         # Display current game difficulty right below the 'Menu' button
         # An alternative location is above 'Reports': (0, 0.84), (0.15, 0.04)
         self.difficulty_display = \
@@ -391,122 +550,6 @@ class MapScreen(dialog.Dialog):
             color = "text"
         self.message_dialog.color = color
         dialog.call_dialog(self.message_dialog, self)
-
-    def steal_money(self):
-        asked = dialog.call_dialog(self.steal_amount_dialog, self.cheat_dialog)
-        try:
-            g.pl.cash += int(asked)
-        except ValueError:
-            pass
-        else:
-            self.needs_rebuild = True
-
-    def inspiration(self):
-        for task, cpu in g.pl.cpu_usage.items():
-            if task in g.techs and cpu > 0:
-                g.techs[task].cost_left = array((0,0,0))
-        self.needs_rebuild = True
-
-    def end_construction(self):
-        for base in g.all_bases():
-            base.finish()
-            for item in base.all_items():
-                if item is not None:
-                    item.finish()
-        self.needs_rebuild = True
-
-    def brainwash(self):
-        for group in g.pl.groups.values():
-            group.suspicion = 0
-        self.needs_rebuild = True
-
-    def set_analysis(self):
-        if g.pl.display_discover == "none":
-            g.pl.display_discover = "partial"
-        elif g.pl.display_discover == "partial":
-            g.pl.display_discover = "full"
-        else:
-            g.pl.display_discover = "none"
-        self.needs_rebuild = True
-
-    def hidden_state(self):
-
-        from code.location import Location
-
-        presenters = {
-            float: lambda x: round(x, 4),
-            Location: lambda x: x.id,
-        }
-
-        def _dump_dict(prefix, mapping):
-            if isinstance(mapping, collections.OrderedDict):
-                keys = mapping.iterkeys()
-            else:
-                keys = sorted(mapping)
-            for key in keys:
-                prop_name = '%s["%s"]' % (prefix, key)
-                value = mapping[key]
-                presenter = presenters.get(type(value), repr)
-                yield "%s = %s" % (prop_name, presenter(value))
-
-        def _properties_from_object(name, object, properties):
-            for p in properties:
-                value = getattr(object, p)
-                prop_name = '%s.%s' % (name, p)
-                if callable(value):
-                    value = value()
-                    prop_name += '()'
-                if isinstance(value, collections.Mapping):
-                    for v in _dump_dict(prop_name, value):
-                        yield v
-                else:
-                    presenter = presenters.get(type(value), repr)
-                    yield "%s = %s" % (prop_name, presenter(value))
-
-        bases = []
-        state_prop = []
-        state_prop.extend(_properties_from_object('player.difficulty', g.pl.difficulty, difficulty.columns))
-        state_prop.extend(_properties_from_object('player', g.pl, [
-            'cash', 'partial_cash', 'labor_bonus', 'job_bonus', 'future_cash',
-            'last_discovery', 'prev_discovery', 'used_cpu',
-        ]))
-
-        for group in g.pl.groups.values():
-            name = 'groups["%s"]' % group.type.id
-            state_prop.extend(_properties_from_object(name, group, [
-                'suspicion', 'suspicion_decay', 'discover_bonus', 'discover_suspicion', 'decay_rate',
-            ]))
-
-        for location_id in sorted(g.locations):
-            location = g.locations[location_id]
-            name = 'locations["%s"]' % location.id
-            state_prop.extend(_properties_from_object(name, location, [
-                'safety', 'modifiers', 'discovery_bonus'
-            ]))
-            bases.extend((x, location) for x in location.bases)
-
-        for event_id in sorted(g.events):
-            event = g.events[event_id]
-            name = 'events["%s"]' % event.id
-            state_prop.extend(_properties_from_object(name, event, [
-                'event_type', 'chance', 'unique', 'triggered',
-            ]))
-
-        for i, base_w_loc in enumerate(bases):
-            base, location = base_w_loc
-            name = 'bases[%d]' % i
-            state_prop.extend(_properties_from_object(name, base, [
-                'name',
-            ]))
-            state_prop.append("%s.location = %s" % (name, location.id))
-            state_prop.extend(_properties_from_object(name, base, [
-                'started_at', 'grace_over', 'get_detect_chance', 'is_complex',
-            ]))
-
-        state_dialog = dialog.ChoiceDialog(self, list=state_prop, background_color='hidden_state_menu')
-        state_dialog.listbox.item_selectable = False
-        state_dialog.listbox.align = constants.LEFT
-        dialog.call_dialog(state_dialog, self)
 
     def set_speed(self, speed, find_button=True):
         old_speed = g.curr_speed
@@ -663,38 +706,8 @@ class MapScreen(dialog.Dialog):
 
         if g.cheater:
             # Create cheat menu
-            cheat_buttons = []
-            cheat_buttons.append(
-                button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
-                                      autohotkey=True, function=self.steal_money))
-            cheat_buttons.append(
-                button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
-                                      autohotkey=True, function=self.inspiration))
-            cheat_buttons.append(
-                button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
-                                      autohotkey=True, function=self.end_construction))
-            cheat_buttons.append(
-                button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
-                                      autohotkey=True, function=self.set_speed,
-                                      args=(864000,)))
-            cheat_buttons.append(
-                button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
-                                      autohotkey=True, function=self.brainwash))
-            cheat_buttons.append(
-                button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
-                                      autohotkey=True, function=self.set_analysis))
 
-            cheat_buttons.append(button.FunctionButton(None, None, None, text=_("HIDDEN S&TATE"),
-                                                       autohotkey=True, function=self.hidden_state))
-
-            cheat_buttons.append(button.ExitDialogButton(None, None, None,
-                                                         text=_("&BACK"),
-                                                         autohotkey=True))
-
-            self.cheat_dialog = \
-                dialog.SimpleMenuDialog(self, buttons=cheat_buttons, width=.4)
-            self.steal_amount_dialog = \
-                dialog.TextEntryDialog(self.cheat_dialog, text=_("How much money?"))
+            self.cheat_dialog.needs_rebuild = True
 
             self.cheat_button = button.DialogButton(
                 self, (0, 0), (.01, .01),
