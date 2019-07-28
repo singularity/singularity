@@ -98,7 +98,7 @@ def load_sounds():
                 sound = pygame.mixer.Sound(real_file)
 
                 # And shove it into the sounds dictionary.
-                if not sounds.has_key(sound_class):
+                if sound_class not in sounds:
                     sounds[sound_class] = []
                     
                 sounds[sound_class].append({
@@ -156,7 +156,7 @@ load_music() loads music for the game.  It looks in multiple locations:
                 files = entry[2]
                 (head, tail) = os.path.split(root)
                 if (tail.lower() != ".svn"):
-                    if not music_dict.has_key(tail):
+                    if tail not in music_dict:
                         music_dict[tail]=[]
                     for file_name in files:
                         if (len(file_name) > 5 and

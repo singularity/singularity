@@ -302,7 +302,7 @@ def load_regions():
         while True:
             i += 1
             modifiers_name = "modifier%d" % i
-            if not region_info.has_key(modifiers_name):
+            if modifiers_name not in region_info:
                 break
             
             modifiers_dict = read_modifiers_dict(region_info.get(modifiers_name, []))
@@ -399,12 +399,12 @@ def load_techs():
         if type(tech_pre) != list:
             tech_pre = [tech_pre]
 
-        if tech_name.has_key("danger"):
+        if "danger" in tech_name:
             tech_danger = int(tech_name["danger"])
         else:
             tech_danger = 0
 
-        if tech_name.has_key("effect"):
+        if "effect" in tech_name:
             effect_list = tech_name["effect"]
             if type(effect_list) != list:
                 sys.stderr.write("Error with effect given: %s\n" % repr(effect_list))
@@ -442,7 +442,7 @@ def load_items():
         if type(item_pre) != list:
             item_pre = [item_pre]
 
-        if item_name.has_key("type"):
+        if "type" in item_name:
 
             type_list = item_name["type"]
             if type(type_list) != list or len(type_list) != 2:
@@ -454,7 +454,7 @@ def load_items():
             item_type = ""
             item_second = 0
 
-        if item_name.has_key("build"):
+        if "build" in item_name:
             build_list = item_name["build"]
 
             # It may be a single item and not an actual list.  If so, make it
@@ -563,7 +563,7 @@ def load_theme(theme_id, theme_dir):
             if theme_section["id"] == "general":
                 variant_theme.name = theme_section["name"]
 
-                if theme_section.has_key("parent"):
+                if "parent" in theme_section:
                     if (variant is None):
                         new_theme.inherit(theme_section["parent"])
                     else:

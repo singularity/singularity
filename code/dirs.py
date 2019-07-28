@@ -111,7 +111,7 @@ def create_directories(force_single_dir):
     # For a smooth, trouble-free and most importantly *backward-compatible*
     # the old standard ~/.endgame is always read (created if needed).
     # Otherwise, by default new user directories are used and read first.
-    if os.environ.has_key("HOME") and not force_single_dir:
+    if "HOME" in os.environ and not force_single_dir:
 
         home = os.environ["HOME"]
         xdg_config_home = os.environ.get('XDG_CONFIG_HOME') or \
