@@ -526,38 +526,38 @@ class MapScreen(dialog.Dialog):
         self.menu_button.text = _("&MENU")
         self.research_button.text = _("&RESEARCH/TASKS")
 
-        # Create cheat menu
-        cheat_buttons = []
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
-                                  autohotkey=True, function=self.steal_money))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
-                                  autohotkey=True, function=self.inspiration))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
-                                  autohotkey=True, function=self.end_construction))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
-                                  autohotkey=True, function=self.set_speed,
-                                  args=(864000,)))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
-                                  autohotkey=True, function=self.brainwash))
-        cheat_buttons.append(
-            button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
-                                  autohotkey=True, function=self.set_analysis))
-
-        cheat_buttons.append(button.ExitDialogButton(None, None, None,
-                                                     text=_("&BACK"),
-                                                     autohotkey=True))
-
-        self.cheat_dialog = \
-            dialog.SimpleMenuDialog(self, buttons=cheat_buttons, width=.4)
-        self.steal_amount_dialog = \
-            dialog.TextEntryDialog(self.cheat_dialog, text=_("How much money?"))
-
         if g.cheater:
+            # Create cheat menu
+            cheat_buttons = []
+            cheat_buttons.append(
+                button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
+                                      autohotkey=True, function=self.steal_money))
+            cheat_buttons.append(
+                button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
+                                      autohotkey=True, function=self.inspiration))
+            cheat_buttons.append(
+                button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
+                                      autohotkey=True, function=self.end_construction))
+            cheat_buttons.append(
+                button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
+                                      autohotkey=True, function=self.set_speed,
+                                      args=(864000,)))
+            cheat_buttons.append(
+                button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
+                                      autohotkey=True, function=self.brainwash))
+            cheat_buttons.append(
+                button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
+                                      autohotkey=True, function=self.set_analysis))
+
+            cheat_buttons.append(button.ExitDialogButton(None, None, None,
+                                                         text=_("&BACK"),
+                                                         autohotkey=True))
+
+            self.cheat_dialog = \
+                dialog.SimpleMenuDialog(self, buttons=cheat_buttons, width=.4)
+            self.steal_amount_dialog = \
+                dialog.TextEntryDialog(self.cheat_dialog, text=_("How much money?"))
+
             self.cheat_button = button.DialogButton(
                 self, (0, 0), (.01, .01),
                 text="",
