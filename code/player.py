@@ -246,8 +246,9 @@ class Player(object):
                 self.cpu_pool += real_cpu
                 if task != "cpu_pool":
                     if dry_run:
-                        spent = g.techs[task].calculate_work(time=mins_passed,
-                                                     cpu_available=real_cpu)[0]
+                        spent = g.techs[task].calculate_work(self.cash,
+                                                             real_cpu,
+                                                             time=mins_passed)[0]
                         self.cpu_pool -= int(spent[cpu])
                         self.cash -= int(spent[cash])
                         tech_cpu += int(spent[cpu])
@@ -256,7 +257,8 @@ class Player(object):
 
                     # Note that we restrict the CPU available to prevent
                     # the tech from pulling from the rest of the CPU pool.
-                    tech_gained = g.techs[task].work_on(cpu_available=real_cpu,
+                    tech_gained = g.techs[task].work_on(self.cash,
+                                                        real_cpu,
                                                         time=mins_passed)
                     if tech_gained:
                         techs_researched.append(g.techs[task])
@@ -277,8 +279,9 @@ class Player(object):
         # Base construction.
         for base in bases_under_construction:
             if dry_run:
-                spent = base.calculate_work(time=mins_passed,
-                                            cpu_available=self.cpu_pool )[0]
+                spent = base.calculate_work(self.cash,
+                                            self.cpu_pool,
+                                            time=mins_passed)[0]
 
                 self.cpu_pool -= int(spent[cpu])
                 self.cash -= int(spent[cash])
@@ -286,7 +289,9 @@ class Player(object):
                 construction_cash += int(spent[cash])
                 continue
 
-            built_base = base.work_on(time = mins_passed)
+            built_base = base.work_on(self.cash,
+                                      self.cpu_pool,
+                                      time=mins_passed)
 
             if built_base:
                 bases_constructed.append(base)
@@ -294,15 +299,18 @@ class Player(object):
         # Item construction.
         for base, item in items_under_construction:
             if dry_run:
-                spent = item.calculate_work(time=mins_passed,
-                                            cpu_available=self.cpu_pool )[0]
+                spent = item.calculate_work(self.cash,
+                                            self.cpu_pool,
+                                            time=mins_passed)[0]
                 self.cpu_pool -= int(spent[cpu])
                 self.cash -= int(spent[cash])
                 construction_cpu += int(spent[cpu])
                 construction_cash += int(spent[cash])
                 continue
 
-            built_item = item.work_on(time = mins_passed)
+            built_item = item.work_on(self.cash,
+                                      self.cpu_pool,
+                                      time=mins_passed)
 
             if built_item:
                 items_constructed.append( (base, item) )

@@ -161,18 +161,9 @@ class Buyable(object):
     def percent_complete(self):
         return self.min_valid(self._percent_complete())
 
-
-    def calculate_work(self, cash_available=None, cpu_available=None, time=0):
+    def calculate_work(self, cash_available, cpu_available, time=0):
         """Given an amount of available resources, calculates and returns the
            amount that would be spent and the progress towards completion."""
-
-        # cash_available defaults to all the player's cash.
-        if cash_available == None:
-            cash_available = g.pl.cash
-
-        # cpu_available defaults to the entire CPU Pool.
-        if cpu_available == None:
-            cpu_available = g.pl.cpu_pool
 
         # Figure out how much we could complete.
         pct_complete = self._percent_complete([cash_available, cpu_available,
