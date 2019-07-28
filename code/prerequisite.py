@@ -73,5 +73,5 @@ class Prerequisite(object):
         if self.prerequisites[0] == 'impossible':
             return None
         if self.prerequisites[0] == 'OR':
-            return frozenset(frozenset(self.prerequisites[1:]))
+            return frozenset([frozenset(x for x in self.prerequisites[1:])])
         return frozenset(frozenset([x]) for x in self.prerequisites)
