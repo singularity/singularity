@@ -32,14 +32,16 @@ def get_current(type):
                    if t.available() and t.type == type)
                 , None)
 
+
 class Task(prerequisite.Prerequisite):
 
-    def __init__(self, parent, type, value, prerequisites):
-        self.name = ""
+    def __init__(self, id, type, value, prerequisites):
+        super(Task, self).__init__(prerequisites)
+        self.id = id
+        self.name = id
         self.description = ""
         self.type = type
         self.value = value
-        self.prerequisites = prerequisites
 
     def get_profit(self):
         if (self.type != "jobs"): return 0
