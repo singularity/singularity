@@ -566,21 +566,25 @@ class MessageDialog(TextDialog):
 
 class TextEntryDialog(TextDialog, FocusDialog):
     ok_type = widget.causes_rebuild("_ok_type")
-    def __init__(self, parent, pos=(-.50, -.50), size=(.40, .10),
+    cancel_type = widget.causes_rebuild("_cancel_type")
+    def __init__(self, parent, pos=(-.50, -.50), size=(.50, .10),
                  anchor=constants.MID_CENTER, **kwargs):
         kwargs.setdefault('wrap', False)
         kwargs.setdefault("shrink_factor", 1)
         kwargs.setdefault("text_size", 20)
         self.default_text = kwargs.pop("default_text", "")
         self.ok_type = kwargs.pop("ok_type", "ok")
+        self.cancel_type = kwargs.pop("cancel_type", "cancel")
         super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.text_field = text.EditableText(self, (0, -.50), (-.80, -.50),
                                             borders=constants.ALL,
                                             base_font="normal")
 
-        self.ok_button = button.FunctionButton(self, (-.82, -.50), (-.18, -.50),
+        self.ok_button = button.FunctionButton(self, (-.72, -.50), (-.14, -.50),
                                                function=self.return_text)
+        self.cancel_button = button.FunctionButton(self, (-.86, -.50), (-.14, -.50),
+                                                   function=self.return_nothing)
 
         self.add_key_handler(pygame.K_RETURN, self.return_text)
         self.add_key_handler(pygame.K_KP_ENTER, self.return_text)
@@ -592,13 +596,17 @@ class TextEntryDialog(TextDialog, FocusDialog):
         self.ok_button.text      = g.buttons[self.ok_type]['text']
         self.ok_button.underline = g.buttons[self.ok_type]['pos']
         self.ok_button.hotkey    = g.buttons[self.ok_type]['key']
+        
+        self.cancel_button.text      = g.buttons[self.cancel_type]['text']
+        self.cancel_button.underline = g.buttons[self.cancel_type]['pos']
+        self.cancel_button.hotkey    = g.buttons[self.cancel_type]['key']
 
     def show(self):
         self.text_field.text = self.default_text
         self.text_field.cursor_pos = len(self.default_text)
         return super(TextEntryDialog, self).show()
 
-    def return_nothing(self, event):
+    def return_nothing(self, event=None):
         if event and event.type == pygame.KEYUP:
             return
         raise constants.ExitDialog, ""
