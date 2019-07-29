@@ -111,13 +111,13 @@ build_list = ANTARCTIC | OCEAN | MOON
 
 [Heatsink]
 cost_list = 15000 | 0 | 8
-pre = Heat Signature
+pre = Heat Signature Reduction
 type_list = security | 2000
 build_list = ANTARCTIC | OCEAN | MOON
 
 [Ground Source Heatsink]
 cost_list = 50000 | 0 | 16
-pre = Advanced Heat Signature
+pre = Advanced Heat Signature Reduction
 type_list = security | 3000
 build_list = ANTARCTIC | OCEAN | MOON
 
