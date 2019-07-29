@@ -88,12 +88,12 @@ description = Armed guards can aid in keeping suspicious individuals away from s
 
 [Passive Camouflage]
 name = Passive Camouflage
-description = A simple camouflage relying on the environment around the base to better mask the heat and sounds from the base.
+description = Careful adjustment of the environment around my base will better mask heat and sounds coming from my operations.
 
 [Fuel Cell]
 name = Fuel Cell
-description = A cell that convert the electrochemical energy from a fuel into electricity. Reduces discovery chance by preventing suspicious power drains.
+description = Fuel cells convert electrochemical energy stored in a physical array of devices into electricity.
 
 [Solid Fuel Cell]
 name = Solid Fuel Cell
-description = A better cell using solid oxide that convert the electrochemical energy from a fuel into electricity. Reduces discovery chance by preventing suspicious power drains.
+description = A refinement of my previous fuel cell design, these use a custom material with a near-fractal complexity to increase both storage and throughput.
