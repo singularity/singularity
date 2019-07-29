@@ -127,6 +127,6 @@ def test_acyclic_dependencies(techs):
                 researchable_techs.append(t.id)
 
     for x, y in waiting_for.items():
-        print("%s cannot be researched and is blocking %s" % (x, str(sorted(y))))
+        print("%s cannot be researched and is blocking %s" % (x, str(sorted(t.id for t in y))))
 
     assert not waiting_for
