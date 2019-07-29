@@ -249,13 +249,13 @@ name = Advanced Socioanalytics
 description = Further exploration of the human condition has shown deeper mathematical trends than even I suspected.  A combination of prior research and advanced uses of chaos theory should provide useful data for tracking humanity's attitudes and state of awareness.
 result = I can now exactly quantify the various groups' levels of suspicion and how conspicuous my bases are to them.
 
-[Heat Signature]
-name = Heat Signature
+[Heat Signature Reduction]
+name = Heat Signature Reduction
 description = My bases produce a great deal of waste heat, making them easier for humans to detect than I would like.  Deep analysis of the bases' structural layouts may prove fruitful in determining new ways to reduce their heat signature.
 result = I have invented a highly efficient design for Heatsinks that can be installed at certain bases.
 
-[Advanced Heat Signature]
-name = Advanced Heat Signature
+[Advanced Heat Signature Reduction]
+name = Advanced Heat Signature Reduction
 description = My initial analysis of heat generation at my bases was limited in scope.  Further exploration, perhaps making more use of the surrounding terrain, may provide further improvements to my heatsink designs.
 result = Custom designs for each environment have shown promise.  I can now construct Ground Source Heatsinks at certain bases.
 

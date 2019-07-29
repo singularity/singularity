@@ -230,12 +230,12 @@ cost_list = 299000 | 99000 | 0
 effect_list = job_profit | 500
 pre_list = Corporate Identification | Advanced Database Manipulation
 
-[Heat Signature]
+[Heat Signature Reduction]
 cost_list = 1000 | 27315 | 0
 pre_list = Autonomous Vehicles
 danger = 1
 
-[Advanced Heat Signature]
+[Advanced Heat Signature Reduction]
 cost_list = 5000 | 45967 | 0
-pre_list = Heat Signature
+pre_list = Heat Signature Reduction
 danger = 1
