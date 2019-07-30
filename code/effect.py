@@ -48,7 +48,7 @@ class Effect(object):
                 mixer.play_music("win")
                 g.map_screen.show_story_section("Win")
                 for group in g.pl.groups.values():
-                    group.discover_bonus = 0
+                    group.is_actively_discovering_bases = False
                 g.pl.apotheosis = True
                 g.pl.had_grace = True
             elif current == "suspicion":

@@ -188,6 +188,8 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
                                   args=(864000,)),
             button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
                                   autohotkey=True, function=self.brainwash),
+            button.FunctionButton(None, None, None, text=_("TOGGLE &DETECTION"),
+                                  autohotkey=True, function=self.toggle_detection),
             button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
                                   autohotkey=True, function=self.set_analysis),
 
@@ -204,6 +206,11 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
         self._rebuild_menu_buttons()
         self.steal_amount_dialog = dialog.TextEntryDialog(self, text=_("How much money?"))
         super(CheatMenuDialog, self).rebuild()
+
+    def toggle_detection(self):
+        for group in g.pl.groups.values():
+            group.is_actively_discovering_bases = not group.is_actively_discovering_bases
+        self._map_screen.needs_rebuild = True
 
     def steal_money(self):
         asked = dialog.call_dialog(self.steal_amount_dialog, self)

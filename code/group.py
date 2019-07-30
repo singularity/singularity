@@ -32,6 +32,7 @@ class GroupSpec(object):
         self.name = ""
         self.discover_desc = ""
 
+
 class Group(object):
 
     def __init__(self, spec, suspicion = 0, discover_bonus = 10000, discover_suspicion = 10000):
@@ -42,6 +43,7 @@ class Group(object):
         self.changed_discover_bonus = 0
         self.base_discover_suspicion = discover_suspicion
         self.changed_discover_suspicion = 0
+        self.is_actively_discovering_bases = True
 
     def convert_from(self, old_version):
         if old_version < 99.6: # < 1.0 dev
@@ -66,6 +68,8 @@ class Group(object):
 
     @property
     def discover_bonus(self):
+        if not self.is_actively_discovering_bases:
+            return 0
         return max(1, self.base_discover_bonus + self.changed_discover_bonus)
 
     @property
