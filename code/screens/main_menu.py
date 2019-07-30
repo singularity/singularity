@@ -33,9 +33,6 @@ class MainMenu(dialog.TopDialog):
 
         self.difficulty_dialog = dialog.SimpleMenuDialog(self)
 
-        self.load_dialog = dialog.ChoiceDialog(self, (.5,.5), (.5,.5),
-                                               anchor=constants.MID_CENTER,
-                                               yes_type="load")
         self.map_screen = map.MapScreen(self)
         self.new_game_button = \
             button.FunctionButton(self, (.5, .20), (.25, .08),
