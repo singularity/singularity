@@ -34,7 +34,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
                  list_pos=0, list_size=-20, borders=constants.ALL,
                  item_borders=True, item_selectable=True,
-                 align=constants.CENTER, on_double_click_on_item=None, **kwargs):
+                 align=constants.CENTER, on_double_click_on_item=None,
+                 on_item_selected=None, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
 
@@ -52,12 +53,15 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
         self.auto_scroll = True
         if item_selectable:
+            self.on_item_selected = on_item_selected
             self.on_double_click_on_item = on_double_click_on_item
             self.add_handler(constants.DOUBLECLICK, self.on_double_click, 200)
         elif on_double_click_on_item:
             raise ValueError("The on_double_click_on_item handler only works for a listbox with selectable items")
+        elif on_item_selected:
+            raise ValueError("The on_item_selected handler only works for a listbox with selectable items")
         self.scrollbar = scrollbar.UpdateScrollbar(self,
-                                                   update_func = self.on_scroll)
+                                                   update_func=self.on_scroll)
 
     def add_hooks(self):
         super(Listbox, self).add_hooks()
@@ -89,7 +93,11 @@ class Listbox(widget.FocusWidget, text.SelectableText):
                 # Figure out which element was clicked...
                 index = self.find_item_under_mouse(event)
                 # ... and select it.
-                self.list_pos = self.safe_pos(index + self.scrollbar.scroll_pos)
+                new_pos = self.safe_pos(index + self.scrollbar.scroll_pos)
+                old_pos = self.list_pos
+                self.list_pos = new_pos
+                if self.list_pos > -1 and self.on_item_selected:
+                    self.on_item_selected(event, new_pos, old_pos)
 
     def on_double_click(self, event):
         if self.on_double_click_on_item is None:
