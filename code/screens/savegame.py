@@ -34,13 +34,50 @@ class SavegameScreen(dialog.ChoiceDialog):
         self.no_button.pos = (-.97,-.99)
         self.no_button.exit_code = None
 
+        self._all_savegames_sorted = []
+
+        self.label = text.Text(self, (0, 0), (0.1, .04),
+                               borders=constants.ALL,
+                               anchor=constants.TOP_LEFT,
+                               base_font="normal")
+        self.text_field = text.UpdateEditableText(self, (0.1, 0), (0.4, .04),
+                                                  borders=constants.ALL,
+                                                  anchor=constants.TOP_LEFT,
+                                                  update_func=self._search_for_savegame,
+                                                  base_font="normal")
+
         self.delete_button = button.FunctionButton(self, (-.50,-.99), (-.3,-.1),
                                                    anchor=constants.BOTTOM_CENTER,
                                                    autohotkey=True,
                                                    function=self.delete_savegame)
 
+    def _search_for_savegame(self, new_text):
+        if not new_text:
+            self.list = self._all_savegames_sorted
+            return
+        words = new_text.split()
+        prev_selected = None
+        if 0 <= self.listbox.list_pos < len(self.list):
+            prev_selected = self.list[self.listbox.list_pos]
+
+        self.list = [s for s in self._all_savegames_sorted if all(w in s.name for w in words)]
+
+        if len(self.list) == 1:
+            self.listbox.list_pos = 1
+            return
+
+        for idx, savegame in enumerate(self.list):
+            if savegame is prev_selected:
+                # Retain the previous selected item by default
+                # as long as it is available and there is no
+                # perfect match
+                self.listbox.list_pos = idx
+            if savegame.name == new_text:
+                self.listbox.list_pos = idx
+                return
+
     def make_listbox(self):
-        return listbox.CustomListbox(self, (0, 0), (-1, -.85),
+        return listbox.CustomListbox(self, (0, 0.04), (-1, -.81),
                                      anchor=constants.TOP_LEFT,
                                      remake_func=self.make_item,
                                      rebuild_func=self.update_item,
@@ -73,13 +110,14 @@ class SavegameScreen(dialog.ChoiceDialog):
     def rebuild(self):
         # Update buttons translations
         self.delete_button.text = _("Delete")
+        self.label.text = _("Filter: ")
 
         super(SavegameScreen, self).rebuild()
 
     def reload_savegames(self):
         savegames = sv.get_savegames()
         savegames.sort(key=lambda savegame: savegame.name.lower())
-
+        self._all_savegames_sorted = savegames
         self.list = savegames
 
     def delete_savegame(self):
@@ -100,9 +138,10 @@ class SavegameScreen(dialog.ChoiceDialog):
         if 0 <= index < len(self.list):
             save = self.list[index]
             return sv.load_savegame(save)
-        return False
 
     def show(self):
         self.reload_savegames()
-
+        self.text_field.text = ''
+        self.text_field.cursor_pos = 0
+        self.text_field.has_focus = True
         return super(SavegameScreen, self).show()
