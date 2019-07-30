@@ -131,27 +131,17 @@ Note that the resulting file will be licensed either under the CC-BY-SA 3.0
 license (for *.dat files created with traduko) or the game's code license
 (for the *.po files created by gettext-singularity), both described below.
 
+Website: http://www.emhsoft.com/singularity/
+IRC Room: #singularity on irc.oftc.net (port 6667)
 
 ====================
 CREDITS AND LICENSES
 ====================
 
 AUTHORS AND MAIN CONTRIBUTORS
-Evil Mr Henry
-Phil Bordelon
-Brian Reid
-FunnyMan3595
-MestreLion
-Borg[MDQ] (translation into Spanish)
-Adam Bark (reduced-CPU Clock class)
-Max McCracken (music)
-Anders Andersson (translation into Swedish)
-Thomas (native-proofing of German translation)
-Philippe Grenard (translation into French)
-Guga (updates to the Spanish translation)
-Daniele Sapino (translation into Spanish)
-Dafne Saqueti (translation into Brazilian Portuguese)
-Eleazar Castellanos (translation into Mexican Spanish)
+
+The list of programmer contributors is provided in AUTHORS
+The list of traduction contributors is provided in i18n/AUTHORS
 
 CODE LICENSE
 Copyright (C) 2005 Evil Mr Henry, Phil Bordelon, Brian Reid, FunnyMan3595,
@@ -170,7 +160,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-A full copy of this license is provided in GPL.txt
+A full copy of this license is provided in LICENSE.txt
 
 DATA LICENSE
 The sounds, music, text files, and icons in the data subdirectory are under
