@@ -33,26 +33,45 @@ class SavegameScreen(dialog.ChoiceDialog):
         self.no_button.pos = (-.97,-.99)
         self.no_button.exit_code = None
 
+        self._all_savegames_by_name = {}
+        self._all_savegames_sorted = []
+        self._search_enabled = True
+
         self.label = text.Text(self, (0, 0), (0.1, .04),
                                borders=constants.ALL,
                                anchor=constants.TOP_LEFT,
                                base_font="normal")
-        self.text_field = text.EditableText(self, (0.1, 0), (0.4, .04),
-                                            borders=constants.ALL,
-                                            anchor=constants.TOP_LEFT,
-                                            base_font="normal")
+        self.text_field = text.UpdateEditableText(self, (0.1, 0), (0.4, .04),
+                                                  borders=constants.ALL,
+                                                  anchor=constants.TOP_LEFT,
+                                                  update_func=self._search_for_savegame,
+                                                  base_font="normal")
 
         self.delete_button = button.FunctionButton(self, (-.50,-.99), (-.3,-.1),
                                                    anchor=constants.BOTTOM_CENTER,
                                                    autohotkey=True,
                                                    function=self.delete_savegame)
-        self._all_savegames_by_name = {}
 
     def _on_item_selected(self, event, new_pos, old_pos):
         if 0 <= new_pos < len(self.list):
             savegame = self.list[new_pos]
-            self.text_field.text = savegame.name
-            self.text_field.cursor_pos = len(savegame.name)
+            try:
+                # Disable searching to avoid re-shuffling the
+                # list during a double click.
+                self._search_enabled = False
+                self.text_field.text = savegame.name
+                self.text_field.cursor_pos = len(savegame.name)
+            finally:
+                self._search_enabled = True
+
+    def _search_for_savegame(self, new_text):
+        if not self._search_enabled:
+            return
+        if not new_text:
+            self.list = self._all_savegames_sorted
+            return
+        words = new_text.split()
+        self.list = [s for s in self._all_savegames_sorted if all(w in s.name for w in words)]
 
     def make_listbox(self):
         return listbox.CustomListbox(self, (0, 0.04), (-1, -.81),
@@ -98,6 +117,7 @@ class SavegameScreen(dialog.ChoiceDialog):
         savegames.sort(key=lambda savegame: savegame.name.lower())
 
         self._all_savegames_by_name = {s.name: s for s in savegames}
+        self._all_savegames_sorted = savegames
 
         self.list = savegames
 
