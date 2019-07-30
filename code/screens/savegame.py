@@ -18,10 +18,10 @@
 
 #This file contains the savegame screen.
 
-import pygame
 
-from code import g, savegame as sv
-from code.graphics import dialog, button, slider, text, constants, listbox, g as gg
+from code import savegame as sv
+from code.graphics import dialog, button, text, constants, listbox
+
 
 class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):
@@ -33,17 +33,34 @@ class SavegameScreen(dialog.ChoiceDialog):
         self.no_button.pos = (-.97,-.99)
         self.no_button.exit_code = None
 
+        self.label = text.Text(self, (0, 0), (0.1, .04),
+                               borders=constants.ALL,
+                               anchor=constants.TOP_LEFT,
+                               base_font="normal")
+        self.text_field = text.EditableText(self, (0.1, 0), (0.4, .04),
+                                            borders=constants.ALL,
+                                            anchor=constants.TOP_LEFT,
+                                            base_font="normal")
+
         self.delete_button = button.FunctionButton(self, (-.50,-.99), (-.3,-.1),
                                                    anchor=constants.BOTTOM_CENTER,
                                                    autohotkey=True,
                                                    function=self.delete_savegame)
+        self._all_savegames_by_name = {}
+
+    def _on_item_selected(self, event, new_pos, old_pos):
+        if 0 <= new_pos < len(self.list):
+            savegame = self.list[new_pos]
+            self.text_field.text = savegame.name
+            self.text_field.cursor_pos = len(savegame.name)
 
     def make_listbox(self):
-        return listbox.CustomListbox(self, (0, 0), (-1, -.85),
+        return listbox.CustomListbox(self, (0, 0.04), (-1, -.81),
                                      anchor=constants.TOP_LEFT,
                                      remake_func=self.make_item,
                                      rebuild_func=self.update_item,
                                      on_double_click_on_item=self.yes_button.activated,
+                                     on_item_selected=self._on_item_selected,
                                      )
 
     def make_item(self, item):
@@ -72,12 +89,15 @@ class SavegameScreen(dialog.ChoiceDialog):
     def rebuild(self):
         # Update buttons translations
         self.delete_button.text = _("Delete")
+        self.label.text = _("Name: ")
 
         super(SavegameScreen, self).rebuild()
 
     def reload_savegames(self):
         savegames = sv.get_savegames()
         savegames.sort(key=lambda savegame: savegame.name.lower())
+
+        self._all_savegames_by_name = {s.name: s for s in savegames}
 
         self.list = savegames
 
@@ -95,13 +115,15 @@ class SavegameScreen(dialog.ChoiceDialog):
                 self.reload_savegames()
 
     def return_savegame(self):
-        index = self.return_list_pos()
-        if 0 <= index < len(self.list):
-            save = self.list[index]
-            return sv.load_savegame(save)
+        savegame_name = self.text_field.text
+        savegame = self._all_savegames_by_name.get(savegame_name)
+        if savegame is not None:
+            return sv.load_savegame(savegame)
         return False
 
     def show(self):
         self.reload_savegames()
-
+        self.text_field.text = ''
+        self.text_field.cursor_pos = 0
+        self.text_field.has_focus = True
         return super(SavegameScreen, self).show()
