@@ -139,6 +139,7 @@ def load_savegame(savegame):
             array=list,  # This is the old buyable.array.
                          # We just treat it as a list for conversion purposes.
             list=list,
+            LocationSpec=location.LocationSpec,
             Location=location.Location,
             Tech=tech.Tech,
             TechSpec=tech.TechSpec,
