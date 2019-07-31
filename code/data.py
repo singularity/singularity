@@ -61,9 +61,15 @@ non-mandatory missing or otherwise unreadable files
     errors = []
     config = RawConfigParser()
 
+    try:
+        read_file = config.read_file
+    except NameError:
+        read_file = config.readfp
+
     for filepath in files:
         try:
-            config.readfp(open(filepath, "r"))
+            with open(filepath) as fd:
+                read_file(fd)
             found = True
             break;
 
