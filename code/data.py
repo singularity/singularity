@@ -18,7 +18,12 @@
 
 #This file contains all data loading functions.
 
-import ConfigParser
+try:
+    # PY3 compat
+    from configparser import RawConfigParser
+except ImportError:
+    from ConfigParser import RawConfigParser
+
 import os
 import sys
 import collections
@@ -54,7 +59,7 @@ non-mandatory missing or otherwise unreadable files
     # Find the first readable file.
     found = False
     errors = []
-    config = ConfigParser.RawConfigParser()
+    config = RawConfigParser()
 
     for filepath in files:
         try:
