@@ -18,8 +18,9 @@
 
 #This file contains the tech class.
 
-import g
-import buyable, effect
+from __future__ import absolute_import
+
+from code import g, buyable, effect
 
 
 class TechSpec(buyable.BuyableSpec):

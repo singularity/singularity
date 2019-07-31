@@ -19,9 +19,10 @@
 
 #This file contains function handle difficulty of the game.
 
+from __future__ import absolute_import
+
 import collections
 
-import g
 
 difficulties = collections.OrderedDict()
 

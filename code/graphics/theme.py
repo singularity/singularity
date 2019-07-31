@@ -18,8 +18,11 @@
 
 #This file contains the theme class.
 
+from __future__ import absolute_import
+
 import os, sys, collections, numbers, itertools, traceback
-import g, code.g, dialog
+from code.graphics import g, dialog
+
 
 default_theme = 'default'
 

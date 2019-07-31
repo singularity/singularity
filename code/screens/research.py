@@ -18,6 +18,8 @@
 
 #This file contains the global research screen.
 
+from __future__ import absolute_import
+
 from numpy import array
 import pygame
 

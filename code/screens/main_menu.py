@@ -18,11 +18,12 @@
 
 #This file is used to display the main menu upon startup.
 
-import map
+from __future__ import absolute_import
+
 from code.graphics import dialog, g as gg, button, text, constants
+from code.screens import map, options, savegame
 import code.g as g, code.difficulty as difficulty
 
-import options, savegame
 
 class MainMenu(dialog.TopDialog):
     def __init__(self, *args, **kwargs):

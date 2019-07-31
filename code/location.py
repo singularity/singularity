@@ -18,9 +18,10 @@
 
 #This file contains the Location class.
 
-import g
-import prerequisite
-from buyable import cash, cpu, labor
+from __future__ import absolute_import
+
+from code import g, prerequisite
+from code.buyable import cash, cpu, labor
 
 
 class LocationSpec(prerequisite.Prerequisite):

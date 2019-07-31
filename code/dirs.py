@@ -21,12 +21,14 @@
 #Assumes that all platforms that have HOME and XDG_CONFIG_HOME defined have them
 # defined properly.
 
+from __future__ import absolute_import
+
 import os
 import sys
 import errno
 
-import g
-import i18n
+from code import g
+
 
 read_dirs = {}
 write_dirs = {}
@@ -228,6 +230,7 @@ def get_writable_file_in_dirs(filename, dir_name, outer_paths=None):
 
 def get_readable_i18n_files(filename, lang=None, default_language=True, 
         localized_item=True, only_last=False, outer_paths=None):
+    from code import i18n
     files = []
 
     lang_list = i18n.language_searchlist(lang, default=default_language)

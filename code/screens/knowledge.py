@@ -18,6 +18,8 @@
 
 #This file is used to display the knowledge lists.
 
+from __future__ import absolute_import
+
 import pygame
 import collections
 from code import g

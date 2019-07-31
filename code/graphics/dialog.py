@@ -18,16 +18,14 @@
 
 #This file contains the dialog class.
 
+from __future__ import absolute_import
+
 import bisect
 import time
 import pygame
 
-import constants
-import g
-import widget
-import text
-import button
-import listbox
+from code.graphics import g, constants, widget, text, button, listbox
+
 
 KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
           pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7, pygame.K_KP8: 8,

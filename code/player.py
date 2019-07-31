@@ -19,18 +19,22 @@
 
 #This file contains the player class.
 
+from __future__ import absolute_import
+
 import random
 import collections
 from operator import truediv
 from numpy import array
 
-import g, difficulty, task, chance
+from code import g, difficulty, task, chance
 from code import location
-from graphics import g as gg
-from buyable import cash, cpu
+from code.graphics import g as gg
+from code.buyable import cash, cpu
+
 
 class DryRunInfo(object):
     pass
+
 
 class Player(object):
 

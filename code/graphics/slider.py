@@ -18,12 +18,12 @@
 
 #This file contains the slider widget.
 
+from __future__ import absolute_import
+
 import pygame
 
-import constants
-import g
-import widget
-import button
+from code.graphics import g, constants, widget, button
+
 
 def calc_max(elements, size):
     return max(elements - size, 0)

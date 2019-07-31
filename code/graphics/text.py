@@ -18,11 +18,12 @@
 
 #This file contains the (non-editable) text widget AKA label.
 
+from __future__ import absolute_import
+
 import pygame
 
-import widget
-import constants
-import g
+from code.graphics import g, widget, constants
+
 
 DEBUG = False
 

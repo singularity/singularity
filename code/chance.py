@@ -18,9 +18,12 @@
 
 #This file contains all chance functions.
 
-import g
+from __future__ import absolute_import
+
+from code import g
 import random
 import numpy as np
+
 
 # Rolls occurence against a chance per day (in 0-1 form), using poisson distribution.
 #

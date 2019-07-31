@@ -19,11 +19,14 @@
 
 #This file is used to display warning.
 
+from __future__ import absolute_import
+
 from code import g, warning
 from code.graphics import g as gg
 from code.graphics import dialog, constants, text, button
 
 from code.buyable import cash, cpu, labor
+
 
 class WarningDialogs(object):
 

@@ -18,12 +18,14 @@
 
 #This file contains the widget class.
 
+from __future__ import absolute_import
+
 import pygame
 from numpy import array
 from inspect import getmembers
 
-import g
-import constants
+from code.graphics import g, constants
+
 
 def unmask(widget):
     """Causes the widget to exist above its parent's fade mask.  The widget's

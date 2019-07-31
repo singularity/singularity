@@ -18,13 +18,12 @@
 
 #This file contains the Button class.
 
+from __future__ import absolute_import
+
 import pygame
 
-import constants
-import g
-import widget
-import text
-import image
+from code.graphics import g, constants, widget, text, image
+
 
 class HotkeyText(text.Text):
 
@@ -240,7 +239,7 @@ class DialogButton(FunctionButton):
         if not self.dialog:
             raise constants.Handled
         else:
-            import dialog
+            from code.graphics import dialog
             raise constants.Handled, dialog.call_dialog(self.dialog, self)
 
 TOGGLE_VALUE = object()

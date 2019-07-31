@@ -18,11 +18,12 @@
 
 #This file contains the image widget.
 
+from __future__ import absolute_import
+
 import pygame
 
-import constants
-import widget
-import g
+from code.graphics import g, constants, widget
+
 
 def scale(*args, **kwargs):
     try:

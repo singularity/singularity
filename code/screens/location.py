@@ -18,12 +18,14 @@
 
 #This file is used to display the base list at a given location
 
+from __future__ import absolute_import
+
 import random
 
 from code import g, base
 from code.graphics import text, button, dialog, constants, listbox, g as gg
 
-import base as basescreen
+import code.screens.base as basescreen
 
 state_colors = basescreen.state_colors
 state_list = base.power_states[:2]

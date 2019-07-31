@@ -19,7 +19,10 @@
 
 #This file contains the group class, a group of person which can suspect the singularity.
 
-import g
+from __future__ import absolute_import
+
+from code import g
+
 
 class GroupSpec(object):
 

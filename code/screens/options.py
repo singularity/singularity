@@ -18,6 +18,8 @@
 
 #This file is used to display the options screen.
 
+from __future__ import absolute_import
+
 import os, sys
 import ConfigParser
 import pygame

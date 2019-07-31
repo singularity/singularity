@@ -21,13 +21,14 @@
 #
 #IMPORTANT: A portion of translation is still done with data files in g.
 
+from __future__ import absolute_import
+
 import os
 import sys
-import polib
 import locale
 
-import g
-import dirs
+from code import g, polib, dirs
+
 
 #Used to determine which data files to load.
 #It is required that default language have all data files and all of them

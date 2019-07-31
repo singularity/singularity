@@ -19,6 +19,8 @@
 
 #This file contains all global objects.
 
+from __future__ import absolute_import
+
 version = "0.31alpha1"
 
 import pygame
@@ -30,7 +32,8 @@ import sys
 # are made where needed.
 import locale
 
-import buyable, statistics
+from code import statistics
+
 
 stats = statistics.Statistics()
 
@@ -224,16 +227,13 @@ def new_game(difficulty_name):
     curr_speed = 1
     global pl
 
-    import data    
+    from code import data, difficulty, player, group, base, mixer
     data.reload_all_mutable()
 
-    import difficulty
     diff = difficulty.difficulties[difficulty_name]
 
-    import player
     pl = player.Player(cash = diff.starting_cash, difficulty = diff)
 
-    import group
     for group_id in groups:
         pl.groups[group_id] = group.Group(groups[group_id], 0, diff.discover_multiplier, diff.suspicion_multiplier)
 
@@ -241,7 +241,6 @@ def new_game(difficulty_name):
         techs[tech_id].finish()
 
     #Starting base
-    import base
     open = [loc for loc in pl.locations.values() if loc.available()]
     random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
@@ -255,7 +254,6 @@ def new_game(difficulty_name):
                 print "%s gets modifiers %s" % (loc, mod)
 
     # Reset music
-    import mixer
     mixer.play_music("music")
 
 

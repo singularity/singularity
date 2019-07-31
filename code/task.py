@@ -18,8 +18,10 @@
 
 #This file contains the Task class.
 
-import g
-import prerequisite
+from __future__ import absolute_import
+
+from code import g, prerequisite
+
 
 def danger_for(task_id):
     if task_id in ["jobs", "cpu_pool"]:

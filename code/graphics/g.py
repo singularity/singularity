@@ -19,8 +19,11 @@
 
 #This file contains all global objects.
 
+from __future__ import absolute_import
+
 import os.path
 import pygame
+
 
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
@@ -100,7 +103,7 @@ def init_graphics_system(size=None):
     set_mode()
 
     # Initialize the cache of the current theme.
-    import theme
+    from code.graphics import theme
     theme.current.init_cache()
 
     init_alpha()

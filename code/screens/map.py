@@ -18,6 +18,9 @@
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #This file is used to display the World Map.
+
+from __future__ import absolute_import
+
 import collections
 import pygame
 
@@ -26,13 +29,14 @@ from code import chance, difficulty
 from code.location import Location
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
+from code.screens import research, knowledge, report, log, warning, savegame
+from code.screens.location import LocationScreen
+from code.screens.options import OptionsScreen
 
 import math
 import time
 
 from pygame.surfarray import pixels_alpha
-
-import location, research, knowledge, report, log, warning, savegame
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
@@ -332,7 +336,6 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
     def __init__(self, map_screen):
         super(GameMenuDialog, self).__init__(parent=map_screen)
         self._map_screen = map_screen
-        from options import OptionsScreen
         self.options_dialog = OptionsScreen(self)
         self.savename_dialog = dialog.TextEntryDialog(self)
         self.load_dialog = savegame.SavegameScreen(self,
@@ -419,7 +422,7 @@ class MapScreen(dialog.Dialog):
                                       args=(loc.id,))
             self.location_buttons[loc.id] = b
 
-        self.location_dialog = location.LocationScreen(self)
+        self.location_dialog = LocationScreen(self)
 
         self.suspicion_bar = \
             text.FastStyledText(self, (0,.92), (1, .04), base_font="special",

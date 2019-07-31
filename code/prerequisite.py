@@ -18,7 +18,9 @@
 
 #This file contains the Prequisite class.
 
-import g
+from __future__ import absolute_import
+
+from code import g
 
 
 class Prerequisite(object):

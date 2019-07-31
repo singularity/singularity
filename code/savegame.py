@@ -18,15 +18,15 @@
 
 #This file contains functions to handle savegame (load, save, ...)
 
+from __future__ import absolute_import
+
 import cPickle
 import collections
 import os
 
-import g, mixer, dirs, player
+from code import g, mixer, dirs, player, group, data
+from code import base, tech, item, event, location, buyable, difficulty, effect
 
-#name given when the savegame button is pressed. This is changed when the
-#game is loaded or saved.
-from code import group
 
 default_savegame_name = u"Default Save"
 
@@ -130,7 +130,7 @@ def load_savegame(savegame):
         import copy_reg
         import numpy.core.multiarray
         import collections
-        import player, base, tech, item, event, location, buyable, difficulty, effect
+
         save_classes = dict(
             player_class=player.Player,
             Player=player.Player,
@@ -207,7 +207,6 @@ def load_savegame(savegame):
         for my_event in g.events.values():
             my_event.convert_from(load_version)
 
-    import data
     data.reload_all_mutable_def()
 
     # Play the appropriate music

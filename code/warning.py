@@ -18,7 +18,6 @@
 
 #This file contains the warning class.
 
-import g
 
 class Warning(object):
     def __init__(self, warning_id, text):

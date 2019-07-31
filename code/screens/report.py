@@ -18,6 +18,7 @@
 
 #This file contains the screen to display information report.
 
+from __future__ import absolute_import
 
 import code.g as g
 import pygame

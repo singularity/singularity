@@ -20,9 +20,11 @@
 # initialize hardware, load data files and show main screen. Do not execute it
 # directly. use ../singularity.py instead.
 
-import g
+from __future__ import absolute_import
+
 import sys
-import dirs
+from code import g, dirs
+
 
 # Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
 # so g.get_save_folder reports the correct location of preferences file
@@ -34,7 +36,7 @@ for parser in sys.argv[1:]:
 dirs.create_directories(g.force_single_dir)
 
 # Set language second, so help page and all error messages can be translated
-import i18n
+from code import i18n
 i18n.set_language(force=True)
 
 langs = i18n.available_languages()
@@ -57,7 +59,7 @@ import optparse
 import logging
 
 import code.graphics.g as gg
-import graphics.theme as theme
+import code.graphics.theme as theme
 
 set_theme = None
 
@@ -73,7 +75,7 @@ if len(logging.getLogger().handlers) == 0:
             pass
 
 # keep g's defaults intact so we can compare after parsing options and prefs
-import mixer
+from code import mixer, warning
 desired_soundbuf = mixer.soundbuf
 
 desired_set_grab = None
@@ -155,8 +157,6 @@ if save_loc is not None:
             
     if prefs.has_section("Warning"):
         try:
-            import warning
-
             for key in prefs.options('Warning'):
 
                 if key in prefs.defaults(): # Filter default key
@@ -289,7 +289,7 @@ if pygame.image.get_extended() == 0:
     print "Error: SDL_image required. Exiting."
     sys.exit(1)
 
-import data
+from code import data
 
 #init themes:
 data.load_themes()
@@ -301,7 +301,6 @@ gg.init_graphics_system()
 data.reload_all()
 
 # Init music
-import mixer
 mixer.load_sounds()
 mixer.load_music()
 mixer.play_music("music")
@@ -309,7 +308,7 @@ mixer.play_music("music")
 #Display the main menu
 #Import is delayed until now so selected language via command-line options or
 # preferences file can be effective
-from screens import main_menu
+from code.screens import main_menu
 menu_screen = main_menu.MainMenu()
 try:
     menu_screen.show()

@@ -18,6 +18,8 @@
 
 #This file contains the savegame screen.
 
+from __future__ import absolute_import
+
 import pygame
 
 from code import g, savegame as sv

@@ -18,9 +18,11 @@
 
 #This file contains the buyable class, a super class for item, base and tech
 
+from __future__ import absolute_import
+
 from operator import truediv
-import g
-import prerequisite
+from code import g
+from code import prerequisite
 
 cash, cpu, labor = range(3)
 

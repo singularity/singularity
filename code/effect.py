@@ -18,7 +18,9 @@
 
 #This file contains the effect class.
 
-import g, mixer
+from __future__ import absolute_import
+
+from code import g, mixer
 
 class Effect(object):
 

@@ -18,6 +18,8 @@
 
 #This file is used to display the log of player action
 
+from __future__ import absolute_import
+
 from numpy import array
 import pygame
 

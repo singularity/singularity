@@ -18,10 +18,12 @@
 
 #This file contains the item class.
 
+from __future__ import absolute_import
+
 import collections
 
-import buyable
-import g
+from code import g, buyable
+
 
 class ItemType(object):
     """ Item type, 4 fixed instances: cpu, reactor, network and security """

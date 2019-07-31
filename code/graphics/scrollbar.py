@@ -18,13 +18,12 @@
 
 #This file contains the scrollbar widget.
 
+from __future__ import absolute_import
+
 import pygame
 
-import constants
-import g
-import widget
-import button
-import slider
+from code.graphics import g, constants, widget, button, slider
+
 
 class _ArrowButton(button.FunctionButton, button.ImageButton):
     def __init__(self, parent, *args, **kwargs):

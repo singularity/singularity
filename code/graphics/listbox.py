@@ -18,12 +18,12 @@
 
 #This file contains the listbox widget.
 
+from __future__ import absolute_import
+
 import pygame
 
-import constants
-import widget
-import text
-import scrollbar
+from code.graphics import constants, widget, text, scrollbar
+
 
 class Listbox(widget.FocusWidget, text.SelectableText):
     list = widget.causes_rebuild("_list")

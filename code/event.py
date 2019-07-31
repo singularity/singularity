@@ -18,9 +18,10 @@
 
 #This file contains the event class.
 
-import g
-import effect
-#detection = (news, science, covert, person)
+from __future__ import absolute_import
+
+from code import g, effect
+
 
 class Event(object):
     # For some as-yet-unknown reason, cPickle decides to call event.__init__()

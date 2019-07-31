@@ -18,21 +18,24 @@
 
 #This file contains all data loading functions.
 
+from __future__ import absolute_import
+
 try:
     # PY3 compat
     from configparser import RawConfigParser
 except ImportError:
     from ConfigParser import RawConfigParser
 
+
 import os
 import sys
 import collections
 
-import g
-import dirs
-import player, group, base, tech, item, event, location, difficulty, task, region
+from code import g, i18n
+from code import dirs
+from code import player, group, base, tech, item, event, location, difficulty, task, region
 import code.graphics.g as gg
-import graphics.theme as theme
+import code.graphics.theme as theme
 
 
 def generic_load(filename, load_dirs="data", mandatory=True):
@@ -154,8 +157,6 @@ def read_modifiers_dict(modifiers_info):
     return modifiers_dict
 
 def load_generic_defs_file(name,lang=None):
-    import i18n
-    
     return_list = []
 
     i18n_files = dirs.get_readable_i18n_files(name + "_str.dat", lang)
