@@ -136,5 +136,10 @@ def translate(string, *args, **kwargs):
     return s
 
 # Initialization code
-import __builtin__
-__builtin__.__dict__['_'] = translate
+try:
+    import builtins
+except ImportError:
+    import __builtin__ as builtins
+
+builtins.__dict__['_'] = translate
+
