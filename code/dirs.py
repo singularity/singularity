@@ -255,7 +255,7 @@ def get_readable_i18n_files(filename, lang=None, default_language=True,
 
 def makedirs_if_not_exist(directory):
     try:
-        os.makedirs(directory, mode=0700)
+        os.makedirs(directory, mode=0o0700)
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
