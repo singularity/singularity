@@ -34,8 +34,11 @@ from code import g, polib, dirs
 #It is required that default language have all data files and all of them
 # must have all available entries
 default_language = "en_US"
-try:    language = locale.getdefaultlocale()[0] or default_language
-except: language = default_language
+try:
+    language = locale.getdefaultlocale()[0] or default_language
+except RuntimeError:
+    language = default_language
+
 
 def set_language(lang=None, force=False):
     global language # required, since we're going to change it

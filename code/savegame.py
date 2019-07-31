@@ -76,7 +76,7 @@ def get_savegames():
     for saves_dir in all_dirs:
         try:
             all_files = os.listdir(saves_dir)
-        except:
+        except RuntimeError:
             continue
 
         for file_name in all_files:
@@ -95,7 +95,7 @@ def get_savegames():
                         load_version = unpickle.load()
                         if load_version in savefile_translation:
                             version_name = savefile_translation[load_version][0]
-                    except:
+                    except RuntimeError:
                         version_name = None # To be sure.
                     savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
                     all_savegames.append(savegame)
@@ -111,7 +111,7 @@ def delete_savegame(savegame):
 
     try:
         os.remove(load_path)
-    except:
+    except RuntimeError:
         return False
 
 def load_savegame(savegame):

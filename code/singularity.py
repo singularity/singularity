@@ -100,44 +100,44 @@ if save_loc is not None:
                 i18n.set_language(desired_language)
             else:
                 raise ValueError
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'lang' in preferences.\n")
 
         try:
             gg.set_fullscreen(prefs.getboolean("Preferences", "fullscreen"))
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
 
         try:
             mixer.nosound = prefs.getboolean("Preferences", "nosound")
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'nosound' setting in preferences.\n")
 
         try:
             desired_set_grab = prefs.getboolean("Preferences", "grab")
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'grab' setting in preferences.\n")
 
         try:
             g.daynight = prefs.getboolean("Preferences", "daynight")
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'daynight' setting in preferences.\n")
 
         try:
             desired_soundbuf = prefs.getint("Preferences", "soundbuf")
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
 
         xres, yres = (0, 0)
 
         try:
             xres = prefs.getint("Preferences", "xres")
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'xres' resolution in preferences.\n")
 
         try:
             yres = prefs.getint("Preferences", "yres")
-        except:
+        except RuntimeError:
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
 
         if xres and yres:
@@ -145,14 +145,14 @@ if save_loc is not None:
 
         try:
             set_theme = prefs.get("Preferences", "theme")
-        except:
+        except RuntimeError:
             pass # don't be picky (for now...)
 
         try:
             for name in mixer.soundvolumes:
                 mixer.set_volume(name, prefs.getfloat("Preferences", name + "_volume"))
 
-        except:
+        except RuntimeError:
             pass # don't be picky (for now...
             
     if prefs.has_section("Warning"):
@@ -167,7 +167,7 @@ if save_loc is not None:
                 
                 warning.warnings[key].active = prefs.getboolean("Warning", key)
 
-        except:
+        except RuntimeError:
             pass # don't be picky (for now...)
 
 
