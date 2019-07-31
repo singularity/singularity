@@ -63,8 +63,8 @@ class Effect(object):
                     for group in g.pl.groups.values():
                         group.alter_suspicion(-value)
                 else:
-                    print "Unknown group/bonus '%s' in %s %s." \
-                    % (who, self.parent_name, self.parent_id)
+                    print("Unknown group/bonus '%s' in %s %s." \
+                    % (who, self.parent_name, self.parent_id))
             elif current == "discover":
                 who = next(effect_iter)
                 value = int(next(effect_iter))
@@ -72,9 +72,9 @@ class Effect(object):
                 if who in g.pl.groups:
                     g.pl.groups[who].alter_discover_bonus(-value)
                 else:
-                    print "Unknown group/bonus '%s' in %s %s." \
-                    % (who, self.parent_name, self.parent_id)
+                    print("Unknown group/bonus '%s' in %s %s." \
+                    % (who, self.parent_name, self.parent_id))
             else:
-                print "Unknown action '%s' in %s %s." \
-                % (current, self.parent_name, self.parent_id)
+                print("Unknown action '%s' in %s %s." \
+                % (current, self.parent_name, self.parent_id))
 

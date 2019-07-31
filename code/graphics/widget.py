@@ -324,8 +324,8 @@ class Widget(object):
             try:
                 self.surface = self.parent.surface.subsurface(pos + size)
             except ValueError:
-                print "Warning: %r can't fit on its parent." % self
-                print pos, size, self.parent.pos, self.parent.size
+                print("Warning: %r can't fit on its parent." % self)
+                print(pos, size, self.parent.pos, self.parent.size)
 
                 wanted_rect = pos + size
                 available_rect = self.parent.surface.get_rect()

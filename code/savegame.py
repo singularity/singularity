@@ -181,7 +181,7 @@ def load_savegame(savegame):
     load_version_string = unpickle.load()
     if load_version_string not in savefile_translation:
         loadfile.close()
-        print savegame.name + " is not a savegame, or is too old to work."
+        print(savegame.name + " is not a savegame, or is too old to work.")
         return False
     load_version = savefile_translation[load_version_string][1]
 

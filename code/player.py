@@ -474,8 +474,8 @@ class Player(object):
             if not (grace or dead or base.has_grace()):
                 detect_chance = base.get_detect_chance()
                 if g.debug:
-                    print "Chance of discovery for base %s: %s" % \
-                        (base.name, repr(detect_chance))
+                    print("Chance of discovery for base %s: %s" % \
+                        (base.name, repr(detect_chance)))
 
                 for group, group_chance in detect_chance.iteritems():
                     if chance.roll_interval(group_chance/10000., secs_passed):
@@ -558,12 +558,12 @@ class Player(object):
 
         # Have we reached the limit of cpu ?
         if g.debug:
-            print "DEBUG: Grace - Used CPU: %s >= %s (%s * %s)?" % (
+            print("DEBUG: Grace - Used CPU: %s >= %s (%s * %s)?" % (
                 self.used_cpu,
                 self.grace_period_cpu * g.seconds_per_day,
                 self.grace_period_cpu,
                 g.seconds_per_day
-            )
+            ))
         if self.grace_period_cpu * g.seconds_per_day < self.used_cpu:
             return False
 
@@ -604,7 +604,7 @@ class Player(object):
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": detect_phrase}
             else:
-                print "Error: base destroyed for unknown reason: " + reason
+                print("Error: base destroyed for unknown reason: " + reason)
                 dialog_string = g.strings["discover"] % \
                                 {"base": base_name, "group": "???"}
 

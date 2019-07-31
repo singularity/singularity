@@ -18,7 +18,7 @@ def test_hotkeys(input_text, hotkey_chars, cleaned_text):
     actual_hotkey_char = hotkey_data['key'][0] if hotkey_data['key'] else ''
     expected_hotkey = hotkey_chars[0] if hotkey_chars else ''
 
-    print("input: %s - %s" % (input_text, str(hotkey_data['keys'])))
+    print(("input: %s - %s" % (input_text, str(hotkey_data['keys']))))
     assert actual_hotkey_chars == hotkey_chars
     assert actual_cleaned_text == cleaned_text
     assert actual_hotkey_char == expected_hotkey

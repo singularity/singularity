@@ -687,7 +687,7 @@ def _make_prototype_handler(parent):
             if depth:
                 prefix = prefixes[1] * (depth - 1) + prefixes[0]
 
-            print prefix + str(kid)
+            print(prefix + str(kid))
     return print_on_click
 
 class ProtoWidget(EditableText):

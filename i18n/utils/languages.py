@@ -296,8 +296,8 @@ def main(args):
         # Save updated data file
         Locale.saveLanguagesData(languages, datafile)
 
-        print "{0:d} languages saved to {1}".format(len(languages),
-                                                    osp.relpath(datafile))
+        print("{0:d} languages saved to {1}".format(len(languages),
+                                                    osp.relpath(datafile)))
     except IOError as reason:
         sys.stderr.write("Could not save languages data file:"
                          " {0}\n".format(reason))

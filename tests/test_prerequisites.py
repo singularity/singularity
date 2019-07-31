@@ -74,7 +74,7 @@ def prerequisites_references_valid_techs(techs, prerequisites_list, prerequisite
             # deliberately marked impossible
             continue
         for disjunction in conjunction:
-            print("%s %s -> At least one of: %s" % (prerequisite_typename, prereq.id, str(sorted(disjunction))))
+            print(("%s %s -> At least one of: %s" % (prerequisite_typename, prereq.id, str(sorted(disjunction)))))
             for tech_dep_id in disjunction:
                 assert '|' not in tech_dep_id, '%s "%s" references unknown dependency tech "%s" (' \
                                                'did you use pre instead of pre_list?)' % (
@@ -110,7 +110,7 @@ def test_acyclic_dependencies(techs):
         new_tech = researchable_techs.pop()
         if new_tech in researched_techs:
             continue
-        print("Researchable %s" % new_tech)
+        print(("Researchable %s" % new_tech))
         researched_techs.add(new_tech)
         techs_waiting = waiting_for[new_tech]
         del waiting_for[new_tech]
@@ -127,6 +127,6 @@ def test_acyclic_dependencies(techs):
                 researchable_techs.append(t.id)
 
     for x, y in waiting_for.items():
-        print("%s cannot be researched and is blocking %s" % (x, str(sorted(t.id for t in y))))
+        print(("%s cannot be researched and is blocking %s" % (x, str(sorted(t.id for t in y)))))
 
     assert not waiting_for

@@ -252,7 +252,7 @@ def new_game(difficulty_name):
         for mod, loc in zip(reg.modifiers_list, reg.locations):
             pl.locations[loc].modifiers = mod
             if debug:
-                print "%s gets modifiers %s" % (loc, mod)
+                print("%s gets modifiers %s" % (loc, mod))
 
     # Reset music
     mixer.play_music("music")

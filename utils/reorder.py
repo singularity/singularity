@@ -22,15 +22,15 @@
 import re, sys
 
 if len(sys.argv) != 3:
-    print "Re-orders a localized .dat file to match the corresponding en_US file."
-    print "Creates a new file with the suffix .reorder."
-    print
-    print "Reorder attempts to avoid losing anything, but USE WITH CAUTION."
-    print "I strongly recommend placing the file under source control BEFORE using this."
-    print
-    print "Run from the data directory."
-    print "Usage: ../utils/reorder.py file_name language"
-    print "e.g. ../utils/reorder.py bases de_DE"
+    print("Re-orders a localized .dat file to match the corresponding en_US file.")
+    print("Creates a new file with the suffix .reorder.")
+    print()
+    print("Reorder attempts to avoid losing anything, but USE WITH CAUTION.")
+    print("I strongly recommend placing the file under source control BEFORE using this.")
+    print()
+    print("Run from the data directory.")
+    print("Usage: ../utils/reorder.py file_name language")
+    print("e.g. ../utils/reorder.py bases de_DE")
     sys.exit(1)
 
 which = sys.argv[1]

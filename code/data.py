@@ -428,7 +428,7 @@ def load_techs():
         techs[tech_name["id"]]=tech.Tech(tech_name["id"], 0,
          tech_cost, tech_pre, tech_danger, effect_list)
 
-    if g.debug: print "Loaded %d techs." % len (techs)
+    if g.debug: print("Loaded %d techs." % len (techs))
 
     load_tech_defs()
 
@@ -707,7 +707,7 @@ def load_story_defs(lang=None):
     story_files = dirs.get_readable_i18n_files("story_str.dat", lang)
     
     if len(story_files) == 0:
-        print "Story is missing. Skipping."
+        print("Story is missing. Skipping.")
         return
         
     # Take the last story file, story is never partially translated.

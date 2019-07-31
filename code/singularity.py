@@ -287,7 +287,7 @@ if desired_set_grab is not None:
 #I can't use the standard image dictionary, as that requires the screen to
 #be created.
 if pygame.image.get_extended() == 0:
-    print "Error: SDL_image required. Exiting."
+    print("Error: SDL_image required. Exiting.")
     sys.exit(1)
 
 from code import data
