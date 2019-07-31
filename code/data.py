@@ -63,7 +63,7 @@ non-mandatory missing or otherwise unreadable files
 
     try:
         read_file = config.read_file
-    except NameError:
+    except AttributeError:
         read_file = config.readfp
 
     for filepath in files:
