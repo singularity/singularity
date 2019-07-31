@@ -95,16 +95,16 @@ class Scrollbar(widget.Widget):
     def resize(self):
         super(Scrollbar, self).resize()
         if self.horizontal:
-            long = self.real_size[0]
-            short = self.real_size[1]
-            size = short / float(long)
+            long_side = self.real_size[0]
+            short_side = self.real_size[1]
+            size = short_side / float(long_side)
             self.button1.size = (-size, -1)
             self.button2.size = (-size, -1)
             self.slider.size = ((size * 2) - 1, -1)
         else:
-            long = self.real_size[1]
-            short = self.real_size[0]
-            size = short / float(long)
+            long_side = self.real_size[1]
+            short_side = self.real_size[0]
+            size = short_side / float(long_side)
             self.button1.size = (-1, -size)
             self.button2.size = (-1, -size)
             self.slider.size = (-1, (size * 2) - 1)
