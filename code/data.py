@@ -31,7 +31,9 @@ import collections
 import g
 import dirs
 import player, group, base, tech, item, event, location, difficulty, task, region
-import graphics.g, graphics.theme as theme
+import code.graphics.g as gg
+import graphics.theme as theme
+
 
 def generic_load(filename, load_dirs="data", mandatory=True):
     """
@@ -692,7 +694,7 @@ def load_buttons_defs(lang=None):
         "continue" : g.hotkey(_("&CONTINUE")),
         "skip"     : g.hotkey(_("&SKIP")),
     }
-    graphics.g.buttons.update(buttons)
+    gg.buttons.update(buttons)
 
 def load_strings():
     load_string_defs()

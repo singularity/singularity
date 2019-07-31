@@ -56,7 +56,8 @@ import os.path
 import optparse
 import logging
 
-import graphics.g, graphics.theme as theme
+import code.graphics.g as gg
+import graphics.theme as theme
 
 set_theme = None
 
@@ -101,7 +102,7 @@ if save_loc is not None:
             sys.stderr.write("Invalid or missing 'lang' in preferences.\n")
 
         try:
-            graphics.g.set_fullscreen(prefs.getboolean("Preferences", "fullscreen"))
+            gg.set_fullscreen(prefs.getboolean("Preferences", "fullscreen"))
         except:
             sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
 
@@ -138,7 +139,7 @@ if save_loc is not None:
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
 
         if xres and yres:
-            graphics.g.set_screen_size((xres, yres))
+            gg.set_screen_size((xres, yres))
 
         try:
             set_theme = prefs.get("Preferences", "theme")
@@ -208,9 +209,9 @@ display_options.add_option("-t", "--theme", dest="theme", type="string",
                            metavar="THEME", help="set theme to THEME")
 display_options.add_option("-r", "--res", "--resolution", dest="resolution",
                            help="set resolution to custom RES (default %dx%d)" %
-                           graphics.g.default_screen_size,
+                           gg.default_screen_size,
                            metavar="RES")
-for res in ["%dx%d" % res for res in graphics.g.resolutions]:
+for res in ["%dx%d" % res for res in gg.resolutions]:
     display_options.add_option("--" + res, action="store_const",
                                dest="resolution", const=res,
                                help="set resolution to %s" % res)
@@ -247,14 +248,14 @@ if options.theme is not None:
 if options.resolution is not None:
     try:
         xres, yres = options.resolution.split("x")
-        graphics.g.set_screen_size((int(xres), int(yres)))
+        gg.set_screen_size((int(xres), int(yres)))
     except Exception:
         parser.error("Resolution must be of the form <h>x<v>, e.g. %dx%d." %
-                     graphics.g.default_screen_size)
+                     gg.default_screen_size)
 if options.grab is not None:
     desired_set_grab = options.grab
 if options.fullscreen is not None:
-    graphics.g.set_fullscreen(options.fullscreen)
+    gg.set_fullscreen(options.fullscreen)
 if options.sound is not None:
     mixer.nosound = not options.sound
 if options.daynight is not None:
@@ -262,7 +263,7 @@ if options.daynight is not None:
 if options.soundbuf is not None:
     desired_soundbuf = options.soundbuf
 
-graphics.g.ebook_mode = options.ebook
+gg.ebook_mode = options.ebook
 
 g.cheater = options.cheater
 g.debug = options.debug
@@ -294,7 +295,7 @@ import data
 data.load_themes()
 theme.set_theme(set_theme)
 
-graphics.g.init_graphics_system()
+gg.init_graphics_system()
 
 #init data:
 data.reload_all()
