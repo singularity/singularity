@@ -150,7 +150,7 @@ if save_loc is not None:
 
         try:
             for name in mixer.soundvolumes:
-                mixer.setvolume(name, prefs.getfloat("Preferences", name + "_volume"))
+                mixer.set_volume(name, prefs.getfloat("Preferences", name + "_volume"))
 
         except:
             pass # don't be picky (for now...
