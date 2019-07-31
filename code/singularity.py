@@ -90,7 +90,7 @@ if save_loc is not None:
     try:
         with open(save_loc, "r", encoding='utf-8') as savefile:
             prefs.readfp(savefile)
-    except Exception, reason:
+    except Exception as reason:
         sys.stderr.write("Cannot load preferences file %s! (%s)\n" % (save_loc, reason))
         sys.exit(1)
 

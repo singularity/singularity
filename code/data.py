@@ -350,7 +350,7 @@ def load_locations():
                 absolute = False
             else:
                 if position[0] != "absolute":
-                    raise ValueError, "'%s' not understood." % position[0]
+                    raise ValueError("'%s' not understood." % position[0])
                 position = ( int(position[1]), int(position[2]) )
                 absolute = True
         except ValueError:

@@ -374,7 +374,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
         did_load = dialog.call_dialog(self.load_dialog, self)
         if did_load:
             self._map_screen.force_update()
-            raise constants.ExitDialog, False
+            raise constants.ExitDialog(False)
 
     def save_game(self):
         self.savename_dialog.default_text = sv.default_savegame_name
@@ -390,7 +390,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
                     return
 
             sv.create_savegame(name)
-            raise constants.ExitDialog, False
+            raise constants.ExitDialog(False)
 
 
 speeds = [0, 1, 60, 7200, 432000]

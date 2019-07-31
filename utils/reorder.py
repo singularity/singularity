@@ -57,13 +57,13 @@ for line in source_lines:
             source_dict[section] = {}
             continue
         if section == None:
-            raise SystemExit, "Source line appears before any section header: %s" % line
+            raise SystemExit("Source line appears before any section header: %s" % line)
         entry_match = entry_re.search(pre_comment)
         if entry_match:
             key = entry_match.groups()[0].strip()
             source_dict[section][key] = line
         else:
-            raise SystemExit, "Source line not understood: %s"
+            raise SystemExit("Source line not understood: %s")
 
 section = None
 for line in order_lines:
@@ -77,19 +77,19 @@ for line in order_lines:
                 dest_file.write("\n")
             section = section_match.groups()[0].strip()
             if section not in source_dict:
-                raise SystemExit, "Order section missing from source: %s" % section
+                raise SystemExit("Order section missing from source: %s" % section)
             dest_file.write(line)
             continue
         if section == None:
-            raise SystemExit, "Order line appears before any section header: %s" % line
+            raise SystemExit("Order line appears before any section header: %s" % line)
         entry_match = entry_re.search(pre_comment)
         if entry_match:
             key = entry_match.groups()[0].strip()
             if key not in source_dict[section]:
-                raise SystemExit, "Order entry missing from source section %s: %s" % (section, key)
+                raise SystemExit("Order entry missing from source section %s: %s" % (section, key))
             dest_file.write(source_dict[section].pop(key))
         else:
-            raise SystemExit, "Order line not understood: %s"
+            raise SystemExit("Order line not understood: %s")
 
 if section != None:
     for k,line in source_dict[section].iteritems():

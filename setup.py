@@ -19,7 +19,7 @@ elif sys.platform.startswith("darwin"):
         raise SystemExit("For Mac OS X, 'py2app' module must be installed.")
 
 elif sys.platform.startswith("linux"):
-    raise SystemExit, "setup was not tested in Linux. Use 'singularity.py' to run the game"
+    raise SystemExit("setup was not tested in Linux. Use 'singularity.py' to run the game")
 
 my_files = os.listdir(".")
 my_files = [file for file in my_files if file not in ("dist", "build")]

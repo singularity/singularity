@@ -328,5 +328,5 @@ if __name__ == '__main__':
         sys.exit(1)
     except KeyboardInterrupt:
         pass
-    except SystemExit, ex:
+    except SystemExit as ex:
         raise ex
