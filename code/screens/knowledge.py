@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import pygame
 import collections
 from code import g
-from code.graphics import text, button, dialog, widget, constants, listbox, g as gg
+from code.graphics import text, button, dialog, widget, constants, listbox
 
 
 class KnowledgeScreen(dialog.Dialog):

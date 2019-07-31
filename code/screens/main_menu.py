@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 
-from code.graphics import dialog, g as gg, button, text, constants
+from code.graphics import dialog, button, text, constants
 from code.screens import map, options, savegame
 import code.g as g, code.difficulty as difficulty
 

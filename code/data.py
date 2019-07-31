@@ -33,7 +33,7 @@ import collections
 
 from code import g, i18n
 from code import dirs
-from code import player, group, base, tech, item, event, location, difficulty, task, region
+from code import group, base, tech, item, event, location, difficulty, task, region
 import code.graphics.g as gg
 import code.graphics.theme as theme
 

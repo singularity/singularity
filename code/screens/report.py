@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import code.g as g
 import pygame
 
-from code.graphics import widget, dialog, button, text, constants, g as gg
+from code.graphics import widget, dialog, button, text, constants
 
 
 class ReportScreen(dialog.Dialog):

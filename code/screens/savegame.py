@@ -20,10 +20,9 @@
 
 from __future__ import absolute_import
 
-import pygame
+from code import savegame as sv
+from code.graphics import dialog, button, text, constants, listbox
 
-from code import g, savegame as sv
-from code.graphics import dialog, button, slider, text, constants, listbox, g as gg
 
 class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):

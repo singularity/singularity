@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 
-from code import g, buyable, effect
+from code import buyable, effect
 
 
 class TechSpec(buyable.BuyableSpec):

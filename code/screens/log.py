@@ -20,11 +20,10 @@
 
 from __future__ import absolute_import
 
-from numpy import array
-import pygame
 
 from code import g
-from code.graphics import dialog, button, slider, text, constants, listbox, g as gg
+from code.graphics import dialog, constants, listbox
+
 
 class LogScreen(dialog.ChoiceDialog):
     def __init__(self, parent, pos=(.5, .5), size=(.73, .63), *args, **kwargs):

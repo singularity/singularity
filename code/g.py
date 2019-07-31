@@ -23,8 +23,7 @@ from __future__ import absolute_import
 
 version = "0.31alpha1"
 
-import pygame
-import os.path
+
 import random
 import sys
 

@@ -28,7 +28,6 @@ from numpy import array
 
 from code import g, difficulty, task, chance
 from code import location
-from code.graphics import g as gg
 from code.buyable import cash, cpu
 
 

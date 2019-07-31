@@ -19,12 +19,10 @@
 
 #This file contains the screen to display the base screen.
 
-import locale
 import pygame
 
 from code import g, item
-from code.buyable import cash
-from code.graphics import g as gg, constants, widget, dialog, text, button, listbox, slider
+from code.graphics import constants, widget, dialog, text, button, slider
 
 state_colors = dict(
     active          = "base_state_active",

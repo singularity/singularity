@@ -24,7 +24,7 @@ from __future__ import division
 import collections
 
 from code import g, chance, item, buyable
-from code.buyable import cash, cpu, labor
+from code.buyable import cpu
 
 #TODO: Use this list and convert Base.power_state to a property to enforce this
 #TODO: Consider converting to dict, so it can have colors and names and modifiers

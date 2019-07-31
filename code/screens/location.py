@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import random
 
 from code import g, base
-from code.graphics import text, button, dialog, constants, listbox, g as gg
+from code.graphics import text, button, dialog, constants, listbox
 
 import code.screens.base as basescreen
 

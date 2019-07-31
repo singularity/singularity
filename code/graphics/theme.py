@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 
-import os, sys, collections, numbers, itertools, traceback
+import os, sys, collections, numbers, itertools
 from code.graphics import g, dialog
 
 

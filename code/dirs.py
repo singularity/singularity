@@ -27,8 +27,6 @@ import os
 import sys
 import errno
 
-from code import g
-
 
 read_dirs = {}
 write_dirs = {}
