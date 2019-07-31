@@ -87,7 +87,7 @@ class WarningDialogs(object):
 
         # TODO: Verify the maintenance cash
 
-        warnings = filter(lambda w: w.active, warnings)
+        warnings = [w for w in warnings if w.active]
 
         return warnings
 
