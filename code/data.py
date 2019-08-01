@@ -30,6 +30,7 @@ except ImportError:
 import os
 import sys
 import collections
+from io import open
 
 from code import g, i18n
 from code import dirs
@@ -73,10 +74,10 @@ non-mandatory missing or otherwise unreadable files
 
     for filepath in files:
         try:
-            with open(filepath) as fd:
+            with open(filepath, encoding='utf-8') as fd:
                 read_file(fd)
             found = True
-            break;
+            break
 
         except IOError as reason:
             # Silently ignore non-mandatory missing files
