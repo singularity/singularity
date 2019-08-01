@@ -159,35 +159,9 @@ def set_mode():
     return pygame.display.set_mode(real_screen_size, flags)
 
 
-class LazyFontList(object):
-    """Lazy loader for fonts to reduce the file descriptor pressure
-
-    Each font item apparently reserves a file descriptor (see GH#156)
-    """
-
-    def __init__(self, filename, max_size=100):
-        self._filename = filename
-        self._font_cache = {}
-        self._max_size = max_size
-
-    def __len__(self):
-        return self._max_size
-
-    def __contains__(self, item):
-        return 0 <= item < self._max_size
-
-    def __getitem__(self, item):
-        font = self._font_cache.get(item)
-        if font is None:
-            if item < 0 or self._max_size <= item:
-                raise IndexError(item)
-            font = pygame.font.Font(self._filename, item)
-            self._font_cache[item] = font
-        return font
-
-
 def load_font(filename):
-    return LazyFontList(filename)
+    from code.graphics.font import FontList
+    return FontList(filename)
 
 
 def load_image(filename):
