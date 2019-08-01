@@ -26,6 +26,8 @@ import optparse
 import os.path
 import errno
 import sys
+from io import open
+
 
 # A list of all available modes.
 MODE_LIST = ["update", "verify", "package"]
@@ -223,7 +225,8 @@ TODO: Describe better.
             try:
                 if verbose:
                     verbout("Loading translation from %s." % source_filepath)
-                source_parser.readfp(open(source_filepath))
+                with open(source_filepath, 'r', encoding='utf-8') as fp:
+                    source_parser.readfp(fp)
             except:
                 if required:
                     error_and_out("Incomplete required translation.  Cannot proceed.")
@@ -252,9 +255,9 @@ TODO: Describe better.
         # We have a "complete" file.  Write it out.
         if verbose:
             verbout("Writing out translation file %s." % dest_filepath)
-        fp = open(dest_filepath, "w")
-        dest_parser.write(fp)
-        fp.close()
+        with open(dest_filepath, "w", encoding='utf-8') as fp:
+            dest_parser.write(fp)
+
 
 def verify(trans_lang, trans_path, verbose):
     """

@@ -22,6 +22,7 @@
 
 from __future__ import absolute_import
 
+from io import open
 import sys
 from code import g, dirs
 
@@ -87,8 +88,8 @@ if save_loc is not None:
 
     prefs = ConfigParser.SafeConfigParser()
     try:
-        savefile = open(save_loc, "r")
-        prefs.readfp(savefile)
+        with open(save_loc, "r", encoding='utf-8') as savefile:
+            prefs.readfp(savefile)
     except Exception, reason:
         sys.stderr.write("Cannot load preferences file %s! (%s)\n" % (save_loc, reason))
         sys.exit(1)

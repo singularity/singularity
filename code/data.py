@@ -111,13 +111,11 @@ non-mandatory missing or otherwise unreadable files
             if len(option) > 6 and option[-5:] == "_list":
 
                 # Break it into elements separated by |.
-                item_dict[option[:-5]] = [unicode(x.strip(), "UTF-8") for x in
-                 config.get(item_id, option).split("|")]
+                item_dict[option[:-5]] = [x.strip() for x in config.get(item_id, option).split("|")]
             else:
 
                 # Otherwise, just grab the data.
-                item_dict[option] = unicode(config.get(item_id, option).strip(),
-                 "UTF-8")
+                item_dict[option] = config.get(item_id, option).strip()
 
         # Add this to the list of all objects we are returning.
         return_list.append(item_dict)
@@ -207,7 +205,7 @@ def load_significant_numbers():
         sys.stderr.write("WARNING: Cannot read file: numbers.dat\n")
         return
 
-    with open(numbers_file, 'r') as file:
+    with open(numbers_file, 'r', encoding='utf-8') as file:
         for index, line in enumerate(file):
             value = line.split("#")[0].strip()
 
@@ -713,15 +711,13 @@ def load_story_defs(lang=None):
         return
         
     # Take the last story file, story is never partially translated.
-    story_file = open(story_files[-1][1])
+    story_file = open(story_files[-1][1], 'r', encoding='utf-8')
 
     section_name = ""
     segment = ""
-    line_num = 1;
+    line_num = 1
 
-    for raw_line in story_file.readlines():
-        line = raw_line.decode("utf-8")
-        
+    for line in story_file.readlines():
         if line and line != "\n":
             if line[0] == "#":
                 pass # Ignore comment
