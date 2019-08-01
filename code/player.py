@@ -31,6 +31,7 @@ from code.buyable import cash, cpu
 from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
 from code.stats import itself as stats, observe
+from code.pycompat import *
 
 
 class DryRunInfo(object):

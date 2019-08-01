@@ -20,12 +20,6 @@
 
 from __future__ import absolute_import
 
-try:
-    # PY3 compat
-    from configparser import RawConfigParser
-except ImportError:
-    from ConfigParser import RawConfigParser
-
 
 import os
 import sys
@@ -35,6 +29,7 @@ from io import open
 from code import g, i18n
 from code import dirs
 from code import group, base, tech, item, event, location, difficulty, task, region
+from code.pycompat import *
 import code.graphics.g as gg
 import code.graphics.theme as theme
 
@@ -67,15 +62,10 @@ non-mandatory missing or otherwise unreadable files
     errors = []
     config = RawConfigParser()
 
-    try:
-        read_file = config.read_file
-    except AttributeError:
-        read_file = config.readfp
-
     for filepath in files:
         try:
             with open(filepath, encoding='utf-8') as fd:
-                read_file(fd)
+                config.read_file(fd)
             found = True
             break
 

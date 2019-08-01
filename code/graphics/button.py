@@ -23,6 +23,7 @@ from __future__ import absolute_import
 import pygame
 
 from code.graphics import constants, widget, text, image
+from code.pycompat import *
 
 
 class HotkeyText(text.Text):

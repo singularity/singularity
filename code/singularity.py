@@ -54,11 +54,11 @@ except ValueError:
 except ImportError:
     raise SystemExit("Endgame: Singularity requires pygame.")
 
-import ConfigParser
 import os.path
 import optparse
 import logging
 
+from code.pycompat import *
 import code.graphics.g as gg
 import code.graphics.theme as theme
 
@@ -87,10 +87,10 @@ save_loc = dirs.get_readable_file_in_dirs("prefs.dat", "pref")
 
 if save_loc is not None:
 
-    prefs = ConfigParser.SafeConfigParser()
+    prefs = SafeConfigParser()
     try:
         with open(save_loc, "r", encoding='utf-8') as savefile:
-            prefs.readfp(savefile)
+            prefs.read_file(savefile)
     except Exception as reason:
         sys.stderr.write("Cannot load preferences file %s! (%s)\n" % (save_loc, reason))
         sys.exit(1)

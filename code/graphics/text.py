@@ -243,7 +243,6 @@ class Text(widget.BorderedWidget):
 
         def test_size(size):
             font = self.resolved_base_font[size]
-
             font.set_bold(self.bold)
             result = test_font(font)
             font.set_bold(False)

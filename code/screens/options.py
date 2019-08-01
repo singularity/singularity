@@ -21,12 +21,12 @@
 from __future__ import absolute_import
 
 import os, sys
-import ConfigParser
 import pygame
 import json
 
 from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
 import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer, code.data as data, code.warning as warning
+from code.pycompat import *
 
 class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
     def __init__(self, *args, **kwargs):
@@ -590,7 +590,7 @@ def set_language_properly(language):
 
 def save_options():
     # Build a ConfigParser for writing the various preferences out.
-    prefs = ConfigParser.SafeConfigParser()
+    prefs = SafeConfigParser()
     prefs.add_section("Preferences")
     prefs.set("Preferences", "fullscreen",   str(bool(gg.fullscreen)))
     prefs.set("Preferences", "nosound",      str(bool(mixer.nosound)))
