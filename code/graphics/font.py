@@ -19,7 +19,6 @@
 
 #This file contains class to handle font.
 
-import io
 import pygame
 
 font_cache = False
@@ -40,7 +39,7 @@ def generate_from_cache(filename):
     """ Generate file object for pygame.font.Font
     
     Without cache, we return the filename.
-    With cache, we return a byteIO from cached content.
+    With cache, we return a file-like object from cached content.
     
     Note: pygame can crash when passing a file-like object.
     Vulnerable version knows is: 1.9.1
@@ -49,7 +48,7 @@ def generate_from_cache(filename):
         with open(filename, 'rb') as fd:
             font_content = fd.read()
         while True:
-            yield io.BytesIO(font_content)
+            yield FontFile(font_content)
     else:
         while True:
             yield filename
@@ -81,3 +80,54 @@ class FontList(object):
             font = pygame.font.Font(next(self._generator), item)
             self._font_cache[item] = font
         return font
+
+class FontFile(object):
+    """ Buffer object to cache font file.
+    
+    Avoid to copy the buffer content when using BytesIO.
+    
+    Note: python 3.5 solve the problem with BytesIO.
+    """
+    
+    def __init__(self, content):
+        self._content = content
+        self._position = 0
+        self._end = len(self._content) - 1
+    
+    def fileno(self):
+        raise OSError()
+        
+    def seekable(self):
+        return True
+        
+    def seek(self, offset, whence=0):
+        position = self._position
+        
+        if (whence == 0):
+            position = offset
+        elif (whence == 1):
+            position += offset
+        elif (whence == 2):
+            position = self._end + offset
+
+        self._position = max(0, min(position, self._end))
+
+    def tell(self):
+        return self._position
+
+    def readable(self):
+        return True
+
+    def read(self, size=-1):
+        position = self._position
+        start = position
+        
+        if (size == None or size == -1):
+            end = self._end
+        else:
+            end = min(position + size, self._end)
+        
+        return self._content[start:end]
+
+    def write(b):
+        raise OSError()
