@@ -269,6 +269,8 @@ gg.ebook_mode = options.ebook
 g.cheater = options.cheater
 g.debug = options.debug
 
+import code.graphics.font as font
+
 # PYGAME INITIALIZATION  
 #
 # Only initiliaze after reading all arguments and preferences to avoid to
@@ -278,7 +280,7 @@ pygame.mixer.pre_init(*mixer.soundargs, buffer=desired_soundbuf)
 pygame.init()
 mixer.init = bool(pygame.mixer.get_init())
 mixer.soundbuf = desired_soundbuf
-pygame.font.init()
+font.init()
 pygame.key.set_repeat(1000, 50)
 
 if desired_set_grab is not None:
