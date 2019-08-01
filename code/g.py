@@ -32,6 +32,8 @@ import sys
 # are made where needed.
 import locale
 
+from code.pycompat import *
+
 
 # Useful constants.
 hours_per_day = 24
@@ -289,6 +291,7 @@ def hotkey(string):
 
     def remove_accents(text):
         from unicodedata import normalize, combining
+        from code.pycompat import unicode
         nfkd_form = normalize('NFKD', unicode(text))
         return u"".join(c for c in nfkd_form if not combining(c))
 

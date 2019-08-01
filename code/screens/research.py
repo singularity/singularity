@@ -25,6 +25,7 @@ import pygame
 
 from code import g, task
 from code.graphics import dialog, button, slider, text, constants, listbox
+from code.pycompat import *
 
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):

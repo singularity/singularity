@@ -22,7 +22,7 @@
 from __future__ import absolute_import
 
 import pygame
-
+from code.pycompat import *
 
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
@@ -185,20 +185,23 @@ def init_alpha():
     global ALPHA
     ALPHA = pygame.Surface((0,0)).convert_alpha()
 
+
 def resolve_image_alias(image):
-    if (isinstance(image, basestring)):
+    if isinstance(image, basestring):
         return resolve_color_alias(images[image])
     else:
         return image
 
+
 def resolve_color_alias(color):
-    if (isinstance(color, basestring)):
+    if isinstance(color, basestring):
         return resolve_color_alias(colors[color])
     else:
         return color
 
+
 def resolve_font_alias(font):
-    if (isinstance(font, basestring)):
+    if isinstance(font, basestring):
         return resolve_color_alias(fonts[font])
     else:
         return font

@@ -26,6 +26,7 @@ from functools import reduce
 from code import g, chance, item, buyable
 from code.buyable import cpu
 from code.stats import stat
+from code.pycompat import *
 
 from code.spec import SpecDataField, promote_to_list, validate_must_be_list
 
