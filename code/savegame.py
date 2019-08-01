@@ -89,12 +89,12 @@ def get_savegames():
                     # Get version, only pickle first string.
                     version_name = None # None == Unknown version
                     try:
-                        loadfile = open(filepath, 'r')
-                        unpickle = cPickle.Unpickler(loadfile)
+                        with open(filepath, 'r') as loadfile:
+                            unpickle = cPickle.Unpickler(loadfile)
 
-                        load_version = unpickle.load()
-                        if load_version in savefile_translation:
-                            version_name = savefile_translation[load_version][0]
+                            load_version = unpickle.load()
+                            if load_version in savefile_translation:
+                                version_name = savefile_translation[load_version][0]
                     except RuntimeError:
                         version_name = None # To be sure.
                     savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
