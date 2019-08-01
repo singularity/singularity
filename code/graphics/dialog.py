@@ -23,6 +23,7 @@ from __future__ import absolute_import
 import bisect
 import time
 import pygame
+import operator
 
 from code.graphics import g, constants, widget, text, button, listbox
 
@@ -30,6 +31,33 @@ from code.graphics import g, constants, widget, text, button, listbox
 KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
           pygame.K_KP5: 5, pygame.K_KP6: 6, pygame.K_KP7: 7, pygame.K_KP8: 8,
           pygame.K_KP9: 9}
+
+
+def insort_right_w_key(a, x, lo=0, hi=None, key=lambda v: v):
+    """Insert item x in list a, and keep it sorted assuming a is sorted.
+
+    If x is already in a, insert it to the right of the rightmost x.
+
+    Optional args lo (default 0) and hi (default len(a)) bound the
+    slice of a to be searched.
+
+    (Basically bisect.insort_right but with support for a key function)
+    """
+
+    if lo < 0:
+        raise ValueError('lo must be non-negative')
+    if hi is None:
+        hi = len(a)
+    x_key = key(x)
+    while lo < hi:
+        mid = (lo+hi)//2
+        mid_key = key(a[mid])
+        if x_key < mid_key:
+            hi = mid
+        else:
+            lo = mid+1
+    a.insert(lo, x)
+
 
 def move_mouse(dxy):
     (dx, dy) = dxy
@@ -101,9 +129,11 @@ def call_dialog(dialog, parent=None):
 
     return retval
 
+
 def insort_all(sorted_list, items):
     for item in items:
-        bisect.insort(sorted_list, item)
+        insort_right_w_key(sorted_list, item, key=operator.itemgetter(0))
+
 
 class Dialog(text.Text):
     """A Dialog is a Widget that has its own event loop and can be faded out."""
@@ -206,8 +236,8 @@ class Dialog(text.Text):
 
     def add_handler(self, type, handler, priority = 100):
         """Adds a handler of the given type, with the given priority."""
-        bisect.insort( self.handlers.setdefault(type, []),
-                       (priority, handler) )
+        insort_right_w_key(self.handlers.setdefault(type, []),
+                           (priority, handler), key=operator.itemgetter(0))
 
     def remove_handler(self, type, handler):
         """Removes all instances of the given handler from the given type."""
@@ -216,8 +246,8 @@ class Dialog(text.Text):
 
     def add_key_handler(self, key, handler, priority = 100):
         """Adds a key handler to the given key, with the given priority."""
-        bisect.insort( self.key_handlers.setdefault(key, []),
-                       (priority, handler) )
+        insort_right_w_key(self.key_handlers.setdefault(key, []),
+                           (priority, handler), key=operator.itemgetter(0))
 
     def remove_key_handler(self, key, handler):
         """Removes all instances of the given handler from the given key."""
