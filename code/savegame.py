@@ -89,7 +89,7 @@ def get_savegames():
                     # Get version, only pickle first string.
                     version_name = None # None == Unknown version
                     try:
-                        with open(filepath, 'r') as loadfile:
+                        with open(filepath, 'rb') as loadfile:
                             unpickle = cPickle.Unpickler(loadfile)
 
                             load_version = unpickle.load()
