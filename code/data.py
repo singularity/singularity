@@ -53,7 +53,7 @@ non-mandatory missing or otherwise unreadable files
 """
 
     # Get directories to find the file
-    if (isinstance(load_dirs, basestring)):
+    if load_dirs is not None:
         load_dirs = dirs.get_read_dirs(load_dirs)
 
     # For each directories, create a file, otherwise use filename
