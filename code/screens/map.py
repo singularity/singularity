@@ -96,8 +96,8 @@ class EarthImage(image.Image):
 
             latitude = linspace(-pi/2,pi/2,height)[newaxis,:]
             longitude = linspace(0,2*pi,width)[:,newaxis]
-            sin_sun_altitude = (cos(longitute)*(cos(latitude)*cos(sun_declination))
-                                    +sin(latitute)*sin(sun_declination))
+            sin_sun_altitude = (cos(longitude)*(cos(latitude)*cos(sun_declination))
+                                    +sin(latitude)*sin(sun_declination))
             # use tanh to convert values to the range [0,1]
             light = 0.5*(tanh(sin_sun_altitude/(sun_diameter/2))+1)
             night_alphas = pixels_alpha(self.night_mask)
