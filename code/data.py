@@ -165,11 +165,9 @@ def load_generic_defs_file(name,lang=None):
         mandatory = (lang==i18n.default_language)
 
         try:
-            mandatory = (lang==i18n.default_language)
             return_list.extend( generic_load(filepath, mandatory=mandatory) )
-
         except Exception:
-            pass # For other languages, ignore errors
+            pass  # For other languages, ignore errors
 
     return return_list
 
