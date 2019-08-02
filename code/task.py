@@ -48,6 +48,6 @@ class Task(prerequisite.Prerequisite):
     def get_profit(self):
         if (self.type != "jobs"): return 0
 
-        profit = int(self.value * g.pl.job_bonus / 10000)
+        profit = int((self.value * g.pl.job_bonus) // 10000)
 
         return profit
