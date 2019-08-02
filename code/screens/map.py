@@ -251,7 +251,7 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
             g.pl.display_discover = "full"
         else:
             g.pl.display_discover = "none"
-        self.needs_rebuild = True
+        self._map_screen.needs_rebuild = True
 
     def hidden_state(self):
 
