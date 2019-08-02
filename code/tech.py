@@ -28,7 +28,8 @@ class TechSpec(buyable.BuyableSpec):
 
 
 class Tech(buyable.Buyable):
-    def __init__(self, id, known, cost, prerequisites, danger,
+
+    def __init__(self, id, cost, prerequisites, danger,
                  effect_data):
         # A bit silly, but it does the trick.
         spec = TechSpec(id, cost, prerequisites)
@@ -37,11 +38,6 @@ class Tech(buyable.Buyable):
         self.danger = danger
         self.result = ""
         self.effect = effect.Effect(self, effect_data)
-
-        if known:
-            # self.finish would re-apply the tech benefit, which is already in
-            # place.
-            super(Tech, self).finish()
 
     def convert_from(self, old_version):
         super(Tech, self).convert_from(old_version)
