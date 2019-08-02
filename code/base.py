@@ -21,7 +21,7 @@
 
 from __future__ import division
 
-import collections
+from functools import reduce
 
 from code import g, chance, item, buyable
 from code.buyable import cpu
