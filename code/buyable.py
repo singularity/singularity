@@ -91,22 +91,14 @@ class BuyableSpec(prerequisite.Prerequisite):
         # cash, which is the one we care about the most.
         return cmp(tuple(self.cost), tuple(other.cost))
 
-for stat in ("count", "complete_count", "total_count",
-             "total_complete_count"):
-    # Ugly syntax, but it seems to be the Right Way to do it.
-    def get(self, stat=stat):
-        return g.stats.get_statistic(self.spec_type + '_' + self.id + "_" + stat)
-    def set(self, value, stat=stat):
-        return g.stats.set_statistic(self.spec_type + '_' + self.id + "_" + stat, value)
-
-    stat_prop = property(get, set)
-    setattr(BuyableSpec, stat, stat_prop)
-
 class Buyable(object):
     def __init__(self, spec, count=1):
         self.spec = spec
-        spec.count += count
-        spec.total_count += count
+        spec.count = count
+        spec.total_count = count
+        spec.complete_count = 0
+        spec.total_complete_count = 0
+        
 
         self.name = spec.name
         self.description = spec.description
