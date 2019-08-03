@@ -50,3 +50,9 @@ money_per_day = Money per day.
 location_modifiers = Bases at this location are %(modifiers)s.
 cpu_bonus = more efficient
 cpu_penalty = less efficient
+
+stat_cash_earned = Cash Earned
+stat_cpu_used = Cpu Used
+stat_tech_created = Tech Created
+stat_base_created = Base Created
+stat_item_created = Item Created
