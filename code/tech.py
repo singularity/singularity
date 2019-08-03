@@ -38,10 +38,7 @@ class TechSpec(buyable.BuyableSpec):
 
 class Tech(buyable.Buyable):
 
-    def __init__(self, id, cost, prerequisites, danger,
-                 effect_data):
-        # A bit silly, but it does the trick.
-        spec = TechSpec(id, cost, prerequisites, danger, effect_data)
+    def __init__(self, spec):
         super(Tech, self).__init__(spec)
 
         self.result = ""

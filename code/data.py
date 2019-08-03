@@ -423,8 +423,10 @@ def load_techs():
         else:
             effect_list = []
 
-        techs[tech_name["id"]]=tech.Tech(tech_name["id"],
-         tech_cost, tech_pre, tech_danger, effect_list)
+        tech_id = tech_name['id']
+        tech_spec = tech.TechSpec(tech_id, tech_cost, tech_pre, tech_danger,
+                                  effect_list)
+        techs[tech_id] = tech.Tech(tech_spec)
 
     if g.debug: print("Loaded %d techs." % len (techs))
 
