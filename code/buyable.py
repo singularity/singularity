@@ -21,7 +21,7 @@
 from __future__ import absolute_import
 
 from operator import truediv
-from code import g
+from code import g, spec
 from code import prerequisite
 
 cash, cpu, labor = range(3)
@@ -30,11 +30,26 @@ import numpy
 numpy.seterr(all='ignore')
 array = numpy.array
 
-class BuyableSpec(prerequisite.Prerequisite):
-    def __init__(self, id, cost, prerequisites):
-        super(BuyableSpec, self).__init__(prerequisites)
 
-        self.name = self.id = id
+def spec_parse_cost(value):
+    spec.validate_must_be_list(value)
+    if len(value) != 3:  # pragma: no cover
+        raise ValueError("Cost must have exactly 3 values (CPU, money, time), got %d items (value: %s)" % (
+            len(value), repr(value)))
+    return [int(x) for x in value]
+
+
+SPEC_FIELD_PREREQUISITES = spec.SpecDataField('prerequisites', data_field_name='pre', converter=spec.promote_to_list,
+                                              default_value=list)
+SPEC_FIELD_COST = spec.SpecDataField('cost', converter=spec_parse_cost)
+
+
+class BuyableSpec(spec.GenericSpec, prerequisite.Prerequisite):
+    def __init__(self, id, cost, prerequisites):
+        spec.GenericSpec.__init__(self, id)
+        prerequisite.Prerequisite.__init__(self, prerequisites)
+
+        self.name = id
         # This will be set when languages are (re)loaded
         self.description = ''
         self._cost = cost

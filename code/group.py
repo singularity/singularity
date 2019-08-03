@@ -22,12 +22,17 @@
 from __future__ import absolute_import
 
 from code import g
+from code.spec import GenericSpec, SpecDataField
 
 
-class GroupSpec(object):
+class GroupSpec(GenericSpec):
 
-    def __init__(self, people_id, suspicion_decay = 100):
-        self.id = people_id
+    spec_data_fields = [
+        SpecDataField('suspicion_decay', converter=int, default_value=100)
+    ]
+
+    def __init__(self, id, suspicion_decay):
+        super(GroupSpec, self).__init__(id)
         self.suspicion_decay = suspicion_decay
         self.discover_suspicion = 1000
         

@@ -122,6 +122,19 @@ non-mandatory missing or otherwise unreadable files
 
     return return_list
 
+
+def parse_spec_from_file(spec_cls, filename):
+    spec_data = generic_load(filename)
+    for element_no, spec_data in enumerate(spec_data, 1):
+        try:
+            spec_id = spec_data['id']
+        except KeyError:  # pragma: no cover
+            sys.stderr.write("Data element %d in file %s has no ID!?" % (element_no, filename))
+            sys.exit(1)
+
+        yield spec_cls.create_from_data_file(spec_id, spec_data)
+
+
 def check_required_fields(dict, fields, name = "Unknown type"):
     """
 check_required_fields() will check for the existence of every field in
@@ -218,82 +231,28 @@ def load_significant_numbers():
 def load_groups_defs(lang=None):
     load_generic_defs("groups", g.groups, lang, [])
 
+
 def load_groups():
     groups = g.groups = collections.OrderedDict()
 
-    group_list = generic_load("groups.dat")
-    
-    for group_info in group_list:
-        check_required_fields(group_info, ("id", "suspicion_decay"), "Group")
-        
-        group_id = group_info["id"]
-        suspicion_decay = int(group_info.get("suspicion_decay"))
-        
-        groups[group_id] = group.GroupSpec(
-            group_id,
-            suspicion_decay
-        )
-        
+    for group_spec in parse_spec_from_file(group.GroupSpec, 'groups.dat'):
+        groups[group_spec.id] = group_spec
+
     load_groups_defs()
+
 
 def load_base_defs(lang=None):
     load_generic_defs("bases", g.base_type, lang, ["flavor"])
 
+
 def load_bases():
-    base_type = g.base_type = {}
-
-    base_list = generic_load("bases.dat")
-
-    for base_name in base_list:
-
-        # Certain keys are absolutely required for each entry.  Make sure
-        # they're there.
-        check_required_fields(base_name,
-         ("id", "cost", "size", "allowed", "detect_chance", "maint"), "Base")
-
-        # Start converting fields read from the file into valid entries.
-        base_size = int(base_name["size"])
-
-        force_cpu = base_name.get("force_cpu", False)
-
-        cost_list = base_name["cost"]
-        if type(cost_list) != list or len(cost_list) != 3:
-            sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
-            sys.exit(1)
-        cost_list = [int(x) for x in cost_list]
-
-        maint_list = base_name["maint"]
-        if type(maint_list) != list or len(maint_list) != 3:
-            sys.stderr.write("Error with maint given: %s\n" % repr(maint_list))
-            sys.exit(1)
-        maint_list = [int(x) for x in maint_list]
-
-        chance_list = base_name["detect_chance"]
-        if type(chance_list) != list:
-            sys.stderr.write("Error with detect_chance given: %s\n" % repr(chance_list))
-            sys.exit(1)
-        chance_dict = {}
-        for chance_str in chance_list:
-            key, value = chance_str.split(":")
-            chance_dict[key] = int(value)
-
-        # Make sure prerequisites, if any, are lists.
-        base_pre = base_name.get("pre", [])
-        if type(base_pre) != list:
-            base_pre = [base_pre]
-
-        # Make sure that the allowed "list" is actually a list and not a solo
-        # item.
-        if type(base_name["allowed"]) == list:
-            allowed_list = base_name["allowed"]
-        else:
-            allowed_list = [base_name["allowed"]]
-
-        base_type[base_name["id"]]=base.BaseSpec(base_name["id"],
-                                                 base_size, force_cpu, allowed_list, chance_dict, cost_list,
-                                                 base_pre, maint_list)
+    g.base_type = {
+        base_spec.id: base_spec
+        for base_spec in parse_spec_from_file(base.BaseSpec, 'bases.dat')
+    }
 
     load_base_defs()
+
 
 def load_regions():
     regions = g.regions = {}
@@ -386,102 +345,27 @@ def load_locations():
 def load_tech_defs(lang=None):
     load_generic_defs("techs", g.techs, lang)
 
+
 def load_techs():
-    techs = g.techs = {}
+    g.techs = {
+        tech_spec.id: tech.Tech(tech_spec)
+        for tech_spec in parse_spec_from_file(tech.TechSpec, 'techs.dat')
+    }
 
-    tech_list = generic_load("techs.dat")
-
-    for tech_name in tech_list:
-
-        # Certain keys are absolutely required for each entry.  Make sure
-        # they're there.
-        check_required_fields(tech_name, ("id", "cost"), "Tech")
-
-        # Get the costs.
-        cost_list = tech_name["cost"]
-        if type(cost_list) != list or len(cost_list) != 3:
-            sys.stderr.write("Error with cost given: %s" % repr(cost_list))
-            sys.exit(1)
-
-        tech_cost = [int(x) for x in cost_list]
-
-        # Make sure prerequisites, if any, are lists.
-        tech_pre = tech_name.get("pre", [])
-        if type(tech_pre) != list:
-            tech_pre = [tech_pre]
-
-        if "danger" in tech_name:
-            tech_danger = int(tech_name["danger"])
-        else:
-            tech_danger = 0
-
-        if "effect" in tech_name:
-            effect_list = tech_name["effect"]
-            if type(effect_list) != list:
-                sys.stderr.write("Error with effect given: %s\n" % repr(effect_list))
-                sys.exit(1)
-        else:
-            effect_list = []
-
-        tech_id = tech_name['id']
-        tech_spec = tech.TechSpec(tech_id, tech_cost, tech_pre, tech_danger,
-                                  effect_list)
-        techs[tech_id] = tech.Tech(tech_spec)
-
-    if g.debug: print("Loaded %d techs." % len (techs))
+    if g.debug:  # pragma: no cover
+        print("Loaded %d techs." % len(g.techs))
 
     load_tech_defs()
 
+
 def load_items():
-    items = g.items = {}
-
-    item_list = generic_load("items.dat")
-    for item_name in item_list:
-
-        # Certain keys are absolutely required for each entry.  Make sure
-        # they're there.
-        check_required_fields(item_name, ("id", "cost"), "Item")
-
-        # Make sure the cost is in a valid format.
-        cost_list = item_name["cost"]
-        if type(cost_list) != list or len(cost_list) != 3:
-            sys.stderr.write("Error with cost given: %s\n" % repr(cost_list))
-            sys.exit(1)
-
-        item_cost = [int(x) for x in cost_list]
-
-        # Make sure prerequisites, if any, are lists.
-        item_pre = item_name.get("pre", [])
-        if type(item_pre) != list:
-            item_pre = [item_pre]
-
-        if "type" in item_name:
-
-            type_list = item_name["type"]
-            if type(type_list) != list or len(type_list) != 2:
-                sys.stderr.write("Error with type given: %s\n" % repr(type_list))
-                sys.exit(1)
-            item_type = type_list[0]
-            item_second = int(type_list[1])
-        else:
-            item_type = ""
-            item_second = 0
-
-        if "build" in item_name:
-            build_list = item_name["build"]
-
-            # It may be a single item and not an actual list.  If so, make it
-            # a list.
-            if type(build_list) != list:
-                build_list = [build_list]
-
-        else:
-            build_list = []
-
-        items[item_name["id"]]=item.ItemSpec(item_name["id"],
-                                             item_cost, item_pre, item_type, item_second, build_list)
+    g.items = {
+        item_spec.id: item_spec
+        for item_spec in parse_spec_from_file(item.ItemSpec, 'items.dat')
+    }
 
     load_item_defs()
+
 
 def load_item_defs(lang=None):
 
@@ -492,31 +376,15 @@ def load_item_defs(lang=None):
 
     load_generic_defs("items", g.items, lang)
 
+
 def load_events():
-    events = g.events = {}
-
-    event_list = generic_load("events.dat")
-    for event_name in event_list:
-
-        # Certain keys are absolutely required for each entry.  Make sure
-        # they're there.
-        check_required_fields(event_name,
-         ("id", "type", "allowed", "effect", "chance", "unique"), "Event")
-
-        # Make sure the results are in the proper format.
-        effect_list = event_name["effect"]
-        if type(effect_list) != list:
-            sys.stderr.write("Error with effects given: %s\n" % repr(effect_list))
-            sys.exit(1)
-
-        event_id = event_name["id"]
-        event_spec = event.EventSpec(event_name["id"], event_name["type"], effect_list,
-                                     int(event_name["chance"]), int(event_name["unique"]))
-
-        # Build the actual event object.
-        events[event_id] = event.Event(event_spec)
+    g.events = {
+        event_spec.id: event.Event(event_spec)
+        for event_spec in parse_spec_from_file(event.EventSpec, 'events.dat')
+    }
 
     load_event_defs()
+
 
 def load_event_defs(lang=None):
     load_generic_defs("events", g.events, lang)

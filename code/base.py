@@ -31,18 +31,41 @@ from code.buyable import cpu
 #      (Base.power_state would need to be a property, with setter and getter)
 #This list only applies to 'Base' class, not 'BaseClass'
 #Changes to this list should also be reflected in Base.power_state_name property
+from code.spec import SpecDataField, promote_to_list, validate_must_be_list
+
 power_states = ['active','sleep']
 #power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
+
+
+def parse_detect_chance(parsed_value):
+    validate_must_be_list(parsed_value)
+    chance_dict = {}
+
+    for chance_str in parsed_value:
+        key, value = chance_str.split(":")
+        chance_dict[key] = int(value)
+
+    return chance_dict
 
 
 class BaseSpec(buyable.BuyableSpec):
     """Base as a buyable item (New Base in Location menu)"""
 
     spec_type = 'base'
+    spec_data_fields = [
+        SpecDataField('size', converter=int),
+        SpecDataField('force_cpu', default_value=None),
+        SpecDataField('regions', data_field_name='allowed', converter=promote_to_list),
+        SpecDataField('detect_chance', converter=parse_detect_chance),
+        buyable.SPEC_FIELD_COST,
+        buyable.SPEC_FIELD_PREREQUISITES,
+        SpecDataField('danger', converter=int, default_value=0),
+        SpecDataField('maintenance', data_field_name='maint', converter=buyable.spec_parse_cost),
+    ]
 
-    def __init__(self, name, size, force_cpu, regions,
-                        detect_chance, cost, prerequisites, maintenance):
-        super(BaseSpec, self).__init__(name, cost, prerequisites)
+    def __init__(self, id, size, force_cpu, regions,
+                 detect_chance, cost, prerequisites, maintenance):
+        super(BaseSpec, self).__init__(id, cost, prerequisites)
         self.size = size
         self.force_cpu = force_cpu
         self.regions = regions

@@ -21,14 +21,22 @@
 from __future__ import absolute_import
 
 from code import g, effect
+from code.spec import GenericSpec, SpecDataField, spec_field_effect
 
 
-class EventSpec(object):
+class EventSpec(GenericSpec):
 
-    def __init__(self, id, event_type, effects, chance, unique):
-        self.id = id
+    spec_data_fields = [
+        SpecDataField('event_type', data_field_name='type'),
+        spec_field_effect(mandatory=True),
+        SpecDataField('chance', converter=int),
+        SpecDataField('unique', converter=int),
+    ]
+
+    def __init__(self, id, event_type, effect_data, chance, unique):
+        super(EventSpec, self).__init__(id)
         self.event_type = event_type
-        self.effect = effect.Effect(self, effects)
+        self.effect = effect.Effect(self, effect_data)
         self.chance = chance
         self.unique = unique
 
