@@ -31,10 +31,6 @@ import sys
 # are made where needed.
 import locale
 
-from code import statistics
-
-
-stats = statistics.Statistics()
 
 # Useful constants.
 hours_per_day = 24
