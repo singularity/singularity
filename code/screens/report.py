@@ -24,7 +24,7 @@ import code.g as g
 import pygame
 
 from code.graphics import widget, dialog, button, text, constants
-
+from code.screens import stat
 
 class ReportScreen(dialog.Dialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .73), *args, **kwargs):
@@ -34,8 +34,12 @@ class ReportScreen(dialog.Dialog):
 
         self.format_buttons = button.ButtonGroup()
 
-        self.back_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
-                                                   anchor = constants.BOTTOM_CENTER,
+        self.stats_button = button.DialogButton(self, (-.49,-.99), (-.3,-.1),
+                                                    anchor = constants.BOTTOM_RIGHT,
+                                                    autohotkey=True,
+                                                    dialog=stat.StatScreen(self))
+        self.back_button = button.ExitDialogButton(self, (-.51,-.99), (-.3,-.1),
+                                                   anchor = constants.BOTTOM_LEFT,
                                                    autohotkey=True)
         self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound)
 
@@ -64,6 +68,7 @@ class ReportScreen(dialog.Dialog):
 
     def rebuild(self):
         # Update buttons translations
+        self.stats_button.text = _("&STATISTICS")
         self.back_button.text = _("&BACK")
         self.format_button_midnight.text = _("&Midnight")
         self.format_button_24hours.text = _("24 &Hours")
