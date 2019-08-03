@@ -509,15 +509,12 @@ def load_events():
             sys.stderr.write("Error with effects given: %s\n" % repr(effect_list))
             sys.exit(1)
 
+        event_id = event_name["id"]
+        event_spec = event.EventSpec(event_name["id"], event_name["type"], effect_list,
+                                     int(event_name["chance"]), int(event_name["unique"]))
+
         # Build the actual event object.
-        events[event_name["id"]] = event.Event(
-         event_name["id"],
-         "",
-         "",
-         event_name["type"],
-         effect_list,
-         int(event_name["chance"]),
-         int(event_name["unique"]))
+        events[event_id] = event.Event(event_spec)
 
     load_event_defs()
 

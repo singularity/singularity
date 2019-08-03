@@ -37,11 +37,10 @@ class Event(object):
     # For some as-yet-unknown reason, cPickle decides to call event.__init__()
     # when an event is loaded, but before filling it.  So Event pretends to
     # allow no arguments, even though that would cause Bad Things to happen.
-    def __init__(self, id=None, description=None, log_description=None, event_type=None,
-                 effects=None, chance=None, unique=None):
-        self.spec = EventSpec(id, event_type, effects, chance, unique)
-        self.description = description
-        self.log_description = log_description
+    def __init__(self, spec=None):
+        self.spec = spec
+        self.description = ""
+        self.log_description = ""
         self.triggered = 0
 
     @property
