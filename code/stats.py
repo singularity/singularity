@@ -55,3 +55,25 @@ class Statistic(object):
 
 itself = Statistics()
 
+def observe(name, data_member, display=None):
+    """ Observe a class member and save change in a statistics."""
+
+    itself[name]._display = display
+
+    def get(self):
+        return getattr(self, data_member)
+
+    def set(self, new_value):
+        if data_member in self.__dict__:
+            old_value = self.__dict__[data_member]
+        else:
+            old_value = 0
+
+        change = new_value - old_value
+        
+        if itself.enabled and change > 0:
+            itself[name].value += change
+
+        setattr(self, data_member, new_value)
+
+    return property(get, set)
