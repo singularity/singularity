@@ -26,7 +26,7 @@ import os
 
 from code import g, mixer, dirs, player, group, data
 from code import base, tech, item, event, location, buyable, difficulty, effect
-
+from code.stats import itself as stats
 
 default_savegame_name = u"Default Save"
 
@@ -124,6 +124,8 @@ def load_savegame(savegame):
 
     loadfile = open(load_path, 'rb')
     unpickle = cPickle.Unpickler(loadfile)
+
+    stats.reset()
 
     def find_class(module_name, class_name):
         # For cPickle

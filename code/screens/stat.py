@@ -60,5 +60,5 @@ class StatScreen(dialog.ChoiceDialog):
             canvas.stat_value.text = stat.display_value()
         
     def show(self):
-        self.list = [name for name in stats]
+        self.list = [stat.name for stat in stats]
         return super(StatScreen, self).show()

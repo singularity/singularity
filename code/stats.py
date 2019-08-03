@@ -32,9 +32,6 @@ class Statistics(object):
     def __len__(self):
         len(self._stats)
     
-    def __setitem__(self, key, value):
-        self._stats[key] = value
-    
     def __getitem__(self, key):
         stat = self._stats.get(key, None)
         
@@ -45,16 +42,20 @@ class Statistics(object):
         return stat
     
     def __iter__(self):
-        return self._stats.__iter__()
+        return self._stats.itervalues()
+
+    def reset(self):
+        for stat in self:
+            self[stat.name].value = 0
 
 
 class Statistic(object):
     def __init__(self, name):
-        self._name = name
+        self.name = name
         self.value = 0
 
     def display_name(self):
-        return g.strings["stat_" + self._name]
+        return g.strings["stat_" + self.name]
 
     def display_value(self):
         if (hasattr(self, "_display") and callable(self._display)):

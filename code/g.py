@@ -224,6 +224,9 @@ def new_game(difficulty_name):
     curr_speed = 1
     global pl
 
+    from code.stats import itself as stats
+    stats.reset()
+
     from code import data, difficulty, player, group, base, mixer
     data.reload_all_mutable()
 
