@@ -106,15 +106,10 @@ class BuyableSpec(spec.GenericSpec, prerequisite.Prerequisite):
         # cash, which is the one we care about the most.
         return cmp(tuple(self.cost), tuple(other.cost))
 
+
 class Buyable(object):
     def __init__(self, spec, count=1):
         self.spec = spec
-        spec.count = count
-        spec.total_count = count
-        spec.complete_count = 0
-        spec.total_complete_count = 0
-        
-
         self.name = spec.name
         self.description = spec.description
         self.prerequisites = spec.prerequisites
@@ -152,8 +147,6 @@ class Buyable(object):
 
     def finish(self, is_player=True):
         if not self.done:
-            self.spec.complete_count += self.count
-            self.spec.total_complete_count += self.count
             self.cost_left = array([0,0,0], long)
             self.done = True
             
@@ -217,6 +210,6 @@ class Buyable(object):
         return False
 
     def destroy(self):
-        self.spec.count -= self.count
-        if self.done:
-            self.spec.complete_count -= self.count
+        # Does nothing by default
+        pass
+
