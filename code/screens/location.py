@@ -278,12 +278,13 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
 
             raise constants.ExitDialog((name, type))
 
-## Generates a name for a base, given a particular location.
-def generate_base_name(location, base_type):
 
+# Generates a name for a base, given a particular location.
+def generate_base_name(location, base_type):
     attempts = 0
     name = None
-    base_names = [name]+[base.name for base in location.bases]
+    base_names = {b.name for b in location.bases}
+    base_names.add(name)
     while name in base_names:
 
         # First, decide whether we're going to try significant values or just
