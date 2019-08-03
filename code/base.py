@@ -25,6 +25,7 @@ from functools import reduce
 
 from code import g, chance, item, buyable
 from code.buyable import cpu
+from code.stats import stat
 
 #TODO: Use this list and convert Base.power_state to a property to enforce this
 #TODO: Consider converting to dict, so it can have colors and names and modifiers
@@ -39,6 +40,7 @@ class BaseSpec(buyable.BuyableSpec):
     """Base as a buyable item (New Base in Location menu)"""
 
     spec_type = 'base'
+    created = stat(spec_type + "_created")
 
     def __init__(self, name, size, force_cpu, regions,
                         detect_chance, cost, prerequisites, maintenance):
@@ -137,10 +139,10 @@ class Base(buyable.Buyable):
         if self.spec.force_cpu:
             self.cpus = item.Item(g.items[self.spec.force_cpu],
                                   base=self, count=self.spec.size)
-            self.cpus.finish()
+            self.cpus.finish(is_player=False)
 
         if built:
-            self.finish()
+            self.finish(is_player=False)
 
         self.power_state = "active"
         self.grace_over = False

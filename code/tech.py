@@ -21,10 +21,12 @@
 from __future__ import absolute_import
 
 from code import buyable, effect
+from code.stats import stat
 
 
 class TechSpec(buyable.BuyableSpec):
     spec_type = 'tech'
+    created = stat(spec_type + "_created")
 
     def __init__(self, id, cost, prerequisites, danger,
                  effect_data):
@@ -70,8 +72,9 @@ class Tech(buyable.Buyable):
                  _("Cost left"), left,
                  self.description))
 
-    def finish(self):
-        super(Tech, self).finish()
+    def finish(self, is_player=True):
+        super(Tech, self).finish(is_player)
+        
         self.gain_tech()
 
     def gain_tech(self):

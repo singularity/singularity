@@ -77,3 +77,16 @@ def observe(name, data_member, display=None):
         setattr(self, data_member, new_value)
 
     return property(get, set)
+
+def stat(name, display=None):
+    """ Manipulate a statistics with a property."""
+
+    itself[name]._display = display
+
+    def get(self):
+        return itself[name].value
+
+    def set(self, new_value):
+        itself[name].value = new_value 
+
+    return property(get, set)

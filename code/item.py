@@ -23,6 +23,7 @@ from __future__ import absolute_import
 import collections
 
 from code import g, buyable
+from code.stats import stat
 
 
 class ItemType(object):
@@ -81,6 +82,7 @@ class ItemSpec(buyable.BuyableSpec):
     """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
 
     spec_type = 'item'
+    created = stat(spec_type + "_created")
 
     def __init__(self, name, cost, prerequisites, item_type,
             item_qual, buildable):
@@ -158,8 +160,8 @@ class Item(buyable.Buyable):
             
         return item_qual * self.count
 
-    def finish(self):
-        super(Item, self).finish()
+    def finish(self, is_player=True):
+        super(Item, self).finish(is_player)
         if self.base:
             self.base.recalc_cpu()
 
