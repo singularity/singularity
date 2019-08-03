@@ -29,13 +29,16 @@ from numpy import array
 from code import g, difficulty, task, chance
 from code import location
 from code.buyable import cash, cpu
-
+from code.stats import itself as stats, observe
 
 class DryRunInfo(object):
     pass
 
 
 class Player(object):
+
+    cash = observe("cash_earned", "_cash")
+    used_cpu = observe("cpu_used", "_used_cpu", display=lambda value: value // g.seconds_per_day)
 
     def __init__(self, cash=0, time_sec=0, time_min=0, time_hour=0, time_day=0,
                  difficulty=None):
@@ -189,6 +192,11 @@ class Player(object):
     def give_time(self, time_sec, dry_run=False, midnight_stop=True):
         if time_sec == 0:
             return 0
+
+        # Hack to avoid changing statistics in dry run.
+        # TODO: We should use temporary vars.
+        if dry_run:
+            stats.enabled = False
 
         old_time = self.raw_sec
         last_minute = self.raw_min
@@ -402,6 +410,7 @@ class Player(object):
             self.partial_cash = old_partial_cash
             self.raw_sec = old_time
             self.update_times()
+            stats.enabled = True
 
             return (cash_info, cpu_info)
 
