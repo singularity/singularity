@@ -26,18 +26,23 @@ from code import buyable, effect
 class TechSpec(buyable.BuyableSpec):
     spec_type = 'tech'
 
+    def __init__(self, id, cost, prerequisites, danger,
+                 effect_data):
+        super(TechSpec, self).__init__(id, cost, prerequisites)
+
+        self.danger = danger
+        self.effect = effect.Effect(self, effect_data)
+
 
 class Tech(buyable.Buyable):
 
     def __init__(self, id, cost, prerequisites, danger,
                  effect_data):
         # A bit silly, but it does the trick.
-        spec = TechSpec(id, cost, prerequisites)
+        spec = TechSpec(id, cost, prerequisites, danger, effect_data)
         super(Tech, self).__init__(spec)
 
-        self.danger = danger
         self.result = ""
-        self.effect = effect.Effect(self, effect_data)
 
     def convert_from(self, old_version):
         super(Tech, self).convert_from(old_version)
@@ -51,6 +56,10 @@ class Tech(buyable.Buyable):
             return -1
         else:
             return cmp(self.spec, other.spec)
+
+    @property
+    def danger(self):
+        return self.spec.danger
 
     def get_info(self):
         cost = self.spec.describe_cost(self.total_cost, True)
@@ -67,4 +76,4 @@ class Tech(buyable.Buyable):
 
     def gain_tech(self):
         #give the effect of the tech
-        self.effect.trigger()
+        self.spec.effect.trigger()
