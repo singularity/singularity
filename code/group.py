@@ -139,8 +139,3 @@ class Group(object):
         # Suspicion steady or decreasing.
         else:
             return 0
-
-    def get_info():
-        pass
-        #return " " + self.name + u":\xA0", suspicion_display_dict["news"]
-        

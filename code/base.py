@@ -155,10 +155,6 @@ class Base(buyable.Buyable):
     def cpus(self, value):
         self.items["cpu"] = value
 
-    @cpus.deleter
-    def cpus(self, value):
-        del self.items["cpu"]
-
     @property
     def power_state_name(self):
         """A read-only i18'zable version of power_state attribute, suitable for
@@ -335,25 +331,6 @@ class Base(buyable.Buyable):
             if item and item.spec.item_type.is_extra() and not item.done:
                 return True
         return False
-
-    # Can the base study the given tech?
-    def allow_study(self, tech_name):
-        if not self.done:
-            return False
-        elif tech_name in g.jobs \
-                or tech_name in ("CPU Pool", ""):
-            return True
-        elif tech_name == "Sleep":
-            return not self.is_building()
-        else:
-            if self.location:
-                return self.location.safety >= g.techs[tech_name].danger
-
-            # Should only happen for the fake base.
-            for region in self.spec.regions:
-                if g.locations[region].safety >= g.techs[tech_name].danger:
-                    return True
-            return False
 
     def has_grace(self):
         if self.grace_over:
