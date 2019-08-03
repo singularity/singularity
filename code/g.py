@@ -235,7 +235,7 @@ def new_game(difficulty_name):
         pl.groups[group_id] = group.Group(groups[group_id], 0, diff.discover_multiplier, diff.suspicion_multiplier)
 
     for tech_id in diff.techs:
-        techs[tech_id].finish()
+        techs[tech_id].finish(is_player=False)
 
     #Starting base
     open = [loc for loc in pl.locations.values() if loc.available()]

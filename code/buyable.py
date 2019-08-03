@@ -135,12 +135,15 @@ class Buyable(object):
             self.spec = self.type
             del self.type
 
-    def finish(self):
+    def finish(self, is_player=True):
         if not self.done:
             self.spec.complete_count += self.count
             self.spec.total_complete_count += self.count
             self.cost_left = array([0,0,0], long)
             self.done = True
+            
+            if (is_player):
+                self.spec.created += 1
 
     def _percent_complete(self, available=(0,0,0)):
         available_array = array(available, long)
