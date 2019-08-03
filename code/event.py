@@ -23,20 +23,46 @@ from __future__ import absolute_import
 from code import g, effect
 
 
+class EventSpec(object):
+
+    def __init__(self, id, event_type, effects, chance, unique):
+        self.id = id
+        self.event_type = event_type
+        self.effect = effect.Effect(self, effects)
+        self.chance = chance
+        self.unique = unique
+
+
 class Event(object):
     # For some as-yet-unknown reason, cPickle decides to call event.__init__()
     # when an event is loaded, but before filling it.  So Event pretends to
     # allow no arguments, even though that would cause Bad Things to happen.
     def __init__(self, id=None, description=None, log_description=None, event_type=None,
                  effects=None, chance=None, unique=None):
-        self.event_id = self.name = self.id = id
+        self.spec = EventSpec(id, event_type, effects, chance, unique)
         self.description = description
         self.log_description = log_description
-        self.event_type = event_type
-        self.effect = effect.Effect(self, effects)
-        self.chance = chance
-        self.unique = unique
         self.triggered = 0
+
+    @property
+    def event_id(self):
+        return self.spec.event_id
+
+    @property
+    def event_type(self):
+        return self.spec.event_type
+
+    @property
+    def effect(self):
+        return self.spec.effect
+
+    @property
+    def chance(self):
+        return self.spec.chance
+
+    @property
+    def unique(self):
+        return self.spec.unique
 
     def convert_from(self, old_version):
         if old_version < 99: # < 1.0dev
