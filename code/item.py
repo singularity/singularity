@@ -24,6 +24,7 @@ import collections
 
 from code import g, buyable
 from code.stats import stat
+from code.spec import SpecDataField, validate_must_be_list, promote_to_list
 
 
 class ItemType(object):
@@ -74,22 +75,41 @@ item_types = collections.OrderedDict([
     ("security", ItemType("security")),
 ])
 
+
 def all_types():
     for item_type in item_types.itervalues():
         yield item_type
+
+
+def convert_item_type(raw_value):
+    validate_must_be_list(raw_value)
+    if len(raw_value) != 2:  # pragma: no cover
+        raise ValueError("item type must be exactly 2 elements, got %d (value: %s)" % (len(raw_value), repr(raw_value)))
+    item_type_id, item_qual = raw_value
+    try:
+        item_type = item_types[item_type_id]
+    except KeyError:  # pragma: no cover
+        raise ValueError("Unknown item type %s, please use one of: %s" % (item_type_id, ", ".join(item_types)))
+    return item_type, int(item_qual)
+
 
 class ItemSpec(buyable.BuyableSpec):
     """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
 
     spec_type = 'item'
     created = stat(spec_type + "_created")
+    spec_data_fields = [
+        buyable.SPEC_FIELD_COST,
+        buyable.SPEC_FIELD_PREREQUISITES,
+        SpecDataField('item_type_info', data_field_name='type', converter=convert_item_type),
+        SpecDataField('buildable', data_field_name='build', converter=promote_to_list, default_value=list),
+    ]
 
-    def __init__(self, name, cost, prerequisites, item_type,
-            item_qual, buildable):
-        super(ItemSpec, self).__init__(name, cost, prerequisites)
+    def __init__(self, id, cost, prerequisites, item_type_info, buildable):
+        super(ItemSpec, self).__init__(id, cost, prerequisites)
 
-        self.item_type = item_types[item_type]
-        self.item_qual = item_qual
+        # The "type" field in the data file expands to more than one field
+        self.item_type, self.item_qual = item_type_info
         self.regions = buildable
 
     def get_info(self):

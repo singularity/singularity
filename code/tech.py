@@ -22,11 +22,18 @@ from __future__ import absolute_import
 
 from code import buyable, effect
 from code.stats import stat
+from code.spec import SpecDataField, spec_field_effect
 
 
 class TechSpec(buyable.BuyableSpec):
     spec_type = 'tech'
     created = stat(spec_type + "_created")
+    spec_data_fields = [
+        buyable.SPEC_FIELD_COST,
+        buyable.SPEC_FIELD_PREREQUISITES,
+        SpecDataField('danger', converter=int, default_value=0),
+        spec_field_effect(mandatory=False),
+    ]
 
     def __init__(self, id, cost, prerequisites, danger,
                  effect_data):
