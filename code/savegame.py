@@ -146,6 +146,7 @@ def load_savegame(savegame):
             Tech=tech.Tech,
             TechSpec=tech.TechSpec,
             event_class=event.Event,
+            EventSpec=event.EventSpec,
             Event=event.Event,
             group=group.Group,
             Group=group.Group,
