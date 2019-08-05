@@ -679,17 +679,87 @@ class Player(object):
         # Still Alive.
         return 0
 
-    #returns the amount of cash available after taking into account all
-    #current projects in construction.
-    def future_cash(self):
-        result_cash = self.cash
+    def compute_future_resource_flow(self, secs_forwarded=g.seconds_per_day):
+        """Compute how resources (e.g. cash) will flow in optimal conditions
+
+        This returns a tuple of approximate cash change and "available" CPU pool if time
+        moves forward by the number of seconds in secs_forwarded.  Note that CPU pool
+        *can* be negative, which implies that there are not enough CPU allocated to the
+        CPU pool.  The numbers are an average and can be inaccurate when the rates changes
+        rapidly.
+
+        Known omissions:
+         * Interest (g.pl.interest_rate) is not covered.
+        """
+        construction = []
+        maintenance_cost = array((0, 0, 0), long)
         for base in g.all_bases():
-            result_cash -= base.cost_left[cash]
-            for item in base.all_items():
-                if item: result_cash -= item.cost_left[cash]
-            result_cash = max(result_cash, -g.max_cash)
-        for task, cpus in self.cpu_usage.items():
-            if task in g.techs and cpus > 0:
-                result_cash -= g.techs[task].cost_left[cash]
-                result_cash = max(result_cash, -g.max_cash)
-        return result_cash
+            # Collect base info, including maintenance.
+            if not base.done:
+                construction.append(base)
+            else:
+                construction.extend(item for item in base.all_items()
+                                    if item and not item.done)
+
+                maintenance_cost += base.maintenance
+        if self.apotheosis:
+            maintenance_cost = array((0, 0, 0), long)
+
+        time_fraction = 1 if secs_forwarded == g.seconds_per_day else secs_forwarded / float(g.seconds_per_day)
+        mins_forwarded = secs_forwarded // g.seconds_per_minute
+
+        cpu_flow = -maintenance_cost[cpu] * time_fraction
+        cash_flow = -maintenance_cost[cash] * time_fraction
+
+        job_cpu = 0
+        cpu_left = g.pl.available_cpus[0]
+        for task_id, cpu_assigned in self.cpu_usage.items():
+            if cpu_assigned == 0:
+                continue
+            cpu_left -= cpu_assigned
+            real_cpu = cpu_assigned * secs_forwarded
+            if task_id == 'cpu_pool':
+                cpu_flow += real_cpu
+            elif task_id == "jobs":
+                job_cpu += real_cpu
+            else:
+                tech = g.techs[task_id]
+                cost_left = tech.cost_left
+                remaining_cash = cost_left[cash]
+                remaining_cpu = cost_left[cpu]
+                spent_cash = remaining_cash * real_cpu / float(remaining_cpu)
+                cash_flow -= spent_cash
+
+        cpu_flow += cpu_left * secs_forwarded
+        available_cpu_pool = cpu_flow
+
+        # Base construction.
+        for buyable in construction:
+            ideal_spending = buyable.cost_left
+            # We need to do calculate work twice: Once for figuring out how much CPU
+            # we would like to spend and once for how much money we are spending.
+            # The numbers will be the same in optimal conditions.  However, if we
+            # have less CPU available than we should, then the cash spent can
+            # differ considerably and our estimates should reflect that.
+            ideal_cpu_spending = buyable.calculate_work(ideal_spending[cash],
+                                                        ideal_spending[cpu],
+                                                        time=mins_forwarded)[0]
+
+            cpu_flow -= ideal_cpu_spending[cpu]
+            ideal_cash_spending_with_cpu_allocation = buyable.calculate_work(ideal_spending[cash],
+                                                                             available_cpu_pool,
+                                                                             time=mins_forwarded)[0]
+            cash_flow -= ideal_cash_spending_with_cpu_allocation[cash]
+            available_cpu_pool -= ideal_cash_spending_with_cpu_allocation[cpu]
+
+        if cpu_flow > 0:
+            job_cpu += cpu_flow
+
+        earned, earned_partial = self.get_job_info(job_cpu, partial_cash=0)
+        cash_flow += earned + float(earned_partial) / g.seconds_per_day
+        cash_flow += self.income * time_fraction
+        # This is too simplistic, but it is "close enough" in many cases
+        cash_flow += self.get_interest()
+        cpu_flow /= secs_forwarded
+        return cash_flow, cpu_flow
+
