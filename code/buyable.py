@@ -145,7 +145,7 @@ class Buyable(object):
             self.spec = self.type
             del self.type
 
-    def finish(self, is_player=True):
+    def finish(self, is_player=True, loading_savegame=False):
         if not self.done:
             self.cost_left = array([0,0,0], long)
             self.done = True

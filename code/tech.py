@@ -76,11 +76,7 @@ class Tech(buyable.Buyable):
                  _("Cost left"), left,
                  self.description))
 
-    def finish(self, is_player=True):
-        super(Tech, self).finish(is_player)
-        
-        self.gain_tech()
+    def finish(self, is_player=True, loading_savegame=False):
+        super(Tech, self).finish(is_player=is_player, loading_savegame=loading_savegame)
+        self.spec.effect.trigger(loading_savegame=loading_savegame)
 
-    def gain_tech(self):
-        #give the effect of the tech
-        self.spec.effect.trigger()
