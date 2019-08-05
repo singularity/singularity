@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 import cPickle
 import collections
+import json
 import os
 
 from code import g, mixer, dirs, player, group, data, logmessage
@@ -31,7 +32,8 @@ from code.stats import itself as stats
 default_savegame_name = u"Default Save"
 
 #savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_99.7"
+current_save_version_pickle = "singularity_savefile_99.7"
+current_save_version = "singularity_savefile_99.8"
 savefile_translation = {
     "singularity_savefile_r4":      ("0.30",         4   ),
     "singularity_savefile_r5_pre":  ("0.30",         4.91),
@@ -44,6 +46,7 @@ savefile_translation = {
     "singularity_savefile_99.5":    ("1.0 (dev)",   99.5 ),
     "singularity_savefile_99.6":    ("1.0 (dev)",   99.6 ),
     "singularity_savefile_99.7":    ("1.0 (dev)",   99.7 ),
+    "singularity_savefile_99.8":    ("1.0 (dev+json)",   99.8 ),
 }
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
@@ -82,7 +85,7 @@ def get_savegames():
         for file_name in all_files:
             if file_name[0] != "." and file_name != "CVS":
                 # If it's a new-style save, trim the .sav bit.
-                if len (file_name) > 4 and file_name[-4:] == ".sav":
+                if file_name.endswith('.sav'):
                     name = file_name[:-4]
                     filepath = os.path.join(saves_dir, file_name)
 
@@ -106,6 +109,19 @@ def get_savegames():
                         version_name = None # To be sure.
                     savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
                     all_savegames.append(savegame)
+                elif file_name.endswith('.s2'):
+                    name = file_name[:-3]
+                    filepath = os.path.join(saves_dir, file_name)
+                    version_name = None
+                    try:
+                        with open(filepath, 'rb') as loadfile:
+                            load_version, headers = parse_json_game_headers(loadfile)
+                            if load_version in savefile_translation:
+                                version_name = savefile_translation[load_version][0]
+                    except Exception:
+                        version_name = None
+                    savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
+                    all_savegames.append(savegame)
 
     return all_savegames
 
@@ -121,6 +137,20 @@ def delete_savegame(savegame):
     except Exception:
         return False
 
+
+def parse_json_game_headers(fd):
+    version_line = fd.readline().decode('utf-8').strip()
+    headers = {}
+    while True:
+        line = fd.readline().decode('utf-8').strip()
+
+        if line == '':
+            break
+        key, value = line.split('=', 1)
+        headers[key] = value
+    return version_line, headers
+
+
 def load_savegame(savegame):
     global default_savegame_name
 
@@ -128,6 +158,54 @@ def load_savegame(savegame):
 
     if load_path is None:
         return False
+
+    if 'json' in savegame.version:
+        return load_savegame_by_json(savegame)
+    else:
+        return load_savegame_by_pickle(savegame)
+
+
+def load_savegame_by_json(savegame):
+    global default_savegame_name
+
+    load_path = savegame.filepath
+    with open(load_path, 'rb') as fd:
+        load_version_string, headers = parse_json_game_headers(fd)
+        if load_version_string not in savefile_translation:
+            print(savegame.name + " is not a savegame, or is too old to work.")
+            return False
+
+        load_version = savefile_translation[load_version_string][1]
+        difficulty_id = headers['difficulty']
+        game_time = int(headers['game_time'])
+
+        game_data = json.load(fd)
+        data.reset_techs()
+        data.reset_events()
+
+        pl_data = game_data['player']
+        player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
+        for key, cls in [
+            ('techs', tech.Tech),
+            ('events', event.Event),
+        ]:
+            for obj_data in game_data[key]:
+                cls.deserialize_obj(obj_data, load_version)
+
+        for base in g.all_bases():
+            if base.done:
+                base.recalc_cpu()
+
+    data.reload_all_mutable_def()
+
+    default_savegame_name = savegame.name
+    return True
+
+
+def load_savegame_by_pickle(savegame):
+
+    global default_savegame_name
+    load_path = savegame.filepath
 
     loadfile = open(load_path, 'rb')
     unpickle = cPickle.Unpickler(loadfile)
@@ -267,12 +345,34 @@ def create_savegame(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
     save_loc = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".sav", "saves")
+    save_loc_v2 = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".s2", "saves")
+
+    # Save in legacy format
     with open(save_loc, 'wb') as savefile:
-        cPickle.dump(current_save_version, savefile, protocol=2)
+        cPickle.dump(current_save_version_pickle, savefile, protocol=2)
         cPickle.dump(g.pl, savefile, protocol=2)
         cPickle.dump(g.curr_speed, savefile, protocol=2)
         cPickle.dump(g.techs, savefile, protocol=2)
         cPickle.dump(g.events, savefile, protocol=2)
+
+    # Save in new "JSONish" format
+    with open(save_loc_v2, 'wb') as savefile:
+        version_line = "%s\n" % current_save_version
+        savefile.write(version_line.encode('utf-8'))
+        headers = [
+            ('difficulty', g.pl.difficulty.id),
+            ('game_time', str(g.pl.raw_sec)),
+        ]
+        for k, v in headers:
+            kw_str = "%s=%s\n" % (k, v)
+            savefile.write(kw_str.encode('utf-8'))
+        savefile.write(b'\n')
+        game_data = {
+            'player': g.pl.serialize_obj(),
+            'techs': [t.serialize_obj() for tid, t in sorted(g.techs.items()) if t.available()],
+            'events': [e.serialize_obj() for eid, e in sorted(g.events.items())]
+        }
+        json.dump(game_data, savefile)
 
 
 class SavegameException(Exception):
