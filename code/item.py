@@ -167,8 +167,8 @@ class Item(buyable.Buyable):
             
         return item_qual * self.count
 
-    def finish(self, is_player=True):
-        super(Item, self).finish(is_player)
+    def finish(self, is_player=True, loading_savegame=False):
+        super(Item, self).finish(is_player=is_player, loading_savegame=loading_savegame)
         if self.base:
             self.base.recalc_cpu()
 

@@ -102,10 +102,11 @@ class Event(object):
             self.effect = effect.Effect(self, [self.result[0], self.result[1]])
             del self.result
 
-    def trigger(self):
-        g.map_screen.show_message(self.description)
+    def trigger(self, loading_savegame=False):
+        if not loading_savegame:
+            g.map_screen.show_message(self.description)
 
         self.triggered = 1
         self.triggered_at = g.pl.raw_sec
 
-        self.effect.trigger()
+        self.effect.trigger(loading_savegame=loading_savegame)

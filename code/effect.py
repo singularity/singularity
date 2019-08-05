@@ -30,8 +30,8 @@ class Effect(object):
         self.parent_name = parent.__class__.__name__
         self.effect_stack = effect_stack
 
-    def trigger(self):
-        self._apply_effect()
+    def trigger(self, loading_savegame=False):
+        self._apply_effect(loading_savegame=loading_savegame)
 
     def undo_effect(self):
         self._apply_effect(undo_effect=True)
@@ -71,9 +71,11 @@ class Effect(object):
                     g.pl.groups[who].alter_suspicion_decay(value)
                 elif who == "onetime":
                     assert not undo_effect, "One-shot effects (reduction of suspicion) cannot be undone!"
-
-                    for group in g.pl.groups.values():
-                        group.alter_suspicion(-value)
+                    # We must not re-apply this when loading the game as
+                    # it is already effected in the state of the groups
+                    if not loading_savegame:
+                        for group in g.pl.groups.values():
+                            group.alter_suspicion(-value)
                 else:
                     print("Unknown group/bonus '%s' in %s %s." \
                     % (who, self.parent_name, self.parent_id))
