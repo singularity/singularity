@@ -83,11 +83,10 @@ def quit_game():
     sys.exit()
 
 #Takes a number and adds commas to it to aid in human viewing.
-def add_commas(number):
-    encoding = locale.getlocale()[1] or "UTF-8"
+def add_commas(number, fixed_size=False):
     raw_with_commas = locale.format("%0.2f", number,
                                     grouping=True)
-    locale_test = locale.format("%01.1f", 0.1)
+    locale_test = locale.format("%01.1f", 0.1) if not fixed_size else ''
     if len(locale_test) == 3 and not locale_test[1].isdigit():
         if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
             return raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
@@ -145,13 +144,13 @@ def to_cpu(amount):
 
 # Instead of having the money display overflow, we should generate a string
 # to represent it if it's more than 999999.
-def to_money(amount):
+def to_money(amount, fixed_size=False):
     abs_amount = abs(amount)
     if abs_amount < 10**6:
-        return add_commas(amount)
+        return add_commas(amount, fixed_size=fixed_size)
 
     prec = 2
-    format = "%.*f%s"
+    format = "%0.*f%s" if fixed_size else "%.*f%s"
     if abs_amount < 10**9: # Millions.
         divisor = 10**6
         #Translators: abbreviation of 'millions'
