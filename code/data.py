@@ -347,15 +347,23 @@ def load_tech_defs(lang=None):
 
 
 def load_techs():
-    g.techs = {
-        tech_spec.id: tech.Tech(tech_spec)
+    g.tech_specs = {
+        tech_spec.id: tech_spec
         for tech_spec in parse_spec_from_file(tech.TechSpec, 'techs.dat')
     }
+    reset_techs()
 
     if g.debug:  # pragma: no cover
         print("Loaded %d techs." % len(g.techs))
 
     load_tech_defs()
+
+
+def reset_techs():
+    g.techs = {
+        tech_spec_id: tech.Tech(tech_spec)
+        for tech_spec_id, tech_spec in g.tech_specs.items()
+    }
 
 
 def load_item_types():
@@ -385,12 +393,19 @@ def load_item_defs(lang=None):
 
 
 def load_events():
-    g.events = {
-        event_spec.id: event.Event(event_spec)
+    g.event_specs = {
+        event_spec.id: event_spec
         for event_spec in parse_spec_from_file(event.EventSpec, 'events.dat')
     }
-
+    reset_events()
     load_event_defs()
+
+
+def reset_events():
+    g.events = {
+        event_spec_id: event.Event(event_spec)
+        for event_spec_id, event_spec in g.event_specs.items()
+    }
 
 
 def load_event_defs(lang=None):
