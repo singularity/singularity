@@ -87,6 +87,7 @@ class Player(object):
 
         self.log = collections.deque(maxlen=1000)
         self.locations = {loc_id: location.Location(loc_spec) for loc_id, loc_spec in g.locations.items()}
+        self._considered_buyables = []
 
     @property
     def grace_period_cpu(self):
@@ -95,6 +96,15 @@ class Player(object):
     @property
     def base_grace_multiplier(self):
         return self.difficulty.base_grace_multiplier
+
+    @property
+    def considered_buyables(self):
+        return self._considered_buyables
+
+    @considered_buyables.setter
+    def considered_buyables(self, new_value):
+        self._considered_buyables = new_value
+        g.map_screen.needs_rebuild = True
 
     def convert_from(self, old_version):
         if old_version < 4.91: # < r5_pre
@@ -734,6 +744,8 @@ class Player(object):
         available_cpu_pool = cpu_flow
 
         # Base construction.
+        if hasattr(self, '_considered_buyables'):
+            construction.extend(self._considered_buyables)
         for buyable in construction:
             ideal_spending = buyable.cost_left
             # We need to do calculate work twice: Once for figuring out how much CPU
