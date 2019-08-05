@@ -146,9 +146,6 @@ class Base(buyable.Buyable):
 
         self.location = None
 
-        #Base suspicion is currently unused
-        self.suspicion = {}
-
         self.raw_cpu = 0
         self.cpu = 0
 
@@ -299,12 +296,7 @@ class Base(buyable.Buyable):
         for group in g.pl.groups:
             detect_chance.setdefault(group, 0)
 
-        # Factor in the suspicion adjustments for this particular base ...
-        for group, suspicion in self.suspicion.iteritems():
-            detect_chance[group] *= 10000 + suspicion
-            detect_chance[group] //= 10000
-
-        # ... and any items built with discover_bonus ...
+        # Factor in any items built with discover_bonus ...
         base_qual = self.get_quality_for("discover_modifier")
         for group in detect_chance:
             detect_chance[group] *= 10000 - base_qual
