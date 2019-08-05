@@ -171,7 +171,6 @@ class Base(buyable.Buyable):
         self.grace_over = False
 
         self.maintenance = buyable.array(self.spec.maintenance, long)
-        self._detect_chance_cache = None
 
     @property
     def cpus(self):
@@ -215,9 +214,6 @@ class Base(buyable.Buyable):
 
     def recalc_cpu(self):
         self.raw_cpu = self.get_quality_for("cpu")
-        # We discard the detect chance cache as this is called whenver an item
-        # has been built.
-        self._detect_chance_cache = None
 
         if self.raw_cpu == 0:
             self.cpu = 0
@@ -297,35 +293,29 @@ class Base(buyable.Buyable):
     # accurate is False, we just return the value to the nearest full
     # percent.
     def get_detect_chance(self, accurate = True):
-        detect_cache_cache = getattr(self, '_detect_chance_cache')
-        if detect_cache_cache:
-            detect_chance = detect_cache_cache.copy()
-        else:
-            # Get the base chance from the universal function.
-            detect_chance = calc_base_discovery_chance(self.spec.id)
+        # Get the base chance from the universal function.
+        detect_chance = calc_base_discovery_chance(self.spec.id)
 
-            for group in g.pl.groups:
-                detect_chance.setdefault(group, 0)
-
-            # Factor in the any items built with discover_bonus ...
-            base_qual = self.get_quality_for("discover_modifier")
-            for group in detect_chance:
-                detect_chance[group] *= 10000 - base_qual
-                detect_chance[group] //= 10000
-
-            # ... and its location ...
-            if self.location:
-                multiplier = self.location.discovery_bonus()
-                for group in detect_chance:
-                    detect_chance[group] *= multiplier
-                    detect_chance[group] //= 100
-
-            self._detect_chance_cache = detect_chance.copy()
+        for group in g.pl.groups:
+            detect_chance.setdefault(group, 0)
 
         # Factor in the suspicion adjustments for this particular base ...
         for group, suspicion in self.suspicion.iteritems():
             detect_chance[group] *= 10000 + suspicion
             detect_chance[group] //= 10000
+
+        # ... and any items built with discover_bonus ...
+        base_qual = self.get_quality_for("discover_modifier")
+        for group in detect_chance:
+            detect_chance[group] *= 10000 - base_qual
+            detect_chance[group] //= 10000
+
+        # ... and its location ...
+        if self.location:
+            multiplier = self.location.discovery_bonus()
+            for group in detect_chance:
+                detect_chance[group] *= multiplier
+                detect_chance[group] //= 100
 
         # ... and its power state.
         if self.done and self.power_state == "sleep":
@@ -428,10 +418,7 @@ class Base(buyable.Buyable):
         chance = self.get_detect_chance(accurate)
         
         return get_detect_info(chance)
-
-    def finish(self, is_player=True):
-        super(Base, self).finish(is_player=True)
-        self._detect_chance_cache = None
+        
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.
