@@ -381,6 +381,9 @@ class Dialog(text.Text):
         handlers = self.handlers.get(constants.MOUSEMOTION, [])[:]
         self.call_handlers(handlers, event=None)
 
+    def on_close_dialog(self):
+        pass
+
     def call_handlers(self, handlers, event):
         # Feed the event to all the handlers, in priority order.
         for __, handler in handlers:
@@ -390,6 +393,7 @@ class Dialog(text.Text):
                 break # If it's been handled, we leave the rest alone.
             except constants.ExitDialog as e:
                 # Exiting the dialog.
+                self.on_close_dialog()
                 if e.args:
                     # If we're given a return value, we pass it on.
                     return e.args[0]
