@@ -21,7 +21,7 @@
 
 import pygame
 
-from code import g, item
+from code import g, item, buyable
 from code.graphics import constants, widget, dialog, text, button, slider
 
 state_colors = dict(
@@ -77,8 +77,14 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                              background_color="pane_background",
                              align=constants.LEFT, valign=constants.TOP,
                              borders=constants.ALL)
-        
+
+        g.pl.considered_buyables = [buyable.Buyable(self.item, count=1)] if item is not None else []
+
         self.on_description_change()
+
+    def on_close_dialog(self):
+        g.pl.considered_buyables = []
+
 
 class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
     def __init__(self, parent, *args, **kwargs):
@@ -115,6 +121,11 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
         if self.item is not None:
             self.description.text += "\n---\n"
             self.description.text += self.item.get_total_cost_info(self.count_slider.slider_pos)
+            self.description.text += "\n"
+            if self.count_slider.slider_pos > 0:
+                g.pl.considered_buyables = [buyable.Buyable(self.item, count=self.count_slider.slider_pos)]
+            else:
+                g.pl.considered_buyables = []
 
     def on_change(self, description_pane, item):
         space_left = self.parent.base.space_left_for(item)
