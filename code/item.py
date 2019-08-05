@@ -160,8 +160,11 @@ class Item(buyable.Buyable):
 
     def __init__(self, item_spec, base=None, count=1):
         super(Item, self).__init__(item_spec, count)
-        self.item_qual = item_spec.item_qual
         self.base = base
+
+    @property
+    def item_qual(self):
+        return self.spec.item_qual
 
     def convert_from(self, load_version):
         super(Item, self).convert_from(load_version)
