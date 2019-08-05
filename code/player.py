@@ -676,6 +676,61 @@ class Player(object):
             # Update the detection chance display.
             g.map_screen.needs_rebuild = True
 
+    def serialize_obj(self):
+        obj_data = {
+            # Difficulty and game_time (raw_sec) are stored in the header, so
+            # do not include them here.
+            'cash': self.cash,
+            'partial_cash': self.partial_cash,
+            'locations': [loc.serialize_obj() for loc in self.locations.values() if loc.available()],
+            'cpu_usage': self.cpu_usage,
+            'last_discovery': self.last_discovery.id if self.last_discovery else None,
+            'prev_discovery': self.prev_discovery.id if self.prev_discovery else None,
+            'log': [x.serialize_obj() for x in self.log],
+            'used_cpu': self.used_cpu,
+            'had_grace': self.had_grace,
+            'groups': [grp.serialize_obj() for grp in self.groups.values()]
+        }
+        if self.prev_discovery is not None:
+            obj_data['prev_discovery'] = self.prev_discovery.id
+        if self.last_discovery is not None:
+            obj_data['last_discovery'] = self.last_discovery.id
+        return obj_data
+
+    @classmethod
+    def deserialize_obj(cls, difficulty_id, game_time, obj_data, game_version):
+        diff = difficulty.difficulties[difficulty_id]
+        obj = Player(difficulty=diff)
+        obj.raw_sec = game_time
+        obj.intro_shown = True
+        obj.cash = obj_data.get('cash')
+        obj.partial_cash = obj_data.get('partial_cash')
+        obj._used_cpu = obj_data.get('used_cpu')
+        obj.had_grace = obj_data['had_grace']
+        obj.cpu_usage = obj_data.get('cpu_usage', {})
+        obj.log.clear()
+        obj.log.extend(AbstractLogMessage.deserialize_obj(x) for x in obj_data.get('log', []))
+        g.pl = obj
+
+        for group_data in obj_data.get('groups', []):
+            group_id = group_data['id']
+            obj.groups[group_id].restore_obj(group_data, game_version)
+
+        last_discovery_id = obj_data.get('last_discovery')
+        prev_discovery_id = obj_data.get('prev_discovery')
+        if last_discovery_id and last_discovery_id in obj.locations:
+            obj.last_discovery = obj.locations[last_discovery_id]
+        if prev_discovery_id and prev_discovery_id in obj.locations:
+            obj.prev_discovery = obj.locations[prev_discovery_id]
+
+        for location_data in obj_data.get('locations', []):
+            loc_id = location_data['id']
+            loc = obj.locations[loc_id]
+            loc.restore_obj(location_data, game_version)
+
+        obj.update_times()
+        return obj
+
     def lost_game(self):
         # Apotheosis makes you immortal.
         if self.apotheosis:

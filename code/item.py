@@ -150,6 +150,20 @@ class Item(buyable.Buyable):
     def item_qual(self):
         return self.spec.item_qual
 
+    def serialize_obj(self):
+        return self.serialize_buyable_fields({
+            'spec_id': self.spec.id,
+        })
+
+    @classmethod
+    def deserialize_obj(cls, base, obj_data, game_version):
+        spec_id = obj_data['spec_id']
+        spec = g.items[spec_id]
+        count = obj_data.get('count', 1)
+        obj = Item(spec, base, count=count)
+        obj.restore_buyable_fields(obj_data, game_version)
+        return obj
+
     def convert_from(self, load_version):
         super(Item, self).convert_from(load_version)
         if load_version < 4.91: # < r5_pre

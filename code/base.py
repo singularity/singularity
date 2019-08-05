@@ -228,6 +228,33 @@ class Base(buyable.Buyable):
 
         self.cpu = max(1, int(self.raw_cpu * compute_bonus // 10000))
 
+    def serialize_obj(self):
+        return self.serialize_buyable_fields({
+            'spec_id': self.spec.id,
+            'name': self.name,
+            'started_at_min': self.started_at,
+            'power_state': self.power_state,
+            'grace_over': self.grace_over,
+            # Note that we store all items even for "force_cpu"'ed bases.  This enables
+            # use to load the base with that CPU item even if the "force_cpu" flag is
+            # later removed from the spec.
+            'items': [it.serialize_obj() for it in self.items.values() if it is not None],
+        })
+
+    def restore_obj(self, obj_data, game_version):
+        self.started_at = obj_data['started_at_min']
+        self.power_state = obj_data['power_state']
+        self.grace_over = obj_data.get('grace_over', True)
+
+        if not self.spec.force_cpu:
+            item_data_list = obj_data['items']
+            for item_data in item_data_list:
+                it = item.Item.deserialize_obj(self, item_data, game_version)
+                self.items[it.spec.item_type.id] = it
+
+        self.restore_buyable_fields(obj_data, game_version)
+        return self
+
     def convert_from(self, save_version):
         super(Base, self).convert_from(save_version)
         

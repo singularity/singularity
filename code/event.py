@@ -89,10 +89,43 @@ class Event(object):
         if not self.decayable_event:
             return
 
-        if g.pl.raw_sec - self.triggered_at > self.duration * g.seconds_per_day:
+        if self.is_expired:
             self.effect.undo_effect()
             self.triggered = 0
             self.triggered_at = -1
+
+    def is_expired(self):
+        if g.pl.raw_sec - self.triggered_at > self.duration * g.seconds_per_day:
+            return True
+        return False
+
+    def serialize_obj(self):
+        return {
+            'id': self.spec.id,
+            'triggered': self.triggered,
+            'triggered_at': self.triggered_at
+        }
+
+    @classmethod
+    def deserialize_obj(cls, obj_data, game_version):
+        obj = g.events[obj_data['id']]
+        obj.triggered = obj_data.get('triggered', 0)
+        if obj.triggered:
+            # We only load the triggered_at time if the event is in a triggered
+            # state.  This ensures that triggered_at is -1 when the event is
+            # not triggered.
+            #
+            # Auto-correct old events without a triggered_at time to just
+            # be triggered "now".
+            obj.triggered_at = obj_data.get('triggered_at', g.pl.raw_sec)
+
+            if obj.is_expired:
+                # Can happen if the duration is reduced after the savegame was made
+                obj.triggered = 0
+                obj.triggered_at = -1
+            else:
+                obj.trigger(loading_savegame=True)
+        return obj
 
     def convert_from(self, old_version):
         if old_version < 99: # < 1.0dev
