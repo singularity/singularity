@@ -26,10 +26,10 @@ import collections
 from operator import truediv
 from numpy import array
 
-from code import g, difficulty, task, chance
-from code import location
+from code import g, difficulty, task, chance, location, group
 from code.buyable import cash, cpu
 from code.stats import itself as stats, observe
+
 
 class DryRunInfo(object):
     pass
@@ -70,6 +70,8 @@ class Player(object):
         self.intro_shown = False
 
         self.groups = collections.OrderedDict()
+        for group_id in g.groups:
+            self.groups[group_id] = group.Group(g.groups[group_id], difficulty)
 
         self.last_discovery = self.prev_discovery = None
 

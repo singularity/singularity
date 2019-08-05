@@ -234,9 +234,6 @@ def new_game(difficulty_name):
 
     pl = player.Player(cash = diff.starting_cash, difficulty = diff)
 
-    for group_id in groups:
-        pl.groups[group_id] = group.Group(groups[group_id], diff)
-
     for tech_id in diff.techs:
         techs[tech_id].finish(is_player=False)
 
