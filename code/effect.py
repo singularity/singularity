@@ -36,7 +36,7 @@ class Effect(object):
     def undo_effect(self):
         self._apply_effect(undo_effect=True)
 
-    def _apply_effect(self, undo_effect=False):
+    def _apply_effect(self, loading_savegame=False, undo_effect=False):
         # effect_data is now a stack of instructions to run the effect.
         # multiple effect can be run simultaneous
         effect_iter = iter(self.effect_stack)

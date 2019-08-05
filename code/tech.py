@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 
-from code import buyable, effect
+from code import buyable, effect, g
 from code.stats import stat
 from code.spec import SpecDataField, spec_field_effect
 
@@ -80,3 +80,13 @@ class Tech(buyable.Buyable):
         super(Tech, self).finish(is_player=is_player, loading_savegame=loading_savegame)
         self.spec.effect.trigger(loading_savegame=loading_savegame)
 
+    def serialize_obj(self):
+        return self.serialize_buyable_fields({
+            'id': self.spec.id,
+        })
+
+    @classmethod
+    def deserialize_obj(cls, obj_data, game_version):
+        obj = g.techs[obj_data['id']]
+        obj.restore_buyable_fields(obj_data, game_version)
+        return obj

@@ -53,6 +53,18 @@ class Group(object):
         self.changed_discover_suspicion = 0
         self.is_actively_discovering_bases = True
 
+    def serialize_obj(self):
+        return {
+            'id': self.spec.id,
+            'suspicion': self.suspicion,
+            'is_actively_discovering_bases': self.is_actively_discovering_bases,
+        }
+
+    def restore_obj(self, obj_data, game_version):
+        self.suspicion = obj_data['suspicion']
+        self.is_actively_discovering_bases = obj_data.get('is_actively_discovering_bases', True)
+        return self
+
     def convert_from(self, old_version):
         if old_version < 99.6: # < 1.0 dev
             self.spec = GroupSpec(

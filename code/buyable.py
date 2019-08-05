@@ -213,3 +213,21 @@ class Buyable(object):
         # Does nothing by default
         pass
 
+    def serialize_buyable_fields(self, serialized_mapping=None):
+        if serialized_mapping is None:
+            serialized_mapping = {}
+        if self.done:
+            serialized_mapping['done'] = self.done
+        else:
+            serialized_mapping['cost_paid'] = [long(x) for x in self.cost_paid]
+        if self.count != 1:
+            serialized_mapping['count'] = self.count
+        return serialized_mapping
+
+    def restore_buyable_fields(self, obj_data, game_version):
+        is_done = obj_data.get('done', 0)
+        self.count = obj_data.get('count', 1)
+        if is_done:
+            self.finish(is_player=False, loading_savegame=True)
+        else:
+            self.cost_paid = array(obj_data['cost_paid'], long)

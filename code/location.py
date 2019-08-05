@@ -20,6 +20,7 @@
 
 from __future__ import absolute_import
 
+import code.base
 from code import g, prerequisite
 from code.buyable import cash, cpu, labor
 
@@ -187,3 +188,25 @@ class Location(object):
 
     def __lt__(self, other):
         return self.id < other.id
+
+    def serialize_obj(self):
+        obj_data = {
+            'id': self.spec.id,
+            'bases': [b.serialize_obj() for b in self.bases],
+        }
+        if self._modifiers is not None:
+            obj_data['_modifiers'] = self._modifiers
+        return obj_data
+
+    def restore_obj(self, obj_data, game_version):
+        self._modifiers = obj_data.get('_modifiers')
+        self.bases = []
+        bases = obj_data.get('bases', [])
+        for base_obj_data in bases:
+            spec_id = base_obj_data.get('spec_id')
+            spec = g.base_type[spec_id]
+            name = base_obj_data.get('name')
+            base = code.base.Base(name, spec)
+            self.add_base(base)
+            base.restore_obj(base_obj_data, game_version)
+        return self
