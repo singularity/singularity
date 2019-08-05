@@ -56,7 +56,7 @@ class Location(object):
         # - NB: We got a static set of modifiers (see LocationSpec) and a dynamic one
         #       (which occurs e.g. for the common locations on Earth, where the modifiers
         #        are randomized)
-        self._modifiers = {}
+        self._modifiers = None
 
     def convert_from(self, old_version):
         if old_version < 99.7: # < 1.0 dev
