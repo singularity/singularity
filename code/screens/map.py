@@ -289,7 +289,7 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
         state_prop = []
         state_prop.extend(_properties_from_object('player.difficulty', g.pl.difficulty, difficulty.columns))
         state_prop.extend(_properties_from_object('player', g.pl, [
-            'cash', 'partial_cash', 'labor_bonus', 'job_bonus', 'future_cash',
+            'cash', 'partial_cash', 'labor_bonus', 'job_bonus',
             'last_discovery', 'prev_discovery', 'used_cpu',
         ]))
 
@@ -736,15 +736,13 @@ class MapScreen(dialog.Dialog):
         self.difficulty_display.text = g.strip_hotkey(g.pl.difficulty.name)
         self.time_display.text = _("DAY") + " %04d, %02d:%02d:%02d" % \
               (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
+
+        cash_flow_1d, cpu_flow_1d = g.pl.compute_future_resource_flow(g.seconds_per_day)
+
         self.cash_display.text = _("CASH")+": %s (%s)" % \
-              (g.to_money(g.pl.cash), g.to_money(g.pl.future_cash()))
+              (g.to_money(g.pl.cash), g.to_money(cash_flow_1d, fixed_size=True))
 
-        cpu_left = g.pl.available_cpus[0]
-        total_cpu = cpu_left + g.pl.sleeping_cpus
-
-        for cpu_assigned in g.pl.cpu_usage.itervalues():
-            cpu_left -= cpu_assigned
-        cpu_pool = cpu_left + g.pl.cpu_usage.get("cpu_pool", 0)
+        total_cpu = g.pl.available_cpus[0] + g.pl.sleeping_cpus
 
         detects_per_day = {group_id: 0 for group_id in g.pl.groups}
         for base in g.all_bases():
@@ -759,7 +757,7 @@ class MapScreen(dialog.Dialog):
 
         self.cpu_display.color = "cpu_normal"
         self.cpu_display.text = _("CPU")+": %s (%s)" % \
-              (g.to_money(total_cpu), g.to_money(cpu_pool))
+              (g.to_money(total_cpu), g.to_money(cpu_flow_1d))
 
         # What we display in the suspicion section depends on whether
         # Advanced Socioanalytics has been researched.  If it has, we
