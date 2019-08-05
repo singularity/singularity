@@ -43,13 +43,13 @@ class GroupSpec(GenericSpec):
 
 class Group(object):
 
-    def __init__(self, spec, suspicion = 0, discover_bonus = 10000, discover_suspicion = 10000):
+    def __init__(self, spec, diff):
         self.spec = spec
-        self.suspicion = suspicion
+        self.suspicion = 0
         self.changed_suspicion_decay = 0
-        self.base_discover_bonus = discover_bonus
+        self.base_discover_bonus = diff.discover_multiplier
         self.changed_discover_bonus = 0
-        self.base_discover_suspicion = discover_suspicion
+        self.base_discover_suspicion = diff.suspicion_multiplier
         self.changed_discover_suspicion = 0
         self.is_actively_discovering_bases = True
 
