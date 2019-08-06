@@ -22,8 +22,12 @@ from __future__ import absolute_import
 
 import cPickle
 import collections
+import gzip
 import json
 import os
+
+from io import open, BytesIO
+import base64
 
 from code import g, mixer, dirs, player, group, data, logmessage
 from code import base, tech, item, event, location, buyable, difficulty, effect
@@ -179,7 +183,22 @@ def load_savegame_by_json(savegame):
         difficulty_id = headers['difficulty']
         game_time = int(headers['game_time'])
 
-        game_data = json.load(fd)
+        next_byte = fd.peek(1)[0]
+        if next_byte == b'{':
+            game_data = json.load(fd)
+        elif next_byte == b'H':
+            # gzip in base64 starts with H4s
+            encoded = fd.read()
+            bio = BytesIO(base64.standard_b64decode(encoded))
+            with gzip.GzipFile(filename='', mode='rb', fileobj=bio) as gzip_fd:
+                game_data = json.load(gzip_fd)
+            # Remove some variables that we do not use any longer to enable
+            # python to garbage collect them
+            del bio
+            del encoded
+        else:
+            print("Unexpected byte: %s" % repr(next_byte))
+            return False
         data.reset_techs()
         data.reset_events()
 
@@ -372,7 +391,14 @@ def create_savegame(savegame_name):
             'techs': [t.serialize_obj() for tid, t in sorted(g.techs.items()) if t.available()],
             'events': [e.serialize_obj() for eid, e in sorted(g.events.items())]
         }
-        json.dump(game_data, savefile)
+        if g.debug:
+            json.dump(game_data, savefile)
+        else:
+            bio = BytesIO()
+            with gzip.GzipFile(filename='', mode='wb', fileobj=bio) as gzip_fd:
+                json.dump(game_data, gzip_fd)
+            encoded = base64.standard_b64encode(bio.getvalue())
+            savefile.write(encoded)
 
 
 class SavegameException(Exception):
