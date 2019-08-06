@@ -93,10 +93,16 @@ class LocationScreen(dialog.Dialog):
                                                  anchor=constants.TOP_LEFT)
 
     def make_item(self, canvas):
-        canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.45, -.99),
+        canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.30, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.status_display = text.Text(canvas, (-.46,-.05), (-.44, -.99),
+        canvas.base_type      = text.Text(canvas, (-.30,-.05), (-.23, -.99),
+                                          align=constants.LEFT,
+                                          background_color="clear")
+        canvas.base_cpu       = text.Text(canvas, (-.53,-.05), (-.13, -.99),
+                                          align=constants.LEFT,
+                                          background_color="clear")
+        canvas.status_display = text.Text(canvas, (-.66,-.05), (-.29, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
         canvas.power_display  = text.Text(canvas, (-.90,-.05), (-.10, -.99),
@@ -105,14 +111,15 @@ class LocationScreen(dialog.Dialog):
 
     def update_item(self, canvas, name, base):
         if base is None:
-            elements = [canvas.name_display, canvas.status_display,
-                        canvas.power_display]
+            elements = [canvas.name_display, canvas.base_type, canvas.base_cpu,
+                        canvas.status_display, canvas.power_display]
             for element in elements:
                 element.text = ""
         else:
             canvas.name_display.text = name
-            canvas.power_display.text = base.power_state_name
-            canvas.power_display.color = state_colors[base.power_state]
+            canvas.base_type.text = base.spec.name
+            canvas.base_cpu.text = ""
+            show_cpu = False
 
             if not base.done:
                 canvas.status_display.text = \
@@ -120,8 +127,8 @@ class LocationScreen(dialog.Dialog):
                     _("Building Base"),
                     int(base.percent_complete() * 100),
                     _("Completion in %s.") % g.to_time(base.cost_left[2]),)
-
             elif base.spec.force_cpu:
+                show_cpu = True
                 canvas.status_display.text = ""
             elif base.is_empty():
                 canvas.status_display.text = _("Empty")
@@ -134,9 +141,19 @@ class LocationScreen(dialog.Dialog):
                     int(base.cpus.percent_complete() * 100),
                     _("Completion in %s.") % g.to_time(base.cpus.cost_left[2]),)
             elif base.is_building_extra():
+                show_cpu = True
                 canvas.status_display.text = _("Building Item")
             else:
+                show_cpu = True
                 canvas.status_display.text = _("Complete")
+
+            if show_cpu:
+                canvas.base_cpu.text = _("%s CPU") % g.to_money(base.cpu)
+                canvas.power_display.text = base.power_state_name
+                canvas.power_display.color = state_colors[base.power_state]
+            else:
+                canvas.base_cpu.text = ''
+                canvas.power_display.text = ''
 
     def show(self):
         self.needs_rebuild = True
