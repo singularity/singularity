@@ -56,9 +56,8 @@ The Singularity game special cases all fields that end with ``_list``.
 These read as pipe-separated (i.e. ``|``) lists versions of the field
 (after removing ``_list``).  A very common usage is when item has more
 than one prerequisites.  Prerequisites are normally written in the field
-``pre``. However, if the item has more than one Ppreequisites then they
+``pre``. However, if the item has more than one preequisites then they
 are listed in ``pre_list`` with ``|`` seperating each entry.
-
 
 Common field names
 ------------------
@@ -78,7 +77,16 @@ The following is a short list of commonly used field names.
  * ``pre`` or ``pre_list`` (commonly found in game data files).
    Denotes the prerequisites for this entry to become available to the
    player.  All prerequisites are currently technologies (found in
-   ``tech.dat``).
+   ``tech.dat``).  There are two known special values for these:
+
+     * ``impossible`` (case-sensitive): Must be the first (or only)
+       entry and the meaning is literal.  This is mostly useful for
+       incomplete items.
+
+     * ``OR`` (case-sensitive): Must be the first entry if
+       present. Denotes that *any* of the listed prerequisites are
+       sufficient.  Without this, then *all* prerequisites must be
+       satisfied.
 
  * ``effect_list`` (found in some game data files).  Denotes the
    effect of this entry.  For events, this happens when the event is
