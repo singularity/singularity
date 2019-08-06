@@ -5,6 +5,7 @@ saves/
 *.mp3
 *.log
 .*
+_build
 !.travis.yml
 !.gitignore
 !.gitattributes
