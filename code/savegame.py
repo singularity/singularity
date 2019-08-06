@@ -92,6 +92,13 @@ def get_savegames():
                         with open(filepath, 'rb') as loadfile:
                             unpickle = cPickle.Unpickler(loadfile)
 
+                            def find_class(module_name, class_name):
+                                # Lets reduce the risk of "funny monkey business"
+                                # when checking the version of pickled files
+                                raise SavegameException(module_name, class_name)
+
+                            unpickle.find_global = find_class
+
                             load_version = unpickle.load()
                             if load_version in savefile_translation:
                                 version_name = savefile_translation[load_version][0]
