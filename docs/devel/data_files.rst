@@ -59,6 +59,26 @@ than one prerequisites.  Prerequisites are normally written in the field
 ``pre``. However, if the item has more than one preequisites then they
 are listed in ``pre_list`` with ``|`` seperating each entry.
 
+As an example, consider the previous example again::
+
+  [Server Access]
+  size = 1
+  force_cpu = Server
+  allowed = URBAN
+  detect_chance_list = news:50 | covert:100 | public:125
+  cost_list = 100 | 0 | 0
+  maint_list = 5 | 0 | 0
+
+
+Please observe the ``cost_list``, ``maint_list``, and
+``detect_chance_list`` fields in the above example.  When parsed, the
+code sees the fields ``cost``, ``maint``, and ``detect_chance``
+instead with the value of a list.
+
+Caveat: Not all fields support a ``_list`` variant.  As a concrete
+example, the ``size`` field is assumed to never be a list.
+
+
 Common field names
 ------------------
 
