@@ -116,3 +116,86 @@ The following is a short list of commonly used field names.
 
  * ``danger`` (found in some data game files)
 
+Loading ``Spec`` classes from data files
+----------------------------------------
+
+Some of these data files are parsed in a declarative manner.  Any
+class deriving from the ``GenericSpec`` class can declare its data
+fields via the ``spec_data_fields`` class field.  As an example::
+
+
+  class BaseSpec(buyable.BuyableSpec):
+      """Base as a buyable item (New Base in Location menu)"""
+
+      # ...
+      spec_data_fields = [
+          SpecDataField('size', converter=int),
+          SpecDataField('force_cpu', default_value=None),
+          SpecDataField('regions', data_field_name='allowed', converter=promote_to_list),
+          SpecDataField('detect_chance', converter=parse_detect_chance),
+          buyable.SPEC_FIELD_COST,
+          buyable.SPEC_FIELD_PREREQUISITES,
+          SpecDataField('danger', converter=int, default_value=0),
+          SpecDataField('maintenance', data_field_name='maint', converter=buyable.spec_parse_cost),
+      ]
+
+      def __init__(self, id, size, force_cpu, regions,
+                   detect_chance, cost, prerequisites, maintenance):
+        # ...
+      
+The fields listed above declares which fields are considered from the
+data file.  In general, the fields should match the data file and the
+constructor argument.  I.e. the ``size`` in the data field will be
+passed as the positional argument ``size`` in the ``def
+__init__(...)``-method.
+
+
+Starting with some simple examples::
+
+          SpecDataField('size', converter=int),
+          SpecDataField('force_cpu', default_value=None),
+          ...
+          SpecDataField('danger', converter=int, default_value=0),
+
+These declare the ``size``, ``force_cpu``, and ``danger`` fields.
+Notice that these name match both the name of the constructor and the
+respective field name from the data file.  The ``size`` field is
+implicitly mandatory (given it has no ``default_value``) and the value
+should be converted by the ``int`` function before passing it to the
+constructor.
+
+On the other hand, the ``force_cpu`` field is optional and in its
+abence, the constructor receives a ``None``.  Finally, ``danger`` is
+optional (defaulting to ``0``).  However, if the ``danger`` field is
+present, the value will be converted by ``int`` (like with ``size``).
+
+Moving on to the next example::
+
+          SpecDataField('regions', data_field_name='allowed', converter=promote_to_list)
+
+This entry declares a ``regions`` constructor argument.  However, the
+field name in the data file is ``allowed`` (denoted by
+``data_field_name``).  In other words, it "renames" the field when
+passing it to the constructor.
+
+Beyond that, it has a ``converter`` to ensure the value is always a
+list.  If given a single string, it will be rewritten as a list
+containing exactly that one string. This enables us to write the data
+file using both ``allowed = X`` and as ``allowed_list = X`` while the
+code will in both cases see the python value ``["X"]``.
+
+Moving on to the final example::
+
+          buyable.SPEC_FIELD_COST,
+          buyable.SPEC_FIELD_PREREQUISITES,
+
+These reference standard fields declared by another module.  In the
+concrete cases, they denote the ``cost`` and the ``prerequisites``
+field.  If you find that many ``Spec`` classes reuse the same field,
+consider writing a generic ``SpecDataField`` instance that cover them
+(as was done here), so we do not have to repeat ourselves.  :)
+
+
+Finally, the ``id`` argument deserves a special mention.  It is
+implicit and will always reference the section title (e.g. ``Server
+Access`` from ``[Server Access]`` in the example used in this page).
