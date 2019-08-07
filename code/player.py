@@ -29,7 +29,7 @@ from numpy import array
 from code import g, difficulty, task, chance, location, group
 from code.buyable import cash, cpu
 from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
-    LogBaseConstructed
+    LogBaseConstructed, LogItemConstructionComplete
 from code.stats import itself as stats, observe
 
 
@@ -438,14 +438,11 @@ class Player(object):
 
         # Item complete dialogs.
         for base, item in items_constructed:
-            if item.count == 1:
-                text = g.strings["item_construction_single"] % \
-                       {"item": item.spec.name, "base": base.name}
-            else: # Just finished several items.
-                text = g.strings["item_construction_multiple"] % \
-                       {"item": item.spec.name, "base": base.name}
+            log_message = LogItemConstructionComplete(self.raw_sec, item.spec.id, item.count, base.name, base.spec.id,
+                                                      base.location.id)
+            self.log.append(log_message)
             self.pause_game()
-            g.map_screen.show_message(text)
+            g.map_screen.show_message(log_message.full_message)
 
         # Are we still in the grace period?
         grace = self.in_grace_period(self.had_grace)
