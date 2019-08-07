@@ -150,9 +150,6 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         # Display a number calculate by the size of one item.
         list_size = max(1, rect.height // min_height)
 
-        for index, element in enumerate(self.display_elements):
-            print(index, element.real_pos, element.real_size)
-
         return int(math.ceil(list_size))
 
     def remake_elements(self):
