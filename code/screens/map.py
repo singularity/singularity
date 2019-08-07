@@ -339,7 +339,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
         self.options_dialog = OptionsScreen(self)
         self.savename_dialog = dialog.TextEntryDialog(self)
         self.load_dialog = savegame.SavegameScreen(self,
-                                                   (.5,.5), (.5,.5),
+                                                   (.5,.5), (.75,.75),
                                                    anchor=constants.MID_CENTER)
 
         self._rebuild_menu_buttons()

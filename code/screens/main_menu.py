@@ -71,7 +71,7 @@ class MainMenu(dialog.TopDialog):
 
         self.difficulty_dialog = dialog.SimpleMenuDialog(self)
 
-        self.load_dialog = savegame.SavegameScreen(self, (.5,.5), (.5,.5),
+        self.load_dialog = savegame.SavegameScreen(self, (.5,.5), (.75,.75),
                                                    anchor=constants.MID_CENTER)
 
     def rebuild(self):
