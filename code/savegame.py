@@ -24,7 +24,7 @@ import cPickle
 import collections
 import os
 
-from code import g, mixer, dirs, player, group, data
+from code import g, mixer, dirs, player, group, data, logmessage
 from code import base, tech, item, event, location, buyable, difficulty, effect
 from code.stats import itself as stats
 
@@ -171,6 +171,7 @@ def load_savegame(savegame):
             ItemClass=item.ItemSpec,
             ItemSpec=item.ItemSpec,
             ItemType=item.ItemType,
+            LogEmittedEvent=logmessage.LogEmittedEvent,
             _reconstruct=numpy.core.multiarray._reconstruct,
             scalar=numpy.core.multiarray.scalar,
             ndarray=numpy.ndarray,

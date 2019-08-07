@@ -28,6 +28,7 @@ from numpy import array
 
 from code import g, difficulty, task, chance, location, group
 from code.buyable import cash, cpu
+from code.logmessage import LogEmittedEvent
 from code.stats import itself as stats, observe
 
 
@@ -506,8 +507,8 @@ class Player(object):
                         continue
                     self.pause_game()
                     g.events[event].trigger()
-                    self.add_log("log_event", g.events[event].event_id)
-                    break # Don't trigger more than one at a time.
+                    self.log.append(LogEmittedEvent(self.raw_sec, g.events[event].event_id))
+                    break  # Don't trigger more than one at a time.
 
         # Process any complete days.
         if day_passed:

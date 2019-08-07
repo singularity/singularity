@@ -23,6 +23,7 @@ from __future__ import absolute_import
 
 from code import g
 from code.graphics import dialog, constants, listbox
+from code.logmessage import AbstractLogMessage
 
 
 class LogScreen(dialog.ChoiceDialog):
@@ -40,12 +41,21 @@ class LogScreen(dialog.ChoiceDialog):
                                item_borders=False, item_selectable=False)
 
     def show(self):
-        self.list = ["%s -- %s" % (_("DAY") + " %04d, %02d:%02d:%02d" % log[0],
-                                   self.create_log_text(log[1], log[2])) for log in g.pl.log]
+        self.list = [self.render_log_message(message) for message in g.pl.log]
 
         self.default = len(self.list) - 1
 
         return super(LogScreen, self).show()
+
+    def render_log_message(self, message):
+        if isinstance(message, AbstractLogMessage):
+            log_emit_time = message.log_emit_time
+            log_message = message.log_line
+        else:
+            # Old style messages
+            log_emit_time = message[0]
+            log_message = self.create_log_text(message[1], message[2])
+        return "%s -- %s" % (_("DAY") + " %04d, %02d:%02d:%02d" % log_emit_time, log_message)
 
     def create_log_text(self, log_name, log_data):
         """ Dispatch log to a function.
