@@ -38,7 +38,20 @@ class LogScreen(dialog.ChoiceDialog):
     def make_listbox(self):
         return listbox.Listbox(self, (0, 0), (-1, -.85),
                                anchor=constants.TOP_LEFT, align=constants.LEFT,
-                               item_borders=False, item_selectable=False)
+                               on_double_click_on_item=self.handle_double_click,
+                               item_borders=False, item_selectable=True)
+
+    def handle_double_click(self, event):
+        if self.listbox.is_over(event.pos) and 0 <= self.listbox.list_pos < len(g.pl.log):
+            message = g.pl.log[self.listbox.list_pos]
+            message_dialog = dialog.MessageDialog(self, text_size=20)
+            if isinstance(message, AbstractLogMessage):
+                message_dialog.text = message.full_message
+                message_dialog.color = message.full_message_color
+            else:
+                # Old style message; fall back to rendering the log line
+                message_dialog.text = self.create_log_text(message[1], message[2])
+            dialog.call_dialog(message_dialog, self)
 
     def show(self):
         self.list = [self.render_log_message(message) for message in g.pl.log]
