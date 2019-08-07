@@ -151,10 +151,10 @@ if save_loc is not None:
 
         try:
             for name in mixer.soundvolumes:
-                mixer.set_volume(name, prefs.getfloat("Preferences", name + "_volume"))
-
+                # Stored as 0-1 but the mixer expects 0-100
+                mixer.set_volume(name, 100 * prefs.getfloat("Preferences", name + "_volume"))
         except RuntimeError:
-            pass # don't be picky (for now...
+            pass # don't be picky (for now...)
             
     if prefs.has_section("Warning"):
         try:
