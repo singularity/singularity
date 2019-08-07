@@ -36,7 +36,7 @@ class LocationScreen(dialog.Dialog):
         super(LocationScreen, self).__init__(*args, **kwargs)
         self.pos = (-.5, -.5)
         self.anchor = constants.MID_CENTER
-        self.size = (-.75, -.5)
+        self.size = (.75, .70)
         self.name_display = text.Text(self, (0,0), (-1, -.08),
                                       background_color="clear")
 

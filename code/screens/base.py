@@ -187,7 +187,7 @@ class BaseScreen(dialog.Dialog):
     base = widget.causes_rebuild("_base")
     def __init__(self, *args, **kwargs):
         if len(args) < 3:
-            kwargs.setdefault("size", (.75, .5))
+            kwargs.setdefault("size", (.75, .70))
         base = kwargs.pop("base", None)
         super(BaseScreen, self).__init__(*args, **kwargs)
 
@@ -235,7 +235,7 @@ class BaseScreen(dialog.Dialog):
                                     anchor = constants.BOTTOM_CENTER,
                                     autohotkey=True)
 
-        self.info_frame = text.Text(self, (-1, .09), (.21, .33),
+        self.info_frame = text.Text(self, (-1, .09), (.21, .53),
                                       anchor=constants.TOP_RIGHT,
                                       background_color="pane_background",
                                       borders=constants.ALL,
@@ -244,7 +244,7 @@ class BaseScreen(dialog.Dialog):
                                       valign=constants.TOP)
 
         self.contents_frame = \
-            widget.BorderedWidget(self, (0, .09), (.50, .33),
+            widget.BorderedWidget(self, (0, .09), (.50, .53),
                                   anchor=constants.TOP_LEFT,
                                   background_color="pane_background",
                                   borders=range(6))
