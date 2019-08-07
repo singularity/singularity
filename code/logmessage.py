@@ -137,6 +137,10 @@ class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
         super(LogBaseLostMaintenance, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
 
     @property
+    def full_message_color(self):
+        return 'red'
+
+    @property
     def log_line(self):
         return g.strings['log_destroy_maint'] % (self._base_name, self.base_type.name, self.location.name)
 
@@ -153,6 +157,10 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
     def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id, discovered_by_group_id):
         super(LogBaseDiscovered, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
         self._discovered_by_group_id = discovered_by_group_id
+
+    @property
+    def full_message_color(self):
+        return 'red'
 
     @property
     def group_discover_desc(self):
