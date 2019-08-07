@@ -229,9 +229,10 @@ class Dialog(text.Text):
             event = pygame.event.wait()
             result = self.handle(event)
             if result != constants.NO_RESULT:
-                self.visible = False
-                return result
+                break
         self.stop_timer()
+        self.visible = False
+        return result
 
     def add_handler(self, type, handler, priority = 100):
         """Adds a handler of the given type, with the given priority."""
