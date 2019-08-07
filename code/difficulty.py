@@ -42,7 +42,7 @@ list_columns = (
 )
 
 def get_difficulties():
-    return [(d.name, id) for id, d in difficulties.iteritems()]
+    return [(d.name, id) for id, d in difficulties.items()]
 
 class Difficulty(object):
     pass

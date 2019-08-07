@@ -252,7 +252,7 @@ def new_game(difficulty_name):
                                  base_type["Stolen Computer Time"], built=True))
 
     #Assign region modifiers to each starting location.
-    for reg in regions.itervalues():
+    for reg in regions.values():
         random.shuffle(reg.modifiers_list)
         for mod, loc in zip(reg.modifiers_list, reg.locations):
             pl.locations[loc].modifiers = mod

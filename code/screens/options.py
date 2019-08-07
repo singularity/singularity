@@ -105,8 +105,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             gui_volume      = mixer.get_volume("gui"),
             music_volume    = mixer.get_volume("music"),
             soundbuf        = mixer.get_soundbuf(),
-            warnings        = {warn.id: warn.active for warn in warning.warnings.itervalues()}
-        )
+            warnings        = {warn.id: warn.active for warn in warning.warnings.values()}
+       )
 
         self.set_options(self.initial_options)
 
@@ -533,7 +533,7 @@ class GUIPane(widget.Widget):
         self.warning_labels = {}
         self.warning_toggles = {}
         
-        for i, (warn_id, warn) in enumerate(warning.warnings.iteritems()):
+        for i, (warn_id, warn) in enumerate(warning.warnings.items()):
             x = .01
             y = .08 + i * .06
             
@@ -553,7 +553,7 @@ class GUIPane(widget.Widget):
 
         self.warning_title.text = _("WARNING")
 
-        for warn_id, warn in warning.warnings.iteritems():
+        for warn_id, warn in warning.warnings.items():
             self.warning_labels[warn_id].text = g.strings[warn.name]
 
             if warn.active:
@@ -570,7 +570,7 @@ class GUIPane(widget.Widget):
         warn.active = value
 
     def set_options(self, options):
-        for warn_id, warn_active in options["warnings"].iteritems():
+        for warn_id, warn_active in options["warnings"].items():
             self.warning_toggles[warn_id].set_active(warn_active)
         
     def apply_options(self):
@@ -606,7 +606,7 @@ def save_options():
         prefs.set("Preferences", name + "_volume", str(mixer.get_volume(name)))
 
     prefs.add_section("Warning")
-    for warn_id, warn in warning.warnings.iteritems():
+    for warn_id, warn in warning.warnings.items():
         prefs.set("Warning", warn_id, str(bool(warn.active)))
 
     # Actually write the preferences out.
