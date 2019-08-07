@@ -33,7 +33,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         super(ResearchScreen, self).__init__(parent, pos, size, *args, **kwargs)
         self.listbox.parent = None
         self.listbox = listbox.CustomListbox(self, (0,0), (.53, .55),
-                                             list_size=-40,
+                                             list_item_height=0.06,
                                              remake_func=self.make_item,
                                              rebuild_func=self.update_item,
                                              update_func=self.handle_update)

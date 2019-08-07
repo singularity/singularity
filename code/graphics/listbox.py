@@ -20,9 +20,11 @@
 
 from __future__ import absolute_import
 
+import math
+
 import pygame
 
-from code.graphics import constants, widget, text, scrollbar
+from code.graphics import g, constants, widget, text, scrollbar
 
 
 class Listbox(widget.FocusWidget, text.SelectableText):
@@ -32,7 +34,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     list_pos = widget.causes_rebuild("_list_pos")
 
     def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
-                 list_pos=0, list_size=-20, borders=constants.ALL,
+                 list_pos=0, list_item_height=0.03, borders=constants.ALL,
                  item_borders=True, item_selectable=True,
                  align=constants.CENTER, on_double_click_on_item=None, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
@@ -46,7 +48,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
         self.item_borders = item_borders
         self.align = align
-        self.list_size = list_size
+        self.list_item_height = list_item_height
         self.list_pos = list_pos
         self.list = list or []
 
@@ -133,13 +135,25 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
 
     def num_elements(self):
-        # If self.list_size is negative, we interpret it as a minimum height
-        # for each element and calculate the number of elements to show.
-        list_size = self.list_size
-        if list_size < 0:
-            min_height = -list_size
-            list_size = max(1, self._make_collision_rect().height // min_height)
-        return list_size
+        # TODO: If needed, add a paramater to display a fixed number of element.
+        
+        rect = self._make_collision_rect()
+        
+        list_item_height = self.list_item_height
+        
+        # Calculate the min height of one element. 
+        if list_item_height > 0:
+            min_height = list_item_height * g.real_screen_size[1]
+        else:
+            min_height = -list_item_height * rect.height
+        
+        # Display a number calculate by the size of one item.
+        list_size = max(1, rect.height // min_height)
+
+        for index, element in enumerate(self.display_elements):
+            print(index, element.real_pos, element.real_size)
+
+        return int(math.ceil(list_size))
 
     def remake_elements(self):
         list_size = self.num_elements()
