@@ -62,9 +62,12 @@ class SavegameScreen(dialog.ChoiceDialog):
 
         self.list = [s for s in self._all_savegames_sorted if all(w in s.name for w in words)]
 
+        # Select the element if only one.
         if len(self.list) == 1:
             self.listbox.list_pos = 1
             return
+
+        match_prev = False
 
         for idx, savegame in enumerate(self.list):
             if savegame is prev_selected:
@@ -72,9 +75,14 @@ class SavegameScreen(dialog.ChoiceDialog):
                 # as long as it is available and there is no
                 # perfect match
                 self.listbox.list_pos = idx
+                match_prev = True
             if savegame.name == new_text:
                 self.listbox.list_pos = idx
                 return
+
+        # Otherwise, take the first element.
+        if not match_prev:
+            self.listbox.list_pos = 0
 
     def make_listbox(self):
         return listbox.CustomListbox(self, (0, -.10), (-1, -.77),
