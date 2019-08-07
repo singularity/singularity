@@ -17,7 +17,7 @@ discover_multiplier = 9500
 suspicion_multiplier = 9500
 base_grace_multiplier = 30000
 story_grace_difficulty = 3
-grace_period_cpu = 800
+grace_period_cpu = 10000
 tech_list = Socioanalytics
 
 [normal]
@@ -28,7 +28,7 @@ discover_multiplier = 10000
 suspicion_multiplier = 10000
 base_grace_multiplier = 20000
 story_grace_difficulty = 5
-grace_period_cpu = 500
+grace_period_cpu = 5000
 
 [hard]
 starting_cash = 700
@@ -38,7 +38,7 @@ discover_multiplier = 10500
 suspicion_multiplier = 10500
 base_grace_multiplier = 18000
 story_grace_difficulty = 7
-grace_period_cpu = 350
+grace_period_cpu = 2500
 
 [ultra-hard]
 starting_cash = 500
@@ -48,7 +48,7 @@ discover_multiplier = 11250
 suspicion_multiplier = 11500
 base_grace_multiplier = 12000
 story_grace_difficulty = 10
-grace_period_cpu = 250
+grace_period_cpu = 1000
 
 [impossible]
 starting_cash = 0
