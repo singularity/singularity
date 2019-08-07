@@ -35,6 +35,7 @@ import collections
 import gzip
 import json
 import os
+import numpy
 
 from io import open, BytesIO
 import base64
@@ -159,16 +160,14 @@ def delete_savegame(savegame):
 
 
 def parse_pickle_savegame_headers(fd):
-    unpickle = pickle.Unpickler(fd)
-
     def find_class(module_name, class_name):
         # Lets reduce the risk of "funny monkey business"
         # when checking the version of pickled files
         raise SavegameException(module_name, class_name)
 
-    unpickle.find_global = find_class
+    unpickle = unpickle_instance(fd, find_globals=find_class)
 
-    load_version = unpickle.load()
+    load_version = recursive_fix_pickle(unpickle.load(), seen=set())
 
     return load_version, {}
 
@@ -184,6 +183,77 @@ def parse_json_savegame_headers(fd):
         key, value = line.split('=', 1)
         headers[key] = value
     return version_line, headers
+
+
+TypeType = type(type(None))
+NoneType = type(None)
+
+
+def recursive_fix_pickle(the_object, seen):
+    # Adapted from https://github.com/jhpyle/docassemble/blob/master/docassemble_webapp/docassemble/webapp/fixpickle.py
+    # Copyright (c) 2015-2018 Jonathan Pyle
+    # Licensed under MIT according to the LICENSE.txt in the root of the project
+    #
+    # Permission is hereby granted, free of charge, to any person obtaining a copy
+    # of this software and associated documentation files (the "Software"), to deal
+    # in the Software without restriction, including without limitation the rights
+    # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    # copies of the Software, and to permit persons to whom the Software is
+    # furnished to do so, subject to the following conditions:
+    #
+    # The above copyright notice and this permission notice shall be included in all
+    # copies or substantial portions of the Software.
+    #
+    # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    # SOFTWARE.
+
+    if not PY3:
+        return the_object
+    if isinstance(the_object, bytes):
+        try:
+            return the_object.decode('utf-8')
+        except Exception:
+            return the_object
+    if isinstance(the_object, (str, bool, int, float, complex, NoneType, TypeType, numpy.ndarray)):
+        return the_object
+    if isinstance(the_object, dict):
+        new_dict = type(the_object)()
+        for key, val in the_object.items():
+            new_dict[recursive_fix_pickle(key, seen=seen)] = recursive_fix_pickle(val, seen=seen)
+        return new_dict
+    if isinstance(the_object, list):
+        new_list = type(the_object)()
+        for item in the_object:
+            new_list.append(recursive_fix_pickle(item, seen=seen))
+        return new_list
+    if isinstance(the_object, set):
+        new_set = type(the_object)()
+        for item in the_object:
+            new_set.add(recursive_fix_pickle(item, seen=seen))
+        return new_set
+    if isinstance(the_object, collections.deque):
+        new_list = list()
+        for item in the_object:
+            new_list.append(recursive_fix_pickle(item, seen=seen))
+        the_object.clear()
+        the_object.extend(new_list)
+        return the_object
+    if isinstance(the_object, tuple):
+        new_list = list()
+        for item in the_object:
+            new_list.append(recursive_fix_pickle(item, seen=seen))
+        return type(the_object)(new_list)
+    object_id = id(the_object)
+    if object_id in seen:
+        return the_object
+    seen.add(object_id)
+    the_object.__dict__ = dict((recursive_fix_pickle(k, seen=seen), recursive_fix_pickle(v, seen=seen)) for k, v in the_object.__dict__.items())
+    return the_object
 
 
 def load_savegame(savegame):
@@ -276,6 +346,7 @@ def load_savegame_by_pickle(savegame):
 
         import numpy.core.multiarray
         import collections
+        import _codecs
 
         save_classes = dict(
             player_class=player.Player,
@@ -285,6 +356,7 @@ def load_savegame_by_pickle(savegame):
             array=list,  # This is the old buyable.array.
                          # We just treat it as a list for conversion purposes.
             list=list,
+            encode=_codecs.encode,
             LocationSpec=location.LocationSpec,
             Location=location.Location,
             Tech=tech.Tech,
@@ -348,19 +420,20 @@ def load_savegame_by_pickle(savegame):
     data.reset_events()
 
     # Changes to overall structure go here.
-    saved_player = unpickle.load()
+    seen_objects = set()
+    saved_player = recursive_fix_pickle(unpickle.load(), seen_objects)
     # Current speed (ignored)
     unpickle.load()
     # Pause game when loading
     g.curr_speed = 0
-    techs = unpickle.load()
+    techs = recursive_fix_pickle(unpickle.load(), seen_objects)
     if load_version < 99.7:
         # In >= 99.8 locations are saved as a part of the player object, but earlier
         # it was stored as a separate part of the stream.
-        locations = unpickle.load()
+        locations = recursive_fix_pickle(unpickle.load(), seen_objects)
     else:
         locations = saved_player.locations
-    events = unpickle.load()
+    events = recursive_fix_pickle(unpickle.load(), seen_objects)
 
     if load_version < 99.1:
         diff_obj = next((d for d in difficulty.difficulties.values()
