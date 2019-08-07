@@ -609,7 +609,7 @@ class TextEntryDialog(TextDialog, FocusDialog):
         self.cancel_type = kwargs.pop("cancel_type", "cancel")
         super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
-        self.text_field = text.EditableText(self, (0, -.50), (-.80, -.50),
+        self.text_field = text.EditableText(self, (0, -.50), (-.71, -.50),
                                             borders=constants.ALL,
                                             base_font="normal")
 
