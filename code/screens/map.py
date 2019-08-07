@@ -457,7 +457,18 @@ class MapScreen(dialog.Dialog):
                                               dialog=log.LogScreen(self))
 
         if g.cheater:
+            # Create cheat menu
+            # Cheat menu button must be created before menu button to avoid bug.
+            
             self.cheat_dialog = CheatMenuDialog(self)
+            self.cheat_button = button.DialogButton(
+                self, (0, 0), (.01, .01),
+                text="",
+                # Translators: hotkey to open the cheat screen menu.
+                # Should preferably be near the ESC key, and it must not be a
+                # dead key (ie, it must print a char with a single keypress)
+                hotkey=_("`"),
+                dialog=self.cheat_dialog)
 
         self.menu_dialog = GameMenuDialog(self)
         def show_menu():
@@ -716,18 +727,7 @@ class MapScreen(dialog.Dialog):
         self.research_button.text = _("&RESEARCH/TASKS")
 
         if g.cheater:
-            # Create cheat menu
-
             self.cheat_dialog.needs_rebuild = True
-
-            self.cheat_button = button.DialogButton(
-                self, (0, 0), (.01, .01),
-                text="",
-                # Translators: hotkey to open the cheat screen menu.
-                # Should preferably be near the ESC key, and it must not be a
-                # dead key (ie, it must print a char with a single keypress)
-                hotkey=_("`"),
-                dialog=self.cheat_dialog)
 
         super(MapScreen, self).rebuild()
 
