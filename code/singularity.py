@@ -150,9 +150,8 @@ if save_loc is not None:
             pass # don't be picky (for now...)
 
         try:
-            for name in mixer.soundvolumes:
-                # Stored as 0-1 but the mixer expects 0-100
-                mixer.set_volume(name, 100 * prefs.getfloat("Preferences", name + "_volume"))
+            for name in mixer.itervolumes():
+                mixer.set_volume(name, prefs.getint("Preferences", name + "_volume"))
         except RuntimeError:
             pass # don't be picky (for now...)
             
@@ -276,10 +275,9 @@ import code.graphics.font as font
 # Only initiliaze after reading all arguments and preferences to avoid to
 # reinitialize something again (mixer,...).
 #
-pygame.mixer.pre_init(*mixer.soundargs, buffer=desired_soundbuf)
+mixer.preinit(desired_soundbuf)
 pygame.init()
-mixer.init = bool(pygame.mixer.get_init())
-mixer.soundbuf = desired_soundbuf
+mixer.update()
 font.init()
 pygame.key.set_repeat(1000, 50)
 

@@ -45,7 +45,20 @@ soundbuf = 1024*2
 soundargs = (48000, -16, 2)  # sampling frequency, size, channels
 soundvolumes = {"gui": 1.0, "music": 1.0}
 
-def reinit_mixer():
+def preinit(desired_soundbuf):
+    pygame.mixer.pre_init(*soundargs, buffer=desired_soundbuf)
+    
+    global soundbuf
+    soundbuf = desired_soundbuf
+    
+def update():
+    global init
+    init = bool(pygame.mixer.get_init())
+
+    if (init):
+        pygame.mixer.music.set_volume(soundvolumes["music"])
+
+def reinit():
     global init
 
     if nosound:
@@ -203,6 +216,13 @@ def set_volume(type, value):
     if init and type == "music":
         pygame.mixer.music.set_volume(soundvolumes["music"])
 
+def get_volume(type):
+    return int(soundvolumes[type] * 100)
+
+def itervolumes():
+    for name in soundvolumes:
+        yield name
+
 def set_sound(value):
     global nosound
     if nosound == (not value):
@@ -223,4 +243,7 @@ def set_soundbuf(value):
     soundbuf = value
 
     if init and soundbuf != old_soundbuf:
-        reinit_mixer()
+        reinit()
+
+def get_soundbuf():
+    return int(soundbuf)

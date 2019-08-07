@@ -110,9 +110,9 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             resolution      = gg.screen_size,
             language        = i18n.language,
             sound           = not mixer.nosound,
-            gui_volume      = int(mixer.soundvolumes["gui"] * 100.0),
-            music_volume    = int(mixer.soundvolumes["music"] * 100.0),
-            soundbuf        = mixer.soundbuf,
+            gui_volume      = mixer.get_volume("gui"),
+            music_volume    = mixer.get_volume("music"),
+            soundbuf        = mixer.get_soundbuf(),
             warnings        = {warn.id: warn.active for warn in warning.warnings.itervalues()}
         )
 
@@ -606,12 +606,12 @@ def save_options():
     prefs.set("Preferences", "daynight",     str(bool(g.daynight)))
     prefs.set("Preferences", "xres",         str(int(gg.screen_size[0])))
     prefs.set("Preferences", "yres",         str(int(gg.screen_size[1])))
-    prefs.set("Preferences", "soundbuf",     str(int(mixer.soundbuf)))
+    prefs.set("Preferences", "soundbuf",     str(mixer.get_soundbuf()))
     prefs.set("Preferences", "lang",         str(i18n.language))
     prefs.set("Preferences", "theme",        str(theme.current.id))
 
-    for name, value in mixer.soundvolumes.iteritems():
-        prefs.set("Preferences", name + "_volume", str(value))
+    for name in mixer.itervolumes():
+        prefs.set("Preferences", name + "_volume", str(mixer.get_volume(name)))
 
     prefs.add_section("Warning")
     for warn_id, warn in warning.warnings.iteritems():
