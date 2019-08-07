@@ -100,11 +100,11 @@ class BuyableSpec(spec.GenericSpec, prerequisite.Prerequisite):
         template = "%s\n" + _("Cost:") + " %s\n---\n%s"
         return template % (self.name, cost_str, self.description)
 
-    def __cmp__(self, other):
-        # For sorting buyables, we sort by cost; Python's cmp() is smart enough
+    def __lt__(self, other):
+        # For sorting buyables, we sort by cost; Python is smart enough
         # to handle this properly for tuples.  The first element is price in
         # cash, which is the one we care about the most.
-        return cmp(tuple(self.cost), tuple(other.cost))
+        return tuple(self.cost) < tuple(other.cost)
 
 
 class Buyable(object):

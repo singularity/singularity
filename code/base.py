@@ -396,11 +396,11 @@ class Base(buyable.Buyable):
         # bases aren't considered equal.
         return (-self.spec.size, -self.cpu, self.name, id(self))
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         if isinstance(other, Base):
-            return cmp(self.sort_tuple(), other.sort_tuple())
+            return self.sort_tuple() < other.sort_tuple()
         else:
-            return -1
+            return True
 
     def all_items(self):
         for item in self.items.itervalues():

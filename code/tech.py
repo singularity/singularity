@@ -57,11 +57,11 @@ class Tech(buyable.Buyable):
             del self.tech_type
             del self.secondary_data
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         if not isinstance(other, Tech):
-            return -1
+            return True
         else:
-            return cmp(self.spec, other.spec)
+            return self.spec.id < other.spec.id
 
     @property
     def danger(self):
