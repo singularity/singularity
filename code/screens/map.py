@@ -456,6 +456,9 @@ class MapScreen(dialog.Dialog):
                                               anchor=constants.TOP_CENTER,
                                               dialog=log.LogScreen(self))
 
+        if g.cheater:
+            self.cheat_dialog = CheatMenuDialog(self)
+
         self.menu_dialog = GameMenuDialog(self)
         def show_menu():
             exit = dialog.call_dialog(self.menu_dialog, self)
@@ -464,8 +467,6 @@ class MapScreen(dialog.Dialog):
         self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
                                                  autohotkey=True,
                                                  function=show_menu)
-
-        self.cheat_dialog = CheatMenuDialog(self)
 
         # Display current game difficulty right below the 'Menu' button
         # An alternative location is above 'Reports': (0, 0.84), (0.15, 0.04)
