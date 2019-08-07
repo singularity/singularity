@@ -27,12 +27,13 @@ from code import g, chance, item, buyable
 from code.buyable import cpu
 from code.stats import stat
 
+from code.spec import SpecDataField, promote_to_list, validate_must_be_list
+
 #TODO: Use this list and convert Base.power_state to a property to enforce this
 #TODO: Consider converting to dict, so it can have colors and names and modifiers
 #      (Base.power_state would need to be a property, with setter and getter)
 #This list only applies to 'Base' class, not 'BaseClass'
 #Changes to this list should also be reflected in Base.power_state_name property
-from code.spec import SpecDataField, promote_to_list, validate_must_be_list
 
 power_states = ['active','sleep']
 #power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
