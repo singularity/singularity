@@ -213,7 +213,7 @@ def play_music(musicdir=None):
 def set_volume(type, value):
     # Chomp volume to the 0-100 range.  
     # Just to avoid blasting peoples ears out if something goes wrong.
-    # pygame already disallows bad value but just in case...
+    # pygame already disallows bad value but just in case...
     value = min(max(value, 0), 100)
     
     soundvolumes[type] = value / float(100)
