@@ -28,7 +28,8 @@ from numpy import array
 
 from code import g, difficulty, task, chance, location, group
 from code.buyable import cash, cpu
-from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered
+from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
+    LogBaseConstructed
 from code.stats import itself as stats, observe
 
 
@@ -430,9 +431,10 @@ class Player(object):
 
         # Base complete dialogs.
         for base in bases_constructed:
-            text = g.strings["construction"] % {"base": base.name}
+            log_message = LogBaseConstructed(self.raw_sec, base.name, base.spec.id, base.location.id)
+            self.log.append(log_message)
             self.pause_game()
-            g.map_screen.show_message(text)
+            g.map_screen.show_message(log_message.full_message)
 
         # Item complete dialogs.
         for base, item in items_constructed:
