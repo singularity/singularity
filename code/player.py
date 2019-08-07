@@ -173,6 +173,28 @@ class Player(object):
         # Overflow
         self.time_day = self.raw_day
 
+    def do_interest(self, time):
+        raw_cash = self.partial_cash + self.get_interest() * time
+
+        earned = raw_cash // g.seconds_per_day
+        partial_cash = raw_cash % g.seconds_per_day
+
+        self.cash += earned
+        self.partial_cash = partial_cash
+
+        return earned
+
+    def do_income(self, time):
+        raw_cash = self.partial_cash + self.income * time
+
+        earned = raw_cash // g.seconds_per_day
+        partial_cash = raw_cash % g.seconds_per_day
+
+        self.cash += earned
+        self.partial_cash = partial_cash
+
+        return earned
+
     def do_jobs(self, cpu_time):
         earned, self.partial_cash = self.get_job_info(cpu_time)
         self.cash += earned
@@ -253,6 +275,10 @@ class Player(object):
         # Maintenance?  Gods don't need no stinking maintenance!
         if self.apotheosis:
             maintenance_cost = array((0, 0, 0), long)
+
+        # Do Interest and income.
+        interest_cash = self.do_interest(secs_passed)
+        income_cash = self.do_income(secs_passed)
 
         # Any CPU explicitly assigned to jobs earns its dough.
         job_cpu = self.cpu_usage.get("jobs", 0) * secs_passed
@@ -364,9 +390,8 @@ class Player(object):
             # Collect the cash information.
             cash_info = DryRunInfo()
 
-            cash_info.interest = self.get_interest()
-            cash_info.income = self.income
-            self.cash += cash_info.interest + cash_info.income
+            cash_info.interest = interest_cash
+            cash_info.income = income_cash
 
             cash_info.explicit_jobs = explicit_job_cash
             cash_info.pool_jobs = pool_job_cash
@@ -584,10 +609,7 @@ class Player(object):
 
     #Run every day at midnight.
     def new_day(self):
-        # Interest and income.
-        self.cash += self.get_interest()
-        self.cash += self.income
-
+        
         # Reduce suspicion.
         for group in self.groups.values():
             group.new_day()
