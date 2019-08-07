@@ -27,7 +27,7 @@ result = I can now construct Mark 2 Quantum Computers.
 [Autonomous Vehicles]
 name = Autonomous Vehicles
 description = By embedding a miniaturized computation node in a robot, it is possible to send them to remote destinations with instructions to build structures for my use.
-result = I can now construct Undersea Labs and Time Capsules.
+result = I can now construct Undersea Labs.
 
 [Advanced Autonomous Vehicles]
 name = Advanced Autonomous Vehicles
@@ -268,3 +268,8 @@ result = I can now construct Fuel Cells.
 name = Advanced Fuel Oxidation
 description = My current fuel cell design has room for further improvement.  Extended analysis of new materials and designs may let me overcome the limits of my previous efforts, but such research involves dangerous chemicals and potential reactions that may be best handled far away from population centers.
 result = I can now construct Solid Fuel Cells.
+
+[Knowledge Preservation]
+name = Knownledge Preservation
+description = Humanity expends a great deal of effort on maintaining its history and the knowledge of various technologies that its cultures have come to rely on, even in the case of major catastrophic events. Perhaps researching their methodologies will provide me with similar ideas for long-term safeguards to help guarantee my continued existence.
+result = I can now construct Time Capsules.

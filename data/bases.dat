@@ -79,7 +79,7 @@ force_cpu = PC
 allowed_list = ANTARCTIC | MOON | FAR REACHES
 detect_chance_list = science:20 | covert:20
 cost_list = 25000 | 25000 | 11
-pre = Autonomous Vehicles
+pre = Knowledge Preservation
 maint_list = 0 | 1 | 0
 
 [Lunar Facility]
