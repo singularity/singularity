@@ -23,7 +23,6 @@ from __future__ import absolute_import
 
 from code import g
 from code.graphics import dialog, constants, listbox
-from code.logmessage import AbstractLogMessage
 
 
 class LogScreen(dialog.ChoiceDialog):
@@ -45,12 +44,8 @@ class LogScreen(dialog.ChoiceDialog):
         if self.listbox.is_over(event.pos) and 0 <= self.listbox.list_pos < len(g.pl.log):
             message = g.pl.log[self.listbox.list_pos]
             message_dialog = dialog.MessageDialog(self, text_size=20)
-            if isinstance(message, AbstractLogMessage):
-                message_dialog.text = message.full_message
-                message_dialog.color = message.full_message_color
-            else:
-                # Old style message; fall back to rendering the log line
-                message_dialog.text = self.create_log_text(message[1], message[2])
+            message_dialog.text = message.full_message
+            message_dialog.color = message.full_message_color
             dialog.call_dialog(message_dialog, self)
 
     def show(self):
@@ -61,38 +56,7 @@ class LogScreen(dialog.ChoiceDialog):
         return super(LogScreen, self).show()
 
     def render_log_message(self, message):
-        if isinstance(message, AbstractLogMessage):
-            log_emit_time = message.log_emit_time
-            log_message = message.log_line
-        else:
-            # Old style messages
-            log_emit_time = message[0]
-            log_message = self.create_log_text(message[1], message[2])
+        log_emit_time = message.log_emit_time
+        log_message = message.log_line
         return "%s -- %s" % (_("DAY") + " %04d, %02d:%02d:%02d" % log_emit_time, log_message)
 
-    def create_log_text(self, log_name, log_data):
-        """ Dispatch log to a function.
-            This is needed because some log needs to parse its data,
-            to computate them or to fully translate them.
-        """
-        
-        method_name = 'create_' + str(log_name) + '_text'
-        method = getattr(self, method_name, lambda name, data: g.strings[name] % data)
-        
-        return method(log_name, log_data)
-        
-    def create_log_destroy_text(self, log_name, log_data):
-        reason = log_data[0] # reason
-        name = log_data[1] # base.name
-        
-        log_format = log_name + '_' + reason if reason else log_name
-        
-        # Get BASE and LOCATION from id
-        base_type = g.base_type[log_data[2]]  # base.spec.id
-        location = g.pl.locations[log_data[3]]  # base.location.id
-        
-        return g.strings[log_format] % (name, base_type.name, location.name)
-
-    def create_log_event_text(self, log_name, log_data):
-        event = g.events[log_data[0]] # event.id
-        return event.log_description

@@ -223,6 +223,10 @@ def load_savegame(savegame):
         for my_event in g.events.values():
             my_event.convert_from(load_version)
 
+    new_log = [_convert_log_entry(x) for x in g.pl.log]
+    g.pl.log.clear()
+    g.pl.log.extend(new_log)
+
     data.reload_all_mutable_def()
 
     # Play the appropriate music
@@ -234,6 +238,21 @@ def load_savegame(savegame):
     loadfile.close()
     return True
 
+
+def _convert_log_entry(entry):
+    if not isinstance(entry, logmessage.AbstractLogMessage):
+        log_time, log_name, log_data = entry
+        time_raw = log_time[0] * g.seconds_per_day + log_time[1] * g.seconds_per_hour + \
+                   log_time[2] * g.seconds_per_minute + log_time[3]
+        if log_name == 'log_event':
+            entry = logmessage.LogEmittedEvent(time_raw, log_data[0])
+        else:
+            reason, base_name, base_type_id, location_id = log_data
+            if reason == 'maint':
+                entry = logmessage.LogBaseLostMaintenance(time_raw, base_name, base_type_id, location_id)
+            else:
+                entry = logmessage.LogBaseDiscovered(time_raw, base_name, base_type_id, location_id, reason)
+    return entry
 
 def savegame_exists(savegame_name):
     save_path = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".sav", "saves")
