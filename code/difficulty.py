@@ -33,8 +33,8 @@ columns = (
     'discover_multiplier',
     'suspicion_multiplier',
     'base_grace_multiplier',
-    'story_grace_difficulty',
-    'grace_period_cpu'
+    'grace_period_cpu',
+    'old_difficulty_value', # Used now only for compatibility with old save
 )
 
 list_columns = (

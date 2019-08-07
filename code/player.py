@@ -116,7 +116,7 @@ class Player(object):
             self.log = collections.deque(maxlen=1000)
         if old_version < 99.1: # < 1.0 dev
             self.difficulty = next((d for d in difficulty.difficulties.itervalues()
-                                   if self.difficulty == d.story_grace_difficulty), 
+                                   if self.difficulty == d.old_difficulty_value), 
                                    next(iter(difficulty.difficulties)))
         else:
             # Always reload the Difficult object from the data file as it never
