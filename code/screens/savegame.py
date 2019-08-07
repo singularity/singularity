@@ -36,11 +36,11 @@ class SavegameScreen(dialog.ChoiceDialog):
 
         self._all_savegames_sorted = []
 
-        self.label = text.Text(self, (0, 0), (0.1, .04),
+        self.label = text.Text(self, (-.01, -.01), (-.20, -.08),
                                borders=constants.ALL,
                                anchor=constants.TOP_LEFT,
                                base_font="normal")
-        self.text_field = text.UpdateEditableText(self, (0.1, 0), (0.4, .04),
+        self.text_field = text.UpdateEditableText(self, (-.21, -.01), (-.78, -.08),
                                                   borders=constants.ALL,
                                                   anchor=constants.TOP_LEFT,
                                                   update_func=self._search_for_savegame,
@@ -77,12 +77,11 @@ class SavegameScreen(dialog.ChoiceDialog):
                 return
 
     def make_listbox(self):
-        return listbox.CustomListbox(self, (0, 0.04), (-1, -.81),
+        return listbox.CustomListbox(self, (0, -.10), (-1, -.77),
                                      anchor=constants.TOP_LEFT,
                                      remake_func=self.make_item,
                                      rebuild_func=self.update_item,
-                                     on_double_click_on_item=self.yes_button.activated,
-                                     )
+                                     on_double_click_on_item=self.yes_button.activated)
 
     def make_item(self, item):
         item.name_display     = text.Text(item, (-.01,-.05), (-.45, -.99),
