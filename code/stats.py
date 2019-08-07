@@ -19,7 +19,7 @@
 #This file contains the Statistic class, used for saving/loading single-game
 #statistics.
 
-import g
+from code import g
 
 class Statistics(object):
     
