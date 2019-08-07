@@ -28,7 +28,7 @@ from numpy import array
 
 from code import g, difficulty, task, chance, location, group
 from code.buyable import cash, cpu
-from code.logmessage import LogEmittedEvent
+from code.logmessage import LogEmittedEvent, LogResearchedTech
 from code.stats import itself as stats, observe
 
 
@@ -423,11 +423,10 @@ class Player(object):
         # Tech gain dialogs.
         for tech in techs_researched:
             del self.cpu_usage[tech.id]
-            text = g.strings["tech_gained"] % \
-                   {"tech": tech.name,
-                    "tech_message": tech.result}
+            tech_log = LogResearchedTech(self.raw_sec, tech.id)
+            self.log.append(tech_log)
             self.pause_game()
-            g.map_screen.show_message(text)
+            g.map_screen.show_message(tech_log.full_message)
 
         # Base complete dialogs.
         for base in bases_constructed:

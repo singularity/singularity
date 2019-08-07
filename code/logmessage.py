@@ -70,3 +70,27 @@ class LogEmittedEvent(AbstractLogMessage):
     @property
     def full_message(self):
         return self.event.description
+
+
+class LogResearchedTech(AbstractLogMessage):
+
+    def __init__(self, raw_emit_time, tech_id):
+        super(LogResearchedTech, self).__init__(raw_emit_time)
+        self._tech_id = tech_id
+
+    @property
+    def tech(self):
+        return g.techs[self._tech_id]
+
+    @property
+    def log_line(self):
+        return _('My study of {TECH} is complete.', TECH=self.tech.name)
+
+    @property
+    def full_message(self):
+        tech = self.tech
+        text = g.strings["tech_gained"] % {
+            "tech": tech.name,
+            "tech_message": tech.result
+        }
+        return text
