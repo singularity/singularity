@@ -176,3 +176,29 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
             "group": self.group_discover_desc
         }
         return dialog_string
+
+
+class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
+
+    def __init__(self, raw_emit_time, item_spec_id, item_count, base_name, base_type_id, base_location_id):
+        super(LogItemConstructionComplete, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+        self._item_spec_id = item_spec_id
+        self._item_count = item_count
+
+    @property
+    def item_spec(self):
+        return g.items[self._item_spec_id]
+
+    @property
+    def log_line(self):
+        return _("Construction of {ITEM_TYPE_NAME} in {BASE_NAME} at location {LOCATION} is complete.",
+                 ITEM_TYPE_NAME=self.item_spec.name, BASE_NAME=self._base_name, BASE_TYPE=self.base_type.name,
+                 LOCATION=self.location.name)
+
+    @property
+    def full_message(self):
+        if self._item_count == 1:
+            text = g.strings["item_construction_single"]
+        else:  # Just finished several items.
+            text = g.strings["item_construction_multiple"]
+        return text % {"item": self.item_spec.name, "base": self._base_name}

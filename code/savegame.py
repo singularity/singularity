@@ -176,6 +176,7 @@ def load_savegame(savegame):
             LogBaseLostMaintenance=logmessage.LogBaseLostMaintenance,
             LogBaseDiscovered=logmessage.LogBaseDiscovered,
             LogBaseConstructed=logmessage.LogBaseConstructed,
+            LogItemConstructionComplete=logmessage.LogItemConstructionComplete,
             _reconstruct=numpy.core.multiarray._reconstruct,
             scalar=numpy.core.multiarray.scalar,
             ndarray=numpy.ndarray,
