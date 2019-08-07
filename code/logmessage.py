@@ -113,6 +113,24 @@ class AbstractBaseRelatedLogMessage(AbstractLogMessage):
         return g.pl.locations[self._base_location_id]
 
 
+class LogBaseConstructed(AbstractBaseRelatedLogMessage):
+
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
+        super(LogBaseConstructed, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+
+    @property
+    def log_line(self):
+        return _("My {BASE_TYPE} at location {LOCATION}, {BASE_NAME}, is ready for use.",
+                 BASE_NAME=self._base_name, BASE_TYPE=self.base_type.name, LOCATION=self.location.name)
+
+    @property
+    def full_message(self):
+        dialog_string = g.strings["construction"] % {
+            "base": self._base_name,
+        }
+        return dialog_string
+
+
 class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
 
     def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
