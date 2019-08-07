@@ -101,17 +101,17 @@ if save_loc is not None:
                 i18n.set_language(desired_language)
             else:
                 raise ValueError
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'lang' in preferences.\n")
 
         try:
             gg.set_fullscreen(prefs.getboolean("Preferences", "fullscreen"))
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'fullscreen' setting in preferences.\n")
 
         try:
             mixer.nosound = prefs.getboolean("Preferences", "nosound")
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'nosound' setting in preferences.\n")
 
         try:
@@ -121,24 +121,24 @@ if save_loc is not None:
 
         try:
             g.daynight = prefs.getboolean("Preferences", "daynight")
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'daynight' setting in preferences.\n")
 
         try:
             desired_soundbuf = prefs.getint("Preferences", "soundbuf")
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
 
         xres, yres = (0, 0)
 
         try:
             xres = prefs.getint("Preferences", "xres")
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'xres' resolution in preferences.\n")
 
         try:
             yres = prefs.getint("Preferences", "yres")
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
 
         if xres and yres:
@@ -146,17 +146,17 @@ if save_loc is not None:
 
         try:
             set_theme = prefs.get("Preferences", "theme")
-        except RuntimeError:
+        except Exception:
             pass # don't be picky (for now...)
 
         for name in mixer.itervolumes():
             try:
                 volume = prefs.getint("Preferences", name + "_volume")
-            except (RuntimeError, ValueError):
+            except Exception:
                 # Work around old preferences where a float was stored by mistake
                 try:
                     volume = prefs.getfloat("Preferences", name + "_volume")
-                except (RuntimeError, ValueError):
+                except Exception:
                     continue
                 else:
                     volume = int(volume) * 100
@@ -175,7 +175,7 @@ if save_loc is not None:
                 
                 warning.warnings[key].active = prefs.getboolean("Warning", key)
 
-        except RuntimeError:
+        except Exception:
             pass # don't be picky (for now...)
 
 
