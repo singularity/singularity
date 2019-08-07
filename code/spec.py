@@ -98,7 +98,11 @@ class GenericSpec(object):
         named_fields['id'] = data_id
         # Use reflection to call the constructor with the arguments
         # properly aligned
-        arg_desc = inspect.getargspec(cls.__init__)
+        try:
+            getfullargspec = inspect.getfullargspec
+        except AttributeError:
+            getfullargspec = inspect.getargspec
+        arg_desc = getfullargspec(cls.__init__)
         args = [named_fields[name] for name in arg_desc.args[1:]]
         return cls(*args)
 
