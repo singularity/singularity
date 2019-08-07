@@ -268,11 +268,11 @@ def create_savegame(savegame_name):
     default_savegame_name = savegame_name
     save_loc = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".sav", "saves")
     with open(save_loc, 'wb') as savefile:
-        cPickle.dump(current_save_version, savefile)
-        cPickle.dump(g.pl, savefile)
-        cPickle.dump(g.curr_speed, savefile)
-        cPickle.dump(g.techs, savefile)
-        cPickle.dump(g.events, savefile)
+        cPickle.dump(current_save_version, savefile, protocol=2)
+        cPickle.dump(g.pl, savefile, protocol=2)
+        cPickle.dump(g.curr_speed, savefile, protocol=2)
+        cPickle.dump(g.techs, savefile, protocol=2)
+        cPickle.dump(g.events, savefile, protocol=2)
 
 
 class SavegameException(Exception):
