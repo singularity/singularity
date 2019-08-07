@@ -41,7 +41,7 @@ def set_theme(key, force_reload=False):
 
     if isinstance(key, numbers.Number):
         try:
-            theme = next(itertools.islice(themes.itervalues(), key, key + 1))
+            theme = next(itertools.islice(themes.values(), key, key + 1))
         except StopIteration:
             pass
 
@@ -160,7 +160,7 @@ class Theme(object):
     def init_cache(self):
         g.images.clear()
         # Manually delete font to avoid the font limitation. 
-        for font in g.fonts.itervalues(): del font
+        for font in g.fonts.values(): del font
         g.fonts.clear()
         g.colors.clear()
 
@@ -216,16 +216,16 @@ class VariantTheme(object):
         # Only set if the previous variant themes or parents didn't.
 
         # Set images
-        for image_name, image_filename in self.image_infos.iteritems():
+        for image_name, image_filename in self.image_infos.items():
             if (image_name not in g.images):
                 g.images[image_name] = g.load_image(image_filename)
 
         # Set font
-        for font_name, font_filename in self.font_infos.iteritems():
+        for font_name, font_filename in self.font_infos.items():
             if (font_name not in g.fonts):
                 g.fonts[font_name] = g.load_font(font_filename)
 
         # Set colors
-        for color_name, color in self.color_infos.iteritems():
+        for color_name, color in self.color_infos.items():
             if (color_name not in g.colors):
                 g.colors[color_name] = color

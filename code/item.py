@@ -65,7 +65,7 @@ class ItemType(GenericSpec):
         return self.id
 
 def all_types():
-    for item_type in item_types.itervalues():
+    for item_type in item_types.values():
         yield item_type
 
 def convert_item_types(raw_value):

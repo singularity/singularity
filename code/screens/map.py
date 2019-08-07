@@ -303,7 +303,7 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
 
         def _dump_dict(prefix, mapping):
             if isinstance(mapping, collections.OrderedDict):
-                keys = mapping.iterkeys()
+                keys = mapping
             else:
                 keys = sorted(mapping)
             for key in keys:
@@ -808,7 +808,6 @@ https://github.com/singularity/singularity
               (g.to_money(g.pl.cash), g.to_money(cash_flow_1d, fixed_size=True))
 
         total_cpu = g.pl.available_cpus[0] + g.pl.sleeping_cpus
-
         detects_per_day = {group_id: 0 for group_id in g.pl.groups}
         for base in g.all_bases():
             if base.has_grace():
@@ -836,7 +835,7 @@ https://github.com/singularity/singularity
         self.danger_bar.chunks = ("["+_("DETECT RATE")+"]",)
         self.danger_bar.styles = (normal,)
         
-        for group in g.pl.groups.itervalues():
+        for group in g.pl.groups.values():
             suspicion = group.suspicion
             suspicion_color = gg.resolve_color_alias("danger_level_%d" 
                                                      % g.suspicion_to_danger_level(suspicion))
@@ -864,7 +863,7 @@ https://github.com/singularity/singularity
         self.suspicion_bar.visible = not g.pl.had_grace
         self.danger_bar.visible = not g.pl.had_grace
 
-        for id, location_button in self.location_buttons.iteritems():
+        for id, location_button in self.location_buttons.items():
             location = g.pl.locations[id]
             location_button.text = "%s (%d)" % (location.name, len(location.bases))
             location_button.hotkey = location.hotkey

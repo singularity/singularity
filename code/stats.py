@@ -42,7 +42,7 @@ class Statistics(object):
         return stat
     
     def __iter__(self):
-        return self._stats.itervalues()
+        return iter(self._stats.values())
 
     def reset(self):
         for stat in self:

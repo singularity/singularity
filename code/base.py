@@ -418,7 +418,7 @@ class Base(buyable.Buyable):
             return True
 
     def all_items(self):
-        for item in self.items.itervalues():
+        for item in self.items.values():
             if item: yield item
 
     def get_detect_info(self):
@@ -448,7 +448,7 @@ def get_detect_info(detect_chance):
     detect_template = _("Detection chance:") + "\n"
     chances = []
     
-    for group in g.pl.groups.itervalues():
+    for group in g.pl.groups.values():
         detect_template += group.name + u":\xA0%s\n"
         chances.append(detect_chance.get(group.spec.id, 0))
 

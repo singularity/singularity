@@ -274,7 +274,7 @@ class Player(object):
         # Do research, fill the CPU pool.
         default_cpu = self.available_cpus[0]
         
-        for task, cpu_assigned in self.cpu_usage.iteritems():
+        for task, cpu_assigned in self.cpu_usage.items():
             if cpu_assigned == 0:
                 continue
 
@@ -468,7 +468,7 @@ class Player(object):
                     print("Chance of discovery for base %s: %s" % \
                         (base.name, repr(detect_chance)))
 
-                for group, group_chance in detect_chance.iteritems():
+                for group, group_chance in detect_chance.items():
                     if chance.roll_interval(group_chance/10000., secs_passed):
                         dead_bases.append( (base, group) )
                         dead = True
@@ -524,13 +524,13 @@ class Player(object):
         # usage proportionately.
         # It must be computed separalty for each danger.
         needed_cpus = array([0,0,0,0,0], long)
-        for task_id, cpu in self.cpu_usage.iteritems():
+        for task_id, cpu in self.cpu_usage.items():
             danger = task.danger_for(task_id)
             needed_cpus[:danger+1] += cpu
         for danger, (available_cpu, needed_cpu) in enumerate(zip(self.available_cpus, needed_cpus)):
             if needed_cpu > available_cpu:
                 pct_left = truediv(available_cpu, needed_cpu)
-                for task_id, cpu_assigned in self.cpu_usage.iteritems():
+                for task_id, cpu_assigned in self.cpu_usage.items():
                     task_danger = task.danger_for(task_id)
                     if (danger == task_danger):
                         self.cpu_usage[task_id] = int(cpu_assigned * pct_left)

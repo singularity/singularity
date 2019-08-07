@@ -152,7 +152,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
     def calc_cpu_left(self):
         cpu_count = array(g.pl.available_cpus, long)
-        for task_id, cpu in g.pl.cpu_usage.iteritems():
+        for task_id, cpu in g.pl.cpu_usage.items():
             danger = task.danger_for(task_id)
             cpu_count[:danger+1] -= cpu
 

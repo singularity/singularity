@@ -283,9 +283,7 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
         self.list = []
         self.key_list = []
 
-        base_type_list = g.base_type.values()
-        base_type_list.sort()
-        base_type_list.reverse()
+        base_type_list = sorted(g.base_type.values(), reverse=True)
         for base_type in base_type_list:
             if base_type.available() \
                     and base_type.buildable_in(self.parent.location):

@@ -77,9 +77,9 @@ class KnowledgeScreen(dialog.Dialog):
                                      _("Items")   :"items",})
         self.knowledge_types.update({ knowledge["name"]: knowledge_id
                                       for knowledge_id, knowledge
-                                      in g.knowledge.iteritems() })
+                                      in g.knowledge.items() })
 
-        self.knowledge_choice.list = self.knowledge_types.keys()
+        self.knowledge_choice.list = list(self.knowledge_types)
         self.knowledge_choice.needs_rebuild = True
 
         # Update buttons translations
@@ -112,7 +112,7 @@ class KnowledgeScreen(dialog.Dialog):
             items = [[item.name, item.id ] for item in g.items.values()
                                            if item.available()]
         elif item_type != None:
-            items = [ [item[0], id] for id, item in g.knowledge[item_type]["list"].iteritems()]
+            items = [ [item[0], id] for id, item in g.knowledge[item_type]["list"].items()]
 
         else:
             items = []

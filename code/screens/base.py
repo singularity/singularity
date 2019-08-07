@@ -48,9 +48,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         self.list = []
         self.key_list = []
 
-        item_list = g.items.values()
-        item_list.sort()
-        item_list.reverse()
+        item_list = sorted(g.items.values(), reverse=True)
         for item in item_list:
             if item.item_type.id == self.type.id and item.available() \
                     and item.buildable_in(self.parent.base.location):
