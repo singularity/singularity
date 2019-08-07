@@ -36,6 +36,7 @@ class LogScreen(dialog.ChoiceDialog):
 
     def make_listbox(self):
         return listbox.Listbox(self, (0, 0), (-1, -.85),
+                               list_item_height=0.05,
                                anchor=constants.TOP_LEFT, align=constants.LEFT,
                                on_double_click_on_item=self.handle_double_click,
                                item_borders=False, item_selectable=True)

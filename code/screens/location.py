@@ -93,19 +93,19 @@ class LocationScreen(dialog.Dialog):
                                                  anchor=constants.TOP_LEFT)
 
     def make_item(self, canvas):
-        canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.30, -.99),
+        canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.27, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_type      = text.Text(canvas, (-.30,-.05), (-.23, -.99),
+        canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.23, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_cpu       = text.Text(canvas, (-.53,-.05), (-.13, -.99),
+        canvas.base_cpu       = text.Text(canvas, (-.50,-.05), (-.13, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.status_display = text.Text(canvas, (-.66,-.05), (-.29, -.99),
+        canvas.status_display = text.Text(canvas, (-.63,-.05), (-.35, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.power_display  = text.Text(canvas, (-.90,-.05), (-.10, -.99),
+        canvas.power_display  = text.Text(canvas, (-.93,-.05), (-.07, -.99),
                                           background_color="clear")
 
 
