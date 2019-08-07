@@ -172,6 +172,7 @@ def load_savegame(savegame):
             ItemSpec=item.ItemSpec,
             ItemType=item.ItemType,
             LogEmittedEvent=logmessage.LogEmittedEvent,
+            LogResearchedTech=logmessage.LogResearchedTech,
             _reconstruct=numpy.core.multiarray._reconstruct,
             scalar=numpy.core.multiarray.scalar,
             ndarray=numpy.ndarray,
