@@ -207,7 +207,7 @@ class Text(widget.BorderedWidget):
     resolved_base_font = widget.call_on_change("_resolved_base_font", resize_redraw)
 
     def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
-                 text=None, base_font=None, shrink_factor=1,
+                 text=None, base_font=None, shrink_factor=0.875,
                  color=None, align=constants.CENTER, valign=constants.MID,
                  underline=-1, wrap=True, bold=False, text_size=36, **kwargs):
         kwargs.setdefault("background_color", "text_background")
@@ -254,10 +254,10 @@ class Text(widget.BorderedWidget):
 
     def pick_font_size(self, dimensions, break_words=True):
         if dimensions[0]:
-            width = int(dimensions[0] - max(4, dimensions[0] * .30) * self.shrink_factor)
+            width = int(dimensions[0] * self.shrink_factor)
         else:
             width = None
-        height = int(dimensions[1] - max(4, dimensions[1] * .30) * self.shrink_factor)
+        height = int(dimensions[1] * self.shrink_factor)
 
         basic_line_count = self.text.count("\n") + 1
 
