@@ -33,7 +33,7 @@ def get_theme_list():
     return [themes[k].name for k in themes]
 
 def get_theme_pos():
-    return (i[0] for i in enumerate(themes) if i[1] == current.id).next()
+    return next(i[0] for i in enumerate(themes) if i[1] == current.id)
 
 def set_theme(key, force_reload=False):
     global current
