@@ -149,12 +149,22 @@ if save_loc is not None:
         except RuntimeError:
             pass # don't be picky (for now...)
 
-        try:
-            for name in mixer.itervolumes():
-                mixer.set_volume(name, prefs.getint("Preferences", name + "_volume"))
-        except RuntimeError:
-            pass # don't be picky (for now...)
-            
+        for name in mixer.itervolumes():
+            try:
+                volume = prefs.getint("Preferences", name + "_volume")
+            except (RuntimeError, ValueError):
+                # Work around old preferences where a float was stored by mistake
+                try:
+                    volume = prefs.getfloat("Preferences", name + "_volume")
+                except (RuntimeError, ValueError):
+                    continue
+                else:
+                    volume = int(volume) * 100
+            # chomp volume to the 0-100 range.  Just to avoid blasting peoples ears out
+            # if something goes wrong.
+            volume = min(max(volume, 0), 100)
+            mixer.set_volume(name, volume)
+
     if prefs.has_section("Warning"):
         try:
             for key in prefs.options('Warning'):
