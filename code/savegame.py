@@ -173,6 +173,8 @@ def load_savegame(savegame):
             ItemType=item.ItemType,
             LogEmittedEvent=logmessage.LogEmittedEvent,
             LogResearchedTech=logmessage.LogResearchedTech,
+            LogBaseLostMaintenance=logmessage.LogBaseLostMaintenance,
+            LogBaseDiscovered=logmessage.LogBaseDiscovered,
             _reconstruct=numpy.core.multiarray._reconstruct,
             scalar=numpy.core.multiarray.scalar,
             ndarray=numpy.ndarray,

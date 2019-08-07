@@ -28,7 +28,7 @@ from numpy import array
 
 from code import g, difficulty, task, chance, location, group
 from code.buyable import cash, cpu
-from code.logmessage import LogEmittedEvent, LogResearchedTech
+from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered
 from code.stats import itself as stats, observe
 
 
@@ -604,26 +604,19 @@ class Player(object):
             base_name = base.name
 
             if reason == "maint":
-                dialog_string = g.strings["discover_maint"] % \
-                                {"base": base_name}
-
-            elif reason in self.groups:
-                discovery_locs.append(base.location)
-                self.groups[reason].discovered_a_base()
-                detect_phrase = g.groups[reason].discover_desc
-
-                dialog_string = g.strings["discover"] % \
-                                {"base": base_name, "group": detect_phrase}
+                log_message = LogBaseLostMaintenance(self.raw_sec, base_name, base.spec.id, base.location.id)
             else:
-                print("Error: base destroyed for unknown reason: " + reason)
-                dialog_string = g.strings["discover"] % \
-                                {"base": base_name, "group": "???"}
+                if reason in self.groups:
+                    discovery_locs.append(base.location)
+                    self.groups[reason].discovered_a_base()
+                else:
+                    print("Error: base destroyed for unknown reason: " + reason)
+                log_message = LogBaseDiscovered(self.raw_sec, base_name, base.spec.id, base.location.id, reason)
 
-            self.add_log("log_destroy", reason, base.name, base.spec.id, base.location.id)
-
+            self.log.append(log_message)
             self.pause_game()
             base.destroy()
-            g.map_screen.show_message(dialog_string, color="red")
+            g.map_screen.show_message(log_message.full_message, color="red")
 
         # Now we update the internal information about what locations had
         # the most recent discovery and the nextmost recent one.  First,
@@ -679,8 +672,3 @@ class Player(object):
                 result_cash -= g.techs[task].cost_left[cash]
                 result_cash = max(result_cash, -g.max_cash)
         return result_cash
-
-    def add_log(self, name, *args):
-        time = (self.time_day, self.time_hour, self.time_min, self.time_sec)
-        log = (time, name, args)
-        self.log.append(log)
