@@ -20,7 +20,17 @@
 
 from __future__ import absolute_import
 
-import cPickle
+import sys
+
+try:
+    import cPickle as pickle
+    PY3 = False
+    assert sys.version_info[0] == 2
+except ImportError:
+    import pickle
+    assert sys.version_info[0] >= 3
+    PY3 = True
+
 import collections
 import gzip
 import json
@@ -67,6 +77,9 @@ def convert_string_to_path_name(name):
 
 
 def convert_path_name_to_str(path):
+    if PY3:
+        # Python3 handles this case sanely by default
+        return path
     # Some filesystems require unicode (e.g. Windows) whereas Linux needs bytes.
     # Python 2 is rather forgiving which works as long as you work with ASCII,
     # but some people might like non-ASCII in their savegame names
@@ -74,6 +87,24 @@ def convert_path_name_to_str(path):
     if os.path.supports_unicode_filenames:
         return path
     return path.decode('utf-8', errors='replace')
+
+
+if PY3:
+
+    def unpickle_instance(fd, find_globals):
+        class RestrictedUnpickler(pickle.Unpickler):
+
+            def find_class(self, module, name):
+                return find_globals(module, name)
+
+        return RestrictedUnpickler(fd, encoding='bytes')
+
+else:
+
+    def unpickle_instance(fd, find_globals):
+        unpickler = pickle.Unpickler(fd)
+        unpickler.find_global = find_globals
+        return unpickler
 
 
 def get_savegames():
@@ -128,7 +159,7 @@ def delete_savegame(savegame):
 
 
 def parse_pickle_savegame_headers(fd):
-    unpickle = cPickle.Unpickler(fd)
+    unpickle = pickle.Unpickler(fd)
 
     def find_class(module_name, class_name):
         # Lets reduce the risk of "funny monkey business"
@@ -233,13 +264,16 @@ def load_savegame_by_pickle(savegame):
     load_path = savegame.filepath
 
     loadfile = open(load_path, 'rb')
-    unpickle = cPickle.Unpickler(loadfile)
 
     stats.reset()
 
     def find_class(module_name, class_name):
         # For cPickle
-        import copy_reg
+        try:
+            import copy_reg
+        except ImportError:
+            import copyreg as copy_reg
+
         import numpy.core.multiarray
         import collections
 
@@ -295,10 +329,13 @@ def load_savegame_by_pickle(savegame):
         else:
             raise SavegameException(module_name, class_name)
 
-    unpickle.find_global = find_class
+
+    unpickle = unpickle_instance(loadfile, find_class)
 
     #check the savefile version
     load_version_string = unpickle.load()
+    if PY3 and isinstance(load_version_string, bytes):
+        load_version_string = load_version_string.decode('utf-8')
     if load_version_string not in savefile_translation:
         loadfile.close()
         print(savegame.name + " is not a savegame, or is too old to work.")
@@ -442,9 +479,9 @@ def _convert_log_entry(entry):
 
 
 def savegame_exists(savegame_name):
-    save_path = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".s2", "saves")
+    save_path = dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves")
 
-    if (save_path is None or not os.path.isfile(save_path)) :
+    if (save_path is None or not os.path.isfile(convert_string_to_path_name(save_path))) :
         return False
 
     return True
@@ -453,8 +490,7 @@ def savegame_exists(savegame_name):
 def create_savegame(savegame_name):
     global default_savegame_name
     default_savegame_name = savegame_name
-    save_loc = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".s2", "saves")
-    
+    save_loc = convert_string_to_path_name(dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves"))
     # Save in new "JSONish" format
     with open(save_loc, 'wb') as savefile:
         version_line = "%s\n" % current_save_version
