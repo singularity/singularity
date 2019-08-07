@@ -94,3 +94,67 @@ class LogResearchedTech(AbstractLogMessage):
             "tech_message": tech.result
         }
         return text
+
+
+class AbstractBaseRelatedLogMessage(AbstractLogMessage):
+
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
+        super(AbstractBaseRelatedLogMessage, self).__init__(raw_emit_time)
+        self._base_name = base_name
+        self._base_type_id = base_type_id
+        self._base_location_id = base_location_id
+
+    @property
+    def base_type(self):
+        return g.base_type[self._base_type_id]
+
+    @property
+    def location(self):
+        return g.pl.locations[self._base_location_id]
+
+
+class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
+
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
+        super(LogBaseLostMaintenance, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+
+    @property
+    def log_line(self):
+        return g.strings['log_destroy_maint'] % (self._base_name, self.base_type.name, self.location.name)
+
+    @property
+    def full_message(self):
+        dialog_string = g.strings["discover_maint"] % {
+            "base": self._base_name,
+        }
+        return dialog_string
+
+
+class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
+
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id, discovered_by_group_id):
+        super(LogBaseDiscovered, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+        self._discovered_by_group_id = discovered_by_group_id
+
+    @property
+    def group_discover_desc(self):
+        if self._discovered_by_group_id in g.pl.groups:
+            return g.pl.groups[self._discovered_by_group_id].spec.discover_desc
+        return "???"
+
+    @property
+    def log_line(self):
+        try:
+            log_format = 'log_destroy_%s' % self._discovered_by_group_id
+            message = g.strings[log_format]
+        except KeyError:
+            message = g.strings['log_destroy']
+        return message % (self._base_name, self.base_type.name, self.location.name)
+
+    @property
+    def full_message(self):
+        dialog_string = g.strings["discover"] % {
+            "base": self._base_name,
+            "group": self.group_discover_desc
+        }
+        return dialog_string
