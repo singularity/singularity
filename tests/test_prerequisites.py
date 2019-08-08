@@ -32,6 +32,7 @@ def base_types():
 
 @pytest.fixture
 def items():
+    code.data.load_item_types()
     code.data.load_items()
     return g.items.copy()
 
