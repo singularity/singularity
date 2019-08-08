@@ -657,6 +657,23 @@ class MapScreen(dialog.Dialog):
             for child in self.children:
                 if isinstance(child, dialog.Dialog):
                     child.visible = False
+
+            # Display a message so the player understand better what happened.
+            msg = _("""
+A error has occurred. The game will automatically pause and open the game menu. You can continue and save or quit immediately.
+
+A report was written out to%s
+Please create a issue with this report at github:
+https://github.com/singularity/singularity
+""" % (":\n" + g.logfile if g.logfile is not None else " console output."))
+            d = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
+                                   anchor=constants.MID_CENTER,
+                                   yes_type="continue", no_type="quit", text=msg)
+            cont = dialog.call_dialog(d, self)
+
+            if not cont:
+                raise SystemExit
+
             exit = dialog.call_dialog(self.menu_dialog, self)
             if exit:
                 self.visible = False

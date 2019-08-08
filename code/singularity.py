@@ -65,15 +65,16 @@ import code.graphics.theme as theme
 set_theme = None
 
 #configure global logger
-logfile = dirs.get_writable_file_in_dirs("error.log", "log")
+g.logfile = dirs.get_writable_file_in_dirs("error.log", "log")
+
 if len(logging.getLogger().handlers) == 0:
     try:
-        logging.getLogger().addHandler(logging.FileHandler(logfile, delay=True))
+        logging.getLogger().addHandler(logging.FileHandler(g.logfile, delay=True))
     except TypeError: # Python < 2.6, delay not supported yet.
         try:
-            logging.getLogger().addHandler(logging.FileHandler(logfile))
+            logging.getLogger().addHandler(logging.FileHandler(g.logfile))
         except IOError: # Probably access denied with --singledir. That's ok
-            pass
+            g.logfile = None
 
 # keep g's defaults intact so we can compare after parsing options and prefs
 from code import mixer, warning

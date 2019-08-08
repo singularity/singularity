@@ -565,6 +565,7 @@ def load_buttons_defs(lang=None):
         "load"     : g.hotkey(_("&LOAD")),
         "continue" : g.hotkey(_("&CONTINUE")),
         "skip"     : g.hotkey(_("&SKIP")),
+        "quit"     : g.hotkey(_("&QUIT")),
     }
     gg.buttons.update(buttons)
 
