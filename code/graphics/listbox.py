@@ -55,7 +55,6 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.auto_scroll = True
         if item_selectable:
             self.on_double_click_on_item = on_double_click_on_item
-            self.add_handler(constants.DOUBLECLICK, self.on_double_click, 200)
         elif on_double_click_on_item:
             raise ValueError("The on_double_click_on_item handler only works for a listbox with selectable items")
         self.scrollbar = scrollbar.UpdateScrollbar(self,
@@ -65,6 +64,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         super(Listbox, self).add_hooks()
         if self.parent is not None:
             self.parent.add_handler(constants.CLICK, self.on_click, 90)
+            self.parent.add_handler(constants.DOUBLECLICK, self.on_double_click, 200)
             self.parent.add_key_handler(pygame.K_UP, self.got_key)
             self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
             self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
@@ -74,6 +74,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         super(Listbox, self).remove_hooks()
         if self.parent is not None:
             self.parent.remove_handler(constants.CLICK, self.on_click)
+            self.parent.remove_handler(constants.DOUBLECLICK, self.on_double_click, 200)
             self.parent.remove_key_handler(pygame.K_UP, self.got_key)
             self.parent.remove_key_handler(pygame.K_DOWN, self.got_key)
             self.parent.remove_key_handler(pygame.K_PAGEUP, self.got_key)
