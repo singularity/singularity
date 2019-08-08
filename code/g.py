@@ -89,11 +89,15 @@ def add_commas(number, fixed_size=False):
     locale_test = locale.format("%01.1f", 0.1) if not fixed_size else ''
     if len(locale_test) == 3 and not locale_test[1].isdigit():
         if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
-            return raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
-        if locale_test[2] == locale.str(0) and locale_test[0] == locale.str(1):
-            return raw_with_commas.lstrip(locale_test[2]).lstrip(locale_test[1])
+            raw_with_commas = raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
+        elif locale_test[2] == locale.str(0) and locale_test[0] == locale.str(1):
+            raw_with_commas = raw_with_commas.lstrip(locale_test[2]).lstrip(locale_test[1])
 
-    return raw_with_commas
+    # Fix python2 format bug: See https://bugs.python.org/issue15276
+    try:
+        return unicode(raw_with_commas)
+    except UnicodeDecodeError:
+        return raw_with_commas.decode("utf-8")
 
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
