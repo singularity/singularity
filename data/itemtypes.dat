@@ -3,9 +3,13 @@
 # It is not intented to be changed for the moment.
 
 [cpu]
+is_extra = 0
 
 [reactor]
+is_extra = 1
 
 [network]
+is_extra = 1
 
 [security]
+is_extra = 1

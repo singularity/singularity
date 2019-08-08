@@ -30,17 +30,17 @@ from code.spec import GenericSpec, SpecDataField, validate_must_be_list, promote
 class ItemType(GenericSpec):
     
     spec_type = 'item_type'
-    spec_data_fields = []
+    spec_data_fields = [
+        SpecDataField('is_extra', data_field_name='is_extra', converter=lambda v:bool(int(v))),
+    ]
     
     """ Item type """
-    def __init__(self, id, **kwargs):
+    def __init__(self, id, is_extra, **kwargs):
 
-        self.id   = id
+        self.id       = id
+        self.is_extra = is_extra
 
         self.text = ""
-
-    def is_extra(self):
-        return not self.id == "cpu"
 
     @property
     def text(self):
