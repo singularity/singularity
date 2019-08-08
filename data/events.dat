@@ -44,9 +44,11 @@ type = global
 effect_list = discover | news | 1000
 chance = 20
 unique = 0
+duration = 21
 
 [investigation]
 type = global
 effect_list = discover | news | -1000
 chance = 20
 unique = 0
+duration = 21

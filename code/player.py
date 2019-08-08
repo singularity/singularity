@@ -623,6 +623,9 @@ class Player(object):
         # Reduce suspicion.
         for group in self.groups.values():
             group.new_day()
+        for event in g.events.values():
+            if event.triggered and event.decayable_event:
+                event.new_day()
 
     def pause_game(self):
         g.curr_speed = 0

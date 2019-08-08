@@ -30,15 +30,20 @@ class EventSpec(GenericSpec):
         SpecDataField('event_type', data_field_name='type'),
         spec_field_effect(mandatory=True),
         SpecDataField('chance', converter=int),
-        SpecDataField('unique', converter=int),
+        SpecDataField('unique', converter=int, default_value=0),
+        SpecDataField('duration', converter=int, default_value=0),
     ]
 
-    def __init__(self, id, event_type, effect_data, chance, unique):
+    def __init__(self, id, event_type, effect_data, chance, duration, unique):
         super(EventSpec, self).__init__(id)
         self.event_type = event_type
         self.effect = effect.Effect(self, effect_data)
         self.chance = chance
+        self.duration = duration if duration > 0 else None
         self.unique = unique
+        if duration < 1 and not unique:
+            raise ValueError("Event %s must have either a non-zero duration (e.g. duration = 21) or be unique "
+                             "(unique = 1)")
 
 
 class Event(object):
@@ -50,6 +55,7 @@ class Event(object):
         self.description = ""
         self.log_description = ""
         self.triggered = 0
+        self.triggered_at = -1
 
     @property
     def event_id(self):
@@ -68,8 +74,27 @@ class Event(object):
         return self.spec.chance
 
     @property
+    def duration(self):
+        return self.spec.duration
+
+    @property
     def unique(self):
         return self.spec.unique
+
+    @property
+    def decayable_event(self):
+        return self.duration is not None
+
+    def new_day(self):
+        if not self.decayable_event:
+            return
+
+        if g.pl.raw_sec - self.triggered_at > self.duration * g.seconds_per_day:
+            print("Before: %s" % str(g.pl.groups['news'].__dict__))
+            self.effect.undo_effect()
+            print("After: %s" % str(g.pl.groups['news'].__dict__))
+            self.triggered = 0
+            self.triggered_at = -1
 
     def convert_from(self, old_version):
         if old_version < 99: # < 1.0dev
@@ -82,8 +107,7 @@ class Event(object):
     def trigger(self):
         g.map_screen.show_message(self.description)
 
-        # If this is a unique event, mark it as triggered.
-        if self.unique:
-            self.triggered = 1
+        self.triggered = 1
+        self.triggered_at = g.pl.raw_sec
 
         self.effect.trigger()

@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 from code import g, mixer
 
+
 class Effect(object):
 
     def __init__(self, parent, effect_stack):
@@ -30,23 +31,32 @@ class Effect(object):
         self.effect_stack = effect_stack
 
     def trigger(self):
+        self._apply_effect()
+
+    def undo_effect(self):
+        self._apply_effect(undo_effect=True)
+
+    def _apply_effect(self, undo_effect=False):
         # effect_data is now a stack of instructions to run the effect.
         # multiple effect can be run simultaneous
         effect_iter = iter(self.effect_stack)
+        # Abuse "multiply by -1" for undoing most effects
+        effect_modifier = -1 if undo_effect else 1
         
         for current in effect_iter:
 
             if current == "interest":
-                g.pl.interest_rate += int(next(effect_iter))
+                g.pl.interest_rate += effect_modifier * int(next(effect_iter))
             elif current == "income":
-                g.pl.income += int(next(effect_iter))
+                g.pl.income += effect_modifier * int(next(effect_iter))
             elif current == "cost_labor":
-                g.pl.labor_bonus -= int(next(effect_iter))
+                g.pl.labor_bonus -= effect_modifier * int(next(effect_iter))
             elif current == "job_profit":
-                g.pl.job_bonus += int(next(effect_iter))
+                g.pl.job_bonus += effect_modifier * int(next(effect_iter))
             elif current == "display_discover":
-                g.pl.display_discover = next(effect_iter)
+                g.pl.display_discover = effect_modifier * next(effect_iter)
             elif current == "endgame":
+                assert not undo_effect, "One-shot effects (winning the game) cannot be undone!"
                 mixer.play_music("win")
                 g.map_screen.show_story_section("Win")
                 for group in g.pl.groups.values():
@@ -55,11 +65,13 @@ class Effect(object):
                 g.pl.had_grace = True
             elif current == "suspicion":
                 who = next(effect_iter)
-                value = int(next(effect_iter))
+                value = effect_modifier * int(next(effect_iter))
 
                 if who in g.pl.groups:
                     g.pl.groups[who].alter_suspicion_decay(value)
                 elif who == "onetime":
+                    assert not undo_effect, "One-shot effects (reduction of suspicion) cannot be undone!"
+
                     for group in g.pl.groups.values():
                         group.alter_suspicion(-value)
                 else:
@@ -67,7 +79,7 @@ class Effect(object):
                     % (who, self.parent_name, self.parent_id))
             elif current == "discover":
                 who = next(effect_iter)
-                value = int(next(effect_iter))
+                value = effect_modifier * int(next(effect_iter))
 
                 if who in g.pl.groups:
                     g.pl.groups[who].alter_discover_bonus(-value)
