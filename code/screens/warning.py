@@ -87,6 +87,9 @@ class WarningDialogs(object):
         if (g.pl.cpu_usage.get("cpu_pool", 0) < cpu_maintenance):
             warnings.append(warning.cpu_maintenance)
 
+        if sum(1 for b in g.all_bases()) > 7:
+            warnings.append(warning.too_many_bases)
+
         # TODO: Verify the maintenance cash
 
         warnings = [w for w in warnings if w.active]

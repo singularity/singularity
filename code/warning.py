@@ -31,6 +31,8 @@ cpu_usage = Warning("cpu_usage", "warning_cpu_usage")
 one_base = Warning("one_base", "warning_one_base")
 cpu_pool_zero = Warning("cpu_pool_zero", "warning_cpu_pool_zero")
 cpu_maintenance = Warning("cpu_maintenance", "warning_cpu_maintenance")
+too_many_bases = Warning("too_many_bases", "warning_too_many_bases")
+
 
 warnings = {
     cpu_usage.id:       cpu_usage,

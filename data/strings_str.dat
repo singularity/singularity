@@ -27,6 +27,8 @@ warning_cpu_pool_zero_name = CPU POOL is empty.
 warning_cpu_pool_zero_desc = My cpu pool is empty. Some of my bases or items cannot be build without CPU.
 warning_cpu_maintenance_name = CPU POOL not enough for maintenance.
 warning_cpu_maintenance_desc = My cpu pool is not enough to maintain some of my bases. I may lose them.
+warning_too_many_bases_name = Too many bases
+warning_too_many_bases_desc = I have built many bases, which will make it more likely that humans discover them.  Perhaps I should restrain my base count.
 
 # The following strings are used on the map screen in place of percentages until
 # a certain technology is researched.
