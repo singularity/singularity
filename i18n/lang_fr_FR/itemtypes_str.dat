@@ -1,0 +1,11 @@
+[cpu]
+text = &Processeur
+
+[reactor]
+text = &Alimentation
+
+[network]
+text = &Réseau
+
+[security]
+text = &Sécurité

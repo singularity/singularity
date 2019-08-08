@@ -119,22 +119,6 @@ msgstr "часов"
 msgid "minutes"
 msgstr "минут"
 
-#: g.py:848
-msgid "&Processor"
-msgstr "Процессор"
-
-#: g.py:849
-msgid "&Reactor"
-msgstr "Реактор"
-
-#: g.py:850
-msgid "&Network"
-msgstr "Сеть"
-
-#: g.py:851
-msgid "&Security"
-msgstr "Безопасность"
-
 #: g.py:1057
 msgid "&YES"
 msgstr "&да"
