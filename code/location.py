@@ -26,6 +26,9 @@ from code.buyable import cash, cpu, labor
 
 class LocationSpec(prerequisite.Prerequisite):
 
+    # The name of this location (loaded dynamically from locations_str.dat)
+    name = ""
+
     # The hotkey used to open this location (loaded dynamically from locations_str.dat)
     hotkey = ""
 
@@ -88,7 +91,7 @@ class Location(object):
 
     @property
     def name(self):
-        return self.spec.id
+        return self.spec.name
 
     def available(self):
         return self.spec.available()
