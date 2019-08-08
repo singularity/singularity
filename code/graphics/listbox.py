@@ -53,10 +53,9 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.list = list or []
 
         self.auto_scroll = True
-        if item_selectable:
-            self.on_double_click_on_item = on_double_click_on_item
-        elif on_double_click_on_item:
-            raise ValueError("The on_double_click_on_item handler only works for a listbox with selectable items")
+
+        self.on_double_click_on_item = on_double_click_on_item
+
         self.scrollbar = scrollbar.UpdateScrollbar(self,
                                                    update_func = self.on_scroll)
 
