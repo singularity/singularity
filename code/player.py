@@ -734,11 +734,11 @@ class Player(object):
                 job_cpu += real_cpu
             else:
                 tech = g.techs[task_id]
-                cost_left = tech.cost_left
-                remaining_cash = cost_left[cash]
-                remaining_cpu = cost_left[cpu]
-                spent_cash = remaining_cash * real_cpu / float(remaining_cpu)
-                cash_flow -= spent_cash
+                ideal_spending = tech.cost_left
+                spending = tech.calculate_work(ideal_spending[cash],
+                                               ideal_spending[cpu],
+                                               time=mins_forwarded)[0]
+                cash_flow -= spending[cash]
 
         cpu_flow += cpu_left * secs_forwarded
         available_cpu_pool = cpu_flow
