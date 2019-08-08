@@ -358,6 +358,19 @@ def load_techs():
     load_tech_defs()
 
 
+def load_item_types():
+    item.item_types = collections.OrderedDict()
+    
+    for item_type in parse_spec_from_file(item.ItemType, 'itemtypes.dat'):
+        item.item_types[item_type.id] = item_type
+
+    load_item_type_defs()
+
+
+def load_item_type_defs(lang=None):
+    load_generic_defs("itemtypes", item.item_types, lang)
+    
+
 def load_items():
     g.items = {
         item_spec.id: item_spec
@@ -368,12 +381,6 @@ def load_items():
 
 
 def load_item_defs(lang=None):
-
-    item.item_types['cpu'].text = _("&Processor")
-    item.item_types['reactor'].text = _("&Reactor")
-    item.item_types['network'].text = _("&Network")
-    item.item_types['security'].text = _("&Security")
-
     load_generic_defs("items", g.items, lang)
 
 
@@ -619,6 +626,7 @@ def reload_all():
     load_regions()
     load_locations()
     load_techs()
+    load_item_types()
     load_items()
     load_bases()
     
@@ -635,6 +643,7 @@ def reload_all_def():
     load_difficulty_defs()
     load_base_defs()
     load_tech_defs()
+    load_item_type_defs()
     load_item_defs()
     load_event_defs()
     load_task_defs()

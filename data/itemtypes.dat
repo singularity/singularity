@@ -1,0 +1,11 @@
+# Dehardcoded item types
+# However, part of the game use specifically a item type. 
+# It is not intented to be changed for the moment.
+
+[cpu]
+
+[reactor]
+
+[network]
+
+[security]

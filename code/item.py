@@ -24,20 +24,20 @@ import collections
 
 from code import g, buyable
 from code.stats import stat
-from code.spec import SpecDataField, validate_must_be_list, promote_to_list
+from code.spec import GenericSpec, SpecDataField, validate_must_be_list, promote_to_list
 
 
-class ItemType(object):
-    """ Item type, 4 fixed instances: cpu, reactor, network and security """
+class ItemType(GenericSpec):
+    
+    spec_type = 'item_type'
+    spec_data_fields = []
+    
+    """ Item type """
     def __init__(self, id, **kwargs):
 
-        # Either cpu, reactor, network or security
         self.id   = id
 
-        # Text is language-dependent data, thus ideally it should not be passed
-        # to the constructor, so label, hotkey and pos are created with default
-        # (blank) values. When language changes, update data with text.setter
-        self.text = kwargs.pop("text", id)
+        self.text = ""
 
     def is_extra(self):
         return not self.id == "cpu"
@@ -64,18 +64,6 @@ class ItemType(object):
     def __repr__(self):
         return self.id
 
-# TODO: Deharcode ItemType
-
-# Order IS NOT relevant!
-# Because the ugly extra_items are gone and I am happy. :)))
-item_types = collections.OrderedDict([
-    ("cpu", ItemType("cpu")),
-    ("reactor", ItemType("reactor")),
-    ("network", ItemType("network")),
-    ("security", ItemType("security")),
-])
-
-
 def all_types():
     for item_type in item_types.itervalues():
         yield item_type
@@ -94,7 +82,7 @@ def convert_item_type(raw_value):
 
 
 class ItemSpec(buyable.BuyableSpec):
-    """ Item as a buyable item (CPUs, Reactors, Network and Security items) """
+    """ Item as a buyable item """
 
     spec_type = 'item'
     created = stat(spec_type + "_created")
