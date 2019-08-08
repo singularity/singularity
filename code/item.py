@@ -128,13 +128,13 @@ class ItemSpec(buyable.BuyableSpec):
         for qual, value in self.item_qual.iteritems():
             if qual == "cpu":
                 bonus_text += _("CPU per day:")+" "
-                bonus_text += g.add_commas(self.item_qual)
+                bonus_text += g.add_commas(value)
             elif qual == "cpu_modifier":
                 bonus_text += _("CPU bonus:")+" "
-                bonus_text += g.to_percent(self.item_qual)
+                bonus_text += g.to_percent(value)
             elif qual == "discover_modifier":
                 bonus_text += _("Detection chance reduction:")+" "
-                bonus_text += g.to_percent(self.item_qual)
+                bonus_text += g.to_percent(value)
             bonus_text += "\n"
 
         return bonus_text
