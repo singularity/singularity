@@ -736,7 +736,7 @@ class Player(object):
                 tech = g.techs[task_id]
                 ideal_spending = tech.cost_left
                 spending = tech.calculate_work(ideal_spending[cash],
-                                               ideal_spending[cpu],
+                                               real_cpu,
                                                time=mins_forwarded)[0]
                 cash_flow -= spending[cash]
 
