@@ -196,7 +196,7 @@ class KnowledgeScreen(dialog.Dialog):
             desc_text += ", " + g.to_time(g.items[knowledge_key].cost[2]) + "\n"
             desc_text += g.items[knowledge_key].get_quality_info()
 
-            desc_text += "\n\n"+g.items[knowledge_key].description
+            desc_text += "\n"+g.items[knowledge_key].description
 
         elif knowledge_type != None:
             desc_text = g.knowledge[knowledge_type]["list"][knowledge_key][0] + "\n\n" + \

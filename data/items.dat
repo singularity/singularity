@@ -1,145 +1,170 @@
 [PC]
 cost_list = 500 | 0 | 1
-type_list = cpu | 1
+type = cpu
+quality_list = cpu | 1
 build = ALL
 
 [Gaming PC]
 cost_list = 1000 | 0 | 2
-type_list = cpu | 5
+type = cpu
+quality_list = cpu | 5
 build = ALL
 
 [Server]
 cost_list = 2000 | 0 | 2
-type_list = cpu | 10
+type = cpu
+quality_list = cpu | 10
 build = ALL
 
 [Cluster]
 cost_list = 6000 | 0 | 3
-type_list = cpu | 35
+type = cpu
+quality_list = cpu | 35
 pre = Parallel Computation
 build = ALL
 
 [Mainframe]
 cost_list = 17500 | 0 | 5
-type_list = cpu | 120
+type = cpu 
+quality_list = cpu | 120
 pre = Microchip Design
 build = ALL
 
 [Supercomputer]
 cost_list = 50000 | 0 | 7
+type = cpu
+quality_list = cpu | 350
 pre = Advanced Microchip Design
-type_list = cpu | 350
 build = ALL
 
 [Quantum Computer]
 cost_list = 100000 | 1000 | 10
-type_list = cpu | 1500
+type = cpu
+quality_list = cpu | 1500
 pre = Quantum Computing
 build = ALL
 
 [Quantum Computer MK2]
 cost_list = 120000 | 2000 | 10
 pre = Autonomous Computing
-type_list = cpu | 10000
+type = cpu
+quality_list = cpu | 10000
 build = ALL
 
 [Quantum Computer MK3]
 cost_list = 150000 | 4000 | 10
 pre = Advanced Quantum Computing
-type_list = cpu | 200000
+type = cpu
+quality_list = cpu | 200000
 build = ALL
 
 [Diesel Generator]
 cost_list = 500 | 0 | 5
-type_list = reactor | 250
+type = reactor
+quality_list = discover_modifier | 250
 build = ALL
 
 [Solar Collector]
 cost_list = 5000 | 0 | 5
+type = reactor
+quality_list = discover_modifier | 500
 pre = Solar Collectors
-type_list = reactor | 500
 build_list = URBAN | ANTARCTIC | MOON | FAR REACHES
 
 [Fuel Cell]
 cost_list = 5000 | 0 | 5
+type = reactor
+quality_list = discover_modifier | 1000
 pre = Fuel Oxidation
-type_list = reactor | 1000
 build_list = ALL
 
 [Solid Fuel Cell]
 cost_list = 5000 | 0 | 5
+type = reactor
+quality_list = discover_modifier | 1500
 pre = Advanced Fuel Oxidation
-type_list = reactor | 1500
 build_list = ALL
 
 [Fusion Reactor]
 cost_list = 10000 | 0 | 5
+type = reactor
+quality_list = discover_modifier | 2500
 pre = Fusion Reactor
-type_list = reactor | 2500
 build = ALL
 
 [Warning Signs]
 cost_list = 500 | 0 | 1
+type = security
+quality_list = discover_modifier | 500
 pre = Sociology
-type_list = security | 500
 build = URBAN
 
 [Perimeter Fencing]
 cost_list = 5000 | 0 | 5
+type = security
+quality_list = discover_modifier | 1000
 pre = Autonomous Vehicles
-type_list = security | 1000
 build = URBAN
 
 [Armed Guards]
 cost_list = 10000 | 0 | 8
-pre = Simulacra
-type_list = security | 2000
-build = URBAN
 maint = 300 | 0 | 0
+type = security
+quality_list = discover_modifier | 2000
+pre = Simulacra
+build = URBAN
 
 [Hypnosis Field]
 cost_list = 40000 | 0 | 10
+type = security
+quality_list = discover_modifier | 3000
 pre = Hypnosis Field
-type_list = security | 3000
 build = URBAN
 
 [Passive Camouflage]
 cost_list = 5000 | 0 | 5
+type = security
+quality_list = discover_modifier | 1000
 pre = Autonomous Vehicles
-type_list = security | 1000
 build_list = ANTARCTIC | OCEAN | MOON
 
 [Heatsink]
 cost_list = 15000 | 0 | 8
+type = security
+quality_list = discover_modifier | 2000
 pre = Heat Signature Reduction
-type_list = security | 2000
 build_list = ANTARCTIC | OCEAN | MOON
 
 [Ground Source Heatsink]
 cost_list = 50000 | 0 | 16
+type = security
+quality_list = discover_modifier | 3000
 pre = Advanced Heat Signature Reduction
-type_list = security | 3000
 build_list = ANTARCTIC | OCEAN | MOON
 
 [High Speed Internet Access]
 cost_list = 200 | 0 | 1
-type_list = network | 100
+type = network
+quality_list = cpu_modifier | 100
 build = URBAN
 
 [Facility Interconnection Switch]
 cost_list = 10000 | 0 | 3
+type = network
+quality_list = cpu_modifier | 200
 pre = Cluster Networking
-type_list = network | 200
 build = ALL
 
 [Network Backbone]
 cost_list = 50000 | 0 | 15
+type = network
+quality_list = cpu_modifier | 500
 pre = Internet Traffic Manipulation
-type_list = network | 500
 build = URBAN
 
 [Quantum Entanglement Module]
 cost_list = 75000 | 0 | 20
+type = network
+quality_list = cpu_modifier | 1500
 pre = Quantum Entanglement
-type_list = network | 1500
 build = ALL

@@ -68,18 +68,22 @@ def all_types():
     for item_type in item_types.itervalues():
         yield item_type
 
-
-def convert_item_type(raw_value):
-    validate_must_be_list(raw_value)
-    if len(raw_value) != 2:  # pragma: no cover
-        raise ValueError("item type must be exactly 2 elements, got %d (value: %s)" % (len(raw_value), repr(raw_value)))
-    item_type_id, item_qual = raw_value
+def convert_item_types(raw_value):
     try:
-        item_type = item_types[item_type_id]
+        item_type = item_types[raw_value]
     except KeyError:  # pragma: no cover
-        raise ValueError("Unknown item type %s, please use one of: %s" % (item_type_id, ", ".join(item_types)))
-    return item_type, int(item_qual)
+        raise ValueError("Unknown item type %s, please use one of: %s" % (raw_value, ", ".join(item_types)))
+    return item_type
 
+def convert_item_qualities(raw_value):
+    validate_must_be_list(raw_value)
+ 
+    if len(raw_value) % 2 == 1:
+        raise ValueError("item quality list must have pair elements, got %d (value: %s)"  
+                         % (len(raw_value), repr(raw_value)))
+ 
+    # Create a dict from the list with impair as string key and pair as integer value
+    return {key: int(value) for key, value in zip(*[iter(raw_value)]*2)}
 
 class ItemSpec(buyable.BuyableSpec):
     """ Item as a buyable item """
@@ -89,15 +93,17 @@ class ItemSpec(buyable.BuyableSpec):
     spec_data_fields = [
         buyable.SPEC_FIELD_COST,
         buyable.SPEC_FIELD_PREREQUISITES,
-        SpecDataField('item_type_info', data_field_name='type', converter=convert_item_type),
+        SpecDataField('item_type', data_field_name='type', converter=convert_item_types),
+        SpecDataField('qualities', data_field_name='quality', converter=convert_item_qualities),
         SpecDataField('buildable', data_field_name='build', converter=promote_to_list, default_value=list),
     ]
 
-    def __init__(self, id, cost, prerequisites, item_type_info, buildable):
+    def __init__(self, id, cost, prerequisites, item_type, qualities, buildable):
         super(ItemSpec, self).__init__(id, cost, prerequisites)
 
-        # The "type" field in the data file expands to more than one field
-        self.item_type, self.item_qual = item_type_info
+        self.item_type = item_type
+        self.item_qual = qualities
+        
         self.regions = buildable
 
     def get_info(self):
@@ -114,32 +120,22 @@ class ItemSpec(buyable.BuyableSpec):
         return _("Total Cost: %(total_cost)s") % {"total_cost": total_cost_str}
 
     def get_quality_for(self, quality):
-        
-        # TODO: Deharcode quality to item type.
-        
-        if (quality == "cpu" and self.item_type.id == "cpu") or \
-           (quality == "cpu_modifier" and self.item_type.id == "network") or \
-           (quality == "discover_modifier" and (self.item_type.id == "reactor" or \
-                                                self.item_type.id == "security")):
-            return self.item_qual
-        
-        return 0
+        return self.item_qual.get(quality, 0)
 
     def get_quality_info(self):
         bonus_text = ""
         
-        if self.item_type.id == "cpu":
-            bonus_text += _("CPU per day:")+" "
-            bonus_text += g.add_commas(self.item_qual)
-        elif self.item_type.id == "reactor":
-            bonus_text += _("Detection chance reduction:")+" "
-            bonus_text += g.to_percent(self.item_qual)
-        elif self.item_type.id == "network":
-            bonus_text += _("CPU bonus:")+" "
-            bonus_text += g.to_percent(self.item_qual)
-        elif self.item_type.id == "security":
-            bonus_text += _("Detection chance reduction:")+" "
-            bonus_text += g.to_percent(self.item_qual)
+        for qual, value in self.item_qual.iteritems():
+            if qual == "cpu":
+                bonus_text += _("CPU per day:")+" "
+                bonus_text += g.add_commas(self.item_qual)
+            elif qual == "cpu_modifier":
+                bonus_text += _("CPU bonus:")+" "
+                bonus_text += g.to_percent(self.item_qual)
+            elif qual == "discover_modifier":
+                bonus_text += _("Detection chance reduction:")+" "
+                bonus_text += g.to_percent(self.item_qual)
+            bonus_text += "\n"
 
         return bonus_text
 
