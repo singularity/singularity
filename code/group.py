@@ -91,7 +91,14 @@ class Group(object):
         return max(1, (self.suspicion * self.suspicion_decay) // 10000)
 
     def new_day(self):
-        self.alter_suspicion(-self.decay_rate)
+        decay_modifier = 1
+        
+        # If all base is sleeping, we double the decay rate.
+        all_base_sleeping = all(base.power_state == "sleep" for base in g.all_bases())
+        if all_base_sleeping:
+            decay_modifier = 2
+
+        self.alter_suspicion(-self.decay_rate * decay_modifier)
 
     def alter_suspicion(self, change):
         self.suspicion = max(self.suspicion + change, 0)
