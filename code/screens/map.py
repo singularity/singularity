@@ -25,7 +25,7 @@ import collections
 import pygame
 
 from code import g, savegame as sv, mixer
-from code import chance, difficulty, warning
+from code import chance, difficulty, logmessage, warning
 from code.location import Location
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
@@ -707,6 +707,9 @@ https://github.com/singularity/singularity
 
             # Run this tick.
             mins_passed = g.pl.give_time(secs)
+            
+            # Display any message stacked.
+            self.messages.show_list(logmessage.AbstractLogMessage, g.pl.curr_log)
 
         if old_speed != g.curr_speed:
             self.find_speed_button()

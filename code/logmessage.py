@@ -23,6 +23,9 @@ from code import g
 
 class AbstractLogMessage(object):
 
+    title_simple   = _("MESSAGE")
+    title_multiple = _("MESSAGE %d/%d")
+
     def __init__(self, raw_emit_time):
         self._raw_emit_time = raw_emit_time
         self._log_emit_time = None

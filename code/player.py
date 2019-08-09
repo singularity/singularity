@@ -86,6 +86,8 @@ class Player(object):
         self.display_discover = "none"
 
         self.log = collections.deque(maxlen=1000)
+        self.curr_log = []
+        
         self.locations = {loc_id: location.Location(loc_spec) for loc_id, loc_spec in g.locations.items()}
         self._considered_buyables = []
 
@@ -105,6 +107,10 @@ class Player(object):
     def considered_buyables(self, new_value):
         self._considered_buyables = new_value
         g.map_screen.needs_rebuild = True
+
+    def append_log(self, log):
+        self.log.append(log)
+        self.curr_log.append(log)
 
     def convert_from(self, old_version):
         if old_version < 4.91: # < r5_pre
@@ -456,28 +462,25 @@ class Player(object):
         # Record statistics about the player
         self.used_cpu += self.available_cpus[0] * secs_passed
 
+        # Reset current log message
+        self.curr_log = []
+
         # Tech gain dialogs.
         for tech in techs_researched:
             del self.cpu_usage[tech.id]
             tech_log = LogResearchedTech(self.raw_sec, tech.id)
-            self.log.append(tech_log)
-            self.pause_game()
-            g.map_screen.show_message(tech_log.full_message)
+            self.append_log(tech_log)
 
         # Base complete dialogs.
         for base in bases_constructed:
             log_message = LogBaseConstructed(self.raw_sec, base.name, base.spec.id, base.location.id)
-            self.log.append(log_message)
-            self.pause_game()
-            g.map_screen.show_message(log_message.full_message)
+            self.append_log(log_message)
 
         # Item complete dialogs.
         for base, item in items_constructed:
             log_message = LogItemConstructionComplete(self.raw_sec, item.spec.id, item.count, base.name, base.spec.id,
                                                       base.location.id)
-            self.log.append(log_message)
-            self.pause_game()
-            g.map_screen.show_message(log_message.full_message)
+            self.append_log(log_message)
 
         # Are we still in the grace period?
         grace = self.in_grace_period(self.had_grace)
