@@ -25,11 +25,11 @@ import collections
 import pygame
 
 from code import g, savegame as sv, mixer
-from code import chance, difficulty
+from code import chance, difficulty, warning
 from code.location import Location
 from code.graphics import g as gg
 from code.graphics import dialog, constants, image, button, text, widget
-from code.screens import research, knowledge, report, log, warning, savegame
+from code.screens import research, knowledge, report, log, message, savegame
 from code.screens.location import LocationScreen
 from code.screens.options import OptionsScreen
 
@@ -545,7 +545,7 @@ class MapScreen(dialog.Dialog):
 
         self.message_dialog = dialog.MessageDialog(self, text_size=20)
 
-        self.warnings = warning.WarningDialogs(self)
+        self.messages = message.MessageDialogs(self)
         self.needs_warning = True
 
         self.add_key_handler(pygame.K_ESCAPE, self.got_escape)
@@ -689,7 +689,8 @@ https://github.com/singularity/singularity
             self.show_story_section("Intro")
 
         if self.needs_warning:
-            self.warnings.show_dialog()
+            warnings = warning.refresh_warnings()
+            self.messages.show_list(warning.Warning, warnings)
             self.needs_warning = False
 
         mins_passed = 0
