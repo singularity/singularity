@@ -328,7 +328,7 @@ class Base(buyable.Buyable):
         # ... and its power state.
         if self.done and self.power_state == "sleep":
             for group in detect_chance:
-                detect_chance[group] //= 2
+                detect_chance[group] //= 4
 
         # Lastly, if we're not returning the accurate values, adjust
         # to the nearest percent.
