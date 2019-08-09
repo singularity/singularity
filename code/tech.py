@@ -50,13 +50,6 @@ class Tech(buyable.Buyable):
 
         self.result = ""
 
-    def convert_from(self, old_version):
-        super(Tech, self).convert_from(old_version)
-        if old_version < 99.2: # < 1.0dev
-            self.effect = effect.Effect(self, [self.tech_type, self.secondary_data])
-            del self.tech_type
-            del self.secondary_data
-
     def __lt__(self, other):
         if not isinstance(other, Tech):
             return True

@@ -72,9 +72,12 @@ class Location(object):
             if spec_id in {'ANTARCTIC', 'OCEAN', 'MOON', 'ORBIT', 'FAR REACHES'}:
                 self.__dict__['modifiers'] = None
 
-            # Remove old fields
+            # Remove old fields where present
             for field in ('id', 'name', 'x', 'y', 'absolute', 'safety', 'cities', 'modifiers', 'hotkey'):
-                del self.__dict__[field]
+                try:
+                    del self.__dict__[field]
+                except KeyError:
+                    pass
         else:
             # >= 99.7; the LocationSpec is present on the object itself
             spec_id = self.spec.id

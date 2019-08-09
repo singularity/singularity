@@ -65,19 +65,6 @@ class Group(object):
         self.is_actively_discovering_bases = obj_data.get('is_actively_discovering_bases', True)
         return self
 
-    def convert_from(self, old_version):
-        if old_version < 99.6: # < 1.0 dev
-            self.spec = GroupSpec(
-                self.__dict__['id'], 
-                self.__dict__['suspicion_decay'])
-            del self.__dict__['id'], self.__dict__['name'], self.__dict__['suspicion_decay']
-            
-            self.__dict__['base_discover_bonus'] = self.__dict__['discover_bonus']
-            del self.__dict__['discover_bonus']
-        if old_version < 99.7: # < 1.0 dev
-            self.spec = self.type
-            del self.type
-
     @property
     def name(self):
         return self.spec.name
