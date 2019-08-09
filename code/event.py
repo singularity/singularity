@@ -90,9 +90,7 @@ class Event(object):
             return
 
         if g.pl.raw_sec - self.triggered_at > self.duration * g.seconds_per_day:
-            print("Before: %s" % str(g.pl.groups['news'].__dict__))
             self.effect.undo_effect()
-            print("After: %s" % str(g.pl.groups['news'].__dict__))
             self.triggered = 0
             self.triggered_at = -1
 
