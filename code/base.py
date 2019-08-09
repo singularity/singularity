@@ -373,7 +373,7 @@ class Base(buyable.Buyable):
         
     def is_building_extra(self):
         for item in self.all_items():
-            if item and item.spec.item_type.is_extra() and not item.done:
+            if item and item.spec.item_type.is_extra and not item.done:
                 return True
         return False
 
