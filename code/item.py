@@ -165,11 +165,11 @@ class Item(buyable.Buyable):
         return obj
 
     def convert_from(self, load_version):
-        super(Item, self).convert_from(load_version)
         if load_version < 4.91: # < r5_pre
             self.type = g.items[self.type.id]
         if load_version < 99.4:
             self.type.item_type = item_types[self.type.item_type]
+        super(Item, self).convert_from(load_version)
 
     def get_quality_for(self, quality):
         item_qual = self.spec.get_quality_for(quality)

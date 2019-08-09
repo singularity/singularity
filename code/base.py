@@ -293,18 +293,6 @@ class Base(buyable.Buyable):
 
             self.power_state = self.power_state.lower()
 
-            # Update CPU usage.
-            if self.studying in g.techs:
-                g.pl.cpu_usage[self.studying] = \
-                    g.pl.cpu_usage.get(self.studying, 0) + self.cpu
-            elif "Jobs" in self.studying:
-                g.pl.cpu_usage["jobs"] = \
-                    g.pl.cpu_usage.get("jobs", 0) + self.cpu
-            elif self.studying == "CPU Pool":
-                g.pl.cpu_usage["cpu_pool"] = \
-                    g.pl.cpu_usage.get("cpu_pool", 0) + self.cpu
-
-
         if save_version < 99.3: # < 1.0 (dev)
             extra_items = iter(self.__dict__["extra_items"])
             

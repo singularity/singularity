@@ -202,6 +202,8 @@ def load_savegame_by_json(savegame):
         data.reset_techs()
         data.reset_events()
 
+        # Pause game when loading
+        g.curr_speed = 0
         pl_data = game_data['player']
         player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
         for key, cls in [
@@ -300,27 +302,104 @@ def load_savegame_by_pickle(savegame):
 
     default_savegame_name = savegame.name
 
+    data.reset_techs()
+    data.reset_events()
+
     # Changes to overall structure go here.
-    g.pl = unpickle.load()
-    g.curr_speed = unpickle.load()
-    g.techs = unpickle.load()
+    saved_player = unpickle.load()
+    # Current speed (ignored)
+    unpickle.load()
+    # Pause game when loading
+    g.curr_speed = 0
+    techs = unpickle.load()
     if load_version < 99.7:
         # In >= 99.8 locations are saved as a part of the player object, but earlier
         # it was stored as a separate part of the stream.
-        g.pl.locations = unpickle.load()
-    g.events = unpickle.load()
+        locations = unpickle.load()
+    else:
+        locations = saved_player.locations
+    events = unpickle.load()
 
-    # Changes to individual pieces go here.
-    if load_version != savefile_translation[current_save_version]:
-        g.pl.convert_from(load_version)
-        for my_group in g.pl.groups.values():
-            my_group.convert_from(load_version)
-        for my_tech in g.techs.values():
-            my_tech.convert_from(load_version)
-        for my_event in g.events.values():
-            my_event.convert_from(load_version)
+    if load_version < 99.1:
+        diff_obj = next((d for d in difficulty.difficulties.values()
+                         if saved_player.difficulty == d.old_difficulty_value),
+                        next(iter(difficulty.difficulties)))
+        difficulty_id = diff_obj.id
+    else:
+        difficulty_id = saved_player.difficulty.id
 
-    new_log = [_convert_log_entry(x) for x in g.pl.log]
+    player_log = []
+    if hasattr(saved_player, 'log'):
+        player_log.extend(saved_player.log)
+
+    def _find_attribute(obj, options, **kwargs):
+        for option in options:
+            if option in obj.__dict__:
+                return obj.__dict__[option]
+        if 'default_value' in kwargs:
+            return kwargs['default_value']
+        raise KeyError(str(options))
+
+    pl_obj_data = {
+        'cash': _find_attribute(saved_player, ['_cash', 'cash']),
+        'partial_cash': saved_player.partial_cash,
+        'locations': [],
+        'cpu_usage': _find_attribute(saved_player, ['cpu_usage'], default_value={}),
+        # 'last_discovery': saved_player.last_discovery.id if saved_player.last_discovery else None,
+        # 'prev_discovery': saved_player.prev_discovery.id if saved_player.prev_discovery else None,
+        # We will fix the log later manually
+        'log': [],
+        'used_cpu': _find_attribute(saved_player, ['_used_cpu', 'used_cpu'], default_value=0),
+        'had_grace': saved_player.had_grace,
+        'groups': [{'id': grp_id, 'suspicion': grp.suspicion} for grp_id, grp in saved_player.groups.items()]
+    }
+
+    for loc_id, saved_location in locations.items():
+        # Fixup modifiers and simplify some code below.
+        saved_location.convert_from(load_version)
+        if saved_location.spec.id == location.DEAD_LOCATION_SPEC.id:
+            # Unknown location - pretend we did not see it.
+            continue
+        fake_base_objs = []
+        fake_location_obj = {
+            'id': loc_id,
+            '_modifiers': saved_location._modifiers,
+            'bases': fake_base_objs,
+        }
+
+        # Convert works reasonably well for bases and items; use that to fix up the
+        # items and then serialize them into built-ins.
+        for saved_base in saved_location.bases:
+            # Note: We do not convert the "studying" field.  Savegames so old that
+            # they still rely on that field will lose the CPU allocations.
+            saved_base.convert_from(load_version)
+            for my_item in saved_base.all_items():
+                my_item.convert_from(load_version)
+            fake_base_objs.append(saved_base.serialize_obj())
+        pl_obj_data['locations'].append(fake_location_obj)
+
+    # Now we have enough information to reconstruct the Player object
+    player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
+
+    for tech_id, saved_tech in techs.items():
+        if tech_id == 'unknown_tech':
+            continue
+        # convert_from can handle buyable fields correctly
+        saved_tech.convert_from(load_version)
+        fake_obj_data = saved_tech.serialize_buyable_fields({
+            'id': tech_id,
+        })
+        tech.Tech.deserialize_obj(fake_obj_data, load_version)
+    for event_id, saved_event in events.items():
+        fake_obj_data = {
+            'id': event_id,
+            'triggered': saved_event.triggered,
+            # Omit triggered_at; it did not exist and deserialize_obj will
+            # fix it for us.
+        }
+        event.Event.deserialize_obj(fake_obj_data, load_version)
+
+    new_log = [_convert_log_entry(x) for x in player_log]
     g.pl.log.clear()
     g.pl.log.extend(new_log)
 
