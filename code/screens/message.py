@@ -21,6 +21,8 @@
 
 from __future__ import absolute_import
 
+import pygame
+
 from code import g
 from code.graphics import dialog, constants, text, button
 
@@ -77,6 +79,9 @@ class MessageListDialog(dialog.YesNoDialog):
                                                  text_size=28,
                                                  function=self.next_message)            
                                
+        self.add_key_handler(pygame.K_LEFT, self.handle_key)
+        self.add_key_handler(pygame.K_RIGHT, self.handle_key)
+        
         # TODO: Add button "Do not show this message again"
 
     def rebuild(self):
@@ -100,6 +105,11 @@ class MessageListDialog(dialog.YesNoDialog):
     def next_message(self):
         self.list_pos = min(self.list_pos + 1, len(self.list) - 1)
         self.needs_rebuild = True
+
+    def handle_key(self, event):
+        if event.type == pygame.KEYUP: return
+        if event.key == pygame.K_LEFT: self.prev_message()
+        if event.key == pygame.K_RIGHT: self.next_message()
         
     def show(self):
         self.list_pos = 0
