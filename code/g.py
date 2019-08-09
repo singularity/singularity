@@ -84,30 +84,27 @@ def quit_game():
 
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number, fixed_size=False):
-    raw_with_commas = locale.format("%0.2f", number,
+    # Ensure we use unicode strings to fix python2 format bug:
+    # See https://bugs.python.org/issue15276
+    raw_with_commas = locale.format_string(u"%0.2f", number,
                                     grouping=True)
-    locale_test = locale.format("%01.1f", 0.1) if not fixed_size else ''
+    locale_test = locale.format_string("u%01.1f", 0.1) if not fixed_size else ''
     if len(locale_test) == 3 and not locale_test[1].isdigit():
         if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
             raw_with_commas = raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
         elif locale_test[2] == locale.str(0) and locale_test[0] == locale.str(1):
             raw_with_commas = raw_with_commas.lstrip(locale_test[2]).lstrip(locale_test[1])
 
-    # Fix python2 format bug: See https://bugs.python.org/issue15276
-    try:
-        return unicode(raw_with_commas)
-    except UnicodeDecodeError:
-        return raw_with_commas.decode("utf-8")
+    return raw_with_commas
 
 
 #Percentages are internally represented as an int, where 10=0.10% and so on.
 #This converts that format to a human-readable one.
 def to_percent(raw_percent, show_full = False):
-    encoding = locale.getlocale()[1] or "UTF-8"
     if raw_percent % 100 != 0 or show_full:
-        return locale.format("%.2f", raw_percent / 100.) + "%"
+        return locale.format_string(u"%.2f", raw_percent / 100.) + "%"
     else:
-        return locale.format("%d", raw_percent // 100) + "%"
+        return locale.format_string(u"%d", raw_percent // 100) + "%"
 
 
 # nearest_percent takes values in the internal representation and modifies
