@@ -45,6 +45,10 @@ class EarthImage(image.Image):
         super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
                                          constants.MID_CENTER,
                                          'earth')
+        self._sin_latitude = None
+        self._cos_longitude_x_cos_latitiude = None
+        self.needs_resize = True
+        self.sun_radius = 0.5*pi/360
 
     def rescale(self):
         super(EarthImage, self).rescale()
@@ -61,6 +65,14 @@ class EarthImage(image.Image):
         self.needs_resize = True
         self.needs_redraw = True
 
+    def resize(self):
+        super(EarthImage, self).resize()
+        width, height = self.real_size
+        latitude = linspace(-pi/2, pi/2, height)[newaxis,:]
+        longitude = linspace(0, 2*pi, width)[:,newaxis]
+        self._cos_longitude_x_cos_latitiude = cos(longitude) * cos(latitude)
+        self._sin_latitude = sin(latitude)
+
     night_mask_day_of_year = None
     night_mask_dim = None
     night_mask = None
@@ -76,7 +88,6 @@ class EarthImage(image.Image):
 
     def get_night_mask(self):
         width, height = self.real_size
-        max_alpha = 255
 
         day_of_year = self.compute_day_of_year()
 
@@ -86,23 +97,20 @@ class EarthImage(image.Image):
             self.night_mask = None
 
         if self.night_mask is None:
+            max_alpha = 255
             self.night_mask_day_of_year = day_of_year
             self.night_mask_dim = (width, height)
 
             self.night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
             sun_declination = (-23.45/360.*2*math.pi *
                     math.cos(2*math.pi/365.*(day_of_year + 10)))
-            sun_diameter = 0.5*pi/180
 
-            latitude = linspace(-pi/2,pi/2,height)[newaxis,:]
-            longitude = linspace(0,2*pi,width)[:,newaxis]
-            sin_sun_altitude = (cos(longitude)*(cos(latitude)*cos(sun_declination))
-                                    +sin(latitude)*sin(sun_declination))
+            sin_sun_altitude = (self._cos_longitude_x_cos_latitiude * cos(sun_declination)
+                                    + self._sin_latitude * sin(sun_declination))
             # use tanh to convert values to the range [0,1]
-            light = 0.5*(tanh(sin_sun_altitude/(sun_diameter/2))+1)
+            light = 0.5*(tanh(sin_sun_altitude/self.sun_radius)+1)
             night_alphas = pixels_alpha(self.night_mask)
             night_alphas[...] = round(max_alpha*light).astype(uint8)
-            del night_alphas
         return self.night_mask
 
     high_speed_pos = None
