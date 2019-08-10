@@ -18,7 +18,7 @@
 
 #This file contains the warning class.
 
-import g
+from code import g
 
 from code.buyable import cpu, labor
 
