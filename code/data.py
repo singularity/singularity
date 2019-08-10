@@ -577,6 +577,7 @@ def load_buttons_defs(lang=None):
         "destroy"  : g.hotkey(_("&DESTROY")),
         "build"    : g.hotkey(_("&BUILD")),
         "back"     : g.hotkey(_("&BACK")),
+        "pause"    : g.hotkey(_("&PAUSE")),
         "load"     : g.hotkey(_("&LOAD")),
         "continue" : g.hotkey(_("&CONTINUE")),
         "skip"     : g.hotkey(_("&SKIP")),

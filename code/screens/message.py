@@ -32,7 +32,7 @@ class MessageDialogs(object):
         self.screen = screen
         self.dialog = MessageListDialog(screen,
                                         yes_type="continue",
-                                        no_type="back")
+                                        no_type="pause")
 
     def show_list(self, message_type, messages):
         if (len(messages) == 0):
