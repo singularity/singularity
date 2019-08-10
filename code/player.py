@@ -473,21 +473,27 @@ class Player(object):
 
         # Random Events
         if not grace:
-            for event in g.events:
-                if chance.roll_interval(g.events[event].chance/10000., time_sec):
-                    #Skip events already flagged as triggered.
-                    if g.events[event].triggered == 1:
-                        continue
-                    self.pause_game()
-                    g.events[event].trigger()
-                    self.log.append(LogEmittedEvent(self.raw_sec, g.events[event].event_id))
-                    break  # Don't trigger more than one at a time.
+            self._check_event(time_sec)
 
         # Process any complete days.
         if day_passed:
             self.new_day()
 
         return mins_passed
+
+    def _check_event(self, time_sec):
+        for event_id in g.events:
+            event = g.events[event_id]
+            # Skip events already flagged as triggered.
+            if event.triggered == 1:
+                continue
+
+            if chance.roll_interval(event.chance/10000., time_sec):
+                self.pause_game()
+                event.trigger()
+                self.log.append(LogEmittedEvent(self.raw_sec, event.event_id))
+                return True  # Don't trigger more than one at a time.
+        return False
 
     def recalc_cpu(self):
         # Determine how much CPU we have.
