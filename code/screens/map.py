@@ -49,6 +49,7 @@ class EarthImage(image.Image):
         self._cos_longitude_x_cos_latitiude = None
         self.needs_resize = True
         self.sun_radius = 0.5*pi/360
+        self.night_image = None
 
     def rescale(self):
         super(EarthImage, self).rescale()
@@ -76,6 +77,11 @@ class EarthImage(image.Image):
     night_mask_day_of_year = None
     night_mask_dim = None
     night_mask = None
+    next_night_mask = None
+    next_night_mask_ready = False
+    next_night_mask_step = 0
+    step_night_alphas = None
+    step_round_light = None
 
     start_day = None
     start_second = None
@@ -86,31 +92,57 @@ class EarthImage(image.Image):
         day_of_year = (g.pl.time_day+self.start_day) % 365 # no leap years, sorry
         return day_of_year
 
+    def on_tick(self, event):
+        if self.next_night_mask_ready:
+            return
+        width, height = self.real_size
+        day_of_year = self.compute_day_of_year()
+        # Prepare a part of the next night mask to avoid lagging at end of day
+        # on game speed high speed.
+        self._compute_night_mask_step(width, height, day_of_year + 1)
+
+    def _compute_night_mask_step(self, width, height, next_day_of_year):
+        if self.next_night_mask_ready:
+            return
+        if self.next_night_mask_step == 0:
+            max_alpha = 255
+            self.next_night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
+            sun_declination = (-23.45/360.*2*math.pi *
+                               math.cos(2*math.pi/365.*(next_day_of_year + 10)))
+
+            sin_sun_altitude = (self._cos_longitude_x_cos_latitiude * cos(sun_declination)
+                                          + self._sin_latitude * sin(sun_declination))
+            light = 0.5*(tanh(sin_sun_altitude/self.sun_radius)+1)
+            self.step_night_alphas = pixels_alpha(self.next_night_mask)
+            self.step_round_light = round(max_alpha*light).astype(uint8)
+        elif self.next_night_mask_step == 1:
+            self.step_night_alphas[...] = self.step_round_light
+            self.next_night_mask_ready = True
+
+        self.next_night_mask_step = (self.next_night_mask_step + 1) % 2
+
     def get_night_mask(self):
         width, height = self.real_size
-
         day_of_year = self.compute_day_of_year()
 
         if day_of_year != self.night_mask_day_of_year:
             self.night_mask = None
+            # Force a rebuild.  In most cases, it will be ready at ahead of time
+            # but if any steps are missing, we force a rebuild now at cost of
+            # rebuild.
         elif self.night_mask_dim != (width, height):
             self.night_mask = None
+            # Force a rebuild from scratch at cost of frame-rate
+            self.next_night_mask_ready = False
+            self.next_night_mask_step = 0
+        else:
+            return self.night_mask
 
-        if self.night_mask is None:
-            max_alpha = 255
-            self.night_mask_day_of_year = day_of_year
-            self.night_mask_dim = (width, height)
+        while not self.next_night_mask_ready:
+            self._compute_night_mask_step(width, height, day_of_year)
+        self.night_mask = self.next_night_mask
+        self.next_night_mask_ready = False
 
-            self.night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
-            sun_declination = (-23.45/360.*2*math.pi *
-                    math.cos(2*math.pi/365.*(day_of_year + 10)))
-
-            sin_sun_altitude = (self._cos_longitude_x_cos_latitiude * cos(sun_declination)
-                                    + self._sin_latitude * sin(sun_declination))
-            # use tanh to convert values to the range [0,1]
-            light = 0.5*(tanh(sin_sun_altitude/self.sun_radius)+1)
-            night_alphas = pixels_alpha(self.night_mask)
-            night_alphas[...] = round(max_alpha*light).astype(uint8)
         return self.night_mask
 
     high_speed_pos = None
@@ -727,6 +759,11 @@ https://github.com/singularity/singularity
         if g.curr_speed == 0 or (mins_passed and g.curr_speed < 100000) \
                 or (g.curr_speed>=100000 and g.pl.time_hour==0):
             self.map.needs_rebuild = True
+        else:
+            # Smear the cost of rendering the night mask over several
+            # ticks to avoid FPS-stalls at end of day at high game
+            # speed.
+            self.map.on_tick(event)
 
         lost = g.pl.lost_game()
         if lost > 0:
