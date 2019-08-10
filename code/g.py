@@ -90,7 +90,7 @@ def add_commas(number, fixed_size=False):
     # See https://bugs.python.org/issue15276
     raw_with_commas = locale.format_string(u"%0.2f", number,
                                     grouping=True)
-    locale_test = locale.format_string("u%01.1f", 0.1) if not fixed_size else ''
+    locale_test = locale.format_string(u"%01.1f", 0.1) if not fixed_size else ''
     if len(locale_test) == 3 and not locale_test[1].isdigit():
         if locale_test[0] == locale.str(0) and locale_test[2] == locale.str(1):
             raw_with_commas = raw_with_commas.rstrip(locale_test[0]).rstrip(locale_test[1])
