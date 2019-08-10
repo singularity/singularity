@@ -262,6 +262,7 @@ def load_savegame_by_pickle(savegame):
             Buyable_Class=buyable.BuyableSpec,
             BuyableClass=buyable.BuyableSpec,
             BuyableSpec=buyable.BuyableSpec,
+            Buyable=buyable.Buyable,
             Base=base.Base,
             Base_Class=base.BaseSpec,
             BaseClass=base.BaseSpec,
