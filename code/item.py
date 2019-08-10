@@ -109,8 +109,9 @@ class ItemSpec(buyable.BuyableSpec):
     def get_info(self):
         basic_text = super(ItemSpec, self).get_info()
         if self.item_type.id == "cpu":
+            cpu = self.item_qual.get('cpu')
             return basic_text.replace("---", _("Generates {0} CPU.",
-                                               g.add_commas(self.item_qual)) + \
+                                               g.add_commas(cpu)) + \
                                       "\n---")
         return basic_text
 
