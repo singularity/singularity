@@ -105,21 +105,24 @@ class EarthImage(image.Image):
         if self.next_night_mask_ready:
             return
         if self.next_night_mask_step == 0:
-            max_alpha = 255
             self.next_night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
-            sun_declination = (-23.45/360.*2*math.pi *
+            self.step_sun_declination = (-23.45/360.*2*math.pi *
                                math.cos(2*math.pi/365.*(next_day_of_year + 10)))
 
-            sin_sun_altitude = (self._cos_longitude_x_cos_latitiude * cos(sun_declination)
-                                          + self._sin_latitude * sin(sun_declination))
-            light = 0.5*(tanh(sin_sun_altitude/self.sun_radius)+1)
-            self.step_night_alphas = pixels_alpha(self.next_night_mask)
-            self.step_round_light = round(max_alpha*light).astype(uint8)
         elif self.next_night_mask_step == 1:
+            self.step_sin_sun_altitude = (self._cos_longitude_x_cos_latitiude * cos(self.step_sun_declination)
+                                          + self._sin_latitude * sin(self.step_sun_declination))
+        elif self.next_night_mask_step == 2:
+            self.step_light = 0.5*(tanh(self.step_sin_sun_altitude/self.sun_radius)+1)
+        elif self.next_night_mask_step == 3:
+            max_alpha = 255
+            self.step_night_alphas = pixels_alpha(self.next_night_mask)
+            self.step_round_light = round(max_alpha*self.step_light).astype(uint8)
+        elif self.next_night_mask_step == 4:
             self.step_night_alphas[...] = self.step_round_light
             self.next_night_mask_ready = True
 
-        self.next_night_mask_step = (self.next_night_mask_step + 1) % 2
+        self.next_night_mask_step = (self.next_night_mask_step + 1) % 5
 
     def get_night_mask(self):
         width, height = self.real_size
