@@ -213,9 +213,10 @@ def load_savegame_by_json(savegame):
             for obj_data in game_data[key]:
                 cls.deserialize_obj(obj_data, load_version)
 
-        for base in g.all_bases():
-            if base.done:
-                base.recalc_cpu()
+        for b in g.all_bases():
+            if b.done:
+                b.recalc_cpu()
+        g.pl.recalc_cpu()
 
     data.reload_all_mutable_def()
 
@@ -402,6 +403,11 @@ def load_savegame_by_pickle(savegame):
     new_log = [_convert_log_entry(x) for x in player_log]
     g.pl.log.clear()
     g.pl.log.extend(new_log)
+
+    for b in g.all_bases():
+        if b.done:
+            b.recalc_cpu()
+    g.pl.recalc_cpu()
 
     data.reload_all_mutable_def()
 
