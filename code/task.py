@@ -20,7 +20,20 @@
 
 from __future__ import absolute_import
 
-from code import g, prerequisite
+from code import g, prerequisite, tech
+
+
+current_task_cache = {}
+
+
+@tech.register_on_tech_reset_handler
+@tech.register_on_tech_researched_handler
+def _clear_current_task_cache(*args, **kwargs):
+    current_task_cache.clear()
+
+
+def tasks_reset():
+    _clear_current_task_cache()
 
 
 def danger_for(task_id):
@@ -31,9 +44,15 @@ def danger_for(task_id):
 
 
 def get_current(task_type):
+    try:
+        return current_task_cache[task_type]
+    except KeyError:
+        pass
     for t in reversed(g.tasks_by_type[task_type]):
         if t.available():
+            current_task_cache[task_type] = t
             return t
+    current_task_cache[task_type] = None
     return None
 
 

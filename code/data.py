@@ -364,6 +364,7 @@ def reset_techs():
         tech_spec_id: tech.Tech(tech_spec)
         for tech_spec_id, tech_spec in g.tech_specs.items()
     }
+    tech.techs_reset()
 
 
 def load_item_types():
@@ -447,6 +448,8 @@ def load_tasks():
 
     for t in g.tasks.values():
         g.tasks_by_type[t.type].append(t)
+
+    task.tasks_reset()
 
     load_task_defs()
 

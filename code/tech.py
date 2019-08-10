@@ -25,6 +25,25 @@ from code.stats import stat
 from code.spec import SpecDataField, spec_field_effect
 
 
+TECH_RESET_EVENT = []
+TECH_RESEARCH_EVENT = []
+
+
+def register_on_tech_reset_handler(func):
+    TECH_RESET_EVENT.append(func)
+    return func
+
+
+def register_on_tech_researched_handler(func):
+    TECH_RESEARCH_EVENT.append(func)
+    return func
+
+
+def techs_reset():
+    for handler in TECH_RESET_EVENT:
+        handler()
+
+
 class TechSpec(buyable.BuyableSpec):
     spec_type = 'tech'
     created = stat(spec_type + "_created")
@@ -72,6 +91,8 @@ class Tech(buyable.Buyable):
     def finish(self, is_player=True, loading_savegame=False):
         super(Tech, self).finish(is_player=is_player, loading_savegame=loading_savegame)
         self.spec.effect.trigger(loading_savegame=loading_savegame)
+        for handler in TECH_RESEARCH_EVENT:
+            handler(self)
 
     def serialize_obj(self):
         return self.serialize_buyable_fields({
