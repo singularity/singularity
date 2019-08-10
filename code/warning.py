@@ -72,12 +72,14 @@ def refresh_warnings():
                 for item in base.all_items()
                 if item is not None and not item.done
                 and item.cost_left[cpu] > 0)
-    if ((building_base + building_item > 0) and g.pl.cpu_usage.get("cpu_pool", 0) == 0):
+
+    effective_cpu_pool = g.pl.effective_cpu_pool()
+    if ((building_base + building_item > 0) and effective_cpu_pool == 0):
         curr_warnings.append(warnings["cpu_pool_zero"])
 
     # Verify the cpu pool provides the maintenance CPU 
     cpu_maintenance = sum(base.maintenance[1] for base in g.all_bases() if base.done)
-    if (g.pl.cpu_usage.get("cpu_pool", 0) < cpu_maintenance):
+    if (effective_cpu_pool < cpu_maintenance):
         curr_warnings.append(warnings["cpu_maintenance"])
 
     # TODO: Verify the maintenance cash

@@ -520,6 +520,13 @@ class Player(object):
                         self.cpu_usage[task_id] = int(cpu_assigned * pct_left)
                 g.map_screen.needs_rebuild = True
 
+    def effective_cpu_pool(self):
+        effective_cpu_pool = self.available_cpus[0]
+        for task, cpu_assigned in self.cpu_usage.items():
+            if cpu_assigned == 0 or task == 'cpu_pool':
+                continue
+            effective_cpu_pool -= cpu_assigned
+        return effective_cpu_pool
 
     # Are we still in the grace period?
     # The number of complete bases and complex_bases can be passed in, if we
