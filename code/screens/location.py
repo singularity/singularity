@@ -300,7 +300,11 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
         considered_buyables = []
         if 0 <= new_item_pos < len(self.key_list):
             base_type = self.key_list[new_item_pos]
-            considered_buyables.append(base.Base('<Undecided>', base_type))
+            fake_base = base.Base('<Undecided>', base_type)
+            location = self.parent.location
+            location.modify_cost(fake_base.total_cost)
+            location.modify_cost(fake_base.cost_left)
+            considered_buyables.append(fake_base)
 
         g.pl.considered_buyables = considered_buyables
 
