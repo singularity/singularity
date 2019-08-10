@@ -58,7 +58,8 @@ class Effect(object):
             elif current == "endgame":
                 assert not undo_effect, "One-shot effects (winning the game) cannot be undone!"
                 mixer.play_music("win")
-                g.map_screen.show_story_section("Win")
+                if not loading_savegame:
+                    g.map_screen.show_story_section("Win")
                 for group in g.pl.groups.values():
                     group.is_actively_discovering_bases = False
                 g.pl.apotheosis = True
