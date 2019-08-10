@@ -72,14 +72,14 @@ pre = Solar Collectors
 build_list = URBAN | ANTARCTIC | MOON | FAR REACHES
 
 [Fuel Cell]
-cost_list = 5000 | 0 | 5
+cost_list = 6000 | 0 | 5
 type = reactor
 quality_list = discover_modifier | 1000
 pre = Fuel Oxidation
 build_list = ALL
 
 [Solid Fuel Cell]
-cost_list = 5000 | 0 | 5
+cost_list = 8000 | 0 | 5
 type = reactor
 quality_list = discover_modifier | 1500
 pre = Advanced Fuel Oxidation
