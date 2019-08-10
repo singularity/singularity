@@ -164,8 +164,7 @@ class Player(object):
 
         raw_cash = partial_cash + cash_per_cpu * cpu_time
 
-        new_cash = raw_cash // g.seconds_per_day
-        new_partial_cash = raw_cash % g.seconds_per_day
+        new_cash, new_partial_cash = divmod(raw_cash, g.seconds_per_day)
 
         return new_cash, new_partial_cash
 
