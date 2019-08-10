@@ -29,10 +29,12 @@ def danger_for(task_id):
     else:
         return g.techs[task_id].danger
 
-def get_current(type):
-    return next((t for t in (g.tasks[k] for k in reversed(g.tasks))
-                   if t.available() and t.type == type)
-                , None)
+
+def get_current(task_type):
+    for t in reversed(g.tasks_by_type[task_type]):
+        if t.available():
+            return t
+    return None
 
 
 class Task(prerequisite.Prerequisite):

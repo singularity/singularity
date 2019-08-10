@@ -24,6 +24,7 @@ from __future__ import absolute_import
 version = "0.31alpha1"
 
 
+import collections
 import random
 import sys
 
@@ -67,6 +68,7 @@ events = {}
 event_specs = {}
 items = {}
 tasks = {}
+tasks_by_type = collections.defaultdict(list)
 base_type = {}
 buttons = {}
 help_strings = {}

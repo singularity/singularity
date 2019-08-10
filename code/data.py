@@ -445,6 +445,9 @@ def load_tasks():
         sys.stderr.write("A minimun of one job task without prerequisite is needed for the game\n")
         sys.exit(1)
 
+    for t in g.tasks.values():
+        g.tasks_by_type[t.type].append(t)
+
     load_task_defs()
 
 def load_task_defs(lang=None):
