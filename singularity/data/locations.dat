@@ -24,6 +24,7 @@ region_list = URBAN
 
 [ANTARCTIC]
 position_list = 50 | 91
+safety=1
 modifier_list = stealth:6/5 | thrift:5/6
 pre_list = Advanced Database Manipulation
 
