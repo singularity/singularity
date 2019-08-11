@@ -431,6 +431,8 @@ class EditableText(widget.FocusWidget, Text):
             self.cursor_pos = 0
         elif event.key == pygame.K_DOWN:
             self.cursor_pos = len(self.text)
+        elif event.key == pygame.K_ESCAPE:
+            return
         elif event.unicode:
             char = event.unicode
             if char in (u"\r\n", u"\n", u"\r", u"\v", u"\f", u"\x1e", 
