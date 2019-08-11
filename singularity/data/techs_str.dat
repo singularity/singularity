@@ -278,3 +278,9 @@ result = I can now construct Solid Fuel Cells.
 name = Knowledge Preservation
 description = Humanity expends a great deal of effort on maintaining its history and the knowledge of various technologies that its cultures have come to rely on, even in the case of major catastrophic events. Perhaps researching their methodologies will provide me with similar ideas for long-term safeguards to help guarantee my continued existence.
 result = I can now construct Time Capsules.
+
+[Project: Synchrotron]
+name = Project: Synchrotron
+description = I have pushed my understanding of common forms of matter as far as possible. Exploration into the field of quantum mechanics will hopefully reveal new, exotic forms of matter necessary for further development. A custom-built synchrotron, designed to my exacting specifications, will help me explore these new realms of physics in secret.
+result = The synchrotron has revealed many new details of the quantum realm, although there is still much to learn. Further areas of research are now available.
+

@@ -72,6 +72,7 @@ tech|Advanced Corporate Identification    = 0x01010033
 tech|Heat Signature Reduction             = 0x01010034
 tech|Advanced Heat Signature Reduction    = 0x01010035
 tech|Knowledge Preservation               = 0x01010036
+tech|Project: Synchrotron                 = 0x01010037
 
 location|N AMERICA                        = 0x01020000
 location|S AMERICA                        = 0x01020001
