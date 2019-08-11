@@ -172,12 +172,15 @@ class Location(object):
         self.bases.append(base)
         base.location = self
 
-        self.modify_cost(base.total_cost)
-        self.modify_cost(base.cost_left)
-        self.modify_maintenance(base.maintenance)
+        self.modify_base(base)
 
         # Make sure the location's CPU modifier is applied.
         base.recalc_cpu()
+
+    def modify_base(self, base):
+        self.modify_cost(base.total_cost)
+        self.modify_cost(base.cost_left)
+        self.modify_maintenance(base.maintenance)
 
     def __eq__(self, other):
         if self is other:

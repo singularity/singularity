@@ -273,9 +273,7 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
 
             considered_buyables = []
             fake_base = base.Base('<Undecided>', base_type)
-            location = self.parent.location
-            location.modify_cost(fake_base.total_cost)
-            location.modify_cost(fake_base.cost_left)
+            self.parent.location.modify_base(fake_base)
             considered_buyables.append(fake_base)
             g.pl.considered_buyables = considered_buyables
         else:
