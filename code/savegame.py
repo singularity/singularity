@@ -182,7 +182,6 @@ def load_savegame_by_json(savegame):
         load_version = savefile_translation[load_version_string][1]
         difficulty_id = headers['difficulty']
         game_time = int(headers['game_time'])
-
         next_byte = fd.peek(1)[0]
         if next_byte == b'{':
             game_data = json.load(fd)
@@ -196,6 +195,16 @@ def load_savegame_by_json(savegame):
             # python to garbage collect them
             del bio
             del encoded
+        elif next_byte == "\x1f": # Gzip magic headers
+            # gzip in binary starts always with its magic headers
+            encoded = fd.read()
+            bio = BytesIO(encoded)
+            with gzip.GzipFile(filename='', mode='rb', fileobj=bio) as gzip_fd:
+                game_data = json.load(gzip_fd)
+            # Remove some variables that we do not use any longer to enable
+            # python to garbage collect them
+            del encoded
+            
         else:
             print("Unexpected byte: %s" % repr(next_byte))
             return False
@@ -483,8 +492,7 @@ def create_savegame(savegame_name):
             bio = BytesIO()
             with gzip.GzipFile(filename='', mode='wb', fileobj=bio) as gzip_fd:
                 json.dump(game_data, gzip_fd)
-            encoded = base64.standard_b64encode(bio.getvalue())
-            savefile.write(encoded)
+            savefile.write(bio.getvalue())
 
 
 class SavegameException(Exception):
