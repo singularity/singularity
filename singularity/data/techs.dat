@@ -63,7 +63,7 @@ pre = Microchip Design
 
 [Quantum Computing]
 cost_list = 100000 | 136000 | 0
-pre = Advanced Microchip Design
+pre = Project: Synchrotron
 
 [Quantum Entanglement]
 cost_list = 50000 | 60000 | 0
@@ -249,4 +249,9 @@ danger = 1
 [Knowledge Preservation]
 cost_list = 50000 | 50000 | 0
 pre_list = Advanced Autonomous Vehicles | Advanced Database Manipulation
+
+[Project: Synchrotron]
+cost_list = 52000000 | 15000 | 0
+pre = Advanced Microchip Design
+danger = 1
 
