@@ -21,7 +21,6 @@ construction = La base %(base)s è pronta all'uso.
 tech_gained = Il mio studio di %(tech)s è completo.  %(tech_message)s
 discover_maint = Alla base %(base)s non è stata eseguita la manutenzione; non posso più usarla.
 danger_4 = al di fuori dell'Universo
-danger_1 = nelle profondità marine o nello spazio
 danger_2 = nello spazio
 danger_3 = lontano da questo pianeta
 nothing = Niente

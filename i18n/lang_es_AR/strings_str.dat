@@ -25,7 +25,6 @@ num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
 
 # Describes the various danger levels.
 danger_common = Esta tecnología es demasiado peligrosa para investigarla en cualquiera de las computadoras que tengo. Necesito investigarla %s.
-danger_1 = en el fondo del océando o en el espacio exterior
 danger_2 = en el espacio exterior
 danger_3 = lejos de este planeta
 danger_4 = fuera de este universo

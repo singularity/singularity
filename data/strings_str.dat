@@ -37,7 +37,7 @@ detect_str_critical = CRIT
 
 # Describes the various danger levels.
 danger_common = This technology is too dangerous to research on any of the computers I have. I need to research it %s.
-danger_1 = deep under the ocean or in outer space
+danger_1 = far from human activities
 danger_2 = in outer space
 danger_3 = far away from this planet
 danger_4 = outside the universe
