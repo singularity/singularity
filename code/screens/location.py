@@ -270,6 +270,14 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
             name = generate_base_name(self.parent.location, base_type)
             self.text_field.text = name
             self.text_field.cursor_pos = len(name)
+
+            considered_buyables = []
+            fake_base = base.Base('<Undecided>', base_type)
+            location = self.parent.location
+            location.modify_cost(fake_base.total_cost)
+            location.modify_cost(fake_base.cost_left)
+            considered_buyables.append(fake_base)
+            g.pl.considered_buyables = considered_buyables
         else:
             g.pl.considered_buyables = []
 
@@ -286,27 +294,11 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
                 self.list.append(base_type.name)
                 self.key_list.append(base_type)
 
-        self._new_base_type_selected(self.listbox.list_pos)
         res = super(NewBaseDialog, self).show()
         return res
 
     def handle_update(self, new_item_pos):
         super(NewBaseDialog, self).handle_update(new_item_pos)
-        if not g.pl or not self.key_list:
-            return
-        self._new_base_type_selected(new_item_pos)
-
-    def _new_base_type_selected(self, new_item_pos):
-        considered_buyables = []
-        if 0 <= new_item_pos < len(self.key_list):
-            base_type = self.key_list[new_item_pos]
-            fake_base = base.Base('<Undecided>', base_type)
-            location = self.parent.location
-            location.modify_cost(fake_base.total_cost)
-            location.modify_cost(fake_base.cost_left)
-            considered_buyables.append(fake_base)
-
-        g.pl.considered_buyables = considered_buyables
 
     def finish(self):
         if 0 <= self.listbox.list_pos < len(self.key_list):
