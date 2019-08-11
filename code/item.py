@@ -108,8 +108,8 @@ class ItemSpec(buyable.BuyableSpec):
 
     def get_info(self):
         basic_text = super(ItemSpec, self).get_info()
-        if self.item_type.id == "cpu":
-            cpu = self.item_qual.get('cpu')
+        if self.has_quality_for("cpu"):
+            cpu = self.get_quality_for("cpu")
             return basic_text.replace("---", _("Generates {0} CPU.",
                                                g.add_commas(cpu)) + \
                                       "\n---")
@@ -119,6 +119,9 @@ class ItemSpec(buyable.BuyableSpec):
         total_cost = self.cost * count
         total_cost_str = self.describe_cost(total_cost, hide_time=True)
         return _("Total Cost: %(total_cost)s") % {"total_cost": total_cost_str}
+
+    def has_quality_for(self, quality):
+        return quality in self.item_qual
 
     def get_quality_for(self, quality):
         return self.item_qual.get(quality, 0)
@@ -146,10 +149,6 @@ class Item(buyable.Buyable):
     def __init__(self, item_spec, base=None, count=1):
         super(Item, self).__init__(item_spec, count)
         self.base = base
-
-    @property
-    def item_qual(self):
-        return self.spec.item_qual
 
     def serialize_obj(self):
         return self.serialize_buyable_fields({
