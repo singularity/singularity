@@ -91,6 +91,8 @@ class Player(object):
         self.locations = {loc_id: location.Location(loc_spec) for loc_id, loc_spec in g.locations.items()}
         self._considered_buyables = []
 
+        self.start_day = random.randint(0, 365)
+
     @property
     def grace_period_cpu(self):
         return self.difficulty.grace_period_cpu

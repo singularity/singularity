@@ -87,9 +87,7 @@ class EarthImage(image.Image):
     start_second = None
 
     def compute_day_of_year(self):
-        if self.start_day is None:
-            self.start_day = time.gmtime()[7]
-        day_of_year = (g.pl.time_day+self.start_day) % 365 # no leap years, sorry
+        day_of_year = (g.pl.time_day+g.pl.start_day) % 365 # no leap years, sorry
         return day_of_year
 
     def on_tick(self, event):
