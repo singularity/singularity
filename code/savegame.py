@@ -87,45 +87,30 @@ def get_savegames():
             continue
 
         for file_name in all_files:
-            if file_name[0] != "." and file_name != "CVS":
-                # If it's a new-style save, trim the .sav bit.
-                if file_name.endswith('.sav'):
-                    name = file_name[:-4]
-                    filepath = os.path.join(saves_dir, file_name)
+            if file_name[0] == ".":
+                continue
 
-                    # Get version, only pickle first string.
-                    version_name = None # None == Unknown version
-                    try:
-                        with open(filepath, 'rb') as loadfile:
-                            unpickle = cPickle.Unpickler(loadfile)
+            if file_name.endswith('.sav'):
+                name = file_name[:-4]
+                parse_headers = parse_pickle_savegame_headers
+            elif file_name.endswith('.s2'):
+                name = file_name[:-3]
+                parse_headers = parse_json_savegame_headers
 
-                            def find_class(module_name, class_name):
-                                # Lets reduce the risk of "funny monkey business"
-                                # when checking the version of pickled files
-                                raise SavegameException(module_name, class_name)
+            filepath = os.path.join(saves_dir, file_name)
+            version_name = None # None == Unknown version
 
-                            unpickle.find_global = find_class
+            try:
+                with open(filepath, 'rb') as loadfile:
+                    version_line, headers = parse_headers(loadfile)
+                
+                    if version_line in savefile_translation:
+                        version_name = savefile_translation[version_line][0]
+            except Exception:
+                version_name = None # To be sure.
 
-                            load_version = unpickle.load()
-                            if load_version in savefile_translation:
-                                version_name = savefile_translation[load_version][0]
-                    except Exception:
-                        version_name = None # To be sure.
-                    savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
-                    all_savegames.append(savegame)
-                elif file_name.endswith('.s2'):
-                    name = file_name[:-3]
-                    filepath = os.path.join(saves_dir, file_name)
-                    version_name = None
-                    try:
-                        with open(filepath, 'rb') as loadfile:
-                            load_version, headers = parse_json_game_headers(loadfile)
-                            if load_version in savefile_translation:
-                                version_name = savefile_translation[load_version][0]
-                    except Exception:
-                        version_name = None
-                    savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
-                    all_savegames.append(savegame)
+            savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
+            all_savegames.append(savegame)
 
     return all_savegames
 
@@ -142,7 +127,22 @@ def delete_savegame(savegame):
         return False
 
 
-def parse_json_game_headers(fd):
+def parse_pickle_savegame_headers(fd):
+    unpickle = cPickle.Unpickler(fd)
+
+    def find_class(module_name, class_name):
+        # Lets reduce the risk of "funny monkey business"
+        # when checking the version of pickled files
+        raise SavegameException(module_name, class_name)
+
+    unpickle.find_global = find_class
+
+    load_version = unpickle.load()
+
+    return load_version, {}
+
+
+def parse_json_savegame_headers(fd):
     version_line = fd.readline().decode('utf-8').strip()
     headers = {}
     while True:
@@ -174,7 +174,7 @@ def load_savegame_by_json(savegame):
 
     load_path = savegame.filepath
     with open(load_path, 'rb') as fd:
-        load_version_string, headers = parse_json_game_headers(fd)
+        load_version_string, headers = parse_json_savegame_headers(fd)
         if load_version_string not in savefile_translation:
             print(savegame.name + " is not a savegame, or is too old to work.")
             return False
