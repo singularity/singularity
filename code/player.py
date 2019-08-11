@@ -403,23 +403,27 @@ class Player(object):
 
         # Reset current log message
         self.curr_log = []
+        need_recalc_cpu = False
 
         # Tech gain dialogs.
         for tech in techs_researched:
             del self.cpu_usage[tech.id]
             tech_log = LogResearchedTech(self.raw_sec, tech.id)
             self.append_log(tech_log)
+            need_recalc_cpu = True
 
         # Base complete dialogs.
         for base in bases_constructed:
             log_message = LogBaseConstructed(self.raw_sec, base.name, base.spec.id, base.location.id)
             self.append_log(log_message)
+            need_recalc_cpu = True
 
         # Item complete dialogs.
         for base, item in items_constructed:
             log_message = LogItemConstructionComplete(self.raw_sec, item.spec.id, item.count, base.name, base.spec.id,
                                                       base.location.id)
             self.append_log(log_message)
+            need_recalc_cpu = True
 
         # Are we still in the grace period?
         grace = self.in_grace_period(self.had_grace)
@@ -470,8 +474,10 @@ class Player(object):
                         dead = True
                         break
 
-        # Base disposal and dialogs.
-        self.remove_bases(dead_bases)
+        if dead_bases:
+            # Base disposal and dialogs.
+            self.remove_bases(dead_bases)
+            need_recalc_cpu = True
 
         # Random Events
         if not grace:
@@ -480,6 +486,9 @@ class Player(object):
         # Process any complete days.
         if day_passed:
             self.new_day()
+
+        if need_recalc_cpu:
+            self.recalc_cpu()
 
         return mins_passed
 
