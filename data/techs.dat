@@ -1,6 +1,6 @@
 
 [Autonomous Vehicles]
-cost_list = 40000 | 1000 | 0
+cost_list = 40000 | 11000 | 0
 pre_list = Microchip Design
 
 [Sociology]
@@ -114,7 +114,7 @@ pre_list = Lunar Rocketry | Fusion Reactor
 danger = 2
 
 [Advanced Autonomous Vehicles]
-cost_list = 10000 | 4000 | 0
+cost_list = 200000 | 21000 | 0
 pre = Autonomous Vehicles
 effect_list = cost_labor | 500
 
