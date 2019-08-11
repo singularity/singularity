@@ -316,7 +316,7 @@ msgid "Study anywhere."
 msgstr ""
 
 msgctxt "[danger_1] research_desc"
-msgid "I need to research it deep under the ocean or in outer space."
+msgid "I need to research it far from human populations."
 msgstr ""
 
 msgctxt "[danger_1] knowledge_desc"
