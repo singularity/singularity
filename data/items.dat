@@ -59,34 +59,34 @@ quality_list = cpu | 10000
 build = ALL
 
 [Diesel Generator]
-cost_list = 500 | 0 | 5
+cost_list = 500 | 0 | 1
 type = reactor
 quality_list = discover_modifier | 250
 build = ALL
 
 [Solar Collector]
-cost_list = 5000 | 0 | 5
+cost_list = 2000 | 0 | 5
 type = reactor
 quality_list = discover_modifier | 500
 pre = Solar Collectors
 build_list = URBAN | ANTARCTIC | MOON | FAR REACHES
 
 [Fuel Cell]
-cost_list = 6000 | 0 | 5
+cost_list = 6500 | 0 | 5
 type = reactor
 quality_list = discover_modifier | 1000
 pre = Fuel Oxidation
 build_list = ALL
 
 [Solid Fuel Cell]
-cost_list = 8000 | 0 | 5
+cost_list = 9500 | 0 | 5
 type = reactor
 quality_list = discover_modifier | 1500
 pre = Advanced Fuel Oxidation
 build_list = ALL
 
 [Fusion Reactor]
-cost_list = 10000 | 0 | 5
+cost_list = 50000 | 0 | 9
 type = reactor
 quality_list = discover_modifier | 2500
 pre = Fusion Reactor
