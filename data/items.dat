@@ -48,14 +48,14 @@ build = ALL
 cost_list = 120000 | 1750 | 10
 pre = Autonomous Computing
 type = cpu
-quality_list = cpu | 2750
+quality_list = cpu | 4000
 build = ALL
 
 [Quantum Computer MK3]
 cost_list = 150000 | 3500 | 10
 pre = Advanced Quantum Computing
 type = cpu
-quality_list = cpu | 5000
+quality_list = cpu | 10000
 build = ALL
 
 [Diesel Generator]
