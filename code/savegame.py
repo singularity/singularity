@@ -446,8 +446,9 @@ def _convert_log_entry(entry):
                 entry = logmessage.LogBaseDiscovered(time_raw, base_name, base_type_id, location_id, reason)
     return entry
 
+
 def savegame_exists(savegame_name):
-    save_path = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".sav", "saves")
+    save_path = dirs.get_writable_file_in_dirs(convert_string_to_path_name(savegame_name) + ".s2", "saves")
 
     if (save_path is None or not os.path.isfile(save_path)) :
         return False
