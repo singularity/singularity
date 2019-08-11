@@ -761,7 +761,7 @@ https://github.com/singularity/singularity
         # midnight if going fast.
         if g.curr_speed == 0 or (mins_passed and g.curr_speed < 100000) \
                 or (g.curr_speed>=100000 and g.pl.time_hour==0):
-            self.map.needs_rebuild = True
+            self.map.needs_redraw = True
         else:
             # Smear the cost of rendering the night mask over several
             # ticks to avoid FPS-stalls at end of day at high game
