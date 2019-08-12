@@ -25,7 +25,7 @@ region_list = URBAN
 [ANTARCTIC]
 position_list = 50 | 91
 modifier_list = stealth:6/5 | thrift:5/6
-pre_list = OR | Autonomous Vehicles | Advanced Database Manipulation
+pre_list = Advanced Database Manipulation
 
 [OCEAN]
 position_list = 55 | 76
