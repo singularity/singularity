@@ -284,9 +284,9 @@ def load_savegame_by_json(savegame):
         difficulty_id = headers['difficulty']
         game_time = int(headers['game_time'])
         next_byte = fd.peek(1)[0]
-        if next_byte == b'{':
+        if next_byte == b'{'[0]:
             game_data = json.load(fd)
-        elif next_byte == b'H':
+        elif next_byte == b'H'[0]:
             # gzip in base64 starts with H4s
             encoded = fd.read()
             bio = BytesIO(base64.standard_b64decode(encoded))
@@ -296,7 +296,7 @@ def load_savegame_by_json(savegame):
             # python to garbage collect them
             del bio
             del encoded
-        elif next_byte == "\x1f": # Gzip magic headers
+        elif next_byte == b"\x1f"[0]:  # Gzip magic headers
             # gzip in binary starts always with its magic headers
             with gzip.GzipFile(filename='', mode='rb', fileobj=fd) as gzip_fd:
                 game_data = json.load(gzip_fd)
