@@ -241,6 +241,16 @@ cost_list = 5000 | 45967 | 0
 pre_list = Heat Signature Reduction
 danger = 1
 
+[Metamaterial]
+cost_list = 430000 | 390000 | 0
+pre_list = Project: Synchrotron | Heat Signature Reduction
+danger = 1
+
+[Advanced Metamaterial]
+cost_list = 770000 | 700000 | 0
+pre_list = Metamaterial
+danger = 1
+
 [Knowledge Preservation]
 cost_list = 50000 | 50000 | 0
 pre_list = Advanced Autonomous Vehicles | Advanced Database Manipulation

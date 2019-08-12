@@ -142,6 +142,20 @@ quality_list = discover_modifier | 3000
 pre = Advanced Heat Signature Reduction
 build_list = ANTARCTIC | OCEAN | MOON
 
+[Invisibility Cloak]
+cost_list = 75000 | 0 | 14
+pre = Metamaterial
+type = security
+quality_list = security | 4000
+build_list = ALL
+
+[Full-Spectrum Invisibility Cloak]
+cost_list = 250000 | 0 | 21
+pre = Advanced Metamaterial
+type = security
+quality_list = security | 5000
+build_list = ALL
+
 [High Speed Internet Access]
 cost_list = 200 | 0 | 1
 type = network
