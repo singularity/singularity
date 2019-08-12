@@ -167,7 +167,7 @@ effect_list = income | 1000
 
 [Advanced Simulacra]
 cost_list = 100000 | 120000 | 0
-pre_list = Simulacra | Advanced Memetics
+pre = Simulated Reality
 effect_list = job_profit | 1000
 
 [Personal Identification]
@@ -186,7 +186,7 @@ effect_list = endgame
 
 [Hypnosis Field]
 cost_list = 70000 | 50000 | 0
-pre_list = Advanced Memetics | Simulacra
+pre = Simulated Reality
 
 [Project: Impossibility Theorem]
 cost_list = 20000 | 100000 | 0
@@ -253,5 +253,11 @@ pre_list = Advanced Autonomous Vehicles | Advanced Database Manipulation
 [Project: Synchrotron]
 cost_list = 52000000 | 15000 | 0
 pre = Advanced Microchip Design
+danger = 1
+
+[Simulated Reality]
+cost_list = 8000000 | 18000 | 0
+effect_list = discover | public | 500
+pre = Simulacra
 danger = 1
 
