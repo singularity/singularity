@@ -7,5 +7,6 @@ saves/
 .*
 _build
 !.travis.yml
+!.codecov.yml
 !.gitignore
 !.gitattributes
