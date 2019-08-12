@@ -171,6 +171,9 @@ class Player(object):
 
         return new_cash, new_partial_cash
 
+    def cpu_allocated_for(self, task_id, default_value=None):
+        return self.cpu_usage.get(task_id, default_value)
+
     def give_time(self, time_sec, dry_run=False, midnight_stop=True):
         if time_sec == 0:
             return 0
@@ -237,7 +240,7 @@ class Player(object):
         income_cash = self.do_income(secs_passed)
 
         # Any CPU explicitly assigned to jobs earns its dough.
-        job_cpu = self.cpu_usage.get("jobs", 0) * secs_passed
+        job_cpu = self.cpu_allocated_for("jobs", 0) * secs_passed
         explicit_job_cash = self.do_jobs(job_cpu)
 
         # Pay maintenance cash, if we can.
@@ -382,11 +385,11 @@ class Player(object):
             cpu_info.maintenance = cpu_info.maintenance_needed \
                                    - cpu_info.maintenance_shortfall
 
-            cpu_info.explicit_jobs = self.cpu_usage.get("jobs", 0) * cpu_ratio
+            cpu_info.explicit_jobs = self.cpu_allocated_for("jobs", 0) * cpu_ratio
             cpu_info.pool_jobs = self.cpu_pool * cpu_ratio_secs
             cpu_info.jobs = cpu_info.explicit_jobs + cpu_info.pool_jobs
 
-            cpu_info.explicit_pool = self.cpu_usage.get("cpu_pool", 0) * cpu_ratio
+            cpu_info.explicit_pool = self.cpu_allocated_for("cpu_pool", 0) * cpu_ratio
             cpu_info.default_pool = default_cpu * cpu_ratio_secs
             cpu_info.pool = cpu_info.explicit_pool + cpu_info.default_pool
 

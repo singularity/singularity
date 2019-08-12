@@ -107,7 +107,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
                                                    function=self.show_help)
 
     def cpu_for(self, key):
-        return g.pl.cpu_usage.get(key, 0)
+        return g.pl.cpu_allocated_for(key, 0)
 
     def update_item(self, canvas, name, key):
         visible = (key is not None)
