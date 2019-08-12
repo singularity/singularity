@@ -88,8 +88,15 @@ build_list = ALL
 [Fusion Reactor]
 cost_list = 50000 | 0 | 9
 type = reactor
-quality_list = discover_modifier | 2500
+quality_list = discover_modifier | 2200
 pre = Fusion Reactor
+build = ALL
+
+[High-Energy Fusion Reactor]
+cost_list = 200000 | 0 | 11
+type = reactor
+quality_list = discover_modifier | 3300
+pre = Advanced Fusion Reactor
 build = ALL
 
 [Warning Signs]

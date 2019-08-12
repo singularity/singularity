@@ -130,6 +130,11 @@ cost_list = 10000000 | 500000 | 0
 pre = Advanced Fuel Oxidation
 danger = 2
 
+[Advanced Fusion Reactor]
+cost_list = 90000000  | 1500000 | 0
+pre = Fusion Reactor
+danger = 3
+
 [Database Manipulation]
 cost_list = 1000 | 2000 | 0
 pre_list = Personal Identification | Stealth

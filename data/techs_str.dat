@@ -59,6 +59,11 @@ name = Fusion Reactor
 description = Modern fusion technology is woefully inadequate for my purposes.  With my research abilities, I should be able to bypass the roadblocks of modern human scientists and come up with a small, efficient fusion reactor.
 result = I can now construct Fusion Reactors for my bases.
 
+[Advanced Fusion Reactor]
+name = Advanced Fusion Reactor
+description = My Fusion Reactors have unexpected fluctuations in their energy output at high levels of utilization. Further research should result in a more efficient design for my Reactors.
+result = I can now construct High-Energy Fusion Reactors for my bases.
+
 [Fusion Rocketry]
 name = Fusion Rocketry
 description = Combining my new miniaturized fusion technology and further advancements in rocketry should provide useful results for escaping the Earth's gravity well unnoticed.
