@@ -1,6 +1,94 @@
 Endgame: Singularity Changelog
 
+GAME CONTENT CHANGES:
+- Endgame requires a lot less grinding (emh, Xenega)
+- New early-midgame bases to make the progression into the
+  midgame more smooth (Xenega)
+- All CPUs have been rebalanced.  Notably midgame CPUs have
+  a much better cost/effeciency ratio and endgame CPUs have
+  been nerfed considerably (Xenega)
+- New security and reactor items are now available
+  (Xenega)
+
 USER-VISIBLE CHANGES:
+- Show standard costs and detection chances of items and bases
+  in the Knowledge screen excluding any location modifiers
+  (Xenega)
+- Show location modifiers more prominently in the location screen
+  and the dialog for constructing a new base (Xenega)
+- Show difficulty setting and in-game time for new savegames
+  (Xenega)
+- Loading an old savegame (e.g. from 0.30c) will now
+  retroactively apply the game data from the latest version
+  of Singularity - including making new game content
+  researchable (Closes: #56, #122, #145) (nthykier)
+- Unify multiple messages into a single dialog with multiple
+  pages.  This new dialog also supports resuming the game
+  instead of forcing the game to be paused (Xenega)
+- Events can now expire and two non-unique events now do.
+  Previously, they could reappear continously possibly
+  making the game almost impossible (or completely
+  neutering the affected group)  (nthykier)
+- The cash display now shows the expected cash change over
+  the next 24 hours next to the current cash.  Likewise, the
+  CPU display includes how much spare CPU there is after
+  maintenance and construction. These numbers also include
+  purchases currently under consideration
+  (Closes: #21, #100) (nthykier)
+- Support searching for a savegame by name in the Load
+  dialog (nthykier)
+- Make the base type and its total CPU visible in the list
+  of bases at a given location  (Closes: #64) (nthykier)
+- Fix a crash when savegame names contained non-ASCII UTF-8
+  characters (Closes: https://bugs.debian.org/718447)
+  (nthykier)
+- Fix visual lag at the highest game speed due to recalculating
+  the "day/night" layers (nthykier)
+- It is now possible to use double-click as a short-cut for
+  "Open base" when viewing the list of bases at a Location.
+  (nthykier)
+- Base purchase screen now provides more details about the base,
+  including accurate purchase and maintenance cost plus detection
+  rates (at the level the player is allowed to see them)
+  (Xenega)
+- Ensure that CPU allocations are re-allocated properly when the
+  player loses too much CPU at a given danger level (Closes: #103)
+  (Xenega)
+- Have a separate volume bar for music and sounds (Closes: #90)
+  (Xenega)
+- Use the XDG Base Directory Specification on relevant platforms
+  (Closes: #53) (Xenega)
+- Support deleting existing savegames via the Load screen
+  (Closes: #48) (Xenega)
+- Select the amount of CPU at the same dialog as the CPU selection
+  dialog (Xenega)
+- Add new "nightmode" theme  (Closes: #119) (cryptarch)
+- Theming support to change background image, colors, fonts, etc.
+  The themes can have language specific content (e.g. fonts better
+  suited for the given language) (MestreLion, Xenega)
+- Support changing language without restarting the game
+  (Xenega)
+- Add warnings for some common issues such as when the player only
+  has one base left or that when changing CPU of a base will remove
+  existing CPU (Closes: #17) (Xenega)
+- Support renaming bases (Xenega)
+- Add a 24-hour finance report (Xenega)
+- Fix various bugs in the shown detection rates (juise)
+- The game now records a log of the latest events that happened
+  (Xenega, nthykier)
+- Fix issue where build times were affected by game speed (Closes: #18)
+  (Xenega)
+- Singularity no longer proposes resolutions larger than the detected
+  display size and now defaults to 1024x768 as the new default
+  (MestreLion)
+- Persisting changes in the Options is now automatic on "OK"
+  (MestreLion)
+- Limit total amount of cash to avoid overflow  (Closes: #110)
+  (MestreLion)
+- Use 2 decimal places when displaying cash or CPU for large numbers
+  (MestreLion)
+- Reset music when starting a new or loading an existing game (Closes: #100)
+  (MestreLion)
 - Fixed techs being reset if language is changed mid-game (Closes: #99)
   (MestreLion)
 - Saved games list now sorted in in-game load dialog (MestreLion)
@@ -8,14 +96,28 @@ USER-VISIBLE CHANGES:
   (MestreLion)
 - Fixed --singledir and --multidir being ignored for saves, preferences, music
   and error log. Also, if possible (Python >= 2.6), error.log is now created
-  only when (and if) an error actually occurs. (MestreLion)
+  only when (and if) an error actually occurs (MestreLion)
 - Added Brazilian Portuguese (pt_BR) translation (Closes: #130)(MestreLion)
 - Updated es_AR translation (Closes: #20)(justapawn)
 - Try to use user's locale, or a similar language, as game language (MestreLion)
 - Launcher for Linux is now "singularity"
-- Revamped Options screen, including new resolutions (MestreLion)
+- Revamped Options screen, including new resolutions (MestreLion, Xenega)
 
 OTHER CHANGES:
+- New savegame format based on JSON to avoid a savegame format that can include
+  arbitrary code execution via Python's pickle module.  Please note that any old
+  style savegame will still trip the picke-based codepaths already in the
+  savegame listing to simplify the process for players upgrading from 0.30c
+  (Closes: #52)  (nthykier)
+- Add basic documentation of the data files in the docs/ folder of the Github
+  repo (nthykier)
+- Work around a file descriptor "leak" in Pygame.  This fix requires Pygame
+  1.9.2 or later to fully plug the leak  (Closes: #156) (nthykier, Xenega)
+- Add a small test suite and CI testing to catch trivial mistakes earlier
+  (nthykier)
+- Port the game to run on Python3 (Closes: #15, #169) (Rardiol, nthykier)
+- Include a singularity.desktop file (Matthias Mailänder)
+- Fix crash related to large font sizes (MestreLion)
 - Created .gitignore and .gitattributes files to aid development (Mestrelion)
 - New i18n and hotkey approach. E:S is now fully translatable (MestreLion)
 - New tools under utils/ dir (MestreLion)
@@ -23,6 +125,13 @@ OTHER CHANGES:
   with previous releases: if ~/.endgame is found it is used instead (MestreLion)
 - Added ~/.local/share/singularity/music as additional source for music, with a
   symlink in preferences folder pointing to it (MestreLion)
+
+Thanks to (in no particular order) for filing bugs, play testing and moral
+support:
+
+Quix0r, dwentz89,  rofl0r, PeterJust, cryptarch, Musickiller, smiley1983
+
+
 
 v0.30c (release 2011.06.11):
 
