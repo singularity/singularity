@@ -28,14 +28,6 @@ import json
 from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
 import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer, code.data as data, code.warning as warning
 
-#TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
-#TODO: Integrate "Save Options to Disk" functionality in OK button.
-#TODO: Add dialog suggesting restart when language changes, so changes may apply
-#      at least until/if we find a way refresh all screens. Don't forget to
-#      remind user to save current game (if loaded from map menu)
-#TODO: Disable Sound pane if mixer is not initialized
-#TODO: Create a dedicated button for Music
-#
 class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("yes_type", "ok")
