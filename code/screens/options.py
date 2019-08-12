@@ -345,7 +345,7 @@ class VideoPane(widget.Widget):
         if (current_res == None):
             current_res = (int(gg.screen_size[0]), int(gg.screen_size[1]))
               
-        self.resolutions = sorted(set(gg.resolutions + pygame.display.list_modes()))
+        self.resolutions = gg.get_screen_size_list()
         self.resolution_choice.list = [_("CUSTOM")] + ["%sx%s" % res for res in self.resolutions]
             
         custom = True

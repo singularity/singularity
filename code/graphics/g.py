@@ -115,6 +115,16 @@ def set_fullscreen(value):
     set_screen_size(fs=value)
 
 
+def get_screen_size_list():
+    res_list = set(resolutions + pygame.display.list_modes())
+
+    # Remove resolution superior to desktop size since we will not allows them.
+    if desktop_size:
+        res_list = filter(lambda res: res[0] <= desktop_size[0] and res[1] <= desktop_size[1], res_list)
+
+    return sorted(res_list)
+
+# TODO: Allows Fullscreen resolution could be higher than desktop_size when possible.
 def set_screen_size(size=None, fs=None):
     """ Calculates proper real and abstract screen sizes
         based on current and given screen size, fullscreen and desktop size
