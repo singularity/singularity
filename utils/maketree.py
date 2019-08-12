@@ -37,12 +37,15 @@ else:
     sys.path.append(esdir)
 
 try:
-    import code.g as g, code.dirs as dirs
+    import code.g as g, code.dirs as dirs, code.i18n as i18n, code.data as data
     dirs.create_directories(False)
-    g.set_language()
-    g.load_techs()
-    g.load_items()
-    g.load_tasks()
+    i18n.set_language()
+    data.load_regions()
+    data.load_locations()
+    data.load_techs()
+    data.load_item_types()
+    data.load_items()
+    data.load_tasks()
 except ImportError:
     sys.exit("Could not find game's code.g")
 
@@ -98,7 +101,6 @@ s = 'node [fillcolor="#ccccff"];\n'
 f.write(s)
 so_far += s
 
-g.load_items()
 for name,item in g.items.items():
     if not item.prerequisites: continue
     for pre in item.prerequisites:
@@ -115,7 +117,6 @@ s = 'node [fillcolor="#99ffff"];\n'
 f.write(s)
 so_far += s
 
-g.load_bases()
 for name,base in g.base_type.items():
     if not base.prerequisites: continue
     for pre in base.prerequisites:
@@ -142,10 +143,9 @@ def set_or(state):
         else:
             f.write('edge [arrowhead=normal,color="#000000"];\n')
 
-g.load_locations()
 for name,loc in g.locations.items():
     if not loc.prerequisites: continue
-    if "unknown_tech" in loc.prerequisites:
+    if "impossible" in loc.prerequisites:
         continue
     set_or(False)
     for pre in loc.prerequisites:
