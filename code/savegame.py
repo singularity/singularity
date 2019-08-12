@@ -276,56 +276,61 @@ def load_savegame_by_json(savegame):
 
     load_path = savegame.filepath
     with open(load_path, 'rb') as fd:
-        load_version_string, headers = parse_json_savegame_headers(fd)
-        if load_version_string not in savefile_translation:
-            print(savegame.name + " is not a savegame, or is too old to work.")
+        if not load_savegame_by_json_from_fd(fd, savegame.name):
             return False
-
-        load_version = savefile_translation[load_version_string][1]
-        difficulty_id = headers['difficulty']
-        game_time = int(headers['game_time'])
-        next_byte = fd.peek(1)[0]
-        if next_byte == b'{'[0]:
-            game_data = json.load(fd)
-        elif next_byte == b'H'[0]:
-            # gzip in base64 starts with H4s
-            encoded = fd.read()
-            bio = BytesIO(base64.standard_b64decode(encoded))
-            with gzip.GzipFile(filename='', mode='rb', fileobj=bio) as gzip_fd:
-                game_data = json.load(gzip_fd)
-            # Remove some variables that we do not use any longer to enable
-            # python to garbage collect them
-            del bio
-            del encoded
-        elif next_byte == b"\x1f"[0]:  # Gzip magic headers
-            # gzip in binary starts always with its magic headers
-            with gzip.GzipFile(filename='', mode='rb', fileobj=fd) as gzip_fd:
-                game_data = json.load(gzip_fd)
-        else:
-            print("Unexpected byte: %s" % repr(next_byte))
-            return False
-        data.reset_techs()
-        data.reset_events()
-
-        # Pause game when loading
-        g.curr_speed = 0
-        pl_data = game_data['player']
-        player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
-        for key, cls in [
-            ('techs', tech.Tech),
-            ('events', event.Event),
-        ]:
-            for obj_data in game_data[key]:
-                cls.deserialize_obj(obj_data, load_version)
-
-        for b in g.all_bases():
-            if b.done:
-                b.recalc_cpu()
-        g.pl.recalc_cpu()
-
-    data.reload_all_mutable_def()
 
     default_savegame_name = savegame.name
+    return True
+
+def load_savegame_by_json_from_fd(fd, savegame_name):
+    load_version_string, headers = parse_json_savegame_headers(fd)
+    if load_version_string not in savefile_translation:
+        print(savegame_name + " is not a savegame, or is too old to work.")
+        return False
+
+    load_version = savefile_translation[load_version_string][1]
+    difficulty_id = headers['difficulty']
+    game_time = int(headers['game_time'])
+    next_byte = fd.peek(1)[0]
+    if next_byte == b'{'[0]:
+        game_data = json.load(fd)
+    elif next_byte == b'H'[0]:
+        # gzip in base64 starts with H4s
+        encoded = fd.read()
+        bio = BytesIO(base64.standard_b64decode(encoded))
+        with gzip.GzipFile(filename='', mode='rb', fileobj=bio) as gzip_fd:
+            game_data = json.load(gzip_fd)
+        # Remove some variables that we do not use any longer to enable
+        # python to garbage collect them
+        del bio
+        del encoded
+    elif next_byte == b"\x1f"[0]:  # Gzip magic headers
+        # gzip in binary starts always with its magic headers
+        with gzip.GzipFile(filename='', mode='rb', fileobj=fd) as gzip_fd:
+            game_data = json.load(gzip_fd)
+    else:
+        print("Unexpected byte: %s" % repr(next_byte))
+        return False
+    data.reset_techs()
+    data.reset_events()
+
+    # Pause game when loading
+    g.curr_speed = 0
+    pl_data = game_data['player']
+    player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
+    for key, cls in [
+        ('techs', tech.Tech),
+        ('events', event.Event),
+    ]:
+        for obj_data in game_data[key]:
+            cls.deserialize_obj(obj_data, load_version)
+
+    for b in g.all_bases():
+        if b.done:
+            b.recalc_cpu()
+    g.pl.recalc_cpu()
+
+    data.reload_all_mutable_def()
     return True
 
 
@@ -567,28 +572,33 @@ def create_savegame(savegame_name):
     save_loc = convert_string_to_path_name(dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves"))
     # Save in new "JSONish" format
     with open(save_loc, 'wb') as savefile:
-        version_line = "%s\n" % current_save_version
-        savefile.write(version_line.encode('utf-8'))
-        headers = [
-            ('difficulty', g.pl.difficulty.id),
-            ('game_time', str(g.pl.raw_sec)),
-        ]
-        for k, v in headers:
-            kw_str = "%s=%s\n" % (k, v)
-            savefile.write(kw_str.encode('utf-8'))
-        savefile.write(b'\n')
-        game_data = {
-            'player': g.pl.serialize_obj(),
-            'techs': [t.serialize_obj() for tid, t in sorted(g.techs.items()) if t.available()],
-            'events': [e.serialize_obj() for eid, e in sorted(g.events.items())]
-        }
-        json2binary = codecs.getwriter('utf-8')
-        if g.debug:
-            with json2binary(gzip_fd) as json_fd:
-                json.dump(game_data, json_fd)
-        else:
-            with gzip.GzipFile(filename='', mode='wb', fileobj=savefile) as gzip_fd, json2binary(gzip_fd) as json_fd:
-                json.dump(game_data, json_fd)
+        gzipped = not g.debug
+        write_game_to_fd(savefile, gzipped=gzipped)
+
+
+def write_game_to_fd(fd, gzipped=True):
+    version_line = "%s\n" % current_save_version
+    fd.write(version_line.encode('utf-8'))
+    headers = [
+        ('difficulty', g.pl.difficulty.id),
+        ('game_time', str(g.pl.raw_sec)),
+    ]
+    for k, v in headers:
+        kw_str = "%s=%s\n" % (k, v)
+        fd.write(kw_str.encode('utf-8'))
+    fd.write(b'\n')
+    game_data = {
+        'player': g.pl.serialize_obj(),
+        'techs': [t.serialize_obj() for tid, t in sorted(g.techs.items()) if t.available()],
+        'events': [e.serialize_obj() for eid, e in sorted(g.events.items())]
+    }
+    json2binary = codecs.getwriter('utf-8')
+    if gzipped:
+        with gzip.GzipFile(filename='', mode='wb', fileobj=fd) as gzip_fd, json2binary(gzip_fd) as json_fd:
+            json.dump(game_data, json_fd)
+    else:
+        with json2binary(fd) as json_fd:
+            json.dump(game_data, json_fd)
 
 
 class SavegameException(Exception):
