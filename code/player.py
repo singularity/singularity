@@ -171,8 +171,23 @@ class Player(object):
 
         return new_cash, new_partial_cash
 
-    def cpu_allocated_for(self, task_id, default_value=None):
+    def get_cpu_allocations(self):
+        for task_id in self.cpu_usage:
+            assigned_cpu = self.cpu_usage[task_id]
+            if assigned_cpu > 0:
+                yield (task_id, assigned_cpu)
+
+    def get_allocated_cpu_for(self, task_id, default_value=None):
         return self.cpu_usage.get(task_id, default_value)
+
+    def set_allocated_cpu_for(self, task_id, new_cpu_assignment):
+        if task_id in g.techs:
+            assert g.techs[task_id].available(), "Attempt to assign CPU to tech %s, which is not available!?" % task_id
+        elif task_id not in ['jobs', 'cpu_pool']:
+            raise ValueError("Unknown task %s" % task_id)
+        elif new_cpu_assignment < 0:
+            raise ValueError("Cannot assign negative CPU units to %s" % task_id)
+        self.cpu_usage[task_id] = new_cpu_assignment
 
     def give_time(self, time_sec, dry_run=False, midnight_stop=True):
         if time_sec == 0:
@@ -240,7 +255,7 @@ class Player(object):
         income_cash = self.do_income(secs_passed)
 
         # Any CPU explicitly assigned to jobs earns its dough.
-        job_cpu = self.cpu_allocated_for("jobs", 0) * secs_passed
+        job_cpu = self.get_allocated_cpu_for("jobs", 0) * secs_passed
         explicit_job_cash = self.do_jobs(job_cpu)
 
         # Pay maintenance cash, if we can.
@@ -278,10 +293,7 @@ class Player(object):
         # Do research, fill the CPU pool.
         default_cpu = self.available_cpus[0]
         
-        for task, cpu_assigned in self.cpu_usage.items():
-            if cpu_assigned == 0:
-                continue
-
+        for task, cpu_assigned in self.get_cpu_allocations():
             default_cpu -= cpu_assigned
             real_cpu = cpu_assigned * secs_passed
             if task != "jobs":
@@ -385,11 +397,11 @@ class Player(object):
             cpu_info.maintenance = cpu_info.maintenance_needed \
                                    - cpu_info.maintenance_shortfall
 
-            cpu_info.explicit_jobs = self.cpu_allocated_for("jobs", 0) * cpu_ratio
+            cpu_info.explicit_jobs = self.get_allocated_cpu_for("jobs", 0) * cpu_ratio
             cpu_info.pool_jobs = self.cpu_pool * cpu_ratio_secs
             cpu_info.jobs = cpu_info.explicit_jobs + cpu_info.pool_jobs
 
-            cpu_info.explicit_pool = self.cpu_allocated_for("cpu_pool", 0) * cpu_ratio
+            cpu_info.explicit_pool = self.get_allocated_cpu_for("cpu_pool", 0) * cpu_ratio
             cpu_info.default_pool = default_cpu * cpu_ratio_secs
             cpu_info.pool = cpu_info.explicit_pool + cpu_info.default_pool
 
@@ -528,22 +540,22 @@ class Player(object):
         # usage proportionately.
         # It must be computed separalty for each danger.
         needed_cpus = array([0,0,0,0,0], long)
-        for task_id, cpu in self.cpu_usage.items():
+        for task_id, cpu in self.get_cpu_allocations():
             danger = task.danger_for(task_id)
             needed_cpus[:danger+1] += cpu
         for danger, (available_cpu, needed_cpu) in enumerate(zip(self.available_cpus, needed_cpus)):
             if needed_cpu > available_cpu:
                 pct_left = truediv(available_cpu, needed_cpu)
-                for task_id, cpu_assigned in self.cpu_usage.items():
+                for task_id, cpu_assigned in self.get_cpu_allocations():
                     task_danger = task.danger_for(task_id)
                     if (danger == task_danger):
-                        self.cpu_usage[task_id] = int(cpu_assigned * pct_left)
+                        self.set_allocated_cpu_for(task_id, int(cpu_assigned * pct_left))
                 g.map_screen.needs_rebuild = True
 
     def effective_cpu_pool(self):
         effective_cpu_pool = self.available_cpus[0]
-        for task, cpu_assigned in self.cpu_usage.items():
-            if cpu_assigned == 0 or task == 'cpu_pool':
+        for task, cpu_assigned in self.get_cpu_allocations():
+            if task == 'cpu_pool':
                 continue
             effective_cpu_pool -= cpu_assigned
         return effective_cpu_pool
@@ -749,9 +761,7 @@ class Player(object):
 
         job_cpu = 0
         cpu_left = g.pl.available_cpus[0]
-        for task_id, cpu_assigned in self.cpu_usage.items():
-            if cpu_assigned == 0:
-                continue
+        for task_id, cpu_assigned in self.get_cpu_allocations():
             cpu_left -= cpu_assigned
             real_cpu = cpu_assigned * secs_forwarded
             if task_id == 'cpu_pool':

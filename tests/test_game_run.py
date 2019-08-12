@@ -57,7 +57,7 @@ def test_initial_game():
     assert len(pl.log) == 0
 
     stealth_tech = g.techs['Stealth']
-    pl.cpu_usage[stealth_tech.id] = 1
+    pl.set_allocated_cpu_for(stealth_tech.id, 1)
 
     pl.give_time(g.seconds_per_day)
     # Nothing should have appeared in the logs

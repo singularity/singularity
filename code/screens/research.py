@@ -107,7 +107,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
                                                    function=self.show_help)
 
     def cpu_for(self, key):
-        return g.pl.cpu_allocated_for(key, 0)
+        return g.pl.get_allocated_cpu_for(key, 0)
 
     def update_item(self, canvas, name, key):
         visible = (key is not None)
@@ -153,7 +153,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
     def calc_cpu_left(self):
         cpu_count = array(g.pl.available_cpus, long)
-        for task_id, cpu in g.pl.cpu_usage.items():
+        for task_id, cpu in g.pl.get_cpu_allocations():
             danger = task.danger_for(task_id)
             cpu_count[:danger+1] -= cpu
 
@@ -163,7 +163,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         return [int(c) for c in cpu_count]
 
     def handle_slide(self, key, new_pos):
-        g.pl.cpu_usage[key] = new_pos
+        g.pl.set_allocated_cpu_for(key, new_pos)
         self.dirty_count = True
         self.needs_rebuild = True
         self.parent.needs_rebuild = True
