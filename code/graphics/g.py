@@ -35,7 +35,7 @@ desktop_size = ()
 desktop_margin = (70, 70)
 
 #initial screen size. Can be set via command-line option or preferences file
-default_screen_size = (800, 600)
+default_screen_size = (1024, 768)
 
 #Current screen size. This size is an abstraction, tightly tied to resolutions.
 #Real window size in windowed mode may be smaller due to desktop_margin
