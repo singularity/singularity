@@ -73,6 +73,7 @@ tech|Heat Signature Reduction             = 0x01010034
 tech|Advanced Heat Signature Reduction    = 0x01010035
 tech|Knowledge Preservation               = 0x01010036
 tech|Project: Synchrotron                 = 0x01010037
+tech|Simulated Reality                    = 0x01010038
 
 location|N AMERICA                        = 0x01020000
 location|S AMERICA                        = 0x01020001
