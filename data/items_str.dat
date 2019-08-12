@@ -44,7 +44,11 @@ description = An array of focused photovoltaic phased arrays coupled with simple
 
 [Fusion Reactor]
 name = Fusion Reactor
-description = A miniaturized nuclear reactor. Reduces discovery chance by preventing suspicious power drains.
+description = A miniaturized fusion nuclear reactor. Reduces discovery chance by preventing suspicious power drains.
+
+[High-Energy Fusion Reactor]
+name = Fusion Reactor
+description = A miniaturized fusion nuclear reactor with high levels of energy output. Reduces discovery chance by preventing suspicious power drains.
 
 [Hypnosis Field]
 name = Hypnosis Field
