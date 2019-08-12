@@ -230,15 +230,16 @@ def get_story_section(name):
         # TODO: Execute command
         yield segment
 
-def new_game(difficulty_name):
+
+def new_game_no_gui(difficulty_name, initial_speed=1):
     global curr_speed
-    curr_speed = 1
+    curr_speed = initial_speed
     global pl
 
     from code.stats import itself as stats
     stats.reset()
 
-    from code import data, difficulty, player, group, base, mixer
+    from code import data, difficulty, player, base
     data.reload_all_mutable()
 
     diff = difficulty.difficulties[difficulty_name]
@@ -261,6 +262,11 @@ def new_game(difficulty_name):
             if debug:
                 print("%s gets modifiers %s" % (loc, mod))
 
+
+def new_game(difficulty_name):
+    new_game_no_gui(difficulty_name)
+
+    from code import mixer
     # Reset music
     mixer.play_music("music")
 
