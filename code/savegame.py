@@ -20,6 +20,7 @@
 
 from __future__ import absolute_import
 
+import codecs
 import sys
 
 try:
@@ -581,11 +582,13 @@ def create_savegame(savegame_name):
             'techs': [t.serialize_obj() for tid, t in sorted(g.techs.items()) if t.available()],
             'events': [e.serialize_obj() for eid, e in sorted(g.events.items())]
         }
+        json2binary = codecs.getwriter('utf-8')
         if g.debug:
-            json.dump(game_data, savefile)
+            with json2binary(gzip_fd) as json_fd:
+                json.dump(game_data, json_fd)
         else:
-            with gzip.GzipFile(filename='', mode='wb', fileobj=savefile) as gzip_fd:
-                json.dump(game_data, gzip_fd)
+            with gzip.GzipFile(filename='', mode='wb', fileobj=savefile) as gzip_fd, json2binary(gzip_fd) as json_fd:
+                json.dump(game_data, json_fd)
 
 
 class SavegameException(Exception):
