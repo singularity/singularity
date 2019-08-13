@@ -5,3 +5,7 @@ ignore:
   - "data/**/*"
   - "docs/**/*"
   - "i18n/lang_*/**/*"
+  - "AUTHORS"
+  - "**/README*"
+  - "**/*.txt"
+  - "**/Changelog"
