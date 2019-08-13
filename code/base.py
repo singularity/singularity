@@ -391,6 +391,8 @@ class Base(buyable.Buyable):
             if item is not None:
                 item.destroy()
 
+        g.pl.recalc_cpu()
+
     def next_base(self, forwards):
         index = self.location.bases.index(self)
         if forwards > 0:
