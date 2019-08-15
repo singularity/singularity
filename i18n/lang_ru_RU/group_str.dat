@@ -1,0 +1,19 @@
+[news]
+name = СМИ
+discover_log = Некоторыми СМИ была раскрыта база %s типа %s в %s.
+discover_desc = some news organizations
+
+[science]
+name = НАУКА
+discover_log = Научным сообществом была обнаружена база %s типа %s в %s.
+discover_desc = the scientific community
+
+[covert]
+name = СПЕЦ-СЛУЖБЫ
+discover_log = Некоторыми правительственными спец-службами была обнаружена база %s типа %s в %s.
+discover_desc = several secret governmental organizations
+
+[public]
+name = ОБЩЕСТВЕННОСТЬ
+discover_log = Общественность обнаружила базу %s типа %s в %s.
+discover_desc = the general public

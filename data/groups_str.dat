@@ -1,15 +1,19 @@
 [news]
 name = NEWS
+discover_log = Base %s of type %s discovered at location %s by some news organizations.
 discover_desc = some news organizations
 
 [science]
 name = SCIENCE
+discover_log = Base %s of type %s discovered at location %s by the scientific community.
 discover_desc = the scientific community
 
 [covert]
 name = COVERT
+discover_log = Base %s of type %s discovered at location %s by several secret governmental organizations.
 discover_desc = several secret governmental organizations
 
 [public]
 name = PUBLIC
+discover_log = Base %s of type %s discovered at location %s by the general public.
 discover_desc = the general public

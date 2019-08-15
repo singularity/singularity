@@ -30,22 +30,6 @@ msgstr "Производит {0} ЦПУ"
 msgid "Detection chance:"
 msgstr "Шансы обнаружения:"
 
-#: base.py:88 screens/base.py:362 screens/map.py:656 screens/map.py:664
-msgid "NEWS"
-msgstr "СМИ"
-
-#: base.py:89 screens/base.py:363 screens/map.py:657 screens/map.py:665
-msgid "SCIENCE"
-msgstr "НАУКА"
-
-#: base.py:90 screens/base.py:364 screens/map.py:658 screens/map.py:666
-msgid "COVERT"
-msgstr "СПЕЦ-СЛУЖБЫ"
-
-#: base.py:91 screens/base.py:365 screens/map.py:659 screens/map.py:667
-msgid "PUBLIC"
-msgstr "ОБЩЕСТВЕННОСТЬ"
-
 #: base.py:112
 #, python-format
 msgid "Has space for %d computers."

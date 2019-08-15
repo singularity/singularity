@@ -259,25 +259,19 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
         return 'red'
 
     @property
-    def group_discover_desc(self):
-        if self._discovered_by_group_id in g.pl.groups:
-            return g.pl.groups[self._discovered_by_group_id].spec.discover_desc
-        return "???"
+    def group_spec(self):
+        return g.pl.groups[self._discovered_by_group_id].spec
 
     @property
     def log_line(self):
-        try:
-            log_format = 'log_destroy_%s' % self._discovered_by_group_id
-            message = g.strings[log_format]
-        except KeyError:
-            message = g.strings['log_destroy']
-        return message % (self._base_name, self.base_type.name, self.location.name)
+        log_format = self.group_spec.discover_log or g.strings['log_destroy']
+        return log_format % (self._base_name, self.base_type.name, self.location.name)
 
     @property
     def full_message(self):
         dialog_string = g.strings["discover"] % {
             "base": self._base_name,
-            "group": self.group_discover_desc
+            "group": self.group_spec.discover_desc
         }
         return dialog_string
 

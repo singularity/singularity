@@ -38,6 +38,7 @@ class GroupSpec(GenericSpec):
         
         # String data
         self.name = ""
+        self.discover_log = ""
         self.discover_desc = ""
 
 
