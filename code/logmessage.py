@@ -179,7 +179,7 @@ class LogResearchedTech(AbstractLogMessage):
 
     @property
     def log_line(self):
-        return _('My study of {TECH} is complete.', TECH=self.tech.name)
+        return _('{TECH} complete', TECH=self.tech.name)
 
     @property
     def full_message(self):
@@ -227,7 +227,7 @@ class LogBaseConstructed(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        return _("My {BASE_TYPE} at location {LOCATION}, {BASE_NAME}, is ready for use.",
+        return _("{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}",
                  BASE_NAME=self._base_name, BASE_TYPE=self.base_type.name, LOCATION=self.location.name)
 
     @property
@@ -326,7 +326,7 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        return _("Construction of {ITEM_TYPE_NAME} in {BASE_NAME} at location {LOCATION} is complete.",
+        return _("{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}",
                  ITEM_TYPE_NAME=self.item_spec.name, BASE_NAME=self._base_name, BASE_TYPE=self.base_type.name,
                  LOCATION=self.location.name)
 
