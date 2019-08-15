@@ -271,7 +271,7 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
     def full_message(self):
         dialog_string = g.strings["discover"] % {
             "base": self._base_name,
-            "group": self.group_spec.discover_desc
+            "message": self.group_spec.discover_desc
         }
         return dialog_string
 
