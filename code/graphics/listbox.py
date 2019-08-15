@@ -33,9 +33,10 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     align = widget.causes_redraw("_align")
     list_size = widget.causes_rebuild("_list_size")
     list_pos = widget.causes_rebuild("_list_pos")
+    list_item_shrink = widget.causes_rebuild("_list_item_shrink")
 
     def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
-                 list_pos=0, list_item_height=0.03, borders=constants.ALL,
+                 list_pos=0, list_item_height=0.03, list_item_shrink=1, borders=constants.ALL,
                  item_borders=True, item_selectable=True,
                  align=constants.CENTER, on_double_click_on_item=None, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
@@ -50,6 +51,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.item_borders = item_borders
         self.align = align
         self.list_item_height = list_item_height
+        self.list_item_shrink = list_item_shrink
         self.list_pos = list_pos
         self.list = list or []
 
@@ -188,6 +190,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         borders = (constants.TOP, constants.LEFT) if self.item_borders else (constants.LEFT,)
         return text.SelectableText(self, None, None, anchor=constants.TOP_LEFT,
                                    borders=borders,
+                                   shrink_factor=self.list_item_shrink,
                                    border_color=self.border_color,
                                    selected_color=self.selected_color,
                                    unselected_color=self.unselected_color,
