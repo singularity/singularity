@@ -166,7 +166,7 @@ class Base(buyable.Buyable):
         if built:
             self.finish(is_player=False)
 
-        self.power_state = "active"
+        self._power_state = "active"
         self.grace_over = False
 
         self.maintenance = buyable.array(self.spec.maintenance, long)
@@ -178,6 +178,16 @@ class Base(buyable.Buyable):
     @cpus.setter
     def cpus(self, value):
         self.items["cpu"] = value
+
+    @property
+    def power_state(self):
+        return self._power_state
+
+    @power_state.setter
+    def power_state(self, value):
+        self._power_state = value
+        self.check_power()
+        g.pl.recalc_cpu()
 
     @property
     def power_state_name(self):
@@ -243,9 +253,7 @@ class Base(buyable.Buyable):
         })
 
     def restore_obj(self, obj_data, game_version):
-        self.started_at = obj_data['started_at_min']
-        self.power_state = obj_data['power_state']
-        self.grace_over = obj_data.get('grace_over', True)
+        self.restore_buyable_fields(obj_data, game_version)
 
         if not self.spec.force_cpu:
             item_data_list = obj_data['items']
@@ -253,7 +261,11 @@ class Base(buyable.Buyable):
                 it = item.Item.deserialize_obj(self, item_data, game_version)
                 self.items[it.spec.item_type.id] = it
 
-        self.restore_buyable_fields(obj_data, game_version)
+        self.started_at = obj_data['started_at_min']
+        self.grace_over = obj_data.get('grace_over', True)
+        # Note that power_state is subject to whether the base and items are built,
+        # so we deliberately restore it late.
+        self.power_state = obj_data['power_state']
         return self
 
     def convert_from(self, save_version):
