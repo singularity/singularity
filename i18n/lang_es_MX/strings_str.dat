@@ -5,12 +5,10 @@ item_construction_single = La construcción de %(item)s en %(base)s está comple
 tech_gained = Mi estudio de %(tech)s está completo. %(tech_message)s
 discover = Mi uso de %(base)s ha sido descubierto. Los sistemas de seguridad automáticos han removido todas las evidencias concluyentes, pero ha surgido sospecha entre %(group)s.
 discover_maint = La base %(base)s ha caído en el descuido; no puedo seguir utilizándola.   
-save_text = ¿Guardar su juego bajo que nombre?
 name_base_text = Ingrese un nombre para la base
 cpu_pool = Reserva de CPU
 
 detect_chance = [DETECTION CHANCE]
-num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
 
 # Las siguientes series de caracteres se utilizan en la pantalla del mapa en lugar de los porcentajes hasta
 # que una determinada tecnología sea investigada.

@@ -16,5 +16,3 @@ item_construction_single = Koonstruktion av %(item)s i %(base)s är klar.
 construction = %(base)s redo för användning.
 tech_gained = Min forskning inom %(tech)s är klar. %(tech_message)s
 discover_maint = %(base)s har förfalligt och är nu oanvändbar för mig. 
-save_text = Under vilket namn vill du spara spelet?
-

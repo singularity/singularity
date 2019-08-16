@@ -13,8 +13,6 @@ tech_gained = Mes études de %(tech)s sont achevées.  %(tech_message)s
 discover_maint = La base %(base)s est irrécupérable; Je ne peux plus l'utiliser.
 danger_4 = hors de l'univers
 danger_3 = très loin de cette planète
-num_cpu_prompt = Entrer un nombre de %s à construire. (max %d)
-save_text = Nom de la sauvegarde?
 
 # The following strings are used on the map screen in place of percentages until
 # a certain technology is researched.

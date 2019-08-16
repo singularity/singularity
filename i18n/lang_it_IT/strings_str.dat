@@ -20,7 +20,5 @@ danger_4 = al di fuori dell'Universo
 danger_1 = nelle profondità marine o nello spazio
 danger_2 = nello spazio
 danger_3 = lontano da questo pianeta
-num_cpu_prompt = Inserire il numero di %s da costruire. (max %d)
-save_text = Con che nome salvare la partita?
 
 
