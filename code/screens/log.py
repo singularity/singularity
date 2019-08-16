@@ -111,23 +111,25 @@ class FilterLogDialog(dialog.MessageDialog):
         for log_type, log_class in logmessage.SAVEABLE_LOG_MESSAGES.items():
             self.log_class_labels[log_type].text = log_class.log_name()
             
-            if log_class in filtered_log_class:
-                self.log_class_toggles[log_type].text = _("YES")
+            if not log_class in filtered_log_class:
+                self.log_class_toggles[log_type].text = _("SHOW")
+                self.log_class_toggles[log_type].set_active(True)
             else:
-                self.log_class_toggles[log_type].text = _("NO")
+                self.log_class_toggles[log_type].text = _("HIDE")
+                self.log_class_toggles[log_type].set_active(False)
 
         super(FilterLogDialog, self).rebuild()
 
     def toggle_log_class(self, widget, value, log_class):
         if value:
-            widget.text = _("YES")
+            widget.text = _("SHOW")
         else:
-            widget.text = _("NO")
+            widget.text = _("HIDE")
 
         if value:
-            filtered_log_class.add(log_class)
-        else:
             filtered_log_class.remove(log_class)
+        else:
+            filtered_log_class.add(log_class)
 
 class FilterButton(button.ToggleButton, button.FunctionButton):
     pass
