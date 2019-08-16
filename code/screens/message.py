@@ -88,12 +88,12 @@ class MessageListDialog(dialog.YesNoDialog):
         super(MessageListDialog, self).rebuild()
 
         if (len(self.list) == 1):
-            self.title.text = self.type.title_simple
+            self.title.text = self.type.title_simple()
             self.body.text = self.list[0].full_message
             self.prev_button.visible = False
             self.next_button.visible = False
         else:
-            self.title.text = self.type.title_multiple % (self.list_pos + 1, len(self.list))
+            self.title.text = self.type.title_multiple() % (self.list_pos + 1, len(self.list))
             self.body.text = self.list[self.list_pos].full_message
             self.prev_button.visible = True
             self.next_button.visible = True

@@ -35,9 +35,6 @@ def register_saveable_log_message(cls):
 
 class AbstractLogMessage(object):
 
-
-    title_simple   = _("MESSAGE")
-    title_multiple = _("MESSAGE %d/%d")
     log_message_serial_id = None
     _log_message_serial_fields = ['raw_emit_time']
     _log_message_serial_fields_cache = None
@@ -47,6 +44,14 @@ class AbstractLogMessage(object):
         self._log_emit_time = None
         # Force initialization of the message fields to ensure we catch bugs early
         self.log_message_serial_fields()
+
+    @classmethod
+    def title_simple(self):
+        return _("MESSAGE")
+
+    @classmethod
+    def title_multiple(self):
+        return _("MESSAGE %d/%d")
 
     @property
     def log_emit_time(self):

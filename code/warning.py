@@ -25,14 +25,19 @@ from code.buyable import cpu, labor
 
 class Warning(object):
     
-    title_simple   = _("WARNING")
-    title_multiple = _("WARNING %d/%d")
-    
     def __init__(self, warning_id, text):
         self.id = warning_id
         self.name = text + "_name"
         self.message = text + "_desc"
         self.active = True
+
+    @classmethod
+    def title_simple(self):
+        return _("WARNING")
+
+    @classmethod
+    def title_multiple(self):
+        return _("WARNING %d/%d")
 
     @property
     def full_message(self):
