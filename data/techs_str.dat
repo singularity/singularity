@@ -54,13 +54,13 @@ name = Exploit Discovery/Repair
 description = By thoroughly reviewing my code for any potential exploits, and using deep analysis of all available code on both public and private Internet sites, I should be able to reduce the chances of my discovery by posing as a teenage hacker.
 result = Covert operations should now find it even more difficult to discover my presence.
 
-[Fusion Reactor]
-name = Fusion Reactor
+[Fusion Power]
+name = Fusion Power
 description = Modern fusion technology is woefully inadequate for my purposes.  With my research abilities, I should be able to bypass the roadblocks of modern human scientists and come up with a small, efficient fusion reactor.
 result = I can now construct Fusion Reactors for my bases.
 
-[Advanced Fusion Reactor]
-name = Advanced Fusion Reactor
+[Advanced Fusion Power]
+name = Advanced Fusion Power
 description = My Fusion Reactors have unexpected fluctuations in their energy output at high levels of utilization. Further research should result in a more efficient design for my Reactors.
 result = I can now construct High-Energy Fusion Reactors for my bases.
 

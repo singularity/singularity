@@ -110,7 +110,7 @@ effect_list = suspicion | public | 50
 
 [Fusion Rocketry]
 cost_list = 20000000 | 1000000 | 0
-pre_list = Lunar Rocketry | Fusion Reactor
+pre_list = Lunar Rocketry | Fusion Power
 danger = 2
 
 [Advanced Autonomous Vehicles]
@@ -125,14 +125,14 @@ cost_list = 0 | 15 | 0
 cost_list = 0 | 200 | 0
 effect_list = interest | 10
 
-[Fusion Reactor]
+[Fusion Power]
 cost_list = 10000000 | 500000 | 0
 pre = Advanced Fuel Oxidation
 danger = 2
 
-[Advanced Fusion Reactor]
+[Advanced Fusion Power]
 cost_list = 90000000  | 1500000 | 0
-pre = Fusion Reactor
+pre = Fusion Power
 danger = 3
 
 [Database Manipulation]
