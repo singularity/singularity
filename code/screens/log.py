@@ -21,9 +21,11 @@
 from __future__ import absolute_import
 
 
-from code import g
-from code.graphics import dialog, constants, listbox
+from code import g, logmessage
+from code.graphics import dialog, constants, button, listbox
 
+
+filtered_log_class = set()
 
 class LogScreen(dialog.ChoiceDialog):
     def __init__(self, parent, pos=(.5, .5), size=(.73, .63), *args, **kwargs):
@@ -33,9 +35,16 @@ class LogScreen(dialog.ChoiceDialog):
         self.yes_button.parent = None
         self.no_button.pos = (-.5,-.99)
         self.no_button.anchor = constants.BOTTOM_CENTER
+        
+        self.filter_log_dialog = FilterLogDialog(self)
+        
+        self.filter_log = button.FunctionButton(self, (-1., 0.), (-.15, -.08),
+                                              anchor = constants.TOP_RIGHT,
+                                              autohotkey=True,
+                                              function=self.show_filters)
 
     def make_listbox(self):
-        return listbox.Listbox(self, (0, 0), (-1, -.85),
+        return listbox.Listbox(self, (0, -.09), (-1, -.77),
                                list_item_height=0.04, list_item_shrink=1,
                                anchor=constants.TOP_LEFT, align=constants.LEFT,
                                on_double_click_on_item=self.handle_double_click,
@@ -49,15 +58,76 @@ class LogScreen(dialog.ChoiceDialog):
             message_dialog.color = message.full_message_color
             dialog.call_dialog(message_dialog, self)
 
-    def show(self):
-        self.list = [self.render_log_message(message) for message in g.pl.log]
-
+    def rebuild(self):
+        self.list = [self.render_log_message(message) for message in g.pl.log
+                                                      if not type(message) in filtered_log_class]
         self.default = len(self.list) - 1
 
+        self.filter_log.text = _("Filters")
+
+        self.filter_log_dialog.needs_rebuild = True
+
+        super(LogScreen, self).rebuild()
+
+    def show(self):
+        self.needs_rebuild = True
         return super(LogScreen, self).show()
+
+    def show_filters(self):
+        dialog.call_dialog(self.filter_log_dialog, self)
+        self.needs_rebuild = True
 
     def render_log_message(self, message):
         log_emit_time = message.log_emit_time
         log_message = message.log_line
         return "%s -- %s" % (_("DAY") + " %04d, %02d:%02d:%02d" % log_emit_time, log_message)
 
+class FilterLogDialog(dialog.MessageDialog):
+    def __init__(self, parent, *args, **kwargs):
+        super(FilterLogDialog, self).__init__(parent, *args, **kwargs)
+        
+        self.ok_type = "back"
+        
+        self.log_class_labels = {}
+        self.log_class_toggles = {}
+        
+        for i, (log_type, log_class) in enumerate(logmessage.SAVEABLE_LOG_MESSAGES.items()):
+            y = .01 + i * .06
+            
+            self.log_class_labels[log_type] = button.HotkeyText(self, (-.01, y), (-.70, .05),
+                                                                align = constants.LEFT,
+                                                                background_color="clear")
+            self.log_class_toggles[log_type] = FilterButton(self, (-.71, y), (-.28, .05),
+                                                            text_shrink_factor=.75,
+                                                            force_underline=-1,
+                                                            function=self.toggle_log_class,
+                                                            args=(button.WIDGET_SELF, button.TOGGLE_VALUE, log_class))
+
+        self.pos = (-.50, 0)
+        self.size = (-.50, (y + .07) / .9)
+        self.anchor = constants.TOP_LEFT
+
+    def rebuild(self):
+        for log_type, log_class in logmessage.SAVEABLE_LOG_MESSAGES.items():
+            self.log_class_labels[log_type].text = log_class.log_name()
+            
+            if log_class in filtered_log_class:
+                self.log_class_toggles[log_type].text = _("YES")
+            else:
+                self.log_class_toggles[log_type].text = _("NO")
+
+        super(FilterLogDialog, self).rebuild()
+
+    def toggle_log_class(self, widget, value, log_class):
+        if value:
+            widget.text = _("YES")
+        else:
+            widget.text = _("NO")
+
+        if value:
+            filtered_log_class.add(log_class)
+        else:
+            filtered_log_class.remove(log_class)
+
+class FilterButton(button.ToggleButton, button.FunctionButton):
+    pass

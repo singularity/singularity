@@ -133,6 +133,10 @@ class LogEmittedEvent(AbstractLogMessage):
         super(LogEmittedEvent, self).__init__(raw_emit_time)
         self._event_id = event_id
 
+    @classmethod
+    def log_name(self):
+        return _("Emitted Event")
+
     @property
     def event(self):
         return g.events[self._event_id]
@@ -155,6 +159,10 @@ class LogResearchedTech(AbstractLogMessage):
     def __init__(self, raw_emit_time, tech_id):
         super(LogResearchedTech, self).__init__(raw_emit_time)
         self._tech_id = tech_id
+
+    @classmethod
+    def log_name(self):
+        return _("Researched Tech")
 
     @property
     def tech(self):
@@ -205,6 +213,10 @@ class LogBaseConstructed(AbstractBaseRelatedLogMessage):
     def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
         super(LogBaseConstructed, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
 
+    @classmethod
+    def log_name(self):
+        return _("Base Constructed")
+
     @property
     def log_line(self):
         return _("My {BASE_TYPE} at location {LOCATION}, {BASE_NAME}, is ready for use.",
@@ -225,6 +237,10 @@ class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
 
     def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
         super(LogBaseLostMaintenance, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+
+    @classmethod
+    def log_name(self):
+        return _("Base Lost Maintenance")
 
     @property
     def full_message_color(self):
@@ -249,6 +265,10 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
     _log_message_serial_fields = {
         'discovered_by_group_id': '_discovered_by_group_id',
     }
+
+    @classmethod
+    def log_name(self):
+        return _("Base Discovered")
 
     def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id, discovered_by_group_id):
         super(LogBaseDiscovered, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
@@ -289,6 +309,10 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
         super(LogItemConstructionComplete, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
         self._item_spec_id = item_spec_id
         self._item_count = item_count
+
+    @classmethod
+    def log_name(self):
+        return _("Item Construction")
 
     @property
     def item_spec(self):
