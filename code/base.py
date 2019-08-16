@@ -265,7 +265,13 @@ class Base(buyable.Buyable):
         self.grace_over = obj_data.get('grace_over', True)
         # Note that power_state is subject to whether the base and items are built,
         # so we deliberately restore it late.
-        self.power_state = obj_data['power_state']
+        stored_power_state = obj_data['power_state']
+        if stored_power_state in power_states:
+            self.power_state = stored_power_state
+        else:
+            # Unknown power states revert to "active" except for the historical "statis"
+            # states (which are reverted to "sleep")
+            self.power_state = 'sleep' if stored_power_state in ('statis', 'entering_stasis') else 'active'
         return self
 
     def convert_from(self, save_version):
