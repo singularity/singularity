@@ -195,6 +195,7 @@ class LocationScreen(dialog.Dialog):
             base.check_power()
             self.needs_rebuild = True
             self.parent.needs_rebuild = True
+            g.pl.recalc_cpu()
 
     def destroy_base(self):
         if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
