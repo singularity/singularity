@@ -140,6 +140,9 @@ def get_savegames():
             elif file_name.endswith('.s2'):
                 name = file_name[:-3]
                 parse_headers = parse_json_savegame_headers
+            else:
+                # Unknown extension; ignore
+                continue
 
             filepath = os.path.join(saves_dir, file_name)
             version_name = None # None == Unknown version
