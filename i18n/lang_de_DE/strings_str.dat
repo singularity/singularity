@@ -1,11 +1,5 @@
 [strings]
 research_cpu_pool = Forschung anhalten.  Ich werde die verfügbare CPU-Zeit dazu benutzen, meine Stützpunkte zu warten und neue zu bauen.  Wenn noch CPU-Zeit übrig bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
-construction = %(base)s ist für meine Nutzung bereit.
-item_construction_single = Der Bau von %(item)s in %(base)s wurde abgeschlossen.
-tech_gained = Meine Forschung im Bereich "%(tech)s" ist abgeschlossen.  %(tech_message)s
-discover = Meine Nutzung von %(base)s wurde entdeckt.  Das automatische Sicherheitssystem hat alle schlüssigen Beweise vernichtet, aber Argwohn wurde in %(group)s geweckt.
-discover_maint = Die Basis %(base)s ist verfallen; ich kann sie nicht länger benutzen.  
-name_base_text = Einen Namen für die Basis eingeben
 cpu_pool = CPU-Datenbasis
 detect_chance = [ENTDECKUNGSWK.]
 detect_str_low = NIEDR

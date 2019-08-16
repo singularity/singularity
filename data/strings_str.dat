@@ -1,16 +1,7 @@
 [strings]
 research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
-construction = %(base)s is ready for use.
-item_construction_single = The construction of %(item)s in %(base)s is complete.
-item_construction_multiple = The constructions of each %(item)s in %(base)s are complete.
-tech_gained = My study of %(tech)s is complete.  %(tech_message)s
-discover = My use of %(base)s has been discovered. %(message)s.
-discover_maint = The base %(base)s has fallen into disrepair; I can no longer use it.
-name_base_text = Enter a name for the base
 cpu_pool = CPU Pool
 detect_chance = [DETECTION CHANCE]
-log_destroy = Base %s of type %s destroyed at location %s.
-log_destroy_maint = Base %s of type %s destroyed at location %s. Maintenance failed.
 warning_cpu_usage_name = Do not use all the available CPU.
 warning_cpu_usage_desc = I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.
 warning_one_base_name = Only one base remaining.

@@ -1,6 +1,4 @@
 [strings]
-discover = Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra %(group)s.
-name_base_text = Inserire un nome per la base
 detect_str_low = BASSA
 detect_str_moderate = MODERATA
 cpu_penalty = meno efficienti
@@ -12,10 +10,6 @@ detect_str_high = ALTA
 cpu_pool = Riserva di CPU
 location_modifiers = Le basi in questa zona sono %(modifiers)s.
 detect_str_critical = CRITICA
-item_construction_single = La costruzione di %(item)s nella base di %(base)s è completa.
-construction = La base %(base)s è pronta all'uso.
-tech_gained = Il mio studio di %(tech)s è completo.  %(tech_message)s
-discover_maint = Alla base %(base)s non è stata eseguita la manutenzione; non posso più usarla.
 danger_4 = al di fuori dell'Universo
 danger_1 = nelle profondità marine o nello spazio
 danger_2 = nello spazio

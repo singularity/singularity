@@ -180,11 +180,7 @@ class LogResearchedTech(AbstractLogMessage):
     @property
     def full_message(self):
         tech = self.tech
-        text = g.strings["tech_gained"] % {
-            "tech": tech.name,
-            "tech_message": tech.result
-        }
-        return text
+        return _("My study of {TECH} is complete. {MESSAGE}", TECH=tech.name, MESSAGE=tech.result)
 
 
 class AbstractBaseRelatedLogMessage(AbstractLogMessage):
@@ -229,10 +225,7 @@ class LogBaseConstructed(AbstractBaseRelatedLogMessage):
 
     @property
     def full_message(self):
-        dialog_string = g.strings["construction"] % {
-            "base": self._base_name,
-        }
-        return dialog_string
+        return _("{BASE} is ready for use.", BASE=self._base_name)
 
 
 @register_saveable_log_message
@@ -253,14 +246,13 @@ class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        return g.strings['log_destroy_maint'] % (self._base_name, self.base_type.name, self.location.name)
+        return _("Base %s of type %s destroyed at location %s. Maintenance failed.",
+                  BASE=self._base_name, BASE_TYPE=self.base_type.name, LOCATION=self.location.name)
 
     @property
     def full_message(self):
-        dialog_string = g.strings["discover_maint"] % {
-            "base": self._base_name,
-        }
-        return dialog_string
+        return _("The base %(base)s has fallen into disrepair; I can no longer use it.",
+                  BASE=self._base_name)
 
 
 @register_saveable_log_message
@@ -289,16 +281,13 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        log_format = self.group_spec.discover_log or g.strings['log_destroy']
+        log_format = self.group_spec.discover_log or _("Base %s of type %s destroyed at location %s.")
         return log_format % (self._base_name, self.base_type.name, self.location.name)
 
     @property
     def full_message(self):
-        dialog_string = g.strings["discover"] % {
-            "base": self._base_name,
-            "message": self.group_spec.discover_desc
-        }
-        return dialog_string
+        return _("My use of {BASE} has been discovered. {MESSAGE}", 
+                 BASE=self._base_name, MESSAGE=self.group_spec.discover_desc)
 
 
 @register_saveable_log_message
@@ -332,10 +321,12 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
     @property
     def full_message(self):
         if self._item_count == 1:
-            text = g.strings["item_construction_single"]
+            text = _("The construction of {ITEM} in {BASE} is complete.",
+                     ITEM=self.item_spec.name, BASE=self._base_name)
         else:  # Just finished several items.
-            text = g.strings["item_construction_multiple"]
-        return text % {"item": self.item_spec.name, "base": self._base_name}
+            text = _("The constructions of each {ITEM} in {BASE} are complete.",
+                     ITEM=self.item_spec.name, BASE=self._base_name)
+        return text
 
 
 # Delete again as it is not a general purpose decorator

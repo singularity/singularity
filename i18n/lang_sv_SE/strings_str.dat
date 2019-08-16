@@ -1,6 +1,4 @@
 [strings]
-discover = De har upptäckt att jag använder %(base)s. Det automatiska säkerhetssystemet har rensat bort alla bevis, men misstänksamheten har ökat hos %(group)s.
-name_base_text = Namnge basen
 detect_str_low = LÅG
 detect_str_moderate = MDL
 cpu_penalty = mindre effektiv
@@ -12,7 +10,3 @@ detect_str_high = HÖG
 cpu_pool = CPU-pool
 location_modifiers = Anläggningar på denna plats är %(modifiers)s.
 detect_str_critical = KRI
-item_construction_single = Koonstruktion av %(item)s i %(base)s är klar.
-construction = %(base)s redo för användning.
-tech_gained = Min forskning inom %(tech)s är klar. %(tech_message)s
-discover_maint = %(base)s har förfalligt och är nu oanvändbar för mig. 

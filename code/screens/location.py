@@ -86,8 +86,7 @@ class LocationScreen(dialog.Dialog):
         self.new_base_dialog = NewBaseDialog(self)
         self.location = None
 
-        self.name_dialog = \
-            dialog.TextEntryDialog(self, text=g.strings["name_base_text"])
+        self.name_dialog = dialog.TextEntryDialog(self)
 
         self.base_dialog = basescreen.BaseScreen(self, (0,0),
                                                  anchor=constants.TOP_LEFT)
@@ -173,8 +172,10 @@ class LocationScreen(dialog.Dialog):
 
         # Rebuild dialogs
         self.confirm_destroy.needs_rebuild = True
-        self.name_dialog.needs_rebuild = True
         self.base_dialog.needs_rebuild = True
+        
+        # Update dialog translations
+        self.name_dialog.text=_("Enter a name for the base")
 
         # Update buttons translations
         self.open_button.text = _("&OPEN BASE")
@@ -247,8 +248,7 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
                                           anchor=constants.BOTTOM_LEFT,
                                           borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                           shrink_factor=.88,
-                                          background_color="pane_background",
-                                          text=g.strings["name_base_text"])
+                                          background_color="pane_background")
 
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
                                             anchor=constants.BOTTOM_LEFT,
@@ -258,6 +258,11 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
         self.desc_func = self.on_change
 
         self.yes_button.function = self.finish
+
+    def rebuild(self):
+        self.text_label.text = _("Name")
+        
+        super(NewBaseDialog, self).rebuild()
 
     def on_change(self, description_pane, base_type):
         if base_type is not None:
