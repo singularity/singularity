@@ -101,6 +101,8 @@ class Tech(buyable.Buyable):
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        obj = g.techs[obj_data['id']]
+        from code import savegame
+        tech_id = savegame.convert_id('tech', obj_data['id'] , game_version)
+        obj = g.techs[tech_id]
         obj.restore_buyable_fields(obj_data, game_version)
         return obj

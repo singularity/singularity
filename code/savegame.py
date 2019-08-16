@@ -68,6 +68,17 @@ savefile_translation = {
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
 
 
+# TODO: We should use a persistent internal ID that is immune to us renaming
+# human visible IDs.
+ID_REMAPPING = {
+    'tech/Fusion Reactor': 'Fusion Power'
+}
+
+
+def convert_id(id_type, id_value, loading_from_game_version):
+    return ID_REMAPPING.get("%s/%s" % (id_type, id_value), id_value)
+
+
 def convert_string_to_path_name(name):
     # Some filesystems require unicode (e.g. Windows) whereas Linux needs bytes.
     # Python 2 is rather forgiving which works as long as you work with ASCII,
@@ -502,9 +513,10 @@ def load_savegame_by_pickle(savegame):
     # Now we have enough information to reconstruct the Player object
     player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
 
-    for tech_id, saved_tech in techs.items():
-        if tech_id == 'unknown_tech':
+    for orig_tech_id, saved_tech in techs.items():
+        if orig_tech_id == 'unknown_tech':
             continue
+        tech_id = convert_id('tech', orig_tech_id, load_version)
         # convert_from can handle buyable fields correctly
         saved_tech.convert_from(load_version)
         fake_obj_data = saved_tech.serialize_buyable_fields({

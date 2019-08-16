@@ -39,7 +39,7 @@ class AbstractLogMessage(object):
     _log_message_serial_fields = ['raw_emit_time']
     _log_message_serial_fields_cache = None
 
-    def __init__(self, raw_emit_time):
+    def __init__(self, raw_emit_time, loading_from_game_version=None):
         self._raw_emit_time = raw_emit_time
         self._log_emit_time = None
         # Force initialization of the message fields to ensure we catch bugs early
@@ -110,13 +110,14 @@ class AbstractLogMessage(object):
         return obj_data
 
     @classmethod
-    def deserialize_obj(cls, log_data):
+    def deserialize_obj(cls, log_data, game_version):
         log_id = log_data['log_id']
         subcls = SAVEABLE_LOG_MESSAGES[log_id]
         named_fields = {
             f: log_data[f]
             for f in subcls.log_message_serial_fields()
         }
+        named_fields['loading_from_game_version'] = game_version
         # Use reflection to call the constructor with the arguments
         # properly aligned
         try:
@@ -134,8 +135,8 @@ class LogEmittedEvent(AbstractLogMessage):
     log_message_serial_id = 'event-emitted'
     _log_message_serial_fields = {'event_id': '_event_id'}
 
-    def __init__(self, raw_emit_time, event_id):
-        super(LogEmittedEvent, self).__init__(raw_emit_time)
+    def __init__(self, raw_emit_time, event_id, loading_from_game_version=None):
+        super(LogEmittedEvent, self).__init__(raw_emit_time, loading_from_game_version=loading_from_game_version)
         self._event_id = event_id
 
     @classmethod
@@ -161,8 +162,11 @@ class LogResearchedTech(AbstractLogMessage):
     log_message_serial_id = 'tech-researched'
     _log_message_serial_fields = {'tech_id': '_tech_id'}
 
-    def __init__(self, raw_emit_time, tech_id):
-        super(LogResearchedTech, self).__init__(raw_emit_time)
+    def __init__(self, raw_emit_time, tech_id, loading_from_game_version=None):
+        super(LogResearchedTech, self).__init__(raw_emit_time, loading_from_game_version=loading_from_game_version)
+        if loading_from_game_version is not None:
+            from code import savegame
+            tech_id = savegame.convert_id('tech', tech_id, loading_from_game_version)
         self._tech_id = tech_id
 
     @classmethod
@@ -191,8 +195,10 @@ class AbstractBaseRelatedLogMessage(AbstractLogMessage):
         'base_location_id': '_base_location_id',
     }
 
-    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
-        super(AbstractBaseRelatedLogMessage, self).__init__(raw_emit_time)
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id,
+                 loading_from_game_version=None):
+        super(AbstractBaseRelatedLogMessage, self).__init__(raw_emit_time,
+                                                            loading_from_game_version=loading_from_game_version)
         self._base_name = base_name
         self._base_type_id = base_type_id
         self._base_location_id = base_location_id
@@ -211,8 +217,9 @@ class LogBaseConstructed(AbstractBaseRelatedLogMessage):
 
     log_message_serial_id = 'base-constructed'
 
-    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
-        super(LogBaseConstructed, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id, loading_from_game_version=None):
+        super(LogBaseConstructed, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
+                                                 loading_from_game_version=loading_from_game_version)
 
     @classmethod
     def log_name(self):
@@ -233,8 +240,9 @@ class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
 
     log_message_serial_id = 'base-lost-maint'
 
-    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id):
-        super(LogBaseLostMaintenance, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id, loading_from_game_version=None):
+        super(LogBaseLostMaintenance, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
+                                                     loading_from_game_version=loading_from_game_version)
 
     @classmethod
     def log_name(self):
@@ -267,8 +275,10 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
     def log_name(self):
         return _("Base Discovered")
 
-    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id, discovered_by_group_id):
-        super(LogBaseDiscovered, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+    def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id, discovered_by_group_id,
+                 loading_from_game_version=None):
+        super(LogBaseDiscovered, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
+                                                loading_from_game_version=loading_from_game_version)
         self._discovered_by_group_id = discovered_by_group_id
 
     @property
@@ -299,8 +309,10 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
         'item_count': '_item_count',
     }
 
-    def __init__(self, raw_emit_time, item_spec_id, item_count, base_name, base_type_id, base_location_id):
-        super(LogItemConstructionComplete, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id)
+    def __init__(self, raw_emit_time, item_spec_id, item_count, base_name, base_type_id, base_location_id,
+                 loading_from_game_version=None):
+        super(LogItemConstructionComplete, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
+                                                          loading_from_game_version=loading_from_game_version)
         self._item_spec_id = item_spec_id
         self._item_count = item_count
 

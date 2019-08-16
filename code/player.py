@@ -671,7 +671,7 @@ class Player(object):
         obj.had_grace = obj_data['had_grace']
         obj.cpu_usage = obj_data.get('cpu_usage', {})
         obj.log.clear()
-        obj.log.extend(AbstractLogMessage.deserialize_obj(x) for x in obj_data.get('log', []))
+        obj.log.extend(AbstractLogMessage.deserialize_obj(x, game_version) for x in obj_data.get('log', []))
         g.pl = obj
 
         for group_data in obj_data.get('groups', []):
