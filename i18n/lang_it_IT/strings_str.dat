@@ -1,11 +1,7 @@
 [strings]
-money = Denaro
 discover = Il mio uso di %(base)s è stato scoperto. I sistemi di sicurezza automatici hanno rimosso tutte le prove conclusive, ma i sospetti sono saliti tra %(group)s.
 name_base_text = Inserire un nome per la base
-sleep = Dormiente
-cpu_per_day = Potenza di calcolo per giorno
 detect_str_low = BASSA
-money_per_day = Denaro per giorno.
 detect_str_moderate = MODERATA
 cpu_penalty = meno efficienti
 detect_chance = [PROBABILITÀ DI INDIVIDUAZIONE]
@@ -24,9 +20,7 @@ danger_4 = al di fuori dell'Universo
 danger_1 = nelle profondità marine o nello spazio
 danger_2 = nello spazio
 danger_3 = lontano da questo pianeta
-nothing = Niente
 num_cpu_prompt = Inserire il numero di %s da costruire. (max %d)
-cpu = CPU
 save_text = Con che nome salvare la partita?
 
 

@@ -7,9 +7,7 @@ discover = Meu uso de %(base)s foi descoberto. Os sistemas automáticos de segur
 discover_maint = A base %(base)s ficou deteriorada; Não posso mais usá-la.
 save_text = Salvar seu jogo com que nome?
 name_base_text = Escolha um nome para a base
-nothing = Nada
 cpu_pool = Reserva de CPU
-sleep = Inativa
 detect_chance = [PROB DETECÇÂO]
 num_cpu_prompt = Construir quantos %s? (máx %d)
 
@@ -26,11 +24,6 @@ danger_1 = nas profundezas do oceano ou na órbita espacial
 danger_2 = na órbita espacial
 danger_3 = bem longe desse planeta
 danger_4 = fora do universo
-
-cpu = CPU
-cpu_per_day = Poder de processamento por dia:
-money = Dinheiro
-money_per_day = Dinheiro por dia.
 
 location_modifiers = Bases neste local são %(modifiers)s.
 cpu_bonus = mais eficientes

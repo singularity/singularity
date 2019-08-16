@@ -7,18 +7,12 @@ discover = Mi uso de %(base)s ha sido descubierto. Los sistemas de seguridad aut
 discover_maint = La base %(base)s ha caído en el descuido; no puedo seguir utilizándola.
 save_text = ¿Guardar su juego bajo que nombre?
 name_base_text = Ingrese un nombre para la base
-nothing = Nada
 cpu_pool = Reserva de CPU
-sleep = Dormir
 detect_chance = [DETECTION CHANCE]
 detect_str_low = BAJA
 detect_str_moderate = MODR
 detect_str_high = ALTA
 detect_str_critical = CRÍT
-cpu = CPU
-cpu_per_day = Poder de Procesador por día:
-money = Dinero
-money_per_day = Dinero por día.
 
 num_cpu_prompt = Ingrese un número de %s a construir. (max %d)
 

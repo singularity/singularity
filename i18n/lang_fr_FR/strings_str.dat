@@ -2,7 +2,6 @@
 discover = Ma cachette %(base)s a été découverte. Le système de sécurité a effacé toutes les preuves flagrantes mais la suspicion de %(group)s vient d'augmenter. 
 danger_1 = profond sous l'océan ou dans l'espace intersidéral
 name_base_text = Entrez un nom pour cette base
-sleep = Sommeil
 danger_2 = dans l'espace intersidéral
 detect_chance = [PROBABILITE DE DETECTION]
 research_cpu_pool = Interrompt les recherches. J'utiliserai la capacité de calcul disponible pour maintenir mes bases et en construire d'autres. Si j'ai encore des ressources disponibles après ça, je l'utiliserai pour gagner de l'argent.
@@ -14,7 +13,6 @@ tech_gained = Mes études de %(tech)s sont achevées.  %(tech_message)s
 discover_maint = La base %(base)s est irrécupérable; Je ne peux plus l'utiliser.
 danger_4 = hors de l'univers
 danger_3 = très loin de cette planète
-nothing = Rien
 num_cpu_prompt = Entrer un nombre de %s à construire. (max %d)
 save_text = Nom de la sauvegarde?
 
@@ -24,11 +22,6 @@ detect_str_low = FAIBLE
 detect_str_moderate = MODÉRÉ
 detect_str_high = ÉLEVÉ
 detect_str_critical = CRITIQUE
-
-cpu = CPU
-cpu_per_day = Puissance processeur par jour:
-money = Revenu
-money_per_day = Revenu journalier.
 
 location_modifiers = Les bases situées à cet endroit sont des %(modifiers)s.
 cpu_bonus = plus efficace

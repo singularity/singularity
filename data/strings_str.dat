@@ -8,9 +8,7 @@ discover = My use of %(base)s has been discovered. %(message)s.
 discover_maint = The base %(base)s has fallen into disrepair; I can no longer use it.
 save_text = Save your game under what name?
 name_base_text = Enter a name for the base
-nothing = Nothing
 cpu_pool = CPU Pool
-sleep = Sleep
 detect_chance = [DETECTION CHANCE]
 num_cpu_prompt = Enter a number of %s to build. (max %d)
 log_destroy = Base %s of type %s destroyed at location %s.
@@ -37,11 +35,6 @@ danger_1 = deep under the ocean or in outer space
 danger_2 = in outer space
 danger_3 = far away from this planet
 danger_4 = outside the universe
-
-cpu = CPU
-cpu_per_day = Processor power per day:
-money = Money
-money_per_day = Money per day.
 
 location_modifiers = Bases at this location are %(modifiers)s.
 cpu_bonus = more efficient

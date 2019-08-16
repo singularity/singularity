@@ -63,7 +63,7 @@ msgstr ""
 
 #: base.py:173
 msgid "Sleep"
-msgstr ""
+msgstr "Dormir"
 
 #: base.py:174
 msgid "Overclocked"
