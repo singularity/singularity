@@ -48,8 +48,8 @@ name = Descubrimiento/Reparación de Exploits
 description = Mediante una revisión minuciosa de mi código en busca de potenciales exploits, y realizando análisis profundos de todo el código disponible en sitios web públicos y privados, podré disminuir las posibilidades de ser descubierto simulando ser un hacker adolescente.
 result = Le resultará más difícil a las operaciones secretas descubrir mi presencia.
 
-[Fusion Reactor]
-name = Reactor de Fusión
+[Fusion Power]
+name = Energía de Fusión
 description = La tecnología moderna de fusión es inadecuada para mis propósitos. Con mis habilidades de investigación seré capaz de sobrepasar las barreras de los científicos humanos y desarrollar un pequeño pero eficiente reactor de fusión.
 result = Ahora puedo construir un Reactor de Fusión para mis bases.
 

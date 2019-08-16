@@ -54,8 +54,7 @@ name = Explorar Descoberta/Conserto de Falhas
 description = Revisando meticulosamente meu código por qualquer falha em potencial e utilizando uma análise profunda de todos os códigos disponíveis em sites públicos e privados da Internet, devo conseguir reduzir minhas chances de ser descoberto me passando por um hacker adolescente.
 result = Operações Secretas vão achar ainda mais difícil descobrir minha presença.
 
-[Fusion Reactor]
-name = Reator de Fusão
+[Fusion Power]
 description = A tecnologia moderna de fusão é deploravelmente inadequada aos meus propósitos. Com minhas habilidades de pesquisa, devo conseguir contornar os bloqueios de cientistas humanos modernos e conceber um pequeno e eficiente reator de fusão.
 result = Agora posso construir Reatores de Fusão para minhas bases.
 

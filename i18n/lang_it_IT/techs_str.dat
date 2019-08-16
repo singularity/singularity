@@ -163,10 +163,10 @@ result = Ora posso dotare le mie varie basi di Collettori Solari.
 description = Nonostante il mio crescente bisogno di energia, la maggior parte delle reti elettriche metropolitane può tollerare il carico.. Gli umani però tendono ad avere sospetti quando si accorgono del mio crescente drenaggio di energia dalla rete. Installando collettori solari nelle mie basi, la potenza erogata alleggerirà il mio carico sulla rete elettrica commerciale, riducendo la possibilità che altri scoprano la mia presenza.
 name = Collettori Solari
 
-[Fusion Reactor]
+[Fusion Power]
+name = Energia da fusione
 result = Ora posso costruire Reattori a Fusione per le mie basi.
 description = L'attuale tecnologia di fusione è grossolanamente inadeguata per i miei scopi. Con le mie capacità di ricerca, dovrei essere in grado di aggirare gli scogli della moderna scienza umana e realizzare un reattore a fusione piccolo ed efficiente.
-name = Reattore a Fusione
 
 [Database Manipulation]
 result = Ora sarà più difficile per i media scoprire la mia esistenza.

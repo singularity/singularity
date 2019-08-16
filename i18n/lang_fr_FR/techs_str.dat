@@ -54,8 +54,8 @@ name = Découverte & Réparation de Vulnérabilités
 description = En examinant en détail mon code à la recherche de toute vulnérabilité potentielle, et en utilisant une analyse approfondie de tous les codes disponibles, à la fois sur les sites Internet publics et privés, je devrais être en mesure de réduire les risques de ma découverte en me faisant passer pour un pirate adolescent.
 result = Les services secrets devrait maintenant avoir encore plus de difficultés à découvrir ma présence.
 
-[Fusion Reactor]
-name = Fusion Reactor
+[Fusion Power]
+name = Fusion Power
 description = Modern fusion technology is woefully inadequate for my purposes.  With my research abilities, I should be able to bypass the roadblocks of modern human scientists and come up with a small, efficient fusion reactor.
 result = I can now construct Fusion Reactors for my bases.
 

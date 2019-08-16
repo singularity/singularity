@@ -163,10 +163,9 @@ description = Trots min törst för elektrisitet klarar de flesta städerna av a
 result = Nu kan jag skapa solpaneler i de flesta anläggningstyperna.
 name = Solfångare
 
-[Fusion Reactor]
+[Fusion Power]
 description = Man skrattar åt fusionsteknologin idag. Med min superkapacitet skulle jag kunna gå om mänskligheten och bli först med en liten och användbar fusionsreaktor.
 result = Nu kan jag skapa fusionsreaktorer i mina anläggningar.
-name = Fusionsreaktor
 
 [Database Manipulation]
 description = Med min nya tillgång till nyhetsarkiv skulle jag kunna läsa om mitt förflutna. På detta sättet skulle jag, till skillnad från människorna, lära mig av mina misstag.
