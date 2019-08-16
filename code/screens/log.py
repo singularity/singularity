@@ -51,16 +51,16 @@ class LogScreen(dialog.ChoiceDialog):
                                item_borders=False, item_selectable=True)
 
     def handle_double_click(self, event):
-        if self.listbox.is_over(event.pos) and 0 <= self.listbox.list_pos < len(g.pl.log):
-            message = g.pl.log[self.listbox.list_pos]
+        if self.listbox.is_over(event.pos) and 0 <= self.listbox.list_pos < len(self.key_list):
+            message = self.key_list[self.listbox.list_pos]
             message_dialog = dialog.MessageDialog(self, text_size=20)
             message_dialog.text = message.full_message
             message_dialog.color = message.full_message_color
             dialog.call_dialog(message_dialog, self)
 
     def rebuild(self):
-        self.list = [self.render_log_message(message) for message in g.pl.log
-                                                      if not type(message) in filtered_log_class]
+        self.key_list = [message for message in g.pl.log if not type(message) in filtered_log_class]
+        self.list = [self.render_log_message(message) for message in self.key_list]
         self.default = len(self.list) - 1
 
         self.filter_log.text = _("Filters")
