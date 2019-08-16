@@ -47,7 +47,7 @@ name = Fusion Reactor
 description = A miniaturized fusion nuclear reactor. Reduces discovery chance by preventing suspicious power drains.
 
 [High-Energy Fusion Reactor]
-name = Fusion Reactor
+name = High-Energy Fusion Reactor
 description = A miniaturized fusion nuclear reactor with high levels of energy output. Reduces discovery chance by preventing suspicious power drains.
 
 [Hypnosis Field]
