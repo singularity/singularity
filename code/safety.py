@@ -42,14 +42,17 @@ def log_error(error_message):
         except IOError: # Probably access denied with --singledir. That's ok
             pass
 
+def log_func_exc(func):
+    buffer = Buffer("Exception in function %s at %s:\n"
+                                   % (func.__name__, get_timestamp()))
+    traceback.print_exc(file=buffer)
+    log_error(buffer.data)
+
 def safe_call(func, args=(), kwargs={}, on_error=None):
     try:
         return func(*args, **kwargs)
     except Exception:
-        buffer = Buffer("Exception in function %s at %s:\n"
-                                   % (func.__name__, get_timestamp()))
-        traceback.print_exc(file=buffer)
-        log_error(buffer.data)
+        log_func_exc(func)
 
 #        # ... --- ...
 #        import g

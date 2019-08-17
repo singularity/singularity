@@ -20,9 +20,10 @@
 
 from __future__ import absolute_import
 
-from code import savegame as sv
+from code import g, savegame as sv
 from code.graphics import dialog, button, text, constants, listbox
 
+from code.safety import log_func_exc
 
 class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):
@@ -144,7 +145,23 @@ class SavegameScreen(dialog.ChoiceDialog):
         index = self.return_list_pos()
         if 0 <= index < len(self.list):
             save = self.list[index]
-            return sv.load_savegame(save)
+            try:
+                return sv.load_savegame(save)
+            except Exception:
+                log_func_exc(sv.load_savegame)
+                md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
+                          anchor=constants.MID_CENTER,
+                          text=_("""
+Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.
+
+A report was written out to{LOG_TEXT}
+Please create a issue with this report and this savegame at Github:
+https://github.com/singularity/singularity
+""", \
+SAVE_NAME = save.name, \
+LOG_TEXT = (":\n" + g.logfile if g.logfile is not None else " console output.")))
+                dialog.call_dialog(md, self)
+                return False
 
     def show(self):
         self.reload_savegames()
