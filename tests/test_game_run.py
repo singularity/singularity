@@ -31,7 +31,7 @@ def save_and_load_game():
     fd.close = lambda *args,**kwargs: None
     savegame.write_game_to_fd(fd, gzipped=False)
     fd = io.BytesIO(fd.getvalue())
-    assert savegame.load_savegame_by_json_from_fd(io.BufferedReader(fd), 'test-save')
+    savegame.load_savegame_by_json(io.BufferedReader(fd))
     real_close()
 
 
