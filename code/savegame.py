@@ -417,7 +417,7 @@ def load_savegame_by_pickle(savegame):
         if class_name in save_classes:
             return save_classes[class_name]
         else:
-            raise SavegameException(module_name, class_name)
+            raise ValueError("Invalid class in savegame: %s.%s" % (module_name, class_name))
 
 
     unpickle = unpickle_instance(loadfile, find_class)
@@ -613,8 +613,3 @@ def write_game_to_fd(fd, gzipped=True):
         with json2binary(fd) as json_fd:
             json.dump(game_data, json_fd)
 
-
-class SavegameException(Exception):
-    def __init__(self, module_name, class_name):
-        super(SavegameException, self).__init__("Invalid class in savegame: %s.%s" 
-                % (module_name, class_name))
