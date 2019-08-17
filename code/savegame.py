@@ -483,6 +483,7 @@ def load_savegame_by_pickle(loadfile):
         # Convert works reasonably well for bases and items; use that to fix up the
         # items and then serialize them into built-ins.
         for saved_base in saved_location.bases:
+            saved_base = _convert_base(saved_base, load_version)
             # Note: We do not convert the "studying" field.  Savegames so old that
             # they still rely on that field will lose the CPU allocations.
             saved_base.convert_from(load_version)
@@ -532,6 +533,10 @@ def load_savegame_by_pickle(loadfile):
 
     loadfile.close()
 
+def _convert_base(base, save_version):
+    if ("power_state" in base.__dict__):
+        base._power_state = base.__dict__["power_state"]
+    return base
 
 def _convert_log_entry(entry):
     if not isinstance(entry, logmessage.AbstractLogMessage):
