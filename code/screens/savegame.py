@@ -146,7 +146,8 @@ class SavegameScreen(dialog.ChoiceDialog):
         if 0 <= index < len(self.list):
             save = self.list[index]
             try:
-                return sv.load_savegame(save)
+                sv.load_savegame(save)
+                return True
             except sv.SavegameVersionException as e:
                 text=_("""
 This save file '{SAVE_NAME}' is from an unsupported or invalid version:
