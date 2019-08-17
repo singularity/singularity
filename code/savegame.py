@@ -320,8 +320,7 @@ def load_savegame_by_json_from_fd(fd, savegame_name):
         with gzip.GzipFile(filename='', mode='rb', fileobj=fd) as gzip_fd:
             game_data = json.load(gzip_fd)
     else:
-        print("Unexpected byte: %s" % repr(next_byte))
-        return False
+        raise ValueError("Unexpected byte: %s" % repr(next_byte))
     data.reset_techs()
     data.reset_events()
 
