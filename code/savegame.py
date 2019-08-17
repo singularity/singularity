@@ -65,7 +65,7 @@ savefile_translation = {
     "singularity_savefile_99.8":    ("1.0 (dev+json)",   99.8 ),
 }
 
-Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version'])
+Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version', 'load_file'])
 
 
 # TODO: We should use a persistent internal ID that is immune to us renaming
@@ -137,9 +137,11 @@ def get_savegames():
             if file_name.endswith('.sav'):
                 name = file_name[:-4]
                 parse_headers = parse_pickle_savegame_headers
+                load_file = load_savegame_by_pickle
             elif file_name.endswith('.s2'):
                 name = file_name[:-3]
                 parse_headers = parse_json_savegame_headers
+                load_file = load_savegame_by_json
             else:
                 # Unknown extension; ignore
                 continue
@@ -156,7 +158,7 @@ def get_savegames():
             except Exception:
                 version_name = None # To be sure.
 
-            savegame = Savegame(convert_path_name_to_str(name), filepath, version_name)
+            savegame = Savegame(convert_path_name_to_str(name), filepath, version_name, load_file)
             all_savegames.append(savegame)
 
     return all_savegames
@@ -277,13 +279,9 @@ def load_savegame(savegame):
     load_path = savegame.filepath
 
     if load_path is None:
-        return False
+        return None
 
-    if 'json' in savegame.version:
-        return load_savegame_by_json(savegame)
-    else:
-        return load_savegame_by_pickle(savegame)
-
+    return savegame.load_file(savegame)
 
 def load_savegame_by_json(savegame):
     global default_savegame_name
