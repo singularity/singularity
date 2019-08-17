@@ -281,17 +281,12 @@ def load_savegame(savegame):
     if load_path is None:
         raise RuntimeError("savegame without valid path")
     
-    savegame.load_file(savegame)
+    with open(load_path, 'rb') as fd:
+        savegame.load_file(fd)
 
     default_savegame_name = savegame.name
 
-def load_savegame_by_json(savegame):
-    load_path = savegame.filepath
-    with open(load_path, 'rb') as fd:
-        load_savegame_by_json_from_fd(fd):
-
-
-def load_savegame_by_json_from_fd(fd):
+def load_savegame_by_json(fd):
     load_version_string, headers = parse_json_savegame_headers(fd)
     if load_version_string not in savefile_translation:
         raise SavegameVersionException(load_version_string)
@@ -340,11 +335,7 @@ def load_savegame_by_json_from_fd(fd):
     data.reload_all_mutable_def()
 
 
-def load_savegame_by_pickle(savegame):
-
-    load_path = savegame.filepath
-
-    loadfile = open(load_path, 'rb')
+def load_savegame_by_pickle(loadfile):
 
     stats.reset()
 
@@ -420,7 +411,6 @@ def load_savegame_by_pickle(savegame):
     if PY3 and isinstance(load_version_string, bytes):
         load_version_string = load_version_string.decode('utf-8')
     if load_version_string not in savefile_translation:
-        loadfile.close()
         raise SavegameVersionException(load_version_string)
     load_version = savefile_translation[load_version_string][1]
 
