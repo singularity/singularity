@@ -279,7 +279,7 @@ def load_savegame(savegame):
     load_path = savegame.filepath
 
     if load_path is None:
-        return None
+        raise RuntimeError("savegame without valid path")
 
     return savegame.load_file(savegame)
 
