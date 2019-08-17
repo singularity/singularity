@@ -297,8 +297,7 @@ def load_savegame_by_json(savegame):
 def load_savegame_by_json_from_fd(fd, savegame_name):
     load_version_string, headers = parse_json_savegame_headers(fd)
     if load_version_string not in savefile_translation:
-        print(savegame_name + " is not a savegame, or is too old to work.")
-        return False
+        raise SavegameVersionException(load_version_string)
 
     load_version = savefile_translation[load_version_string][1]
     difficulty_id = headers['difficulty']
@@ -428,8 +427,7 @@ def load_savegame_by_pickle(savegame):
         load_version_string = load_version_string.decode('utf-8')
     if load_version_string not in savefile_translation:
         loadfile.close()
-        print(savegame.name + " is not a savegame, or is too old to work.")
-        return False
+        raise SavegameVersionException(load_version_string)
     load_version = savefile_translation[load_version_string][1]
 
     default_savegame_name = savegame.name
@@ -613,3 +611,9 @@ def write_game_to_fd(fd, gzipped=True):
         with json2binary(fd) as json_fd:
             json.dump(game_data, json_fd)
 
+
+class SavegameVersionException(Exception):
+    def __init__(self, version):
+        version_str = str(version)[:64]
+        super(SavegameException, self).__init__("Invalid version: %s" % version_str)
+        self.version = version_str
