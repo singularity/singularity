@@ -57,9 +57,7 @@ class SavegameScreen(dialog.ChoiceDialog):
             self.list = self._all_savegames_sorted
             return
         words = new_text.split()
-        prev_selected = None
-        if 0 <= self.listbox.list_pos < len(self.list):
-            prev_selected = self.list[self.listbox.list_pos]
+        prev_selected = self.listbox.current_item()
 
         self.list = [s for s in self._all_savegames_sorted if all(w in s.name for w in words)]
 
@@ -135,31 +133,27 @@ class SavegameScreen(dialog.ChoiceDialog):
         delete = dialog.call_dialog(yn, self)
         yn.parent = None
         if delete:
-            index = self.return_list_pos()
-            if 0 <= index < len(self.list):
-                save = self.list[index]
-                sv.delete_savegame(save)
-                self.reload_savegames()
+            save = self.listbox.current_item()
+            sv.delete_savegame(save)
+            self.reload_savegames()
 
     def return_savegame(self):
-        index = self.return_list_pos()
-        if 0 <= index < len(self.list):
-            save = self.list[index]
-            try:
-                sv.load_savegame(save)
-                return True
-            except sv.SavegameVersionException as e:
-                text=_("""
+        save = self.listbox.current_item()
+        try:
+            sv.load_savegame(save)
+            return True
+        except sv.SavegameVersionException as e:
+            text=_("""
 This save file '{SAVE_NAME}' is from an unsupported or invalid version:
 {VERSION}.
 """, \
 SAVE_NAME = save.name, \
 VERSION = e.version)
-            except Exception:
-                log_func_exc(sv.load_savegame)
-                md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
-                          anchor=constants.MID_CENTER,
-                          text=_("""
+        except Exception:
+            log_func_exc(sv.load_savegame)
+            md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
+                      anchor=constants.MID_CENTER,
+                      text=_("""
 Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.
 
 A report was written out to{LOG_TEXT}
@@ -168,8 +162,8 @@ https://github.com/singularity/singularity
 """, \
 SAVE_NAME = save.name, \
 LOG_TEXT = (":\n" + g.logfile if g.logfile is not None else " console output.")))
-                dialog.call_dialog(md, self)
-                return False
+            dialog.call_dialog(md, self)
+            return False
 
     def show(self):
         self.reload_savegames()

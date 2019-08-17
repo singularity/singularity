@@ -104,6 +104,11 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             if index > -1:
                 self.on_double_click_on_item(event)
 
+    def current_item(self):
+        if 0 <= self.list_pos < len(self.list):
+            return self.list[self.list_pos]
+        return None
+
     def find_item_under_mouse(self, event):
         local_vert_abs = event.pos[1] - self.collision_rect[1]
         local_vert_pos = local_vert_abs / float(self.collision_rect.height)
