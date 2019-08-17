@@ -484,11 +484,8 @@ def load_savegame_by_pickle(loadfile):
         # items and then serialize them into built-ins.
         for saved_base in saved_location.bases:
             saved_base = _convert_base(saved_base, load_version)
-            # Note: We do not convert the "studying" field.  Savegames so old that
-            # they still rely on that field will lose the CPU allocations.
-            saved_base.convert_from(load_version)
             for my_item in saved_base.all_items():
-                my_item.convert_from(load_version)
+                my_item = _convert_item(my_item, load_version)
             fake_base_objs.append(saved_base.serialize_obj())
         pl_obj_data['locations'].append(fake_location_obj)
 
@@ -496,11 +493,11 @@ def load_savegame_by_pickle(loadfile):
     player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
 
     for orig_tech_id, saved_tech in techs.items():
-        if orig_tech_id == 'unknown_tech':
-            continue
         tech_id = convert_id('tech', orig_tech_id, load_version)
+        if tech_id == 'unknown_tech':
+            continue
+        saved_tech = _convert_tech(saved_tech, load_version)
         # convert_from can handle buyable fields correctly
-        saved_tech.convert_from(load_version)
         fake_obj_data = saved_tech.serialize_buyable_fields({
             'id': tech_id,
         })
@@ -533,10 +530,75 @@ def load_savegame_by_pickle(loadfile):
 
     loadfile.close()
 
+def _convert_buyable(buyable, save_version):
+    if save_version < 4.91: # r5_pre
+        buyable.cost_left = array(self.cost_left, long)
+        buyable.total_cost = array(self.total_cost, long)
+        buyable.count = 1
+    if save_version < 99.7:
+        buyable.spec = buyable.type
+        del buyable.type
+    return buyable
+
 def _convert_base(base, save_version):
+    base = _convert_buyable(base, save_version)
+
+    if save_version < 99.3: # < 1.0 (dev)
+        # We needs to do it first because of property base.cpus
+        base.items = {
+            "cpu": base.__dict__["cpus"]
+        }
+        del base.__dict__["cpus"]
+    
+    if save_version < 4.91: # < r5_pre
+        for cpu in base.cpus:
+            if cpu:
+                cpu.convert_from(save_version)
+                cpu.base = base
+        for index in range(len(base.extra_items)):
+            if base.extra_items[index]:
+                base.extra_items[index].convert_from(save_version)
+            else:
+                base.extra_items[index] = None
+
+        base.raw_cpu = 0
+        if base.cpus[0]:
+            for cpu in base.cpus[1:]:
+                base.cpus[0] += cpu
+
+            if len(base.cpus) == 1 and base.cpus[0].done:
+                # Force it to report its CPU.
+                base.cpus[0].finish()
+
+            base.cpus = base.cpus[0]
+        else:
+            base.cpus = None
+
+        base.recalc_cpu()
+
+        base.power_state = base.power_state.lower()
+
+    if save_version < 99.3: # < 1.0 (dev)
+        extra_items = iter(base.__dict__["extra_items"])
+        
+        base.items["reactor"] = next(extra_items, None)
+        base.items["network"] = next(extra_items, None)
+        base.items["security"] = next(extra_items, None)
+                    
+        del base.__dict__["extra_items"]
+
     if ("power_state" in base.__dict__):
         base._power_state = base.__dict__["power_state"]
+        
     return base
+
+def _convert_item(item, save_version):
+    item = _convert_buyable(item, save_version)
+    return item
+
+def _convert_tech(tech, save_version):
+    tech = _convert_buyable(tech, save_version)
+    return tech
 
 def _convert_log_entry(entry):
     if not isinstance(entry, logmessage.AbstractLogMessage):

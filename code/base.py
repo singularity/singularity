@@ -274,53 +274,6 @@ class Base(buyable.Buyable):
             self.power_state = 'sleep' if stored_power_state in ('statis', 'entering_stasis') else 'active'
         return self
 
-    def convert_from(self, save_version):
-        super(Base, self).convert_from(save_version)
-        
-        if save_version < 99.3: # < 1.0 (dev)
-            # We needs to do it first because of property self.cpus
-            self.items = {
-                "cpu": self.__dict__["cpus"]
-            }
-            del self.__dict__["cpus"]
-        
-        if save_version < 4.91: # < r5_pre
-            for cpu in self.cpus:
-                if cpu:
-                    cpu.convert_from(save_version)
-                    cpu.base = self
-            for index in range(len(self.extra_items)):
-                if self.extra_items[index]:
-                    self.extra_items[index].convert_from(save_version)
-                else:
-                    self.extra_items[index] = None
-
-            self.raw_cpu = 0
-            if self.cpus[0]:
-                for cpu in self.cpus[1:]:
-                    self.cpus[0] += cpu
-
-                if len(self.cpus) == 1 and self.cpus[0].done:
-                    # Force it to report its CPU.
-                    self.cpus[0].finish()
-
-                self.cpus = self.cpus[0]
-            else:
-                self.cpus = None
-
-            self.recalc_cpu()
-
-            self.power_state = self.power_state.lower()
-
-        if save_version < 99.3: # < 1.0 (dev)
-            extra_items = iter(self.__dict__["extra_items"])
-            
-            self.items["reactor"] = next(extra_items, None)
-            self.items["network"] = next(extra_items, None)
-            self.items["security"] = next(extra_items, None)
-                        
-            del self.__dict__["extra_items"]
-
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full
     # percent.

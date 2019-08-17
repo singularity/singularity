@@ -136,15 +136,6 @@ class Buyable(object):
     @cost_paid.setter
     def cost_paid(self, value): self.cost_left = self.total_cost - value
 
-    def convert_from(self, save_version):
-        if save_version < 4.91: # r5_pre
-            self.cost_left = array(self.cost_left, long)
-            self.total_cost = array(self.total_cost, long)
-            self.count = 1
-        if save_version < 99.7:
-            self.spec = self.type
-            del self.type
-
     def finish(self, is_player=True, loading_savegame=False):
         if not self.done:
             self.cost_left = array([0,0,0], long)
