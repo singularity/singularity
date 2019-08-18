@@ -469,8 +469,8 @@ def load_savegame_by_pickle(loadfile):
 
     for loc_id, saved_location in locations.items():
         # Fixup modifiers and simplify some code below.
-        saved_location.convert_from(load_version)
-        if saved_location.spec.id == location.DEAD_LOCATION_SPEC.id:
+        saved_location = _convert_location(saved_location, load_version)
+        if saved_location is None:
             # Unknown location - pretend we did not see it.
             continue
         fake_base_objs = []
@@ -529,6 +529,34 @@ def load_savegame_by_pickle(loadfile):
         mixer.play_music("music")
 
     loadfile.close()
+
+def _convert_location(loc, old_version):
+    if old_version < 99.7: # < 1.0 dev
+        spec_id = loc.__dict__['id']
+        # Default to None if absent (so the LocationSpec's version is used)
+        loc.__dict__['_modifiers'] = loc.__dict__['modifiers'] if loc.__dict__.get('modifiers') else None
+        # The following locations had a static modifier list at the time of 99.8.  Clear their modifier
+        # dict, so the LocationSpec's version is used instead.
+        if spec_id in {'ANTARCTIC', 'OCEAN', 'MOON', 'ORBIT', 'FAR REACHES'}:
+            loc.__dict__['modifiers'] = None
+
+        # Remove old fields where present
+        for field in ('id', 'name', 'x', 'y', 'absolute', 'safety', 'cities', 'modifiers', 'hotkey'):
+            try:
+                del loc.__dict__[field]
+            except KeyError:
+                pass
+    else:
+        # >= 99.7; the LocationSpec is present on the object itself
+        spec_id = loc.spec.id
+
+    # Force reload the spec for now until #145 is fully implemented
+    if spec_id not in g.locations:
+        return None
+
+    loc.spec = g.locations[spec_id]
+
+    return loc
 
 def _convert_buyable(buyable, save_version):
     if save_version < 4.91: # r5_pre

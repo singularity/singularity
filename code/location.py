@@ -45,8 +45,6 @@ class LocationSpec(prerequisite.Prerequisite):
         self.safety = safety
         self.modifiers = {}
 
-DEAD_LOCATION_SPEC = LocationSpec('<unknown>', (0, 0), False, 0, 'impossible')
-
 
 class Location(object):
 
@@ -60,33 +58,6 @@ class Location(object):
         #       (which occurs e.g. for the common locations on Earth, where the modifiers
         #        are randomized)
         self._modifiers = None
-
-    def convert_from(self, old_version):
-        if old_version < 99.7: # < 1.0 dev
-            spec_id = self.__dict__['id']
-            # Default to None if absent (so the LocationSpec's version is used)
-            self.__dict__['_modifiers'] = self.__dict__['modifiers'] if self.__dict__.get('modifiers') else None
-            # The following locations had a static modifier list at the time of 99.8.  Clear their modifier
-            # dict, so the LocationSpec's version is used instead.
-            if spec_id in {'ANTARCTIC', 'OCEAN', 'MOON', 'ORBIT', 'FAR REACHES'}:
-                self.__dict__['modifiers'] = None
-
-            # Remove old fields where present
-            for field in ('id', 'name', 'x', 'y', 'absolute', 'safety', 'cities', 'modifiers', 'hotkey'):
-                try:
-                    del self.__dict__[field]
-                except KeyError:
-                    pass
-        else:
-            # >= 99.7; the LocationSpec is present on the object itself
-            spec_id = self.spec.id
-
-        # Force reload the spec for now until #145 is fully implemented
-        if spec_id not in g.locations:
-            # We are referencing an unknown location; mark us as dead.
-            self.spec = DEAD_LOCATION_SPEC
-            return
-        self.spec = g.locations[spec_id]
 
     @property
     def id(self):
