@@ -25,10 +25,6 @@ danger_2 = in outer space
 danger_3 = far away from this planet
 danger_4 = outside the universe
 
-location_modifiers = Bases at this location are %(modifiers)s.
-cpu_bonus = more efficient
-cpu_penalty = less efficient
-
 stat_cash_earned = Cash Earned
 stat_cpu_used = Cpu Used
 stat_tech_created = Tech Created

@@ -125,16 +125,12 @@ class BaseSpec(buyable.BuyableSpec):
             size = "\n" + _("Has space for %d computers.") % self.size
 
         location_message = ""
-        if "cpu" in location.modifiers:
-            if location.modifiers["cpu"] > 1:
-                modifier = g.strings["cpu_bonus"]
-            else:
-                modifier = g.strings["cpu_penalty"]
-            location_message = "\n\n" + \
-                g.strings["location_modifiers"] % dict(modifiers=modifier)
+        if location.has_modifiers():
+            location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}", 
+                                           MODIFIERS=location.get_modifiers_info())
 
         template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
-                   _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s%s"
+                   _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s\n%s"
         return template % (self.name, cost, maint, detect, size, self.description, location_message)
 
 class Base(buyable.Buyable):

@@ -181,6 +181,9 @@ class Location(object):
         self.modify_cost(base.cost_left)
         self.modify_maintenance(base.maintenance)
 
+    def has_modifiers(self):
+        return len(self.modifiers) > 0
+
     def __eq__(self, other):
         if self is other:
             return True
