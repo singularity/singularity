@@ -95,8 +95,7 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
                                      anchor=constants.BOTTOM_LEFT, valign=constants.MID,
                                      borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                      shrink_factor=.88,
-                                     background_color="pane_background",
-                                     text=_("Number of items"))
+                                     background_color="pane_background")
 
         self.count_field = text.UpdateEditableText(self, (-.26, -.87), (-.10, -.1),
                                              anchor=constants.BOTTOM_LEFT,
@@ -109,6 +108,11 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
                                                 horizontal=True, priority=150,
                                                 update_func=self.on_slider_change,
                                                 slider_size=2)
+
+    def rebuild(self):
+        self.count_label.text = _("Number of items")
+
+        super(MultipleBuildDialog, self).rebuild()
 
     @property
     def count(self):
@@ -430,6 +434,7 @@ class BaseScreen(dialog.Dialog):
         self.info_frame.text = info_text
 
         # Rebuild dialogs
+        self.multiple_build_dialog.needs_rebuild = True
         self.build_dialog.needs_rebuild = True
 
         # Update buttons translations
