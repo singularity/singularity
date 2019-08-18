@@ -185,12 +185,16 @@ class ItemPane(widget.BorderedWidget):
         self.change_button = button.FunctionButton(
             self, (.36,.01), (.12, .04),
             anchor=constants.TOP_LEFT,
-            text="%s (&%s)" % (_("CHANGE"), self.item_type.hotkey.upper()),
             force_underline=len(_("CHANGE")) + 2,
             autohotkey=True,
             function=self.parent.parent.build_item,
             kwargs={'type': self.item_type},
         )
+
+    def rebuild(self):
+        self.change_button.text = "%s (&%s)" % (_("CHANGE"), self.item_type.hotkey.upper())
+
+        super(ItemPane, self).rebuild()
 
 class BaseScreen(dialog.Dialog):
     base = widget.causes_rebuild("_base")
@@ -391,6 +395,7 @@ class BaseScreen(dialog.Dialog):
             pane.name_panel.text = "%s: %s" % (item_type.label,
                                                current_name)
             pane.build_panel.text = current_build
+            pane.needs_rebuild = True
 
         count = ""
         if self.base.spec.size > 1:
