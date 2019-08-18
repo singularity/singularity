@@ -45,7 +45,6 @@ class LocationSpec(prerequisite.Prerequisite):
         self.safety = safety
         self.modifiers = {}
 
-
 DEAD_LOCATION_SPEC = LocationSpec('<unknown>', (0, 0), False, 0, 'impossible')
 
 
@@ -216,3 +215,21 @@ class Location(object):
             self.add_base(base)
             base.restore_obj(base_obj_data, game_version)
         return self
+
+    def get_modifiers_info(self):
+        modifier_names = {
+            "cpu"      : _("CPU"),
+            "stealth"  : _("STEALTH"),
+            "speed"    : _("BUILDING"),
+            "thrift"   : _("COST"),
+        }
+
+        modifiers = []
+
+        for modifier_id, modifier_value in self.modifiers.items():
+            if (modifier_value > 1):
+                modifiers.append(_("{MODIFIER} BONUS", MODIFIER=modifier_names[modifier_id]))
+            elif (modifier_value < 1):
+                modifiers.append(_("{MODIFIER} MALUS", MODIFIER=modifier_names[modifier_id]))
+
+        return ", ".join(modifiers)

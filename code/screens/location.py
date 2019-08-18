@@ -37,11 +37,16 @@ class LocationScreen(dialog.Dialog):
         self.pos = (-.5, -.5)
         self.anchor = constants.MID_CENTER
         self.size = (.75, .70)
+
         self.name_display = text.Text(self, (0,0), (-1, -.08),
+                                      anchor=constants.TOP_LEFT,
                                       borders=constants.ALL,
                                       border_color="pane_background",
                                       background_color="pane_background_empty",
                                       shrink_factor=1, bold=True)
+        self.modifier_display = text.Text(self, (-.75, -.01), (-.25, -.06),
+                                          anchor=constants.TOP_LEFT,
+                                          background_color="clear")
 
         self.open_button = \
             button.FunctionButton(self, (0, -.8), (-.3, -.09),
@@ -170,6 +175,7 @@ class LocationScreen(dialog.Dialog):
             self.listbox.key_list = self.location.bases
 
             self.name_display.text = self.location.name
+            self.modifier_display.text = self.location.get_modifiers_info()
 
             self.listbox.needs_rebuild = True
 
