@@ -369,10 +369,7 @@ class BaseScreen(dialog.Dialog):
         return super(BaseScreen, self).show()
 
     def rebuild(self):
-        # Cannot use self.base.type.name directly because it may contain a
-        # different language than current
-        self.name_display.text="%s (%s)" % (self.base.name,
-                                            g.base_type[self.base.spec.id].name)
+        self.name_display.text="%s (%s)" % (self.base.name, self.base.spec.name)
         self.state_display.color = state_colors[self.base.power_state]
         self.state_display.text = self.base.power_state_name
 
