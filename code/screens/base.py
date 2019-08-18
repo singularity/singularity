@@ -434,7 +434,8 @@ class BaseScreen(dialog.Dialog):
         self.info_frame.text = info_text
 
         # Rebuild dialogs
-        self.multiple_build_dialog.needs_rebuild = True
+        # FIXME: needs_rebuild bug with multiple_build_dialog, should not.
+        #self.multiple_build_dialog.needs_rebuild = True
         self.build_dialog.needs_rebuild = True
 
         # Update buttons translations
