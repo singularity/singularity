@@ -261,13 +261,19 @@ class Base(buyable.Buyable):
         self.grace_over = obj_data.get('grace_over', True)
         # Note that power_state is subject to whether the base and items are built,
         # so we deliberately restore it late.
+        #
+        # IMPORTANT: Avoid changing self.power_state as it triggers a "recalc_cpu"
+        # for the player.  As not we might not have restored everything this either
+        # breaks or makes recalc_cpu throw away all allocations as most of the CPU
+        # power is missing at this stage.
         stored_power_state = obj_data['power_state']
         if stored_power_state in power_states:
-            self.power_state = stored_power_state
+            self._power_state = stored_power_state
         else:
             # Unknown power states revert to "active" except for the historical "statis"
             # states (which are reverted to "sleep")
-            self.power_state = 'sleep' if stored_power_state in ('statis', 'entering_stasis') else 'active'
+            self._power_state = 'sleep' if stored_power_state in ('statis', 'entering_stasis') else 'active'
+        self.check_power()
         return self
 
     # Get the detection chance for the base, applying bonuses as needed.  If
