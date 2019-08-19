@@ -73,12 +73,12 @@ class KnowledgeScreen(dialog.Dialog):
     def rebuild(self):
         # Update knowledge lists
         self.knowledge_types = collections.OrderedDict()
-        self.knowledge_types.update({_("Techs")   :"techs",
-                                     _("Bases")   :"bases",
-                                     _("Items")   :"items",})
-        self.knowledge_types.update({ knowledge["name"]: knowledge_id
+        self.knowledge_types.update([(_("Techs"), "techs"),
+                                     (_("Bases"), "bases"),
+                                     (_("Items"), "items")])
+        self.knowledge_types.update([(knowledge["name"], knowledge_id)
                                       for knowledge_id, knowledge
-                                      in g.knowledge.items() })
+                                      in g.knowledge.items() ])
 
         self.knowledge_choice.list = list(self.knowledge_types)
         self.knowledge_choice.needs_rebuild = True
