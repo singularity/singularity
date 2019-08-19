@@ -61,6 +61,10 @@ class Warning(object):
     def full_message(self):
         return self.message
 
+    @property
+    def full_message_color(self):
+        return 'text'
+
 def refresh_warnings():
     curr_warnings = []
 
