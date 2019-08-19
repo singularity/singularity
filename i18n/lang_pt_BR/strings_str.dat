@@ -1,6 +1,4 @@
 [strings]   
-research_cpu_pool = Interrompe a pesquisa. Usarei o poder de processamento disponível para manter minhas bases e ajudar a construir novas. Se ainda houver algum tempo livre de CPU, usarei ele para fazer qualquer Trabalho que eu puder.
-cpu_pool = Reserva de CPU
 detect_chance = [PROB DETECÇÂO]
 # The following strings are used on the map screen in place of percentages until
 # a certain technology is researched.

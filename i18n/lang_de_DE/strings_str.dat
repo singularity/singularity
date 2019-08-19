@@ -1,6 +1,4 @@
 [strings]
-research_cpu_pool = Forschung anhalten.  Ich werde die verfügbare CPU-Zeit dazu benutzen, meine Stützpunkte zu warten und neue zu bauen.  Wenn noch CPU-Zeit übrig bleibt, werde ich sie benutzen, um Jobs zu arbeiten.
-cpu_pool = CPU-Datenbasis
 detect_chance = [ENTDECKUNGSWK.]
 detect_str_low = NIEDR
 detect_str_moderate = MODR

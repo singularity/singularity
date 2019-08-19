@@ -410,25 +410,31 @@ def load_tasks():
 
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
-        check_required_fields(task_dict, ("id", "type", "value"), "Task")
+        check_required_fields(task_dict, ("id", "type"), "Task")
 
         task_id = task_dict["id"]
         task_type = task_dict["type"]
 
-        # Only jobs are possible for now
-        if task_type != "jobs":
-            sys.stderr.write("Only jobs task are supported\n")
-            sys.exit(1)
+        # Only jobs and cpu_pool are possible for now
+        if task_type == "jobs":
+            task_value = int(task_dict["value"])
+            # Make sure prerequisites, if any, are lists.
+            task_pre = task_dict.get("pre", [])
+            if type(task_pre) != list:
+                task_pre = [task_pre]
 
-        # Make sure prerequisites, if any, are lists.
-        task_pre = task_dict.get("pre", [])
-        if type(task_pre) != list:
-            task_pre = [task_pre]
+        elif task_type == "cpu_pool":
+            task_value = 0
+            task_pre = []
+        
+        else:
+            sys.stderr.write("Only jobs and cpu_pool task are supported\n")
+            sys.exit(1)
 
         tasks[task_id] = task.Task(
             task_id,
             task_type,
-            int(task_dict["value"]),
+            task_value,
             task_pre
         )
 

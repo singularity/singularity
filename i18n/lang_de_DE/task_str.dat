@@ -13,3 +13,7 @@ description = Durchschnittliche Jobs ausführen.  Die Fähigkeit, Telefonate zu 
 [Expert Jobs]
 name = Expertenjobs
 description = Expertenjobs ausführen.  Durch die Verwendung von Robotern, die von Menschen nicht zu unterscheiden sind, erschließen sich mir fast alle Jobs.
+
+[CPU Pool]
+name = CPU-Datenbasis
+description = Forschung anhalten.  Ich werde die verfügbare CPU-Zeit dazu benutzen, meine Stützpunkte zu warten und neue zu bauen.  Wenn noch CPU-Zeit übrig bleibt, werde ich sie benutzen, um Jobs zu arbeiten.

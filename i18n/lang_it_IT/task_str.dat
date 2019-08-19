@@ -13,3 +13,7 @@ description = Svolgi lavori intermedi. La capacità di fare chiamate telefoniche
 [Expert Jobs]
 name = Lavori specialistici
 description = Svolgi lavori specialistici. L'uso di robot indistinguibili dagli umani mi apre la strada per la maggior parte dei lavori.
+
+[CPU Pool]
+name = Riserva di CPU
+description = Ferma la ricerca. Userò la potenza di calcolo disponibile per mantenere le mie basi ed aiutare la costruzione di nuove. Se ci sono ancora delle risorse rimanenti, le userò per svolgere qualsiasi lavoro possibile.

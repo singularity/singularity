@@ -13,3 +13,7 @@ description = Perform intermediate jobs. The ability to make phone calls allows 
 [Expert Jobs]
 name = Expert Jobs
 description = Perform expert jobs. Use of robots indistinguishable from humans opens up most jobs to me.
+
+[CPU Pool]
+name = CPU Pool
+description = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.

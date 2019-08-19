@@ -1,6 +1,4 @@
 [strings]
-research_cpu_pool = Stops research. I will use the available processor power to maintain my bases and help construct new ones.  If there's still CPU time left, I'll use it to work whatever Jobs I can.
-cpu_pool = CPU Pool
 detect_chance = [DETECTION CHANCE]
 
 # The following strings are used on the map screen in place of percentages until

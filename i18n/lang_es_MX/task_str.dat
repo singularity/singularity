@@ -13,3 +13,7 @@ description = Realizar trabajo intermedio. La habilidad de realizar llamadas tel
 [Expert Jobs]
 name = Trabajos Expertos
 description = Realizar trabajo experto. El uso de robots indistinguibles a los humanos ha abierto casi todos los trabajos para mí.
+
+[CPU Pool]
+name = Reserva de CPU
+description = Detiene la investigación. Usaré el poder de procesador disponible para mantener mis bases y construir otras nuevas. Si aún así hay tiempo de CPU disponible, lo usaré para los Trabajos que pueda realizar.

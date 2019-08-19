@@ -13,3 +13,7 @@ description = Executa trabalhos intermediários. A habilidade de fazer ligaçõe
 [Expert Jobs]
 name = Trabalhos Especializados
 description = Executa trabalhos especializados. O uso de robôs indistinguíveis de humanos me permite quase todos os trabalhos.
+
+[CPU Pool]
+name = Reserva de CPU
+description = Interrompe a pesquisa. Usarei o poder de processamento disponível para manter minhas bases e ajudar a construir novas. Se ainda houver algum tempo livre de CPU, usarei ele para fazer qualquer Trabalho que eu puder.

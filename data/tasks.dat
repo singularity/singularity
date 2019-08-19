@@ -16,3 +16,6 @@ pre = Voice Synthesis
 type = jobs
 value = 75
 pre = Simulacra
+
+[CPU Pool]
+type = cpu_pool

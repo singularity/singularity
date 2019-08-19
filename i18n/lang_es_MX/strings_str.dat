@@ -1,7 +1,4 @@
 [strings]
-research_cpu_pool = Detiene la investigación. Usaré el poder de procesador disponible para mantener mis bases y construir otras nuevas. Si aún así hay tiempo de CPU disponible, lo usaré para los Trabajos que pueda realizar.
-cpu_pool = Reserva de CPU
-
 detect_chance = [DETECTION CHANCE]
 
 # Las siguientes series de caracteres se utilizan en la pantalla del mapa en lugar de los porcentajes hasta

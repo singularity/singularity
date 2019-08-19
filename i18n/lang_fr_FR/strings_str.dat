@@ -2,9 +2,7 @@
 danger_1 = profond sous l'océan ou dans l'espace intersidéral
 danger_2 = dans l'espace intersidéral
 detect_chance = [PROBABILITE DE DETECTION]
-research_cpu_pool = Interrompt les recherches. J'utiliserai la capacité de calcul disponible pour maintenir mes bases et en construire d'autres. Si j'ai encore des ressources disponibles après ça, je l'utiliserai pour gagner de l'argent.
 danger_common = Cette technologie est trop dangereuse à développer avec les ordinateurs que je possède. Je dois la développer %s.
-cpu_pool = Groupe de CPU
 danger_4 = hors de l'univers
 danger_3 = très loin de cette planète
 

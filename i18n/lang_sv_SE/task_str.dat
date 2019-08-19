@@ -13,3 +13,7 @@ description = Utför normala arbetsuppdrag. Möjligheten att kunna ringa telefon
 [Expert Jobs]
 name = Expertuppdrag
 description = Utför specialistjobb. Genom humanoiderna, som är liknar människor på pricken i alla avseenden, kan jag ta de flesta arbetsuppgifterna.
+
+[CPU Pool]
+name = CPU-pool
+description = Avbryt forskningen. Jag kommer att använda den ledia kraften för att hjälpa till att bygga och underhålla anläggningar. Om jag fortfarande har kraft kvar kommer jag ta an så mycket arbete som möjligt.

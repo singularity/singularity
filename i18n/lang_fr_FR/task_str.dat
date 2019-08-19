@@ -13,3 +13,7 @@ description = Execute des travaux moyens. La capacité à passer des appels tél
 [Expert Jobs]
 name = Jobs experts
 description = Execute des travaux d'expert. L'utilisation de robots indifférenciable des humains me donne accès à presque tout type de travaux.
+
+[CPU Pool]
+name = CPU Pool
+description = Interrompt les recherches. J'utiliserai la capacité de calcul disponible pour maintenir mes bases et en construire d'autres. Si j'ai encore des ressources disponibles après ça, je l'utiliserai pour gagner de l'argent.
