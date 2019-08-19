@@ -554,7 +554,7 @@ class GUIPane(widget.Widget):
         self.warning_title.text = _("WARNING")
 
         for warn_id, warn in warning.warnings.items():
-            self.warning_labels[warn_id].text = g.strings[warn.name]
+            self.warning_labels[warn_id].text = warn.name
 
             if warn.active:
                 self.warning_toggles[warn_id].text = _("YES")
