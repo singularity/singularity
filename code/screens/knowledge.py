@@ -169,9 +169,7 @@ class KnowledgeScreen(dialog.Dialog):
             #Cost
             if not g.techs[knowledge_key].done:
                 desc_text += _("Research Cost:")+"\n"
-                desc_text += _("%s Money") % g.to_money(g.techs[knowledge_key].cost_left[0])
-                desc_text += ", "
-                desc_text += _("%s CPU") % g.to_cpu(g.techs[knowledge_key].cost_left[1])
+                desc_text += self._desc_cost(g.techs[knowledge_key].total_cost) #Research cost
                 desc_text += "\n"
 
                 if g.techs[knowledge_key].danger == 0:
