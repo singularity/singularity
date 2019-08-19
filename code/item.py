@@ -129,7 +129,7 @@ class ItemSpec(buyable.BuyableSpec):
     def get_quality_info(self):
         bonus_text = ""
         
-        for qual, value in self.item_qual.iteritems():
+        for qual, value in self.item_qual.items():
             if qual == "cpu":
                 bonus_text += _("CPU per day:")+" "
                 bonus_text += g.add_commas(value)
