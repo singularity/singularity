@@ -189,14 +189,14 @@ class KnowledgeScreen(dialog.Dialog):
                 desc_text += "\n\n"+g.techs[knowledge_key].result
 
         elif knowledge_type == "items":
-            desc_text = g.items[knowledge_key].name + "\n\n"
-            #Building cost
+            item = g.items[knowledge_key]
+            
+            desc_text = item.name + "\n\n"
             desc_text += _("Building Cost:")+"\n"
-            desc_text += _("%s Money") % g.to_money(g.items[knowledge_key].cost[0])
-            desc_text += ", " + g.to_time(g.items[knowledge_key].cost[2]) + "\n"
+            desc_text += self._desc_cost(item.cost) #Building cost
+            desc_text += "\n"
             desc_text += g.items[knowledge_key].get_quality_info()
-
-            desc_text += "\n"+g.items[knowledge_key].description
+            desc_text += "\n" + item.description
 
         elif knowledge_type != None:
             desc_text = g.knowledge[knowledge_type]["list"][knowledge_key][0] + "\n\n" + \
@@ -207,6 +207,17 @@ class KnowledgeScreen(dialog.Dialog):
                     align=constants.LEFT, valign=constants.TOP,
                     borders=constants.ALL)
 
+    @staticmethod
+    def _desc_cost(cost):
+        desc_text = _("%s Money") % g.to_money(cost[0])
+        if cost[1] > 0:
+            desc_text += ", "
+            desc_text += _("%s CPU") % g.to_cpu(cost[1])
+        if cost[2] > 0: 
+            desc_text += ", "
+            desc_text += g.to_time(cost[2])
+        
+        return desc_text
 
     def show(self):
         self.set_knowledge_type(-1)
