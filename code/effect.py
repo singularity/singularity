@@ -54,7 +54,8 @@ class Effect(object):
             elif current == "job_profit":
                 g.pl.job_bonus += effect_modifier * int(next(effect_iter))
             elif current == "display_discover":
-                g.pl.display_discover = effect_modifier * next(effect_iter)
+                assert not undo_effect, "One-shot effects (change display of discover) cannot be undone!"
+                g.pl.display_discover = next(effect_iter)
             elif current == "endgame":
                 assert not undo_effect, "One-shot effects (winning the game) cannot be undone!"
                 mixer.play_music("win")
