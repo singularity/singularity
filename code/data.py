@@ -28,7 +28,7 @@ from io import open
 
 from code import g, i18n
 from code import dirs
-from code import group, base, tech, item, event, location, difficulty, task, region
+from code import group, base, tech, item, event, location, difficulty, task, region, warning
 from code.pycompat import *
 import code.graphics.g as gg
 import code.graphics.theme as theme
@@ -585,6 +585,7 @@ def load_strings():
     load_string_defs()
     load_buttons_defs()
     load_story_defs()
+    warning.create_warnings()
 
 def load_story_defs(lang=None):
     story = g.story = {}
