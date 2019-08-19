@@ -138,7 +138,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                 try:
                     tm = float(save.headers["time"])
                     tm_str = time.strftime("%c", time.localtime(tm))
-                except KeyError, ValueError:
+                except (KeyError, ValueError):
                     tm_str = ""
 
                 try:
@@ -149,7 +149,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                     gtm_time_day = gtm_raw_day
                     gtm_str = _("DAY") + " %04d, %02d:%02d:%02d" % \
                         (gtm_time_day, gtm_time_hour, gtm_time_min, gtm_time_sec)
-                except KeyError, ValueError:
+                except (KeyError, ValueError):
                     gtm_str = ""
 
                 dif = save.headers.get("difficulty", "")
