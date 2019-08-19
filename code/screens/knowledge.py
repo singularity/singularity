@@ -74,6 +74,7 @@ class KnowledgeScreen(dialog.Dialog):
         # Update knowledge lists
         self.knowledge_types = collections.OrderedDict()
         self.knowledge_types.update({_("Techs")   :"techs",
+                                     _("Bases")   :"bases",
                                      _("Items")   :"items",})
         self.knowledge_types.update({ knowledge["name"]: knowledge_id
                                       for knowledge_id, knowledge
@@ -108,6 +109,9 @@ class KnowledgeScreen(dialog.Dialog):
         if item_type == "techs":
             items = [[tech.name, tech.id ] for tech in g.techs.values()
                                            if tech.available()]
+        elif item_type == "bases":
+            items = [[base.name, base.id ] for base in g.base_type.values()
+                                           if base.available()]
         elif item_type == "items":
             items = [[item.name, item.id ] for item in g.items.values()
                                            if item.available()]
@@ -187,6 +191,21 @@ class KnowledgeScreen(dialog.Dialog):
 
             if g.techs[knowledge_key].done:
                 desc_text += "\n\n"+g.techs[knowledge_key].result
+
+        elif knowledge_type == "bases":
+            base = g.base_type[knowledge_key]
+            
+            desc_text = base.name + "\n\n"
+            desc_text += _("Building Cost:")+"\n"
+            desc_text += self._desc_cost(base.cost) #Building cost
+            desc_text += "\n"
+            desc_text += _("Maintenance Cost:")+"\n"
+            desc_text += self._desc_cost(base.maintenance) #Maintenance cost
+            desc_text += "\n"
+            if base.size > 1:
+                desc_text +=  _("Size: %d") % base.size + "\n"
+
+            desc_text += "\n" + base.description
 
         elif knowledge_type == "items":
             item = g.items[knowledge_key]
