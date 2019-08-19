@@ -205,6 +205,8 @@ class KnowledgeScreen(dialog.Dialog):
             if base.size > 1:
                 desc_text +=  _("Size: %d") % base.size + "\n"
 
+            desc_text += base.get_detect_info()
+
             desc_text += "\n" + base.description
 
         elif knowledge_type == "items":

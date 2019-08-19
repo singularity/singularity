@@ -100,9 +100,9 @@ class BaseSpec(buyable.BuyableSpec):
 
         return detect_chance
 
-    def get_detect_info(self, location):
+    def get_detect_info(self, location=None):
 
-        detect_modifier = 1 / location.modifiers.get("stealth", 1)
+        detect_modifier = 1 / location.modifiers.get("stealth", 1) if location else 1
         chance = self.calc_discovery_chance(detect_modifier)
 
         return get_detect_info(chance)
