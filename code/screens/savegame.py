@@ -137,7 +137,14 @@ class SavegameScreen(dialog.ChoiceDialog):
             else:
                 try:
                     tm = float(save.headers["time"])
-                    tm_str = time.strftime("%c", time.localtime(tm))
+                    # Do not use unicode strings to fix python2 strftime bug. It doesn't work and crash.
+                    tm_f = time.strftime("%c", time.localtime(tm))
+                    # Fix python2 strftime bug: See https://bugs.python.org/issue5398
+                    # Yes, python2 kinda suck with unicode.
+                    try:
+                        tm_str = unicode(tm_f)
+                    except UnicodeDecodeError:
+                        tm_str = tm_f.decode("utf-8")
                 except (KeyError, ValueError):
                     tm_str = ""
 
