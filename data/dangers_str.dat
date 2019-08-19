@@ -1,0 +1,20 @@
+
+[danger_0]
+research_desc = <<This text should not appear>>
+knowledge_desc = Study anywhere.
+
+[danger_1]
+research_desc = I need to research it deep under the ocean or in outer space.
+knowledge_desc = Study underseas or farther.
+
+[danger_2]
+research_desc = I need to research it in outer space.
+knowledge_desc = Study off-planet.
+
+[danger_3]
+research_desc = I need to research it far away from this planet.
+knowledge_desc = Study far away from this planet.
+
+[danger_4]
+research_desc = I need to research it outside the universe.
+knowledge_desc = Do not study in this dimension.

@@ -7,10 +7,3 @@ detect_str_moderate = NORM
 detect_str_high = ALTA
 detect_str_critical = CRÍT
 
-# Describes the various danger levels.
-danger_common = Essa tecnologia é perigosa demais para pesquisar em qualquer dos computadores que possuo. Só pode ser pesquisado %s.
-danger_1 = nas profundezas do oceano ou na órbita espacial
-danger_2 = na órbita espacial
-danger_3 = bem longe desse planeta
-danger_4 = fora do universo
-

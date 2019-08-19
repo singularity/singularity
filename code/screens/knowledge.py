@@ -172,16 +172,8 @@ class KnowledgeScreen(dialog.Dialog):
                 desc_text += self._desc_cost(g.techs[knowledge_key].total_cost) #Research cost
                 desc_text += "\n"
 
-                if g.techs[knowledge_key].danger == 0:
-                    desc_text += _("Study anywhere.")
-                elif g.techs[knowledge_key].danger == 1:
-                    desc_text += _("Study underseas or farther.")
-                elif g.techs[knowledge_key].danger == 2:
-                    desc_text += _("Study off-planet.")
-                elif g.techs[knowledge_key].danger == 3:
-                    desc_text += _("Study far away from this planet.")
-                elif g.techs[knowledge_key].danger == 4:
-                    desc_text += _("Do not study in this dimension.")
+                danger_level = g.techs[knowledge_key].danger
+                desc_text += g.dangers[danger_level].knowledge_desc
 
             else: desc_text += _("Research complete.")
 

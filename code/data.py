@@ -244,6 +244,30 @@ def load_bases():
     load_base_defs()
 
 
+# Expando type for danger.
+danger_type = type('Danger', (object,), {})
+
+def load_danger_defs(lang=None):
+    dangers = g.dangers = {}
+
+    danger_list = load_generic_defs_file("dangers", lang)
+    
+    for danger_def in danger_list:
+        check_required_fields(danger_def, ("id", "research_desc", "knowledge_desc"), "Danger")
+
+        danger_id = danger_def["id"]
+        
+        if not danger_id.startswith("danger_"):
+            sys.stderr.write("Invalid format for danger id: %s\n" % danger_id)
+            sys.exit(1)
+
+        danger_level = int(danger_id[7:])
+
+        dangers[danger_level] = danger_type()
+        dangers[danger_level].research_desc = danger_def["research_desc"]
+        dangers[danger_level].knowledge_desc = danger_def["knowledge_desc"]
+
+
 def load_regions():
     regions = g.regions = {}
     
@@ -591,6 +615,7 @@ def load_strings():
     load_string_defs()
     load_buttons_defs()
     load_story_defs()
+    load_danger_defs()
     warning.create_warnings()
 
 def load_story_defs(lang=None):

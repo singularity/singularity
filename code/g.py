@@ -57,6 +57,7 @@ force_single_dir = False
 
 # Initialization data
 significant_numbers = []
+dangers = {}
 messages = {}
 strings = {}
 story = {}

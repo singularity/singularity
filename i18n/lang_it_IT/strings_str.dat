@@ -2,12 +2,6 @@
 detect_str_low = BASSA
 detect_str_moderate = MODERATA
 detect_chance = [PROBABILITÀ DI INDIVIDUAZIONE]
-danger_common = Questa tecnologia è troppo pericolosa per essere ricercata su qualunque dei computer di cui dispongo. Devo ricercarla %s.
 detect_str_high = ALTA
 detect_str_critical = CRITICA
-danger_4 = al di fuori dell'Universo
-danger_1 = nelle profondità marine o nello spazio
-danger_2 = nello spazio
-danger_3 = lontano da questo pianeta
-
 

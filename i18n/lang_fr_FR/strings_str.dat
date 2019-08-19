@@ -1,10 +1,5 @@
 [strings]
-danger_1 = profond sous l'océan ou dans l'espace intersidéral
-danger_2 = dans l'espace intersidéral
 detect_chance = [PROBABILITE DE DETECTION]
-danger_common = Cette technologie est trop dangereuse à développer avec les ordinateurs que je possède. Je dois la développer %s.
-danger_4 = hors de l'univers
-danger_3 = très loin de cette planète
 
 # The following strings are used on the map screen in place of percentages until
 # a certain technology is researched.
