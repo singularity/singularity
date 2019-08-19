@@ -84,6 +84,9 @@ cpu_normal      = white
 cpu_warning     = red
 
 # Save colors
+save_name       = white
+save_time       = gray
+save_difficulty = white
 save_valid      = green
 save_invalid    = red
 

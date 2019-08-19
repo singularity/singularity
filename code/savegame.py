@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 import codecs
 import sys
+import time
 
 try:
     import cPickle as pickle
@@ -65,7 +66,7 @@ savefile_translation = {
     "singularity_savefile_99.8":    ("1.0 (dev+json)",   99.8 ),
 }
 
-Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version', 'load_file'])
+Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version', 'headers', 'load_file'])
 
 
 # TODO: We should use a persistent internal ID that is immune to us renaming
@@ -158,7 +159,7 @@ def get_savegames():
             except Exception:
                 version_name = None # To be sure.
 
-            savegame = Savegame(convert_path_name_to_str(name), filepath, version_name, load_file)
+            savegame = Savegame(convert_path_name_to_str(name), filepath, version_name, headers, load_file)
             all_savegames.append(savegame)
 
     return all_savegames
@@ -669,6 +670,7 @@ def write_game_to_fd(fd, gzipped=True):
     headers = [
         ('difficulty', g.pl.difficulty.id),
         ('game_time', str(g.pl.raw_sec)),
+        ('time', str(time.time())),
     ]
     for k, v in headers:
         kw_str = "%s=%s\n" % (k, v)

@@ -20,7 +20,9 @@
 
 from __future__ import absolute_import
 
-from code import g, savegame as sv
+import time
+
+from code import g, savegame as sv, difficulty
 from code.graphics import dialog, button, text, constants, listbox
 
 from code.safety import log_func_exc
@@ -85,33 +87,76 @@ class SavegameScreen(dialog.ChoiceDialog):
 
     def make_listbox(self):
         return listbox.CustomListbox(self, (0, -.10), (-1, -.77),
+                                     list_item_height=0.06,
                                      anchor=constants.TOP_LEFT,
                                      remake_func=self.make_item,
                                      rebuild_func=self.update_item,
                                      on_double_click_on_item=self.yes_button.activated)
 
     def make_item(self, item):
-        item.name_display     = text.Text(item, (-.01,-.05), (-.45, -.99),
-                                          anchor=constants.TOP_LEFT,
-                                          align=constants.LEFT,
-                                          background_color="clear")
-        item.version_display  = text.Text(item, (-.99,-.05), (-.45, -.99),
-                                          anchor=constants.TOP_RIGHT,
-                                          align=constants.RIGHT,
-                                          background_color="clear")
+        item.name_display        = text.Text(item, (-.01, -.01), (-.45, -.60),
+                                             anchor=constants.TOP_LEFT,
+                                             align=constants.LEFT,
+                                             color="save_name",
+                                             background_color="clear")
+        item.time_display        = text.Text(item, (-.01, -.99), (-.75, -.40),
+                                             anchor=constants.BOTTOM_LEFT,
+                                             align=constants.LEFT,
+                                             color="save_time",
+                                             background_color="clear")                               
+        item.version_display     = text.Text(item, (-.99, -.01), (-.45, -.60),
+                                             anchor=constants.TOP_RIGHT,
+                                             align=constants.RIGHT,
+                                             background_color="clear")
+        item.difficulty_display  = text.Text(item, (-.99, -.99), (-.25, -.40),
+                                             anchor=constants.BOTTOM_RIGHT,
+                                             align=constants.RIGHT,
+                                             color="save_difficulty",
+                                             background_color="clear")
+
 
     def update_item(self, item, save):
         if save is None:
             item.name_display.text = ""
+            item.time_display.text = ""
             item.version_display.text = ""
+            item.difficulty_display.text = ""
         else:
             item.name_display.text = save.name
+
             if save.version is None:
                 item.version_display.text  = _("UNKNOWN")
                 item.version_display.color = "save_invalid"
             else:
                 item.version_display.text  = save.version
                 item.version_display.color = "save_valid"
+
+            if save.headers is None:
+                item.time_display.text = ""
+                item.difficulty_display.text = ""
+            else:
+                try:
+                    tm = float(save.headers["time"])
+                    tm_str = time.strftime("%c", time.localtime(tm))
+                except KeyError, ValueError:
+                    tm_str = ""
+
+                try:
+                    gtm_raw_sec = int(save.headers["game_time"])
+                    gtm_raw_min,  gtm_time_sec  = divmod(gtm_raw_sec, 60)
+                    gtm_raw_hour, gtm_time_min  = divmod(gtm_raw_min, 60)
+                    gtm_raw_day,  gtm_time_hour = divmod(gtm_raw_hour, 24)
+                    gtm_time_day = gtm_raw_day
+                    gtm_str = _("DAY") + " %04d, %02d:%02d:%02d" % \
+                        (gtm_time_day, gtm_time_hour, gtm_time_min, gtm_time_sec)
+                except KeyError, ValueError:
+                    gtm_str = ""
+
+                dif = save.headers.get("difficulty", "")
+                dif_str = g.strip_hotkey(getattr(difficulty.difficulties.get(dif, None), "name", ""))
+                
+                item.time_display.text = tm_str + " | " + gtm_str if tm_str else gtm_str
+                item.difficulty_display.text = dif_str
 
     def rebuild(self):
         # Update buttons translations
