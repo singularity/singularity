@@ -1,12 +1,9 @@
 [strings]
 detect_str_low = BASSA
 detect_str_moderate = MODERATA
-cpu_penalty = meno efficienti
 detect_chance = [PROBABILITÀ DI INDIVIDUAZIONE]
 danger_common = Questa tecnologia è troppo pericolosa per essere ricercata su qualunque dei computer di cui dispongo. Devo ricercarla %s.
-cpu_bonus = più efficienti
 detect_str_high = ALTA
-location_modifiers = Le basi in questa zona sono %(modifiers)s.
 detect_str_critical = CRITICA
 danger_4 = al di fuori dell'Universo
 danger_1 = nelle profondità marine o nello spazio

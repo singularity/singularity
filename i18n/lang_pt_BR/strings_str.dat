@@ -14,7 +14,3 @@ danger_2 = na órbita espacial
 danger_3 = bem longe desse planeta
 danger_4 = fora do universo
 
-location_modifiers = Bases neste local são %(modifiers)s.
-cpu_bonus = mais eficientes
-cpu_penalty = menos eficientes
-

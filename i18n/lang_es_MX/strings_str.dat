@@ -14,7 +14,3 @@ danger_1 = en el fondo del océano o en el espacio cósmico
 danger_2 = en el espacio cósmico
 danger_3 = lejos de este planeta
 danger_4 = fuera de este universo
-
-location_modifiers = Bases en este lugar son %(modifiers)s.
-cpu_bonus = más eficientes
-cpu_penalty = menos eficientes

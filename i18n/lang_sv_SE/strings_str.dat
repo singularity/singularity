@@ -1,10 +1,7 @@
 [strings]
 detect_str_low = LÅG
 detect_str_moderate = MDL
-cpu_penalty = mindre effektiv
 research_construction = Stoppa forskningen och allokera resurserna till att bygga upp nya anläggningar istället.
 detect_chance = [RISK FÖR AVSLÖJANDE]
-cpu_bonus = effektivare
 detect_str_high = HÖG
-location_modifiers = Anläggningar på denna plats är %(modifiers)s.
 detect_str_critical = KRI

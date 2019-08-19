@@ -12,8 +12,3 @@ detect_str_low = FAIBLE
 detect_str_moderate = MODÉRÉ
 detect_str_high = ÉLEVÉ
 detect_str_critical = CRITIQUE
-
-location_modifiers = Les bases situées à cet endroit sont des %(modifiers)s.
-cpu_bonus = plus efficace
-cpu_penalty = moins efficace
-
