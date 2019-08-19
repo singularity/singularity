@@ -11,7 +11,6 @@ can be downloaded at Max McCracken's website:
 And also at Endgame: Singularity download hosts:
 
     http://www.emhsoft.com/singularity
-    https://code.google.com/p/endgame-singularity/downloads/list
     https://github.com/singularity/singularity-music
 
 Be aware that the Ogg Vorbis songs available at Endgame: Singularity hosts were
