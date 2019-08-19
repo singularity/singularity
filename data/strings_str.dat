@@ -16,9 +16,3 @@ danger_1 = deep under the ocean or in outer space
 danger_2 = in outer space
 danger_3 = far away from this planet
 danger_4 = outside the universe
-
-stat_cash_earned = Cash Earned
-stat_cpu_used = Cpu Used
-stat_tech_created = Tech Created
-stat_base_created = Base Created
-stat_item_created = Item Created

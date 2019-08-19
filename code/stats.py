@@ -54,9 +54,6 @@ class Statistic(object):
         self.name = name
         self.value = 0
 
-    def display_name(self):
-        return g.strings["stat_" + self.name]
-
     def display_value(self):
         if (hasattr(self, "_display") and callable(self._display)):
             return str(self._display(self.value))

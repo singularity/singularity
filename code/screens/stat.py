@@ -51,14 +51,21 @@ class StatScreen(dialog.ChoiceDialog):
                                       align=constants.RIGHT,
                                       background_color="clear")
 
-    def update_item(self, canvas, name):
-        
-        if (name is not None):
-            stat = stats[name]
-        
-            canvas.stat_name.text = stat.display_name()
+    def update_item(self, canvas, item):
+        if item is not None:
+            stat = stats[item[0]]
+
+            canvas.stat_name.text = item[1]
             canvas.stat_value.text = stat.display_value()
         
     def show(self):
-        self.list = [stat.name for stat in stats]
+        # FIXME: Remove the needs of this array.
+        self.list = [
+            ("cash_earned" , _("Cash Earned")),
+            ("cpu_used"    , _("Cpu Used")), 
+            ("tech_created", _("Tech Created")), 
+            ("base_created", _("Base Created")), 
+            ("item_created", _("Item Created")), 
+        ]
+
         return super(StatScreen, self).show()
