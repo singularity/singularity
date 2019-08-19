@@ -335,8 +335,6 @@ def load_savegame_by_json(fd):
             b.recalc_cpu()
     g.pl.recalc_cpu()
 
-    data.reload_all_mutable_def()
-
 
 def load_savegame_by_pickle(loadfile):
 
@@ -522,8 +520,6 @@ def load_savegame_by_pickle(loadfile):
         if b.done:
             b.recalc_cpu()
     g.pl.recalc_cpu()
-
-    data.reload_all_mutable_def()
 
     # Play the appropriate music
     if g.pl.apotheosis:
