@@ -181,7 +181,7 @@ def parse_pickle_savegame_headers(fd):
     def find_class(module_name, class_name):
         # Lets reduce the risk of "funny monkey business"
         # when checking the version of pickled files
-        raise SavegameException(module_name, class_name)
+        raise ValueError("Invalid class in savegame: %s.%s" % (module_name, class_name))
 
     unpickle = unpickle_instance(fd, find_globals=find_class)
 
@@ -693,5 +693,5 @@ def write_game_to_fd(fd, gzipped=True):
 class SavegameVersionException(Exception):
     def __init__(self, version):
         version_str = str(version)[:64]
-        super(SavegameException, self).__init__("Invalid version: %s" % version_str)
+        super(SavegameVersionException, self).__init__("Invalid version: %s" % version_str)
         self.version = version_str
