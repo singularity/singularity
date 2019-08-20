@@ -237,7 +237,7 @@ class Base(buyable.Buyable):
 
     def serialize_obj(self):
         return self.serialize_buyable_fields({
-            'spec_id': self.spec.id,
+            'spec_id': g.to_internal_id('base', self.spec.id),
             'name': self.name,
             'started_at_min': self.started_at,
             'power_state': self.power_state,
@@ -250,7 +250,7 @@ class Base(buyable.Buyable):
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        spec_id = obj_data.get('spec_id')
+        spec_id = g.convert_internal_id('base', obj_data['spec_id'])
         spec = g.base_type[spec_id]
         name = obj_data.get('name')
         base = Base(name, spec)

@@ -169,7 +169,7 @@ class Location(object):
 
     def serialize_obj(self):
         obj_data = {
-            'id': self.spec.id,
+            'id': g.to_internal_id('location', self.spec.id),
             'bases': [b.serialize_obj() for b in self.bases],
         }
         if self._modifiers is not None:
@@ -178,7 +178,7 @@ class Location(object):
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        spec_id = obj_data.get('id')
+        spec_id = g.convert_internal_id('location', obj_data['id'])
         spec = g.locations[spec_id]
         loc = Location(spec)
         

@@ -152,12 +152,12 @@ class Item(buyable.Buyable):
 
     def serialize_obj(self):
         return self.serialize_buyable_fields({
-            'spec_id': self.spec.id,
+            'spec_id': g.to_internal_id('item', self.spec.id),
         })
 
     @classmethod
     def deserialize_obj(cls, base, obj_data, game_version):
-        spec_id = obj_data['spec_id']
+        spec_id = g.convert_internal_id('item', obj_data['spec_id'])
         spec = g.items[spec_id]
         count = obj_data.get('count', 1)
         obj = Item(spec, base, count=count)

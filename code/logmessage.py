@@ -32,12 +32,28 @@ def register_saveable_log_message(cls):
                                           cls.__name__
     return cls
 
+def merge_fields_on_subclasses(cls, field_name):
+    cache = {}
+    subclasses = cls.mro()
+    subclasses.append(cls)
+    for subcls in reversed(subclasses):
+        try:
+            fields = getattr(subcls, field_name)
+            cache.update(fields)
+        except AttributeError:
+            pass
+    return cache
+
+def id_converter(id_type):
+    return lambda field: g.to_internal_id(id_type, field)
 
 class AbstractLogMessage(object):
 
     log_message_serial_id = None
-    _log_message_serial_fields = ['raw_emit_time']
+    _log_message_serial_fields = {'raw_emit_time':'raw_emit_time'}
     _log_message_serial_fields_cache = None
+    _log_message_serial_converters = {}
+    _log_message_serial_converters_cache = None
 
     def __init__(self, raw_emit_time, loading_from_game_version=None):
         self._raw_emit_time = raw_emit_time
@@ -82,30 +98,28 @@ class AbstractLogMessage(object):
     def log_message_serial_fields(cls):
         if cls._log_message_serial_fields_cache:
             return cls._log_message_serial_fields_cache
-        cache = {}
-        subclasses = cls.mro()
-        subclasses.append(cls)
-        for subcls in reversed(subclasses):
-            try:
-                fields = subcls._log_message_serial_fields
-                # Enable short hands when there is a 1:1 between constructor argument,
-                # serial format, and the field name
-                if isinstance(fields, list):
-                    cache.update({x: x for x in fields})
-                else:
-                    cache.update(fields)
-            except AttributeError:
-                pass
+        cache = merge_fields_on_subclasses(cls, "_log_message_serial_fields")
         cls._log_message_serial_fields_cache = cache
+        assert 'log_id' not in cache, "The log_id field is reserved for internal usage"
+        return cache
+
+    @classmethod
+    def log_message_serial_converters(cls):
+        if cls._log_message_serial_converters_cache:
+            return cls._log_message_serial_converters_cache
+        cache = merge_fields_on_subclasses(cls, "_log_message_serial_converters")
+        cls._log_message_serial_converters_cache = cache
         assert 'log_id' not in cache, "The log_id field is reserved for internal usage"
         return cache
 
     def serialize_obj(self):
         assert self.__class__.log_message_serial_id, "%s has invalid log_message_serial_id" % self.__class__.__name__
-        obj_data = {
-            serial_name: getattr(self, field_name)
-            for serial_name, field_name in self.__class__.log_message_serial_fields().items()
-        }
+        obj_data = {}
+        for serial_name, field_name in self.__class__.log_message_serial_fields().items():
+            field = getattr(self, field_name)
+            converter = self.__class__.log_message_serial_converters().get(serial_name, lambda field: field)
+            obj_data[serial_name] = converter(field)
+        
         obj_data['log_id'] = self.__class__.log_message_serial_id
         return obj_data
 
@@ -134,9 +148,12 @@ class LogEmittedEvent(AbstractLogMessage):
 
     log_message_serial_id = 'event-emitted'
     _log_message_serial_fields = {'event_id': '_event_id'}
+    _log_message_serial_converters = {'event_id': id_converter("event")}
 
     def __init__(self, raw_emit_time, event_id, loading_from_game_version=None):
         super(LogEmittedEvent, self).__init__(raw_emit_time, loading_from_game_version=loading_from_game_version)
+        if loading_from_game_version is not None:
+            event_id = g.convert_internal_id('event', event_id)
         self._event_id = event_id
 
     @classmethod
@@ -161,12 +178,12 @@ class LogResearchedTech(AbstractLogMessage):
 
     log_message_serial_id = 'tech-researched'
     _log_message_serial_fields = {'tech_id': '_tech_id'}
+    _log_message_serial_converters = {'tech_id': id_converter("tech")}
 
     def __init__(self, raw_emit_time, tech_id, loading_from_game_version=None):
         super(LogResearchedTech, self).__init__(raw_emit_time, loading_from_game_version=loading_from_game_version)
         if loading_from_game_version is not None:
-            from code import savegame
-            tech_id = savegame.convert_id('tech', tech_id, loading_from_game_version)
+            tech_id = g.convert_internal_id('tech', tech_id)
         self._tech_id = tech_id
 
     @classmethod
@@ -194,12 +211,19 @@ class AbstractBaseRelatedLogMessage(AbstractLogMessage):
         'base_type_id': '_base_type_id',
         'base_location_id': '_base_location_id',
     }
+    _log_message_serial_converters = {
+        'base_type_id': id_converter("base"),
+        'base_location_id': id_converter("location"),
+    }
 
     def __init__(self, raw_emit_time, base_name, base_type_id, base_location_id,
                  loading_from_game_version=None):
         super(AbstractBaseRelatedLogMessage, self).__init__(raw_emit_time,
                                                             loading_from_game_version=loading_from_game_version)
         self._base_name = base_name
+        if loading_from_game_version is not None:
+            base_type_id = g.convert_internal_id('base', base_type_id)
+            base_location_id = g.convert_internal_id('location', base_location_id)
         self._base_type_id = base_type_id
         self._base_location_id = base_location_id
 
@@ -270,6 +294,9 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
     _log_message_serial_fields = {
         'discovered_by_group_id': '_discovered_by_group_id',
     }
+    _log_message_serial_converters = {
+        'discovered_by_group_id': id_converter("group"),
+    }
 
     @classmethod
     def log_name(self):
@@ -307,6 +334,9 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
     _log_message_serial_fields = {
         'item_spec_id': '_item_spec_id',
         'item_count': '_item_count',
+    }
+    _log_message_serial_converters = {
+        'item_spec_id': id_converter("item")
     }
 
     def __init__(self, raw_emit_time, item_spec_id, item_count, base_name, base_type_id, base_location_id,

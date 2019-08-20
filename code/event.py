@@ -112,14 +112,14 @@ class Event(object):
 
     def serialize_obj(self):
         return {
-            'id': self.spec.id,
+            'id': g.to_internal_id('event', self.spec.id),
             'triggered': self.triggered,
             'triggered_at': self.triggered_at
         }
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        spec_id = obj_data['id']
+        spec_id = g.convert_internal_id('event', obj_data['id'])
         spec = g.events[spec_id]
         obj = Event(spec)
 

@@ -56,14 +56,14 @@ class Group(object):
 
     def serialize_obj(self):
         return {
-            'id': self.spec.id,
+            'id': g.to_internal_id('group', self.spec.id),
             'suspicion': self.suspicion,
             'is_actively_discovering_bases': self.is_actively_discovering_bases,
         }
 
     @classmethod
     def deserialize_obj(cls, diff, obj_data, game_version):
-        spec_id = obj_data.get('id')
+        spec_id = g.convert_internal_id('group', obj_data['id'])
         spec = g.groups[spec_id]
         group = Group(spec, diff)
         
