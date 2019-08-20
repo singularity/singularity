@@ -61,10 +61,19 @@ class Group(object):
             'is_actively_discovering_bases': self.is_actively_discovering_bases,
         }
 
-    def restore_obj(self, obj_data, game_version):
-        self.suspicion = obj_data['suspicion']
-        self.is_actively_discovering_bases = obj_data.get('is_actively_discovering_bases', True)
-        return self
+    @classmethod
+    def deserialize_obj(cls, diff, obj_data, game_version):
+        spec_id = obj_data.get('id')
+        spec = g.groups[spec_id]
+        group = Group(spec, diff)
+        
+        group.suspicion = obj_data['suspicion']
+        group.is_actively_discovering_bases = obj_data.get('is_actively_discovering_bases', True)
+        return group
+
+    @property
+    def id(self):
+        return self.spec.id
 
     @property
     def name(self):

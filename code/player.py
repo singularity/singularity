@@ -700,8 +700,8 @@ class Player(object):
         g.pl = obj
 
         for group_data in obj_data.get('groups', []):
-            group_id = group_data['id']
-            obj.groups[group_id].restore_obj(group_data, game_version)
+            gr = group.Group.deserialize_obj(diff, group_data, game_version)
+            obj.groups[gr.id] = gr
 
         last_discovery_id = obj_data.get('last_discovery')
         prev_discovery_id = obj_data.get('prev_discovery')
