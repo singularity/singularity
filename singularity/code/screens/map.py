@@ -329,7 +329,8 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
 
         bases = []
         state_prop = []
-        state_prop.extend(_properties_from_object('player.difficulty', g.pl.difficulty, difficulty.columns))
+        state_prop.extend(_properties_from_object('player.difficulty', g.pl.difficulty,
+                                                  [x.field_name for x in difficulty.Difficulty.spec_data_fields]))
         state_prop.extend(_properties_from_object('player', g.pl, [
             'cash', 'partial_cash', 'labor_bonus', 'job_bonus',
             'last_discovery', 'prev_discovery', 'used_cpu',

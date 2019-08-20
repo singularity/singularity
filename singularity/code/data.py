@@ -495,27 +495,8 @@ def load_themes():
 def load_difficulties():
     difficulties = difficulty.difficulties = collections.OrderedDict()
 
-    difficulty_list = generic_load("difficulties.dat")
-    for difficulty_item in difficulty_list:
-        check_required_fields(difficulty_item, \
-            ('id',) + tuple(column for column in difficulty.columns), "Difficulty")
-
-        id = difficulty_item['id']
-
-        diff = difficulty.Difficulty()
-        diff.id = id
-        diff.name = ""
-
-        for column in difficulty.columns:
-            setattr(diff, column, int(difficulty_item[column]))
-            
-        for column in difficulty.list_columns:
-            if column[0] in difficulty_item:
-                setattr(diff, column[1], list(difficulty_item[column[0]]))
-            else:
-                setattr(diff, column[1], [])
-
-        difficulties[id] = diff
+    for diff in parse_spec_from_file(difficulty.Difficulty, 'difficulties.dat'):
+        difficulties[diff.id] = diff
 
     load_difficulty_defs()
 
