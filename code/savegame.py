@@ -285,9 +285,28 @@ def load_savegame(savegame):
         raise RuntimeError("savegame without valid path")
     
     with open(load_path, 'rb') as fd:
+        before_load_savegame()
         savegame.load_file(fd)
+        after_load_savegame()
 
     default_savegame_name = savegame.name
+
+
+def before_load_savegame():
+    stats.reset()
+
+def after_load_savegame():
+    for b in g.all_bases():
+        if b.done:
+            b.recalc_cpu()
+    g.pl.recalc_cpu()
+
+    # Play the appropriate music
+    if g.pl.apotheosis:
+        mixer.play_music("win")
+    else:
+        mixer.play_music("music")
+
 
 def load_savegame_by_json(fd):
     load_version_string, headers = parse_json_savegame_headers(fd)
@@ -330,15 +349,8 @@ def load_savegame_by_json(fd):
         for obj_data in game_data[key]:
             cls.deserialize_obj(obj_data, load_version)
 
-    for b in g.all_bases():
-        if b.done:
-            b.recalc_cpu()
-    g.pl.recalc_cpu()
-
 
 def load_savegame_by_pickle(loadfile):
-
-    stats.reset()
 
     def find_class(module_name, class_name):
         # For cPickle
@@ -516,16 +528,6 @@ def load_savegame_by_pickle(loadfile):
     g.pl.log.clear()
     g.pl.log.extend(new_log)
 
-    for b in g.all_bases():
-        if b.done:
-            b.recalc_cpu()
-    g.pl.recalc_cpu()
-
-    # Play the appropriate music
-    if g.pl.apotheosis:
-        mixer.play_music("win")
-    else:
-        mixer.play_music("music")
 
 def _convert_location(loc, old_version):
     if old_version < 99.7: # < 1.0 dev
