@@ -247,7 +247,7 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
     pl = player.Player(cash = diff.starting_cash, difficulty = diff)
 
     for tech_id in diff.techs:
-        techs[tech_id].finish(is_player=False)
+        g.pl.techs[tech_id].finish(is_player=False)
 
     #Starting base
     open = [loc for loc in pl.locations.values() if loc.available()]
