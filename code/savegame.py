@@ -527,8 +527,6 @@ def load_savegame_by_pickle(loadfile):
     else:
         mixer.play_music("music")
 
-    loadfile.close()
-
 def _convert_location(loc, old_version):
     if old_version < 99.7: # < 1.0 dev
         spec_id = loc.__dict__['id']
