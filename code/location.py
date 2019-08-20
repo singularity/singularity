@@ -176,14 +176,19 @@ class Location(object):
             obj_data['_modifiers'] = self._modifiers
         return obj_data
 
-    def restore_obj(self, obj_data, game_version):
-        self._modifiers = obj_data.get('_modifiers')
-        self.bases = []
+    @classmethod
+    def deserialize_obj(cls, obj_data, game_version):
+        spec_id = obj_data.get('id')
+        spec = g.locations[spec_id]
+        loc = Location(spec)
+        
+        loc._modifiers = obj_data.get('_modifiers')
+        loc.bases = []
         bases = obj_data.get('bases', [])
         for base_obj_data in bases:
             base_obj = base.Base.deserialize_obj(base_obj_data, game_version)
-            self.add_base(base_obj)
-        return self
+            loc.add_base(base_obj)
+        return loc
 
     def get_modifiers_info(self):
         modifier_names = {

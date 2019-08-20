@@ -711,9 +711,8 @@ class Player(object):
             obj.prev_discovery = obj.locations[prev_discovery_id]
 
         for location_data in obj_data.get('locations', []):
-            loc_id = location_data['id']
-            loc = obj.locations[loc_id]
-            loc.restore_obj(location_data, game_version)
+            loc = location.Location.deserialize_obj(location_data, game_version)
+            obj.locations[loc.id] = loc
 
         for event_data in obj_data.get('events', []):
             ev = event.Event.deserialize_obj(event_data, game_version)
