@@ -336,7 +336,10 @@ def load_savegame_by_json(fd):
     else:
         raise ValueError("Unexpected byte: %s" % repr(next_byte))
     data.reset_techs()
-    data.reset_events()
+
+    if "events" in game_data:
+        game_data['player']['events'] = game_data['events']
+        del game_data['events']
 
     # Pause game when loading
     g.curr_speed = 0
@@ -344,7 +347,6 @@ def load_savegame_by_json(fd):
     player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
     for key, cls in [
         ('techs', tech.Tech),
-        ('events', event.Event),
     ]:
         for obj_data in game_data[key]:
             cls.deserialize_obj(obj_data, load_version)
@@ -428,7 +430,6 @@ def load_savegame_by_pickle(loadfile):
     load_version = savefile_translation[load_version_string][1]
 
     data.reset_techs()
-    data.reset_events()
 
     # Changes to overall structure go here.
     seen_objects = set()
@@ -477,7 +478,8 @@ def load_savegame_by_pickle(loadfile):
         'log': [],
         'used_cpu': _find_attribute(saved_player, ['_used_cpu', 'used_cpu'], default_value=0),
         'had_grace': saved_player.had_grace,
-        'groups': [{'id': grp_id, 'suspicion': grp.suspicion} for grp_id, grp in saved_player.groups.items()]
+        'groups': [{'id': grp_id, 'suspicion': grp.suspicion} for grp_id, grp in saved_player.groups.items()],
+        'events': []
     }
 
     for loc_id, saved_location in locations.items():
@@ -502,6 +504,15 @@ def load_savegame_by_pickle(loadfile):
             fake_base_objs.append(saved_base.serialize_obj())
         pl_obj_data['locations'].append(fake_location_obj)
 
+    for event_id, saved_event in events.items():
+        fake_obj_data = {
+            'id': event_id,
+            'triggered': saved_event.triggered,
+            # Omit triggered_at; it did not exist and deserialize_obj will
+            # fix it for us.
+        }
+        pl_obj_data['events'].append(fake_obj_data)
+
     # Now we have enough information to reconstruct the Player object
     player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
 
@@ -515,14 +526,6 @@ def load_savegame_by_pickle(loadfile):
             'id': tech_id,
         })
         tech.Tech.deserialize_obj(fake_obj_data, load_version)
-    for event_id, saved_event in events.items():
-        fake_obj_data = {
-            'id': event_id,
-            'triggered': saved_event.triggered,
-            # Omit triggered_at; it did not exist and deserialize_obj will
-            # fix it for us.
-        }
-        event.Event.deserialize_obj(fake_obj_data, load_version)
 
     new_log = [_convert_log_entry(x) for x in player_log]
     g.pl.log.clear()
@@ -677,7 +680,6 @@ def write_game_to_fd(fd, gzipped=True):
     game_data = {
         'player': g.pl.serialize_obj(),
         'techs': [t.serialize_obj() for tid, t in sorted(g.techs.items()) if t.available()],
-        'events': [e.serialize_obj() for eid, e in sorted(g.events.items())]
     }
     json2binary = codecs.getwriter('utf-8')
     if gzipped:

@@ -408,23 +408,15 @@ def load_item_defs(lang=None):
 
 
 def load_events():
-    g.event_specs = {
+    g.events = {
         event_spec.id: event_spec
         for event_spec in parse_spec_from_file(event.EventSpec, 'events.dat')
     }
-    reset_events()
     load_event_defs()
-
-
-def reset_events():
-    g.events = {
-        event_spec_id: event.Event(event_spec)
-        for event_spec_id, event_spec in g.event_specs.items()
-    }
-
 
 def load_event_defs(lang=None):
     load_generic_defs("events", g.events, lang)
+
 
 def load_tasks():
     tasks = g.tasks = collections.OrderedDict() # Keep order (important)

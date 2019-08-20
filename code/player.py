@@ -26,7 +26,7 @@ import collections
 from operator import truediv
 from numpy import array
 
-from code import g, difficulty, task, chance, location, group
+from code import g, difficulty, task, chance, location, group, event
 from code.buyable import cash, cpu
 from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
@@ -91,6 +91,8 @@ class Player(object):
         
         self.locations = {loc_id: location.Location(loc_spec) for loc_id, loc_spec in g.locations.items()}
         self._considered_buyables = []
+
+        self.events = {}
 
         self.start_day = random.randint(0, 365)
 
@@ -510,15 +512,22 @@ class Player(object):
 
     def _check_event(self, time_sec):
         for event_id in g.events:
-            event = g.events[event_id]
+            event_spec = g.events[event_id]
+            event_target = self.events.get(event_id, None)
+            
             # Skip events already flagged as triggered.
-            if event.triggered == 1:
+            if event_target and event_target.triggered == 1:
                 continue
 
-            if chance.roll_interval(event.chance/10000., time_sec):
+            if chance.roll_interval(event_spec.chance/10000., time_sec):
                 self.pause_game()
-                event.trigger()
-                self.log.append(LogEmittedEvent(self.raw_sec, event.event_id))
+
+                if not event_target:
+                    event_target = event.Event(event_spec)
+                    self.events[event_id] = event_target
+
+                event_target.trigger()
+                self.log.append(LogEmittedEvent(self.raw_sec, event_id))
                 return True  # Don't trigger more than one at a time.
         return False
 
@@ -603,7 +612,7 @@ class Player(object):
         # Reduce suspicion.
         for group in self.groups.values():
             group.new_day()
-        for event in g.events.values():
+        for event in self.events.values():
             if event.triggered and event.decayable_event:
                 event.new_day()
 
@@ -666,7 +675,8 @@ class Player(object):
             'log': [x.serialize_obj() for x in self.log],
             'used_cpu': self.used_cpu,
             'had_grace': self.had_grace,
-            'groups': [grp.serialize_obj() for grp in self.groups.values()]
+            'groups': [grp.serialize_obj() for grp in self.groups.values()],
+            'events': [e.serialize_obj() for e in self.events.values()]
         }
         if self.prev_discovery is not None:
             obj_data['prev_discovery'] = self.prev_discovery.id
@@ -704,6 +714,10 @@ class Player(object):
             loc_id = location_data['id']
             loc = obj.locations[loc_id]
             loc.restore_obj(location_data, game_version)
+
+        for event_data in obj_data.get('events', []):
+            ev = event.Event.deserialize_obj(event_data, game_version)
+            obj.events[ev.event_id] = ev
 
         obj.update_times()
         return obj

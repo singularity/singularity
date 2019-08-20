@@ -37,10 +37,13 @@ class EventSpec(GenericSpec):
     def __init__(self, id, event_type, effect_data, chance, duration, unique):
         super(EventSpec, self).__init__(id)
         self.event_type = event_type
+        self.description = ""
+        self.log_description = ""
         self.effect = effect.Effect(self, effect_data)
         self.chance = chance
         self.duration = duration if duration > 0 else None
         self.unique = unique
+
         if duration < 1 and not unique:
             raise ValueError("Event %s must have either a non-zero duration (e.g. duration = 21) or be unique "
                              "(unique = 1)")
@@ -52,8 +55,6 @@ class Event(object):
     # allow no arguments, even though that would cause Bad Things to happen.
     def __init__(self, spec=None):
         self.spec = spec
-        self.description = ""
-        self.log_description = ""
         self.triggered = 0
         self.triggered_at = -1
 
@@ -64,6 +65,14 @@ class Event(object):
     @property
     def event_type(self):
         return self.spec.event_type
+
+    @property
+    def description(self):
+        return self.spec.description
+
+    @property
+    def log_description(self):
+        return self.spec.log_description
 
     @property
     def effect(self):
@@ -108,7 +117,10 @@ class Event(object):
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        obj = g.events[obj_data['id']]
+        spec_id = obj_data['id']
+        spec = g.events[spec_id]
+        obj = Event(spec)
+
         obj.triggered = obj_data.get('triggered', 0)
         if obj.triggered:
             # We only load the triggered_at time if the event is in a triggered

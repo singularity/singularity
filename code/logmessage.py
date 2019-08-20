@@ -144,16 +144,16 @@ class LogEmittedEvent(AbstractLogMessage):
         return _("Emitted Event")
 
     @property
-    def event(self):
+    def event_spec(self):
         return g.events[self._event_id]
 
     @property
     def log_line(self):
-        return self.event.log_description
+        return self.event_spec.log_description
 
     @property
     def full_message(self):
-        return self.event.description
+        return self.event_spec.description
 
 
 @register_saveable_log_message

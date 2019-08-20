@@ -348,8 +348,8 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
             ]))
             bases.extend((x, location) for x in location.bases)
 
-        for event_id in sorted(g.events):
-            event = g.events[event_id]
+        for event_id in sorted(g.pl.events):
+            event = g.pl.events[event_id]
             name = 'events["%s"]' % event_id
             state_prop.extend(_properties_from_object(name, event, [
                 'event_type', 'chance', 'unique', 'triggered',
