@@ -248,33 +248,39 @@ class Base(buyable.Buyable):
             'items': [it.serialize_obj() for it in self.items.values() if it is not None],
         })
 
-    def restore_obj(self, obj_data, game_version):
-        self.restore_buyable_fields(obj_data, game_version)
+    @classmethod
+    def deserialize_obj(cls, obj_data, game_version):
+        spec_id = obj_data.get('spec_id')
+        spec = g.base_type[spec_id]
+        name = obj_data.get('name')
+        base = Base(name, spec)
+        
+        base.restore_buyable_fields(obj_data, game_version)
 
-        if not self.spec.force_cpu:
+        if not base.spec.force_cpu:
             item_data_list = obj_data['items']
             for item_data in item_data_list:
-                it = item.Item.deserialize_obj(self, item_data, game_version)
-                self.items[it.spec.item_type.id] = it
+                it = item.Item.deserialize_obj(base, item_data, game_version)
+                base.items[it.spec.item_type.id] = it
 
-        self.started_at = obj_data['started_at_min']
-        self.grace_over = obj_data.get('grace_over', True)
+        base.started_at = obj_data['started_at_min']
+        base.grace_over = obj_data.get('grace_over', True)
         # Note that power_state is subject to whether the base and items are built,
         # so we deliberately restore it late.
         #
-        # IMPORTANT: Avoid changing self.power_state as it triggers a "recalc_cpu"
+        # IMPORTANT: Avoid changing base.power_state as it triggers a "recalc_cpu"
         # for the player.  As not we might not have restored everything this either
         # breaks or makes recalc_cpu throw away all allocations as most of the CPU
         # power is missing at this stage.
         stored_power_state = obj_data['power_state']
         if stored_power_state in power_states:
-            self._power_state = stored_power_state
+            base._power_state = stored_power_state
         else:
             # Unknown power states revert to "active" except for the historical "statis"
             # states (which are reverted to "sleep")
-            self._power_state = 'sleep' if stored_power_state in ('statis', 'entering_stasis') else 'active'
-        self.check_power()
-        return self
+            base._power_state = 'sleep' if stored_power_state in ('statis', 'entering_stasis') else 'active'
+        base.check_power()
+        return base
 
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full

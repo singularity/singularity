@@ -20,8 +20,7 @@
 
 from __future__ import absolute_import
 
-import code.base
-from code import g, prerequisite
+from code import g, prerequisite, base
 from code.buyable import cash, cpu, labor
 
 
@@ -182,12 +181,8 @@ class Location(object):
         self.bases = []
         bases = obj_data.get('bases', [])
         for base_obj_data in bases:
-            spec_id = base_obj_data.get('spec_id')
-            spec = g.base_type[spec_id]
-            name = base_obj_data.get('name')
-            base = code.base.Base(name, spec)
-            self.add_base(base)
-            base.restore_obj(base_obj_data, game_version)
+            base_obj = base.Base.deserialize_obj(base_obj_data, game_version)
+            self.add_base(base_obj)
         return self
 
     def get_modifiers_info(self):
