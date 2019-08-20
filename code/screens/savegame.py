@@ -26,6 +26,8 @@ from code import g, savegame as sv, difficulty
 from code.graphics import dialog, button, text, constants, listbox
 
 from code.safety import log_func_exc
+from code.pycompat import *
+
 
 class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):
