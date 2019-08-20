@@ -361,24 +361,15 @@ def load_tech_defs(lang=None):
 
 
 def load_techs():
-    g.tech_specs = {
+    g.techs = {
         tech_spec.id: tech_spec
         for tech_spec in parse_spec_from_file(tech.TechSpec, 'techs.dat')
     }
-    reset_techs()
 
     if g.debug:  # pragma: no cover
         print("Loaded %d techs." % len(g.techs))
 
     load_tech_defs()
-
-
-def reset_techs():
-    g.techs = {
-        tech_spec_id: tech.Tech(tech_spec)
-        for tech_spec_id, tech_spec in g.tech_specs.items()
-    }
-    tech.techs_reset()
 
 
 def load_item_types():

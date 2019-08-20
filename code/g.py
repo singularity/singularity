@@ -65,7 +65,6 @@ knowledge = {}
 groups = {}
 locations = {}
 regions = {}
-tech_specs = {}
 techs = {}
 events = {}
 event_specs = {}

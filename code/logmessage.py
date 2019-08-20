@@ -174,16 +174,16 @@ class LogResearchedTech(AbstractLogMessage):
         return _("Researched Tech")
 
     @property
-    def tech(self):
+    def tech_spec(self):
         return g.techs[self._tech_id]
 
     @property
     def log_line(self):
-        return _('{TECH} complete', TECH=self.tech.name)
+        return _('{TECH} complete', TECH=self.tech_spec.name)
 
     @property
     def full_message(self):
-        tech = self.tech
+        tech = self.tech_spec
         return _("My study of {TECH} is complete. {MESSAGE}", TECH=tech.name, MESSAGE=tech.result)
 
 

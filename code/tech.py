@@ -58,6 +58,7 @@ class TechSpec(buyable.BuyableSpec):
                  effect_data):
         super(TechSpec, self).__init__(id, cost, prerequisites)
 
+        self.result = ""
         self.danger = danger
         self.effect = effect.Effect(self, effect_data)
 
@@ -67,13 +68,15 @@ class Tech(buyable.Buyable):
     def __init__(self, spec):
         super(Tech, self).__init__(spec)
 
-        self.result = ""
-
     def __lt__(self, other):
         if not isinstance(other, Tech):
             return True
         else:
             return self.spec.id < other.spec.id
+
+    @property
+    def result(self):
+        return self.spec.result
 
     @property
     def danger(self):
@@ -102,7 +105,9 @@ class Tech(buyable.Buyable):
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
         from code import savegame
-        tech_id = savegame.convert_id('tech', obj_data['id'] , game_version)
-        obj = g.techs[tech_id]
-        obj.restore_buyable_fields(obj_data, game_version)
-        return obj
+        spec_id = savegame.convert_id('tech', obj_data['id'] , game_version)
+        spec = g.techs[spec_id]
+        tech = Tech(spec)
+
+        tech.restore_buyable_fields(obj_data, game_version)
+        return tech

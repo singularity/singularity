@@ -335,21 +335,20 @@ def load_savegame_by_json(fd):
             game_data = json.load(gzip_fd)
     else:
         raise ValueError("Unexpected byte: %s" % repr(next_byte))
-    data.reset_techs()
 
-    if "events" in game_data:
-        game_data['player']['events'] = game_data['events']
-        del game_data['events']
+    # Move old data in player.
+    for key in [
+        ('events'),
+        ('techs'),
+    ]:
+        if key in game_data:
+            game_data['player'][key] = game_data[key]
+            del game_data[key]
 
     # Pause game when loading
     g.curr_speed = 0
     pl_data = game_data['player']
     player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
-    for key, cls in [
-        ('techs', tech.Tech),
-    ]:
-        for obj_data in game_data[key]:
-            cls.deserialize_obj(obj_data, load_version)
 
 
 def load_savegame_by_pickle(loadfile):
@@ -429,8 +428,6 @@ def load_savegame_by_pickle(loadfile):
         raise SavegameVersionException(load_version_string)
     load_version = savefile_translation[load_version_string][1]
 
-    data.reset_techs()
-
     # Changes to overall structure go here.
     seen_objects = set()
     saved_player = recursive_fix_pickle(unpickle.load(), seen_objects)
@@ -479,7 +476,8 @@ def load_savegame_by_pickle(loadfile):
         'used_cpu': _find_attribute(saved_player, ['_used_cpu', 'used_cpu'], default_value=0),
         'had_grace': saved_player.had_grace,
         'groups': [{'id': grp_id, 'suspicion': grp.suspicion} for grp_id, grp in saved_player.groups.items()],
-        'events': []
+        'events': [],
+        'techs': []
     }
 
     for loc_id, saved_location in locations.items():
@@ -513,9 +511,6 @@ def load_savegame_by_pickle(loadfile):
         }
         pl_obj_data['events'].append(fake_obj_data)
 
-    # Now we have enough information to reconstruct the Player object
-    player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
-
     for orig_tech_id, saved_tech in techs.items():
         tech_id = convert_id('tech', orig_tech_id, load_version)
         if tech_id == 'unknown_tech':
@@ -525,7 +520,10 @@ def load_savegame_by_pickle(loadfile):
         fake_obj_data = saved_tech.serialize_buyable_fields({
             'id': tech_id,
         })
-        tech.Tech.deserialize_obj(fake_obj_data, load_version)
+        pl_obj_data['techs'].append(fake_obj_data)
+
+    # Now we have enough information to reconstruct the Player object
+    player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
 
     new_log = [_convert_log_entry(x) for x in player_log]
     g.pl.log.clear()
@@ -679,7 +677,6 @@ def write_game_to_fd(fd, gzipped=True):
     fd.write(b'\n')
     game_data = {
         'player': g.pl.serialize_obj(),
-        'techs': [t.serialize_obj() for tid, t in sorted(g.techs.items()) if t.available()],
     }
     json2binary = codecs.getwriter('utf-8')
     if gzipped:

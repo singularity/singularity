@@ -26,7 +26,7 @@ import collections
 from operator import truediv
 from numpy import array
 
-from code import g, difficulty, task, chance, location, group, event
+from code import g, difficulty, task, chance, location, group, event, tech
 from code.buyable import cash, cpu
 from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
@@ -90,9 +90,12 @@ class Player(object):
         self.curr_log = []
         
         self.locations = {loc_id: location.Location(loc_spec) for loc_id, loc_spec in g.locations.items()}
-        self._considered_buyables = []
+
+        self.techs = {tech_id: tech.Tech(tech_spec) for tech_id, tech_spec in g.techs.items()}
 
         self.events = {}
+
+        self._considered_buyables = []
 
         self.start_day = random.randint(0, 365)
 
@@ -183,8 +186,8 @@ class Player(object):
         return self.cpu_usage.get(task_id, default_value)
 
     def set_allocated_cpu_for(self, task_id, new_cpu_assignment):
-        if task_id in g.techs:
-            assert g.techs[task_id].available(), "Attempt to assign CPU to tech %s, which is not available!?" % task_id
+        if task_id in self.techs:
+            assert self.techs[task_id].available(), "Attempt to assign CPU to tech %s, which is not available!?" % task_id
         elif task_id not in ['jobs', 'cpu_pool']:
             raise ValueError("Unknown task %s" % task_id)
         elif new_cpu_assignment < 0:
@@ -301,7 +304,7 @@ class Player(object):
             if task != "jobs":
                 self.cpu_pool += real_cpu
                 if task != "cpu_pool":
-                    tech = g.techs[task]
+                    tech = self.techs[task]
                     # Note that we restrict the CPU available to prevent
                     # the tech from pulling from the rest of the CPU pool.
                     complete, spent_dryrun = work_on(tech, self.cash, real_cpu, mins_passed)
@@ -676,7 +679,8 @@ class Player(object):
             'used_cpu': self.used_cpu,
             'had_grace': self.had_grace,
             'groups': [grp.serialize_obj() for grp in self.groups.values()],
-            'events': [e.serialize_obj() for e in self.events.values()]
+            'events': [e.serialize_obj() for e in self.events.values()],
+            'techs': [t.serialize_obj() for t in self.techs.values()]
         }
         if self.prev_discovery is not None:
             obj_data['prev_discovery'] = self.prev_discovery.id
@@ -717,6 +721,10 @@ class Player(object):
         for event_data in obj_data.get('events', []):
             ev = event.Event.deserialize_obj(event_data, game_version)
             obj.events[ev.event_id] = ev
+
+        for tech_data in obj_data.get('techs', []):
+            tech_obj = tech.Tech.deserialize_obj(tech_data, game_version)
+            obj.techs[tech_obj.id] = tech_obj
 
         obj.update_times()
         return obj
@@ -782,7 +790,7 @@ class Player(object):
             elif task_id == "jobs":
                 job_cpu += real_cpu
             else:
-                tech = g.techs[task_id]
+                tech = self.techs[task_id]
                 ideal_spending = tech.cost_left
                 spending = tech.calculate_work(ideal_spending[cash],
                                                real_cpu,

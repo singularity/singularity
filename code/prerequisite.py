@@ -38,7 +38,7 @@ class Prerequisite(object):
             if prerequisite == "OR":
                 assert index == 0
                 or_mode = True
-            if prerequisite in g.techs and g.techs[prerequisite].done:
+            if prerequisite in g.pl.techs and g.pl.techs[prerequisite].done:
                 if or_mode:
                     return True
             else:

@@ -62,8 +62,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             canvas.slider.jump(go_lower, big_jump, tiny_jump)
 
     def on_select(self, description_pane, key):
-        if key in g.techs:
-            description = g.techs[key].get_info()
+        if key in g.pl.techs:
+            description = g.pl.techs[key].get_info()
         elif key == "cpu_pool":
             template = "%s\n---\n%s"
             cpu_pool = task.get_current("cpu_pool")
@@ -128,8 +128,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             canvas.help_button.visible = True
             canvas.help_button.args = (danger,)
 
-        if key in g.techs:
-            canvas.progress = g.techs[key].percent_complete().min()
+        if key in g.pl.techs:
+            canvas.progress = g.pl.techs[key].percent_complete().min()
 
         def my_slide(new_pos):
             self.handle_slide(key, new_pos)
@@ -176,7 +176,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         dialog.call_dialog(self.help_dialog, self)
 
     def show(self):
-        techs = [tech for tech in g.techs.values() if tech.available()
+        techs = [tech for tech in g.pl.techs.values() if tech.available()
                                                       and not tech.done]
         techs.sort()
         self.list = [_("CPU Pool"), task.get_current("jobs").name] + \

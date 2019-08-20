@@ -107,7 +107,7 @@ class KnowledgeScreen(dialog.Dialog):
         item_type = self.knowledge_types.get(item_type)
 
         if item_type == "techs":
-            items = [[tech.name, tech.id ] for tech in g.techs.values()
+            items = [[tech.name, tech.id ] for tech in g.pl.techs.values()
                                            if tech.available()]
         elif item_type == "bases":
             items = [[base.name, base.id ] for base in g.base_type.values()
@@ -165,22 +165,22 @@ class KnowledgeScreen(dialog.Dialog):
         desc_text = ""
 
         if knowledge_type == "techs":
-            desc_text = g.techs[knowledge_key].name + "\n\n"
+            desc_text = g.pl.techs[knowledge_key].name + "\n\n"
 
             #Cost
             desc_text += _("Research Cost:")+"\n"
-            desc_text += self._desc_cost(g.techs[knowledge_key].total_cost) #Research cost
+            desc_text += self._desc_cost(g.pl.techs[knowledge_key].total_cost) #Research cost
             desc_text += "\n"
 
-            danger_level = g.techs[knowledge_key].danger
+            danger_level = g.pl.techs[knowledge_key].danger
             desc_text += g.dangers[danger_level].knowledge_desc
 
-            if g.techs[knowledge_key].done:
+            if g.pl.techs[knowledge_key].done:
                 desc_text += _("Research complete.")
 
             desc_text += "\n\n"+g.techs[knowledge_key].description
 
-            if g.techs[knowledge_key].done:
+            if g.pl.techs[knowledge_key].done:
                 desc_text += "\n\n"+g.techs[knowledge_key].result
 
         elif knowledge_type == "bases":

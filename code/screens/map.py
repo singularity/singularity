@@ -268,8 +268,8 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
 
     def inspiration(self):
         for task, cpu in g.pl.get_cpu_allocations():
-            if task in g.techs:
-                g.techs[task].cost_left = array((0, 0, 0))
+            if task in g.pl.techs:
+                g.pl.techs[task].cost_left = array((0, 0, 0))
         self._map_screen.needs_rebuild = True
 
     def end_construction(self):

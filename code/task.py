@@ -40,7 +40,7 @@ def danger_for(task_id):
     if task_id in ["jobs", "cpu_pool"]:
         return 0
     else:
-        return g.techs[task_id].danger
+        return g.pl.techs[task_id].danger
 
 
 def get_current(task_type):
