@@ -104,6 +104,8 @@ class Event(object):
             self.triggered_at = -1
 
     def is_expired(self):
+        if not self.decayable_event:
+            return False
         if g.pl.raw_sec - self.triggered_at > self.duration * g.seconds_per_day:
             return True
         return False
@@ -131,7 +133,7 @@ class Event(object):
             # be triggered "now".
             obj.triggered_at = obj_data.get('triggered_at', g.pl.raw_sec)
 
-            if obj.is_expired:
+            if obj.is_expired():
                 # Can happen if the duration is reduced after the savegame was made
                 obj.triggered = 0
                 obj.triggered_at = -1
