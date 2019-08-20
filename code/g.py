@@ -57,6 +57,8 @@ force_single_dir = False
 
 # Initialization data
 significant_numbers = []
+internal_id_forward = {}
+internal_id_backward = {}
 dangers = {}
 messages = {}
 story = {}
@@ -271,6 +273,30 @@ def new_game(difficulty_name):
     # Reset music
     mixer.play_music("music")
 
+def to_internal_id(obj_type, obj_id):
+    try:
+        return internal_id_forward[obj_type][obj_id]
+    except KeyError:
+        # If we cannot, that's should not happen, but try to return as is.
+        return obj_id
+
+def from_internal_id(obj_type, obj_internal_id):
+    try:
+        return internal_id_backward[obj_type][obj_internal_id]
+    except KeyError:
+        raise ValueError("Cannot convert internal ID: %s" % obj_internal_id) # That's should not happen
+
+def convert_internal_id(id_type, id_value):
+    if id_value is None:
+        return None
+    
+    internal_id = id_value
+    
+    # Not a internal ID, transform to it.
+    if not internal_id.startswith("0x"):
+        internal_id = to_internal_id(id_type, id_value)
+
+    return from_internal_id(id_type, internal_id) 
 
 #TODO: This is begging to become a class... ;)
 def hotkey(string):

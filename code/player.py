@@ -672,7 +672,7 @@ class Player(object):
             'cash': self.cash,
             'partial_cash': self.partial_cash,
             'locations': [loc.serialize_obj() for loc in self.locations.values() if loc.available()],
-            'cpu_usage': self.cpu_usage,
+            'cpu_usage': {},
             'last_discovery': self.last_discovery.id if self.last_discovery else None,
             'prev_discovery': self.prev_discovery.id if self.prev_discovery else None,
             'log': [x.serialize_obj() for x in self.log],
@@ -682,10 +682,14 @@ class Player(object):
             'events': [e.serialize_obj() for e in self.events.values()],
             'techs': [t.serialize_obj() for t in self.techs.values()]
         }
+        for task_id, value in self.cpu_usage.items():
+            if task_id not in ["cpu_pool", "jobs"]:
+                task_id = g.to_internal_id('tech', task_id)
+            obj_data["cpu_usage"][task_id] = value
         if self.prev_discovery is not None:
-            obj_data['prev_discovery'] = self.prev_discovery.id
+            obj_data['prev_discovery'] = g.to_internal_id('location', self.prev_discovery.id)
         if self.last_discovery is not None:
-            obj_data['last_discovery'] = self.last_discovery.id
+            obj_data['last_discovery'] = g.to_internal_id('location', self.last_discovery.id)
         return obj_data
 
     @classmethod
@@ -698,17 +702,22 @@ class Player(object):
         obj.partial_cash = obj_data.get('partial_cash')
         obj._used_cpu = obj_data.get('used_cpu')
         obj.had_grace = obj_data['had_grace']
-        obj.cpu_usage = obj_data.get('cpu_usage', {})
         obj.log.clear()
         obj.log.extend(AbstractLogMessage.deserialize_obj(x, game_version) for x in obj_data.get('log', []))
         g.pl = obj
+
+        obj.cpu_usage = {}
+        for task_id, value in obj_data.get('cpu_usage', {}).items():
+            if task_id not in ["cpu_pool", "jobs"]:
+                task_id = g.convert_internal_id('tech', task_id)
+            obj.cpu_usage[task_id] = value
 
         for group_data in obj_data.get('groups', []):
             gr = group.Group.deserialize_obj(diff, group_data, game_version)
             obj.groups[gr.id] = gr
 
-        last_discovery_id = obj_data.get('last_discovery')
-        prev_discovery_id = obj_data.get('prev_discovery')
+        last_discovery_id = g.convert_internal_id('location', obj_data.get('last_discovery'))
+        prev_discovery_id = g.convert_internal_id('location', obj_data.get('prev_discovery'))
         if last_discovery_id and last_discovery_id in obj.locations:
             obj.last_discovery = obj.locations[last_discovery_id]
         if prev_discovery_id and prev_discovery_id in obj.locations:

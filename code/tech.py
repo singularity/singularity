@@ -100,13 +100,12 @@ class Tech(buyable.Buyable):
 
     def serialize_obj(self):
         return self.serialize_buyable_fields({
-            'id': self.spec.id,
+            'id': g.to_internal_id("tech", self.spec.id),
         })
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        from code import savegame
-        spec_id = savegame.convert_id('tech', obj_data['id'] , game_version)
+        spec_id = g.convert_internal_id('tech', obj_data['id'])
         spec = g.techs[spec_id]
         tech = Tech(spec)
 

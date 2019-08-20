@@ -71,17 +71,6 @@ savefile_translation = {
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version', 'headers', 'load_file'])
 
 
-# TODO: We should use a persistent internal ID that is immune to us renaming
-# human visible IDs.
-ID_REMAPPING = {
-    'tech/Fusion Reactor': 'Fusion Power'
-}
-
-
-def convert_id(id_type, id_value, loading_from_game_version):
-    return ID_REMAPPING.get("%s/%s" % (id_type, id_value), id_value)
-
-
 def convert_string_to_path_name(name):
     # Some filesystems require unicode (e.g. Windows) whereas Linux needs bytes.
     # Python 2 is rather forgiving which works as long as you work with ASCII,
@@ -516,8 +505,7 @@ def load_savegame_by_pickle(loadfile):
         }
         pl_obj_data['events'].append(fake_obj_data)
 
-    for orig_tech_id, saved_tech in techs.items():
-        tech_id = convert_id('tech', orig_tech_id, load_version)
+    for tech_id, saved_tech in techs.items():
         if tech_id == 'unknown_tech':
             continue
         saved_tech = _convert_tech(saved_tech, load_version)

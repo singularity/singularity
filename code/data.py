@@ -98,7 +98,7 @@ non-mandatory missing or otherwise unreadable files
         for option in config.options(item_id):
 
             # If this is a list ...
-            if len(option) > 6 and option[-5:] == "_list":
+            if (len(option) > 6 and option[-5:] == "_list"):
 
                 # Break it into elements separated by |.
                 item_dict[option[:-5]] = [x.strip() for x in config.get(item_id, option).split("|")]
@@ -217,6 +217,35 @@ def load_significant_numbers():
                 significant_numbers.append(number)
             except ValueError:
                 sys.stderr.write("WARNING: Invalid number in 'numbers.dat' line: %d\n" % index)
+
+def load_internal_id():
+    internal_id_file = dirs.get_readable_file_in_dirs("internal_id.dat", "data")
+
+    with open(internal_id_file, 'r', encoding='utf-8') as file:
+        for index, line in enumerate(file):
+            line = line.strip()
+
+            if len(line) == 0 or line[0] == "#":
+                continue
+
+            try:
+                obj, internal_id   = line.split("=")
+                obj_type, obj_id  = obj.split("|")
+                
+                internal_id = internal_id.strip()
+                obj_type = obj_type.strip()
+                obj_id = obj_id.strip()
+
+                if not obj_type in g.internal_id_forward:
+                    g.internal_id_forward[obj_type] = {}
+                    g.internal_id_backward[obj_type] = {}
+
+                g.internal_id_forward[obj_type][obj_id] = internal_id
+                g.internal_id_backward[obj_type][internal_id] = obj_id
+
+            except ValueError:
+                sys.stderr.write("WARNING: Invalid internal ID in 'internal_id.dat' line: %d\n" % index)
+
 
 def load_groups_defs(lang=None):
     load_generic_defs("groups", g.groups, lang, [])
@@ -640,6 +669,7 @@ def load_story_defs(lang=None):
         story[section_name].append(segment)
 
 def reload_all():
+    load_internal_id()
     load_significant_numbers()
     load_strings()
     load_groups()
