@@ -95,7 +95,7 @@ def test_acyclic_dependencies(techs):
     researchable_techs = []
 
     for tech in techs.values():
-        conjunction = tech.spec.prerequisites_in_cnf_format()
+        conjunction = tech.prerequisites_in_cnf_format()
         if conjunction is None:
             # deliberately marked impossible
             impossible_techs.add(tech.id)
@@ -118,7 +118,7 @@ def test_acyclic_dependencies(techs):
         for t in techs_waiting:
             if t.id in researched_techs:
                 continue
-            conjunction = t.spec.prerequisites_in_cnf_format()
+            conjunction = t.prerequisites_in_cnf_format()
             researchable = True
             for disjunction in conjunction:
                 if not all(x in researched_techs for x in disjunction):

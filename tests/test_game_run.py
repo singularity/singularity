@@ -17,8 +17,6 @@ def setup_module():
 
 
 def setup_function(func):
-    code.data.reset_techs()
-    code.data.reset_events()
     # Some operations (e.g. g.pl.recalc_cpu()) triggers a "needs_rebuild"
     # of the map screen.  Mock that bit for now to enable testing.
     g.map_screen = MockObject()
@@ -80,7 +78,7 @@ def test_initial_game():
 
     # Attempt to allocate a CPU to research and then
     # verify that sleep resets it.
-    stealth_tech = g.techs['Stealth']
+    stealth_tech = g.pl.techs['Stealth']
     pl.set_allocated_cpu_for(stealth_tech.id, 1)
     assert pl.get_allocated_cpu_for(stealth_tech.id) == 1
     start_base.power_state = 'sleep'
@@ -111,7 +109,7 @@ def test_initial_game():
 
     save_and_load_game()
 
-    stealth_tech_after_load = g.techs['Stealth']
+    stealth_tech_after_load = g.pl.techs['Stealth']
     # Ensure this is not a false-test
     assert stealth_tech is not stealth_tech_after_load
     assert stealth_tech.cost_paid[cpu] == stealth_tech_after_load.cost_paid[cpu]
