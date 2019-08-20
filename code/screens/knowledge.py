@@ -166,16 +166,17 @@ class KnowledgeScreen(dialog.Dialog):
 
         if knowledge_type == "techs":
             desc_text = g.techs[knowledge_key].name + "\n\n"
+
             #Cost
-            if not g.techs[knowledge_key].done:
-                desc_text += _("Research Cost:")+"\n"
-                desc_text += self._desc_cost(g.techs[knowledge_key].total_cost) #Research cost
-                desc_text += "\n"
+            desc_text += _("Research Cost:")+"\n"
+            desc_text += self._desc_cost(g.techs[knowledge_key].total_cost) #Research cost
+            desc_text += "\n"
 
-                danger_level = g.techs[knowledge_key].danger
-                desc_text += g.dangers[danger_level].knowledge_desc
+            danger_level = g.techs[knowledge_key].danger
+            desc_text += g.dangers[danger_level].knowledge_desc
 
-            else: desc_text += _("Research complete.")
+            if g.techs[knowledge_key].done:
+                desc_text += _("Research complete.")
 
             desc_text += "\n\n"+g.techs[knowledge_key].description
 
