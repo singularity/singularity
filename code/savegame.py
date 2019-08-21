@@ -350,6 +350,10 @@ def load_savegame_by_json(fd):
     pl_data = game_data['player']
     player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
 
+    # Load save if present.
+    if 'stats' in game_data:
+        stats.reset()
+        stats.deserialize_obj(game_data['stats'], load_version)
 
 def load_savegame_by_pickle(loadfile):
 
@@ -677,6 +681,7 @@ def write_game_to_fd(fd, gzipped=True):
     fd.write(b'\n')
     game_data = {
         'player': g.pl.serialize_obj(),
+        'stats': stats.serialize_obj(),
     }
     json2binary = codecs.getwriter('utf-8')
     if gzipped:

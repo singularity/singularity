@@ -48,6 +48,14 @@ class Statistics(object):
         for stat in self:
             self[stat.name].value = 0
 
+    def serialize_obj(self):
+        return {stat.name:stat.value for stat in self}
+
+    def deserialize_obj(self, obj_data, game_version):
+        for stat_name, stat_value in obj_data.items():
+            self[stat_name].value = stat_value
+        return self
+
 
 class Statistic(object):
     def __init__(self, name):
