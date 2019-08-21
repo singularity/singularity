@@ -590,7 +590,7 @@ def load_strings():
 def load_story_defs(lang=None):
     story = g.story = {}
     
-    story_files = dirs.get_readable_i18n_files("story_str.dat", lang)
+    story_files = dirs.get_readable_i18n_files("story.dat", lang)
     
     if len(story_files) == 0:
         print("Story is missing. Skipping.")
