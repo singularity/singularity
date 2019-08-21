@@ -273,10 +273,14 @@ def load_savegame(savegame):
     if load_path is None:
         raise RuntimeError("savegame without valid path")
     
+    
     with open(load_path, 'rb') as fd:
-        before_load_savegame()
-        savegame.load_file(fd)
-        after_load_savegame()
+        try:
+            before_load_savegame()
+            savegame.load_file(fd)
+            after_load_savegame()
+        finally:
+            finally_load_savegame()
 
     default_savegame_name = savegame.name
 
@@ -297,6 +301,9 @@ def after_load_savegame():
     else:
         mixer.play_music("music")
 
+def finally_load_savegame():
+    # In any case, we don't want internal_id_version to be set after load_savegame.
+    g.internal_id_version = None
 
 def load_savegame_by_json(fd):
     load_version_string, headers = parse_json_savegame_headers(fd)
@@ -411,6 +418,7 @@ def load_savegame_by_pickle(loadfile):
         else:
             raise ValueError("Invalid class in savegame: %s.%s" % (module_name, class_name))
 
+    g.internal_id_version = 'pre1'
 
     unpickle = unpickle_instance(loadfile, find_class)
 
