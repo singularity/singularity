@@ -115,7 +115,7 @@ if save_loc is not None:
 
         try:
             desired_set_grab = prefs.getboolean("Preferences", "grab")
-        except RuntimeError:
+        except Exception:
             sys.stderr.write("Invalid or missing 'grab' setting in preferences.\n")
 
         try:
