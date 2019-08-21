@@ -47,8 +47,6 @@ language = i18n.language
 try:
     import pygame
     pygame.surfarray.use_arraytype("numpy")
-except AttributeError:
-    pass # Pygame older than 1.8.
 except ValueError:
     raise SystemExit("Endgame: Singularity requires NumPy.")
 except ImportError:
