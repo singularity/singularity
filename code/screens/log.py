@@ -22,7 +22,7 @@ from __future__ import absolute_import
 
 
 from code import g, logmessage
-from code.graphics import dialog, constants, button, listbox
+from code.graphics import dialog, constants, text, button, listbox
 
 
 filtered_log_class = set()
@@ -94,9 +94,9 @@ class FilterLogDialog(dialog.MessageDialog):
         for i, (log_type, log_class) in enumerate(logmessage.SAVEABLE_LOG_MESSAGES.items()):
             y = .01 + i * .06
             
-            self.log_class_labels[log_type] = button.HotkeyText(self, (-.01, y), (-.70, .05),
-                                                                align = constants.LEFT,
-                                                                background_color="clear")
+            self.log_class_labels[log_type] = text.Text(self, (-.01, y), (-.70, .05),
+                                                        align = constants.LEFT,
+                                                        background_color="clear")
             self.log_class_toggles[log_type] = FilterButton(self, (-.71, y), (-.28, .05),
                                                             text_shrink_factor=.75,
                                                             force_underline=-1,
