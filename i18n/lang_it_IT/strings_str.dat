@@ -1,7 +1,0 @@
-[strings]
-detect_str_low = BASSA
-detect_str_moderate = MODERATA
-detect_chance = [PROBABILITÀ DI INDIVIDUAZIONE]
-detect_str_high = ALTA
-detect_str_critical = CRITICA
-

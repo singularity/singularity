@@ -59,7 +59,6 @@ force_single_dir = False
 significant_numbers = []
 dangers = {}
 messages = {}
-strings = {}
 story = {}
 knowledge = {}
 groups = {}
@@ -76,10 +75,6 @@ buttons = {}
 help_strings = {}
 delay_time = 0
 curr_speed = 1
-detect_string_names = ("detect_str_low",
-                       "detect_str_moderate",
-                       "detect_str_high",
-                       "detect_str_critical")
 
 max_cash = 3.14 * 10**15  # pi qu :)
 pl = None # The Player instance
@@ -134,7 +129,11 @@ def suspicion_to_detect_str(suspicion):
     return danger_level_to_detect_str(suspicion_to_danger_level(suspicion))
 
 def danger_level_to_detect_str(danger):
-    return strings[detect_string_names[danger]]
+    detect_string_names = (_("LOW"),
+                           _("MODR"),
+                           _("HIGH"),
+                           _("CRIT"))
+    return detect_string_names[danger]
 
 # percent_to_danger_level takes a suspicion level and returns an int in range(5)
 # that represents whether it is low, moderate, high, or critically high.

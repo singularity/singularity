@@ -1,9 +1,0 @@
-[strings]
-detect_chance = [PROBABILITE DE DETECTION]
-
-# The following strings are used on the map screen in place of percentages until
-# a certain technology is researched.
-detect_str_low = FAIBLE
-detect_str_moderate = MODÉRÉ
-detect_str_high = ÉLEVÉ
-detect_str_critical = CRITIQUE

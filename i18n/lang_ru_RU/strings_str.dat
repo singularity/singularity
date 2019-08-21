@@ -1,7 +1,0 @@
-[strings]
-detect_chance = [ШАНС ОБНАРУЖЕНИЯ]
-detect_str_low = НИЗК.
-detect_str_moderate = СРЕД.
-detect_str_high = ВЫС.
-detect_str_critical = КРИТ.
-

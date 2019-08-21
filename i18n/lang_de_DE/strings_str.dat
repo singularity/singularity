@@ -1,6 +1,0 @@
-[strings]
-detect_chance = [ENTDECKUNGSWK.]
-detect_str_low = NIEDR
-detect_str_moderate = MODR
-detect_str_high = HOCH
-detect_str_critical = KRIT

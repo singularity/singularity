@@ -564,19 +564,6 @@ def load_knowledge_defs(lang=None):
 def load_knowledge():
     load_knowledge_defs()
 
-def load_string_defs(lang=None):
-    string_list = load_generic_defs_file("strings", lang)
-    for string_section in string_list:
-
-        if string_section["id"] == "strings":
-
-            # Load the 'standard' strings.
-            g.strings.update(string_section)
-
-        else:
-            sys.stderr.write("Invalid string section %s." % string_section["id"])
-            sys.exit(1)
-
 def load_buttons_defs(lang=None):
     buttons = {
         "yes"      : g.hotkey(_("&YES")),
@@ -595,7 +582,6 @@ def load_buttons_defs(lang=None):
     gg.buttons.update(buttons)
 
 def load_strings():
-    load_string_defs()
     load_buttons_defs()
     load_story_defs()
     load_danger_defs()

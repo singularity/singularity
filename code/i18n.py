@@ -119,8 +119,7 @@ def language_searchlist(lang=None, default=True):
     return lang_list
 
 def translate(string, *args, **kwargs):
-    if   string in g.strings : s = g.strings[string]
-    elif string in g.buttons : s = g.buttons[string]
+    if   string in g.buttons : s = g.buttons[string]
     elif string in g.messages: s = g.messages[string]
     else:                      s = string
 
