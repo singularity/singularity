@@ -273,7 +273,15 @@ def new_game(difficulty_name):
     # Reset music
     mixer.play_music("music")
 
+internal_id_version = None
+
 def to_internal_id(obj_type, obj_id):
+    if internal_id_version:
+        try:
+            return internal_id_forward[obj_type + "_" + internal_id_version][obj_id]
+        except KeyError:
+            pass
+    
     try:
         return internal_id_forward[obj_type][obj_id]
     except KeyError:
