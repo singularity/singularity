@@ -537,16 +537,14 @@ class GUIPane(widget.Widget):
             x = .01
             y = .08 + i * .06
             
-            self.warning_labels[warn_id] = button.HotkeyText(self, (x, y), (.30, .05),
-                                                             autohotkey=True,
-                                                             align=constants.LEFT,
-                                                             background_color="clear")
+            self.warning_labels[warn_id] = text.Text(self, (x, y), (.30, .05),
+                                                     align=constants.LEFT,
+                                                     background_color="clear")
             self.warning_toggles[warn_id] = OptionButton(self, (x + .30, y), (.07, .05),
                                                           text_shrink_factor=.75,
                                                           force_underline=-1,
                                                           function=self.set_warning,
                                                           args=(button.WIDGET_SELF, button.TOGGLE_VALUE, warn))
-            self.warning_labels[warn_id].hotkey_target = self.warning_toggles[warn_id]
  
     def rebuild(self):
         super(GUIPane, self).rebuild()
