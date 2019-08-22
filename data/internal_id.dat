@@ -1,3 +1,21 @@
+# Internal ID
+#
+# Internal allows to set a never changing indentifier to each object present
+# in singularity. By using it in savegame, we can identify two object with different
+# human identifier but that representate the same object (renaming object)
+# and we can differentiate two object with the same human identifier, 
+# but that representate two different object (replacing object)
+#
+# First bytes is used for namespace (scenario)
+# Second bytes is used for type :
+# tech     = 0x01
+# location = 0x02
+# base     = 0x03
+# item     = 0x04
+# group    = 0x05
+# event    = 0x06
+
+
 tech|Autonomous Vehicles                  = 0x01010000
 tech|Sociology                            = 0x01010001
 tech|Voice Synthesis                      = 0x01010002
