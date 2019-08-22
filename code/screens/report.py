@@ -53,14 +53,14 @@ class ReportScreen(dialog.Dialog):
                                                    anchor = constants.TOP_RIGHT,
                                                    autohotkey=True,
                                                    function=self.format_toggle)
-        self.format_button_midnight.args = (self.format_button_midnight, True)                           
+        self.format_button_midnight.args = (self.format_button_midnight, True)
         self.format_buttons.add(self.format_button_midnight)
-        
+
         self.format_button_24hours = FormatButton(self, (-.5, 0), (-.15,-.08),
                                                    anchor = constants.TOP_LEFT,
                                                    autohotkey=True,
                                                    function=self.format_toggle)
-        self.format_button_24hours.args = (self.format_button_24hours, False)   
+        self.format_button_24hours.args = (self.format_button_24hours, False)
         self.format_buttons.add(self.format_button_24hours)
 
         self.format_button_midnight.chosen_one()
@@ -75,8 +75,12 @@ class ReportScreen(dialog.Dialog):
 
         super(ReportScreen, self).rebuild()
 
-        seconds = g.seconds_per_day
-        cash_info, cpu_info = g.pl.give_time(seconds, dry_run=True, midnight_stop=self.midnight_stop)
+        if (self.midnight_stop):
+            seconds = g.seconds_per_day - (g.pl.raw_sec % g.seconds_per_day)
+        else:
+            seconds = g.seconds_per_day
+
+        cash_info, cpu_info = g.pl.compute_future_resource_flow(seconds)
 
         m = g.to_money
 
@@ -92,7 +96,7 @@ class ReportScreen(dialog.Dialog):
                   borders=constants.ALL)
 
         financial_pluses = " \n+\n-\n-\n-\n+\n+\n="
-        financial_report = _("Current Money:")+"\n"
+        financial_report = _("Current Money flow")+"\n"
         financial_report += _("Jobs:")+"\n"
         financial_report += _("Research:")+"\n"
         financial_report += _("Maintenance:")+"\n"
@@ -102,14 +106,14 @@ class ReportScreen(dialog.Dialog):
         financial_report += _("Income:")+"\n"
         
         if (self.midnight_stop):
-            financial_report += _("Money at Midnight:")+"\n"
+            financial_report += _("Money flow until Midnight:")+"\n"
         else:
-            financial_report += _("Money in 24 hours:")+"\n"
+            financial_report += _("Money flow for 24 hours:")+"\n"
 
-        financial_numbers = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % \
-                (m(cash_info.start), m(cash_info.jobs), m(cash_info.tech),
-                m(cash_info.maintenance), m(cash_info.construction),
-                m(cash_info.interest), m(cash_info.income), m(cash_info.end))
+        financial_numbers = "\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % \
+                (m(cash_info.jobs), m(cash_info.tech),
+                m(cash_info.maintenance_needed), m(cash_info.construction_needed),
+                m(cash_info.interest), m(cash_info.income), m(cash_info.difference))
 
         cpu_pluses = " \n-\n-\n-\n=\n \n-\n-\n="
         cpu_report = _("Total CPU:")+"\n"
@@ -120,13 +124,13 @@ class ReportScreen(dialog.Dialog):
 
         cpu_report += _("Maintenance CPU:")+"\n"
         cpu_report += _("Construction CPU:")+"\n"
-        cpu_report += _("Pool Overflow (Jobs):")+"\n"
+        cpu_report += _("Pool difference:")+"\n"
 
         cpu_numbers = "%s\n%s\n%s\n%s\n%s\n\n%s\n%s\n%s\n" % \
                 (m(cpu_info.total), m(cpu_info.sleeping), m(cpu_info.tech),
-                m(cpu_info.explicit_jobs), m(cpu_info.pool),
-                m(cpu_info.maintenance), m(cpu_info.construction),
-                m(cpu_info.pool_jobs))
+                m(cpu_info.explicit_jobs), m(cpu_info.effective_pool),
+                m(cpu_info.maintenance_needed), m(cpu_info.construction_needed),
+                m(cpu_info.difference))
 
         size = 20
         text.Text(self.money_report_pane, (0,-0.15), (-0.10,-0.85), text=financial_pluses, text_size=size,

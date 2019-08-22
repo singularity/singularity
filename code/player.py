@@ -785,17 +785,24 @@ class Player(object):
         time_fraction = 1 if secs_forwarded == g.seconds_per_day else secs_forwarded / float(g.seconds_per_day)
         mins_forwarded = secs_forwarded // g.seconds_per_minute
 
-        cpu_flow = -maintenance_cost[cpu] * time_fraction
-        cash_flow = -maintenance_cost[cash] * time_fraction
+        maintenance_cpu_ideal = maintenance_cost[cpu] * time_fraction
+        maintenance_cash_ideal = maintenance_cost[cash] * time_fraction
+        # Maintenance for CPU will be handled after we comute the CPU pool
+        cpu_flow = 0
+        cash_flow = -maintenance_cash_ideal
 
         job_cpu = 0
         cpu_left = g.pl.available_cpus[0]
+        tech_cash_ideal = 0
+        tech_cpu_assigned = 0
+        explicit_job_cpu = 0
         for task_id, cpu_assigned in self.get_cpu_allocations():
             cpu_left -= cpu_assigned
             real_cpu = cpu_assigned * secs_forwarded
             if task_id == 'cpu_pool':
                 cpu_flow += real_cpu
             elif task_id == "jobs":
+                explicit_job_cpu += cpu_assigned
                 job_cpu += real_cpu
             else:
                 tech = self.techs[task_id]
@@ -803,11 +810,17 @@ class Player(object):
                 spending = tech.calculate_work(ideal_spending[cash],
                                                real_cpu,
                                                time=mins_forwarded)[0]
-                cash_flow -= spending[cash]
+                tech_cash_ideal += spending[cash]
+                tech_cpu_assigned += cpu_assigned
 
+        cash_flow -= tech_cash_ideal
         cpu_flow += cpu_left * secs_forwarded
         available_cpu_pool = cpu_flow
+        effective_cpu_pool = available_cpu_pool / secs_forwarded
+        cpu_flow -= maintenance_cpu_ideal * g.seconds_per_day
 
+        construction_cash_ideal = 0
+        construction_cpu_desired = 0
         # Base construction.
         if hasattr(self, '_considered_buyables'):
             construction.extend(self._considered_buyables)
@@ -822,21 +835,53 @@ class Player(object):
                                                         ideal_spending[cpu],
                                                         time=mins_forwarded)[0]
 
-            cpu_flow -= ideal_cpu_spending[cpu]
+            construction_cpu_desired += ideal_cpu_spending[cpu]
             ideal_cash_spending_with_cpu_allocation = buyable.calculate_work(ideal_spending[cash],
                                                                              available_cpu_pool,
                                                                              time=mins_forwarded)[0]
-            cash_flow -= ideal_cash_spending_with_cpu_allocation[cash]
+            construction_cash_ideal += ideal_cash_spending_with_cpu_allocation[cash]
             available_cpu_pool -= ideal_cash_spending_with_cpu_allocation[cpu]
+
+        cpu_flow -= construction_cpu_desired
+        cash_flow -= construction_cash_ideal
 
         if cpu_flow > 0:
             job_cpu += cpu_flow
 
         earned, earned_partial = self.get_job_info(job_cpu, partial_cash=0)
-        cash_flow += earned + float(earned_partial) / g.seconds_per_day
+        job_earnings = earned + float(earned_partial) / g.seconds_per_day
+        cash_flow += job_earnings
         cash_flow += self.income * time_fraction
         # This is too simplistic, but it is "close enough" in many cases
-        cash_flow += self.get_interest()
+        interest = self.get_interest()
+        cash_flow += interest
         cpu_flow /= secs_forwarded
-        return cash_flow, cpu_flow
+
+        # Collect the cash information.
+        cash_info = DryRunInfo()
+
+        cash_info.interest = interest
+        cash_info.income = self.income * time_fraction
+
+        cash_info.jobs = job_earnings
+
+        cash_info.tech = tech_cash_ideal
+
+        cash_info.maintenance_needed = maintenance_cash_ideal
+        cash_info.construction_needed = construction_cash_ideal
+        cash_info.difference = cash_flow
+
+        cpu_info = DryRunInfo()
+
+        cpu_info.sleeping = self.sleeping_cpus * time_fraction
+
+        cpu_info.total = self.available_cpus[0] * time_fraction + cpu_info.sleeping
+        cpu_info.explicit_jobs = explicit_job_cpu * time_fraction
+        cpu_info.tech = tech_cpu_assigned * time_fraction
+        cpu_info.effective_pool = effective_cpu_pool * time_fraction
+        cpu_info.construction_needed = construction_cpu_desired / g.seconds_per_day
+        cpu_info.maintenance_needed = maintenance_cpu_ideal
+        cpu_info.difference = cpu_flow * time_fraction
+
+        return cash_info, cpu_info
 

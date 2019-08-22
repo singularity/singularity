@@ -802,7 +802,9 @@ https://github.com/singularity/singularity
         self.time_display.text = _("DAY") + " %04d, %02d:%02d:%02d" % \
               (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
 
-        cash_flow_1d, cpu_flow_1d = g.pl.compute_future_resource_flow(g.seconds_per_day)
+        cash_flow_1d_data, cpu_flow_1d_data = g.pl.compute_future_resource_flow(g.seconds_per_day)
+        cash_flow_1d = cash_flow_1d_data.difference
+        cpu_flow_1d = cpu_flow_1d_data.difference
 
         self.cash_display.text = _("CASH")+": %s (%s)" % \
               (g.to_money(g.pl.cash), g.to_money(cash_flow_1d, fixed_size=True))
