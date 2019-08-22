@@ -115,7 +115,6 @@ build = URBAN
 
 [Armed Guards]
 cost_list = 10000 | 0 | 8
-maint = 300 | 0 | 0
 type = security
 quality_list = discover_modifier | 2000
 pre = Simulacra
