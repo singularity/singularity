@@ -22,9 +22,7 @@
 from code import g
 
 class Statistics(object):
-    
-    enabled = True
-    
+
     def __init__(self):
         super(Statistics, self).__init__()
         self._stats = {}
@@ -86,7 +84,7 @@ def observe(name, data_member, display=None):
 
         change = new_value - old_value
         
-        if itself.enabled and change > 0:
+        if change > 0:
             itself[name].value += change
 
         setattr(self, data_member, new_value)
