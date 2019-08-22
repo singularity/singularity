@@ -238,12 +238,14 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
     from code.stats import itself as stats
     stats.reset()
 
-    from code import data, difficulty, player, base
+    from code import data, difficulty, player, base, tech
     data.reload_all_mutable()
 
     diff = difficulty.difficulties[difficulty_name]
 
     pl = player.Player(cash = diff.starting_cash, difficulty = diff)
+
+    tech.tech_reinitialized()
 
     for tech_id in diff.techs:
         pl.techs[tech_id].finish(is_player=False)

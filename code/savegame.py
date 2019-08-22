@@ -296,6 +296,7 @@ def before_load_savegame():
     stats.reset()
 
 def after_load_savegame():
+    tech.tech_reinitialized()
     for b in g.all_bases():
         if b.done:
             b.recalc_cpu()

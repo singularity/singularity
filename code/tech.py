@@ -39,7 +39,7 @@ def register_on_tech_researched_handler(func):
     return func
 
 
-def techs_reset():
+def tech_reinitialized():
     for handler in TECH_RESET_EVENT:
         handler()
 
@@ -94,8 +94,9 @@ class Tech(buyable.Buyable):
     def finish(self, is_player=True, loading_savegame=False):
         super(Tech, self).finish(is_player=is_player, loading_savegame=loading_savegame)
         self.spec.effect.trigger(loading_savegame=loading_savegame)
-        for handler in TECH_RESEARCH_EVENT:
-            handler(self)
+        if not loading_savegame:
+            for handler in TECH_RESEARCH_EVENT:
+                handler(self)
 
     def serialize_obj(self):
         return self.serialize_buyable_fields({
