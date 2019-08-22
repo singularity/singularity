@@ -193,14 +193,9 @@ class Player(object):
             raise ValueError("Cannot assign negative CPU units to %s" % task_id)
         self.cpu_usage[task_id] = new_cpu_assignment
 
-    def give_time(self, time_sec, dry_run=False, midnight_stop=True):
+    def give_time(self, time_sec, midnight_stop=True):
         if time_sec == 0:
             return 0
-
-        # Hack to avoid changing statistics in dry run.
-        # TODO: We should use temporary vars.
-        if dry_run:
-            stats.enabled = False
 
         old_time = self.raw_sec
         last_minute = self.raw_min
@@ -229,9 +224,6 @@ class Player(object):
 
         time_of_day = self.raw_sec % g.seconds_per_day
 
-        old_cash = self.cash
-        old_partial_cash = self.partial_cash
-
         techs_researched = []
         bases_constructed = []
         items_constructed = []
@@ -255,44 +247,22 @@ class Player(object):
             maintenance_cost = array((0, 0, 0), int64)
 
         # Do Interest and income.
-        interest_cash = self.do_interest(secs_passed)
-        income_cash = self.do_income(secs_passed)
+        self.do_interest(secs_passed)
+        self.do_income(secs_passed)
 
         # Any CPU explicitly assigned to jobs earns its dough.
         job_cpu = self.get_allocated_cpu_for("jobs", 0) * secs_passed
-        explicit_job_cash = self.do_jobs(job_cpu)
+        self.do_jobs(job_cpu)
 
         # Pay maintenance cash, if we can.
         cash_maintenance = g.current_share(int(maintenance_cost[cash]),
                                            time_of_day, secs_passed)
-        full_cash_maintenance = cash_maintenance
         if cash_maintenance > self.cash:
             cash_maintenance -= self.cash
             self.cash = 0
         else:
             self.cash -= cash_maintenance
             cash_maintenance = 0
-
-        tech_cpu = 0
-        tech_cash = 0
-
-        construction_cpu = 0
-        construction_cash = 0
-
-        def work_on(buyable, available_cash, available_cpu, time_passed):
-            if dry_run:
-                spent = buyable.calculate_work(available_cash,
-                                               available_cpu,
-                                               time=time_passed)[0]
-
-                self.cpu_pool -= int(spent[cpu])
-                self.cash -= int(spent[cash])
-                return False, spent
-            else:
-                complete = buyable.work_on(available_cash,
-                                           available_cpu,
-                                           time=time_passed)
-                return complete, None
 
         # Do research, fill the CPU pool.
         default_cpu = self.available_cpus[0]
@@ -303,15 +273,11 @@ class Player(object):
             if task != "jobs":
                 self.cpu_pool += real_cpu
                 if task != "cpu_pool":
-                    tech = self.techs[task]
+                    tech_task = self.techs[task]
                     # Note that we restrict the CPU available to prevent
                     # the tech from pulling from the rest of the CPU pool.
-                    complete, spent_dryrun = work_on(tech, self.cash, real_cpu, mins_passed)
-                    if spent_dryrun is not None:
-                        tech_cpu += int(spent_dryrun[cpu])
-                        tech_cash += int(spent_dryrun[cash])
-                    if complete:
-                        techs_researched.append(tech)
+                    if tech_task.work_on(self.cash, real_cpu, mins_passed):
+                        techs_researched.append(tech_task)
         self.cpu_pool += default_cpu * secs_passed
 
         # And now we use the CPU pool.
@@ -326,26 +292,17 @@ class Player(object):
 
         # Base construction.
         for base in bases_under_construction:
-            complete, spent_dryrun = work_on(base, self.cash, self.cpu_pool, mins_passed)
-            if spent_dryrun is not None:
-                construction_cpu += int(spent_dryrun[cpu])
-                construction_cash += int(spent_dryrun[cash])
-            if complete:
+            if base.work_on(self.cash, self.cpu_pool, mins_passed):
                 bases_constructed.append(base)
 
         # Item construction.
         for base, item in items_under_construction:
-            complete, spent_dryrun = work_on(item, self.cash, self.cpu_pool, mins_passed)
-            if spent_dryrun is not None:
-                construction_cpu += int(spent_dryrun[cpu])
-                construction_cash += int(spent_dryrun[cash])
-            if complete:
+            if item.work_on(self.cash, self.cpu_pool, mins_passed):
                 items_constructed.append((base, item))
 
         # Jobs via CPU pool.
-        pool_job_cash = 0
         if self.cpu_pool > 0:
-            pool_job_cash = self.do_jobs(self.cpu_pool)
+            self.do_jobs(self.cpu_pool)
 
         # Second attempt at paying off our maintenance cash.
         if cash_maintenance > self.cash:
@@ -359,64 +316,6 @@ class Player(object):
 
         # Apply max cash cap to avoid overflow @ 9.220 qu
         self.cash = min(self.cash, g.max_cash)
-
-        # Exit point for a dry run.
-        if dry_run:
-            # Collect the cash information.
-            cash_info = DryRunInfo()
-
-            cash_info.interest = interest_cash
-            cash_info.income = income_cash
-
-            cash_info.explicit_jobs = explicit_job_cash
-            cash_info.pool_jobs = pool_job_cash
-            cash_info.jobs = explicit_job_cash + pool_job_cash
-
-            cash_info.tech = tech_cash
-            cash_info.construction = construction_cash
-
-            cash_info.maintenance_needed = full_cash_maintenance
-            cash_info.maintenance_shortfall = cash_maintenance
-            cash_info.maintenance = full_cash_maintenance - cash_maintenance
-
-            cash_info.start = old_cash
-            cash_info.end = min(self.cash, g.max_cash)
-
-
-            # Collect the CPU information.
-            cpu_info = DryRunInfo()
-
-            cpu_ratio = secs_passed / float(g.seconds_per_day)
-            cpu_ratio_secs = 1 / float(g.seconds_per_day)
-
-            cpu_info.available = self.available_cpus[0] * cpu_ratio
-            cpu_info.sleeping = self.sleeping_cpus * cpu_ratio
-            cpu_info.total = cpu_info.available + cpu_info.sleeping
-
-            cpu_info.tech = tech_cpu * cpu_ratio_secs
-            cpu_info.construction = construction_cpu * cpu_ratio_secs
-
-            cpu_info.maintenance_needed = maintenance_cost[cpu] * cpu_ratio
-            cpu_info.maintenance_shortfall = cpu_maintenance * cpu_ratio_secs
-            cpu_info.maintenance = cpu_info.maintenance_needed \
-                                   - cpu_info.maintenance_shortfall
-
-            cpu_info.explicit_jobs = self.get_allocated_cpu_for("jobs", 0) * cpu_ratio
-            cpu_info.pool_jobs = self.cpu_pool * cpu_ratio_secs
-            cpu_info.jobs = cpu_info.explicit_jobs + cpu_info.pool_jobs
-
-            cpu_info.explicit_pool = self.get_allocated_cpu_for("cpu_pool", 0) * cpu_ratio
-            cpu_info.default_pool = default_cpu * cpu_ratio_secs
-            cpu_info.pool = cpu_info.explicit_pool + cpu_info.default_pool
-
-            # Restore the old state.
-            self.cash = old_cash
-            self.partial_cash = old_partial_cash
-            self.raw_sec = old_time
-            self.update_times()
-            stats.enabled = True
-
-            return (cash_info, cpu_info)
 
         # Record statistics about the player
         self.used_cpu += self.available_cpus[0] * secs_passed
