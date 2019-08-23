@@ -91,6 +91,13 @@ class LocationScreen(dialog.Dialog):
                             text=_("Are you sure you want to destroy this base?"),
                             shrink_factor=.5)
 
+        self.cannot_destroy_last_base = \
+            dialog.MessageDialog(self,
+                                 pos=(-.5, 0),
+                                 size=(-.35, -.7),
+                                 text=_("Destroying my last active base would be suicidal.  I cannot do that."),
+                                 shrink_factor=.5)
+
         self.new_base_dialog = NewBaseDialog(self)
         self.location = None
 
@@ -206,10 +213,13 @@ class LocationScreen(dialog.Dialog):
 
     def destroy_base(self):
         if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
-            if dialog.call_dialog(self.confirm_destroy, self):
-                base = self.listbox.key_list[self.listbox.list_pos]
-                base.destroy()
-                self.listbox.list = [base.name for base in self.location.bases]
+            selected_base = self.listbox.key_list[self.listbox.list_pos]
+            all_active_bases = [b for b in g.all_bases() if b.maintains_singularity]
+            if len(all_active_bases) == 1 and all_active_bases[0] == selected_base:
+                dialog.call_dialog(self.cannot_destroy_last_base, self)
+            elif dialog.call_dialog(self.confirm_destroy, self):
+                selected_base.destroy()
+                self.listbox.list = [b.name for b in self.location.bases]
                 self.listbox.key_list = self.location.bases
                 self.needs_rebuild = True
                 self.parent.needs_rebuild = True

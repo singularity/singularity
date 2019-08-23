@@ -176,6 +176,15 @@ class Base(buyable.Buyable):
         self.items["cpu"] = value
 
     @property
+    def maintains_singularity(self):
+        """Whether the singularity can be sustained by this base"""
+        if not self.done or not self.cpus or self.cpus.count < 1 or not self.cpus.done:
+            # Incomplete bases or bases without any active CPUs cannot keep the singularity
+            # alive
+            return False
+        return True
+
+    @property
     def power_state(self):
         return self._power_state
 
