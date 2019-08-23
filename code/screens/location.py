@@ -88,14 +88,12 @@ class LocationScreen(dialog.Dialog):
 
         self.confirm_destroy = \
             dialog.YesNoDialog(self, (-.5,0), (-.35, -.7),
-                            text=_("Are you sure you want to destroy this base?"),
                             shrink_factor=.5)
 
         self.cannot_destroy_last_base = \
             dialog.MessageDialog(self,
                                  pos=(-.5, 0),
                                  size=(-.35, -.7),
-                                 text=_("Destroying my last active base would be suicidal.  I cannot do that."),
                                  shrink_factor=.5)
 
         self.new_base_dialog = NewBaseDialog(self)
@@ -192,6 +190,8 @@ class LocationScreen(dialog.Dialog):
         
         # Update dialog translations
         self.name_dialog.text=_("Enter a name for the base")
+        self.confirm_destroy.text = _("Are you sure you want to destroy this base?")
+        self.cannot_destroy_last_base.text = _("Destroying my last active base would be suicidal.  I cannot do that.")
 
         # Update buttons translations
         self.open_button.text = _("&OPEN BASE")
