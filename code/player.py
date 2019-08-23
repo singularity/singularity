@@ -752,7 +752,7 @@ class Player(object):
         cash_flow += job_earnings
         cash_flow += self.income * time_fraction
         # This is too simplistic, but it is "close enough" in many cases
-        interest = self.get_interest()
+        interest = self.get_interest() * time_fraction
         cash_flow += interest
         cpu_flow /= secs_forwarded
 
