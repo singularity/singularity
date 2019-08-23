@@ -30,7 +30,7 @@ from code import g, difficulty, task, chance, location, group, event, tech
 from code.buyable import cash, cpu
 from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
-from code.stats import itself as stats, observe
+from code.stats import observe
 
 
 class DryRunInfo(object):
