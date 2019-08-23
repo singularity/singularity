@@ -581,11 +581,21 @@ def load_buttons_defs(lang=None):
     }
     gg.buttons.update(buttons)
 
+def load_warning_defs(lang=None):
+    warning.warnings["cpu_usage"].name = _("Do not use all the available CPU.")
+    warning.warnings["cpu_usage"].message = _("I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.")
+    warning.warnings["one_base"].name = _("Only one base remaining.")
+    warning.warnings["one_base"].message = _("Only one base can hold my conscience. I am in danger to lose the last place left to survive.")
+    warning.warnings["cpu_pool_zero"].name = _("CPU POOL is empty.")
+    warning.warnings["cpu_pool_zero"].message = _("My cpu pool is empty. Some of my bases or items cannot be build without CPU.")
+    warning.warnings["cpu_maintenance"].name = _("CPU POOL not enough for maintenance.")
+    warning.warnings["cpu_maintenance"].message = _("My cpu pool is not enough to maintain some of my bases. I may lose them.")
+
 def load_strings():
     load_buttons_defs()
     load_story_defs()
     load_danger_defs()
-    warning.create_warnings()
+    load_warning_defs()
 
 def load_story_defs(lang=None):
     story = g.story = {}

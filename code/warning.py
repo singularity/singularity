@@ -27,26 +27,18 @@ warnings = {}
 def create_warnings():
     global warnings
     warnings = {w.id: w for w in [
-        Warning("cpu_usage", 
-                _("Do not use all the available CPU."),
-                _("I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.")),
-        Warning("one_base", 
-                _("Only one base remaining."),
-                _("Only one base can hold my conscience. I am in danger to lose the last place left to survive.")),
-        Warning("cpu_pool_zero", 
-                _("CPU POOL is empty."),
-                _("My cpu pool is empty. Some of my bases or items cannot be build without CPU.")),
-        Warning("cpu_maintenance", 
-                _("CPU POOL not enough for maintenance."),
-                _("My cpu pool is not enough to maintain some of my bases. I may lose them.")),
+        Warning("cpu_usage"),
+        Warning("one_base"),
+        Warning("cpu_pool_zero"),
+        Warning("cpu_maintenance"),
     ]}
 
 class Warning(object):
     
-    def __init__(self, warning_id, name, desc):
+    def __init__(self, warning_id):
         self.id = warning_id
-        self.name = name
-        self.message = desc
+        self.name = ""
+        self.message = ""
         self.active = True
 
     @classmethod
