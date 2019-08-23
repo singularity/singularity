@@ -221,6 +221,9 @@ def load_significant_numbers():
 def load_internal_id():
     internal_id_file = dirs.get_readable_file_in_dirs("internal_id.dat", "data")
 
+    g.internal_id_forward = {}
+    g.internal_id_backward = {}
+
     with open(internal_id_file, 'r', encoding='utf-8') as file:
         for index, line in enumerate(file):
             line = line.strip()
@@ -240,11 +243,16 @@ def load_internal_id():
                     g.internal_id_forward[obj_type] = {}
                     g.internal_id_backward[obj_type] = {}
 
+                if obj_id in g.internal_id_forward[obj_type]:
+                    sys.stderr.write("WARNING: Overwrite internal ID in 'internal_id.dat' line: %d\n" % index + 1)
+                    sys.exit(1)
+
                 g.internal_id_forward[obj_type][obj_id] = internal_id
                 g.internal_id_backward[obj_type][internal_id] = obj_id
 
             except ValueError:
-                sys.stderr.write("WARNING: Invalid internal ID in 'internal_id.dat' line: %d\n" % index)
+                sys.stderr.write("WARNING: Invalid internal ID in 'internal_id.dat' line: %d\n" % index + 1)
+                sys.exit(1)
 
 
 def load_groups_defs(lang=None):
