@@ -1,8 +1,9 @@
 from code import g
 import code.data
+from code import logmessage
 from code.dirs import create_directories
 import code.prerequisite
-from code.buyable import cpu, cash
+from code.buyable import cpu, cash, labor
 import code.savegame as savegame
 import io
 
@@ -124,3 +125,51 @@ def test_initial_game():
     # The CPU allocation to the tech is restored correctly.
     assert pl_after_load.get_allocated_cpu_for(stealth_tech.id) == 1
     assert pl.effective_cpu_pool() == 0
+
+
+def test_game_research_tech():
+    g.new_game_no_gui('impossible', initial_speed=0)
+    pl = g.pl
+    all_bases = list(g.all_bases())
+    assert pl.raw_sec == 0
+    assert pl.partial_cash == 0
+    assert pl.effective_cpu_pool() == 1
+    assert not pl.intro_shown
+    assert len(pl.log) == 0
+    assert len(all_bases) == 1
+    assert pl.effective_cpu_pool() == 1
+
+    # Disable the intro dialog as the test cannot click the
+    # OK button
+    pl.intro_shown = True
+
+    intrusion_tech = pl.techs['Intrusion']
+    # Data assumptions: Intrusion can be researched within the grace period
+    # and requires no cash
+    assert intrusion_tech.available()
+    assert intrusion_tech.cost_left[cpu] < pl.difficulty.grace_period_cpu * g.seconds_per_day
+    assert intrusion_tech.cost_left[cash] == 0
+    assert intrusion_tech.cost_left[labor] == 0
+
+    # Ok, assumptions hold; research the tech
+    pl.set_allocated_cpu_for(intrusion_tech.id, 1)
+    pl.give_time(int(intrusion_tech.cost_left[cpu]))
+
+    assert intrusion_tech.cost_left[cpu] == 0
+    assert intrusion_tech.done
+
+    assert len(pl.log) == 1
+    log_message = pl.log[0]
+    assert isinstance(log_message, logmessage.LogResearchedTech)
+    assert log_message.tech_spec.id == intrusion_tech.id
+
+    save_and_load_game()
+
+    pl_after_load = g.pl
+
+    intrusion_tech_after_load = pl_after_load.techs['Intrusion']
+    # Ensure this is not a false-test
+    assert intrusion_tech is not intrusion_tech_after_load
+    assert intrusion_tech.cost_paid[cpu] == intrusion_tech_after_load.cost_paid[cpu]
+    assert intrusion_tech.cost_paid[cash] == intrusion_tech_after_load.cost_paid[cash]
+    assert intrusion_tech_after_load.done
