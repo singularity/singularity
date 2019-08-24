@@ -335,7 +335,15 @@ class Widget(object):
         else:
             # Recreate using the abstracted screen size, NOT the real one
             # g.set_screen() will calculate the proper g.real_screen_size
-            self.surface = g.set_mode()
+            if g.screen_surface is None:
+                # Ensure that the screen is initialized
+                g.set_mode()
+            # We draw on a copy of the surface.  This is to avoid crashes
+            # during draggable resizing (event.VIDEORESIZE) where the
+            # screen size might change behind our backs while drawing
+            # (event.VIDEORESIZE tells us that the screen has been updated
+            # and we should catch up and not the other way around)
+            self.surface = g.screen_surface.copy()
             self.surface.fill( (0,0,0,255) )
 
             g.fade_mask = pygame.Surface(size, 0, g.ALPHA)
@@ -380,7 +388,8 @@ class Widget(object):
         self._update()
 
         # Oh, and if this is the top-level widget, we should flip the display.
-        if not self.parent:
+        if not self.parent and g.screen_surface:
+            g.screen_surface.blit(self.surface, (0, 0))
             pygame.display.flip()
 
     def _update(self):
