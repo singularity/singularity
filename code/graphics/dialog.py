@@ -20,7 +20,6 @@
 
 from __future__ import absolute_import
 
-import bisect
 import time
 import pygame
 import operator
@@ -370,6 +369,22 @@ class Dialog(text.Text):
                     # Add double-click handlers, but keep the click handlers.
                     insort_all(handlers,
                                self.handlers.get(constants.DOUBLECLICK, []))
+        elif event.type == pygame.VIDEORESIZE:
+            new_size = event.size
+            # We have a minimum size of 250 x 250 as "fun stuff" happens when
+            # dimensions get to small.  Notably, we assume that all screen sizes
+            # are larger than 0 in both width and height.
+            compromise_size = (max(new_size[0], 250), max(new_size[1], 250))
+            g.set_screen_size(size=compromise_size)
+            # We call set_mode to attempt to enforce our corrected sizes.  That
+            # is what it is supposed to do according to:
+            #
+            #   https://stackoverflow.com/questions/18285208/how-to-put-limits-on-resizing-a-window-in-pygame
+            #
+            # However, it is not effective in all cases (as replies to the SO
+            # question above also imply).
+            g.set_mode()
+            Dialog.top.needs_resize = True
         elif event.type == pygame.QUIT:
             raise SystemExit
 

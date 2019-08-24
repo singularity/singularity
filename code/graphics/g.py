@@ -85,6 +85,8 @@ FPS = 30
 # OLPC ebook mode.
 ebook_mode = False
 
+screen_surface = None
+
 
 def init_graphics_system(size=None):
 
@@ -160,13 +162,14 @@ def set_screen_size(size=None, fs=None):
 
 def set_mode():
     """Wrapper for pygame.display.set_mode()"""
+    global screen_surface
 
     if fullscreen:
-        flags = pygame.FULLSCREEN
+        flags = pygame.FULLSCREEN | pygame.DOUBLEBUF
     else:
-        flags = 0
+        flags = pygame.DOUBLEBUF | pygame.RESIZABLE
 
-    return pygame.display.set_mode(real_screen_size, flags)
+    screen_surface = pygame.display.set_mode(real_screen_size, flags)
 
 
 def load_font(filename):
