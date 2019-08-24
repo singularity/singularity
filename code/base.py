@@ -366,9 +366,6 @@ class Base(buyable.Buyable):
         else:
             return True
 
-    def is_complex(self):
-        return self.spec.size > 1 or self.raw_cpu > 20
-
     def destroy(self):
         super(Base, self).destroy()
 

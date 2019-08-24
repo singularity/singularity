@@ -363,7 +363,7 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
             ]))
             state_prop.append("%s.location = %s" % (name, location.id))
             state_prop.extend(_properties_from_object(name, base, [
-                'started_at', 'grace_over', 'get_detect_chance', 'is_complex',
+                'started_at', 'grace_over', 'get_detect_chance',
             ]))
 
         state_dialog = dialog.ChoiceDialog(self, list=state_prop, background_color='hidden_state_menu')
