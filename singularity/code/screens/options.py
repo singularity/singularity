@@ -316,6 +316,10 @@ class VideoPane(widget.Widget):
                                         args=(button.TOGGLE_VALUE,))
         self.grab_label.hotkey_target = self.grab_toggle
 
+    def resize(self):
+        super(VideoPane, self).resize()
+        self.update_resolution_list()
+
     def rebuild(self):
         self.update_resolution_list()
         
