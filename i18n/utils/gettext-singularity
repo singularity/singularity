@@ -56,6 +56,9 @@ cat <<-USAGE
 	--dir         - The root directory of E:S where data file and i18n
                     are found. Default: __file__/../..
 
+	--catalog     - The catalog to update (messages/data_str). Default: messages
+
+
 	By default this command reside in i18n/utils/ dir of E:S source tree,
 	so it can automatically find the source code files and output dir.
 
@@ -94,7 +97,7 @@ mydir=$(dirname "$(readlink -f "$0")")
 esdir="${mydir}/../.."
 datadir="${esdir}/data"
 i18ndir="${esdir}/i18n"
-potfile="${i18ndir}/messages.pot"
+catalog="messages"
 verbose=1
 new=0
 quiet=()
@@ -102,15 +105,17 @@ quiet=()
 # Loop options
 while (( $# )); do
 	case "$1" in
-	-h|--help     ) usage                          ;;
-	-q|--quiet    ) verbose=0 ; quiet=( -q )       ;;
-	   --new=*    ) new=1 ; lang="${1#*=}"         ;;
-	   --new      ) new=1 ; shift ; lang="$1"      ;;
-	   --check=*  ) check 1 "${1#*=}" ; exit       ;;
-	   --check    ) shift ; check 1 "$1"; exit     ;;
-	   --dir=*    ) esdir="${1#*=}"                ;;
-	   --dir      ) shift ; esdir="$1"             ;;
-	*             ) invalid "$1"                   ;;
+	-h|--help      ) usage                          ;;
+	-q|--quiet     ) verbose=0 ; quiet=( -q )       ;;
+	   --new=*     ) new=1 ; lang="${1#*=}"         ;;
+	   --new       ) new=1 ; shift ; lang="$1"      ;;
+	   --check=*   ) check 1 "${1#*=}" ; exit       ;;
+	   --check     ) shift ; check 1 "$1"; exit     ;;
+	   --dir=*     ) esdir="${1#*=}"                ;;
+	   --dir       ) shift ; esdir="$1"             ;;
+       --catalog=* ) catalog="${1#*=}"              ;;
+       --catalog   ) shift ; catalog="$1"           ;;
+	*              ) invalid "$1"                   ;;
 	esac
 	shift
 done
@@ -127,21 +132,37 @@ else
 	invalid "E:S root dir $(rel "$esdir") does not exist"
 fi
 
-# Create or update the POT template from source code
-message "updating template $(rel "$potfile") from sources in $(rel "$esdir")/code"
 tempfile=$(mktemp) || fatal "could not create temporary file"
 trap 'rm -f -- "$tempfile"' EXIT
-cd "${esdir}/code" || fatal "could not access source code dir '${esdir}/code'"
-xgettext --language=Python \
-         --from-code=UTF-8 \
-         --force-po        \
-         --add-comments    \
-         --package-name=singularity \
-         --package-version=$(awk -F'['\'\"']' '/^version *= */{print $2}' g.py) \
-         --msgid-bugs-address="endgame-singularity-dev@googlegroups.com" \
-         --output="$tempfile" \
-         --files-from=<(find -type f -name "*.py")
-cd "$dir"
+
+# Create or update the POT template from source code
+if [[ $catalog == "messages" ]]; then
+    potfile="${i18ndir}/messages.pot"
+    pofilename="messages.po"
+    message "updating template $(rel "$potfile") from sources in $(rel "$esdir")/code"
+    
+    cd "${esdir}/code" || fatal "could not access source code dir '${esdir}/code'"
+    xgettext --language=Python \
+             --from-code=UTF-8 \
+             --force-po        \
+             --add-comments    \
+             --package-name=singularity \
+             --package-version=$(awk -F'['\'\"']' '/^version *= */{print $2}' g.py) \
+             --msgid-bugs-address="endgame-singularity-dev@googlegroups.com" \
+             --output="$tempfile" \
+             --files-from=<(find -type f -name "*.py")
+    cd "$dir"
+elif [[ $catalog == "data_str" ]]; then
+    potfile="${i18ndir}/data_str.pot"
+    pofilename="data_str.po"
+    message "updating template $(rel "$potfile") from string files in $(rel "$esdir")/data"
+
+    cd "${esdir}/code" || fatal "could not access source code dir '${esdir}/data'"
+    python "$dir/data-translations.py" -o $tempfile
+    cd "$dir"
+else
+    invalid "Catalog $(rel "$catalog") does not exist"
+fi
 
 # Fix POT, as --from-code is currently ignored for Python
 sed -i '/^"Content-Type:/s/CHARSET/UTF-8/;/^#, fuzzy$/d' "$tempfile"
@@ -156,7 +177,7 @@ else
 fi
 
 # Update existing PO files with new entries
-pofiles=( "$i18ndir"/lang_*/messages.po )
+pofiles=( "$i18ndir"/lang_*/"$pofilename" )
 for pofile in "${pofiles[@]}"; do
 	message "updating translation $(rel "$pofile")"
 	msgmerge --no-fuzzy-matching \
@@ -173,7 +194,7 @@ done
 # Create a new PO file, if requested
 [[ "$lang" ]] && {
 	output_dir="${i18ndir}/lang_${lang}"
-	output="$output_dir/messages.po"
+	output="$output_dir/$pofilename"
 	[[ -f "$output" ]] && fatal "translation $(rel "$output") already exists!"
 	[[ -d "$output_dir" ]] || mkdir -p "$output_dir"
 	message "creating blank translation $(rel "$output")"

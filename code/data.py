@@ -34,7 +34,7 @@ import code.graphics.g as gg
 import code.graphics.theme as theme
 
 
-def generic_load(filename, load_dirs="data", mandatory=True):
+def generic_load(filename, load_dirs="data", mandatory=True, no_list=False):
     """
 generic_load() loads a data file.  Data files are all in Python-standard
 ConfigParser format.  The 'id' of any object is the section of that object.
@@ -98,8 +98,7 @@ non-mandatory missing or otherwise unreadable files
         for option in config.options(item_id):
 
             # If this is a list ...
-            if (len(option) > 6 and option[-5:] == "_list"):
-
+            if not no_list and (len(option) > 6 and option[-5:] == "_list"):
                 # Break it into elements separated by |.
                 item_dict[option[:-5]] = [x.strip() for x in config.get(item_id, option).split("|")]
             else:
@@ -158,44 +157,39 @@ def read_modifiers_dict(modifiers_info):
 
     return modifiers_dict
 
-def load_generic_defs_file(name,lang=None):
-    return_list = []
 
-    i18n_files = dirs.get_readable_i18n_files(name + "_str.dat", lang)
+def load_generic_defs_file(name, lang=None, no_list=True):
+    filepath = dirs.get_readable_file_in_dirs(name + "_str.dat", "data", lang)
 
-    for lang, filepath in i18n_files:
-        # Definition file for default language is always mandatory
-        mandatory = (lang==i18n.default_language)
+    return generic_load(filepath, mandatory=True, no_list=no_list)
 
-        try:
-            return_list.extend( generic_load(filepath, mandatory=mandatory) )
-        except Exception:
-            pass  # For other languages, ignore errors
 
-    return return_list
-
-def load_generic_defs(name, object, lang=None, listype_attrs=None):
+def load_generic_defs(name, object_list, lang=None, listype_attrs=None):
     listype_attrs = listype_attrs or []
 
     item_list = load_generic_defs_file(name,lang)
     for item in item_list:
+        item_id = item["id"]
+        obj = object_list[item_id]
 
-        # Keys of type list
-        for key in listype_attrs:
-            if key in dir(object[item["id"]]):
-                if key in item:
-                    if type(item[key]) == list:
-                        setattr(object[item["id"]], key, item[key])
-                    else:
-                        setattr(object[item["id"]], key, [item[key]])
-                else:
-                    setattr(object[item["id"]], key, [""])
-
-        # Ordinary keys
         for key in item:
-            if key == "id" or key in listype_attrs: continue # Already handled
-            if key in dir(object[item["id"]]):
-                setattr(object[item["id"]], key, item[key])
+            if key == "id":
+                continue
+            if not hasattr(obj, key):
+                continue
+
+            tr = get_def_translation(item_id, key, item[key])
+
+            if key in listype_attrs:
+                setattr(obj, key, [x.strip() for x in tr.split("|")])
+            else:
+                setattr(obj, key, tr)
+
+
+def get_def_translation(object_id, field, text):
+    ctxt = "[" + object_id + "] " + field
+    return g.data_strings.get((ctxt, text), text)
+
 
 def load_significant_numbers():
     significant_numbers = g.significant_numbers = []
@@ -576,7 +570,7 @@ def load_difficulty_defs(lang=None):
 def load_knowledge_defs(lang=None):
     knowledge = g.knowledge = {}
 
-    help_list = load_generic_defs_file("knowledge", lang)
+    help_list = load_generic_defs_file("knowledge", lang, no_list=False)
     for help_section in help_list:
 
         knowledge_section = {}
