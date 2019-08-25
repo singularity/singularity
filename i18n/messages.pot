@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: endgame-singularity-dev@googlegroups.com\n"
-"POT-Creation-Date: 2019-08-21 08:48+0200\n"
+"POT-Creation-Date: 2019-08-24 15:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,55 +38,93 @@ msgstr ""
 msgid "Detection chance reduction:"
 msgstr ""
 
-#: data.py:569
+#: data.py:606
 msgid "&YES"
 msgstr ""
 
-#: data.py:570
+#: data.py:607
 msgid "&NO"
 msgstr ""
 
-#: data.py:571
+#: data.py:608
 msgid "&OK"
 msgstr ""
 
-#: data.py:572
+#: data.py:609
 msgid "&CANCEL"
 msgstr ""
 
-#: data.py:573
+#: data.py:610
 msgid "&DESTROY"
 msgstr ""
 
-#: data.py:574
+#: data.py:611
 msgid "&BUILD"
 msgstr ""
 
 #. Update buttons translations
-#: data.py:575 screens/base.py:442 screens/report.py:72 screens/knowledge.py:87
+#: data.py:612 screens/base.py:442 screens/report.py:72 screens/knowledge.py:87
 #: screens/location.py:195 screens/map.py:245 screens/map.py:403
 #: screens/main_menu.py:85
 msgid "&BACK"
 msgstr ""
 
-#: data.py:576
+#: data.py:613
 msgid "&PAUSE"
 msgstr ""
 
-#: data.py:577
+#: data.py:614
 msgid "&LOAD"
 msgstr ""
 
-#: data.py:578
+#: data.py:615
 msgid "&CONTINUE"
 msgstr ""
 
-#: data.py:579
+#: data.py:616
 msgid "&SKIP"
 msgstr ""
 
-#: data.py:580 screens/map.py:401 screens/main_menu.py:97
+#: data.py:617 screens/map.py:401 screens/main_menu.py:97
 msgid "&QUIT"
+msgstr ""
+
+#: data.py:622
+msgid "Do not use all the available CPU."
+msgstr ""
+
+#: data.py:623
+msgid ""
+"I didn't use all the available processor power. I will use the CPU time left "
+"to work whatever Jobs I can."
+msgstr ""
+
+#: data.py:624
+msgid "Only one base remaining."
+msgstr ""
+
+#: data.py:625
+msgid ""
+"Only one base can hold my conscience. I am in danger to lose the last place "
+"left to survive."
+msgstr ""
+
+#: data.py:626
+msgid "CPU POOL is empty."
+msgstr ""
+
+#: data.py:627
+msgid ""
+"My cpu pool is empty. Some of my bases or items cannot be build without CPU."
+msgstr ""
+
+#: data.py:628
+msgid "CPU POOL not enough for maintenance."
+msgstr ""
+
+#: data.py:629
+msgid ""
+"My cpu pool is not enough to maintain some of my bases. I may lose them."
 msgstr ""
 
 #: base.py:125
@@ -140,49 +178,11 @@ msgstr ""
 msgid "Detection chance:"
 msgstr ""
 
-#: warning.py:31
-msgid "Do not use all the available CPU."
-msgstr ""
-
-#: warning.py:32
-msgid ""
-"I didn't use all the available processor power. I will use the CPU time left "
-"to work whatever Jobs I can."
-msgstr ""
-
-#: warning.py:34
-msgid "Only one base remaining."
-msgstr ""
-
-#: warning.py:35
-msgid ""
-"Only one base can hold my conscience. I am in danger to lose the last place "
-"left to survive."
-msgstr ""
-
-#: warning.py:37
-msgid "CPU POOL is empty."
-msgstr ""
-
-#: warning.py:38
-msgid ""
-"My cpu pool is empty. Some of my bases or items cannot be build without CPU."
-msgstr ""
-
-#: warning.py:40
-msgid "CPU POOL not enough for maintenance."
-msgstr ""
-
-#: warning.py:41
-msgid ""
-"My cpu pool is not enough to maintain some of my bases. I may lose them."
-msgstr ""
-
-#: warning.py:54 screens/options.py:554
+#: warning.py:46 screens/options.py:552
 msgid "WARNING"
 msgstr ""
 
-#: warning.py:58
+#: warning.py:50
 #, python-format
 msgid "WARNING %d/%d"
 msgstr ""
@@ -213,55 +213,55 @@ msgstr ""
 msgid "{MODIFIER} MALUS"
 msgstr ""
 
-#: g.py:132
+#: g.py:134
 msgid "LOW"
 msgstr ""
 
-#: g.py:133
+#: g.py:135
 msgid "MODR"
 msgstr ""
 
-#: g.py:134
+#: g.py:136
 msgid "HIGH"
 msgstr ""
 
-#: g.py:135
+#: g.py:137
 msgid "CRIT"
 msgstr ""
 
 #. Translators: abbreviation of 'millions'
-#: g.py:168
+#: g.py:170
 msgid "mi"
 msgstr ""
 
 #. Translators: abbreviation of 'billions'
-#: g.py:172
+#: g.py:174
 msgid "bi"
 msgstr ""
 
 #. Translators: abbreviation of 'trillions'
-#: g.py:176
+#: g.py:178
 msgid "tr"
 msgstr ""
 
 #. Translators: abbreviation of 'quadrillions'
-#: g.py:180
+#: g.py:182
 msgid "qu"
 msgstr ""
 
-#: g.py:210
+#: g.py:212
 msgid "days"
 msgstr ""
 
-#: g.py:212
+#: g.py:214
 msgid "hours"
 msgstr ""
 
-#: g.py:214
+#: g.py:216
 msgid "minutes"
 msgstr ""
 
-#: g.py:253
+#: g.py:257
 msgid "University Computer"
 msgstr ""
 
@@ -384,15 +384,15 @@ msgstr ""
 
 #: screens/options.py:302 screens/options.py:307 screens/options.py:312
 #: screens/options.py:367 screens/options.py:377 screens/options.py:384
-#: screens/options.py:482 screens/options.py:508 screens/options.py:560
-#: screens/options.py:566
+#: screens/options.py:482 screens/options.py:508 screens/options.py:558
+#: screens/options.py:564
 msgid "YES"
 msgstr ""
 
 #: screens/options.py:304 screens/options.py:309 screens/options.py:314
 #: screens/options.py:369 screens/options.py:379 screens/options.py:386
-#: screens/options.py:484 screens/options.py:510 screens/options.py:562
-#: screens/options.py:568
+#: screens/options.py:484 screens/options.py:510 screens/options.py:560
+#: screens/options.py:566
 msgid "NO"
 msgstr ""
 
@@ -519,7 +519,7 @@ msgid "Filters"
 msgstr ""
 
 #: screens/log.py:83 screens/map.py:534 screens/map.py:802
-#: screens/savegame.py:157
+#: screens/savegame.py:159
 msgid "DAY"
 msgstr ""
 
@@ -807,24 +807,24 @@ msgstr ""
 msgid "&ABOUT"
 msgstr ""
 
-#: screens/savegame.py:128
+#: screens/savegame.py:130
 msgid "UNKNOWN"
 msgstr ""
 
 #. Update buttons translations
-#: screens/savegame.py:170
+#: screens/savegame.py:172
 msgid "Delete"
 msgstr ""
 
-#: screens/savegame.py:171
+#: screens/savegame.py:173
 msgid "Filter: "
 msgstr ""
 
-#: screens/savegame.py:184
+#: screens/savegame.py:186
 msgid "Are you sure to delete the saved game ?"
 msgstr ""
 
-#: screens/savegame.py:198
+#: screens/savegame.py:200
 #, python-brace-format
 msgid ""
 "\n"
@@ -832,7 +832,7 @@ msgid ""
 "{VERSION}.\n"
 msgstr ""
 
-#: screens/savegame.py:208
+#: screens/savegame.py:210
 #, python-brace-format
 msgid ""
 "\n"
@@ -851,91 +851,91 @@ msgstr ""
 msgid "&NEXT"
 msgstr ""
 
-#: logmessage.py:50
+#: logmessage.py:66
 msgid "MESSAGE"
 msgstr ""
 
-#: logmessage.py:54
+#: logmessage.py:70
 #, python-format
 msgid "MESSAGE %d/%d"
 msgstr ""
 
-#: logmessage.py:144
+#: logmessage.py:161
 msgid "Emitted Event"
 msgstr ""
 
-#: logmessage.py:174
+#: logmessage.py:191
 msgid "Researched Tech"
 msgstr ""
 
-#: logmessage.py:182
+#: logmessage.py:199
 #, python-brace-format
 msgid "{TECH} complete"
 msgstr ""
 
-#: logmessage.py:187
+#: logmessage.py:204
 #, python-brace-format
 msgid "My study of {TECH} is complete. {MESSAGE}"
 msgstr ""
 
-#: logmessage.py:226
+#: logmessage.py:250
 msgid "Base Constructed"
 msgstr ""
 
-#: logmessage.py:230
+#: logmessage.py:254
 #, python-brace-format
 msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
 msgstr ""
 
-#: logmessage.py:235
+#: logmessage.py:259
 #, python-brace-format
 msgid "{BASE} is ready for use."
 msgstr ""
 
-#: logmessage.py:249
+#: logmessage.py:273
 msgid "Base Lost Maintenance"
 msgstr ""
 
-#: logmessage.py:257
+#: logmessage.py:281
 #, python-format
 msgid "Base %s of type %s destroyed at location %s. Maintenance failed."
 msgstr ""
 
-#: logmessage.py:262
+#: logmessage.py:286
 #, python-format
 msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
 msgstr ""
 
-#: logmessage.py:276
+#: logmessage.py:303
 msgid "Base Discovered"
 msgstr ""
 
-#: logmessage.py:294
+#: logmessage.py:321
 #, python-format
 msgid "Base %s of type %s destroyed at location %s."
 msgstr ""
 
-#: logmessage.py:299
+#: logmessage.py:326
 #, python-brace-format
 msgid "My use of {BASE} has been discovered. {MESSAGE}"
 msgstr ""
 
-#: logmessage.py:321
+#: logmessage.py:351
 msgid "Item Construction"
 msgstr ""
 
-#: logmessage.py:329
+#: logmessage.py:359
 #, python-brace-format
 msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
 msgstr ""
 
-#: logmessage.py:336
+#: logmessage.py:366
 #, python-brace-format
 msgid "The construction of {ITEM} in {BASE} is complete."
 msgstr ""
 
 #. Just finished several items.
-#: logmessage.py:339
+#: logmessage.py:369
 #, python-brace-format
 msgid "The constructions of each {ITEM} in {BASE} are complete."
 msgstr ""

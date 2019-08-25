@@ -78,6 +78,8 @@ def set_language(lang=None, force=False):
             continue
 
     load_messages()
+    load_data_str()
+
 
 def load_messages(lang=None):
     if lang is None: lang = language
@@ -92,6 +94,23 @@ def load_messages(lang=None):
             for entry in po.translated_entries():
                 g.messages[entry.msgid] = entry.msgstr
         except IOError: pass # silently ignore non-existing files
+
+
+def load_data_str(lang=None):
+    if lang is None: lang = language
+
+    g.data_strings.clear()
+
+    files = dirs.get_readable_i18n_files("data_str.po", lang, default_language=False)
+
+    for lang, pofile in files:
+        try:
+            po = polib.pofile(pofile)
+            for entry in po.translated_entries():
+                g.data_strings[(entry.msgctxt, entry.msgid)] = entry.msgstr
+        except IOError:
+            pass # silently ignore non-existing files
+
 
 def available_languages():
     return [default_language] + \
