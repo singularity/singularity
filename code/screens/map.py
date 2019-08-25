@@ -561,14 +561,14 @@ class MapScreen(dialog.Dialog):
             self.speed_buttons.add(b)
 
         self.info_window = \
-            widget.BorderedWidget(self, (.56, 0), (.44, .08),
+            widget.BorderedWidget(self, (.56, 0), (.44, .12),
                                   background_color="pane_background_empty",
                                   border_color="pane_background",
                                   borders=constants.ALL)
         widget.unmask_all(self.info_window)
 
         self.cash_display = \
-            text.FastText(self.info_window, (0,0), (-1, -.5),
+            text.FastText(self.info_window, (0,0), (-1, -.33),
                           wrap=False,
                           base_font="special", shrink_factor = .7,
                           borders=constants.ALL,
@@ -576,11 +576,20 @@ class MapScreen(dialog.Dialog):
                           border_color="pane_background")
 
         self.cpu_display = \
-            text.FastText(self.info_window, (0,-.5), (-1, -.5),
+            text.FastText(self.info_window, (0,-.33), (-1, -.33),
                           wrap=False,
                           base_font="special", shrink_factor=.7,
                           borders=
                            (constants.LEFT, constants.RIGHT, constants.BOTTOM),
+                          background_color="pane_background_empty",
+                          border_color="pane_background")
+
+        self.base_display = \
+            text.FastText(self.info_window, (0, -.67), (-1, -.33),
+                          wrap=False,
+                          base_font="special", shrink_factor=.7,
+                          borders=
+                          (constants.LEFT, constants.RIGHT, constants.BOTTOM),
                           background_color="pane_background_empty",
                           border_color="pane_background")
 
@@ -809,7 +818,23 @@ https://github.com/singularity/singularity
 
         total_cpu = g.pl.available_cpus[0] + g.pl.sleeping_cpus
         detects_per_day = {group_id: 0 for group_id in g.pl.groups}
+        total_bases = 0
+        active_bases = 0
+        bases_building_items = 0
+        bases_under_construction = 0
+        idle_bases_unable_to_sustain_singularity = 0
         for base in g.all_bases():
+            total_bases += 1
+            maintains_singularity = base.maintains_singularity
+            if maintains_singularity:
+                active_bases += 1
+            if not base.done:
+                bases_under_construction += 1
+            elif base.is_building():
+                bases_building_items += 1
+            elif not maintains_singularity:
+                idle_bases_unable_to_sustain_singularity += 1
+
             if base.has_grace():
                 # It cannot be detected, so it doesn't contribute to
                 # detection odds calculation
@@ -822,6 +847,19 @@ https://github.com/singularity/singularity
         self.cpu_display.color = "cpu_normal"
         self.cpu_display.text = _("CPU")+": %s (%s)" % \
               (g.to_money(total_cpu), g.to_money(cpu_flow_1d))
+
+        if active_bases == 1:
+            self.base_display.color = 'red'
+        elif idle_bases_unable_to_sustain_singularity > 0:
+            self.base_display.color = 'yellow'
+        else:
+            self.base_display.color = 'white'
+        self.base_display.text = _("BASES") + ": %s / %s (%s + %s + %s)" % (active_bases,
+                                                                            total_bases,
+                                                                            bases_under_construction,
+                                                                            bases_building_items,
+                                                                            idle_bases_unable_to_sustain_singularity
+                                                                            )
 
         # What we display in the suspicion section depends on whether
         # Advanced Socioanalytics has been researched.  If it has, we
