@@ -83,6 +83,12 @@ danger_level_3      = #ff0000ff
 cpu_normal      = white
 cpu_warning     = red
 
+# Base display colors
+base_situation_one_active_base = red
+base_situation_idle_incomplete_bases = yellow
+base_situation_many_bases = orange
+base_situation_normal = white
+
 # Save colors
 save_name       = white
 save_time       = gray
