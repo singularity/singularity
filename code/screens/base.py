@@ -357,7 +357,7 @@ class BaseScreen(dialog.Dialog):
         build_dialog.type = type
         
         result = dialog.call_dialog(build_dialog, self)
-        if result and 0 <= result < len(build_dialog.key_list):
+        if result is not None and 0 <= result < len(build_dialog.key_list):
             item_type = build_dialog.key_list[result]
             
             count = 1
