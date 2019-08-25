@@ -50,6 +50,7 @@ class EarthImage(image.Image):
         self.needs_resize = True
         self.sun_radius = 0.5*pi/360
         self.night_image = None
+        self.high_speed_pos = None
 
     def rescale(self):
         super(EarthImage, self).rescale()
@@ -68,11 +69,13 @@ class EarthImage(image.Image):
 
     def resize(self):
         super(EarthImage, self).resize()
+        self.reset_night_mask_computation()
         width, height = self.real_size
         latitude = linspace(-pi/2, pi/2, height)[newaxis,:]
         longitude = linspace(0, 2*pi, width)[:,newaxis]
         self._cos_longitude_x_cos_latitiude = cos(longitude) * cos(latitude)
         self._sin_latitude = sin(latitude)
+        self.high_speed_pos = None
 
     night_mask_day_of_year = None
     night_mask_dim = None
@@ -122,6 +125,11 @@ class EarthImage(image.Image):
 
         self.next_night_mask_step = (self.next_night_mask_step + 1) % 5
 
+    def reset_night_mask_computation(self):
+        self.night_mask = None
+        self.next_night_mask_ready = False
+        self.next_night_mask_step = 0
+
     def get_night_mask(self):
         width, height = self.real_size
         day_of_year = self.compute_day_of_year()
@@ -132,10 +140,8 @@ class EarthImage(image.Image):
             # but if any steps are missing, we force a rebuild now at cost of
             # rebuild.
         elif self.night_mask_dim != (width, height):
-            self.night_mask = None
             # Force a rebuild from scratch at cost of frame-rate
-            self.next_night_mask_ready = False
-            self.next_night_mask_step = 0
+            self.reset_night_mask_computation()
         else:
             return self.night_mask
 
@@ -146,7 +152,6 @@ class EarthImage(image.Image):
 
         return self.night_mask
 
-    high_speed_pos = None
     def compute_night_start(self):
         if self.high_speed_pos is None or g.curr_speed<=100000:
             width = self.real_size[0]
