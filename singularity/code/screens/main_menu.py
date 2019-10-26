@@ -20,9 +20,10 @@
 
 from __future__ import absolute_import
 
-from code.graphics import dialog, button, text, constants
-from code.screens import map, options, savegame
-import code.g as g, code.difficulty as difficulty
+import singularity
+from singularity.code.graphics import dialog, button, text, constants
+from singularity.code.screens import map, options, savegame
+from singularity.code import g, difficulty
 
 
 class MainMenu(dialog.TopDialog):
@@ -133,4 +134,4 @@ class AboutDialog(dialog.MessageDialog):
     def rebuild(self):
         super(AboutDialog, self).rebuild()
 
-        self.text = _(about_message) % (g.version,)
+        self.text = _(about_message) % (singularity.__version__,)

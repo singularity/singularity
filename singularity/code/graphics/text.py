@@ -22,7 +22,7 @@ from __future__ import absolute_import
 
 import pygame
 
-from code.graphics import g, widget, constants
+from singularity.code.graphics import g, widget, constants
 
 
 DEBUG = False

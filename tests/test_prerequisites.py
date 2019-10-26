@@ -1,10 +1,8 @@
 from collections import defaultdict
 import pytest
 
-from code import g
-import code.data
-from code.dirs import create_directories
-import code.prerequisite
+from singularity.code import g, data, prerequisite
+from singularity.code.dirs import create_directories
 
 
 def setup_module():
@@ -13,33 +11,33 @@ def setup_module():
 
 @pytest.fixture
 def techs():
-    code.data.load_techs()
+    data.load_techs()
     return g.techs.copy()
 
 
 @pytest.fixture
 def locations():
-    code.data.load_regions()
-    code.data.load_locations()
+    data.load_regions()
+    data.load_locations()
     return g.locations.copy()
 
 
 @pytest.fixture
 def base_types():
-    code.data.load_bases()
+    data.load_bases()
     return g.base_type.copy()
 
 
 @pytest.fixture
 def items():
-    code.data.load_item_types()
-    code.data.load_items()
+    data.load_item_types()
+    data.load_items()
     return g.items.copy()
 
 
 @pytest.fixture
 def tasks():
-    code.data.load_tasks()
+    data.load_tasks()
     return g.tasks.copy()
 
 
@@ -65,7 +63,7 @@ def test_valid_prerequisites_tasks(techs, tasks):
 
 def prerequisites_references_valid_techs(techs, prerequisites_list, prerequisite_typename):
     for prereq in prerequisites_list:
-        if isinstance(prereq, code.prerequisite.Prerequisite):
+        if isinstance(prereq, prerequisite.Prerequisite):
             conjunction = prereq.prerequisites_in_cnf_format()
         else:
             spec = prereq.spec if hasattr(prereq, 'spec') else prereq.type

@@ -21,8 +21,8 @@
 from __future__ import absolute_import
 
 from operator import truediv
-from code import g, spec, prerequisite
-from code.pycompat import *
+from singularity.code import g, spec, prerequisite
+from singularity.code.pycompat import *
 
 cash, cpu, labor = range(3)
 

@@ -22,14 +22,15 @@ from __future__ import absolute_import
 
 import random
 
-from code import g, base
-from code.graphics import text, button, dialog, constants, listbox
+from singularity.code import g, base
+from singularity.code.graphics import text, button, dialog, constants, listbox
 
-import code.screens.base as basescreen
+import singularity.code.screens.base as basescreen
 
 state_colors = basescreen.state_colors
 state_list = base.power_states[:2]
 state_list.reverse()
+
 
 class LocationScreen(dialog.Dialog):
     def __init__(self, *args, **kwargs):

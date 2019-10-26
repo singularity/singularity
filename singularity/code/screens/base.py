@@ -21,8 +21,8 @@
 
 import pygame
 
-from code import g, item, buyable
-from code.graphics import constants, widget, dialog, text, button, slider
+from singularity.code import g, item, buyable
+from singularity.code.graphics import constants, widget, dialog, text, button, slider
 
 state_colors = dict(
     active          = "base_state_active",

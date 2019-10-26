@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 
-from code import g, prerequisite, tech
+from singularity.code import g, prerequisite, tech
 
 
 current_task_cache = {}

@@ -20,7 +20,7 @@
 
 import inspect
 
-from code import g
+from singularity.code import g
 
 
 SAVEABLE_LOG_MESSAGES = {}

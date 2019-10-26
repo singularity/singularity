@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 
-from code import g, mixer
+from singularity.code import g, mixer
 
 
 class Effect(object):

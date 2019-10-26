@@ -43,9 +43,9 @@ from numpy import array, int64
 from io import open, BytesIO
 import base64
 
-from code import g, mixer, dirs, player, group, logmessage
-from code import base, tech, item, event, location, buyable, difficulty, effect
-from code.stats import itself as stats
+from singularity.code import g, mixer, dirs, player, group, logmessage
+from singularity.code import base, tech, item, event, location, buyable, difficulty, effect
+from singularity.code.stats import itself as stats
 
 default_savegame_name = u"Default Save"
 

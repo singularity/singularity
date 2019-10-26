@@ -26,11 +26,11 @@ import collections
 from operator import truediv
 from numpy import array, int64
 
-from code import g, difficulty, task, chance, location, group, event, tech
-from code.buyable import cash, cpu
-from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
+from singularity.code import g, difficulty, task, chance, location, group, event, tech
+from singularity.code.buyable import cash, cpu
+from singularity.code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
-from code.stats import observe
+from singularity.code.stats import observe
 
 
 class DryRunInfo(object):

@@ -22,7 +22,7 @@
 from __future__ import absolute_import
 
 import pygame
-from code.pycompat import *
+from singularity.code.pycompat import *
 
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
@@ -102,7 +102,7 @@ def init_graphics_system(size=None):
     set_mode()
 
     # Initialize the cache of the current theme.
-    from code.graphics import theme
+    from singularity.code.graphics import theme
     theme.current.init_cache()
 
     init_alpha()
@@ -170,7 +170,7 @@ def set_mode():
 
 
 def load_font(filename):
-    from code.graphics.font import FontList
+    from singularity.code.graphics.font import FontList
     return FontList(filename)
 
 

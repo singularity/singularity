@@ -20,11 +20,9 @@
 
 from __future__ import absolute_import
 
-import collections
-
-from code import g, buyable
-from code.stats import stat
-from code.spec import GenericSpec, SpecDataField, validate_must_be_list, promote_to_list
+from singularity.code import g, buyable
+from singularity.code.stats import stat
+from singularity.code.spec import GenericSpec, SpecDataField, validate_must_be_list, promote_to_list
 
 
 class ItemType(GenericSpec):

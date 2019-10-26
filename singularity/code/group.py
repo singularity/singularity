@@ -21,8 +21,8 @@
 
 from __future__ import absolute_import
 
-from code import g
-from code.spec import GenericSpec, SpecDataField
+from singularity.code import g
+from singularity.code.spec import GenericSpec, SpecDataField
 
 
 class GroupSpec(GenericSpec):

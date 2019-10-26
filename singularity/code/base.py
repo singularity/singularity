@@ -23,11 +23,11 @@ from __future__ import division
 
 from functools import reduce
 
-from code import g, chance, item, buyable
-from code.buyable import cpu
-from code.stats import stat
+from singularity.code import g, chance, item, buyable
+from singularity.code.buyable import cpu
+from singularity.code.stats import stat
 
-from code.spec import SpecDataField, promote_to_list, validate_must_be_list
+from singularity.code.spec import SpecDataField, promote_to_list, validate_must_be_list
 
 from numpy import int64
 

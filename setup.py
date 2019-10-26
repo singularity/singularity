@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import code.g
+import singularity
 import sys
 import os
 
@@ -26,7 +26,7 @@ my_files = [file for file in my_files if file not in ("dist", "build")]
 
 setup(app=["singularity.py"], console=["singularity.py"],
     name="Endgame Singularity",
-    version=code.g.version,
+    version=singularity.__version__,
     description="A simulation of a true AI",
     author="Evil Mr Henry",
     author_email="evilmrhenry@emhsoft.com",

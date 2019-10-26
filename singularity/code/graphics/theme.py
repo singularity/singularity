@@ -21,8 +21,8 @@
 from __future__ import absolute_import
 
 import os, sys, collections, numbers, itertools
-from code.graphics import g, dialog
-from code.pycompat import *
+from singularity.code.graphics import g, dialog
+from singularity.code.pycompat import *
 
 
 default_theme = 'default'
@@ -67,8 +67,8 @@ def current_variants():
     variants = [None]
 
     # Add language variants
-    import code.i18n
-    lang_list = code.i18n.language_searchlist()
+    import singularity.code.i18n
+    lang_list = singularity.code.i18n.language_searchlist()
     for lang in lang_list:
         variants.insert(0, lang)
 

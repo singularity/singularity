@@ -24,7 +24,7 @@ import pygame
 from numpy import array
 from inspect import getmembers
 
-from code.graphics import g, constants
+from singularity.code.graphics import g, constants
 
 
 def unmask(widget):

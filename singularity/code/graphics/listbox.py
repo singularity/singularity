@@ -24,8 +24,8 @@ import math
 
 import pygame
 
-from code.graphics import g, constants, widget, text, scrollbar
-from code.pycompat import *
+from singularity.code.graphics import g, constants, widget, text, scrollbar
+from singularity.code.pycompat import *
 
 
 class Listbox(widget.FocusWidget, text.SelectableText):

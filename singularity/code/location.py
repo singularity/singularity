@@ -20,8 +20,8 @@
 
 from __future__ import absolute_import
 
-from code import g, prerequisite, base
-from code.buyable import cash, cpu, labor
+from singularity.code import g, prerequisite, base
+from singularity.code.buyable import cash, cpu, labor
 
 
 class LocationSpec(prerequisite.Prerequisite):

@@ -23,8 +23,8 @@ from __future__ import absolute_import
 from numpy import array, int64
 import pygame
 
-from code import g, task
-from code.graphics import dialog, button, slider, text, constants, listbox
+from singularity.code import g, task
+from singularity.code.graphics import dialog, button, slider, text, constants, listbox
 
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):

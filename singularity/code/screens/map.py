@@ -24,14 +24,14 @@ from __future__ import absolute_import
 import collections
 import pygame
 
-from code import g, savegame as sv, mixer
-from code import chance, difficulty, logmessage, warning
-from code.location import Location
-from code.graphics import g as gg
-from code.graphics import dialog, constants, image, button, text, widget
-from code.screens import research, knowledge, report, log, message, savegame
-from code.screens.location import LocationScreen
-from code.screens.options import OptionsScreen
+from singularity.code import g, savegame as sv, mixer
+from singularity.code import chance, difficulty, logmessage, warning
+from singularity.code.location import Location
+from singularity.code.graphics import g as gg
+from singularity.code.graphics import dialog, constants, image, button, text, widget
+from singularity.code.screens import research, knowledge, report, log, message, savegame
+from singularity.code.screens.location import LocationScreen
+from singularity.code.screens.options import OptionsScreen
 
 import math
 import time
@@ -39,6 +39,7 @@ import time
 from pygame.surfarray import pixels_alpha
 
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
+
 
 class EarthImage(image.Image):
     def __init__(self, parent):
@@ -689,7 +690,7 @@ class MapScreen(dialog.Dialog):
     def show(self):
         self.force_update()
 
-        from code.safety import safe_call
+        from singularity.code.safety import safe_call
         # By using safe call here (and only here), if an error is raised
         # during the game, it will drop back out of all the menus, without
         # doing anything, and open the pause dialog, so that the player can

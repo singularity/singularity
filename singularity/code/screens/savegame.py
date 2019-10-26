@@ -22,11 +22,11 @@ from __future__ import absolute_import
 
 import time
 
-from code import g, savegame as sv, difficulty
-from code.graphics import dialog, button, text, constants, listbox
+from singularity.code import g, savegame as sv, difficulty
+from singularity.code.graphics import dialog, button, text, constants, listbox
 
-from code.safety import log_func_exc
-from code.pycompat import *
+from singularity.code.safety import log_func_exc
+from singularity.code.pycompat import *
 
 
 class SavegameScreen(dialog.ChoiceDialog):

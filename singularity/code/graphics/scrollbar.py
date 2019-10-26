@@ -22,7 +22,7 @@ from __future__ import absolute_import
 
 import pygame
 
-from code.graphics import g, constants, widget, button, slider
+from singularity.code.graphics import g, constants, widget, button, slider
 
 
 class _ArrowButton(button.FunctionButton, button.ImageButton):

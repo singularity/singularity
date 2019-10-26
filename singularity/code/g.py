@@ -21,8 +21,6 @@
 
 from __future__ import absolute_import
 
-version = "0.31alpha1"
-
 
 import collections
 import random
@@ -32,7 +30,7 @@ import sys
 # are made where needed.
 import locale
 
-from code.pycompat import *
+from singularity.code.pycompat import *
 
 
 # Useful constants.
@@ -238,10 +236,10 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
     curr_speed = initial_speed
     global pl
 
-    from code.stats import itself as stats
+    from singularity.code.stats import itself as stats
     stats.reset()
 
-    from code import data, difficulty, player, base, tech
+    from singularity.code import data, difficulty, player, base, tech
     data.reload_all_mutable()
 
     diff = difficulty.difficulties[difficulty_name]
@@ -270,7 +268,7 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
 def new_game(difficulty_name):
     new_game_no_gui(difficulty_name)
 
-    from code import mixer
+    from singularity.code import mixer
     # Reset music
     mixer.play_music("music")
 
@@ -333,7 +331,7 @@ def hotkey(string):
 
     def remove_accents(text):
         from unicodedata import normalize, combining
-        from code.pycompat import unicode
+        from singularity.code.pycompat import unicode
         nfkd_form = normalize('NFKD', unicode(text))
         return u"".join(c for c in nfkd_form if not combining(c))
 

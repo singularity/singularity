@@ -20,7 +20,7 @@
 
 from __future__ import absolute_import
 
-from code import g
+from singularity.code import g
 import random
 import numpy as np
 

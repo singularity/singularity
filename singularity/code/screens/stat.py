@@ -20,10 +20,9 @@
 
 from __future__ import absolute_import
 
-import code.g as g
+from singularity.code.stats import itself as stats
+from singularity.code.graphics import dialog, constants, listbox, text
 
-from code.stats import itself as stats
-from code.graphics import dialog, constants, listbox, text
 
 class StatScreen(dialog.ChoiceDialog):
     

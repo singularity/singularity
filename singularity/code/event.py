@@ -20,8 +20,8 @@
 
 from __future__ import absolute_import
 
-from code import g, effect
-from code.spec import GenericSpec, SpecDataField, spec_field_effect
+from singularity.code import g, effect
+from singularity.code.spec import GenericSpec, SpecDataField, spec_field_effect
 
 
 class EventSpec(GenericSpec):

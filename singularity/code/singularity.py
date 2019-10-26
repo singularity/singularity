@@ -24,7 +24,8 @@ from __future__ import absolute_import
 
 from io import open
 import sys
-from code import g, dirs
+import singularity
+from singularity.code import g, dirs
 
 
 # Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
@@ -37,7 +38,7 @@ for parser in sys.argv[1:]:
 dirs.create_directories(g.force_single_dir)
 
 # Set language second, so help page and all error messages can be translated
-from code import i18n
+from singularity.code import i18n
 i18n.set_language(force=True)
 
 langs = i18n.available_languages()
@@ -56,9 +57,9 @@ import os.path
 import optparse
 import logging
 
-from code.pycompat import *
-import code.graphics.g as gg
-import code.graphics.theme as theme
+from singularity.code.pycompat import *
+import singularity.code.graphics.g as gg
+import singularity.code.graphics.theme as theme
 
 set_theme = None
 
@@ -75,7 +76,7 @@ if len(logging.getLogger().handlers) == 0:
             g.logfile = None
 
 # keep g's defaults intact so we can compare after parsing options and prefs
-from code import mixer, warning
+from singularity.code import mixer, warning
 desired_soundbuf = mixer.soundbuf
 
 desired_set_grab = None
@@ -182,7 +183,7 @@ if save_loc is not None:
 desc = """Endgame: Singularity is a simulation of a true AI.
 Go from computer to computer, pursued by the entire world.
 Keep hidden, and you might have a chance."""
-parser = optparse.OptionParser(version=g.version, description=desc,
+parser = optparse.OptionParser(version=singularity.__version__, description=desc,
                                prog="singularity")
 parser.add_option("--sound", action="store_true", dest="sound",
                   help="enable sound (default)")
@@ -275,7 +276,7 @@ gg.ebook_mode = options.ebook
 g.cheater = options.cheater
 g.debug = options.debug
 
-import code.graphics.font as font
+import singularity.code.graphics.font as font
 
 # PYGAME INITIALIZATION  
 #
@@ -297,7 +298,7 @@ if pygame.image.get_extended() == 0:
     print("Error: SDL_image required. Exiting.")
     sys.exit(1)
 
-from code import data
+from singularity.code import data
 
 #init themes:
 data.load_themes()
@@ -316,7 +317,7 @@ mixer.play_music("music")
 #Display the main menu
 #Import is delayed until now so selected language via command-line options or
 # preferences file can be effective
-from code.screens import main_menu
+from singularity.code.screens import main_menu
 menu_screen = main_menu.MainMenu()
 try:
     menu_screen.show()

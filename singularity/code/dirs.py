@@ -96,7 +96,7 @@ dirs_errs = []
 def create_directories(force_single_dir):
 
     # root dir: the install directory for E:S.
-    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     read_dirs["root"] = [root_dir]
     write_dirs["root"] = root_dir
 
@@ -228,7 +228,7 @@ def get_writable_file_in_dirs(filename, dir_name, outer_paths=None):
 
 def get_readable_i18n_files(filename, lang=None, default_language=True, 
         localized_item=True, only_last=False, outer_paths=None):
-    from code import i18n
+    from singularity.code import i18n
     files = []
 
     lang_list = i18n.language_searchlist(lang, default=default_language)

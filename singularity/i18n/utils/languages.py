@@ -218,7 +218,7 @@ class Locale(object):
    
     @classmethod
     def pofiles_import(cls, source):
-        import code.polib as polib
+        import singularity.code.polib as polib
         import os as os
 
         return locals()
@@ -315,7 +315,7 @@ else:
 sys.path.insert(0, esdir)
 
 try:
-    import code.g as g, code.dirs as dirs
+    from singularity.code import g, dirs
 except ImportError:
     sys.exit("Could not find game's code.g")
 

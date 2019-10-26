@@ -25,7 +25,7 @@ import time
 import pygame
 import operator
 
-from code.graphics import g, constants, widget, text, button, listbox
+from singularity.code.graphics import g, constants, widget, text, button, listbox
 
 
 KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
@@ -205,7 +205,7 @@ class Dialog(text.Text):
 
     def show(self):
         """Shows the dialog and enters an event-handling loop."""
-        from code.mixer import play_music
+        from singularity.code.mixer import play_music
 
         self.visible = True
         self.key_down = None
@@ -305,9 +305,9 @@ class Dialog(text.Text):
 
             elif event.key == pygame.K_F5:
                 if event.type == pygame.KEYDOWN:
-                    import code.graphics.theme as theme
+                    import singularity.code.graphics.theme as theme
                     if theme.current:
-                        import code.data as data
+                        import singularity.code.data as data
                         theme_id = theme.current.id
                         data.load_themes()
                         theme.set_theme(theme_id, force_reload=True)

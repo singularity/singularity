@@ -27,8 +27,8 @@ import os
 import sys
 import locale
 
-from code import g, polib, dirs
-from code.pycompat import *
+from singularity.code import g, polib, dirs
+from singularity.code.pycompat import *
 
 
 #Used to determine which data files to load.

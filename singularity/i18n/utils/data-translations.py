@@ -41,7 +41,7 @@ def generate_translations(output_file, lang):
     esdir = get_esdir(__file__)
     sys.path.insert(0, esdir)
 
-    import code.polib as polib
+    import singularity.code.polib as polib
 
     with open(output_file, "w+", encoding='utf-8') as fd:
         fd.write(u"""

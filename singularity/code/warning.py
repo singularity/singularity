@@ -18,9 +18,9 @@
 
 #This file contains the warning class.
 
-from code import g
+from singularity.code import g
 
-from code.buyable import cpu, labor
+from singularity.code.buyable import cpu, labor
 
 warnings = {}
 

@@ -21,8 +21,8 @@
 from __future__ import absolute_import
 
 
-from code import g, logmessage
-from code.graphics import dialog, constants, text, button, listbox
+from singularity.code import g, logmessage
+from singularity.code.graphics import dialog, constants, text, button, listbox
 
 
 filtered_log_class = set()

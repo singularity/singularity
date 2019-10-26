@@ -37,7 +37,7 @@ else:
     sys.path.append(esdir)
 
 try:
-    import code.g as g, code.dirs as dirs, code.i18n as i18n, code.data as data
+    from singularity.code import g, dirs, i18n, data
     dirs.create_directories(False)
     i18n.set_language()
     data.load_regions()

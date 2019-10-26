@@ -26,7 +26,7 @@ import sys
 import random
 import pygame
 
-from code import g, dirs
+from singularity.code import g, dirs
 
 sounds = {}
 music_class = None  # currently playing music "class" (ie, dir)

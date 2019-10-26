@@ -23,8 +23,9 @@ from __future__ import absolute_import
 
 import pygame
 
-from code import g
-from code.graphics import dialog, constants, text, button
+from singularity.code import g
+from singularity.code.graphics import dialog, constants, text, button
+
 
 class MessageDialogs(object):
 

@@ -22,7 +22,7 @@ from __future__ import absolute_import
 
 import pygame
 
-from code.graphics import g, constants, widget
+from singularity.code.graphics import g, constants, widget
 
 
 def scale(*args, **kwargs):

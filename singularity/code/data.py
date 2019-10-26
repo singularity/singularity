@@ -26,12 +26,12 @@ import sys
 import collections
 from io import open
 
-from code import g, i18n
-from code import dirs
-from code import group, base, tech, item, event, location, difficulty, task, region, warning
-from code.pycompat import *
-import code.graphics.g as gg
-import code.graphics.theme as theme
+from singularity.code import g, i18n
+from singularity.code import dirs
+from singularity.code import group, base, tech, item, event, location, difficulty, task, region, warning
+from singularity.code.pycompat import *
+import singularity.code.graphics.g as gg
+import singularity.code.graphics.theme as theme
 
 
 def generic_load(filename, load_dirs="data", mandatory=True, no_list=False):

@@ -20,13 +20,15 @@
 
 from __future__ import absolute_import
 
-import os, sys
+import os
+import sys
 import pygame
 import json
 
-from code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
-import code.g as g, code.dirs as dirs, code.i18n as i18n, code.mixer as mixer, code.data as data, code.warning as warning
-from code.pycompat import *
+from singularity.code.graphics import constants, widget, dialog, button, listbox, slider, text, theme, g as gg
+from singularity.code import g, dirs, i18n, mixer, data, warning
+from singularity.code.pycompat import *
+
 
 class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
     def __init__(self, *args, **kwargs):

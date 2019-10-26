@@ -20,11 +20,12 @@
 
 from __future__ import absolute_import
 
-import code.g as g
+import singularity.code.g as g
 import pygame
 
-from code.graphics import widget, dialog, button, text, constants
-from code.screens import stat
+from singularity.code.graphics import widget, dialog, button, text, constants
+from singularity.code.screens import stat
+
 
 class ReportScreen(dialog.Dialog):
     def __init__(self, parent, pos=(.5, .1), size=(.93, .73), *args, **kwargs):

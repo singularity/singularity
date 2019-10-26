@@ -22,8 +22,8 @@ from __future__ import absolute_import
 
 import pygame
 
-from code.graphics import constants, widget, text, image
-from code.pycompat import *
+from singularity.code.graphics import constants, widget, text, image
+from singularity.code.pycompat import *
 
 
 class HotkeyText(text.Text):
@@ -66,7 +66,7 @@ class HotkeyText(text.Text):
     @text.setter
     def text(self, value):
         if self.autohotkey and (value != None):
-            from code.g import hotkey
+            from singularity.code.g import hotkey
             parsed_hotkey = hotkey(value)
             self.hotkey = parsed_hotkey['key']
             text.Text.text.fset(self, parsed_hotkey['text'])
@@ -163,7 +163,7 @@ class Button(text.SelectableText, HotkeyText):
            This method is called directly by the GUI handler, and should be
            overwritten only to remove the click it plays."""
 
-        from code.mixer import play_sound
+        from singularity.code.mixer import play_sound
         play_sound("click")
         self.activated(event)
 
@@ -240,7 +240,7 @@ class DialogButton(FunctionButton):
         if not self.dialog:
             raise constants.Handled
         else:
-            from code.graphics import dialog
+            from singularity.code.graphics import dialog
             raise constants.Handled(dialog.call_dialog(self.dialog, self))
 
 
