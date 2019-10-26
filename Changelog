@@ -104,6 +104,9 @@ USER-VISIBLE CHANGES:
 - Revamped Options screen, including new resolutions (MestreLion, Xenega)
 
 OTHER CHANGES:
+- Refactored code into a top-level module called singularity instead of using
+  generic top-level python modules nad improve setup.py to be setuptools
+  compatible (Closes: #12)  (rardiol)
 - New savegame format based on JSON to avoid a savegame format that can include
   arbitrary code execution via Python's pickle module.  Please note that any old
   style savegame will still trip the picke-based codepaths already in the
@@ -129,8 +132,8 @@ OTHER CHANGES:
 Thanks to (in no particular order) for filing bugs, play testing and moral
 support:
 
-	Quix0r, dwentz89,  rofl0r, PeterJust, cryptarch, Musickiller, smiley1983,
-	osjc, ardapekis
+	Quix0r, dwentz89, rofl0r, PeterJust, cryptarch, Musickiller, smiley1983,
+	osjc, ardapekis, quantuumsnot, sbosshardt
 
 
 
