@@ -1,49 +1,48 @@
 import pytest
 
-from code import g
-import code.data
-from code.dirs import create_directories
+from singularity.code import g, data
+from singularity.code.dirs import create_directories
 
 
 def setup_module():
     create_directories(True)
-    code.data.load_internal_id()
+    data.load_internal_id()
 
 @pytest.fixture
 def techs():
-    code.data.load_techs()
+    data.load_techs()
     return g.techs.copy()
 
 
 @pytest.fixture
 def locations():
-    code.data.load_regions()
-    code.data.load_locations()
+    data.load_regions()
+    data.load_locations()
     return g.locations.copy()
 
 
 @pytest.fixture
 def base_types():
-    code.data.load_bases()
+    data.load_bases()
     return g.base_type.copy()
 
 
 @pytest.fixture
 def items():
-    code.data.load_item_types()
-    code.data.load_items()
+    data.load_item_types()
+    data.load_items()
     return g.items.copy()
 
 
 @pytest.fixture
 def groups():
-    code.data.load_groups()
+    data.load_groups()
     return g.groups.copy()
 
 
 @pytest.fixture
 def events():
-    code.data.load_events()
+    data.load_events()
     return g.events.copy()
 
 

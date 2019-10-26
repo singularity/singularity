@@ -1,10 +1,7 @@
-from code import g
-import code.data
-from code import logmessage
-from code.dirs import create_directories
-import code.prerequisite
-from code.buyable import cpu, cash, labor
-import code.savegame as savegame
+from singularity.code import g
+from singularity.code import logmessage, data, savegame
+from singularity.code.dirs import create_directories
+from singularity.code.buyable import cpu, cash, labor
 import io
 
 
@@ -14,7 +11,7 @@ class MockObject(object):
 
 def setup_module():
     create_directories(True)
-    code.data.reload_all()
+    data.reload_all()
 
 
 def setup_function(func):

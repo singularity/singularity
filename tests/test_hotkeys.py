@@ -1,6 +1,6 @@
 import pytest
 
-from code import g
+from singularity.code import g
 
 
 @pytest.mark.parametrize("input_text,hotkey_chars,cleaned_text", [
@@ -22,4 +22,4 @@ def test_hotkeys(input_text, hotkey_chars, cleaned_text):
     assert actual_hotkey_chars == hotkey_chars
     assert actual_cleaned_text == cleaned_text
     assert actual_hotkey_char == expected_hotkey
-   
+

@@ -1,10 +1,8 @@
 import os
 import pytest
 
-from code import g
-import code.data
-from code.dirs import create_directories
-import code.savegame as savegame
+from singularity.code import g, data, savegame
+from singularity.code.dirs import create_directories
 
 
 class MockObject(object):
@@ -12,7 +10,7 @@ class MockObject(object):
 
 def setup_module():
     create_directories(True)
-    code.data.reload_all()
+    data.reload_all()
 
 def setup_function(func):
     # Some operations (e.g. g.pl.recalc_cpu()) triggers a "needs_rebuild"
