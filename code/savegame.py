@@ -38,15 +38,14 @@ import gzip
 import json
 import os
 import numpy
-from numpy import array
+from numpy import array, int64
 
 from io import open, BytesIO
 import base64
 
-from code import g, mixer, dirs, player, group, data, logmessage
+from code import g, mixer, dirs, player, group, logmessage
 from code import base, tech, item, event, location, buyable, difficulty, effect
 from code.stats import itself as stats
-from code.pycompat import *
 
 default_savegame_name = u"Default Save"
 
@@ -561,8 +560,8 @@ def _convert_location(loc, old_version):
 
 def _convert_buyable(buyable, save_version):
     if save_version < 4.91: # r5_pre
-        buyable.cost_left = array(buyable.cost_left, long)
-        buyable.total_cost = array(buyable.total_cost, long)
+        buyable.cost_left = array(buyable.cost_left, int64)
+        buyable.total_cost = array(buyable.total_cost, int64)
         buyable.count = 1
     if save_version < 99.7:
         buyable.spec = buyable.type

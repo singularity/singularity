@@ -20,12 +20,11 @@
 
 from __future__ import absolute_import
 
-from numpy import array
+from numpy import array, int64
 import pygame
 
 from code import g, task
 from code.graphics import dialog, button, slider, text, constants, listbox
-from code.pycompat import *
 
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):
@@ -154,7 +153,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.alloc_cpus.text = g.add_commas(cpu)
 
     def calc_cpu_left(self):
-        cpu_count = array(g.pl.available_cpus, long)
+        cpu_count = array(g.pl.available_cpus, int64)
         for task_id, cpu in g.pl.get_cpu_allocations():
             danger = task.danger_for(task_id)
             cpu_count[:danger+1] -= cpu

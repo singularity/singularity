@@ -26,9 +26,10 @@ from functools import reduce
 from code import g, chance, item, buyable
 from code.buyable import cpu
 from code.stats import stat
-from code.pycompat import *
 
 from code.spec import SpecDataField, promote_to_list, validate_must_be_list
+
+from numpy import int64
 
 #TODO: Use this list and convert Base.power_state to a property to enforce this
 #TODO: Consider converting to dict, so it can have colors and names and modifiers
@@ -165,7 +166,7 @@ class Base(buyable.Buyable):
         self._power_state = "active"
         self.grace_over = False
 
-        self.maintenance = buyable.array(self.spec.maintenance, long)
+        self.maintenance = buyable.array(self.spec.maintenance, int64)
 
     @property
     def cpus(self):

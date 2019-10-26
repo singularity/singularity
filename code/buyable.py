@@ -27,6 +27,7 @@ from code.pycompat import *
 cash, cpu, labor = range(3)
 
 import numpy
+from numpy import int64
 numpy.seterr(all='ignore')
 array = numpy.array
 
@@ -56,7 +57,7 @@ class BuyableSpec(spec.GenericSpec, prerequisite.Prerequisite):
 
     @property
     def cost(self):
-        cost = array(self._cost, long)
+        cost = array(self._cost, int64)
         cost[labor] *= g.minutes_per_day * getattr(g.pl,'labor_bonus',1)
         cost[labor] /= 10000
         cost[cpu] *= g.seconds_per_day
@@ -116,7 +117,7 @@ class Buyable(object):
 
         self.total_cost = spec.cost * count
         self.total_cost[labor] //= count
-        self.cost_left = array(self.total_cost, long)
+        self.cost_left = array(self.total_cost, int64)
 
         self.count = count
         self.done = False
@@ -138,14 +139,14 @@ class Buyable(object):
 
     def finish(self, is_player=True, loading_savegame=False):
         if not self.done:
-            self.cost_left = array([0,0,0], long)
+            self.cost_left = array([0,0,0], int64)
             self.done = True
             
             if (is_player):
                 self.spec.created += 1
 
     def _percent_complete(self, available=(0,0,0)):
-        available_array = array(available, long)
+        available_array = array(available, int64)
         return truediv(self.cost_paid + available_array, self.total_cost)
 
     def min_valid(self, complete):
@@ -174,7 +175,7 @@ class Buyable(object):
 
         # And apply it.
         was_complete = self.cost_paid
-        cost_paid = numpy.maximum(numpy.cast[numpy.int64](numpy.round(raw_paid)),
+        cost_paid = numpy.maximum(numpy.cast[int64](numpy.round(raw_paid)),
                                   was_complete)
         spent = cost_paid - was_complete
         return spent, cost_paid
@@ -221,4 +222,4 @@ class Buyable(object):
         if is_done:
             self.finish(is_player=False, loading_savegame=True)
         else:
-            self.cost_paid = array(obj_data['cost_paid'], long)
+            self.cost_paid = array(obj_data['cost_paid'], int64)

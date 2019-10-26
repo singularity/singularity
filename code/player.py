@@ -24,14 +24,13 @@ from __future__ import absolute_import
 import random
 import collections
 from operator import truediv
-from numpy import array
+from numpy import array, int64
 
 from code import g, difficulty, task, chance, location, group, event, tech
 from code.buyable import cash, cpu
 from code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
 from code.stats import itself as stats, observe
-from code.pycompat import *
 
 
 class DryRunInfo(object):
@@ -242,7 +241,7 @@ class Player(object):
         self.cpu_pool = 0
 
         # Collect base info, including maintenance.
-        maintenance_cost = array((0, 0, 0), long)
+        maintenance_cost = array((0, 0, 0), int64)
         for base in g.all_bases():
             if not base.done:
                 bases_under_construction.append(base)
@@ -253,7 +252,7 @@ class Player(object):
 
         # Maintenance?  Gods don't need no stinking maintenance!
         if self.apotheosis:
-            maintenance_cost = array((0, 0, 0), long)
+            maintenance_cost = array((0, 0, 0), int64)
 
         # Do Interest and income.
         interest_cash = self.do_interest(secs_passed)
@@ -536,7 +535,7 @@ class Player(object):
 
     def recalc_cpu(self):
         # Determine how much CPU we have.
-        self.available_cpus = array([0,0,0,0,0], long)
+        self.available_cpus = array([0,0,0,0,0], int64)
         self.sleeping_cpus = 0
         for base in g.all_bases():
             if base.done:
@@ -551,7 +550,7 @@ class Player(object):
         # If we don't have enough to meet our CPU usage, we reduce each task's
         # usage proportionately.
         # It must be computed separalty for each danger.
-        needed_cpus = array([0,0,0,0,0], long)
+        needed_cpus = array([0,0,0,0,0], int64)
         for task_id, cpu in self.get_cpu_allocations():
             danger = task.danger_for(task_id)
             needed_cpus[:danger+1] += cpu
@@ -770,7 +769,7 @@ class Player(object):
          * Interest (g.pl.interest_rate) is not covered.
         """
         construction = []
-        maintenance_cost = array((0, 0, 0), long)
+        maintenance_cost = array((0, 0, 0), int64)
         for base in g.all_bases():
             # Collect base info, including maintenance.
             if not base.done:
@@ -781,7 +780,7 @@ class Player(object):
 
                 maintenance_cost += base.maintenance
         if self.apotheosis:
-            maintenance_cost = array((0, 0, 0), long)
+            maintenance_cost = array((0, 0, 0), int64)
 
         time_fraction = 1 if secs_forwarded == g.seconds_per_day else secs_forwarded / float(g.seconds_per_day)
         mins_forwarded = secs_forwarded // g.seconds_per_minute
