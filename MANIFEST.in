@@ -6,4 +6,3 @@ include README.txt
 
 recursive-include singularity/data *
 recursive-include singularity/i18n *
-recursive-include singularity/music *
