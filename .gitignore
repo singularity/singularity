@@ -1,5 +1,8 @@
 prefs.dat
+dist/
+build/
 saves/
+*.egg-info/
 *.pyc
 *.ogg
 *.mp3
