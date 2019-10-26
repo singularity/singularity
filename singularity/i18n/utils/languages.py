@@ -218,8 +218,10 @@ class Locale(object):
    
     @classmethod
     def pofiles_import(cls, source):
-        import singularity.code.polib as polib
-        import os as os
+        try:
+            import polib
+        except ImportError:
+            import singularity.code.polib as polib
 
         return locals()
 

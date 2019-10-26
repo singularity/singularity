@@ -27,9 +27,13 @@ import os
 import sys
 import locale
 
-from singularity.code import g, polib, dirs
+from singularity.code import g, dirs
 from singularity.code.pycompat import *
 
+try:
+    import polib
+except ImportError:
+    import singularity.code.polib
 
 #Used to determine which data files to load.
 #It is required that default language have all data files and all of them
