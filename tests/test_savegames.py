@@ -2,6 +2,7 @@ import json
 import os
 import pytest
 
+from io import open
 from singularity.code import g, data, savegame
 from singularity.code.dirs import create_directories
 
