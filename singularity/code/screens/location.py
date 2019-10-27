@@ -314,6 +314,8 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
                 self.list.append(base_type.name)
                 self.key_list.append(base_type)
 
+        self._update_desc_pane()
+        self.needs_rebuild = True
         res = super(NewBaseDialog, self).show()
         return res
 

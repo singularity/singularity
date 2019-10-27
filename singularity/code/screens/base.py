@@ -61,6 +61,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         else:
             self.default = self.parent.get_current(self.type).spec.id
 
+        self._update_desc_pane()
         self.needs_rebuild = True
         return super(BuildDialog, self).show()
 

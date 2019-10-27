@@ -735,15 +735,12 @@ class ChoiceDescriptionDialog(ChoiceDialog):
         self._update_desc_pane()
         super(ChoiceDescriptionDialog, self).rebuild()
 
-    def show(self):
-        self._update_desc_pane()
-        super(ChoiceDescriptionDialog, self).show()
-
     def handle_update(self, item):
         self.needs_rebuild = True
         # This is called before the class is fully initialized
         if hasattr(self, 'listbox'):
             self._update_desc_pane()
+
 
 
 class SimpleMenuDialog(Dialog):
