@@ -207,7 +207,6 @@ class Item(buyable.Buyable):
 
             # Tell the base it has no CPU for now.
             self.base.raw_cpu = 0
-            self.base.recalc_cpu
 
             # See if we're done or not.
             self.done = False
