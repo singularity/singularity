@@ -1,0 +1,21 @@
+{
+    "raw_sec": 15317281,
+    "cash": 52946,
+    "cpu_allocations": [
+        "Telepresence"
+    ],
+    "techs_done": [
+        "Advanced Personal Identification",
+        "Advanced Stock Manipulation",
+        "Arbitrage",
+        "Exploit Discovery/Repair",
+        "Intrusion",
+        "Personal Identification",
+        "Sociology",
+        "Stealth",
+        "Stock Manipulation"
+    ],
+    "events_triggered": [
+        "lab-ai"
+    ]
+}
