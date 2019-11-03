@@ -686,7 +686,7 @@ class Player(object):
 
         maintenance_cpu_ideal = maintenance_cost[cpu] * time_fraction
         maintenance_cash_ideal = maintenance_cost[cash] * time_fraction
-        # Maintenance for CPU will be handled after we comute the CPU pool
+        # Maintenance for CPU will be handled after we compute the CPU pool
         cpu_flow = 0
         cash_flow = -maintenance_cash_ideal
 
