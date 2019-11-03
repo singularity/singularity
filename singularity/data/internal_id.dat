@@ -1,10 +1,10 @@
 # Internal ID
 #
-# Internal allows to set a never changing indentifier to each object present
+# Internal allows to set a never changing identifier to each object present
 # in singularity. By using it in savegame, we can identify two object with different
-# human identifier but that representate the same object (renaming object)
+# human identifier but that represent the same object (renaming object)
 # and we can differentiate two object with the same human identifier, 
-# but that representate two different object (replacing object)
+# but that represent two different object (replacing object)
 #
 # First bytes is used for namespace (scenario)
 # Second bytes is used for type :
