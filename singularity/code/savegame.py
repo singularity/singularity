@@ -55,6 +55,11 @@ class SavegameFormatDefinition(object):
 
     def __init__(self, internal_version, display_version, magic_value=None):
         self.internal_version = internal_version
+        # Since the internal version is not visible anywhere, there is no reason not to keep a simple
+        # integer.  Though, we permit legacy versions to keep the original version number to avoid
+        # fixing the code-base retroactively
+        assert internal_version == int(internal_version) or internal_version < 100, \
+            "Use integer version for new savegame versions"
         self.display_version = display_version
         if magic_value is None:
             magic_value = "singularity_savefile_%s" % str(internal_version)
