@@ -117,24 +117,6 @@ class Group(object):
     def discovered_a_base(self):
         self.alter_suspicion(self.discover_suspicion)
 
-    # percent_to_danger_level takes a suspicion level and returns an int in range(5)
-    # that represents whether it is low, moderate, high, or critically high.
-    def suspicion_to_danger_level(self):
-        if self.suspicion < 2500:
-            return 0
-        elif self.suspicion < 5000:
-            return 1
-        elif self.suspicion < 7500:
-            return 2
-        else:
-            return 3
-
-    # percent_to_detect_str takes a percent and renders it to a short (four
-    # characters or less) string representing whether it is low, moderate, high,
-    # or critically high.
-    def suspicion_to_detect_str(self):
-        return g.danger_level_to_detect_str(self.suspicion_to_danger_level())
-
     def detects_per_day_to_danger_level(self, detects_per_day):
         raw_suspicion_per_day = detects_per_day * self.discover_suspicion
         suspicion_per_day = raw_suspicion_per_day - self.decay_rate
