@@ -71,12 +71,12 @@ def main():
 
     if len(logging.getLogger().handlers) == 0:
         try:
-            logging.getLogger().addHandler(logging.FileHandler(g.logfile, delay=True))
-        except TypeError: # Python < 2.6, delay not supported yet.
             try:
+                logging.getLogger().addHandler(logging.FileHandler(g.logfile, delay=True))
+            except TypeError:  # Python < 2.6, delay not supported yet.
                 logging.getLogger().addHandler(logging.FileHandler(g.logfile))
-            except IOError: # Probably access denied with --singledir. That's ok
-                g.logfile = None
+        except IOError:  # Probably access denied with --singledir. That's ok
+            g.logfile = None
 
     # keep g's defaults intact so we can compare after parsing options and prefs
     from singularity.code import mixer, warning
