@@ -186,7 +186,9 @@ def load_generic_defs(name, object_list, listttype_attrs=frozenset()):
             if not hasattr(obj, key_name):
                 continue
 
-            tr = get_def_translation(item_id, key_name, data_item[key_dat_file])
+            # Translations use the field name as defined in the data file (and not
+            # the field name of the object)
+            tr = get_def_translation(item_id, key_dat_file, data_item[key_dat_file])
 
             if key_name in listttype_attrs:
                 setattr(obj, key_name, [x.strip() for x in tr.split("|")])
