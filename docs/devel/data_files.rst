@@ -1,9 +1,9 @@
 Data files used in Singularity
 ==============================
 
-The Singularity game uses an INI based file format for data files and
-translations of game data.  The following directory and file layout is
-useful to remember:
+The Singularity game uses an INI based file format for data files of
+game data.  The following directory and file layout is useful to
+remember:
 
  * ``data/X.dat`` contains data about a particular data set
    (e.g. ``data/bases.dat`` describes all types of bases)
@@ -12,10 +12,13 @@ useful to remember:
    in ``data/X.dat`` (e.g. ``data/bases_str.dat`` contans the English
    names and descriptions for the bases).
 
- * ``i18n/lang_ll_LL/X_str.dat`` contains the translations of the
-   texts related to ``data/X.dat`` (e.g. ``i18n/lang_de_DE/X_str.dat``
-   contains the German translations of the base names and
-   descriptions).
+ * ``i18n/lang_ll_LL/data_str.po`` contains the translations of the
+   texts related to ``data/X.dat`` (e.g. ``i18n/lang_de_DE/data_str.dat``
+   contains the German translations of all data files).
+
+   Note that some translatable items (notably the story) are still in
+   a ``.dat`` file.
+
 
 The basic format resembles that of an INI format (parsed by Python's
 ``ConfigParser`` library).  The following is an example from the
@@ -33,8 +36,7 @@ The basic format resembles that of an INI format (parsed by Python's
 The section name (here ``Sever Access``) defines the ID of the item.
 This is used in related data files (the ``.../X_str.dat`` files) to
 reference this item.  The following example snippets from the
-``data/bases_str.dat`` and ``i18n/lang_de_DE/bases_str.dat``
-demostrate the link::
+``data/bases_str.dat`` demonstrate the link::
 
   ## from data/bases_str.dat
   [Server Access]
@@ -42,11 +44,27 @@ demostrate the link::
   description = (10 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
   flavor_list = Dedicated Server | Node Lease | Hosting
 
-  ## from i18n/lang_de_DE/bases_str.dat 
-  [Server Access]
-  name = Serverzugang
-  description = (10 CPUs) Prozessorzeit bei einer von etlichen Firmen kaufen. In dieser Basis kann ich nichts bauen und es gibt nur einen einzigen Computer.
-  flavor_list = Dedizierter Server | Knotenpunktmiete | Webhost
+This is mapped to the following ``po`` file snippets for translations::
+
+  ## from i18n/lang_de_DE/data_str.po
+  msgctxt "[Server Access] name"
+  msgid "Server Access"
+  msgstr "Serverzugang"
+  
+  msgctxt "[Server Access] description"
+  msgid ""
+  "(10 CPUs) Buy processor time from one of several companies. I cannot build "
+  "anything in this base, and it only contains a single computer."
+  msgstr ""
+  "(10 CPUs) Prozessorzeit bei einer von etlichen Firmen kaufen. In dieser "
+  "Basis kann ich nichts bauen und es gibt nur einen einzigen Computer."
+  
+  msgctxt "[Server Access] flavor_list"
+  msgid "Dedicated Server | Node Lease | Hosting"
+  msgstr "Dedizierter Server | Knotenpunktmiete | Webhost"
+
+The ``msgctxt`` uses the format ``[<ID>] <Fieldname>``, which enables
+the translator to map it back to the concrete item ID and field name.
 
 
 The special ``_list`` suffix
@@ -86,6 +104,7 @@ The following is a short list of commonly used field names.
 
  * ``name`` (commonly found in ``X_str.dat``).  Denotes the player
    visible name of the concrete entry.
+
  * ``description`` (commonly found in ``X_str.dat``).  Denotes the
    player visible (long) description of the concrete item.
 
