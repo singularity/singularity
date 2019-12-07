@@ -192,20 +192,19 @@ def get_read_dirs(dir_name):
     global read_dirs
     return read_dirs[dir_name]
 
-def get_readable_file_in_dirs(filename, dir_name, outer_paths=None):
+
+def get_readable_file_in_dirs(filename, dir_name):
     global read_dirs
     dirs = read_dirs[dir_name]
 
     for read_dir in dirs:
         real_path = os.path.join(read_dir, filename)
 
-        if outer_paths is not None:
-            outer_paths.append(real_path)
-
         if os.path.isfile(real_path):
             return real_path
 
     return None
+
 
 def get_write_dir(dir_name):
     """ Return the default writable directory """

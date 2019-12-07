@@ -158,16 +158,16 @@ def read_modifiers_dict(modifiers_info):
     return modifiers_dict
 
 
-def load_generic_defs_file(name, lang=None, no_list=True):
-    filepath = dirs.get_readable_file_in_dirs(name + "_str.dat", "data", lang)
+def load_generic_defs_file(name, no_list=True):
+    filepath = dirs.get_readable_file_in_dirs(name + "_str.dat", "data")
 
     return generic_load(filepath, mandatory=True, no_list=no_list)
 
 
-def load_generic_defs(name, object_list, lang=None, listype_attrs=None):
+def load_generic_defs(name, object_list, listype_attrs=None):
     listype_attrs = listype_attrs or []
 
-    item_list = load_generic_defs_file(name,lang)
+    item_list = load_generic_defs_file(name)
     for item in item_list:
         item_id = item["id"]
         obj = object_list[item_id]
@@ -249,8 +249,8 @@ def load_internal_id():
                 sys.exit(1)
 
 
-def load_groups_defs(lang=None):
-    load_generic_defs("groups", g.groups, lang, [])
+def load_groups_defs():
+    load_generic_defs("groups", g.groups)
 
 
 def load_groups():
@@ -262,8 +262,8 @@ def load_groups():
     load_groups_defs()
 
 
-def load_base_defs(lang=None):
-    load_generic_defs("bases", g.base_type, lang, ["flavor"])
+def load_base_defs():
+    load_generic_defs("bases", g.base_type, listype_attrs=["flavor"])
 
 
 def load_bases():
@@ -278,10 +278,11 @@ def load_bases():
 # Expando type for danger.
 danger_type = type('Danger', (object,), {})
 
-def load_danger_defs(lang=None):
+
+def load_danger_defs():
     dangers = g.dangers = {}
 
-    danger_list = load_generic_defs_file("dangers", lang)
+    danger_list = load_generic_defs_file("dangers")
     
     for danger_def in danger_list:
         check_required_fields(danger_def, ("id", "research_desc", "knowledge_desc"), "Danger")
@@ -326,8 +327,9 @@ def load_regions():
         regions[id] = region.RegionSpec(id, modifiers_list)
     
 
-def load_location_defs(lang=None):
-    load_generic_defs("locations", g.locations, lang, ["cities"])
+def load_location_defs():
+    load_generic_defs("locations", g.locations, listype_attrs=["cities"])
+
 
 def load_locations():
     locations = g.locations = {}
@@ -387,8 +389,9 @@ def load_locations():
 
     load_location_defs()
 
-def load_tech_defs(lang=None):
-    load_generic_defs("techs", g.techs, lang)
+
+def load_tech_defs():
+    load_generic_defs("techs", g.techs)
 
 
 def load_techs():
@@ -412,8 +415,8 @@ def load_item_types():
     load_item_type_defs()
 
 
-def load_item_type_defs(lang=None):
-    load_generic_defs("itemtypes", item.item_types, lang)
+def load_item_type_defs():
+    load_generic_defs("itemtypes", item.item_types)
     
 
 def load_items():
@@ -425,8 +428,8 @@ def load_items():
     load_item_defs()
 
 
-def load_item_defs(lang=None):
-    load_generic_defs("items", g.items, lang)
+def load_item_defs():
+    load_generic_defs("items", g.items)
 
 
 def load_events():
@@ -436,8 +439,9 @@ def load_events():
     }
     load_event_defs()
 
-def load_event_defs(lang=None):
-    load_generic_defs("events", g.events, lang)
+
+def load_event_defs():
+    load_generic_defs("events", g.events)
 
 
 def load_tasks():
@@ -487,8 +491,10 @@ def load_tasks():
 
     load_task_defs()
 
-def load_task_defs(lang=None):
-    load_generic_defs("tasks", g.tasks, lang)
+
+def load_task_defs():
+    load_generic_defs("tasks", g.tasks)
+
 
 def load_theme(theme_id, theme_dir):
     new_theme = theme.Theme(theme_id, theme_dir)
@@ -564,13 +570,15 @@ def load_difficulties():
 
     load_difficulty_defs()
 
-def load_difficulty_defs(lang=None):
-    load_generic_defs("difficulties", difficulty.difficulties, lang)
 
-def load_knowledge_defs(lang=None):
+def load_difficulty_defs():
+    load_generic_defs("difficulties", difficulty.difficulties)
+
+
+def load_knowledge_defs():
     knowledge = g.knowledge = {}
 
-    help_list = load_generic_defs_file("knowledge", lang, no_list=False)
+    help_list = load_generic_defs_file("knowledge", no_list=False)
     for help_section in help_list:
 
         knowledge_section = {}
@@ -592,10 +600,12 @@ def load_knowledge_defs(lang=None):
 
             knowledge_list[help_key] = help_entry
 
+
 def load_knowledge():
     load_knowledge_defs()
 
-def load_buttons_defs(lang=None):
+
+def load_buttons_defs():
     buttons = {
         "yes"      : g.hotkey(_("&YES")),
         "no"       : g.hotkey(_("&NO")),
@@ -612,7 +622,8 @@ def load_buttons_defs(lang=None):
     }
     gg.buttons.update(buttons)
 
-def load_warning_defs(lang=None):
+
+def load_warning_defs():
     warning.warnings["cpu_usage"].name = _("Do not use all the available CPU.")
     warning.warnings["cpu_usage"].message = _("I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.")
     warning.warnings["one_base"].name = _("Only one base remaining.")
@@ -622,16 +633,18 @@ def load_warning_defs(lang=None):
     warning.warnings["cpu_maintenance"].name = _("CPU POOL not enough for maintenance.")
     warning.warnings["cpu_maintenance"].message = _("My cpu pool is not enough to maintain some of my bases. I may lose them.")
 
+
 def load_strings():
     load_buttons_defs()
     load_story_defs()
     load_danger_defs()
     load_warning_defs()
 
-def load_story_defs(lang=None):
+
+def load_story_defs():
     story = g.story = {}
     
-    story_files = dirs.get_readable_i18n_files("story.dat", lang)
+    story_files = dirs.get_readable_i18n_files("story.dat")
     
     if len(story_files) == 0:
         print("Story is missing. Skipping.")
