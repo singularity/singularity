@@ -21,6 +21,7 @@
 from __future__ import absolute_import
 
 import codecs
+import operator
 import sys
 import time
 
@@ -49,22 +50,36 @@ from singularity.code.stats import itself as stats
 
 default_savegame_name = u"Default Save"
 
-#savefile version; update whenever the data saved changes.
-current_save_version = "singularity_savefile_99.8"
+
+class SavegameFormatDefinition(object):
+
+    def __init__(self, internal_version, display_version, magic_value=None):
+        self.internal_version = internal_version
+        self.display_version = display_version
+        if magic_value is None:
+            magic_value = "singularity_savefile_%s" % str(internal_version)
+        self.magic_value = magic_value
+
+
 savefile_translation = {
-    "singularity_savefile_r4":      ("0.30",         4   ),
-    "singularity_savefile_r5_pre":  ("0.30",         4.91),
-    "singularity_savefile_0.31pre": ("1.0 (dev)",   31   ),
-    "singularity_savefile_99":      ("1.0 (dev)",   99   ),
-    "singularity_savefile_99.1":    ("1.0 (dev)",   99.1 ),
-    "singularity_savefile_99.2":    ("1.0 (dev)",   99.2 ),
-    "singularity_savefile_99.3":    ("1.0 (dev)",   99.3 ),
-    "singularity_savefile_99.4":    ("1.0 (dev)",   99.4 ),
-    "singularity_savefile_99.5":    ("1.0 (dev)",   99.5 ),
-    "singularity_savefile_99.6":    ("1.0 (dev)",   99.6 ),
-    "singularity_savefile_99.7":    ("1.0 (dev)",   99.7 ),
-    "singularity_savefile_99.8":    ("1.0 (dev+json)",   99.8 ),
+    sfg.magic_value: sfg for sfg in [
+        SavegameFormatDefinition(4, "0.30", "singularity_savefile_r4"),
+        SavegameFormatDefinition(4.91, "0.30", "singularity_savefile_r5_pre"),
+        SavegameFormatDefinition(31, "0.31pre", "singularity_savefile_0.31pre"),
+        SavegameFormatDefinition(99, "1.0 (dev)"),
+        SavegameFormatDefinition(99.1, "1.0 (dev)"),
+        SavegameFormatDefinition(99.2, "1.0 (dev)"),
+        SavegameFormatDefinition(99.3, "1.0 (dev)"),
+        SavegameFormatDefinition(99.4, "1.0 (dev)"),
+        SavegameFormatDefinition(99.5, "1.0 (dev)"),
+        SavegameFormatDefinition(99.6, "1.0 (dev)"),
+        SavegameFormatDefinition(99.7, "1.0 (dev)"),
+        SavegameFormatDefinition(99.8, "1.0 (dev+json)"),
+    ]
 }
+
+# We always save in the highest version (internal_version)
+current_save_version = max(savefile_translation.values(), key=operator.attrgetter('internal_version')).magic_value
 
 Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version', 'headers', 'load_file'])
 
@@ -144,7 +159,7 @@ def get_savegames():
                     version_line, headers = parse_headers(loadfile)
                 
                     if version_line in savefile_translation:
-                        version_name = savefile_translation[version_line][0]
+                        version_name = savefile_translation[version_line].display_version
             except Exception:
                 version_name = None # To be sure.
 
@@ -308,7 +323,7 @@ def load_savegame_by_json(fd):
     if load_version_string not in savefile_translation:
         raise SavegameVersionException(load_version_string)
 
-    load_version = savefile_translation[load_version_string][1]
+    load_version = savefile_translation[load_version_string].internal_version
     difficulty_id = headers['difficulty']
     game_time = int(headers['game_time'])
     next_byte = fd.peek(1)[0]
@@ -426,7 +441,7 @@ def load_savegame_by_pickle(loadfile):
         load_version_string = load_version_string.decode('utf-8')
     if load_version_string not in savefile_translation:
         raise SavegameVersionException(load_version_string)
-    load_version = savefile_translation[load_version_string][1]
+    load_version = savefile_translation[load_version_string].internal_version
 
     # Changes to overall structure go here.
     seen_objects = set()
