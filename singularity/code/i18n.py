@@ -33,7 +33,7 @@ from singularity.code.pycompat import *
 try:
     import polib
 except ImportError:
-    import singularity.code.polib
+    import singularity.code.polib as polib
 
 #Used to determine which data files to load.
 #It is required that default language have all data files and all of them
