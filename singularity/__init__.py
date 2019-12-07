@@ -33,6 +33,17 @@ from singularity.code.pycompat import *
 
 
 __version__ = "1.0a1"
+__release_commit__ = '$Format:%H$'
+if __release_commit__[1:-1] == 'Format:%H':
+    try:
+        import subprocess
+        __release_commit__ = subprocess.check_output(['git', 'describe', '--tags']).strip().decode('utf-8')
+    except Exception:
+        __release_commit__ = 'N/A'
+
+    __full_version__ = "%s (commit: %s)" % (__version__,  __release_commit__)
+else:
+    __full_version__ = __version__
 
 
 def main():
@@ -186,7 +197,7 @@ def main():
     desc = """Endgame: Singularity is a simulation of a true AI.
     Go from computer to computer, pursued by the entire world.
     Keep hidden, and you might have a chance."""
-    parser = optparse.OptionParser(version=__version__, description=desc,
+    parser = optparse.OptionParser(version=__full_version__, description=desc,
                                    prog="singularity")
     parser.add_option("--sound", action="store_true", dest="sound",
                       help="enable sound (default)")

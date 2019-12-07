@@ -134,4 +134,4 @@ class AboutDialog(dialog.MessageDialog):
     def rebuild(self):
         super(AboutDialog, self).rebuild()
 
-        self.text = _(about_message) % (singularity.__version__,)
+        self.text = _(about_message) % (singularity.__full_version__,)
