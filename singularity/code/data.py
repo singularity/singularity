@@ -164,8 +164,8 @@ def load_generic_defs_file(name, no_list=True):
     return generic_load(filepath, mandatory=True, no_list=no_list)
 
 
-def load_generic_defs(name, object_list, listype_attrs=None):
-    listype_attrs = listype_attrs or []
+def load_generic_defs(name, object_list, listttype_attrs=None):
+    listttype_attrs = listttype_attrs or []
 
     item_list = load_generic_defs_file(name)
     for item in item_list:
@@ -180,7 +180,7 @@ def load_generic_defs(name, object_list, listype_attrs=None):
 
             tr = get_def_translation(item_id, key, item[key])
 
-            if key in listype_attrs:
+            if key in listttype_attrs:
                 setattr(obj, key, [x.strip() for x in tr.split("|")])
             else:
                 setattr(obj, key, tr)
@@ -263,7 +263,7 @@ def load_groups():
 
 
 def load_base_defs():
-    load_generic_defs("bases", g.base_type, listype_attrs=["flavor"])
+    load_generic_defs("bases", g.base_type, listttype_attrs=["flavor"])
 
 
 def load_bases():
@@ -328,7 +328,7 @@ def load_regions():
     
 
 def load_location_defs():
-    load_generic_defs("locations", g.locations, listype_attrs=["cities"])
+    load_generic_defs("locations", g.locations, listttype_attrs=["cities"])
 
 
 def load_locations():
