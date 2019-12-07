@@ -22,8 +22,12 @@
 
 from __future__ import absolute_import
 
+
+import optparse
+import logging
 from io import open
 import sys
+
 from singularity.code import g, dirs
 from singularity.code.pycompat import *
 
@@ -56,9 +60,6 @@ def main():
         raise SystemExit("Endgame: Singularity requires NumPy.")
     except ImportError:
         raise SystemExit("Endgame: Singularity requires pygame.")
-
-    import optparse
-    import logging
 
     import singularity.code.graphics.g as gg
     import singularity.code.graphics.theme as theme
