@@ -168,22 +168,31 @@ def load_generic_defs(name, object_list, listttype_attrs=None):
     listttype_attrs = listttype_attrs or []
 
     item_list = load_generic_defs_file(name)
-    for item in item_list:
-        item_id = item["id"]
+    for data_item in item_list:
+        item_id = data_item["id"]
         obj = object_list[item_id]
 
-        for key in item:
-            if key == "id":
-                continue
-            if not hasattr(obj, key):
+        for key_dat_file in data_item:
+            if key_dat_file == "id":
                 continue
 
-            tr = get_def_translation(item_id, key, item[key])
+            key_name = key_dat_file
+            if len(key_dat_file) > 6 and key_dat_file.endswith("_list"):
+                key_name = key_dat_file[:-5]
 
-            if key in listttype_attrs:
-                setattr(obj, key, [x.strip() for x in tr.split("|")])
+                if key_name not in listttype_attrs:
+                    # Not allowed to be a list; revert to the original name
+                    key_name = key_dat_file
+
+            if not hasattr(obj, key_name):
+                continue
+
+            tr = get_def_translation(item_id, key_name, data_item[key_dat_file])
+
+            if key_name in listttype_attrs:
+                setattr(obj, key_name, [x.strip() for x in tr.split("|")])
             else:
-                setattr(obj, key, tr)
+                setattr(obj, key_name, tr)
 
 
 def get_def_translation(object_id, field, text):
