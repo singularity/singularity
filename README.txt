@@ -1,4 +1,4 @@
-Endgame: Singularity 0.30c
+Endgame: Singularity 1.0a1
 
 ============
 REQUIREMENTS

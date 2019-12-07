@@ -79,7 +79,7 @@ savefile_translation = {
         SavegameFormatDefinition(99.5, "1.0 (dev)"),
         SavegameFormatDefinition(99.6, "1.0 (dev)"),
         SavegameFormatDefinition(99.7, "1.0 (dev)"),
-        SavegameFormatDefinition(99.8, "1.0 (dev+json)"),
+        SavegameFormatDefinition(99.8, "1.0 (alpha1)"),
     ]
 }
 

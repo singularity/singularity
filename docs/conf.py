@@ -24,9 +24,9 @@ copyright = '2019, Niels Thykier'
 author = 'Niels Thykier'
 
 # The short X.Y version
-version = '0.30'
+version = '1.0'
 # The full version, including alpha/beta/rc tags
-release = '0.30c'
+release = '1.0a1'
 
 
 # -- General configuration ---------------------------------------------------

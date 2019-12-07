@@ -1,1 +1,11 @@
 Changelog merge=union
+
+# Include release commit hash
+singularity/__init__.py export-subst
+
+# The release tarball excludes music
+singularity/music export-ignore
+singularity/music/** export-ignore
+singularity/data/music-src/ export-ignore
+singularity/data/music-src/** export-ignore
+
