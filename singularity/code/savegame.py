@@ -50,7 +50,6 @@ from singularity.code.stats import itself as stats
 default_savegame_name = u"Default Save"
 
 #savefile version; update whenever the data saved changes.
-current_save_version_pickle = "singularity_savefile_99.7"
 current_save_version = "singularity_savefile_99.8"
 savefile_translation = {
     "singularity_savefile_r4":      ("0.30",         4   ),
