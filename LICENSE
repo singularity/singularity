@@ -227,8 +227,8 @@ from Tavmjong Bah. For further information, contact: tavmjong @ free
 . fr.
 
 POLIB
-File code/polib.py is taken from Polib package, v0.7.0, and it is licensed under
-the MIT License.
+File singularity/code/polib.py is taken from Polib package, v0.7.0, and
+it is licensed under the MIT License.
 http://bitbucket.org/izi/polib/
 
 Copyright (c) 2006-2011 David Jean Louis.
