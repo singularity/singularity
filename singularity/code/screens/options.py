@@ -108,7 +108,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             music_volume    = mixer.get_volume("music"),
             soundbuf        = mixer.get_soundbuf(),
             warnings        = {warn.id: warn.active for warn in warning.warnings.values()}
-       )
+        )
 
         self.set_options(self.initial_options)
 
@@ -208,7 +208,7 @@ class GeneralPane(widget.Widget):
         self.theme_choice.list_pos = theme.get_theme_pos()
 
     def apply_options(self):
-      pass
+        pass
 
     def set_language(self, list_pos):
         if not getattr(self, "language_choice", None):
@@ -216,8 +216,9 @@ class GeneralPane(widget.Widget):
 
         if 0 <= list_pos < len(self.language_choice.list):
             language = self.languages[list_pos][0]
-        if i18n.language != language:
-            set_language_properly(language)
+            if i18n.language != language:
+                set_language_properly(language)
+
 
 class VideoPane(widget.Widget):
     def __init__(self, *args, **kwargs):
