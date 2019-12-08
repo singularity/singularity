@@ -86,7 +86,7 @@ FPS = 30
 ebook_mode = False
 
 
-def init_graphics_system(size=None):
+def init_graphics_system():
 
     global desktop_size
     width, height = (pygame.display.Info().current_w,
@@ -110,6 +110,7 @@ def init_graphics_system(size=None):
     # Set the application icon and caption
     pygame.display.set_icon(images["icon"])
     pygame.display.set_caption("Endgame: Singularity")
+
 
 def set_fullscreen(value):
     set_screen_size(fs=value)
