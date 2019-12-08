@@ -21,7 +21,7 @@ Before cutting the tag:
    * Update the version number in setup.py.
    * Update the version number in singularity/__init__.py.
    * Update the version number in singularity/code/savegame.py if needed
-   * Update the version number at the top of README.txt.
+   * Update the version number at the top of README.md.
    * Update the release date at the top of the Changelog.
    * Check TODO and remove any entries that are now done in the new
      version.
@@ -56,5 +56,5 @@ Post-release cleanup:
    * Add a new section at the top of Changelog.
    * Update the version number in singularity/__init__.py to next-release_pre.
    * Update the version number in setup.py to the same.
-   * Update the version number at the top of README.txt to the same.
+   * Update the version number at the top of README.md to the same.
    * Add a new milestone to the Github issue tracker, if necessary.

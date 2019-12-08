@@ -1,8 +1,8 @@
 include AUTHORS
 include Changelog
 include TODO
-include GPL.txt
-include README.txt
+include LICENSE*
+include README.md
 
 recursive-include singularity/data *
 recursive-include singularity/i18n *
