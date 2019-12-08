@@ -95,10 +95,10 @@ center. (But note that your beginning base does not allow building.)
 ### MUSIC
 Endgame: Singularity looks in two places for music tracks to play:
 
-* A music/ directory directly inside of the Endgame: Singularity install
-  directory, and
-* A music/ directory inside of the preferences directory (~/.config/singularity
-  in Linux, the install directory for Windows).
+ * A music/ directory directly inside of the Endgame: Singularity install
+   directory, and
+ * A music/ directory inside of the preferences directory (~/.config/singularity
+   in Linux, the install directory for Windows).
 
 Tracks placed in these directories will be played randomly as part of the
 soundtrack.  The Official Sound Track can be downloaded from the Endgame:
@@ -126,15 +126,14 @@ Note that the resulting file will be licensed either under the CC-BY-SA 3.0
 license (for *.dat files created with traduko) or the game's code license
 (for the *.po files created by gettext-singularity), both described below.
 
-Website: http://www.emhsoft.com/singularity/
-IRC Room: #singularity on irc.oftc.net (port 6667)
+ * Website: http://www.emhsoft.com/singularity/
+ * IRC Room: #singularity on irc.oftc.net (port 6667)
 
 ## CREDITS AND LICENSES
 
-AUTHORS AND MAIN CONTRIBUTORS
 
-The list of programmer contributors is provided in AUTHORS
-The list of traduction contributors is provided in i18n/AUTHORS
+The list of programmer contributors is provided in AUTHORS. The list of
+translation contributors is provided in i18n/AUTHORS.
 
 Singularity in general use GPL-2+ for code and
 Attribution-ShareAlike 3.0 for data.  However, there some exceptions
