@@ -85,12 +85,10 @@ def set_language(lang=None, force=False):
     load_data_str()
 
 
-def load_messages(lang=None):
-    if lang is None: lang = language
-
+def load_messages():
     g.messages.clear()
 
-    files = dirs.get_readable_i18n_files("messages.po", lang, default_language=False)
+    files = dirs.get_readable_i18n_files("messages.po", language, default_language=False)
 
     for lang, pofile in files:
         try:
@@ -100,12 +98,10 @@ def load_messages(lang=None):
         except IOError: pass # silently ignore non-existing files
 
 
-def load_data_str(lang=None):
-    if lang is None: lang = language
-
+def load_data_str():
     g.data_strings.clear()
 
-    files = dirs.get_readable_i18n_files("data_str.po", lang, default_language=False)
+    files = dirs.get_readable_i18n_files("data_str.po", language, default_language=False)
 
     for lang, pofile in files:
         try:
