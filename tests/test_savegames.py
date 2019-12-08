@@ -46,12 +46,17 @@ def compare_loaded_game_with_reference_data(filename, reference_data):
         loaded_tech = g.pl.techs[tech_id]
         print("tech %s is supposed to be done (is done? %s)" % (tech_id, str(loaded_tech.done)))
         assert loaded_tech.done
-    for event_id in reference_data["events_triggered"]:
+    for event_id, event_data in reference_data["events_triggered"].items():
         assert event_id in g.pl.events, "Invalid reference data for %s: The event %s does not exist" % (
             filename, event_id)
         loaded_event = g.pl.events[event_id]
         print("event %s is supposed to be triggered (is triggered? %s)" % (event_id, str(loaded_event.triggered)))
         assert loaded_event.triggered
+        print("event %s is supposed to be triggered at %s (actual value: %s)" % (event_id,
+                                                                                 loaded_event.triggered_at,
+                                                                                 event_data['triggered_at'])
+              )
+        assert loaded_event.triggered_at == event_data['triggered_at']
 
 
 def test_savegames(savegame_dirs):

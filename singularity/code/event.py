@@ -146,6 +146,10 @@ class Event(object):
             g.map_screen.show_message(self.description)
 
         self.triggered = 1
-        self.triggered_at = g.pl.raw_sec
-
+        if loading_savegame:
+            # During a load, deserialize_obj will restore the original triggered_at time
+            # for us
+            assert self.triggered_at > -1
+        else:
+            self.triggered_at = g.pl.raw_sec
         self.effect.trigger(loading_savegame=loading_savegame)

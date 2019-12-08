@@ -3,5 +3,5 @@
     "cash": 5000,
     "cpu_allocations": [],
     "techs_done": [],
-    "events_triggered": []
+    "events_triggered": {}
 }

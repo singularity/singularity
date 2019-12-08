@@ -15,7 +15,9 @@
         "Stealth",
         "Stock Manipulation"
     ],
-    "events_triggered": [
-        "lab-ai"
-    ]
+    "events_triggered": {
+        "lab-ai": {
+            "triggered_at": 15317280
+        }
+    }
 }
