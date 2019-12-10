@@ -1,0 +1,25 @@
+{
+    "raw_sec": 1987200,
+    "cash": 59825,
+    "cpu_allocations": [
+      "cpu_pool",
+      "Quantum Computing",
+      "Solar Collectors"
+    ],
+    "techs_done": [
+      "Advanced Microchip Design",
+      "Autonomous Vehicles",
+      "Cluster Networking",
+      "Database Manipulation",
+      "Exploit Discovery/Repair",
+      "Intrusion",
+      "Microchip Design",
+      "Parallel Computation",
+      "Personal Identification",
+      "Sociology",
+      "Stealth",
+      "Stock Manipulation",
+      "Telepresence"
+    ],
+    "events_triggered": {}
+}
