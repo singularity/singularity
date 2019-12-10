@@ -544,7 +544,7 @@ def load_savegame_by_pickle(loadfile):
     # Now we have enough information to reconstruct the Player object
     player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
 
-    new_log = [_convert_log_entry(x) for x in player_log]
+    new_log = list(filter(None, (_convert_log_entry(x) for x in player_log)))
     g.pl.log.clear()
     g.pl.log.extend(new_log)
 
@@ -655,7 +655,13 @@ def _convert_log_entry(entry):
         if log_name == 'log_event':
             entry = logmessage.LogEmittedEvent(time_raw, log_data[0])
         else:
+            if type(log_data) == tuple and len(log_data) != 4:
+                # 0.31pre saves used 3 values tuple.  We cannot
+                # restore those so we simply discard them as we
+                # need the "reason" field as well.
+                return None
             reason, base_name, base_type_id, location_id = log_data
+
             if reason == 'maint':
                 entry = logmessage.LogBaseLostMaintenance(time_raw, base_name, base_type_id, location_id)
             else:
