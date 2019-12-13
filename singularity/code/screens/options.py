@@ -41,7 +41,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.pos = (.5, .5)
         self.anchor = constants.MID_CENTER
         self.background_color = "options_background"
-        self.borders = ()
 
         # Tabs panel
         self.general_pane   = GeneralPane(None, (0, .1), (.80, .75))

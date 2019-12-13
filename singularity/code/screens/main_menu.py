@@ -128,7 +128,6 @@ class AboutDialog(dialog.MessageDialog):
     def __init__(self, *args, **kwargs):
         super(AboutDialog, self).__init__(*args, **kwargs)
         self.background_color = 'about_dialog_background'
-        self.borders = ()
         self.align = constants.LEFT
 
     def rebuild(self):
