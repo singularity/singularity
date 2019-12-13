@@ -132,8 +132,9 @@ license (for *.dat files created with traduko) or the game's code license
 ## CREDITS AND LICENSES
 
 
-The list of programmer contributors is provided in AUTHORS. The list of
-translation contributors is provided in i18n/AUTHORS.
+The list of programmer contributors is provided in AUTHORS.txt. The
+list of translation contributors is provided in
+singularity/i18n/AUTHORS.txt.
 
 Singularity in general use GPL-2+ for code and
 Attribution-ShareAlike 3.0 for data.  However, there some exceptions

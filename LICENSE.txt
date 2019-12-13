@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-A full copy of this license is provided in LICENSE.gpl-2
+A full copy of this license is provided in LICENSE.gpl-2.txt
 
 CODE LICENSE (singularity/code/savegame.py)
 
