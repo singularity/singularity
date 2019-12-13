@@ -48,7 +48,6 @@ After cutting the tag:
    * Upload to site.
    * Update index.html, and singularity/index.html
    * Check to see if screenshot is out-of-date, and update if needed.
-   * Send update notice to happypenguin.org, freshmeat.net and pygame.org.
    * Also, pypi.python.org.
    * Announce on [endgame-singularity] and [endgame-singularity-dev].
 
