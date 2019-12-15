@@ -45,9 +45,10 @@ def log_error(error_message, *args):
 
 
 def log_func_exc(func):
-    buffer = Buffer("Exception in function %s at %s:\n"
+    buffer = Buffer("Exception in function %s at %s:\n```\n"
                                    % (func.__name__, get_timestamp()))
     traceback.print_exc(file=buffer)
+    buffer.write("```")
     log_error(buffer.data)
 
 
