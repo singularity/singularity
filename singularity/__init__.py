@@ -21,6 +21,7 @@
 # directly. use ../singularity.py instead.
 
 from __future__ import absolute_import
+from __future__ import print_function
 
 
 import optparse
@@ -53,6 +54,9 @@ def main():
         if parser == "--singledir" or parser == "-s": g.force_single_dir = True
         if parser == "--multidir"                   : g.force_single_dir = False
 
+    print("Singularity %s (commit: %s)" % (__version__, __release_commit__))
+    print("Running under Python %s" % sys.version.replace("\n", ''))
+
     # Create all directories first
     dirs.create_directories(g.force_single_dir)
 
@@ -79,15 +83,22 @@ def main():
 
     #configure global logger
     g.logfile = dirs.get_writable_file_in_dirs("error.log", "log")
+    root_logger = logging.getLogger()
 
-    if len(logging.getLogger().handlers) == 0:
+    if len(root_logger.handlers) == 0:
         try:
             try:
-                logging.getLogger().addHandler(logging.FileHandler(g.logfile, delay=True))
+                root_logger.addHandler(logging.FileHandler(g.logfile, delay=True))
+                print("The error-log configured as %s (lazily created when something is logged)" % g.logfile)
             except TypeError:  # Python < 2.6, delay not supported yet.
-                logging.getLogger().addHandler(logging.FileHandler(g.logfile))
-        except IOError:  # Probably access denied with --singledir. That's ok
+                root_logger.addHandler(logging.FileHandler(g.logfile))
+                print("The error-log configured as %s" % g.logfile)
+
+        except IOError as e:  # Probably access denied with --singledir. That's ok
+            print("Could not use %s as log file: %s" % (g.logfile, str(e)))
             g.logfile = None
+    else:
+        print("Using pre-setup logging function")
 
     # keep g's defaults intact so we can compare after parsing options and prefs
     from singularity.code import mixer, warning
