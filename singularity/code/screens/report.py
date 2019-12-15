@@ -133,7 +133,7 @@ class ReportScreen(dialog.Dialog):
                 m(cpu_info.maintenance_needed), m(cpu_info.construction_needed),
                 m(cpu_info.difference))
 
-        size = 20
+        size = 'report_content'
         text.Text(self.money_report_pane, (0,-0.15), (-0.10,-0.85), text=financial_pluses, text_size=size,
                   background_color="clear",
                   align=constants.CENTER, valign=constants.TOP)

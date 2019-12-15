@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 import pygame
 
+from singularity.code.pycompat import *
 from singularity.code.graphics import g, widget, constants
 
 
@@ -187,9 +188,11 @@ def print_line(surface, xy, font, chunks, styles):
         # Adjust the starting position.
         xy[0] += size[0]
 
+
 def resize_redraw(self):
     self.needs_resize = True
     self.needs_redraw = True
+
 
 class Text(widget.BorderedWidget):
     text = widget.call_on_change("_text", resize_redraw)
@@ -206,10 +209,13 @@ class Text(widget.BorderedWidget):
     base_font = widget.auto_reconfig("_base_font", "resolved", g.resolve_font_alias)
     resolved_base_font = widget.call_on_change("_resolved_base_font", resize_redraw)
 
+    text_size = widget.auto_reconfig("_text_size", "resolved", g.resolve_text_size)
+    resolved_text_size = widget.causes_redraw("_resolved_text_size")
+
     def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
                  text=None, base_font=None, shrink_factor=0.875,
                  color=None, align=constants.CENTER, valign=constants.MID,
-                 underline=-1, wrap=True, bold=False, text_size=36, **kwargs):
+                 underline=-1, wrap=True, bold=False, text_size="default", **kwargs):
         kwargs.setdefault("background_color", "text_background")
         kwargs.setdefault("border_color", "text_border")
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
@@ -226,7 +232,7 @@ class Text(widget.BorderedWidget):
         self.text_size = text_size
 
     max_size = property(lambda self: min(len(self.resolved_base_font)-1,
-                                         convert_font_size(self.text_size)))
+                                         convert_font_size(self._resolved_text_size)))
     font = property(lambda self: self._font)
 
     def pick_font(self, dimensions):
