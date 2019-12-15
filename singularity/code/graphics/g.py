@@ -58,6 +58,17 @@ resolutions = [
     (1920,1080),
 ]
 
+
+# Configurable by the user
+configured_text_sizes = {
+    'default': 20,
+    'button': 36,
+    'suspicion_bar': 32,
+    'time_display': 24,
+    'resource_display': 24,
+    'report_content': 20,
+}
+
 fullscreen = False
 
 #colors:
@@ -206,3 +217,10 @@ def resolve_font_alias(font):
         return resolve_color_alias(fonts[font])
     else:
         return font
+
+
+def resolve_text_size(text_size):
+    if isinstance(text_size, basestring):
+        return resolve_text_size(configured_text_sizes[text_size])
+    else:
+        return text_size

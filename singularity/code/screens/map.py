@@ -469,6 +469,7 @@ class MapScreen(dialog.Dialog):
         self.suspicion_bar = \
             text.FastStyledText(self, (0,.92), (1, .04), base_font="special",
                                 wrap=False,
+                                text_size="suspicion_bar",
                                 background_color="pane_background_empty",
                                 border_color="pane_background",
                                 borders=constants.ALL, align=constants.LEFT)
@@ -477,6 +478,7 @@ class MapScreen(dialog.Dialog):
         self.danger_bar = \
             text.FastStyledText(self, (0,.96), (1, .04), base_font="special",
                                 wrap=False,
+                                text_size="suspicion_bar",
                                 background_color="pane_background_empty",
                                 border_color="pane_background",
                                 borders=constants.ALL, align=constants.LEFT)
@@ -527,6 +529,7 @@ class MapScreen(dialog.Dialog):
             text.FastText(self, (0, 0.05), (0.13, 0.04),
                           wrap=False,
                           base_font="special",
+                          text_size=36,
                           background_color="pane_background_empty",
                           border_color="pane_background")
 
@@ -534,6 +537,7 @@ class MapScreen(dialog.Dialog):
                                           wrap=False,
                                           text=_("DAY")+" 0000, 00:00:00",
                                           base_font="special",
+                                          text_size="time_display",
                                           background_color="pane_background_empty",
                                           border_color="pane_background",
                                           borders=constants.ALL)
@@ -573,6 +577,7 @@ class MapScreen(dialog.Dialog):
                           wrap=False,
                           base_font="special", shrink_factor = .7,
                           borders=constants.ALL,
+                          text_size="resource_display",
                           background_color="pane_background_empty",
                           border_color="pane_background")
 
@@ -580,8 +585,8 @@ class MapScreen(dialog.Dialog):
             text.FastText(self.info_window, (0,-.5), (-1, -.5),
                           wrap=False,
                           base_font="special", shrink_factor=.7,
-                          borders=
-                           (constants.LEFT, constants.RIGHT, constants.BOTTOM),
+                          borders=(constants.LEFT, constants.RIGHT, constants.BOTTOM),
+                          text_size="resource_display",
                           background_color="pane_background_empty",
                           border_color="pane_background")
 

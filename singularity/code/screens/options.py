@@ -588,6 +588,7 @@ def set_language_properly(language):
     dialog.Dialog.top.needs_rebuild = True
     dialog.Dialog.top.needs_redraw = True
 
+
 def save_options():
     # Build a ConfigParser for writing the various preferences out.
     prefs = SafeConfigParser()
@@ -609,11 +610,15 @@ def save_options():
     for warn_id, warn in warning.warnings.items():
         prefs.set("Warning", warn_id, str(bool(warn.active)))
 
+    prefs.add_section("Textsizes")
+    for text_size_id, text_size in gg.configured_text_sizes.items():
+        prefs.set("Textsizes", text_size_id, str(text_size))
+
     # Actually write the preferences out.
     save_loc = dirs.get_writable_file_in_dirs("prefs.dat", "pref")
-    savefile = open(save_loc, 'w')
-    prefs.write(savefile)
-    savefile.close()
+    with open(save_loc, 'w') as savefile:
+        prefs.write(savefile)
+
 
 def restart():
     """ Restarts the game with original command line arguments. Those may over-

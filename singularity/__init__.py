@@ -203,6 +203,19 @@ def main():
             except Exception:
                 pass # don't be picky (for now...)
 
+        if prefs.has_section("Textsizes"):
+            for key in prefs.options('Textsizes'):
+                if key in prefs.defaults():  # Filter default key
+                    continue
+
+                if key not in gg.configured_text_sizes:  # Ignore unknown text-size definitions
+                    continue
+
+                try:
+                    gg.configured_text_sizes[key] = prefs.getint("Textsizes", key)
+                except Exception:
+                    pass  # Ignore
+
 
     #Handle the program arguments.
     desc = """Endgame: Singularity is a simulation of a true AI.

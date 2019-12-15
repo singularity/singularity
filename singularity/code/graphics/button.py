@@ -114,6 +114,7 @@ class Button(text.SelectableText, HotkeyText):
 
         self.priority = priority
 
+        kwargs.setdefault('text_size', 'button')
         super(Button, self).__init__(parent, pos, size, **kwargs)
 
         self.base_font = base_font or "special"
