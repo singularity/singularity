@@ -9,3 +9,4 @@ ignore:
   - "**/README*"
   - "**/*.txt"
   - "**/Changelog"
+  - ".github/**/*"
