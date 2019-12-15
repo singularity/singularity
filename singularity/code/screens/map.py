@@ -702,7 +702,7 @@ class MapScreen(dialog.Dialog):
 
             # Display a message so the player understand better what happened.
             msg = _("""
-A error has occurred. The game will automatically pause and open the game menu. You can continue and save or quit immediately.
+An error has occurred. The game will automatically pause and open the game menu. You can continue and save or quit immediately.
 
 A report was written out to%s
 Please create a issue with this report at github:
