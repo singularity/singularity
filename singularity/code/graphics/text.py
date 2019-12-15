@@ -322,7 +322,6 @@ class Text(widget.BorderedWidget):
                     # Too tall.  Run a binary search to find the largest font
                     # size that fits.
                     def test_size(font):
-                        width, height = self.size_using_font(font)
                         width, raw_height = size_of_block(self.text, font)
                         height = int(raw_height / self.shrink_factor) + 4
                         return height <= initial_dimensions[1]
