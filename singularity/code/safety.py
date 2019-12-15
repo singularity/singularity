@@ -34,13 +34,15 @@ def get_timestamp(when=None):
         when = time.time()
     return time.ctime(when) + " " + time.tzname[time.daylight]
 
-def log_error(error_message):
-    sys.stderr.write(error_message + "\n")
+
+def log_error(error_message, *args):
+    sys.stderr.write((error_message % args) + "\n")
     if len(logging.getLogger().handlers) > 0:
         try:
-            logging.getLogger().error(error_message)
-        except IOError: # Probably access denied with --singledir. That's ok
+            logging.getLogger().error(error_message, *args)
+        except IOError:  # Probably access denied with --singledir. That's ok
             pass
+
 
 def log_func_exc(func):
     buffer = Buffer("Exception in function %s at %s:\n"
@@ -48,10 +50,24 @@ def log_func_exc(func):
     traceback.print_exc(file=buffer)
     log_error(buffer.data)
 
+
+FIRST_ERROR = True
+
 def safe_call(func, args=(), kwargs={}, on_error=None):
     try:
         return func(*args, **kwargs)
     except Exception:
+        global FIRST_ERROR
+        if FIRST_ERROR:
+            log_error("----- Basic information (Please include all the data below in the bug report) ------")
+            log_error("Please submit the crash on github: https://github.com/singularity/singularity/issues/new")
+            try:
+                from singularity import __full_version__
+            except ImportError:
+                __full_version__ = "N/A (Import error)"
+            log_error("Singularity version %s", __full_version__)
+            log_error("Python version %s", sys.version.replace("\n", ''))
+            FIRST_ERROR = False
         log_func_exc(func)
 
 #        # ... --- ...
