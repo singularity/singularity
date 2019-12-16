@@ -78,7 +78,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
                              borders=constants.ALL)
 
         old_item = self.parent.base.items[self.type.id]
-        if old_item is None or old_item.spec != item:
+        if item is not None and (old_item is None or old_item.spec != item):
             g.pl.considered_buyables = [buyable.Buyable(self.item, count=1)]
         else:
             g.pl.considered_buyables = []
