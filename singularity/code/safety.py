@@ -36,7 +36,10 @@ def get_timestamp(when=None):
 
 
 def log_error(error_message, *args):
-    sys.stderr.write((error_message % args) + "\n")
+    if args:
+        sys.stderr.write((error_message % args) + "\n")
+    else:
+        sys.stderr.write(error_message + "\n")
     if len(logging.getLogger().handlers) > 0:
         try:
             logging.getLogger().error(error_message, *args)
