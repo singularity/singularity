@@ -385,15 +385,25 @@ class BaseScreen(dialog.Dialog):
         self.name_display.text="%s (%s)" % (self.base.name, self.base.spec.name)
         self.state_display.color = state_colors[self.base.power_state]
         self.state_display.text = self.base.power_state_name
+        available_item_types = {
+            i.item_type
+            for i in g.items.values()
+            if i.available() and i.buildable_in(self.base.location)
+        }
 
         mutable = not self.base.spec.force_cpu
         for item_type in item.all_types():
             pane = getattr(self, item_type.id + "_pane")
-            pane.change_button.visible = mutable
+            item_mutable = mutable and item_type in available_item_types
+            pane.change_button.visible = item_mutable
             current = self.get_current(item_type)
             if current is None:
-                current_name = _("None")
                 current_build = ""
+                if mutable and not item_mutable:
+                    current_name = _("N/A")
+                else:
+                    current_name = _("None")
+
             else:
                 current_name = g.items[current.id].name
                 if current.done:
