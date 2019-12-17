@@ -65,10 +65,10 @@ class KnowledgeScreen(dialog.Dialog):
         self.remove_key_handler(pygame.K_PAGEUP, self.knowledge_inner.got_key)
         self.remove_key_handler(pygame.K_PAGEDOWN, self.knowledge_inner.got_key)
 
-        self.add_key_handler(pygame.K_UP, self.key_handle)
-        self.add_key_handler(pygame.K_DOWN, self.key_handle)
-        self.add_key_handler(pygame.K_LEFT, self.key_handle)
-        self.add_key_handler(pygame.K_RIGHT, self.key_handle)
+        self.add_key_handler(pygame.K_UP, self.key_handle, only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_DOWN, self.key_handle, only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_LEFT, self.key_handle, only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_RIGHT, self.key_handle, only_on_event_type=pygame.KEYDOWN)
 
     def rebuild(self):
         # Update knowledge lists
@@ -93,9 +93,10 @@ class KnowledgeScreen(dialog.Dialog):
         #TODO: Change keyboard focus when user clicks item with mouse
         #This is tricky since selecting amn item type also re-selects
         #first item in inner list
-        if event.type != pygame.KEYDOWN: return
-        elif event.key == pygame.K_LEFT:  self.cur_focus = 0
-        elif event.key == pygame.K_RIGHT: self.cur_focus = 1
+        if event.key == pygame.K_LEFT:
+            self.cur_focus = 0
+        elif event.key == pygame.K_RIGHT:
+            self.cur_focus = 1
         else:
             if self.cur_focus == 0:
                 self.knowledge_choice.got_key(event)

@@ -244,8 +244,19 @@ class Dialog(text.Text):
         self.handlers[type] = [h for h in self.handlers.get(type, [])
                                  if h[1] != handler]
 
-    def add_key_handler(self, key, handler, priority = 100):
+    def add_key_handler(self, key, handler, priority=100, only_on_event_type=None):
         """Adds a key handler to the given key, with the given priority."""
+        if only_on_event_type is not None:
+            if isinstance(only_on_event_type, int):
+                only_on_event_type = {only_on_event_type}
+            else:
+                only_on_event_type = set(only_on_event_type)
+            orig_handler = handler
+
+            def _wrapper(event):
+                if event.type in only_on_event_type:
+                    orig_handler(event)
+            handler = _wrapper
         insort_right_w_key(self.key_handlers.setdefault(key, []),
                            (priority, handler), key=operator.itemgetter(0))
 

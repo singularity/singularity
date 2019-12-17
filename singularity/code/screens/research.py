@@ -41,8 +41,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
         self.desc_func = self.on_select
 
-        self.add_key_handler(pygame.K_LEFT, self.adjust_slider)
-        self.add_key_handler(pygame.K_RIGHT, self.adjust_slider)
+        self.add_key_handler(pygame.K_LEFT, self.adjust_slider, only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_RIGHT, self.adjust_slider, only_on_event_type=pygame.KEYDOWN)
 
         self.help_dialog = dialog.MessageDialog(self)
 

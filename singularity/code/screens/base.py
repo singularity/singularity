@@ -234,7 +234,8 @@ class BaseScreen(dialog.Dialog):
                                   text=">", hotkey=">",
                                   function=self.switch_base,
                                   kwargs={"forwards": True})
-        self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activate_with_sound)
+        self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activate_with_sound,
+                             only_on_event_type=pygame.KEYDOWN)
 
         self.prev_base_button = \
             button.FunctionButton(self.name_display, (0, 0), (.03, -1),
@@ -242,7 +243,8 @@ class BaseScreen(dialog.Dialog):
                                   text="<", hotkey="<",
                                   function=self.switch_base,
                                   kwargs={"forwards": False})
-        self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activate_with_sound)
+        self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activate_with_sound,
+                             only_on_event_type=pygame.KEYDOWN)
 
         self.state_display = text.Text(self.header, (-.5,-.5), (-1, -.5),
                                        anchor=constants.TOP_CENTER,

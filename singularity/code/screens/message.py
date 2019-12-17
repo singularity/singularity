@@ -80,8 +80,8 @@ class MessageListDialog(dialog.YesNoDialog):
                                                  text_size=28,
                                                  function=self.next_message)            
                                
-        self.add_key_handler(pygame.K_LEFT, self.handle_key)
-        self.add_key_handler(pygame.K_RIGHT, self.handle_key)
+        self.add_key_handler(pygame.K_LEFT, self.handle_key, only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_RIGHT, self.handle_key, only_on_event_type=pygame.KEYDOWN)
         
         # TODO: Add button "Do not show this message again"
 
@@ -109,9 +109,10 @@ class MessageListDialog(dialog.YesNoDialog):
         self.needs_rebuild = True
 
     def handle_key(self, event):
-        if event.type == pygame.KEYUP: return
-        if event.key == pygame.K_LEFT: self.prev_message()
-        if event.key == pygame.K_RIGHT: self.next_message()
+        if event.key == pygame.K_LEFT:
+            self.prev_message()
+        elif event.key == pygame.K_RIGHT:
+            self.next_message()
         
     def show(self):
         self.list_pos = 0
