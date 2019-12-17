@@ -577,15 +577,25 @@ def _convert_location(loc, old_version):
 
     return loc
 
+
 def _convert_buyable(buyable, save_version):
-    if save_version < 4.91: # r5_pre
+    if save_version < 4.91:  # r5_pre
         buyable.cost_left = array(buyable.cost_left, int64)
         buyable.total_cost = array(buyable.total_cost, int64)
+        buyable.count = 1
+    elif buyable.count < 1:
+        # Old corrupt (?) savegames sometimes have a count of 0.  Not
+        # sure how that is possible, but "fixing" it to 1 is trivial
+        # enough and lets us move on.
+        # Seen as:
+        #   https://bugs.launchpad.net/ubuntu/+source/singularity/+bug/931037
+        #   https://code.google.com/p/endgame-singularity/issues/detail?id=107 (dead!)
         buyable.count = 1
     if save_version < 99.7:
         buyable.spec = buyable.type
         del buyable.type
     return buyable
+
 
 def _convert_base(base, save_version):
     base = _convert_buyable(base, save_version)
