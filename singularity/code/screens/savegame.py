@@ -197,12 +197,14 @@ class SavegameScreen(dialog.ChoiceDialog):
             sv.load_savegame(save)
             return True
         except sv.SavegameVersionException as e:
-            text=_("""
+            md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
+                                      anchor=constants.MID_CENTER,
+                                      text=_("""
 This save file '{SAVE_NAME}' is from an unsupported or invalid version:
 {VERSION}.
-""", \
-SAVE_NAME = save.name, \
-VERSION = e.version)
+""", SAVE_NAME=save.name, VERSION=e.version))
+
+            dialog.call_dialog(md, self)
         except Exception:
             log_func_exc(sv.load_savegame)
             md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
