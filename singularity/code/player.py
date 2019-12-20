@@ -605,10 +605,6 @@ class Player(object):
         g.pl = obj
 
         obj.cpu_usage = {}
-        for task_id, value in obj_data.get('cpu_usage', {}).items():
-            if task_id not in ["cpu_pool", "jobs"]:
-                task_id = g.convert_internal_id('tech', task_id)
-            obj.cpu_usage[task_id] = value
 
         for group_data in obj_data.get('groups', []):
             gr = group.Group.deserialize_obj(diff, group_data, game_version)
@@ -632,6 +628,13 @@ class Player(object):
         for tech_data in obj_data.get('techs', []):
             tech_obj = tech.Tech.deserialize_obj(tech_data, game_version)
             obj.techs[tech_obj.id] = tech_obj
+
+        for task_id, value in obj_data.get('cpu_usage', {}).items():
+            if task_id not in ["cpu_pool", "jobs"]:
+                task_id = g.convert_internal_id('tech', task_id)
+                if task_id not in g.techs or not g.techs[task_id].available():
+                    continue
+            obj.cpu_usage[task_id] = value
 
         obj.update_times()
         return obj
