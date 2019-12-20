@@ -20,9 +20,13 @@
 #This file contains the screen to display the base screen.
 
 import pygame
+import re
 
 from singularity.code import g, item, buyable
 from singularity.code.graphics import constants, widget, dialog, text, button, slider
+
+
+NOT_NUMBERS = re.compile(r'\D+')
 
 state_colors = dict(
     active          = "base_state_active",
@@ -149,11 +153,21 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
     def on_field_change(self, value):
         if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")):
             return # Not initialized
-        
+
+        orig_field_text = self.count_field.text
+        cleaned_field_text = NOT_NUMBERS.sub('',  orig_field_text)
         try:
-            self.count_slider.slider_pos = int(self.count_field.text)
+            value = int(cleaned_field_text)
         except ValueError:
-            self.count_slider.slider_pos = 0
+            value = 0
+
+        value = max(min(value, self.count_slider.slider_max), 0)
+        new_field_text = str(value)
+        if new_field_text != orig_field_text:
+            self.count_field._text = new_field_text
+            self.count_field.cursor_pos = min(self.count_field.cursor_pos, len(new_field_text))
+
+        self.count_slider.slider_pos = value
 
         self.on_description_change()
 
