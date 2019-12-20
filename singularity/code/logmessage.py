@@ -306,6 +306,9 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
                  loading_from_game_version=None):
         super(LogBaseDiscovered, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
                                                 loading_from_game_version=loading_from_game_version)
+        if loading_from_game_version is not None:
+            discovered_by_group_id = g.convert_internal_id('group', discovered_by_group_id)
+
         self._discovered_by_group_id = discovered_by_group_id
 
     @property
