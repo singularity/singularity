@@ -43,6 +43,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
 
         self.type = None
         self.item = None
+        self.listbox.require_focus = False
         self.desc_func = self.on_change
 
     def show(self):
@@ -108,6 +109,7 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
                                              borders=constants.ALL,
                                              update_func=self.on_field_change,
                                              allowed_characters=set('0123456789'),
+                                             require_focus=False,
                                              base_font="normal")
 
         self.count_slider = slider.UpdateSlider(self, (-.37, -.87), (-.62, -.1),
@@ -135,11 +137,7 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
             pygame.K_BACKSPACE,
             pygame.K_DELETE,
         ]:
-            self.add_key_handler(k, self._got_field_key, priority=50, only_on_event_type=pygame.KEYDOWN)
-
-    def _got_field_key(self, event):
-        self.count_field.handle_key(event, respect_focus=False)
-        raise constants.Handled
+            self.add_key_handler(k, self.count_field.handle_key, priority=50, only_on_event_type=pygame.KEYDOWN)
 
     def _got_slider_key(self, event):
         go_lower = (event.key == pygame.K_LEFT)

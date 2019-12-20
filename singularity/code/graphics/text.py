@@ -397,6 +397,7 @@ class EditableText(widget.FocusWidget, Text):
     def __init__(self, parent, *args, **kwargs):
         self.allows_new_line = kwargs.pop("allows_new_line", False)
         self.allowed_characters = kwargs.pop("allowed_characters", None)
+        self.require_focus = kwargs.pop("require_focus", True)
         
         super(EditableText, self).__init__(parent, *args, **kwargs)
 
@@ -415,8 +416,8 @@ class EditableText(widget.FocusWidget, Text):
         self.parent.remove_handler(constants.KEYDOWN, self.handle_key)
         self.parent.remove_handler(constants.CLICK, self.handle_click)
 
-    def handle_key(self, event, respect_focus=True):
-        if not self.has_focus and respect_focus:
+    def handle_key(self, event):
+        if self.require_focus and not self.has_focus:
             return
         assert event.type == pygame.KEYDOWN
         if event.key == pygame.K_BACKSPACE:
@@ -429,12 +430,20 @@ class EditableText(widget.FocusWidget, Text):
                 self.text = self.text[:self.cursor_pos] \
                 + self.text[self.cursor_pos + 1:]
         elif event.key == pygame.K_LEFT:
+            if not self.has_focus:
+                return
             self.cursor_pos = max(0, self.cursor_pos - 1)
         elif event.key == pygame.K_RIGHT:
+            if not self.has_focus:
+                return
             self.cursor_pos = min(len(self.text), self.cursor_pos + 1)
         elif event.key in (pygame.K_UP, pygame.K_HOME):
+            if not self.has_focus:
+                return
             self.cursor_pos = 0
         elif event.key in (pygame.K_DOWN, pygame.K_END):
+            if not self.has_focus:
+                return
             self.cursor_pos = len(self.text)
         elif event.key == pygame.K_ESCAPE:
             return

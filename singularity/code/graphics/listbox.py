@@ -37,7 +37,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
     def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
                  list_pos=0, list_item_height=0.03, list_item_shrink=1, borders=constants.ALL,
-                 item_borders=True, item_selectable=True,
+                 item_borders=True, item_selectable=True, require_focus=True,
                  align=constants.CENTER, on_double_click_on_item=None, **kwargs):
         super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
                                       **kwargs)
@@ -56,6 +56,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.list = list or []
 
         self.auto_scroll = True
+        self.require_focus = require_focus
 
         self.on_double_click_on_item = on_double_click_on_item
 
@@ -121,7 +122,9 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         return max(0, min(len(self.list) - 1, raw_pos))
 
     def got_key(self, event):
-        if not self.has_focus or not self.item_selectable:
+        if not self.item_selectable:
+            return
+        if self.require_focus and not self.has_focus:
             return
 
         if event.key == pygame.K_UP:
