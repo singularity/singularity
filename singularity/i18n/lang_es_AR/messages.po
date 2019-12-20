@@ -903,12 +903,12 @@ msgstr ""
 
 #: logmessage.py:257
 #, python-format
-msgid "Base %s of type %s destroyed at location %s. Maintenance failed."
+msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. Maintenance failed."
 msgstr ""
 
 #: logmessage.py:262
 #, python-format
-msgid "The base %(base)s has fallen into disrepair; I can no longer use it."
+msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
 msgstr ""
 
 #: logmessage.py:276

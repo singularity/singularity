@@ -278,12 +278,12 @@ class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        return _("Base %s of type %s destroyed at location %s. Maintenance failed.",
+        return _("Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. Maintenance failed.",
                   BASE=self._base_name, BASE_TYPE=self.base_type.name, LOCATION=self.location.name)
 
     @property
     def full_message(self):
-        return _("The base %(base)s has fallen into disrepair; I can no longer use it.",
+        return _("The base {BASE} has fallen into disrepair; I can no longer use it.",
                   BASE=self._base_name)
 
 
