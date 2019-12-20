@@ -396,6 +396,7 @@ class EditableText(widget.FocusWidget, Text):
     cursor_pos = widget.causes_redraw("_cursor_pos")
     def __init__(self, parent, *args, **kwargs):
         self.allows_new_line = kwargs.pop("allows_new_line", False)
+        self.allowed_characters = kwargs.pop("allowed_characters", None)
         
         super(EditableText, self).__init__(parent, *args, **kwargs)
 
@@ -444,7 +445,9 @@ class EditableText(widget.FocusWidget, Text):
                 if not self.allows_new_line:
                     return
                 char = "\n"
-        
+            if self.allowed_characters is not None and char not in self.allowed_characters:
+                return
+
             self.text = self.text[:self.cursor_pos] + char \
                         + self.text[self.cursor_pos:]
             self.cursor_pos += len(char)
