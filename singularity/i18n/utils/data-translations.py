@@ -72,7 +72,7 @@ msgstr ""
     datadir = esdir + "/data"
     file_list = os.listdir(datadir)
 
-    for filename in file_list:
+    for filename in sorted(file_list):
         if not filename.endswith("_str.dat"):
             continue
         
