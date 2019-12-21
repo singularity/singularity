@@ -94,9 +94,10 @@ check() {
 myname="${0##*/}"
 dir="$PWD"
 mydir=$(dirname "$(readlink -f "$0")")
-esdir="${mydir}/../.."
-datadir="${esdir}/data"
-i18ndir="${esdir}/i18n"
+esdir="${mydir}/../../.."
+codedir="${esdir}/singularity/code"
+datadir="${esdir}/singularity/data"
+i18ndir="${esdir}/singularity/i18n"
 catalog="messages"
 verbose=1
 new=0
@@ -140,8 +141,8 @@ if [[ $catalog == "messages" ]]; then
     potfile="${i18ndir}/messages.pot"
     pofilename="messages.po"
     message "updating template $(rel "$potfile") from sources in $(rel "$esdir")/code"
-    
-    cd "${esdir}/code" || fatal "could not access source code dir '${esdir}/code'"
+
+    cd "${codedir}" || fatal "could not access source code dir '${esdir}/code'"
     xgettext --language=Python \
              --from-code=UTF-8 \
              --force-po        \
@@ -157,8 +158,8 @@ elif [[ $catalog == "data_str" ]]; then
     pofilename="data_str.po"
     message "updating template $(rel "$potfile") from string files in $(rel "$esdir")/data"
 
-    cd "${esdir}/code" || fatal "could not access source code dir '${esdir}/data'"
-    python "$dir/data-translations.py" -o $tempfile
+    cd "${codedir}" || fatal "could not access source code dir '${esdir}/data'"
+    PYTHONPATH="${esdir}" python "${mydir}/data-translations.py" -o $tempfile
     cd "$dir"
 else
     invalid "Catalog $(rel "$catalog") does not exist"
