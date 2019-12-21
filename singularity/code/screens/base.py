@@ -118,28 +118,19 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
                                                 update_func=self.on_slider_change,
                                                 slider_size=2)
 
-        self.add_key_handler(pygame.K_DOWN, self.listbox.got_key, priority=50, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_UP, self.listbox.got_key, priority=50, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_LEFT, self._got_slider_key, priority=50, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_RIGHT, self._got_slider_key, priority=50, only_on_event_type=pygame.KEYDOWN)
+        self.add_handler(constants.KEY, self._got_key, priority=5)
 
-        for k in [
-            pygame.K_0,
-            pygame.K_1,
-            pygame.K_2,
-            pygame.K_3,
-            pygame.K_4,
-            pygame.K_5,
-            pygame.K_6,
-            pygame.K_7,
-            pygame.K_8,
-            pygame.K_9,
-            pygame.K_BACKSPACE,
-            pygame.K_DELETE,
-        ]:
-            self.add_key_handler(k, self.count_field.handle_key, priority=50, only_on_event_type=pygame.KEYDOWN)
+    def _got_key(self, event):
+        if event.type != pygame.KEYDOWN:
+            return
+        self._got_slider_key(event)
+        self.listbox.got_key(event)
+        self.count_field.cursor_pos = len(self.count_field.text)
+        self.count_field.handle_key(event)
 
     def _got_slider_key(self, event):
+        if event.key not in (pygame.K_LEFT, pygame.K_RIGHT):
+            return
         go_lower = (event.key == pygame.K_LEFT)
         big_jump = (event.mod & pygame.KMOD_SHIFT)
         tiny_jump = (event.mod & pygame.KMOD_CTRL)
