@@ -1,7 +1,7 @@
 # Contributing to Endgame: Singularity
 
-We welcome contributions for everyting - including this possibly
-incomplete document.
+We welcome contributions for everything - including this possibly
+incomplete document.  :)
 
 ## Translations
 
