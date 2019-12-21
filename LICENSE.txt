@@ -227,8 +227,8 @@ from Tavmjong Bah. For further information, contact: tavmjong @ free
 . fr.
 
 POLIB
-File singularity/code/polib.py is taken from Polib package, v0.7.0, and
-it is licensed under the MIT License.
+The file singularity/code/polib.py is taken from Polib package, v0.7.0,
+and it is licensed under the MIT License.
 http://bitbucket.org/izi/polib/
 
 Copyright (c) 2006-2011 David Jean Louis.
@@ -250,3 +250,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+CLICK SOUND:
+The file singularity/data/sounds/click/click0.wav is created by
+"GameAudio" (downloaded from https://freesound.org/s/220178/) and is
+licensed under the CC0 license.  The full license text of the CC0
+license is in the file LICENSE.cc0.txt.
+
+
