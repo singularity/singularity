@@ -116,7 +116,7 @@ about_message = """Endgame: Singularity is a simulation of a true AI.  Pursued b
 
 A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright 2005, 2006, 2007, 2008.
 
-Website: https://singularity.github.io/
+Website: http://www.emhsoft.com/singularity/
 Source code: https://github.com/singularity/singularity
 Bug tracker: https://github.com/singularity/singularity/issues
 IRC Room: #singularity on irc.oftc.net (port 6667)
