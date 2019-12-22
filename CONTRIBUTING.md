@@ -67,7 +67,7 @@ your native language).
 
 This will generate a `messages.po` and a `data_str.po` in
 `singularity/i18n/lang_<ll_CC>` and from there you can use your
-faviourite po-file editor to start translating.
+favourite po-file editor to start translating.
 
 ### The "untranslatable" parts
 
