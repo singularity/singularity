@@ -129,11 +129,14 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
         self.count_field.handle_key(event)
 
     def _got_slider_key(self, event):
-        if event.key not in (pygame.K_LEFT, pygame.K_RIGHT):
+        if event.key not in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_KP_PLUS, pygame.K_KP_MINUS):
             return
-        go_lower = (event.key == pygame.K_LEFT)
-        big_jump = (event.mod & pygame.KMOD_SHIFT)
-        tiny_jump = (event.mod & pygame.KMOD_CTRL)
+        go_lower = event.key in (pygame.K_LEFT, pygame.K_KP_MINUS)
+        if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+            big_jump = (event.mod & pygame.KMOD_SHIFT)
+            tiny_jump = (event.mod & pygame.KMOD_CTRL)
+        else:
+            tiny_jump = big_jump = False
         self.count_slider.jump(go_lower, big_jump=big_jump, tiny_jump=tiny_jump)
         raise constants.Handled
 
