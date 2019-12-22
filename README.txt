@@ -120,7 +120,7 @@ first remove any MP3s you may have added to the soundtrack.
 
 We welcome contributions! :)
 
-Please see [CONTRIBUTING.md]() for details about contributing to
+Please see CONTRIBUTING.md for details about contributing to
 Endgame: Singularity.
 
 
