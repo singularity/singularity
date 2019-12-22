@@ -118,20 +118,11 @@ first remove any MP3s you may have added to the soundtrack.
 
 ## CONTRIBUTING
 
-All suggestions, translations, code, etc. are welcomed, though it would be
-wise to tell us before starting work on any large projects.  Join and/or
-send mail to endgame-singularity@googlegroups.com for more details.
+We welcome contributions! :)
 
-### CONTRIBUTING TRANSLATIONS
-To add a new translation, please use the 'traduko' and 'gettext-singularity'
-tools in utils/ dir. Their --help option should walk you through its usage.
-If you have any questions contact us at endgame-singularity-dev@googlegroups.com
-Note that the resulting file will be licensed either under the CC-BY-SA 3.0
-license (for *.dat files created with traduko) or the game's code license
-(for the *.po files created by gettext-singularity), both described below.
+Please see [CONTRIBUTING.md]() for details about contributing to
+Endgame: Singularity.
 
- * Website: http://www.emhsoft.com/singularity/
- * IRC Room: #singularity on irc.oftc.net (port 6667)
 
 ## CREDITS AND LICENSES
 

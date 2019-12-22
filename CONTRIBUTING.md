@@ -3,6 +3,44 @@
 We welcome contributions for everything - including this possibly
 incomplete document.  :)
 
+Notable, you can help us even without being able to code:
+
+ * Translations! See the dedicated section on translations below
+ * UI themes
+ * Testing and filing bugs (#38, #115, #206, #207, #208 and many more)
+ * Submitting improvement requests (#19, #64, #83)
+
+Examples of past pull requests/patches that did not require code skills:
+
+ * We were looking for a new UI theme (#71) and got the `Nightmode` UI theme (#119)
+ * We needed help finding a new click sound (#201) and got one (#210)
+ * All our existing translations
+
+## Discussion fora
+Some of the developers are available in the following IRC room:
+
+ * IRC Room: #singularity on irc.oftc.net (port 6667)
+
+Please note that there may be a significant delay between messages here
+depending on your time zone and availability of the members in the channel.
+Therefore, we encourage you to ask your question and have patience until we
+are back.
+
+## License assumption of work provided
+
+We assume that all submissions are under the same license as the
+content being changed unless explicitly stated otherwise in the
+submission or content.  For new content, the license is assumed
+to the the default license of that content if not explicitly
+stated to be another license.
+
+Please see `LICENSE.txt` for details about the license terms.
+
+If you wish to submit work under a different license, please get in
+contact with us before starting the work.  Unfortunately, we may have
+to reject work that is not under a license compatible with the project
+licenses or the project goals.
+
 ## Translations
 
 ### Updating existing translations
@@ -65,4 +103,3 @@ or review the translations, please:
 
 Please submit it as a pull request against the master branch via
 https://github.com/singularity/singularity/pulls.
-
