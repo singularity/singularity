@@ -7,7 +7,7 @@ Pre-built versions of Endgame: Singularity are currently available for Windows
 and Mac OS X. Linux does not require building, and can run directly from source
 
 ### RUNNING FROM SOURCE
-You will need Python (2.7+), pygame (1.9+), and NumPy.
+You will need Python (2.7+ or 3.7+), pygame (1.9+), and NumPy.
 This game should work on Linux, Windows, and Mac OS X as long as the preceding
 requirements are met.  However, all development was done in Linux, so glitches
 may be present in OS X and Windows.
@@ -29,9 +29,13 @@ but the game itself should work properly.
 
 ## RUNNING THE GAME
 
-On Linux and most Unix-like other platforms, running "python singularity.py",
-or simply "singularity", will start the game. If using the Windows compile,
-just run singularity.exe
+On Linux and most Unix-like other platforms, running `python3 -m singularity` in
+the git checkout will start the game (or simply `singularity` if installed via
+a Linux distribution). If you are using the Windows compile, just run
+`singularity.exe`.
+
+For simplicity, there is also a sh wrapper `./run_singularity` to
+start singularity.
 
 ### SOME COMMAND-LINE OPTIONS
 

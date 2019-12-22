@@ -32,7 +32,7 @@ setup(
     ],
     entry_points={
         'gui_scripts': [
-            'singularity=singularity:main',
+            'singularity=singularity.__main__:main',
         ],
     },
 )
