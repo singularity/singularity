@@ -51,14 +51,12 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.no_button.anchor = constants.BOTTOM_CENTER
 
     def adjust_slider(self, event):
+        if event.type != pygame.KEYDOWN:
+            return
         if 0 <= self.listbox.list_pos < len(self.listbox.list):
-            go_lower = (event.key == pygame.K_LEFT)
-            big_jump = (event.mod & pygame.KMOD_SHIFT)
-            tiny_jump = (event.mod & pygame.KMOD_CTRL)
-
             index = self.listbox.list_pos - self.listbox.scrollbar.scroll_pos
             canvas = self.listbox.display_elements[index]
-            canvas.slider.jump(go_lower, big_jump, tiny_jump)
+            canvas.slider.handle_key(event)
 
     def on_select(self, description_pane, key):
         if key in g.pl.techs:

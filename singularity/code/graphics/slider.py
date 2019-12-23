@@ -174,6 +174,18 @@ class Slider(button.Button):
         else:
             self.slider_pos = self.safe_pos(self.slider_pos + jump_dist)
 
+    def handle_key(self, event):
+        if event.key not in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_KP_PLUS, pygame.K_KP_MINUS):
+            return
+        go_lower = event.key in (pygame.K_LEFT, pygame.K_KP_MINUS)
+        if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+            big_jump = (event.mod & pygame.KMOD_SHIFT)
+            tiny_jump = (event.mod & pygame.KMOD_CTRL)
+        else:
+            tiny_jump = big_jump = False
+        self.jump(go_lower, big_jump=big_jump, tiny_jump=tiny_jump)
+        raise constants.Handled
+
     def activated(self, event):
         assert event.type == pygame.MOUSEBUTTONUP
         if self.horizontal:
