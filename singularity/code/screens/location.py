@@ -170,6 +170,7 @@ class LocationScreen(dialog.Dialog):
 
     def show(self):
         self.needs_rebuild = True
+        self.listbox.has_focus = True
         return super(LocationScreen, self).show()
 
     def rebuild(self):
