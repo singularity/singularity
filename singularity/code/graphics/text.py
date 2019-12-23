@@ -415,8 +415,8 @@ class EditableText(widget.FocusWidget, Text):
         self.parent.remove_handler(constants.KEYDOWN, self.handle_key)
         self.parent.remove_handler(constants.CLICK, self.handle_click)
 
-    def handle_key(self, event):
-        if not self.has_focus:
+    def handle_key(self, event, require_focus=True):
+        if require_focus and not self.has_focus:
             return
         assert event.type == pygame.KEYDOWN
         if event.key == pygame.K_BACKSPACE:

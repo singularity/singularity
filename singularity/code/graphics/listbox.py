@@ -120,8 +120,10 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     def safe_pos(self, raw_pos):
         return max(0, min(len(self.list) - 1, raw_pos))
 
-    def got_key(self, event):
-        if not self.has_focus or not self.item_selectable:
+    def got_key(self, event, require_focus=True):
+        if not self.item_selectable:
+            return
+        if require_focus and not self.has_focus:
             return
 
         if event.key == pygame.K_UP:
