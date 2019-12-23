@@ -69,7 +69,7 @@ class MessageListDialog(dialog.YesNoDialog):
                                text_size=20)
 
         self.prev_button = button.FunctionButton(self, (-.78, -.01), (-.2, -.1),
-                                                 text=_("&PREV"), autohotkey=True,
+                                                 text=_("P&REV"), autohotkey=True,
                                                  anchor=constants.TOP_RIGHT,
                                                  text_size=28,
                                                  function=self.prev_message)   

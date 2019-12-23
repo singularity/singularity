@@ -440,7 +440,7 @@ msgid "%s Money"
 msgstr "%s денег"
 
 #: screens/message.py:72
-msgid "&PREV"
+msgid "P&REV"
 msgstr "ПРЕД."
 
 #: screens/message.py:78
