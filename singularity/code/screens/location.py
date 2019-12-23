@@ -317,8 +317,8 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
 
         self._update_desc_pane()
         self.needs_rebuild = True
-        res = super(NewBaseDialog, self).show()
-        return res
+        self.listbox.has_focus = True
+        return super(NewBaseDialog, self).show()
 
     def handle_update(self, new_item_pos):
         super(NewBaseDialog, self).handle_update(new_item_pos)
