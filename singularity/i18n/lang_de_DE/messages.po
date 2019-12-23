@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: endgame-singularity-dev@googlegroups.com\n"
-"POT-Creation-Date: 2019-12-21 10:47+0100\n"
+"POT-Creation-Date: 2019-12-23 18:07+0100\n"
 "PO-Revision-Date: 2018-08-21 07:44+0200\n"
 "Last-Translator: Philippe <xenega@gmx.com>\n"
 "Language-Team: German\n"
@@ -34,7 +34,7 @@ msgid "Build cost:"
 msgstr ""
 
 #. Maintenace cost.
-#: base.py:134 screens/report.py:103 screens/base.py:455
+#: base.py:134 screens/report.py:103 screens/base.py:472
 msgid "Maintenance:"
 msgstr ""
 
@@ -95,9 +95,9 @@ msgid "&BUILD"
 msgstr "&Bauen"
 
 #. Update buttons translations
-#: data.py:626 screens/location.py:203 screens/main_menu.py:86
-#: screens/knowledge.py:87 screens/map.py:246 screens/map.py:404
-#: screens/report.py:73 screens/base.py:470
+#: data.py:626 screens/knowledge.py:87 screens/map.py:246 screens/map.py:404
+#: screens/report.py:73 screens/main_menu.py:86 screens/base.py:487
+#: screens/location.py:204
 msgid "&BACK"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr "&Weiter"
 msgid "&SKIP"
 msgstr "&Überspringen"
 
-#: data.py:631 screens/main_menu.py:98 screens/map.py:402
+#: data.py:631 screens/map.py:402 screens/main_menu.py:98
 msgid "&QUIT"
 msgstr ""
 
@@ -259,123 +259,21 @@ msgstr ""
 msgid "{MODIFIER} MALUS"
 msgstr ""
 
-#: screens/location.py:140
-msgid "Building Base"
-msgstr ""
-
-#: screens/location.py:142 screens/location.py:155 screens/base.py:425
-#, python-format
-msgid "Completion in %s."
-msgstr ""
-
-#: screens/location.py:147
-msgid "Empty"
-msgstr ""
-
-#: screens/location.py:149
-msgid "Incomplete"
-msgstr ""
-
-#: screens/location.py:153
-msgid "Building CPU"
-msgstr ""
-
-#: screens/location.py:158
-msgid "Building Item"
-msgstr ""
-
-#: screens/location.py:161
-msgid "Complete"
-msgstr ""
-
-#: screens/location.py:164 screens/knowledge.py:228 buyable.py:67
-#, python-format
-msgid "%s CPU"
-msgstr ""
-
-#. Update dialog translations
-#: screens/location.py:193
-msgid "Enter a name for the base"
-msgstr ""
-
-#: screens/location.py:194
-msgid "Are you sure you want to destroy this base?"
-msgstr ""
-
-#: screens/location.py:195
-msgid "Destroying my last active base would be suicidal.  I cannot do that."
-msgstr ""
-
-#. Update buttons translations
-#: screens/location.py:198
-msgid "&OPEN BASE"
-msgstr ""
-
-#: screens/location.py:199
-msgid "&RENAME BASE"
-msgstr ""
-
-#: screens/location.py:200
-msgid "&POWER STATE"
-msgstr ""
-
-#: screens/location.py:201
-msgid "&NEW BASE"
-msgstr ""
-
-#: screens/location.py:202
-msgid "&DESTROY BASE"
-msgstr ""
-
-#: screens/location.py:282
-msgid "Name"
-msgstr ""
-
-#. Translators: Format string for the name of a new base
-#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
-#: screens/location.py:359
-#, python-brace-format
-msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr ""
-
-#. Translators: Name of a new base when location has no cities
-#: screens/location.py:363
-#, python-brace-format
-msgid "{BASETYPE} {NUMBER}"
-msgstr ""
-
 #: screens/log.py:66
 msgid "Filters"
 msgstr ""
 
-#: screens/log.py:83 screens/savegame.py:159 screens/map.py:538
-#: screens/map.py:808
+#: screens/log.py:84 screens/map.py:538 screens/map.py:808
+#: screens/savegame.py:171
 msgid "DAY"
 msgstr ""
 
-#: screens/log.py:115 screens/log.py:125
+#: screens/log.py:116 screens/log.py:126
 msgid "SHOW"
 msgstr ""
 
-#: screens/log.py:118 screens/log.py:127
+#: screens/log.py:119 screens/log.py:128
 msgid "HIDE"
-msgstr ""
-
-#. Update buttons translations
-#: screens/main_menu.py:95
-msgid "&NEW GAME"
-msgstr ""
-
-#: screens/main_menu.py:96 screens/map.py:396
-msgid "&LOAD GAME"
-msgstr ""
-
-#: screens/main_menu.py:97 screens/map.py:399
-msgid "&OPTIONS"
-msgstr ""
-
-#: screens/main_menu.py:99
-msgid "&ABOUT"
 msgstr ""
 
 #: screens/stat.py:63
@@ -437,48 +335,17 @@ msgstr ""
 msgid "%s Money"
 msgstr ""
 
+#: screens/knowledge.py:228 screens/location.py:164 buyable.py:67
+#, python-format
+msgid "%s CPU"
+msgstr ""
+
 #: screens/message.py:72
-msgid "&PREV"
+msgid "P&REV"
 msgstr ""
 
 #: screens/message.py:78
 msgid "&NEXT"
-msgstr ""
-
-#: screens/savegame.py:130
-msgid "UNKNOWN"
-msgstr ""
-
-#. Update buttons translations
-#: screens/savegame.py:172
-msgid "Delete"
-msgstr ""
-
-#: screens/savegame.py:173
-msgid "Filter: "
-msgstr ""
-
-#: screens/savegame.py:186
-msgid "Are you sure to delete the saved game ?"
-msgstr ""
-
-#: screens/savegame.py:202
-#, python-brace-format
-msgid ""
-"\n"
-"This save file '{SAVE_NAME}' is from an unsupported or invalid version:\n"
-"{VERSION}.\n"
-msgstr ""
-
-#: screens/savegame.py:212
-#, python-brace-format
-msgid ""
-"\n"
-"Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.\n"
-"\n"
-"A report was written out to{LOG_TEXT}\n"
-"Please create a issue with this report and this savegame at Github:\n"
-"https://github.com/singularity/singularity\n"
 msgstr ""
 
 #: screens/map.py:225
@@ -519,6 +386,14 @@ msgstr ""
 
 #: screens/map.py:393
 msgid "&SAVE GAME"
+msgstr ""
+
+#: screens/map.py:396 screens/main_menu.py:96
+msgid "&LOAD GAME"
+msgstr ""
+
+#: screens/map.py:399 screens/main_menu.py:97
+msgid "&OPTIONS"
 msgstr ""
 
 #: screens/map.py:412
@@ -771,90 +646,215 @@ msgstr ""
 msgid "Pool difference:"
 msgstr ""
 
-#: screens/research.py:71
+#. Update buttons translations
+#: screens/main_menu.py:95
+msgid "&NEW GAME"
+msgstr ""
+
+#: screens/main_menu.py:99
+msgid "&ABOUT"
+msgstr ""
+
+#: screens/base.py:137
+msgid "Number of items"
+msgstr ""
+
+#: screens/base.py:225 screens/base.py:232
+msgid "CHANGE"
+msgstr ""
+
+#: screens/base.py:319
+#, python-format
+msgid "\"%(value)s\" does not seem to be a valid integer."
+msgstr ""
+
+#: screens/base.py:330
+#, python-format
+msgid "Please choose an integer between 1 and %(limit)s."
+msgstr ""
+
+#: screens/base.py:332
+#, python-format
+msgid "The base cannot support any additional number of %(item_name)s."
+msgstr ""
+
+#: screens/base.py:349
+msgid ""
+"I will need to take the existing processors offline while I install the new "
+"ones. Continue anyway?"
+msgstr ""
+
+#: screens/base.py:363
+msgid ""
+"I will need to remove the existing different processors while I install the "
+"new type. Continue anyway?"
+msgstr ""
+
+#: screens/base.py:433
+msgid "N/A"
+msgstr ""
+
+#: screens/base.py:435
+msgid "None"
+msgstr ""
+
+#: screens/base.py:442 screens/location.py:142 screens/location.py:155
+#, python-format
+msgid "Completion in %s."
+msgstr ""
+
+#: screens/base.py:456
+#, python-format
+msgid "x%d (max)"
+msgstr ""
+
+#: screens/base.py:458
+#, python-format
+msgid "(room for %d)"
+msgstr ""
+
+#. Translators: current and maximum number of CPUs in a base
+#: screens/base.py:461
+#, python-brace-format
+msgid "x{CURRENT:d} (max {SIZE:d})"
+msgstr ""
+
+#. Base Total CPU.
+#: screens/base.py:469
+#, python-format
+msgid "CPU: %d"
+msgstr ""
+
+#: screens/location.py:140
+msgid "Building Base"
+msgstr ""
+
+#: screens/location.py:147
+msgid "Empty"
+msgstr ""
+
+#: screens/location.py:149
+msgid "Incomplete"
+msgstr ""
+
+#: screens/location.py:153
+msgid "Building CPU"
+msgstr ""
+
+#: screens/location.py:158
+msgid "Building Item"
+msgstr ""
+
+#: screens/location.py:161
+msgid "Complete"
+msgstr ""
+
+#. Update dialog translations
+#: screens/location.py:194
+msgid "Enter a name for the base"
+msgstr ""
+
+#: screens/location.py:195
+msgid "Are you sure you want to destroy this base?"
+msgstr ""
+
+#: screens/location.py:196
+msgid "Destroying my last active base would be suicidal.  I cannot do that."
+msgstr ""
+
+#. Update buttons translations
+#: screens/location.py:199
+msgid "&OPEN BASE"
+msgstr ""
+
+#: screens/location.py:200
+msgid "&RENAME BASE"
+msgstr ""
+
+#: screens/location.py:201
+msgid "&POWER STATE"
+msgstr ""
+
+#: screens/location.py:202
+msgid "&NEW BASE"
+msgstr ""
+
+#: screens/location.py:203
+msgid "&DESTROY BASE"
+msgstr ""
+
+#: screens/location.py:283
+msgid "Name"
+msgstr ""
+
+#. Translators: Format string for the name of a new base
+#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
+#: screens/location.py:360
+#, python-brace-format
+msgid "{CITY} {BASETYPE} {NUMBER}"
+msgstr ""
+
+#. Translators: Name of a new base when location has no cities
+#: screens/location.py:364
+#, python-brace-format
+msgid "{BASETYPE} {NUMBER}"
+msgstr ""
+
+#: screens/research.py:73
 #, python-format
 msgid "%s money per CPU per day."
 msgstr ""
 
-#: screens/research.py:173
+#: screens/research.py:175
 #, python-brace-format
 msgid ""
 "This technology is too dangerous to research on any of the computers I have. "
 "{TEXT}"
 msgstr ""
 
-#: screens/research.py:181
+#: screens/research.py:183
 msgid "CPU Pool"
 msgstr ""
 
-#: screens/research.py:182
+#: screens/research.py:184
 #, python-format
 msgid "Research %s"
 msgstr ""
 
-#: screens/base.py:120
-msgid "Number of items"
+#: screens/savegame.py:142
+msgid "UNKNOWN"
 msgstr ""
 
-#: screens/base.py:208 screens/base.py:215
-msgid "CHANGE"
+#. Update buttons translations
+#: screens/savegame.py:184
+msgid "Delete"
 msgstr ""
 
-#: screens/base.py:302
-#, python-format
-msgid "\"%(value)s\" does not seem to be a valid integer."
+#: screens/savegame.py:185
+msgid "Filter: "
 msgstr ""
 
-#: screens/base.py:313
-#, python-format
-msgid "Please choose an integer between 1 and %(limit)s."
+#: screens/savegame.py:198
+msgid "Are you sure to delete the saved game ?"
 msgstr ""
 
-#: screens/base.py:315
-#, python-format
-msgid "The base cannot support any additional number of %(item_name)s."
-msgstr ""
-
-#: screens/base.py:332
-msgid ""
-"I will need to take the existing processors offline while I install the new "
-"ones. Continue anyway?"
-msgstr ""
-
-#: screens/base.py:346
-msgid ""
-"I will need to remove the existing different processors while I install the "
-"new type. Continue anyway?"
-msgstr ""
-
-#: screens/base.py:416
-msgid "N/A"
-msgstr ""
-
-#: screens/base.py:418
-msgid "None"
-msgstr ""
-
-#: screens/base.py:439
-#, python-format
-msgid "x%d (max)"
-msgstr ""
-
-#: screens/base.py:441
-#, python-format
-msgid "(room for %d)"
-msgstr ""
-
-#. Translators: current and maximum number of CPUs in a base
-#: screens/base.py:444
+#: screens/savegame.py:214
 #, python-brace-format
-msgid "x{CURRENT:d} (max {SIZE:d})"
+msgid ""
+"\n"
+"This save file '{SAVE_NAME}' is from an unsupported or invalid version:\n"
+"{VERSION}.\n"
 msgstr ""
 
-#. Base Total CPU.
-#: screens/base.py:452
-#, python-format
-msgid "CPU: %d"
+#: screens/savegame.py:224
+#, python-brace-format
+msgid ""
+"\n"
+"Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.\n"
+"\n"
+"A report was written out to{LOG_TEXT}\n"
+"Please create a issue with this report and this savegame at Github:\n"
+"https://github.com/singularity/singularity\n"
 msgstr ""
 
 #: tech.py:90
