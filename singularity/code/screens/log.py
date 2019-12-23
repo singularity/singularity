@@ -71,6 +71,7 @@ class LogScreen(dialog.ChoiceDialog):
 
     def show(self):
         self.needs_rebuild = True
+        self.listbox.has_focus = True
         return super(LogScreen, self).show()
 
     def show_filters(self):
