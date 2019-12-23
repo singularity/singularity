@@ -41,22 +41,26 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
 
         self.desc_func = self.on_select
 
-        self.add_key_handler(pygame.K_LEFT, self.adjust_slider, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_RIGHT, self.adjust_slider, only_on_event_type=pygame.KEYDOWN)
-
         self.help_dialog = dialog.MessageDialog(self)
 
         self.yes_button.parent = None
         self.no_button.pos = (-.5,-.99)
         self.no_button.anchor = constants.BOTTOM_CENTER
 
-    def adjust_slider(self, event):
+        self.add_handler(constants.KEY, self._got_key, priority=5)
+
+    def _got_key(self, event):
         if event.type != pygame.KEYDOWN:
             return
+        # If a valid slider is selected, we let it move first.
         if 0 <= self.listbox.list_pos < len(self.listbox.list):
             index = self.listbox.list_pos - self.listbox.scrollbar.scroll_pos
             canvas = self.listbox.display_elements[index]
+            # Raises Handled for us if the key was relevant to the slider
             canvas.slider.handle_key(event)
+
+        # Let the list box get the rest of the keys if it wants them
+        self.listbox.got_key(event, require_focus=False)
 
     def on_select(self, description_pane, key):
         if key in g.pl.techs:

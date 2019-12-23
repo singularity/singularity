@@ -22,6 +22,8 @@ from __future__ import absolute_import
 
 import time
 
+import pygame
+
 from singularity.code import g, savegame as sv, difficulty
 from singularity.code.graphics import dialog, button, text, constants, listbox
 
@@ -55,6 +57,16 @@ class SavegameScreen(dialog.ChoiceDialog):
                                                    anchor=constants.BOTTOM_CENTER,
                                                    autohotkey=True,
                                                    function=self.delete_savegame)
+
+        self.add_handler(constants.KEY, self._got_key, priority=5)
+
+    def _got_key(self, event):
+        if event.type != pygame.KEYDOWN:
+            return
+        # Try the list box first (for arrow keys)
+        self.listbox.got_key(event, require_focus=False)
+        # Give the rest of the text field
+        self.text_field.handle_key(event, require_focus=False)
 
     def _search_for_savegame(self, new_text):
         if not new_text:
@@ -225,5 +237,4 @@ LOG_TEXT = (":\n" + g.logfile if g.logfile is not None else " console output."))
         self.reload_savegames()
         self.text_field.text = ''
         self.text_field.cursor_pos = 0
-        self.text_field.has_focus = True
         return super(SavegameScreen, self).show()

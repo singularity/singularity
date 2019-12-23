@@ -34,8 +34,11 @@ state_colors = dict(
     entering_stasis = "base_state_entering_stasis",
     leaving_stasis  = "base_state_leaving_stasis",
 )
+
+
 class BuildDialog(dialog.ChoiceDescriptionDialog):
     type = widget.causes_rebuild("_type")
+
     def __init__(self, parent, pos=(0, 0), size=(-1, -1),
                  anchor=constants.TOP_LEFT, *args, **kwargs):
         super(BuildDialog, self).__init__(parent, pos, size, anchor, *args,
@@ -44,6 +47,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         self.type = None
         self.item = None
         self.desc_func = self.on_change
+        self.add_handler(constants.KEY, self._got_key, priority=5)
 
     def show(self):
         self.list = []
@@ -89,6 +93,11 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
     def on_close_dialog(self):
         g.pl.considered_buyables = []
 
+    def _got_key(self, event):
+        if event.type != pygame.KEYDOWN:
+            return
+        self.listbox.got_key(event, require_focus=False)
+
 
 class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
     def __init__(self, parent, *args, **kwargs):
@@ -115,6 +124,14 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
                                                 horizontal=True, priority=150,
                                                 update_func=self.on_slider_change,
                                                 slider_size=2)
+
+    def _got_key(self, event):
+        super(MultipleBuildDialog, self)._got_key(event)
+        if event.type != pygame.KEYDOWN:
+            return
+        self.count_slider.handle_key(event)
+        self.count_field.cursor_pos = len(self.count_field.text)
+        self.count_field.handle_key(event, require_focus=False)
 
     def rebuild(self):
         self.count_label.text = _("Number of items")
