@@ -33,8 +33,6 @@ class MainMenu(dialog.TopDialog):
                                        **kwargs
                                        )
 
-        self.difficulty_dialog = dialog.SimpleMenuDialog(self)
-
         self.map_screen = map.MapScreen(self)
         self.new_game_button = \
             button.FunctionButton(self, (.5, .20), (.25, .08),
