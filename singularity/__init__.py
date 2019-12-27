@@ -50,9 +50,14 @@ else:
 def main():
     # Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
     # so g.get_save_folder reports the correct location of preferences file
+    # We also track --debug/-d to enable some stacktraces during initialization
     for parser in sys.argv[1:]:
-        if parser == "--singledir" or parser == "-s": g.force_single_dir = True
-        if parser == "--multidir"                   : g.force_single_dir = False
+        if parser == "--singledir" or parser == "-s":
+            g.force_single_dir = True
+        elif parser == "--multidir":
+            g.force_single_dir = False
+        elif parser == '--debug' or parser == '-d':
+            g.debug = True
 
     print("Singularity %s (commit: %s)" % (__version__, __release_commit__))
     print("Running under Python %s" % sys.version.replace("\n", ''))
@@ -72,8 +77,12 @@ def main():
         import pygame
         pygame.surfarray.use_arraytype("numpy")
     except ValueError:
+        if g.debug:
+            raise
         raise SystemExit("Endgame: Singularity requires NumPy.")
     except ImportError:
+        if g.debug:
+            raise
         raise SystemExit("Endgame: Singularity requires pygame.")
 
     import singularity.code.graphics.g as gg
