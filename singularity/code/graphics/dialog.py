@@ -209,6 +209,7 @@ class Dialog(text.Text):
 
         self.visible = True
         self.key_down = None
+        self.needs_rebuild = True
         self.start_timer()
 
         # Pretend to jiggle the mouse pointer, to force buttons to update their

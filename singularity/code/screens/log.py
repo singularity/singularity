@@ -70,7 +70,6 @@ class LogScreen(dialog.ChoiceDialog):
         super(LogScreen, self).rebuild()
 
     def show(self):
-        self.needs_rebuild = True
         self.listbox.has_focus = True
         return super(LogScreen, self).show()
 

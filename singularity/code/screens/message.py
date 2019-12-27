@@ -116,5 +116,4 @@ class MessageListDialog(dialog.YesNoDialog):
         
     def show(self):
         self.list_pos = 0
-        self.needs_rebuild = True
         return super(MessageListDialog, self).show()

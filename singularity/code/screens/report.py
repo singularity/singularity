@@ -155,10 +155,6 @@ class ReportScreen(dialog.Dialog):
                   background_color="clear",
                   align=constants.RIGHT, valign=constants.TOP)
 
-    def show(self):
-        self.needs_rebuild = True
-        return super(ReportScreen, self).show()
-
     def format_toggle(self, button, midnight_stop):
         self.midnight_stop = midnight_stop
         button.chosen_one()

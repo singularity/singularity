@@ -67,7 +67,6 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
             self.default = self.parent.get_current(self.type).spec.id
 
         self._update_desc_pane()
-        self.needs_rebuild = True
         return super(BuildDialog, self).show()
 
     def on_description_change(self):
@@ -406,10 +405,6 @@ class BaseScreen(dialog.Dialog):
     def switch_base(self, forwards):
         self.base = self.base.next_base(forwards)
         self.needs_rebuild = True
-
-    def show(self):
-        self.needs_rebuild = True
-        return super(BaseScreen, self).show()
 
     def rebuild(self):
         self.name_display.text="%s (%s)" % (self.base.name, self.base.spec.name)

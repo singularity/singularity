@@ -169,7 +169,6 @@ class LocationScreen(dialog.Dialog):
                 canvas.power_display.text = ''
 
     def show(self):
-        self.needs_rebuild = True
         self.listbox.has_focus = True
         return super(LocationScreen, self).show()
 
