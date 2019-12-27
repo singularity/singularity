@@ -82,6 +82,10 @@ def main():
         raise SystemExit("Endgame: Singularity requires NumPy.")
     except ImportError:
         if g.debug:
+            print("Failed to import pygame.  Python's sys.path is:")
+            for d in sys.path:
+                print("    %s" % str(d))
+            print()
             raise
         raise SystemExit("Endgame: Singularity requires pygame.")
 
