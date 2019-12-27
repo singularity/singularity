@@ -5,4 +5,4 @@
 DIR="$(dirname "$0")"
 PYTHON=${PYTHON:-python3}
 PYPATH=${DIR}${PYTHONPATH:+:${PYTHONPATH}}
-PYTHONPATH="${PYPATH}" "${PYTHON}" -m singularity
+PYTHONPATH="${PYPATH}" "${PYTHON}" -m singularity "$@"
