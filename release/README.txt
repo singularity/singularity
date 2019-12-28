@@ -31,12 +31,12 @@ To cut the tag:
    * $ cd singularity               # The root, where this file is.
    * $ git pull                     # Make sure that everything is up-to-date.
    * $ git commit                   # Actually make the release.
-   * $ git tag singularity-x.yy     # Generate the release.
+   * $ git tag vx.yy                # Generate the release.
 
 
 After cutting the tag:
    * Generate the tarball:
-      * $ git archive --worktree-attributes --prefix=singularity-x.yy/ -o singularity-x.yy.tar.gz singularity-x.yy
+      * $ git archive --worktree-attributes --prefix=singularity-x.yy/ -o singularity-x.yy.tar.gz vx.yy
    * Generate the py2exe:
       * Extract tarball (if Windows machine lacks ability)
       * Copy directory to windows computer with python, pygame, numpy and py2exe.
