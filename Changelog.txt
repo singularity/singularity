@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-vX.YY (release ????.??.??):
+v1.0a2 (2019.12.28):
 
 GAME CONTENT CHANGES:
 - The location Antarctic is now considered as safe as the Ocean
