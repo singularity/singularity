@@ -56,9 +56,10 @@ def cost(c):
     s = ', '.join(['%s %s' % (g.to_money(k), label) for label,k in zip(["money", "CPU", "days"], c) if k])
     return s and '\\n'+s or ''
 
-j = dict([ (v.name,',fillcolor="#ffcccc"') for k,v in g.tasks.iteritems() if v.type != "jobs"])
 
-f = file("techs.dot", 'w')
+j = {v.name: ',fillcolor="#ffcccc"' for k, v in g.tasks.items() if v.type != "jobs"}
+
+f = open("techs.dot", 'w')
 s = ("""\
 digraph g {
 ranksep=0.15;
@@ -95,7 +96,7 @@ f.close()
 try:    system("dot -Tpng -o techs.png techs.dot")
 except: pass
 
-f = file('items.dot','w')
+f = open('items.dot', 'w')
 f.write(so_far)
 s = 'node [fillcolor="#ccccff"];\n'
 f.write(s)
