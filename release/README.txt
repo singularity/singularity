@@ -18,7 +18,6 @@ git submodule update --init release/windows
 Steps for cutting a new release:
 
 Before cutting the tag:
-   * Update the version number in setup.py.
    * Update the version number in singularity/__init__.py.
    * Update the version number in singularity/code/savegame.py if needed
    * Update the version number at the top of README.md.
