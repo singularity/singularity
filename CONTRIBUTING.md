@@ -32,7 +32,7 @@ We assume that all submissions are under the same license as the
 content being changed unless explicitly stated otherwise in the
 submission or content.  For new content, the license is assumed
 to the the default license of that content if not explicitly
-stated to be another license.
+stated to be under another license.
 
 Please see `LICENSE.txt` for details about the license terms.
 
