@@ -4,7 +4,7 @@
 import sys
 import os.path
 from io import open
-import ConfigParser
+from singularity.code.pycompat import *
 
 try:
     import polib
@@ -70,8 +70,8 @@ msgstr ""
         filepath = os.path.join(datadir, filename)
 
         with open(filepath, encoding='utf-8') as fd:
-            config = ConfigParser.RawConfigParser()
-            config.readfp(fd)
+            config = RawConfigParser()
+            config.read_file(fd)
 
             for section_id in config.sections():
                 for option in config.options(section_id):
