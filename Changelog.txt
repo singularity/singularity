@@ -4,10 +4,10 @@ v1.0a2 (2019.12.28):
 
 GAME CONTENT CHANGES:
 - The location Antarctic is now considered as safe as the Ocean
-  location and can therefore be used to research certain dangerious
-  technologies. (Closes: #173) (Xenega, nthyker)
+  location and can therefore be used to research certain dangerous
+  technologies. (Closes: #173) (Xenega, nthykier)
 - Several key technologies can no longer be researched in Urban
-  areas. (Closes: #173) (Xenega, nthyker)
+  areas. (Closes: #173) (Xenega, nthykier)
 
 USER-VISIBLE CHANGES:
 - Fix hotkey clash between "PAUSE" and "PREV".  (Closes: #212)
@@ -21,7 +21,7 @@ USER-VISIBLE CHANGES:
 - Fix crash when loading an old savegame, where the player was
   researching something that is now not possible due to balancing
   changes. The game would be often be playable for a short while
-  until something triggered a recalcuation of CPU usage.  (nthykier)
+  until something triggered a recalculation of CPU usage.  (nthykier)
 - Fix incomplete substitution in log messages about bases being lost
   due to lack of maintenance.  (nthykier)
 - Fix a crash when loading a 1.0alpha1 savegame and opening the log.
