@@ -148,7 +148,7 @@ def create_directories(force_single_dir):
         for item in defs[1:]:
 
             # No parent directory, abort.
-            if (item["parent"] not in read_dirs or read_dirs[item["parent"]] is None):
+            if item["parent"] not in read_dirs or not read_dirs[item["parent"]]:
                 continue
 
             parent_dir = read_dirs[item["parent"]][0]
