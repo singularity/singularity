@@ -222,7 +222,7 @@ def load_internal_id():
                 obj_type = obj_type.strip()
                 obj_id = obj_id.strip()
 
-                if not obj_type in g.internal_id_forward:
+                if obj_type not in g.internal_id_forward:
                     g.internal_id_forward[obj_type] = {}
                     g.internal_id_backward[obj_type] = {}
 
