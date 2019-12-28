@@ -94,7 +94,7 @@ check() {
 myname="${0##*/}"
 dir="$PWD"
 mydir=$(dirname "$(readlink -f "$0")")
-esdir="${mydir}/../../.."
+esdir="${mydir}/.."
 codedir="${esdir}/singularity/code"
 datadir="${esdir}/singularity/data"
 i18ndir="${esdir}/singularity/i18n"

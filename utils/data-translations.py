@@ -6,9 +6,14 @@ import os.path
 from io import open
 import ConfigParser
 
+try:
+    import polib
+except ImportError:
+    import singularity.code.polib as polib
+
 
 def get_esdir(myname):
-    esdir = os.path.abspath(os.path.join(os.path.dirname(myname), '../..'))
+    esdir = os.path.abspath(os.path.dirname(os.path.dirname(myname)))
     return esdir
 
 
@@ -31,12 +36,6 @@ def main():
 
 def generate_translations(output_file):
     esdir = get_esdir(__file__)
-    sys.path.insert(0, esdir)
-
-    try:
-        import polib
-    except ImportError:
-        import singularity.code.polib as polib
 
     with open(output_file, "w+", encoding='utf-8') as fd:
         fd.write(u"""
@@ -61,7 +60,7 @@ msgstr ""
 
     po = polib.pofile(output_file)
 
-    datadir = os.path.join(esdir, "data")
+    datadir = os.path.join(esdir, "singularity", "data")
     file_list = os.listdir(datadir)
 
     for filename in sorted(file_list):

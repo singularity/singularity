@@ -51,7 +51,7 @@ for your language (e.g. `fr_FR` or `pt_BR`).
 
 You can refresh the translations by using the command:
 
-     singularity/i18n/utils/gettext-singularity --catalog <messages|data_str>
+     utils/gettext-singularity --catalog <messages|data_str>
 
 The `--catalog` parameter determines whether the `messages.po` or the
 `data_str.po` file will be refreshed and checked.
@@ -60,7 +60,7 @@ The `--catalog` parameter determines whether the `messages.po` or the
 
 You can add translations for a new language by running:
 
-    singularity/i18n/utils/gettext-singularity --catalog <messages|data_str> --new <lang_code>
+    utils/gettext-singularity --catalog <messages|data_str> --new <lang_code>
 
 It will prompt you for a few details (such as the language name in
 your native language).
