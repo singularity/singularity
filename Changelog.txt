@@ -1,5 +1,70 @@
 Endgame: Singularity Changelog
 
+vX.YY (release ????.??.??):
+
+GAME CONTENT CHANGES:
+- The location Antarctic is now considered as safe as the Ocean
+  location and can therefore be used to research certain dangerious
+  technologies. (Closes: #173) (Xenega, nthyker)
+- Several key technologies can no longer be researched in Urban
+  areas. (Closes: #173) (Xenega, nthyker)
+
+USER-VISIBLE CHANGES:
+- Fix hotkey clash between "PAUSE" and "PREV".  (Closes: #212)
+  (danuker, nthykier)
+- Improve keyboard + focus handling for most dialogs by passing
+  keyboard events on to lists, sliders and text fields in the
+  dialog.  This enables most dialogs to be handled entirely using
+  keyboard only.  (Closes: #209, #211) (nthykier)
+- Replace the GUI click sound to be softer.  (Closes: #201, #210)
+  (danuker)
+- Fix crash when loading an old savegame, where the player was
+  researching something that is now not possible due to balancing
+  changes. The game would be often be playable for a short while
+  until something triggered a recalcuation of CPU usage.  (nthykier)
+- Fix incomplete substitution in log messages about bases being lost
+  due to lack of maintenance.  (nthykier)
+- Fix a crash when loading a 1.0alpha1 savegame and opening the log.
+  (Closes: #208) (nthykier)
+- Reduced the default size for text to ensure that most text fields
+  have a consistent text size. (Closes: #200) (nthykier)
+- Text fields now respond to the HOME + END keys and they move the
+  cursor to the start and end of the text field.  (nthykier)
+- Show the correct warning when attempting to load unsupported
+  savegames.  Previously, it would silently be omitted.  (nthykier)
+- Support loading old savegames with a particular corruption where
+  the number of items in a base were sometimes set to the invalid
+  value of 0.  The only sane fix is to reset the counter to 1 at
+  the expense of some bases "losing" CPU. (Closes:
+  https://bugs.launchpad.net/ubuntu/+source/singularity/+bug/931037,
+  https://code.google.com/p/endgame-singularity/issues/detail?id=107)
+  (nthykier)
+- Using the arrow keys on the research slider no longer trips "two"
+  clicks rather than one.  (Closes: #207,
+  https://bugs.launchpad.net/ubuntu/+source/singularity/+bug/531871)
+  (nthykier)
+- Buttons to construct base items are now disabled when the player
+  cannot built any item of that particular item.
+- Fixed a crash in the build dialog for a base if you tried to build
+  a security item but had not researched any for that particular base.
+  (Closes: #206) (nthykier)
+- Added savegame compat for some older development savegames known as
+  "0.31pre" by discarding the log entries from them. (Closes: #198,
+  #199) (nthykier)
+- Fixed a bug where trigger times of events where reset on loading
+  the game leading them to last longer than they should.  (nthykier)
+
+OTHER CHANGES:
+- Include version information in the error log to simplify reporting
+  of bugs and crashes.  (nthykier)
+
+Thanks to (in no particular order) for filing bugs, play testing and moral
+support:
+
+	Quix0r, danuker, rofl0r, PeterJust, rww (Launchpad),
+        scottparker (Launchpad)
+
+
 v1.0a1 (release 2019.12.07):
 
 GAME CONTENT CHANGES:
