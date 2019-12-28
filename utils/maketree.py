@@ -194,7 +194,7 @@ for tech_spec in g.techs.values():
     pre = tech_spec.prerequisites_in_cnf_format()
     if not pre or tech_spec.danger < 1:
         continue
-    # Safety requirement is the highest satefy required
+    # Safety requirement is the highest safety required
     # between each "AND" and the lowest between "OR".
     # MAX(
     #   MIN(a1.danger, [OR] a2.danger, [OR] ...), [AND]
