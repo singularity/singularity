@@ -84,7 +84,7 @@ so_far += '\n'
 
 for n,t in g.techs.items():
     if n == "unknown_tech": continue
-    s  = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t.cost_left), j.get(n,''))
+    s  = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t.cost), j.get(n,''))
     f.write(s)
     so_far += s
 
