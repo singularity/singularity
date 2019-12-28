@@ -96,7 +96,11 @@ dirs_errs = []
 def create_directories(force_single_dir):
 
     # root dir: the install directory for E:S.
-    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    if getattr(sys, 'frozen', False):
+        # This case is for the precompiled binaries (e.g. the Windows release)
+        root_dir = os.path.join(os.path.abspath(os.path.dirname(sys.executable)), "singularity")
+    else:
+        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     read_dirs["root"] = [root_dir]
     write_dirs["root"] = root_dir
 
