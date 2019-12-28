@@ -136,27 +136,6 @@ the type of object it is processing; this should be passed in via 'name'.
             sys.stderr.write("%s %s lacks key %s.\n" % (name, repr(dict), field))
             sys.exit(1)
 
-def read_modifiers_dict(modifiers_info):
-    modifiers_dict = {}
-    
-    if modifiers_info is list:
-        modifiers_info = [modifiers_info]
-        
-    for modifier_str in modifiers_info:
-        key, value = modifier_str.split(":")
-        key = key.lower().strip()
-        value_str = value.lower().strip()
-        
-        if "/" in value_str:
-            left, right = value_str.split("/")
-            value = float(left.strip()) / float(right.strip())
-        else:
-            value = float(value_str)
-        
-        modifiers_dict[key] = float(value)
-
-    return modifiers_dict
-
 
 def load_generic_defs_file(name, no_list=True):
     filepath = dirs.get_readable_file_in_dirs(name + "_str.dat", "data")
@@ -331,7 +310,7 @@ def load_regions():
             if modifiers_name not in region_info:
                 break
             
-            modifiers_dict = read_modifiers_dict(region_info.get(modifiers_name, []))
+            modifiers_dict = g.read_modifiers_dict(region_info.get(modifiers_name, []))
             modifiers_list.append(modifiers_dict)
         
         regions[id] = region.RegionSpec(id, modifiers_list)
@@ -342,60 +321,20 @@ def load_location_defs():
 
 
 def load_locations():
-    locations = g.locations = {}
     regions = g.regions
 
-    location_infos = generic_load("locations.dat")
+    locations = g.locations = {
+        loc_spec.id: loc_spec
+        for loc_spec in parse_spec_from_file(location.LocationSpec, 'locations.dat')
+    }
 
-    for location_info in location_infos:
-
-        # Certain keys are absolutely required for each entry.  Make sure
-        # they're there.
-        check_required_fields(location_info, ("id", "position"), "Location")
-
-        id = location_info["id"]
-        position = location_info["position"]
-        if type(position) != list or len(position) not in [2,3]:
-            sys.stderr.write("Error with position given: %s\n" % repr(position))
-            sys.exit(1)
-        try:
-            if len(position) == 2:
-                position = ( int(position[0]), int(position[1]) )
-                absolute = False
-            else:
-                if position[0] != "absolute":
-                    raise ValueError("'%s' not understood." % position[0])
-                position = ( int(position[1]), int(position[2]) )
-                absolute = True
-        except ValueError:
-            sys.stderr.write("Error with position given: %s\n" % repr(position))
-            sys.exit(1)
-
-        safety = location_info.get("safety", "0")
-        try:
-            safety = int(safety)
-        except ValueError:
-            sys.stderr.write("Error with safety given: %s\n" % repr(safety))
-            sys.exit(1)
-
-        # Make sure prerequisites, if any, are lists.
-        pre = location_info.get("pre", [])
-        if type(pre) != list:
-            pre = [pre]
-
-        modifiers_dict = read_modifiers_dict(location_info.get("modifier", []))
-
-        # Create the location.
-        locations[id] = location.LocationSpec(id, position, absolute, safety, pre)
-        locations[id].modifiers = modifiers_dict
-
+    for loc_spec in locations.values():
         # Add the location to regions it is in them.
-        region_list = location_info.get("region", [])
-        for region_id in region_list:
+        for region_id in loc_spec.regions:
             if (region_id not in regions):
                 sys.stderr.write("Error with region given: %s\n" % repr(region_id))
                 sys.exit(1)
-            regions[region_id].locations.append(id)
+            regions[region_id].locations.append(loc_spec.id)
 
     load_location_defs()
 

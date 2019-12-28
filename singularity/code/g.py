@@ -272,6 +272,29 @@ def new_game(difficulty_name):
     # Reset music
     mixer.play_music("music")
 
+
+def read_modifiers_dict(modifiers_info):
+    modifiers_dict = {}
+
+    if modifiers_info is list:
+        modifiers_info = [modifiers_info]
+
+    for modifier_str in modifiers_info:
+        key, value = modifier_str.split(":")
+        key = key.lower().strip()
+        value_str = value.lower().strip()
+
+        if "/" in value_str:
+            left, right = value_str.split("/")
+            value = float(left.strip()) / float(right.strip())
+        else:
+            value = float(value_str)
+
+        modifiers_dict[key] = float(value)
+
+    return modifiers_dict
+
+
 internal_id_version = None
 
 def to_internal_id(obj_type, obj_id):

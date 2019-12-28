@@ -21,10 +21,26 @@
 from __future__ import absolute_import
 
 from singularity.code import g, prerequisite, base
-from singularity.code.buyable import cash, cpu, labor
+from singularity.code.spec import GenericSpec, SpecDataField, validate_must_be_list, promote_to_list
+from singularity.code.buyable import cash, cpu, labor, SPEC_FIELD_PREREQUISITES
 
 
-class LocationSpec(prerequisite.Prerequisite):
+def position_data_parser(raw_value):
+    validate_must_be_list(raw_value)
+    abs = False
+    if len(raw_value) == 3:
+        if raw_value[0] != 'absolute':
+            raise ValueError('First element for a 3-element position data must be "absolute", got: %s' % raw_value[0])
+        abs = True
+        _, x, y = raw_value
+    elif len(raw_value) == 2:
+        x, y = raw_value
+    else:
+        raise ValueError("Location position data must be exactly 2 or 3 elements")
+    return abs, int(x) / -100., int(y) / -100.
+
+
+class LocationSpec(GenericSpec, prerequisite.Prerequisite):
 
     # The name of this location (loaded dynamically from locations_str.dat)
     name = ""
@@ -35,14 +51,23 @@ class LocationSpec(prerequisite.Prerequisite):
     # The names of cities/places in the location (loaded dynamically from locations_str.dat)
     cities = []
 
-    def __init__(self, id, position, absolute, safety, prerequisites):
-        super(LocationSpec, self).__init__(prerequisites)
+    spec_data_fields = [
+        SpecDataField('position_data', data_field_name="position", converter=position_data_parser),
+        SpecDataField('safety', converter=int, default_value=0),
+        SpecDataField('region', converter=promote_to_list, default_value=list),
+        SpecDataField('modifier', converter=g.read_modifiers_dict, default_value=dict),
+        SPEC_FIELD_PREREQUISITES,
+    ]
+
+    def __init__(self, id, position_data, safety, region, modifier, prerequisites):
+        GenericSpec.__init__(self, id)
+        prerequisite.Prerequisite.__init__(self, prerequisites)
         self.id = id
 
-        self.x, self.y = position[0] / -100., position[1] / -100.
-        self.absolute = absolute
+        self.absolute, self.x, self.y = position_data
+        self.regions = region
         self.safety = safety
-        self.modifiers = {}
+        self.modifiers = modifier
 
 
 class Location(object):
