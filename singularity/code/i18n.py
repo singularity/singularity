@@ -87,29 +87,29 @@ def set_language(lang=None, force=False):
 
 def load_messages():
     g.messages.clear()
-
-    files = dirs.get_readable_i18n_files("messages.po", language, default_language=False)
-
-    for lang, pofile in files:
-        try:
-            po = polib.pofile(pofile)
-            for entry in po.translated_entries():
-                g.messages[entry.msgid] = entry.msgstr
-        except IOError: pass # silently ignore non-existing files
+    _load_po_file(g.messages, 'messages.po', use_context=False)
 
 
 def load_data_str():
     g.data_strings.clear()
+    _load_po_file(g.data_strings, 'data_str.po', use_context=True)
 
-    files = dirs.get_readable_i18n_files("data_str.po", language, default_language=False)
+
+def _load_po_file(translation_table, pofilename, use_context=True):
+    translation_table.clear()
+
+    files = dirs.get_readable_i18n_files(pofilename, language, default_language=False)
 
     for lang, pofile in files:
         try:
             po = polib.pofile(pofile)
-            for entry in po.translated_entries():
-                g.data_strings[(entry.msgctxt, entry.msgid)] = entry.msgstr
         except IOError:
-            pass # silently ignore non-existing files
+            # silently ignore non-existing files
+            continue
+        for entry in po.translated_entries():
+            key = (entry.msgctxt, entry.msgid) if entry.msgctxt and use_context else entry.msgid
+            translation_table[key] = entry.msgstr
+
 
 
 def available_languages():
