@@ -20,7 +20,7 @@
 
 #This file is used to generate a visual representation of the tech tree using
 #graphviz.
-
+import collections
 from os import system
 import os.path as osp
 import sys
@@ -37,7 +37,7 @@ else:
     sys.path.append(esdir)
 
 try:
-    from singularity.code import g, dirs, i18n, data
+    from singularity.code import g, dirs, i18n, data, tech
     dirs.create_directories(False)
     i18n.set_language()
     data.load_regions()
@@ -51,9 +51,15 @@ except ImportError:
 
 so_far = ""
 
-def cost(c):
-    c = [ k/f for f,k in zip([1, 86400, 24*60], c)]
-    s = ', '.join(['%s %s' % (g.to_money(k), label) for label,k in zip(["money", "CPU", "days"], c) if k])
+
+def cost(buy_spec):
+    c = [ k/f for f,k in zip([1, 86400, 24*60], buy_spec.cost)]
+    s = ', '.join(['%s %s' % (g.to_money(k), label) for label, k in zip(["money", "CPU", "days"], c) if k])
+    if hasattr(buy_spec, 'danger') and buy_spec.danger > 0:
+        d = "Safety needed: %s" % buy_spec.danger
+        if s:
+            s += '\\n'
+        s += d
     return s and '\\n'+s or ''
 
 
@@ -83,9 +89,10 @@ for l in sum([ [ '"%s"->"%s";' % (p,k)
 f.write('\n')
 so_far += '\n'
 
-for n,t in g.techs.items():
-    if n == "unknown_tech": continue
-    s  = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t.cost), j.get(n,''))
+for n, t in g.techs.items():
+    if n == "unknown_tech":
+        continue
+    s = '"%s" [label="%s%s"%s];\n' % (n, n, cost(t), j.get(n,''))
     f.write(s)
     so_far += s
 
@@ -110,7 +117,7 @@ for name,item in g.items.items():
         f.write(s)
         so_far += s
 
-    s  = '"%s-item" [label="%s\\n' % (name, name) + cost(item.cost) + '"];\n'
+    s  = '"%s-item" [label="%s\\n' % (name, name) + cost(item) + '"];\n'
     f.write(s)
     so_far += s
 
@@ -126,7 +133,7 @@ for name,base in g.base_type.items():
         f.write(s)
         so_far += s
 
-    s  = '"%s-base" [label="%s\\n' % (name, name) + cost(base.cost) + '"];\n'
+    s  = '"%s-base" [label="%s\\n' % (name, name) + cost(base) + '"];\n'
     f.write(s)
     so_far += s
 
@@ -144,8 +151,12 @@ def set_or(state):
         else:
             f.write('edge [arrowhead=normal,color="#000000"];\n')
 
-for name,loc in g.locations.items():
-    if not loc.prerequisites: continue
+
+SAFETY2LOCATIONS = collections.defaultdict(list)
+
+for name, loc in g.locations.items():
+    if not loc.prerequisites:
+        continue
     if "impossible" in loc.prerequisites:
         continue
     set_or(False)
@@ -158,9 +169,53 @@ for name,loc in g.locations.items():
         f.write(s)
         so_far += s
 
-    s  = '"%s-loc" [label="%s"];\n' % (name, name)
+    if loc.safety > 0:
+        SAFETY2LOCATIONS[loc.safety].append(loc)
+    s = '"%s-loc" [label="%s"];\n' % (name, name)
     f.write(s)
     so_far += s
+
+# When there are multiple locations providing the same
+# safety level, we inject a safety node.  This reduces
+# the number of edges from L * T to L + T.
+for safety_level in sorted(SAFETY2LOCATIONS):
+    locs = SAFETY2LOCATIONS[safety_level]
+    if len(locs) == 1:
+        continue
+    s = '"safety-%s" [label="Safety level %s", shape="hexagon"];\n' % (safety_level, safety_level)
+    f.write(s)
+    so_far += s
+    for loc in locs:
+        s = '"%s-loc" -> "safety-%s"' % (loc.id, safety_level)
+        f.write(s)
+        so_far += s
+
+for tech_spec in g.techs.values():
+    pre = tech_spec.prerequisites_in_cnf_format()
+    if not pre or tech_spec.danger < 1:
+        continue
+    # Safety requirement is the highest satefy required
+    # between each "AND" and the lowest between "OR".
+    # MAX(
+    #   MIN(a1.danger, [OR] a2.danger, [OR] ...), [AND]
+    #   MIN(b2.danger, [OR] b2.danger, [OR] ...), [AND]
+    #   ...
+    # )
+    safety_required = max(
+        min(g.techs[t].danger for t in dep_group)
+        for dep_group in pre
+    )
+    # We only emit the edge for safety when the tech bumps
+    # the minimum requirement.  This is to reduce the number
+    # of edges in the graph.
+    if tech_spec.danger > safety_required:
+        source = 'safety-%s' % tech_spec.danger
+        if len(SAFETY2LOCATIONS[tech_spec.danger]) == 1:
+            source = '%s-loc' % SAFETY2LOCATIONS[tech_spec.danger][0].id
+        s = '"%s" -> "%s"' % (source, tech_spec.id)
+        f.write(s)
+        so_far += s
+
 
 f.write("\n}\n")
 so_far += '\n'
