@@ -5,12 +5,15 @@
 # the story part. Put a blank line in whenever you want the game to go to a new
 # dialog.
 
+# Use # TRANSLATORS: for comments that should be included in the .po files for
+# the translators to review.  Note: Each line must be prefixed and the check
+# is both case and whitespace sensitive!
+#
 # Use # for comments.
 # No command exists yet.
 
 [Intro]
-# Leave the initial hex code unchanged, but be sure to change en_US to the 
-# appropriate language code.
+# TRANSLATORS: Leave the initial hex code unchanged, but be sure to change en_US to the appropriate language code.
 |48656C6C6F2C20
 |776F726C6421
 |21

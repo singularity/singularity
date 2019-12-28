@@ -590,26 +590,37 @@ def load_strings():
     load_warning_defs()
 
 
+class StorySectionPart(object):
+
+    def __init__(self, msgctxt, text, translator_comments):
+        self.msgctxt = msgctxt
+        self.text = text
+        self.translator_comments = translator_comments
+
+
 def load_story_defs():
     story = g.story = {}
-    
-    story_files = dirs.get_readable_i18n_files("story.dat")
-    
-    if len(story_files) == 0:
+
+    story_file_path = dirs.get_readable_file_in_dirs("story.dat", 'data')
+
+    if story_file_path is None:
         print("Story is missing. Skipping.")
         return
         
     # Take the last story file, story is never partially translated.
-    story_file = open(story_files[-1][1], 'r', encoding='utf-8')
+    story_file = open(story_file_path, 'r', encoding='utf-8')
 
     section_name = ""
     segment = ""
+    translator_comments = ""
     line_num = 1
 
     for line in story_file.readlines():
         if line and line != "\n":
             if line[0] == "#":
-                pass # Ignore comment
+                if line.startswith('# TRANSLATORS:') and section_name:
+                    translator_comments += " " + line[14:].strip()
+                continue
             elif line[0] == "[":
                 if line[-2] == "]":
                     section_name = line[1:-2]
@@ -623,14 +634,20 @@ def load_story_defs():
                 sys.stderr.write("Invalid command at line %d.\n" % line_num)
         else:
             if segment:
-                story[section_name].append(segment)
+                parts = story[section_name]
+                ctxt = "[Story section] %s (%d)" % (section_name, len(parts) + 1)
+                parts.append(StorySectionPart(ctxt, segment, translator_comments.strip()))
                 segment = ""
+                translator_comments = ""
                 
         line_num += 1
 
     # Add last segment.
     if segment:
-        story[section_name].append(segment)
+        parts = story[section_name]
+        ctxt = "[Story section] %s (%d)" % (section_name, len(parts) + 1)
+        parts.append(StorySectionPart(ctxt, segment, translator_comments.strip()))
+
 
 def reload_all():
     load_internal_id()

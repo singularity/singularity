@@ -51,44 +51,29 @@ for your language (e.g. `fr_FR` or `pt_BR`).
 
 You can refresh the translations by using the command:
 
-     utils/gettext-singularity --catalog <messages|data_str>
+     utils/gettext-singularity --catalog <messages|data_str|story>
 
-The `--catalog` parameter determines whether the `messages.po` or the
-`data_str.po` file will be refreshed and checked.
+The `--catalog` parameter determines whether the `messages.po`, `data_str.po`,
+or the `story.po` file will be refreshed and checked.
 
 ### Adding translations for a new language
 
 You can add translations for a new language by running:
 
-    utils/gettext-singularity --catalog <messages|data_str> --new <lang_code>
+    utils/gettext-singularity --catalog <messages|data_str|story> --new <lang_code>
 
 It will prompt you for a few details (such as the language name in
 your native language).
 
-This will generate a `messages.po` and a `data_str.po` in
+This will generate a `messages.po`, a `data_str.po`, and a `story.po` in
 `singularity/i18n/lang_<ll_CC>` and from there you can use your
 favourite po-file editor to start translating.
-
-### The "untranslatable" parts
-
-The "story" is still not translatable via po files but it can be
-translated.  This is done by copying the `story.dat` file into your
-language directory:
-
-    cp -a singularity/data/story.dat singularity/i18n/lang_<ll_CC>/story.dat
-
-**CAVEAT**: This command will reset any existing translation if any.
-If you have a `story.dat` file already for your language, you are
-better served by comparing it to the original English version.
-
-Once you have a `story.dat` file, open it in a text editor and then
-change the relevant text for all lines starting with a `|`.
 
 ### Testing a translation
 
 The singularity game will automatically use your translations once you
-have saved them in the relevant po-files (or `story.dat`).  To verify
-or review the translations, please:
+have saved them in the relevant po-files.  To verify or review the
+translations, please:
 
  * Start the game from the git checkout (see the README for
    instructions)

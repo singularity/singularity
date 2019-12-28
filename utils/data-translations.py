@@ -23,6 +23,8 @@ def build_option_parser():
     description = '''Find data strings and save them for translation.'''
 
     parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("--catalog", dest="catalog", choices=['data_str', 'story'],
+                        help="What translation catalog to generate", metavar="CATALOG")
     parser.add_argument("-o", "--output", dest="output", default=None,
                         help="PO/POT File output", metavar="FILE")
 
@@ -31,7 +33,13 @@ def build_option_parser():
 
 def main():
     args = build_option_parser()
-    generator = generate_data_str_translations()
+    if args.catalog == 'data_str':
+        generator = generate_data_str_translations()
+    elif args.catalog == 'story':
+        generator = generate_story_translations()
+    else:
+        sys.stderr.write("Unimplemented catalog type: %s\n" % args.catalog)
+        sys.exit(1)
     write_po_file(generator, args.output)
 
 
@@ -59,7 +67,7 @@ msgstr ""
 """)
 
     po = polib.pofile(output_file)
-    for text, ctxt in po_entries:
+    for text, ctxt, comment in po_entries:
         entry = po.find(text, msgctxt=ctxt)
 
         if not entry:
@@ -69,13 +77,24 @@ msgstr ""
         entry.msgid = text
         entry.msgctxt = ctxt
         entry.msgstr = ""
+        entry.comment = comment
 
     po.save(output_file)
 
 
+def generate_story_translations():
+    from singularity.code.dirs import create_directories
+    from singularity.code import g, data
+
+    create_directories(True)
+    data.load_story_defs()
+    for section, parts in sorted(g.story.items()):
+        for part in parts:
+            yield (part.text, part.msgctxt, part.translator_comments)
+
+
 def generate_data_str_translations():
     esdir = get_esdir(__file__)
-
     datadir = os.path.join(esdir, "singularity", "data")
     file_list = os.listdir(datadir)
 
@@ -93,7 +112,7 @@ def generate_data_str_translations():
                 for option in config.options(section_id):
                     ctxt = "[" + section_id + "] " + option
                     text = config.get(section_id, option).strip()
-                    yield (text, ctxt)
+                    yield (text, ctxt, None)
 
 
 if __name__ == '__main__':

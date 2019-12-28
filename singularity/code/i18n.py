@@ -83,6 +83,7 @@ def set_language(lang=None, force=False):
 
     load_messages()
     load_data_str()
+    load_story_translations()
 
 
 def load_messages():
@@ -93,6 +94,11 @@ def load_messages():
 def load_data_str():
     g.data_strings.clear()
     _load_po_file(g.data_strings, 'data_str.po', use_context=True)
+
+
+def load_story_translations():
+    g.story_translations.clear()
+    _load_po_file(g.story_translations, 'story.po', use_context=True)
 
 
 def _load_po_file(translation_table, pofilename, use_context=True):

@@ -60,6 +60,7 @@ internal_id_backward = {}
 dangers = {}
 messages = {}
 data_strings = {}
+story_translations = {}
 story = {}
 knowledge = {}
 groups = {}
@@ -223,12 +224,14 @@ def all_bases(with_loc = False):
             else:
                 yield base
 
+
 def get_story_section(name):
     section = story[name]
 
     for segment in section:
         # TODO: Execute command
-        yield segment
+        key = (segment.msgctxt, segment.text)
+        yield story_translations.get(key, segment.text)
 
 
 def new_game_no_gui(difficulty_name, initial_speed=1):

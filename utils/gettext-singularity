@@ -155,13 +155,13 @@ if [[ $catalog == "messages" ]]; then
              --output="$tempfile" \
              --files-from=<(find -type f -name "*.py")
     cd "$dir"
-elif [[ $catalog == "data_str" ]]; then
-    potfile="${i18ndir}/data_str.pot"
-    pofilename="data_str.po"
+elif [[ $catalog == "data_str" ]] || [[ $catalog == "story" ]]; then
+    potfile="${i18ndir}/${catalog}.pot"
+    pofilename="${catalog}.po"
     message "updating template $(rel "$potfile") from string files in $(rel "$esdir")/data"
 
     cd "${codedir}" || fatal "could not access source code dir '${esdir}/data'"
-    PYTHONPATH="${esdir}" "${PYTHON}" "${mydir}/data-translations.py" -o $tempfile
+    PYTHONPATH="${esdir}" "${PYTHON}" "${mydir}/data-translations.py" --catalog "${catalog}" -o $tempfile
     cd "$dir"
 else
     invalid "Catalog $(rel "$catalog") does not exist"
