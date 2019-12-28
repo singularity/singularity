@@ -181,18 +181,19 @@ fi
 
 # Update existing PO files with new entries
 pofiles=( "$i18ndir"/lang_*/"$pofilename" )
-for pofile in "${pofiles[@]}"; do
-	message "updating translation $(rel "$pofile")"
-	msgmerge --no-fuzzy-matching \
-	         --backup=off        \
-	         --previous          \
-	         --update            \
-	         "${quiet[@]}"       \
-	         "$pofile"           \
-	         "$potfile"
-	check $verbose "$(rel "$pofile")"
-done
-
+if [[ ${pofiles[0]} != "$i18ndir/lang_"'*'"/$pofilename" ]]; then
+  for pofile in "${pofiles[@]}"; do
+    message "updating translation $(rel "$pofile")"
+    msgmerge --no-fuzzy-matching \
+             --backup=off        \
+             --previous          \
+             --update            \
+             "${quiet[@]}"       \
+             "$pofile"           \
+             "$potfile"
+    check $verbose "$(rel "$pofile")"
+  done
+fi
 
 # Create a new PO file, if requested
 [[ "$lang" ]] && {
