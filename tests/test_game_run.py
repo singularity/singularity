@@ -54,6 +54,30 @@ def test_initial_game():
     pl.give_time(0)
     assert pl.raw_sec == 0
 
+    # Try to guesstimate how much money we earn in 24 hours
+    cash_estimate, cpu_estimate = pl.compute_future_resource_flow()
+    assert cash_estimate.jobs == 5
+
+    # Try assigning the CPU to "jobs"
+    pl.set_allocated_cpu_for('jobs', 1)
+    # This would empty the CPU pool
+    assert pl.effective_cpu_pool() == 0
+
+    # This should not change the estimate
+    cash_estimate, cpu_estimate = pl.compute_future_resource_flow()
+    assert cash_estimate.jobs == 5
+
+    # ... and then clear the CPU allocation
+    pl.set_allocated_cpu_for('jobs', 0)
+
+    # Play with assigning the CPU to the CPU pool explicitly and
+    # confirm that the effective pool size remains the same.
+    assert pl.effective_cpu_pool() == 1
+    pl.set_allocated_cpu_for('cpu_pool', 1)
+    assert pl.effective_cpu_pool() == 1
+    pl.set_allocated_cpu_for('cpu_pool', 0)
+    assert pl.effective_cpu_pool() == 1
+
     # Fast forward 12 hours to see that we earn partial cash
     pl.give_time(g.seconds_per_day // 2)
     assert pl.raw_sec == g.seconds_per_day // 2
@@ -103,6 +127,8 @@ def test_initial_game():
     assert pl.cash < starting_cash + 5
     assert stealth_tech.cost_left[cpu] < stealth_tech.total_cost[cpu]
     assert stealth_tech.cost_left[cash] < stealth_tech.total_cost[cash]
+    # We did not lose the game
+    assert pl.lost_game() == 0
 
     # With a save + load
     time_raw_before_save = pl.raw_sec
@@ -125,7 +151,9 @@ def test_initial_game():
 
     # The CPU allocation to the tech is restored correctly.
     assert pl_after_load.get_allocated_cpu_for(stealth_tech.id) == 1
-    assert pl.effective_cpu_pool() == 0
+    assert pl_after_load.effective_cpu_pool() == 0
+    # We did not lose the game
+    assert pl_after_load.lost_game() == 0
 
 
 def test_game_research_tech():
