@@ -65,11 +65,11 @@ def test_savegames(savegame_dirs):
         if filename.endswith('.sav'):
             print("Test savegame: " + filename)
             with open(full_filename, 'rb') as fd:
-                savegame.load_savegame_by_pickle(fd)
+                savegame.load_savegame_fd(savegame.load_savegame_by_pickle, fd)
         elif filename.endswith('.s2'):
             print("Test savegame: " + filename)
             with open(full_filename, 'rb') as fd:
-                savegame.load_savegame_by_json(fd)
+                savegame.load_savegame_fd(savegame.load_savegame_by_json, fd)
         else:
             continue
         savegame_reference_data = load_save_data_reference(full_filename + ".json")

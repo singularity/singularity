@@ -24,10 +24,10 @@ def setup_function(func):
 def save_and_load_game():
     fd = io.BytesIO(b'')
     real_close = fd.close
-    fd.close = lambda *args,**kwargs: None
+    fd.close = lambda *args, **kwargs: None
     savegame.write_game_to_fd(fd, gzipped=False)
     fd = io.BytesIO(fd.getvalue())
-    savegame.load_savegame_by_json(io.BufferedReader(fd))
+    savegame.load_savegame_fd(savegame.load_savegame_by_json, io.BufferedReader(fd))
     real_close()
 
 

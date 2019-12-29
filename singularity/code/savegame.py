@@ -290,21 +290,25 @@ def load_savegame(savegame):
 
     if load_path is None:
         raise RuntimeError("savegame without valid path")
-    
-    
+
     with open(load_path, 'rb') as fd:
-        try:
-            before_load_savegame()
-            savegame.load_file(fd)
-            after_load_savegame()
-        finally:
-            finally_load_savegame()
+        load_savegame_fd(savegame.load_file, fd)
 
     default_savegame_name = savegame.name
 
 
+def load_savegame_fd(loader_func, fd):
+    try:
+        before_load_savegame()
+        loader_func(fd)
+        after_load_savegame()
+    finally:
+        finally_load_savegame()
+
+
 def before_load_savegame():
     stats.reset()
+
 
 def after_load_savegame():
     tech.tech_reinitialized()
@@ -319,9 +323,11 @@ def after_load_savegame():
     else:
         mixer.play_music("music")
 
+
 def finally_load_savegame():
     # In any case, we don't want internal_id_version to be set after load_savegame.
     g.internal_id_version = None
+
 
 def load_savegame_by_json(fd):
     load_version_string, headers = parse_json_savegame_headers(fd)
@@ -369,6 +375,7 @@ def load_savegame_by_json(fd):
     if 'stats' in game_data:
         stats.reset()
         stats.deserialize_obj(game_data['stats'], load_version)
+
 
 def load_savegame_by_pickle(loadfile):
 
