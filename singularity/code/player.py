@@ -42,20 +42,16 @@ class Player(object):
     cash = observe("cash_earned", "_cash")
     used_cpu = observe("cpu_used", "_used_cpu", display=lambda value: value // g.seconds_per_day)
 
-    def __init__(self, cash=0, time_sec=0, time_min=0, time_hour=0, time_day=0,
-                 difficulty=None):
+    def __init__(self, cash=0, difficulty=None):
         self.difficulty = difficulty
 
-        self.time_sec = time_sec
-        self.time_min = time_min
-        self.time_hour = time_hour
-        self.time_day = time_day
+        self.time_sec = 0
+        self.time_min = 0
+        self.time_hour = 0
+        self.time_day = 0
         self.make_raw_times()
 
-        if self.raw_sec == 0:
-            self.had_grace = True
-        else:
-            self.had_grace = self.in_grace_period()
+        self.had_grace = True
         self.apotheosis = False
 
         self.cash = cash
@@ -384,7 +380,7 @@ class Player(object):
             # Discoveries
             if not (grace or dead or base.has_grace()):
                 detect_chance = base.get_detect_chance()
-                if g.debug:
+                if g.debug:  # pragma: no cover
                     print("Chance of discovery for base %s: %s" % \
                         (base.name, repr(detect_chance)))
 
@@ -493,7 +489,7 @@ class Player(object):
             return True
 
         # Have we reached the limit of cpu ?
-        if g.debug:
+        if g.debug:  # pragma: no cover
             print("DEBUG: Grace - Used CPU: %s >= %s (%s * %s)?" % (
                 self.used_cpu,
                 self.grace_period_cpu * g.seconds_per_day,
