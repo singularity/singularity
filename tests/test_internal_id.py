@@ -8,6 +8,7 @@ def setup_module():
     create_directories(True)
     data.load_internal_id()
 
+
 @pytest.fixture
 def techs():
     data.load_techs()
@@ -48,21 +49,27 @@ def events():
 
 def test_internal_id_techs(techs):
     check_internal_id("tech", techs.values())
-    
+
+
 def test_internal_id_locations(locations):
     check_internal_id("location", locations.values())
-    
+
+
 def test_internal_id_bases(base_types):
     check_internal_id("base", base_types.values())
-    
+
+
 def test_internal_id_items(items):
     check_internal_id("item", items.values())
-    
+
+
 def test_internal_id_groups(groups):
     check_internal_id("group", groups.values())
 
-def test_internal_id_groups(events):
+
+def test_internal_id_events(events):
     check_internal_id("event", events.values())
+
 
 def check_internal_id(obj_type, obj_list):
     assert obj_type in g.internal_id_forward, "Type '%s'" % (obj_type)
