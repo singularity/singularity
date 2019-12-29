@@ -194,7 +194,8 @@ class Player(object):
         self.cpu_usage[task_id] = new_cpu_assignment
 
     def give_time(self, time_sec, midnight_stop=True):
-        if time_sec == 0:
+        if time_sec <= 0:
+            assert time_sec == 0, "give_time cannot go backwards in time!"
             return 0
 
         old_time = self.raw_sec

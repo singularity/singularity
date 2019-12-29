@@ -50,6 +50,10 @@ def test_initial_game():
     # OK button
     pl.intro_shown = True
 
+    # Dummy check to hit special-case in give time
+    pl.give_time(0)
+    assert pl.raw_sec == 0
+
     # Fast forward 12 hours to see that we earn partial cash
     pl.give_time(g.seconds_per_day // 2)
     assert pl.raw_sec == g.seconds_per_day // 2
