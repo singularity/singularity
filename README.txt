@@ -4,28 +4,49 @@
 
 ### PREBUILT VERSIONS
 Pre-built versions of Endgame: Singularity are currently available for Windows
-and Mac OS X. Linux does not require building, and can run directly from source
+and Mac OS X. Linux does not require building, and can run directly from source.
+
+The Endgame: Singularity game is also distributed by some Linux distribution such
+as Debian and Ubuntu.  Here it is a simple matter of running:
+
+    sudo apt install singularity
 
 ### RUNNING FROM SOURCE
-You will need Python (2.7+ or 3.7+), pygame (1.9+), and NumPy.
+You will need Python 3.7+, pygame (1.9+), and NumPy.
 This game should work on Linux, Windows, and Mac OS X as long as the preceding
 requirements are met.  However, all development was done in Linux, so glitches
 may be present in OS X and Windows.
 
-### WINDOWS FROM SOURCE
-You will need to install:
+#### DEPENDENCIES FOR RUNNING FROM SOURCE
+You will need to install the following software to play Endgame: Singularity:
 
- * Python (http://python.org/download/)
- * pygame (http://www.pygame.org/download.shtml)
- * NumPy (http://www.scipy.org/Download)
+ * Python 3 (https://python.org/download/)
+ * pygame (https://www.pygame.org/download.shtml)
+ * NumPy (https://www.scipy.org/install.html)
 
-Once these are installed, double-click on singularity.py to start the game.
+Remember to install pygame and NumPy for Python 3!  Depending on your
+situation this may involve adding a `3` somewhere (e.g.
+`pip3 install ...` instead of `pip install` or
+`apt install python3-pygame`)
+
+If you want to develop or distribute the game, then you may also want to
+install:
+
+ * pytest (https://pypi.org/project/pytest/) [for testing]
+ * setuptools (https://pypi.org/project/setuptools/) [for packaging]
+
+#### INSTALLING DEPENDENCIES ON LINUX DISTRIBUTIONS
+On some Linux distributions, you can install the dependencies via your
+distribution package manager.  E.g. for Debian/Ubuntu, this would be:
+
+    sudo apt install python3 python3-pygame python3-numpy
 
 ### MAC OS X FROM SOURCE
 Macintosh is mostly unsupported, but it should work. You will need to install
 Python, pygame, and NumPy first, which can be tricky. Some fonts are incorrect,
 but the game itself should work properly.
 
+Contributions to improve MAC OS X support are very welcome!
 
 ## RUNNING THE GAME
 
