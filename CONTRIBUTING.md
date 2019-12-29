@@ -41,6 +41,15 @@ contact with us before starting the work.  Unfortunately, we may have
 to reject work that is not under a license compatible with the project
 licenses or the project goals.
 
+## Running the test suite
+
+The test suite can be run by using setting `PYTHONPATH` and running
+"py.test".  As an example, if you have "py.test" in PATH as
+`py.test-3` (for the Python3 version) and use the bash shell on Linux,
+then you can run the test suite via the following command:
+
+    PYTHONPATH=. py.test-3 -v
+
 ## Translations
 
 ### Updating existing translations
