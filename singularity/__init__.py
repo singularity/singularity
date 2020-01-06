@@ -18,7 +18,7 @@
 
 #This file sets up initial values from command line and preferences file,
 # initialize hardware, load data files and show main screen. Do not execute it
-# directly. use ../singularity.py instead.
+# directly. Use python3 -m singularity instead.
 
 from __future__ import absolute_import
 from __future__ import print_function
@@ -38,8 +38,16 @@ __release_commit__ = '$Format:%H$'
 if __release_commit__[1:-1] == 'Format:%H':
     try:
         import subprocess
-        __release_commit__ = subprocess.check_output(['git', 'describe', '--tags']).strip().decode('utf-8')
-    except Exception:
+        try:
+            devnull = subprocess.DEVNULL
+        except AttributeError:
+            devnull = None  # Not supported, but not critical
+
+        __release_commit__ = subprocess.check_output(
+            ['git', 'describe', '--tags'],
+            stderr=devnull,
+        ).strip().decode('utf-8')
+    except subprocess.CalledProcessError:
         __release_commit__ = 'N/A'
 
     __full_version__ = "%s (commit: %s)" % (__version__,  __release_commit__)
