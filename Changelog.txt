@@ -1,5 +1,26 @@
 Endgame: Singularity Changelog
 
+v1.0b1 (2020.XX.XX):
+
+USER-VISIBLE CHANGES:
+- Show a summary of the bases under the CPU and money display.
+  (Closes: #155, 196)  (nthykier)
+- Fix a bug where Australia would never get a modifier if the game
+  was created with python3.  (nthykier)
+
+OTHER CHANGES:
+- Documented known issues with running singularity on MacOS in the
+  README.  Please see #197 for more details.  Thanks to yiwangwuqian
+  for reporting and Diegus83 for debugging it and finding a
+  possible solution.  (nthykier)
+- All translations are now done via ".po" files (GNU Gettext) to
+  ensure everything uses the same work flow for translators.
+  (nthykier)
+- Refactor handling of regional modifiers.  This caused a bump in
+  the savegame format, which means games saved by 1.0b1 cannot
+  be loaded in earlier versions of singularity.  (nthykier)
+
+
 v1.0a2 (2019.12.28):
 
 GAME CONTENT CHANGES:
