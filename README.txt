@@ -50,7 +50,7 @@ Contributions to improve MAC OS X support are very welcome!
 
 Known issues:
 
- * macOS 13 "Catalina": Using `brew install python` + `pip 3 install pygame numpy` is reported to work
+ * macOS 13 "Catalina": Using `brew install python` + `pip3 install pygame numpy` is reported to work
  * macOS 14 "Mojave": Downloading Python 3.7.2 (or newer) from https://python.org and using pygame 2.0.0.dev3
    (`pip install pygame==2.0.0.dev3`) is reported to work.
 
