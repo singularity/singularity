@@ -7,6 +7,8 @@ USER-VISIBLE CHANGES:
   (Closes: #155, 196)  (nthykier)
 - Fix a bug where Australia would never get a modifier if the game
   was created with python3.  (nthykier)
+- Fix a crash when accessing the Log menu when playing a game loaded
+  from a 1.0a1 (or later) game.
 
 OTHER CHANGES:
 - Documented known issues with running singularity on MacOS in the

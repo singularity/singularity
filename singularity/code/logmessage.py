@@ -346,6 +346,8 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
                  loading_from_game_version=None):
         super(LogItemConstructionComplete, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
                                                           loading_from_game_version=loading_from_game_version)
+        if loading_from_game_version is not None:
+            item_spec_id = g.convert_internal_id('item', item_spec_id)
         self._item_spec_id = item_spec_id
         self._item_count = item_count
 
