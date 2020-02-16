@@ -587,6 +587,18 @@ class Player(object):
             obj_data['last_discovery'] = g.to_internal_id('location', self.last_discovery.id)
         return obj_data
 
+    def _load_auto_deserializable_tables(self, field_name, cls, pl_obj_data, game_version, savegame_field_name=None):
+        if savegame_field_name is None:
+            savegame_field_name = field_name
+        field_table = getattr(self, field_name)
+
+        # Stop bugs immediately
+        assert field_table is not None and isinstance(field_table, dict)
+
+        for data in pl_obj_data.get(savegame_field_name, []):
+            restored_obj = cls.deserialize_obj(data, game_version)
+            field_table[restored_obj.spec.id] = restored_obj
+
     @classmethod
     def deserialize_obj(cls, difficulty_id, game_time, obj_data, game_version):
         diff = difficulty.difficulties[difficulty_id]
@@ -614,17 +626,9 @@ class Player(object):
         if prev_discovery_id and prev_discovery_id in obj.locations:
             obj.prev_discovery = obj.locations[prev_discovery_id]
 
-        for location_data in obj_data.get('locations', []):
-            loc = location.Location.deserialize_obj(location_data, game_version)
-            obj.locations[loc.id] = loc
-
-        for event_data in obj_data.get('events', []):
-            ev = event.Event.deserialize_obj(event_data, game_version)
-            obj.events[ev.event_id] = ev
-
-        for tech_data in obj_data.get('techs', []):
-            tech_obj = tech.Tech.deserialize_obj(tech_data, game_version)
-            obj.techs[tech_obj.id] = tech_obj
+        obj._load_auto_deserializable_tables('locations', location.Location, obj_data, game_version)
+        obj._load_auto_deserializable_tables('events', event.Event, obj_data, game_version)
+        obj._load_auto_deserializable_tables('techs', tech.Tech, obj_data, game_version)
 
         for task_id, value in obj_data.get('cpu_usage', {}).items():
             if task_id not in ["cpu_pool", "jobs"]:
