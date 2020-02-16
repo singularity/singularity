@@ -4,7 +4,7 @@ v1.0b1 (2020.02.16):
 
 USER-VISIBLE CHANGES:
 - Show a summary of the bases under the CPU and money display.
-  (Closes: #155, 196)  (nthykier)
+  (Closes: #155, #196)  (nthykier)
 - Fix a bug where Australia would never get a modifier if the game
   was created with python3.  (nthykier)
 - Fix a crash when accessing the Log menu when playing a game loaded
