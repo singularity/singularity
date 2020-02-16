@@ -32,6 +32,7 @@ def register_saveable_log_message(cls):
                                           cls.__name__
     return cls
 
+
 def merge_fields_on_subclasses(cls, field_name):
     cache = {}
     subclasses = cls.mro()
@@ -44,13 +45,27 @@ def merge_fields_on_subclasses(cls, field_name):
             pass
     return cache
 
+
+class IDConverter(object):
+
+    def __init__(self, id_type):
+        self._id_type = id_type
+
+    def serialize(self, value):
+        return g.to_internal_id(self._id_type, value)
+
+    def deserialize(self, serial_value):
+        return g.convert_internal_id(self._id_type, serial_value)
+
+
 def id_converter(id_type):
-    return lambda field: g.to_internal_id(id_type, field)
+    return IDConverter(id_type)
+
 
 class AbstractLogMessage(object):
 
     log_message_serial_id = None
-    _log_message_serial_fields = {'raw_emit_time':'raw_emit_time'}
+    _log_message_serial_fields = {'raw_emit_time': 'raw_emit_time'}
     _log_message_serial_fields_cache = None
     _log_message_serial_converters = {}
     _log_message_serial_converters_cache = None
@@ -117,11 +132,21 @@ class AbstractLogMessage(object):
         obj_data = {}
         for serial_name, field_name in self.__class__.log_message_serial_fields().items():
             field = getattr(self, field_name)
-            converter = self.__class__.log_message_serial_converters().get(serial_name, lambda field: field)
-            obj_data[serial_name] = converter(field)
+            converter = self.__class__.log_message_serial_converters().get(serial_name)
+            if converter is not None:
+                obj_data[serial_name] = converter.serialize(field)
+            else:
+                obj_data[serial_name] = field
         
         obj_data['log_id'] = self.__class__.log_message_serial_id
         return obj_data
+
+    @classmethod
+    def deserialize_field(cls, serial_name, value):
+        converter = cls.log_message_serial_converters().get(serial_name)
+        if converter is not None:
+            value = converter.deserialize(value)
+        return value
 
     @classmethod
     def deserialize_obj(cls, log_data, game_version):
@@ -139,7 +164,7 @@ class AbstractLogMessage(object):
         except AttributeError:
             getfullargspec = inspect.getargspec
         arg_desc = getfullargspec(subcls.__init__)
-        args = [named_fields[name] for name in arg_desc.args[1:]]
+        args = [subcls.deserialize_field(name, named_fields[name]) for name in arg_desc.args[1:]]
         return subcls(*args)
 
 
@@ -152,8 +177,6 @@ class LogEmittedEvent(AbstractLogMessage):
 
     def __init__(self, raw_emit_time, event_id, loading_from_game_version=None):
         super(LogEmittedEvent, self).__init__(raw_emit_time, loading_from_game_version=loading_from_game_version)
-        if loading_from_game_version is not None:
-            event_id = g.convert_internal_id('event', event_id)
         self._event_id = event_id
 
     @classmethod
@@ -182,8 +205,6 @@ class LogResearchedTech(AbstractLogMessage):
 
     def __init__(self, raw_emit_time, tech_id, loading_from_game_version=None):
         super(LogResearchedTech, self).__init__(raw_emit_time, loading_from_game_version=loading_from_game_version)
-        if loading_from_game_version is not None:
-            tech_id = g.convert_internal_id('tech', tech_id)
         self._tech_id = tech_id
 
     @classmethod
@@ -221,9 +242,6 @@ class AbstractBaseRelatedLogMessage(AbstractLogMessage):
         super(AbstractBaseRelatedLogMessage, self).__init__(raw_emit_time,
                                                             loading_from_game_version=loading_from_game_version)
         self._base_name = base_name
-        if loading_from_game_version is not None:
-            base_type_id = g.convert_internal_id('base', base_type_id)
-            base_location_id = g.convert_internal_id('location', base_location_id)
         self._base_type_id = base_type_id
         self._base_location_id = base_location_id
 
@@ -306,9 +324,6 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
                  loading_from_game_version=None):
         super(LogBaseDiscovered, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
                                                 loading_from_game_version=loading_from_game_version)
-        if loading_from_game_version is not None:
-            discovered_by_group_id = g.convert_internal_id('group', discovered_by_group_id)
-
         self._discovered_by_group_id = discovered_by_group_id
 
     @property
@@ -346,8 +361,6 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
                  loading_from_game_version=None):
         super(LogItemConstructionComplete, self).__init__(raw_emit_time, base_name, base_type_id, base_location_id,
                                                           loading_from_game_version=loading_from_game_version)
-        if loading_from_game_version is not None:
-            item_spec_id = g.convert_internal_id('item', item_spec_id)
         self._item_spec_id = item_spec_id
         self._item_count = item_count
 
