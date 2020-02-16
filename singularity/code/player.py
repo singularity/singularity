@@ -634,7 +634,8 @@ class Player(object):
             obj.prev_discovery = obj.locations[prev_discovery_id]
 
         if 'regions' not in obj_data:
-            if game_version >= 100:  # Regions where introduced in "1.0 (beta1)"
+            if game_version >= 100:  # pragma: no cover
+                # Regions where introduced in "1.0 (beta1)"
                 raise ValueError("Corrupt savegame; region data is missing")
             # We have to guess what the data would have looked like before restoring the locations
             # as they will apply the location modifiers during load to the bases in the locations.
