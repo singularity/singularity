@@ -72,16 +72,15 @@ class LocationSpec(GenericSpec, prerequisite.Prerequisite):
 
 class Location(object):
 
-    def __init__(self, location_spec):
+    def __init__(self, location_spec, regions):
         self.spec = location_spec
 
         # A list of the bases at this location.  Often sorted for the GUI.
         self.bases = []
-        # The bonuses and penalties of this location.
-        # - NB: We got a static set of modifiers (see LocationSpec) and a dynamic one
-        #       (which occurs e.g. for the common locations on Earth, where the modifiers
-        #        are randomized)
-        self._modifiers = None
+        self.regions = regions
+        self._region_modifiers = None
+        # The cache of the bonus and penalties combined for individual sources
+        self._modifiers_cache = None
 
     @property
     def id(self):
@@ -118,15 +117,32 @@ class Location(object):
     def hotkey(self):
         return self.spec.hotkey
 
+    @staticmethod
+    def _merge_location_modifiers_inplace(current_modifier, *merge_list):
+        for modifier_to_merge in merge_list:
+            for mod_id, mod_value in modifier_to_merge.items():
+                current_value = current_modifier.get(mod_id, 1)
+                current_value *= mod_value
+                current_modifier[mod_id] = current_value
+
+    def _get_region_modifiers(self):
+        if self._region_modifiers is None:
+            self._region_modifiers = {}
+            Location._merge_location_modifiers_inplace(self._region_modifiers,
+                                                       *[r.modifier_by_location[self.id] for r in self.regions]
+                                                       )
+        return self._region_modifiers
+
     @property
     def modifiers(self):
-        if self._modifiers is None:
-            return self.spec.modifiers
-        return self._modifiers
-
-    @modifiers.setter
-    def modifiers(self, value):
-        self._modifiers = value
+        if self._modifiers_cache is None:
+            self._modifiers_cache = {}
+            region_modifiers = self._get_region_modifiers()
+            Location._merge_location_modifiers_inplace(self._modifiers_cache,
+                                                       region_modifiers,
+                                                       self.spec.modifiers
+                                                       )
+        return self._modifiers_cache
 
     had_last_discovery = property(lambda self: g.pl.last_discovery == self)
     had_prev_discovery = property(lambda self: g.pl.prev_discovery == self)
@@ -197,17 +213,15 @@ class Location(object):
             'id': g.to_internal_id('location', self.spec.id),
             'bases': [b.serialize_obj() for b in self.bases],
         }
-        if self._modifiers is not None:
-            obj_data['_modifiers'] = self._modifiers
         return obj_data
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
         spec_id = g.convert_internal_id('location', obj_data['id'])
         spec = g.locations[spec_id]
-        loc = Location(spec)
-        
-        loc._modifiers = obj_data.get('_modifiers')
+        regions = [g.pl.regions[region_id] for region_id in spec.regions]
+        loc = Location(spec, regions)
+
         loc.bases = []
         bases = obj_data.get('bases', [])
         for base_obj_data in bases:

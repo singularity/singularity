@@ -645,12 +645,7 @@ def reload_all():
     load_item_types()
     load_items()
     load_bases()
-    
-def reload_all_mutable():
-    # Reset all "mutable" game data
-    load_locations()
-    load_techs()
-    load_events()
+
     
 def reload_all_def():
     load_strings()
@@ -664,6 +659,7 @@ def reload_all_def():
     load_event_defs()
     load_task_defs()
     load_location_defs()
+
 
 def reload_all_mutable_def():
     # Apply current language

@@ -14,6 +14,7 @@
 # item     = 0x04
 # group    = 0x05
 # event    = 0x06
+# region   = 0x07
 
 
 tech|Autonomous Vehicles                  = 0x01010000
@@ -142,3 +143,5 @@ event|lab-ai                              = 0x01060004
 event|discrediting                        = 0x01060005
 event|scandal                             = 0x01060006
 event|investigation                       = 0x01060007
+
+region|URBAN                              = 0x01070000

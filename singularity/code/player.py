@@ -26,7 +26,7 @@ import collections
 from operator import truediv
 from numpy import array, int64
 
-from singularity.code import g, difficulty, task, chance, location, group, event, tech
+from singularity.code import g, difficulty, task, chance, location, group, event, region, tech
 from singularity.code.buyable import cash, cpu
 from singularity.code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
@@ -83,8 +83,14 @@ class Player(object):
 
         self.log = collections.deque(maxlen=1000)
         self.curr_log = []
-        
-        self.locations = {loc_id: location.Location(loc_spec) for loc_id, loc_spec in g.locations.items()}
+
+        self.regions = {region_id: region.Region(region_spec) for region_id, region_spec in g.regions.items()}
+        self.locations = {
+            loc_id: location.Location(loc_spec, [
+                self.regions[region_id] for region_id in loc_spec.regions
+            ])
+            for loc_id, loc_spec in g.locations.items()
+        }
 
         self.techs = {tech_id: tech.Tech(tech_spec) for tech_id, tech_spec in g.techs.items()}
 
@@ -566,6 +572,7 @@ class Player(object):
             # do not include them here.
             'cash': self.cash,
             'partial_cash': self.partial_cash,
+            'regions': [reg.serialize_obj() for reg in self.regions.values()],
             'locations': [loc.serialize_obj() for loc in self.locations.values() if loc.available()],
             'cpu_usage': {},
             'last_discovery': self.last_discovery.id if self.last_discovery else None,
@@ -625,6 +632,21 @@ class Player(object):
             obj.last_discovery = obj.locations[last_discovery_id]
         if prev_discovery_id and prev_discovery_id in obj.locations:
             obj.prev_discovery = obj.locations[prev_discovery_id]
+
+        if 'regions' not in obj_data:
+            if game_version >= 100:  # Regions where introduced in "1.0 (beta1)"
+                raise ValueError("Corrupt savegame; region data is missing")
+            # We have to guess what the data would have looked like before restoring the locations
+            # as they will apply the location modifiers during load to the bases in the locations.
+            # As the region data should influence that modifier, we need to appear first.
+            serialized_location_data = obj_data.get('locations', [])
+            serialized_region_data = region.Region.guess_region_data_in_old_savegame(serialized_location_data,
+                                                                                     game_version)
+
+            # Inject the faked data
+            obj_data['regions'] = serialized_region_data
+
+        obj._load_auto_deserializable_tables('regions', region.Region, obj_data, game_version)
 
         obj._load_auto_deserializable_tables('locations', location.Location, obj_data, game_version)
         obj._load_auto_deserializable_tables('events', event.Event, obj_data, game_version)

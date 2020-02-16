@@ -243,7 +243,6 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
     stats.reset()
 
     from singularity.code import data, difficulty, player, base, tech
-    data.reload_all_mutable()
 
     diff = difficulty.difficulties[difficulty_name]
 
@@ -258,14 +257,6 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
     open = [loc for loc in pl.locations.values() if loc.available()]
     random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
-
-    #Assign region modifiers to each starting location.
-    for reg in regions.values():
-        random.shuffle(reg.modifiers_list)
-        for mod, loc in zip(reg.modifiers_list, reg.locations):
-            pl.locations[loc].modifiers = mod
-            if debug:
-                print("%s gets modifiers %s" % (loc, mod))
 
 
 def new_game(difficulty_name):
