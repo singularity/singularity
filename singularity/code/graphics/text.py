@@ -195,17 +195,27 @@ def resize_redraw(self):
 
 
 class Text(widget.BorderedWidget):
+
+    def _on_enabled_change(self):
+        resize_redraw(self)
+        if self.on_enable_change_func:
+            self.on_enable_change_func()
+
     text = widget.call_on_change("_text", resize_redraw)
     shrink_factor = widget.call_on_change("_shrink_factor", resize_redraw)
     underline = widget.call_on_change("_underline", resize_redraw)
     wrap = widget.call_on_change("_wrap", resize_redraw)
     bold = widget.call_on_change("_bold", resize_redraw)
 
+    enabled = widget.call_on_change("_enabled", _on_enabled_change)
+
     align = widget.causes_redraw("_align")
     valign = widget.causes_redraw("_valign")
 
     color = widget.auto_reconfig("_color", "resolved", g.resolve_color_alias)
     resolved_color = widget.causes_redraw("_resolved_color")
+    color_disabled = widget.auto_reconfig("_color_disabled", "resolved", g.resolve_color_alias)
+    resolved_color_disabled = widget.causes_redraw("_resolved_color_disabled")
     base_font = widget.auto_reconfig("_base_font", "resolved", g.resolve_font_alias)
     resolved_base_font = widget.call_on_change("_resolved_base_font", resize_redraw)
 
@@ -215,6 +225,7 @@ class Text(widget.BorderedWidget):
     def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
                  text=None, base_font=None, shrink_factor=0.875,
                  color=None, align=constants.CENTER, valign=constants.MID,
+                 color_disabled=None, on_enable_change=None,
                  underline=-1, wrap=True, bold=False, text_size="default", **kwargs):
         kwargs.setdefault("background_color", "text_background")
         kwargs.setdefault("border_color", "text_border")
@@ -223,6 +234,7 @@ class Text(widget.BorderedWidget):
         self.text = text
         self.base_font = base_font or "normal"
         self.color = color or "text"
+        self.color_disabled = color_disabled or "text_disabled"
         self.shrink_factor = shrink_factor
         self.underline = underline
         self.align = align
@@ -230,6 +242,8 @@ class Text(widget.BorderedWidget):
         self.wrap = wrap
         self.bold = bold
         self.text_size = text_size
+        self.on_enable_change_func = on_enable_change
+        self.enabled = True
 
     max_size = property(lambda self: min(len(self.resolved_base_font)-1,
                                          convert_font_size(self._resolved_text_size)))
@@ -358,10 +372,14 @@ class Text(widget.BorderedWidget):
         if self.text != None:
             self.print_text()
 
+    @property
+    def text_color(self):
+        return self.resolved_color if self.enabled else self.resolved_color_disabled
+
     def print_text(self):
         # Mark the character to be underlined (if any).
-        no_underline = [self.resolved_color, None, False]
-        underline = [self.resolved_color, None, True]
+        no_underline = [self.text_color, None, False]
+        underline = [self.text_color, None, True]
         styles = [no_underline + [0]]
         if 0 <= self.underline < len(self.text):
             styles.insert(0, underline + [self.underline + 1])

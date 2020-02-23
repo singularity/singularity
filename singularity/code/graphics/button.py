@@ -147,15 +147,15 @@ class Button(text.SelectableText, HotkeyText):
         if self.visible and getattr(self, "collision_rect", None):
             # This gets called a lot, so it's been optimized.
             select_now = self.is_over(pygame.mouse.get_pos())
-            if (self._selected ^ select_now): # If there's a change.
+            if self.enabled and (self._selected ^ select_now):  # If there's a change.
                 self.selected = select_now
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP:
-            if self.visible and self.is_over(event.pos):
+            if self.visible and self.enabled and self.is_over(event.pos):
                 self.activate_with_sound(event)
         elif event.type == pygame.KEYDOWN:
-            if self.visible and self.hotkey in (event.unicode, event.key):
+            if self.visible and self.enabled and self.hotkey in (event.unicode, event.key):
                 self.activate_with_sound(event)
 
     def activate_with_sound(self, event):
@@ -164,13 +164,23 @@ class Button(text.SelectableText, HotkeyText):
            This method is called directly by the GUI handler, and should be
            overwritten only to remove the click it plays."""
 
+        # Sometimes other GUI widgets trigger an activation; ignore
+        # it if the button is disabled
+        if not self.enabled:
+            return
         from singularity.code.mixer import play_sound
         play_sound("click")
         self.activated(event)
 
     def activated(self, event):
         """Called when the button is pressed or otherwise triggered."""
+
+        # Sometimes other GUI widgets trigger an activation; ignore
+        # it if the button is disabled
+        if not self.enabled:
+            return
         raise constants.Handled
+
 
 class ImageButton(Button):
 

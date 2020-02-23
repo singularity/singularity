@@ -54,6 +54,7 @@ text_background_unselected = dark_blue
 text_background_selected   = light_blue
 text_border                = white
 text                       = white
+text_disabled              = gray
 
 # Progress colors
 progress_background_unselected = dark_blue
