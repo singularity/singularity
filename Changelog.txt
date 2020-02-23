@@ -12,6 +12,10 @@ USER-VISIBLE CHANGES:
   (Reload theme is now `F6`).
 - Save games are now ordered by time (most recent first) rather
   than name. This makes it easier to find the latest savegame.
+- There is now an "Auto-build items" button in the base overview.
+  It will propose building all the highest value items in each
+  empty base slot (provided there is anything buildable for
+  that base).
 
 V1.00 (2020.07.02):
 
