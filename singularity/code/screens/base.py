@@ -20,6 +20,7 @@
 # This file contains the screen to display the base screen.
 
 import pygame
+from singularity.code.graphics.dialog import YesNoDialog
 
 from singularity.code import g, item, buyable
 from singularity.code.graphics import constants, widget, dialog, text, button, slider
@@ -379,6 +380,17 @@ class BaseScreen(dialog.Dialog):
             borders=range(6),
         )
 
+        self.auto_build_best = button.FunctionButton(
+            self,
+            (0, 0.54),
+            (0.08, 0.08),
+            autotranslate=True,
+            text=N_("&Auto-build items"),
+            anchor=constants.TOP_LEFT,
+            autohotkey=True,
+            function=self.auto_build,
+        )
+
         for i, item_type in enumerate(item.all_types()):
             setattr(
                 self,
@@ -387,6 +399,75 @@ class BaseScreen(dialog.Dialog):
                     self.contents_frame, (0.01, 0.01 + 0.08 * i), item_type=item_type
                 ),
             )
+
+    def _any_item_slots_empty(self):
+        base = self.base
+        if base is None or base.spec.force_cpu:
+            return False
+        item_list = sorted(g.items.values(), reverse=True)
+        for item_spec in item_list:
+            item_type_id = item_spec.item_type.id
+            existing_item = base.items[item_type_id]
+            if existing_item is not None:
+                continue
+            if not item_spec.available() or not item_spec.buildable_in(
+                self.base.location
+            ):
+                continue
+            return True
+        return False
+
+    def auto_build(self):
+        base = self.base
+        if base is None or base.spec.force_cpu:
+            return
+        best_item_by_type = {}
+        item_list = sorted(g.items.values(), reverse=True)
+        for item_spec in item_list:
+            item_type_id = item_spec.item_type.id
+            if item_type_id in best_item_by_type:
+                continue
+            existing_item = base.items[item_type_id]
+            if existing_item is not None:
+                continue
+            if not item_spec.available() or not item_spec.buildable_in(
+                self.base.location
+            ):
+                continue
+            count = 1
+            if item_type_id == "cpu":
+                count = base.space_left_for(item_spec)
+            best_item_by_type[item_type_id] = (item_spec, count)
+
+        if not best_item_by_type:
+            # Nothing to do
+            return
+
+        g.pl.considered_buyables = [
+            buyable.Buyable(item_obj, count=count)
+            for item_obj, count in best_item_by_type.values()
+        ]
+        text = _("Should I construct the following items?")
+
+        for item_type in item.all_types():
+            if item_type.id not in best_item_by_type:
+                continue
+            item_spec, count = best_item_by_type[item_type.id]
+            if count != 1:
+                label = "%s (x%d)" % (item_spec.name, count)
+            else:
+                label = item_spec.name
+            text += "\n * [%s]: %s" % (g.strip_hotkey(item_type.text), label)
+
+        confirm_dialog = YesNoDialog(self, text=text)
+        self.needs_rebuild = True
+        confirmed = dialog.call_dialog(confirm_dialog, self)
+        g.pl.considered_buyables = []
+        if not confirmed:
+            return
+        for item_spec, count in best_item_by_type.values():
+            self.set_current(item_spec.item_type, item_spec, count)
+        self.needs_rebuild = True
 
     def get_current(self, type):
         return self.base.items[type.id]
@@ -513,6 +594,7 @@ class BaseScreen(dialog.Dialog):
         self.needs_rebuild = True
 
     def rebuild(self):
+        self.auto_build_best.enabled = self._any_item_slots_empty()
         self.name_display.text = "%s (%s)" % (self.base.name, self.base.spec.name)
         self.state_display.color = state_colors[self.base.power_state]
         self.state_display.text = self.base.power_state_name
