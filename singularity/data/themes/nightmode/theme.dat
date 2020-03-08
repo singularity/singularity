@@ -62,7 +62,8 @@ scrollbar_background = black
 scrollbar_background_slider = dark_red
 scrollbar_border = red
 scrollbar_arrow_background_selected = dark_red
-scrollbar_arrow_background_unselected = black
+# A slightly darker red
+scrollbar_arrow_background_unselected = #400000ff
 
 # Danger colors
 danger_level_0      = #0000ffff

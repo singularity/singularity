@@ -3,6 +3,9 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Make scrollbar arrows visible in "Nightmode" theme.
+  Thanks to Wuzzy for reporting it.  (Closes: #221)
+  (nthykier)
 - Add updated German translation.  (Closes: #215)  (Wuzzy)
 - Fix bug where "Concepts" in the "Knowledge" menu was not
   translatable.  (Closes: #216)  (nthykier)
