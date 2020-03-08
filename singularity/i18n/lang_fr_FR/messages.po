@@ -472,7 +472,7 @@ msgstr ""
 #: screens/research.py:73
 #, python-format
 msgid "%s money per CPU per day."
-msgstr "% d'argent par CPU par jour."
+msgstr "%s d'argent par CPU par jour."
 
 #: screens/research.py:175
 #, python-brace-format
@@ -544,7 +544,7 @@ msgstr "&SUPERVITESSE"
 
 #: screens/map.py:235
 msgid "BRAIN&WASH"
-msgstr "LAVAGE DE CERVEAU"
+msgstr "&LAVAGE DE CERVEAU"
 
 #: screens/map.py:237
 msgid "TOGGLE &DETECTION"
