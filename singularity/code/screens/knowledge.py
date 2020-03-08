@@ -23,8 +23,6 @@ from __future__ import absolute_import
 import pygame
 import collections
 
-from singularity.code.data import get_def_translation
-
 from singularity.code import g
 from singularity.code.graphics import text, button, dialog, widget, constants, listbox
 
