@@ -155,7 +155,7 @@ if [[ $catalog == "messages" ]]; then
              --output="$tempfile" \
              --files-from=<(find -type f -name "*.py")
     cd "$dir"
-elif [[ $catalog == "data_str" ]] || [[ $catalog == "story" ]]; then
+elif [[ $catalog == "data_str" ]] || [[ $catalog == "story" ]] || [[ $catalog == "knowledge" ]]; then
     potfile="${i18ndir}/${catalog}.pot"
     pofilename="${catalog}.po"
     message "updating template $(rel "$potfile") from string files in $(rel "$esdir")/data"

@@ -17,32 +17,6 @@ def get_esdir(myname):
     return esdir
 
 
-def build_option_parser():
-    import argparse
-
-    description = '''Find data strings and save them for translation.'''
-
-    parser = argparse.ArgumentParser(description=description)
-    parser.add_argument("--catalog", dest="catalog", choices=['data_str', 'story'],
-                        help="What translation catalog to generate", metavar="CATALOG")
-    parser.add_argument("-o", "--output", dest="output", default=None,
-                        help="PO/POT File output", metavar="FILE")
-
-    return parser.parse_args()
-
-
-def main():
-    args = build_option_parser()
-    if args.catalog == 'data_str':
-        generator = generate_data_str_translations()
-    elif args.catalog == 'story':
-        generator = generate_story_translations()
-    else:
-        sys.stderr.write("Unimplemented catalog type: %s\n" % args.catalog)
-        sys.exit(1)
-    write_po_file(generator, args.output)
-
-
 def write_po_file(po_entries, output_file):
 
     with open(output_file, "w+", encoding='utf-8') as fd:
@@ -93,6 +67,24 @@ def generate_story_translations():
             yield (part.text, part.msgctxt, part.translator_comments)
 
 
+def generate_knowledge_translations():
+    from singularity.code.dirs import create_directories
+    from singularity.code import g, data
+
+    create_directories(True)
+    data.load_knowledge()
+
+    for know_area_id, know_area in sorted(g.knowledge.items()):
+        know_area_id_ctxt = '[%s] name' % know_area_id
+        know_area = g.knowledge[know_area_id]
+        yield know_area.untranslated_name, know_area_id_ctxt, 'Name of the Knowledge area in the Knowledge screen'
+        for entry_id, entry in sorted(know_area.help_entries.items()):
+            full_id_name = "[%s/%s] name" % (know_area_id, entry_id)
+            full_id_text = "[%s/%s] description" % (know_area_id, entry_id)
+            yield entry.untranslated_name, full_id_name, None
+            yield entry.untranslated_description, full_id_text, None
+
+
 def generate_data_str_translations():
     esdir = get_esdir(__file__)
     datadir = os.path.join(esdir, "singularity", "data")
@@ -100,6 +92,10 @@ def generate_data_str_translations():
 
     for filename in sorted(file_list):
         if not filename.endswith("_str.dat"):
+            continue
+
+        if filename == 'knowledge_str.dat':
+            # knowledge is handled separately
             continue
         
         filepath = os.path.join(datadir, filename)
@@ -113,6 +109,38 @@ def generate_data_str_translations():
                     ctxt = "[" + section_id + "] " + option
                     text = config.get(section_id, option).strip()
                     yield (text, ctxt, None)
+
+
+CATALOGS = {
+    'data_str': generate_data_str_translations,
+    'story': generate_story_translations,
+    'knowledge': generate_knowledge_translations,
+}
+
+
+def build_option_parser():
+    import argparse
+
+    description = '''Find data strings and save them for translation.'''
+
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("--catalog", dest="catalog", choices=sorted(CATALOGS),
+                        help="What translation catalog to generate", metavar="CATALOG")
+    parser.add_argument("-o", "--output", dest="output", default=None,
+                        help="PO/POT File output", metavar="FILE")
+
+    return parser.parse_args()
+
+
+def main():
+    args = build_option_parser()
+    try:
+        generator = CATALOGS[args.catalog]
+    except KeyError:
+        sys.stderr.write("Unimplemented catalog type: %s\n" % args.catalog)
+        sys.exit(1)
+
+    write_po_file(generator(), args.output)
 
 
 if __name__ == '__main__':

@@ -87,22 +87,21 @@ def set_language(lang=None, force=False):
 
 
 def load_messages():
-    g.messages.clear()
     _load_po_file(g.messages, 'messages.po', use_context=False)
 
 
 def load_data_str():
-    g.data_strings.clear()
     _load_po_file(g.data_strings, 'data_str.po', use_context=True)
+    _load_po_file(g.data_strings, 'knowledge.po', use_context=True, clear_translation_table=False)
 
 
 def load_story_translations():
-    g.story_translations.clear()
     _load_po_file(g.story_translations, 'story.po', use_context=True)
 
 
-def _load_po_file(translation_table, pofilename, use_context=True):
-    translation_table.clear()
+def _load_po_file(translation_table, pofilename, use_context=True, clear_translation_table=True):
+    if clear_translation_table:
+        translation_table.clear()
 
     files = dirs.get_readable_i18n_files(pofilename, language, default_language=False)
 

@@ -22,6 +22,9 @@ from __future__ import absolute_import
 
 import pygame
 import collections
+
+from singularity.code.data import get_def_translation
+
 from singularity.code import g
 from singularity.code.graphics import text, button, dialog, widget, constants, listbox
 
@@ -76,9 +79,10 @@ class KnowledgeScreen(dialog.Dialog):
         self.knowledge_types.update([(_("Techs"), "techs"),
                                      (_("Bases"), "bases"),
                                      (_("Items"), "items")])
-        self.knowledge_types.update([(knowledge["name"], knowledge_id)
-                                      for knowledge_id, knowledge
-                                      in g.knowledge.items() ])
+        self.knowledge_types.update(
+            (knowledge.name, knowledge_id)
+            for knowledge_id, knowledge in g.knowledge.items()
+        )
 
         self.knowledge_choice.list = list(self.knowledge_types)
         self.knowledge_choice.needs_rebuild = True
@@ -116,8 +120,11 @@ class KnowledgeScreen(dialog.Dialog):
         elif item_type == "items":
             items = [[item.name, item.id ] for item in g.items.values()
                                            if item.available()]
-        elif item_type != None:
-            items = [ [item[0], id] for id, item in g.knowledge[item_type]["list"].items()]
+        elif item_type is not None:
+            items = [
+                [item.name, id]
+                for id, item in g.knowledge[item_type].help_entries.items()
+            ]
 
         else:
             items = []
@@ -206,14 +213,14 @@ class KnowledgeScreen(dialog.Dialog):
             
             desc_text = item.name + "\n\n"
             desc_text += _("Building Cost:")+"\n"
-            desc_text += self._desc_cost(item.cost) #Building cost
+            desc_text += self._desc_cost(item.cost)  # Building cost
             desc_text += "\n"
             desc_text += g.items[knowledge_key].get_quality_info()
             desc_text += "\n" + item.description
 
-        elif knowledge_type != None:
-            desc_text = g.knowledge[knowledge_type]["list"][knowledge_key][0] + "\n\n" + \
-                        g.knowledge[knowledge_type]["list"][knowledge_key][1]
+        elif knowledge_type is not None:
+            help_entry = g.knowledge[knowledge_type].help_entries[knowledge_key]
+            desc_text = help_entry.name + "\n\n" + help_entry.description
 
         text.Text(self.description_pane, (0, 0), (-1, -1), text=desc_text,
                     background_color="pane_background", text_size=20,

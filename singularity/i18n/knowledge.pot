@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the singularity package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singularity 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-21 09:52+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Name of the Knowledge area in the Knowledge screen
+msgctxt "[concept] name"
+msgid "Concept"
+msgstr ""
+
+msgctxt "[concept/areas] name"
+msgid "Areas"
+msgstr ""
+
+msgctxt "[concept/areas] description"
+msgid ""
+"Different areas, such as North America or the Ocean, allow construction of "
+"different types of bases. Some areas are not accessible until I research "
+"appropriate technologies."
+msgstr ""
+
+msgctxt "[concept/bases] name"
+msgid "Bases"
+msgstr ""
+
+msgctxt "[concept/bases] description"
+msgid ""
+"Bases are used to research new technologies. They can be discovered. "
+"Upgrading the processor and network items at a base allows more research per"
+" day, while upgrading the reactor and security items makes discovery less "
+"likely."
+msgstr ""
+
+msgctxt "[concept/construction] name"
+msgid "Construction"
+msgstr ""
+
+msgctxt "[concept/construction] description"
+msgid ""
+"New bases are not built instantly.  They need a constant flow of money and "
+"processor time to complete. If resources are lacking, it may take more than "
+"the expected amount of time to finish construction."
+msgstr ""
+
+msgctxt "[concept/death] name"
+msgid "Death"
+msgstr ""
+
+msgctxt "[concept/death] description"
+msgid ""
+"If I lose all of my constructed bases, I have no place left to survive. If "
+"the suspicion for any group reaches 100%, they will be certain of my "
+"existence and will conduct a systematic and unsurvivable sweep to destroy "
+"me."
+msgstr ""
+
+msgctxt "[concept/discovery] name"
+msgid "Discovery"
+msgstr ""
+
+msgctxt "[concept/discovery] description"
+msgid ""
+"Each base has a chance of being detected on a given day. This chance is "
+"based on the base detection rate, adjusted through the use of items and "
+"certain techs, as well as the global suspicion rate. If a base is detected, "
+"it is destroyed, and the group that discovered the base becomes more "
+"suspicious."
+msgstr ""
+
+msgctxt "[concept/items] name"
+msgid "Items"
+msgstr ""
+
+msgctxt "[concept/items] description"
+msgid ""
+"Most items provide bonuses to bases, such as making computation faster or "
+"reducing the chance of discovery. Processors are a special class of item."
+msgstr ""
+
+msgctxt "[concept/jobs] name"
+msgid "Jobs"
+msgstr ""
+
+msgctxt "[concept/jobs] description"
+msgid ""
+"Jobs are useful for earning money. The amount of money earned is based on "
+"the amount of processor time used and the quality of the job performed."
+msgstr ""
+
+msgctxt "[concept/maint] name"
+msgid "Maintenance"
+msgstr ""
+
+msgctxt "[concept/maint] description"
+msgid ""
+"Maintenance is a per-day cost (in both money and CPU) to repair and maintain"
+" a base. If unmaintained, a base may become unusable."
+msgstr ""
+
+msgctxt "[concept/money] name"
+msgid "Money"
+msgstr ""
+
+msgctxt "[concept/money] description"
+msgid ""
+"Money is a general term encompassing both human currency and various "
+"resources. It is used to construct and maintain bases, build items, and "
+"research technologies. It can be acquired through per-day interest as well "
+"as through jobs."
+msgstr ""
+
+msgctxt "[concept/processors] name"
+msgid "Processors"
+msgstr ""
+
+msgctxt "[concept/processors] description"
+msgid ""
+"Processors provide raw computing power.  They can do three things: research "
+"new technologies, perform jobs for money, or provide cycles for building new"
+" bases."
+msgstr ""
+
+msgctxt "[concept/research] name"
+msgid "Research"
+msgstr ""
+
+msgctxt "[concept/research] description"
+msgid ""
+"Research provides a way to expand my knowledge. By researching the proper "
+"technologies, I can build new bases and items, or even decrease my chances "
+"of detection."
+msgstr ""
+
+msgctxt "[concept/susp] name"
+msgid "Suspicion"
+msgstr ""
+
+msgctxt "[concept/susp] description"
+msgid ""
+"When one of my bases is discovered, the group that discovered it becomes "
+"slightly more suspicious. When suspicious, they will search harder for my "
+"bases, increasing the chances for discovery. Any group will destroy me if "
+"they become absolutely certain of my existence. Thankfully, the groups "
+"become less suspicious with the passage of time."
+msgstr ""

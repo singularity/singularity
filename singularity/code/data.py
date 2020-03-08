@@ -505,20 +505,16 @@ def load_difficulty_defs():
     load_generic_defs("difficulties", difficulty.difficulties)
 
 
-def load_knowledge_defs():
+def load_knowledge():
     knowledge = g.knowledge = {}
+
+    from singularity.code.knowledge import KnowledgeHelpEntry, KnowledgeArea
 
     help_list = load_generic_defs_file("knowledge", no_list=False)
     for help_section in help_list:
 
-        knowledge_section = {}
-        knowledge_section["name"] = help_section["name"]
-
         knowledge_id = help_section["id"]
-        knowledge[knowledge_id] = knowledge_section
-
-        knowledge_list = {}
-        knowledge_section["list"] = knowledge_list
+        help_entries = {}
 
         # Load the knowledge lists.
         help_keys = [x for x in help_section if x != "id" and x != "name"]
@@ -528,11 +524,9 @@ def load_knowledge_defs():
                 sys.stderr.write("Invalid knowledge entry %s." % repr(help_entry))
                 sys.exit(1)
 
-            knowledge_list[help_key] = help_entry
+            help_entries[help_key] = KnowledgeHelpEntry(knowledge_id, help_key, help_entry[0], help_entry[1])
 
-
-def load_knowledge():
-    load_knowledge_defs()
+        knowledge[knowledge_id] = KnowledgeArea(knowledge_id, help_section["name"], help_entries)
 
 
 def load_buttons_defs():
@@ -650,7 +644,6 @@ def reload_all():
 def reload_all_def():
     load_strings()
     load_groups_defs()
-    load_knowledge_defs()
     load_difficulty_defs()
     load_base_defs()
     load_tech_defs()
