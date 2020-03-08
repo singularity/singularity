@@ -170,4 +170,5 @@ except ImportError:
     import __builtin__ as builtins
 
 builtins.__dict__['_'] = translate
-
+# Mark string as translatable but defer translation until later.
+builtins.__dict__['N_'] = lambda x: x

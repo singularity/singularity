@@ -149,6 +149,7 @@ if [[ $catalog == "messages" ]]; then
              --from-code=UTF-8 \
              --force-po        \
              --add-comments    \
+             --keyword=N_      \
              --package-name=singularity \
              --package-version=$(awk -F'['\'\"']' '/^version *= */{print $2}' g.py) \
              --msgid-bugs-address="https://github.com/singularity/singularity/issues" \

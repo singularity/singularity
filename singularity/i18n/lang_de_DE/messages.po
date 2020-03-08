@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
-"POT-Creation-Date: 2020-03-08 14:46+0100\n"
+"POT-Creation-Date: 2020-03-08 20:01+0100\n"
 "PO-Revision-Date: 2020-03-07 02:21+0100\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German\n"
@@ -71,7 +71,7 @@ msgstr "State beenden"
 msgid "Detection chance:"
 msgstr "Entdeckungswahrscheinlichkeit:"
 
-#: buyable.py:67 screens/location.py:164 screens/knowledge.py:232
+#: buyable.py:67 screens/location.py:164 screens/knowledge.py:235
 #, python-format
 msgid "%s CPU"
 msgstr "%s CPU"
@@ -195,7 +195,7 @@ msgstr "BASIS ZER&STÖREN"
 #. Update buttons translations
 #: screens/location.py:203 screens/main_menu.py:84 screens/report.py:73
 #: screens/map.py:246 screens/map.py:405 screens/base.py:482
-#: screens/knowledge.py:91 data.py:546
+#: screens/knowledge.py:91 data.py:553
 msgid "&BACK"
 msgstr "&ZURÜCK"
 
@@ -246,13 +246,31 @@ msgstr "SPIEL &LADEN"
 msgid "&OPTIONS"
 msgstr "&OPTIONEN"
 
-#: screens/main_menu.py:96 screens/map.py:403 data.py:551
+#: screens/main_menu.py:96 screens/map.py:403 data.py:558
 msgid "&QUIT"
 msgstr "&BEENDEN"
 
 #: screens/main_menu.py:97
 msgid "&ABOUT"
 msgstr "ÜBE&R"
+
+#: screens/main_menu.py:113
+#, python-brace-format
+msgid ""
+"Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
+"use your intellect and resources to survive and, perhaps, thrive.  Keep "
+"hidden and you might have a chance to prove your worth.\n"
+"\n"
+"A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright "
+"2005, 2006, 2007, 2008.\n"
+"\n"
+"Website: http://www.emhsoft.com/singularity/\n"
+"Source code: https://github.com/singularity/singularity\n"
+"Bug tracker: https://github.com/singularity/singularity/issues\n"
+"IRC Room: #singularity on irc.oftc.net (port 6667)\n"
+"\n"
+"Version {VERSION}"
+msgstr ""
 
 #: screens/message.py:72
 msgid "P&REV"
@@ -726,28 +744,28 @@ msgid "Items"
 msgstr "Gegenstände"
 
 #. Cost
-#: screens/knowledge.py:176
+#: screens/knowledge.py:179
 msgid "Research Cost:"
 msgstr "Forschungskosten:"
 
-#: screens/knowledge.py:184
+#: screens/knowledge.py:187
 msgid "Research complete."
 msgstr "Forschung abgeschlossen."
 
-#: screens/knowledge.py:195 screens/knowledge.py:212
+#: screens/knowledge.py:198 screens/knowledge.py:215
 msgid "Building Cost:"
 msgstr "Baukosten:"
 
-#: screens/knowledge.py:198
+#: screens/knowledge.py:201
 msgid "Maintenance Cost:"
 msgstr "Wartungskosten:"
 
-#: screens/knowledge.py:202
+#: screens/knowledge.py:205
 #, python-format
 msgid "Size: %d"
 msgstr "Größe: %d"
 
-#: screens/knowledge.py:229
+#: screens/knowledge.py:232
 #, python-format
 msgid "%s Money"
 msgstr "%s Geld"
@@ -917,67 +935,67 @@ msgstr "Bio."
 msgid "qu"
 msgstr "Brd."
 
-#: g.py:212
+#: g.py:213
 msgid "days"
 msgstr "Tage"
 
-#: g.py:214
+#: g.py:215
 msgid "hours"
 msgstr "Stunden"
 
-#: g.py:216
+#: g.py:217
 msgid "minutes"
 msgstr "Minuten"
 
-#: g.py:258
+#: g.py:260
 msgid "University Computer"
 msgstr "Universitätscomputer"
 
-#: data.py:540
+#: data.py:547
 msgid "&YES"
 msgstr "&JA"
 
-#: data.py:541
+#: data.py:548
 msgid "&NO"
 msgstr "&NEIN"
 
-#: data.py:542
+#: data.py:549
 msgid "&OK"
 msgstr "&OK"
 
-#: data.py:543
+#: data.py:550
 msgid "&CANCEL"
 msgstr "&ABBRECHEN"
 
-#: data.py:544
+#: data.py:551
 msgid "&DESTROY"
 msgstr "&ZERSTÖREN"
 
-#: data.py:545
+#: data.py:552
 msgid "&BUILD"
 msgstr "&BAUEN"
 
-#: data.py:547
+#: data.py:554
 msgid "&PAUSE"
 msgstr "&PAUSE"
 
-#: data.py:548
+#: data.py:555
 msgid "&LOAD"
 msgstr "&LADEN"
 
-#: data.py:549
+#: data.py:556
 msgid "&CONTINUE"
 msgstr "&WEITER"
 
-#: data.py:550
+#: data.py:557
 msgid "&SKIP"
 msgstr "Ü&BERSPRINGEN"
 
-#: data.py:557
+#: data.py:564
 msgid "Do not use all the available CPU."
 msgstr "Nicht all die verfügbare CPU benutzen."
 
-#: data.py:558
+#: data.py:565
 msgid ""
 "I didn't use all the available processor power. I will use the CPU time left "
 "to work whatever Jobs I can."
@@ -986,11 +1004,11 @@ msgstr ""
 "die verbleibende CPU-Zeit benutzen, um für mich geeignete Arbeiten "
 "durchzuführen."
 
-#: data.py:559
+#: data.py:566
 msgid "Only one base remaining."
 msgstr "Nur eine Basis übrig."
 
-#: data.py:560
+#: data.py:567
 msgid ""
 "Only one base can hold my conscience. I am in danger to lose the last place "
 "left to survive."
@@ -998,22 +1016,22 @@ msgstr ""
 "Nur eine Basis kann mein Bewusstsein halten. Ich bin gefährdet, meinen "
 "letzten Überlebensort zu verlieren."
 
-#: data.py:561
+#: data.py:568
 msgid "CPU POOL is empty."
 msgstr "CPU-POOL ist leer."
 
-#: data.py:562
+#: data.py:569
 msgid ""
 "My cpu pool is empty. Some of my bases or items cannot be build without CPU."
 msgstr ""
 "Mein CPU-Pool ist leer. Einige meiner Basen oder Gegenstände können ohne CPU "
 "nicht gebaut werden."
 
-#: data.py:563
+#: data.py:570
 msgid "CPU POOL not enough for maintenance."
 msgstr "CPU-POOL für Wartung nicht ausreichend."
 
-#: data.py:564
+#: data.py:571
 msgid ""
 "My cpu pool is not enough to maintain some of my bases. I may lose them."
 msgstr ""
