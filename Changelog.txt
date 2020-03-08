@@ -1,5 +1,12 @@
 Endgame: Singularity Changelog
 
+V1.XX (2020.XX.XX):
+
+USER-VISIBLE CHANGES:
+- Add updated German translation.  (Closes: #215)  (Wuzzy)
+- Fix bug where "Concepts" in the "Knowledge" menu was not
+  translatable.  (Closes: #216)  (nthykier)
+
 v1.0b1 (2020.02.16):
 
 USER-VISIBLE CHANGES:
