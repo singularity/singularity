@@ -336,8 +336,9 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        log_format = self.group_spec.discover_log or _("Base %s of type %s destroyed at location %s.")
-        return log_format % (self._base_name, self.base_type.name, self.location.name)
+        log_format = self.group_spec.discover_log or \
+                     _("Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}.")
+        return log_format.format(BASE=self._base_name, BASE_TYPE=self.base_type.name, LOCATION=self.location.name)
 
     @property
     def full_message(self):

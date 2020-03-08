@@ -471,8 +471,8 @@ msgstr ""
 "vernichtet, aber einige Geheimdienste schöpften Verdacht."
 
 msgctxt "[covert] discover_log"
-msgid "%s (%s) discovered by COVERT at %s"
-msgstr "%s (%s) Entdeckt von GEHEIMD. bei %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by COVERT at {LOCATION}"
+msgstr "{BASE} ({BASE_TYPE}) Entdeckt von GEHEIMD. bei {LOCATION}"
 
 msgctxt "[covert] name"
 msgid "COVERT"
@@ -487,8 +487,8 @@ msgstr ""
 "vernichtet, aber einige Presseorganisationen schöpfen Verdacht."
 
 msgctxt "[news] discover_log"
-msgid "%s (%s) discovered by NEWS at %s"
-msgstr "%s (%s) Entdeckt von PRESSE bei %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by NEWS at {LOCATION}"
+msgstr "{BASE} ({BASE_TYPE}) Entdeckt von PRESSE bei {LOCATION}"
 
 msgctxt "[news] name"
 msgid "NEWS"
@@ -503,8 +503,8 @@ msgstr ""
 "vernichtet, aber in der Zivilbevölkerung kamen Verdachtsmomente auf."
 
 msgctxt "[public] discover_log"
-msgid "%s (%s) discovered by PUBLIC at %s"
-msgstr "%s (%s) Entdeckt von ZIVIL bei %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by PUBLIC at {LOCATION}"
+msgstr "{BASE} ({BASE_TYPE}) Entdeckt von ZIVIL bei {LOCATION}"
 
 msgctxt "[public] name"
 msgid "PUBLIC"
@@ -520,8 +520,8 @@ msgstr ""
 "Verdachtsmomente auf."
 
 msgctxt "[science] discover_log"
-msgid "%s (%s) discovered by SCIENCE at %s"
-msgstr "%s (%s) Entdeckt von WISSENS. bei %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by SCIENCE at {LOCATION}"
+msgstr "{BASE} ({BASE_TYPE}) Entdeckt von WISSENS. bei {LOCATION}"
 
 msgctxt "[science] name"
 msgid "SCIENCE"

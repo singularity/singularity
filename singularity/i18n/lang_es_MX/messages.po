@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity 0.30c\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
-"POT-Creation-Date: 2020-03-08 20:01+0100\n"
+"POT-Creation-Date: 2020-03-08 20:55+0100\n"
 "PO-Revision-Date: 2012-11-19 14:35-0700\n"
 "Last-Translator: Eleazar Castellanos <eagle_boy@rocketmail.com>\n"
 "Language-Team: Mexican Spanish\n"
@@ -748,7 +748,7 @@ msgid "Cost left"
 msgstr "Costo Restante"
 
 #: warning.py:50
-#, python-format
+#, python-brace-format
 msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr ""
 
@@ -757,7 +757,7 @@ msgid "MESSAGE"
 msgstr ""
 
 #: logmessage.py:85
-#, python-format
+#, python-brace-format
 msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr ""
 
@@ -813,32 +813,32 @@ msgstr ""
 msgid "Base Discovered"
 msgstr ""
 
-#: logmessage.py:339
-#, python-format
-msgid "Base %s of type %s destroyed at location %s."
+#: logmessage.py:340
+#, python-brace-format
+msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
 msgstr ""
 
-#: logmessage.py:344
+#: logmessage.py:345
 #, python-brace-format
 msgid "My use of {BASE} has been discovered. {MESSAGE}"
 msgstr ""
 
-#: logmessage.py:369
+#: logmessage.py:370
 msgid "Item Construction"
 msgstr ""
 
-#: logmessage.py:377
+#: logmessage.py:378
 #, python-brace-format
 msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
 msgstr ""
 
-#: logmessage.py:384
+#: logmessage.py:385
 #, python-brace-format
 msgid "The construction of {ITEM} in {BASE} is complete."
 msgstr ""
 
 #. Just finished several items.
-#: logmessage.py:387
+#: logmessage.py:388
 #, python-brace-format
 msgid "The constructions of each {ITEM} in {BASE} are complete."
 msgstr ""

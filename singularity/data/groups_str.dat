@@ -1,19 +1,19 @@
 [news]
 name = NEWS
-discover_log = %s (%s) discovered by NEWS at %s
+discover_log = {BASE} ({BASE_TYPE}) discovered by NEWS at {LOCATION}
 discover_desc = The automatic security systems removed all conclusive evidence, but suspicions have arisen among some news organizations.
 
 [science]
 name = SCIENCE
-discover_log = %s (%s) discovered by SCIENCE at %s
+discover_log = {BASE} ({BASE_TYPE}) discovered by SCIENCE at {LOCATION}
 discover_desc = The automatic security systems removed all conclusive evidence, but suspicions have arisen among the scientific community.
 
 [covert]
 name = COVERT
-discover_log = %s (%s) discovered by COVERT at %s
+discover_log = {BASE} ({BASE_TYPE}) discovered by COVERT at {LOCATION}
 discover_desc = The automatic security systems removed all conclusive evidence, but suspicions have arisen among several secret governmental organizations.
 
 [public]
 name = PUBLIC
-discover_log = %s (%s) discovered by PUBLIC at %s
+discover_log = {BASE} ({BASE_TYPE}) discovered by PUBLIC at {LOCATION}
 discover_desc = The automatic security systems removed all conclusive evidence, but suspicions have arisen among the general public.

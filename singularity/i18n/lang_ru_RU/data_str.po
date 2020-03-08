@@ -457,7 +457,7 @@ msgid ""
 msgstr ""
 
 msgctxt "[covert] discover_log"
-msgid "%s (%s) discovered by COVERT at %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by COVERT at {LOCATION}"
 msgstr ""
 
 msgctxt "[covert] name"
@@ -471,7 +471,7 @@ msgid ""
 msgstr ""
 
 msgctxt "[news] discover_log"
-msgid "%s (%s) discovered by NEWS at %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by NEWS at {LOCATION}"
 msgstr ""
 
 msgctxt "[news] name"
@@ -485,7 +485,7 @@ msgid ""
 msgstr ""
 
 msgctxt "[public] discover_log"
-msgid "%s (%s) discovered by PUBLIC at %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by PUBLIC at {LOCATION}"
 msgstr ""
 
 msgctxt "[public] name"
@@ -499,7 +499,7 @@ msgid ""
 msgstr ""
 
 msgctxt "[science] discover_log"
-msgid "%s (%s) discovered by SCIENCE at %s"
+msgid "{BASE} ({BASE_TYPE}) discovered by SCIENCE at {LOCATION}"
 msgstr ""
 
 msgctxt "[science] name"

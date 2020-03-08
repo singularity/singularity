@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
-"POT-Creation-Date: 2020-03-08 20:01+0100\n"
+"POT-Creation-Date: 2020-03-08 20:55+0100\n"
 "PO-Revision-Date: 2020-03-07 02:21+0100\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German\n"
@@ -779,7 +779,7 @@ msgid "Cost left"
 msgstr "Verbleibende Kosten"
 
 #: warning.py:50
-#, python-format
+#, python-brace-format
 msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr "WARNUNG {CURRENT_PAGE}/{MAX_PAGE}"
 
@@ -788,7 +788,7 @@ msgid "MESSAGE"
 msgstr "MELDUNG"
 
 #: logmessage.py:85
-#, python-format
+#, python-brace-format
 msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr "MELDUNG {CURRENT_PAGE}/{MAX_PAGE}"
 
@@ -847,32 +847,32 @@ msgstr ""
 msgid "Base Discovered"
 msgstr "Basis entdeckt"
 
-#: logmessage.py:339
-#, python-format
-msgid "Base %s of type %s destroyed at location %s."
-msgstr "Basis %s vom Typ %s zerstört am Ort %s."
+#: logmessage.py:340
+#, python-brace-format
+msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
+msgstr "Basis {BASE} vom Typ {BASE_TYPE} zerstört am Ort {LOCATION}"
 
-#: logmessage.py:344
+#: logmessage.py:345
 #, python-brace-format
 msgid "My use of {BASE} has been discovered. {MESSAGE}"
 msgstr "Meine Benutzung von {BASE} wurde entdeckt. {MESSAGE}"
 
-#: logmessage.py:369
+#: logmessage.py:370
 msgid "Item Construction"
 msgstr "Gegenstandsbau"
 
-#: logmessage.py:377
+#: logmessage.py:378
 #, python-brace-format
 msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
 msgstr "{ITEM_TYPE_NAME} gebaut in {BASE_NAME} bei {LOCATION}"
 
-#: logmessage.py:384
+#: logmessage.py:385
 #, python-brace-format
 msgid "The construction of {ITEM} in {BASE} is complete."
 msgstr "Der Bau von {ITEM} in {BASE} ist fertig."
 
 #. Just finished several items.
-#: logmessage.py:387
+#: logmessage.py:388
 #, python-brace-format
 msgid "The constructions of each {ITEM} in {BASE} are complete."
 msgstr "Der Bau von mehreren Gegenständen vom Typ {ITEM} in {BASE} ist fertig."
