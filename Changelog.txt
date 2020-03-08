@@ -3,6 +3,9 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Fix a bug where part of the tech description in the Knowledge
+  menu was not translatable.  Thanks to Wuzzy for reporting it.
+  (Closes: #217) (nthykier)
 - Fix overly precise durations due to missing rounding when
   displaying construction times in Python3.  Thanks to
   Wuzzy for reporting it.  (Closes: #222)  (nthykier)

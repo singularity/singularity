@@ -264,11 +264,26 @@ def load_bases():
     load_base_defs()
 
 
-# Expando type for danger.
-danger_type = type('Danger', (object,), {})
+class Danger(object):
+
+    def __init__(self, id, untranslated_research_desc, untranslated_knowledge_desc):
+        self.id = id
+        self.untranslated_research_desc = untranslated_research_desc
+        self.untranslated_knowledge_desc = untranslated_knowledge_desc
+
+    def _translate(self, field, string):
+        return get_def_translation(self.id, field, string)
+
+    @property
+    def research_desc(self):
+        return self._translate('research_desc', self.untranslated_research_desc)
+
+    @property
+    def knowledge_desc(self):
+        return self._translate('knowledge_desc', self.untranslated_knowledge_desc)
 
 
-def load_danger_defs():
+def load_danger():
     dangers = g.dangers = {}
 
     danger_list = load_generic_defs_file("dangers")
@@ -284,9 +299,7 @@ def load_danger_defs():
 
         danger_level = int(danger_id[7:])
 
-        dangers[danger_level] = danger_type()
-        dangers[danger_level].research_desc = danger_def["research_desc"]
-        dangers[danger_level].knowledge_desc = danger_def["knowledge_desc"]
+        dangers[danger_level] = Danger(danger_id, danger_def["research_desc"], danger_def["knowledge_desc"])
 
 
 def load_regions():
@@ -561,7 +574,6 @@ def load_warning_defs():
 def load_strings():
     load_buttons_defs()
     load_story_defs()
-    load_danger_defs()
     load_warning_defs()
 
 
@@ -626,6 +638,7 @@ def load_story_defs():
 
 def reload_all():
     load_internal_id()
+    load_danger()
     load_significant_numbers()
     load_strings()
     load_groups()
