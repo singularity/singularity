@@ -82,7 +82,7 @@ class AbstractLogMessage(object):
 
     @classmethod
     def title_multiple(self):
-        return _("MESSAGE %d/%d")
+        return _("MESSAGE {CURRENT_PAGE}/{MAX_PAGE}")
 
     @property
     def log_emit_time(self):

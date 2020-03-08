@@ -94,7 +94,7 @@ class MessageListDialog(dialog.YesNoDialog):
             self.prev_button.visible = False
             self.next_button.visible = False
         else:
-            self.title.text = self.type.title_multiple() % (self.list_pos + 1, len(self.list))
+            self.title.text = self.type.title_multiple().format(CURRENT_PAGE=self.list_pos + 1, MAX_PAGE=len(self.list))
             self.body.text  = self.list[self.list_pos].full_message
             self.body.color = self.list[self.list_pos].full_message_color
             self.prev_button.visible = True

@@ -743,7 +743,7 @@ msgstr ""
 
 #: warning.py:50
 #, python-format
-msgid "WARNING %d/%d"
+msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr ""
 
 #: logmessage.py:81
@@ -752,7 +752,7 @@ msgstr ""
 
 #: logmessage.py:85
 #, python-format
-msgid "MESSAGE %d/%d"
+msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr ""
 
 #: logmessage.py:184

@@ -47,7 +47,7 @@ class Warning(object):
 
     @classmethod
     def title_multiple(self):
-        return _("WARNING %d/%d")
+        return _("WARNING {CURRENT_PAGE}/{MAX_PAGE}")
 
     @property
     def full_message(self):

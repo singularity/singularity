@@ -757,8 +757,8 @@ msgstr "Осталось"
 
 #: warning.py:50
 #, python-format
-msgid "WARNING %d/%d"
-msgstr "ПРЕДУПРЕЖДЕНИЕ %d/%d"
+msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
+msgstr "ПРЕДУПРЕЖДЕНИЕ {CURRENT_PAGE}/{MAX_PAGE}"
 
 #: logmessage.py:81
 msgid "MESSAGE"
@@ -766,7 +766,7 @@ msgstr ""
 
 #: logmessage.py:85
 #, python-format
-msgid "MESSAGE %d/%d"
+msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr ""
 
 #: logmessage.py:184
