@@ -206,14 +206,16 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 
     return share_yesterday + passed_this_tick
 
-#Takes a number of minutes, and returns a string suitable for display.
+
+# Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time//60 > 48:
-        return str(raw_time/(24*60)) +" "+_("days")
+        return str(raw_time // (24*60)) + " " + _("days")
     elif raw_time//60 > 1:
-        return str(raw_time/(60)) +" "+_("hours")
+        return str(raw_time // 60) + " " +_("hours")
     else:
-        return str(raw_time) +" "+_("minutes")
+        return str(raw_time) + " "+ _("minutes")
+
 
 # Generator function for iterating through all bases.
 def all_bases(with_loc = False):

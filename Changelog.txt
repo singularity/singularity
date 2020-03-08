@@ -3,6 +3,9 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Fix overly precise durations due to missing rounding when
+  displaying construction times in Python3.  Thanks to
+  Wuzzy for reporting it.  (Closes: #222)  (nthykier)
 - Make scrollbar arrows visible in "Nightmode" theme.
   Thanks to Wuzzy for reporting it.  (Closes: #221)
   (nthykier)
