@@ -151,7 +151,7 @@ if [[ $catalog == "messages" ]]; then
              --add-comments    \
              --package-name=singularity \
              --package-version=$(awk -F'['\'\"']' '/^version *= */{print $2}' g.py) \
-             --msgid-bugs-address="endgame-singularity-dev@googlegroups.com" \
+             --msgid-bugs-address="https://github.com/singularity/singularity/issues" \
              --output="$tempfile" \
              --files-from=<(find -type f -name "*.py")
     cd "$dir"
