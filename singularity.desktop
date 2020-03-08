@@ -3,6 +3,7 @@ Version=1.0
 Type=Application
 Name=Endgame: Singularity
 Comment=Simulation of true AI
+Comment[de]=Simulation einer echten KI
 Icon=singularity
 Exec=singularity
 Terminal=false

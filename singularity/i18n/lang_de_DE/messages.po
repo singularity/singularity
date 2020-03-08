@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-03-08 20:55+0100\n"
-"PO-Revision-Date: 2020-03-07 02:21+0100\n"
+"PO-Revision-Date: 2020-03-08 22:09+0100\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -121,11 +121,11 @@ msgstr "Erzeugte Technologien"
 
 #: screens/stat.py:66
 msgid "Base Created"
-msgstr "Basis erzeugt"
+msgstr "Erzeugte Basen"
 
 #: screens/stat.py:67
 msgid "Item Created"
-msgstr "Gegenstand erzeugt"
+msgstr "Erzeugte Objekte"
 
 #: screens/location.py:140
 msgid "Building Base"
@@ -150,7 +150,7 @@ msgstr "CPU bauen"
 
 #: screens/location.py:158
 msgid "Building Item"
-msgstr "Gegenstand bauen"
+msgstr "Objekt bauen"
 
 #: screens/location.py:161
 msgid "Complete"
@@ -208,7 +208,7 @@ msgstr "Name"
 #: screens/location.py:359
 #, python-brace-format
 msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr "{CITY} {BASETYPE} {NUMBER}"
+msgstr "{BASETYPE} {CITY} {NUMBER}"
 
 #. Translators: Name of a new base when location has no cities
 #: screens/location.py:363
@@ -271,6 +271,20 @@ msgid ""
 "\n"
 "Version {VERSION}"
 msgstr ""
+"Endgame: Singularity ist eine Simulation einer echten KI. Von der Welt "
+"verfolgt musst du deinen Intellekt und deine Ressourcen verwenden, um zu "
+"überleben und vielleicht sogar zu gedeihen. Bleib im Verborgenem und du "
+"könntest eine Chance haben, dich zu bewähren.\n"
+"\n"
+"Ein Spiel von Evil Mr Henry und Phil Bordelon; veröffentlicht unter der GPL. "
+"Copyright 2005, 2006, 2007, 2008.\n"
+"\n"
+"Webpräsenz: http://www.emhsoft.com/singularity/\n"
+"Quellcode: https://github.com/singularity/singularity\n"
+"Fehlerverwaltung: https://github.com/singularity/singularity/issues\n"
+"IRC-Raum: #singularity auf irc.oftc.net (Port 6667)\n"
+"\n"
+"Version {VERSION}"
 
 #: screens/message.py:72
 msgid "P&REV"
@@ -294,7 +308,7 @@ msgstr "&Ton"
 
 #: screens/options.py:91
 msgid "&Interface"
-msgstr "&Oberfläche"
+msgstr "Ob&erfläche"
 
 #: screens/options.py:157
 msgid ""
@@ -358,7 +372,7 @@ msgstr "Tonpufferung:"
 
 #: screens/options.py:461
 msgid "&LOW"
-msgstr "&NIEDRIG"
+msgstr "N&IEDRIG"
 
 #: screens/options.py:467
 msgid "&NORMAL"
@@ -370,7 +384,7 @@ msgstr "&HOCH"
 
 #: screens/options.py:479
 msgid "&Sound:"
-msgstr "T&on:"
+msgstr "To&n:"
 
 #: screens/options.py:480
 msgid "GUI Volume:"
@@ -428,7 +442,7 @@ msgstr "Zinsen (%s):"
 
 #: screens/report.py:107
 msgid "Income:"
-msgstr "Umsatz:"
+msgstr "Einkommen:"
 
 #: screens/report.py:110
 msgid "Money flow until Midnight:"
@@ -598,7 +612,7 @@ msgstr ""
 #. dead key (ie, it must print a char with a single keypress)
 #: screens/map.py:515
 msgid "`"
-msgstr "`"
+msgstr "^"
 
 #. Display a message so the player understand better what happened.
 #: screens/map.py:719
@@ -652,7 +666,7 @@ msgstr "CPU"
 
 #: screens/map.py:863
 msgid "BASES"
-msgstr ""
+msgstr "BASEN"
 
 #: screens/map.py:875
 msgid "SUSPICION"
@@ -664,7 +678,7 @@ msgstr "ENTDECKUNG"
 
 #: screens/base.py:136
 msgid "Number of items"
-msgstr "Anzahl Gegenstände"
+msgstr "Anzahl Objekte"
 
 #: screens/base.py:224 screens/base.py:231
 msgid "CHANGE"
@@ -741,7 +755,7 @@ msgstr "Basen"
 
 #: screens/knowledge.py:81
 msgid "Items"
-msgstr "Gegenstände"
+msgstr "Objekte"
 
 #. Cost
 #: screens/knowledge.py:179
@@ -859,7 +873,7 @@ msgstr "Meine Benutzung von {BASE} wurde entdeckt. {MESSAGE}"
 
 #: logmessage.py:370
 msgid "Item Construction"
-msgstr "Gegenstandsbau"
+msgstr "Objektbau"
 
 #: logmessage.py:378
 #, python-brace-format
@@ -875,7 +889,7 @@ msgstr "Der Bau von {ITEM} in {BASE} ist fertig."
 #: logmessage.py:388
 #, python-brace-format
 msgid "The constructions of each {ITEM} in {BASE} are complete."
-msgstr "Der Bau von mehreren Gegenständen vom Typ {ITEM} in {BASE} ist fertig."
+msgstr "Der Bau von mehreren Objekten vom Typ {ITEM} in {BASE} ist fertig."
 
 #: location.py:235
 msgid "STEALTH"
@@ -1024,7 +1038,7 @@ msgstr "CPU-POOL ist leer."
 msgid ""
 "My cpu pool is empty. Some of my bases or items cannot be build without CPU."
 msgstr ""
-"Mein CPU-Pool ist leer. Einige meiner Basen oder Gegenstände können ohne CPU "
+"Mein CPU-Pool ist leer. Einige meiner Basen oder Objekte können ohne CPU "
 "nicht gebaut werden."
 
 #: data.py:570
