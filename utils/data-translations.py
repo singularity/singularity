@@ -108,8 +108,8 @@ def generate_data_str_translations():
             config = RawConfigParser()
             config.read_file(fd)
 
-            for section_id in config.sections():
-                for option in config.options(section_id):
+            for section_id in sorted(config.sections()):
+                for option in sorted(config.options(section_id)):
                     ctxt = "[" + section_id + "] " + option
                     text = config.get(section_id, option).strip()
                     yield (text, ctxt, None)
