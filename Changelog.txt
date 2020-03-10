@@ -3,6 +3,10 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Use correct number separator for money under non-English
+  locales (e.g. comma in German) when measured in millions
+  or more. Thanks to Wuzzy2 for reporting the issue.
+  (Closes: #226) (nthykier)
 - Ensure that the about menu text is extracted for translations
   Thanks to Wuzzy2 for reporting its absence.  (Closes: #218)
   (nthykier)

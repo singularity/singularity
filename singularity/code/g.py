@@ -163,7 +163,6 @@ def to_money(amount, fixed_size=False):
         return add_commas(amount, fixed_size=fixed_size)
 
     prec = 2
-    format = "%0.*f%s" if fixed_size else "%.*f%s"
     if abs_amount < 10**9: # Millions.
         divisor = 10**6
         #Translators: abbreviation of 'millions'
@@ -183,11 +182,13 @@ def to_money(amount, fixed_size=False):
 
         # congratulations, you broke the bank!
         if abs_amount >= max_cash - divisor/10**prec/2:
+            format_str = "%0.*f%s" if fixed_size else "%.*f%s"
             pi = u"\u03C0"  # also available: infinity = u"\u221E"
             # replace all chars by a cute pi symbol
-            return ("-" if amount<0 else "") + pi * len(format % (prec, 1, unit))
+            return ("-" if amount < 0 else "") + pi * len(format_str % (prec, 1, unit))
 
-    return format % (prec, float(amount) / divisor, unit)
+    amount = round(float(amount) / divisor, prec)
+    return add_commas(amount, fixed_size=fixed_size) + unit
 
 # Spreads a number of events per day (e.g. processor ticks) out over the course
 # of the day.
