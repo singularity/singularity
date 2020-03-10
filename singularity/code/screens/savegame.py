@@ -65,6 +65,12 @@ class SavegameScreen(dialog.ChoiceDialog):
     def _got_key(self, event):
         if event.type != pygame.KEYDOWN:
             return
+
+        if event.key == pygame.K_DELETE:
+            if self.listbox.current_item() is not None:
+                self.delete_button.activated(event)
+            return
+
         # Try the list box first (for arrow keys)
         self.listbox.got_key(event, require_focus=False)
         # Give the rest of the text field
