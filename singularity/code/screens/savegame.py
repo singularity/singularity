@@ -37,9 +37,11 @@ class SavegameScreen(dialog.ChoiceDialog):
 
         self.yes_button.pos = (-.03,-.99)
         self.yes_button.exit_code_func = self.return_savegame
+        self.yes_button.force_underline = -1  # Work around #224
 
         self.no_button.pos = (-.97,-.99)
         self.no_button.exit_code = None
+        self.no_button.force_underline = -1  # Work around #224
 
         self._all_savegames_sorted = []
 
