@@ -91,7 +91,9 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.gui_tab.text                   = _("&Interface")
         
         self.general_pane.needs_rebuild     = True
+        self.video_pane.needs_rebuild       = True
         self.audio_pane.needs_rebuild       = True
+        self.gui_pane.needs_rebuild         = True
 
         super(OptionsScreen, self).rebuild()
 
@@ -571,8 +573,10 @@ class GUIPane(widget.Widget):
 
     def set_options(self, options):
         for warn_id, warn_active in options["warnings"].items():
+            warn = warning.warnings[warn_id]
+            warn.active = warn_active
             self.warning_toggles[warn_id].set_active(warn_active)
-        
+
     def apply_options(self):
         pass
 
