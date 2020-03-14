@@ -144,11 +144,14 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
     def on_description_change(self):
         super(MultipleBuildDialog, self).on_description_change()
         if self.item is not None:
+            count = self.count_slider.slider_pos
             self.description.text += "\n---\n"
             self.description.text += self.item.get_total_cost_info(self.count_slider.slider_pos)
             self.description.text += "\n"
+            self.description.text += self.item.get_quality_info(if_installed_in_base=self.parent.base, count=count)
+            self.description.text += "\n"
             if self.count_slider.slider_pos > 0:
-                g.pl.considered_buyables = [buyable.Buyable(self.item, count=self.count_slider.slider_pos)]
+                g.pl.considered_buyables = [buyable.Buyable(self.item, count=count)]
             else:
                 g.pl.considered_buyables = []
 

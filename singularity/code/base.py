@@ -227,13 +227,8 @@ class Base(buyable.Buyable):
             else:
                 self.power_state = "active"
 
-    def recalc_cpu(self):
-        self.raw_cpu = self.get_quality_for("cpu")
-
-        if self.raw_cpu == 0:
-            self.cpu = 0
-            return
-
+    @property
+    def compute_bonus(self):
         compute_bonus = 10000
 
         # Item bonus
@@ -242,8 +237,16 @@ class Base(buyable.Buyable):
         # Location modifier
         if self.location and "cpu" in self.location.modifiers:
             compute_bonus = compute_bonus * self.location.modifiers["cpu"]
+        return compute_bonus
 
-        self.cpu = max(1, int(self.raw_cpu * compute_bonus // 10000))
+    def recalc_cpu(self):
+        self.raw_cpu = self.get_quality_for("cpu")
+
+        if self.raw_cpu == 0:
+            self.cpu = 0
+            return
+
+        self.cpu = max(1, int(self.raw_cpu * self.compute_bonus // 10000))
 
     def serialize_obj(self):
         return self.serialize_buyable_fields({

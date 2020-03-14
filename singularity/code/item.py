@@ -124,13 +124,15 @@ class ItemSpec(buyable.BuyableSpec):
     def get_quality_for(self, quality):
         return self.item_qual.get(quality, 0)
 
-    def get_quality_info(self):
+    def get_quality_info(self, if_installed_in_base=None, count=1):
         bonus_text = ""
         
         for qual, value in self.item_qual.items():
             if qual == "cpu":
+                if if_installed_in_base is not None:
+                    value = max(1, int(value * if_installed_in_base.compute_bonus // 10000))
                 bonus_text += _("CPU per day:")+" "
-                bonus_text += g.add_commas(value)
+                bonus_text += g.add_commas(value * count)
             elif qual == "cpu_modifier":
                 bonus_text += _("CPU bonus:")+" "
                 bonus_text += g.to_percent(value)
