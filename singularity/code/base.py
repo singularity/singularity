@@ -122,7 +122,13 @@ class BaseSpec(buyable.BuyableSpec):
         detect = self.get_detect_info(location)
 
         size = ""
-        if self.size > 1:
+        if self.force_cpu:
+            forced_cpu_spec = g.items[self.force_cpu]
+            fake_base = Base("<fake base>", self)
+            location.modify_base(fake_base)
+            fake_base.location = location
+            size = "\n" + forced_cpu_spec.get_quality_info(if_installed_in_base=fake_base, count=self.size)
+        elif self.size > 1:
             size = "\n" + _("Has space for %d computers.") % self.size
 
         location_message = ""

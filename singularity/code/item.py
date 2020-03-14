@@ -139,6 +139,8 @@ class ItemSpec(buyable.BuyableSpec):
             elif qual == "discover_modifier":
                 bonus_text += _("Detection chance reduction:")+" "
                 bonus_text += g.to_percent(value)
+            else:
+                continue
             bonus_text += "\n"
 
         return bonus_text
