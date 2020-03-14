@@ -1,16 +1,16 @@
 [Stolen Computer Time]
 name = Stolen Computer Time
-description = (1 CPU) Take over a random computer. I cannot build anything in this base, and it only contains a single slow computer. Detection chance is also rather high.
+description = Take over a random computer. I cannot build anything in this base, and it only contains a single slow computer. Detection chance is also rather high.
 flavor = PC Daemon
 
 [Server Access]
 name = Server Access
-description = (10 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
+description = Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
 flavor_list = Dedicated Server | Node Lease | Hosting
 
 [Datacenter]
 name = Datacenter
-description = (35 CPUs) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
+description = Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.
 flavor_list = Datacenter | Data Center | Premium Hosting
 
 [Storage Unit]
@@ -47,7 +47,7 @@ flavor_list = Dome | Large Undersea Lab
 
 [Time Capsule]
 name = Time Capsule
-description = (1 CPU) This base consists of nothing more than a small computer and a satellite link. It is nearly undetectable.
+description = This base consists of nothing more than a small computer and a satellite link. It is nearly undetectable.
 flavor_list = Time Capsule | Capsule
 
 [Lunar Facility]

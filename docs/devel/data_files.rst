@@ -41,7 +41,7 @@ reference this item.  The following example snippets from the
   ## from data/bases_str.dat
   [Server Access]
   name = Server Access
-  description = (10 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
+  description = Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
   flavor_list = Dedicated Server | Node Lease | Hosting
 
 This is mapped to the following ``po`` file snippets for translations::
@@ -53,10 +53,10 @@ This is mapped to the following ``po`` file snippets for translations::
   
   msgctxt "[Server Access] description"
   msgid ""
-  "(10 CPUs) Buy processor time from one of several companies. I cannot build "
+  "Buy processor time from one of several companies. I cannot build "
   "anything in this base, and it only contains a single computer."
   msgstr ""
-  "(10 CPUs) Prozessorzeit bei einer von etlichen Firmen kaufen. In dieser "
+  "Prozessorzeit bei einer von etlichen Firmen kaufen. In dieser "
   "Basis kann ich nichts bauen und es gibt nur einen einzigen Computer."
   
   msgctxt "[Server Access] flavor_list"

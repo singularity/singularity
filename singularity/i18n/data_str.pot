@@ -33,7 +33,7 @@ msgstr ""
 
 msgctxt "[Datacenter] description"
 msgid ""
-"(35 CPUs) Buy processor time from a company that concentrates on raw "
+"Buy processor time from a company that concentrates on raw "
 "processing power. I will need a fake ID for some of the paperwork."
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 
 msgctxt "[Server Access] description"
 msgid ""
-"(10 CPUs) Buy processor time from one of several companies. I cannot build "
+"Buy processor time from one of several companies. I cannot build "
 "anything in this base, and it only contains a single computer."
 msgstr ""
 
@@ -147,7 +147,7 @@ msgstr ""
 
 msgctxt "[Stolen Computer Time] description"
 msgid ""
-"(1 CPU) Take over a random computer. I cannot build anything in this base, "
+"Take over a random computer. I cannot build anything in this base, "
 "and it only contains a single slow computer. Detection chance is also rather"
 " high."
 msgstr ""
@@ -176,7 +176,7 @@ msgstr ""
 
 msgctxt "[Time Capsule] description"
 msgid ""
-"(1 CPU) This base consists of nothing more than a small computer and a "
+"This base consists of nothing more than a small computer and a "
 "satellite link. It is nearly undetectable."
 msgstr ""
 
