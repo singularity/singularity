@@ -3,6 +3,12 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Fix crash in the Load dialog when clicking Load if no game
+  was selected.  (nthykier)
+- When building bases or CPU for a base, show the correct CPU
+  provided when the base/CPU is constructed.  Previously it would
+  not take location and base modifiers into account. T hanks to
+  Wuzzy2 for reporting the issue.  (Closes: #230) (nthykier)
 - Fix bug where clicking Cancel in the Options menu would still
   commit changes to selected warnings.  Thanks to Wuzzy2 for
   reporting the issue.  (Closes: #230) (nthykier)
