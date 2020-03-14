@@ -85,6 +85,9 @@ class SavegameScreen(dialog.ChoiceDialog):
 
         self.list = [s for s in self._all_savegames_sorted if all(w in s.name for w in words)]
 
+        self.yes_button.enabled = True if self.list else False
+        self.delete_button.enabled = True if self.list else False
+
         # Select the element if only one.
         if len(self.list) == 1:
             self.listbox.list_pos = 1
