@@ -54,26 +54,30 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.tabs_buttons = button.ButtonGroup()
 
         self.general_tab = OptionButton(self, (-.20, .01), (-.20, .05),
-                                         anchor = constants.TOP_CENTER,
-                                         autohotkey=True,
-                                         function=self.set_tabs_pane, args=(self.general_pane,))
+                                        autotranslate=True,
+                                        text=N_("&General"),
+                                        anchor=constants.TOP_CENTER,
+                                        function=self.set_tabs_pane, args=(self.general_pane,))
         self.tabs_buttons.add(self.general_tab)
 
         self.video_tab = OptionButton(self, (-.40, .01), (-.20, .05),
-                                         anchor = constants.TOP_CENTER,
-                                         autohotkey=True,
-                                         function=self.set_tabs_pane, args=(self.video_pane,))
+                                      autotranslate=True,
+                                      text=N_("&Video"),
+                                      anchor = constants.TOP_CENTER,
+                                      function=self.set_tabs_pane, args=(self.video_pane,))
         self.tabs_buttons.add(self.video_tab)
 
         self.audio_tab = OptionButton(self, (-.60, .01), (-.20, .05),
-                                       anchor = constants.TOP_CENTER,
-                                       autohotkey=True,
-                                       function=self.set_tabs_pane, args=(self.audio_pane,))
+                                      autotranslate=True,
+                                      text=N_("&Audio"),
+                                      anchor=constants.TOP_CENTER,
+                                      function=self.set_tabs_pane, args=(self.audio_pane,))
         self.tabs_buttons.add(self.audio_tab)
 
         self.gui_tab = OptionButton(self, (-.80, .01), (-.202, .05),
-                                    anchor = constants.TOP_CENTER,
-                                    autohotkey=True,
+                                    autotranslate=True,
+                                    text=N_("&Interface"),
+                                    anchor=constants.TOP_CENTER,
                                     function=self.set_tabs_pane, args=(self.gui_pane,))
         self.tabs_buttons.add(self.gui_tab)
 
@@ -85,11 +89,6 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.no_button.size = (.15, .05)
 
     def rebuild(self):
-        self.general_tab.text               = _("&General")
-        self.video_tab.text                 = _("&Video")
-        self.audio_tab.text                 = _("&Audio")
-        self.gui_tab.text                   = _("&Interface")
-
         # The tabs do not always have a parent, so the automatic "needs_rebuild" magic
         # does not work.  Do it manually instead.
         for pane in self.tabs_panes:
@@ -248,7 +247,8 @@ class VideoPane(widget.Widget):
                                   update_func=self.update_resolution)
 
         self.resolution_custom = OptionButton(self, (.01, .28), (.14, .05),
-                                              autohotkey=True,
+                                              autotranslate=True,
+                                              text=N_("&CUSTOM:"),
                                               function=self.set_resolution_custom)
 
         self.resolution_custom_horiz = \
@@ -271,7 +271,8 @@ class VideoPane(widget.Widget):
                               background_color='options_custom_resolution_background')
 
         self.fullscreen_label = button.HotkeyText(self, (.40, .01), (.30, .05),
-                                                  autohotkey=True,
+                                                  autotranslate=True,
+                                                  text=N_("&Fullscreen:"),
                                                   align=constants.LEFT,
                                                   background_color="clear")
         self.fullscreen_toggle = OptionButton(self, (.71, .01), (.07, .05),
@@ -282,18 +283,20 @@ class VideoPane(widget.Widget):
         self.fullscreen_label.hotkey_target = self.fullscreen_toggle
 
         self.daynight_label = button.HotkeyText(self, (.40, .08), (.30, .05),
-                                                autohotkey=True,
+                                                autotranslate=True,
+                                                text=N_("Da&y/night display:"),
                                                 align=constants.LEFT,
                                                 background_color="clear")
         self.daynight_toggle = OptionButton(self, (.71, .08), (.07, .05),
-                                        text_shrink_factor=.75,
-                                        force_underline=-1,
-                                        function=self.set_daynight,
-                                        args=(button.TOGGLE_VALUE,))
+                                            text_shrink_factor=.75,
+                                            force_underline=-1,
+                                            function=self.set_daynight,
+                                            args=(button.TOGGLE_VALUE,))
         self.daynight_label.hotkey_target = self.daynight_toggle
 
         self.grab_label = button.HotkeyText(self, (.40, .15), (.30, .05),
-                                            autohotkey=True,
+                                            autotranslate=True,
+                                            text=N_("&Mouse grab:"),
                                             align=constants.LEFT,
                                             background_color="clear")
         self.grab_toggle = OptionButton(self, (.71, .15), (.07, .05),
@@ -304,11 +307,6 @@ class VideoPane(widget.Widget):
         self.grab_label.hotkey_target = self.grab_toggle
 
     def rebuild(self):
-        self.fullscreen_label.text          = _("&Fullscreen:")
-        self.grab_label.text                = _("&Mouse grab:")
-        self.daynight_label.text            = _("Da&y/night display:")
-        self.resolution_custom.text         = _("&CUSTOM")
-        
         self.update_resolution_list()
         
         if gg.fullscreen:
