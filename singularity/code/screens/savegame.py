@@ -46,6 +46,8 @@ class SavegameScreen(dialog.ChoiceDialog):
         self._all_savegames_sorted = []
 
         self.label = text.Text(self, (-.01, -.01), (-.20, -.08),
+                               autotranslate=True,
+                               text=N_("Filter: "),
                                borders=constants.ALL,
                                anchor=constants.TOP_LEFT,
                                base_font="normal")
@@ -193,7 +195,6 @@ class SavegameScreen(dialog.ChoiceDialog):
     def rebuild(self):
         # Update buttons translations
         self.delete_button.text = _("Delete")
-        self.label.text = _("Filter: ")
 
         super(SavegameScreen, self).rebuild()
 

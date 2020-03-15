@@ -182,6 +182,8 @@ class GeneralPane(widget.Widget):
         super(GeneralPane, self).__init__(*args, **kwargs)
 
         self.language_label = text.Text(self, (.01, .01), (.14, .05),
+                                        autotranslate=True,
+                                        text=N_("Language:"),
                                         align=constants.LEFT,
                                         background_color="clear")
 
@@ -192,8 +194,11 @@ class GeneralPane(widget.Widget):
                                   update_func=self.set_language)
 
         self.theme_label = text.Text(self, (.37, .01), (.09, .05),
-                                     text=_("Theme:"), align=constants.LEFT,
-                                     background_color="clear")
+                                     autotranslate=True,
+                                     text=N_("Theme:"),
+                                     align=constants.LEFT,
+                                     background_color="clear",
+                                     )
 
         self.theme_choice = \
             listbox.UpdateListbox(self, (.47, .01), (.12, .25),
@@ -201,8 +206,6 @@ class GeneralPane(widget.Widget):
                                   list_pos=theme.get_theme_pos())
 
     def rebuild(self):
-        self.language_label.text            = _("Language:")
-        
         self.theme_choice.list = theme.get_theme_list()
 
         super(GeneralPane, self).rebuild()
@@ -235,6 +238,8 @@ class VideoPane(widget.Widget):
         self.resolution_initialized = False
         
         self.resolution_label = text.Text(self, (.01, .01), (.14, .05),
+                                          autotranslate=True,
+                                          text=N_("Resolution:"),
                                           align=constants.LEFT,
                                           background_color="clear")
 
@@ -304,7 +309,6 @@ class VideoPane(widget.Widget):
         self.fullscreen_label.text          = _("&Fullscreen:")
         self.grab_label.text                = _("&Mouse grab:")
         self.daynight_label.text            = _("Da&y/night display:")
-        self.resolution_label.text          = _("Resolution:")
         self.resolution_custom.text         = _("&CUSTOM")
         
         self.update_resolution_list()
@@ -423,12 +427,13 @@ class VideoPane(widget.Widget):
         except ValueError:
             pass
 
+
 class AudioPane(widget.Widget):
     def __init__(self, *args, **kwargs):
         super(AudioPane, self).__init__(*args, **kwargs)
 
         self.sound_label = button.HotkeyText(self, (-.49, .01), (.10, .05),
-                                             anchor = constants.TOP_RIGHT,
+                                             anchor=constants.TOP_RIGHT,
                                              align=constants.LEFT,
                                              autohotkey=True,
                                              background_color="clear")
@@ -441,9 +446,11 @@ class AudioPane(widget.Widget):
         self.sound_label.hotkey_target = self.sound_toggle
 
         self.gui_label = text.Text(self, (.01, .08), (.22, .05),
-                                     anchor = constants.TOP_LEFT,
-                                     align=constants.LEFT,
-                                     background_color="clear")
+                                   autotranslate=True,
+                                   text=N_("GUI Volume:"),
+                                   anchor=constants.TOP_LEFT,
+                                   align=constants.LEFT,
+                                   background_color="clear")
         self.gui_slider = slider.UpdateSlider(self, (.24, .08), (.53, .05),
                                               anchor = constants.TOP_LEFT,
                                               horizontal=True, priority=150,
@@ -451,7 +458,9 @@ class AudioPane(widget.Widget):
         self.gui_slider.update_func = self.on_gui_volume_change
 
         self.music_label = text.Text(self, (.01, .15), (.22, .05),
-                                     anchor = constants.TOP_LEFT,
+                                     autotranslate=True,
+                                     text=N_("Music Volume:"),
+                                     anchor=constants.TOP_LEFT,
                                      align=constants.LEFT,
                                      background_color="clear")
         self.music_slider = slider.UpdateSlider(self, (.24, .15), (.53, .05),
@@ -461,7 +470,8 @@ class AudioPane(widget.Widget):
         self.music_slider.update_func = self.on_music_volume_change
 
         self.soundbuf_label = text.Text(self, (.01, .22), (.25, .05),
-                                        text=_("Sound buffering:"),
+                                        autotranslate=True,
+                                        text=N_("Sound buffering:"),
                                         align=constants.LEFT,
                                         background_color="clear")
         self.soundbuf_group = button.ButtonGroup()
@@ -486,8 +496,6 @@ class AudioPane(widget.Widget):
 
     def rebuild(self):
         self.sound_label.text = _("&Sound:")
-        self.gui_label.text = _("GUI Volume:")
-        self.music_label.text = _("Music Volume:")
 
         if not mixer.nosound:
             self.sound_toggle.text = _("YES")
@@ -538,6 +546,8 @@ class GUIPane(widget.Widget):
         super(GUIPane, self).__init__(*args, **kwargs)
         
         self.warning_title = text.Text(self, (.13, .01), (.14, .05),
+                                       autotranslate=True,
+                                       text=N_("WARNING"),
                                        align=constants.LEFT,
                                        background_color="clear")
         
@@ -559,8 +569,6 @@ class GUIPane(widget.Widget):
  
     def rebuild(self):
         super(GUIPane, self).rebuild()
-
-        self.warning_title.text = _("WARNING")
 
         for warn_id, warn in warning.warnings.items():
             self.warning_labels[warn_id].text = warn.name

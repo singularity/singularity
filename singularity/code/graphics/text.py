@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 import pygame
 
+from singularity.code import i18n
 from singularity.code.pycompat import *
 from singularity.code.graphics import g, widget, constants
 
@@ -201,7 +202,6 @@ class Text(widget.BorderedWidget):
         if self.on_enable_change_func:
             self.on_enable_change_func()
 
-    text = widget.call_on_change("_text", resize_redraw)
     shrink_factor = widget.call_on_change("_shrink_factor", resize_redraw)
     underline = widget.call_on_change("_underline", resize_redraw)
     wrap = widget.call_on_change("_wrap", resize_redraw)
@@ -225,13 +225,23 @@ class Text(widget.BorderedWidget):
     def __init__(self, parent, pos, size=(0, .05), anchor=constants.TOP_LEFT,
                  text=None, base_font=None, shrink_factor=0.875,
                  color=None, align=constants.CENTER, valign=constants.MID,
-                 color_disabled=None, on_enable_change=None,
+                 color_disabled=None, on_enable_change=None, autotranslate=False,
                  underline=-1, wrap=True, bold=False, text_size="default", **kwargs):
         kwargs.setdefault("background_color", "text_background")
         kwargs.setdefault("border_color", "text_border")
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
-        self.text = text
+        self._autotranslate = autotranslate
+        if self._autotranslate:
+            assert text, "Automatic translatable widgets must get a default text"
+            self._last_language = "!"  # Invalid to force an update
+            self._untranslated_text = text
+            self._check_translation()
+        else:
+            self._last_language = None
+            self._untranslated_text = None
+            self.text = text
+
         self.base_font = base_font or "normal"
         self.color = color or "text"
         self.color_disabled = color_disabled or "text_disabled"
@@ -248,6 +258,27 @@ class Text(widget.BorderedWidget):
     max_size = property(lambda self: min(len(self.resolved_base_font)-1,
                                          convert_font_size(self._resolved_text_size)))
     font = property(lambda self: self._font)
+
+    @property
+    def autotranslate(self):
+        return self._autotranslate
+
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        if self._autotranslate:
+            raise ValueError("Cannot change text for an automatic translatable text widget")
+        self._text = value
+        resize_redraw(self)
+
+    def _check_translation(self):
+        if self._last_language != i18n.language:
+            self._last_language = i18n.language
+            self._text = _(self._untranslated_text)
+            resize_redraw(self)
 
     def pick_font(self, dimensions):
         nice_size = self.pick_font_size(dimensions, False)
@@ -369,8 +400,13 @@ class Text(widget.BorderedWidget):
     def redraw(self):
         super(Text, self).redraw()
 
-        if self.text != None:
+        if self.text is not None:
             self.print_text()
+
+    def reconfig(self):
+        super(Text, self).reconfig()
+        if self._autotranslate:
+            self._check_translation()
 
     @property
     def text_color(self):

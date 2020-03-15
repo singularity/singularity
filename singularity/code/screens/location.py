@@ -88,11 +88,15 @@ class LocationScreen(dialog.Dialog):
                                                    autohotkey=True)
 
         self.confirm_destroy = \
-            dialog.YesNoDialog(self, (-.5,0), (-.35, -.7),
-                            shrink_factor=.5)
+            dialog.YesNoDialog(self, (-.5, 0), (-.35, -.7),
+                               autotranslate=True,
+                               text=N_("Are you sure you want to destroy this base?"),
+                               shrink_factor=.5)
 
         self.cannot_destroy_last_base = \
             dialog.MessageDialog(self,
+                                 autotranslate=True,
+                                 text=N_("Destroying my last active base would be suicidal.  I cannot do that."),
                                  pos=(-.5, 0),
                                  size=(-.35, -.7),
                                  shrink_factor=.5)
@@ -188,11 +192,9 @@ class LocationScreen(dialog.Dialog):
         # Rebuild dialogs
         self.confirm_destroy.needs_rebuild = True
         self.base_dialog.needs_rebuild = True
-        
+
         # Update dialog translations
         self.name_dialog.text=_("Enter a name for the base")
-        self.confirm_destroy.text = _("Are you sure you want to destroy this base?")
-        self.cannot_destroy_last_base.text = _("Destroying my last active base would be suicidal.  I cannot do that.")
 
         # Update buttons translations
         self.open_button.text = _("&OPEN BASE")
@@ -264,10 +266,13 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
         self.description_pane.size = (-.45, -.75)
 
         self.text_label = text.Text(self, (.01, -.87), (-.25, -.1),
-                                          anchor=constants.BOTTOM_LEFT,
-                                          borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
-                                          shrink_factor=.88,
-                                          background_color="pane_background")
+                                    autotranslate=True,
+                                    text=N_("Name"),
+                                    anchor=constants.BOTTOM_LEFT,
+                                    borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
+                                    shrink_factor=.88,
+                                    background_color="pane_background",
+                                    )
 
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
                                             anchor=constants.BOTTOM_LEFT,
@@ -278,10 +283,6 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
 
         self.yes_button.function = self.finish
 
-    def rebuild(self):
-        self.text_label.text = _("Name")
-        
-        super(NewBaseDialog, self).rebuild()
 
     def on_change(self, description_pane, base_type):
         if base_type is not None:

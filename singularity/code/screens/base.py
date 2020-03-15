@@ -106,6 +106,8 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
         self.description_pane.size = (-.45, -.75)
 
         self.count_label = text.Text(self, (.01, -.87), (-.25, -.1),
+                                     autotranslate=True,
+                                     text=N_("Number of items"),
                                      anchor=constants.BOTTOM_LEFT, valign=constants.MID,
                                      borders=(constants.TOP, constants.BOTTOM, constants.LEFT),
                                      shrink_factor=.88,
@@ -131,11 +133,6 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
         self.count_slider.handle_key(event)
         self.count_field.cursor_pos = len(self.count_field.text)
         self.count_field.handle_key(event, require_focus=False)
-
-    def rebuild(self):
-        self.count_label.text = _("Number of items")
-
-        super(MultipleBuildDialog, self).rebuild()
 
     @property
     def count(self):
