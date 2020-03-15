@@ -38,11 +38,14 @@ class KnowledgeScreen(dialog.Dialog):
         self.cur_focus = 0
 
         self.knowledge_choice = \
-            listbox.UpdateListbox(self, (0.05, .18), (.21, .25),
+            listbox.UpdateListbox(self, (0.05, .18), (.15, .25),
                                   update_func=self.set_knowledge_type)
 
+        # Tech names are typically a lot longer than knowledge concepts.
+        # Therefore, we make knowledge_inner a lot wider than
+        # knowledge_choice.
         self.knowledge_inner = \
-            listbox.UpdateListbox(self, (.30, .18), (.21, .25),
+            listbox.UpdateListbox(self, (.24, .18), (.27, .25),
                                   update_func=self.set_knowledge)
 
         self.description_pane = \

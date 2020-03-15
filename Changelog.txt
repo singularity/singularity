@@ -3,6 +3,10 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Make room for longer tech names in the Knowledge screen to
+  account for some tech names being significantly longer in
+  translations.  Thanks to Wuzzy2 for reporting the issue.
+  (Closes #219) (nthykier)
 - Fix a regression where changing the language in game would
   fail to update the tech names and descriptions.
   (Closes: #232) (nthykier)
