@@ -577,7 +577,7 @@ class MessageDialog(TextDialog):
     def __init__(self, parent, **kwargs):
         self.parent = parent
 
-        ok_type = kwargs.pop("ok_type", "ok")
+        ok_type = kwargs.pop("ok_type", N_("&OK"))
 
         super(MessageDialog, self).__init__(parent, **kwargs)
 
