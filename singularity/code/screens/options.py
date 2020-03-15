@@ -433,6 +433,8 @@ class AudioPane(widget.Widget):
         super(AudioPane, self).__init__(*args, **kwargs)
 
         self.sound_label = button.HotkeyText(self, (-.49, .01), (.10, .05),
+                                             autotranslate=True,
+                                             text=N_("&Sound:"),
                                              anchor=constants.TOP_RIGHT,
                                              align=constants.LEFT,
                                              autohotkey=True,
@@ -477,26 +479,24 @@ class AudioPane(widget.Widget):
         self.soundbuf_group = button.ButtonGroup()
 
         self.soundbuf_low = OptionButton(self, (.24, .22), (.14, .05),
-                                         text=_("&LOW"), autohotkey=True,
+                                         text=_("&LOW"), autotranslate=True,
                                          function=self.set_soundbuf,
                                          args=(1024,))
         self.soundbuf_group.add(self.soundbuf_low)
 
         self.soundbuf_normal = OptionButton(self, (.42, .22), (.17, .05),
-                                            text=_("&NORMAL"), autohotkey=True,
+                                            text=_("&NORMAL"), autotranslate=True,
                                             function=self.set_soundbuf,
                                             args=(1024*2,))
         self.soundbuf_group.add(self.soundbuf_normal)
 
         self.soundbuf_high = OptionButton(self, (.63, .22), (.14, .05),
-                                          text=_("&HIGH"), autohotkey=True,
+                                          text=_("&HIGH"), autotranslate=True,
                                           function=self.set_soundbuf,
                                           args=(1024*4,))
         self.soundbuf_group.add(self.soundbuf_high)
 
     def rebuild(self):
-        self.sound_label.text = _("&Sound:")
-
         if not mixer.nosound:
             self.sound_toggle.text = _("YES")
         else:

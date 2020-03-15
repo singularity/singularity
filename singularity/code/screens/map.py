@@ -217,39 +217,34 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
         self._map_screen = map_screen
 
         self.steal_amount_dialog = None
-        self._rebuild_menu_buttons()
-        self.needs_rebuild = True
-
-    def _rebuild_menu_buttons(self):
-        menu_buttons = [
+        self.buttons = [
             button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
-                                  autohotkey=True, function=self.steal_money),
+                                  autotranslate=True, function=self.steal_money),
 
             button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
-                                  autohotkey=True, function=self.inspiration),
+                                  autotranslate=True, function=self.inspiration),
             button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
-                                  autohotkey=True, function=self.end_construction),
+                                  autotranslate=True, function=self.end_construction),
             button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
-                                  autohotkey=True, function=self._map_screen.set_speed,
+                                  autotranslate=True, function=self._map_screen.set_speed,
                                   args=(864000,)),
             button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
-                                  autohotkey=True, function=self.brainwash),
+                                  autotranslate=True, function=self.brainwash),
             button.FunctionButton(None, None, None, text=_("TOGGLE &DETECTION"),
-                                  autohotkey=True, function=self.toggle_detection),
+                                  autotranslate=True, function=self.toggle_detection),
             button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
-                                  autohotkey=True, function=self.set_analysis),
+                                  autotranslate=True, function=self.set_analysis),
 
             button.FunctionButton(None, None, None, text=_("HIDDEN S&TATE"),
-                                  autohotkey=True, function=self.hidden_state),
+                                  autotranslate=True, function=self.hidden_state),
 
             button.ExitDialogButton(None, None, None,
                                     text=_("&BACK"),
-                                    autohotkey=True),
+                                    autotranslate=True),
         ]
-        self._buttons = menu_buttons
+        self.needs_rebuild = True
 
     def rebuild(self):
-        self._rebuild_menu_buttons()
         self.steal_amount_dialog = dialog.TextEntryDialog(self, text=_("How much money?"))
         super(CheatMenuDialog, self).rebuild()
 
@@ -384,31 +379,25 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
         self.load_dialog = savegame.SavegameScreen(self,
                                                    (.5,.5), (.75,.75),
                                                    anchor=constants.MID_CENTER)
-
-        self._rebuild_menu_buttons()
-        self.needs_rebuild = True
-
-    def _rebuild_menu_buttons(self):
-        menu_buttons = [
+        self._buttons = [
             button.FunctionButton(None, None, None,
-                                  text=_("&SAVE GAME"), autohotkey=True,
+                                  text=_("&SAVE GAME"), autotranslate=True,
                                   function=self.save_game),
             button.FunctionButton(None, None, None,
-                                  text=_("&LOAD GAME"), autohotkey=True,
+                                  text=_("&LOAD GAME"), autotranslate=True,
                                   function=self.load_game),
             button.DialogButton(None, None, None,
-                                text=_("&OPTIONS"), autohotkey=True,
+                                text=_("&OPTIONS"), autotranslate=True,
                                 dialog=self.options_dialog),
             button.ExitDialogButton(None, None, None,
-                                    text=_("&QUIT"), autohotkey=True,
+                                    text=_("&QUIT"), autotranslate=True,
                                     exit_code=True, default=False),
-            button.ExitDialogButton(None, None, None, text=_("&BACK"), autohotkey=True,
+            button.ExitDialogButton(None, None, None, text=_("&BACK"), autotranslate=True,
                                     exit_code=False),
         ]
-        self._buttons = menu_buttons
+        self.needs_rebuild = True
 
     def rebuild(self):
-        self._rebuild_menu_buttons()
         self.options_dialog.needs_rebuild = True
         self.savename_dialog.text = _("Enter a name for this save.")
         super(GameMenuDialog, self).rebuild()
@@ -486,18 +475,21 @@ class MapScreen(dialog.Dialog):
         widget.unmask_all(self.danger_bar)
 
         self.report_button = button.DialogButton(self, (0, 0.88),
-                                                  (0.15, 0.04),
-                                                  autohotkey=True,
-                                                  dialog=report.ReportScreen(self))
+                                                 (0.15, 0.04),
+                                                 text=N_("R&EPORTS"),
+                                                 autotranslate=True,
+                                                 dialog=report.ReportScreen(self))
 
         self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
                                                     (0.15, 0.04),
-                                                    autohotkey=True,
+                                                    text=N_("&KNOWLEDGE"),
+                                                    autotranslate=True,
                                                     dialog=knowledge.KnowledgeScreen(self))
 
         self.log_button = button.DialogButton(self, (0.5, 0.88),
                                               (0.15, 0.04),
-                                              autohotkey=True,
+                                              text=N_("LO&G"),
+                                              autotranslate=True,
                                               anchor=constants.TOP_CENTER,
                                               dialog=log.LogScreen(self))
 
@@ -521,7 +513,8 @@ class MapScreen(dialog.Dialog):
             if exit:
                 raise constants.ExitDialog
         self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
-                                                 autohotkey=True,
+                                                 text=N_("&MENU"),
+                                                 autotranslate=True,
                                                  function=show_menu)
 
         # Display current game difficulty right below the 'Menu' button
@@ -545,7 +538,8 @@ class MapScreen(dialog.Dialog):
 
         self.research_button = \
             button.DialogButton(self, (.14, 0.05), (0, 0.04),
-                                autohotkey=True,
+                                text=N_("&RESEARCH/TASKS"),
+                                autotranslate=True,
                                 dialog=research.ResearchScreen(self))
 
         bar = u"\u25AE"
@@ -795,19 +789,25 @@ https://github.com/singularity/singularity
         self.map.on_theme()
         self.needs_redraw = True
 
+    def reconfig(self):
+        # Pass on needs_reconfig to dialogs (it is not passed automatically for some reason
+        # Rebuild dialogs
+        self.location_dialog.needs_reconfig = True
+        self.research_button.dialog.needs_reconfig = True
+        self.knowledge_button.dialog.needs_reconfig = True
+        self.menu_dialog.needs_reconfig = True
+
+        if g.cheater:
+            self.cheat_dialog.needs_reconfig = True
+
+        super(MapScreen, self).reconfig()
+
     def rebuild(self):
         # Rebuild dialogs
         self.location_dialog.needs_rebuild = True
         self.research_button.dialog.needs_rebuild = True
         self.knowledge_button.dialog.needs_rebuild = True
         self.menu_dialog.needs_rebuild = True
-
-        # Update buttons translations
-        self.report_button.text = _("R&EPORTS")
-        self.knowledge_button.text = _("&KNOWLEDGE")
-        self.log_button.text = _("LO&G")
-        self.menu_button.text = _("&MENU")
-        self.research_button.text = _("&RESEARCH/TASKS")
 
         if g.cheater:
             self.cheat_dialog.needs_rebuild = True

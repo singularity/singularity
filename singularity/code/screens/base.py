@@ -282,9 +282,11 @@ class BaseScreen(dialog.Dialog):
                                        shrink_factor=.8, bold=True)
 
         self.back_button = \
-            button.ExitDialogButton(self, (-.5,-1),
-                                    anchor = constants.BOTTOM_CENTER,
-                                    autohotkey=True)
+            button.ExitDialogButton(self, (-.5, -1),
+                                    autotranslate=True,
+                                    text=N_("&BACK"),
+                                    anchor=constants.BOTTOM_CENTER,
+                                    )
 
         self.info_frame = text.Text(self, (-1, .09), (.21, .53),
                                       anchor=constants.TOP_RIGHT,
@@ -477,8 +479,5 @@ class BaseScreen(dialog.Dialog):
         # FIXME: needs_rebuild bug with multiple_build_dialog, should not.
         #self.multiple_build_dialog.needs_rebuild = True
         self.build_dialog.needs_rebuild = True
-
-        # Update buttons translations
-        self.back_button.text = _("&BACK")
 
         super(BaseScreen, self).rebuild()

@@ -53,6 +53,8 @@ class KnowledgeScreen(dialog.Dialog):
                                   anchor = constants.TOP_LEFT)
 
         self.back_button = button.ExitDialogButton(self, (0.17, 0.46), (-.3, -.1),
+                                                   autotranslate=True,
+                                                   text=N_("&BACK"),
                                                    anchor=constants.TOP_LEFT,
                                                    autohotkey=True)
 
@@ -87,9 +89,6 @@ class KnowledgeScreen(dialog.Dialog):
 
         self.knowledge_choice.list = list(self.knowledge_types)
         self.knowledge_choice.needs_rebuild = True
-
-        # Update buttons translations
-        self.back_button.text = _("&BACK")
 
         super(KnowledgeScreen, self).rebuild()
 

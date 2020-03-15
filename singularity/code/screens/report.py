@@ -35,32 +35,36 @@ class ReportScreen(dialog.Dialog):
 
         self.format_buttons = button.ButtonGroup()
 
-        self.stats_button = button.DialogButton(self, (-.49,-.99), (-.3,-.1),
-                                                    anchor = constants.BOTTOM_RIGHT,
-                                                    autohotkey=True,
-                                                    dialog=stat.StatScreen(self))
-        self.back_button = button.ExitDialogButton(self, (-.51,-.99), (-.3,-.1),
-                                                   anchor = constants.BOTTOM_LEFT,
-                                                   autohotkey=True)
+        self.stats_button = button.DialogButton(self, (-.49, -.99), (-.3, -.1),
+                                                autotranslate=True,
+                                                text=N_("&STATISTICS"),
+                                                anchor=constants.BOTTOM_RIGHT,
+                                                dialog=stat.StatScreen(self))
+        self.back_button = button.ExitDialogButton(self, (-.51, -.99), (-.3, -.1),
+                                                   autotranslate=True,
+                                                   text=N_("&BACK"),
+                                                   anchor=constants.BOTTOM_LEFT,
+                                                   )
         self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound, only_on_event_type=pygame.KEYDOWN)
 
-
         self.money_report_pane = widget.BorderedWidget(self, (0, .08), (-.45, -.72),
-                                                       anchor = constants.TOP_LEFT)
+                                                       anchor=constants.TOP_LEFT)
         self.cpu_report_pane = widget.BorderedWidget(self, (-1, .08), (-.45, -.72),
-                                                     anchor = constants.TOP_RIGHT)
+                                                     anchor=constants.TOP_RIGHT)
 
-        self.format_button_midnight = FormatButton(self, (-.5, 0), (-.15,-.08),
-                                                   anchor = constants.TOP_RIGHT,
-                                                   autohotkey=True,
+        self.format_button_midnight = FormatButton(self, (-.5, 0), (-.15, -.08),
+                                                   autotranslate=True,
+                                                   text=N_("&Midnight"),
+                                                   anchor=constants.TOP_RIGHT,
                                                    function=self.format_toggle)
         self.format_button_midnight.args = (self.format_button_midnight, True)
         self.format_buttons.add(self.format_button_midnight)
 
-        self.format_button_24hours = FormatButton(self, (-.5, 0), (-.15,-.08),
-                                                   anchor = constants.TOP_LEFT,
-                                                   autohotkey=True,
-                                                   function=self.format_toggle)
+        self.format_button_24hours = FormatButton(self, (-.5, 0), (-.15, -.08),
+                                                  autotranslate=True,
+                                                  text=N_("24 &Hours"),
+                                                  anchor=constants.TOP_LEFT,
+                                                  function=self.format_toggle)
         self.format_button_24hours.args = (self.format_button_24hours, False)
         self.format_buttons.add(self.format_button_24hours)
 
@@ -68,12 +72,6 @@ class ReportScreen(dialog.Dialog):
         self.midnight_stop = True
 
     def rebuild(self):
-        # Update buttons translations
-        self.stats_button.text = _("&STATISTICS")
-        self.back_button.text = _("&BACK")
-        self.format_button_midnight.text = _("&Midnight")
-        self.format_button_24hours.text = _("24 &Hours")
-
         super(ReportScreen, self).rebuild()
 
         if (self.midnight_stop):

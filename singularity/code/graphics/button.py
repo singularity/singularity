@@ -31,9 +31,12 @@ class HotkeyText(text.Text):
     force_underline = widget.causes_rebuild("_force_underline")
 
     def __init__(self, *args, **kwargs):
+        # Force early initialization of _hotkey
+        self._hotkey = ""
         self.hotkey_target = kwargs.pop('hotkey_target', None)
         self.hotkey = kwargs.pop('hotkey', False)
-        self.autohotkey = kwargs.pop('autohotkey', False)
+        # Auto-translatable defaults to auto-hotkey as it is the most sane default in that case
+        self.autohotkey = kwargs.pop('autohotkey', kwargs.get('autotranslate', False))
         self.force_underline = kwargs.pop('force_underline', None)
 
         super(HotkeyText, self).__init__(*args, **kwargs)
@@ -54,27 +57,40 @@ class HotkeyText(text.Text):
 
     @hotkey.setter
     def hotkey(self, hotkey):
+        # The auto* fields might not be set yet (during construction)
+        if hasattr(self, 'autohotkey') and self.autohotkey and hasattr(self, 'autotranslate') and self.autotranslate:
+            raise ValueError("Cannot change hotkey for an automatic translatable text widget with automatic hotkey")
+        self._new_hotkey(hotkey)
+
+    def _new_hotkey(self, hotkey):
         self._hotkey = hotkey
         if self.hotkey_target is not None:
             self.hotkey_target.hotkey = self._hotkey
         self.needs_rebuild = True
 
-    @property
-    def text(self):
-        return text.Text.text.fget(self)
+    def _extract_and_set_hotkey(self, text_value):
+        from singularity.code.g import hotkey
+        parsed_hotkey = hotkey(text_value)
+        self._new_hotkey(parsed_hotkey['key'])
+        return parsed_hotkey['text']
 
-    @text.setter
+    def _retranslate(self):
+        new_text = _(self._untranslated_text)
+        if self.autohotkey and new_text is not None:
+            new_text = self._extract_and_set_hotkey(new_text)
+        self._text = new_text
+
+    @text.Text.text.setter
     def text(self, value):
-        if self.autohotkey and (value != None):
-            from singularity.code.g import hotkey
-            parsed_hotkey = hotkey(value)
-            self.hotkey = parsed_hotkey['key']
-            text.Text.text.fset(self, parsed_hotkey['text'])
-        else:
-            text.Text.text.fset(self, value)
+        if self.autotranslate:
+            raise ValueError("Cannot change text for an automatic translatable text widget")
+
+        if self.autohotkey and value is not None:
+            value = self._extract_and_set_hotkey(value)
+        self._text = value
 
     def calc_underline(self):
-        if self.force_underline != None:
+        if self.force_underline is not None:
             self.underline = self.force_underline
         elif self.text and self.hotkey and type(self.hotkey) in (str, unicode):
             if self.hotkey in self.text:
@@ -92,20 +108,17 @@ class HotkeyText(text.Text):
 
         super(HotkeyText, self).rebuild()
 
+
 class Button(text.SelectableText, HotkeyText):
 
     # Rewrite .hotkey, to update key handlers.
-    _hotkey = ""
-    def _on_set_hotkey(self, value):
+    def _new_hotkey(self, value):
         if self.parent and value != self._hotkey:
             if self._hotkey:
                 self.parent.remove_key_handler(self._hotkey, self.handle_event)
             if value:
                 self.parent.add_key_handler(value, self.handle_event)
-        self._hotkey = value
-        self.needs_rebuild = True
-
-    hotkey = property(lambda self: self._hotkey, _on_set_hotkey)
+        super(Button, self)._new_hotkey(value)
 
     def __init__(self, parent, pos, size = (0, .045), base_font = None,
                  borders = constants.ALL, text_shrink_factor = .825,

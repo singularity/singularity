@@ -57,9 +57,10 @@ class SavegameScreen(dialog.ChoiceDialog):
                                                   update_func=self._search_for_savegame,
                                                   base_font="normal")
 
-        self.delete_button = button.FunctionButton(self, (-.50,-.99), (-.3,-.1),
+        self.delete_button = button.FunctionButton(self, (-.50, -.99), (-.3, -.1),
+                                                   autotranslate=True,
+                                                   text=N_("Delete"),
                                                    anchor=constants.BOTTOM_CENTER,
-                                                   autohotkey=True,
                                                    function=self.delete_savegame)
 
         self.add_handler(constants.KEY, self._got_key, priority=5)
@@ -191,12 +192,6 @@ class SavegameScreen(dialog.ChoiceDialog):
                 
                 item.time_display.text = tm_str + " | " + gtm_str if tm_str else gtm_str
                 item.difficulty_display.text = dif_str
-
-    def rebuild(self):
-        # Update buttons translations
-        self.delete_button.text = _("Delete")
-
-        super(SavegameScreen, self).rebuild()
 
     def reload_savegames(self):
         savegames = sv.get_savegames()

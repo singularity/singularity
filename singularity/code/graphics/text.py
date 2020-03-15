@@ -274,10 +274,13 @@ class Text(widget.BorderedWidget):
         self._text = value
         resize_redraw(self)
 
+    def _retranslate(self):
+        self._text = _(self._untranslated_text)
+
     def _check_translation(self):
         if self._last_language != i18n.language:
             self._last_language = i18n.language
-            self._text = _(self._untranslated_text)
+            self._retranslate()
             resize_redraw(self)
 
     def pick_font(self, dimensions):
