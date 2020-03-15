@@ -110,6 +110,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
             daynight        = g.daynight,
             resolution      = gg.screen_size,
             language        = i18n.language,
+            theme           = theme.current.id,
             sound           = not mixer.nosound,
             gui_volume      = mixer.get_volume("gui"),
             music_volume    = mixer.get_volume("music"),
@@ -216,6 +217,7 @@ class GeneralPane(widget.Widget):
         self.set_language(self.language_choice.list_pos)
 
         self.theme_choice.list_pos = theme.get_theme_pos()
+        theme.set_theme(options['theme'], force_reload=True)
 
     def apply_options(self):
         pass
