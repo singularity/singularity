@@ -174,6 +174,10 @@ class Base(buyable.Buyable):
 
         self.maintenance = buyable.array(self.spec.maintenance, int64)
 
+    @buyable.Buyable.name.setter
+    def name(self, value):
+        self._name = value
+
     @property
     def cpus(self):
         return self.items.get("cpu", None)
