@@ -100,5 +100,3 @@ base_state_leaving_stasis  = gray
 simple_menu_background = #400000ff
 simple_menu_border     = red
 
-# Options screen colors
-options_custom_resolution_background       = black

@@ -105,6 +105,3 @@ base_state_suicide         = red
 base_state_stasis          = gray
 base_state_entering_stasis = gray
 base_state_leaving_stasis  = gray
-
-# Options screen colors
-options_custom_resolution_background       = darker_blue
