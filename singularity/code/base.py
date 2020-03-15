@@ -146,7 +146,7 @@ class Base(buyable.Buyable):
     def __init__(self, name, spec, built=False):
         super(Base, self).__init__(spec)
 
-        self.name = name
+        self._name = name
         self.started_at = g.pl.raw_min
 
         self.location = None

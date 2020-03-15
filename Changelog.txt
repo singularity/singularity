@@ -3,6 +3,9 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Fix a regression where changing the language in game would
+  fail to update the tech names and descriptions.
+  (Closes: #232) (nthykier)
 - Fix crash in the Load dialog when clicking Load if no game
   was selected.  (nthykier)
 - When building bases or CPU for a base, show the correct CPU

@@ -111,8 +111,6 @@ class BuyableSpec(spec.GenericSpec, prerequisite.Prerequisite):
 class Buyable(object):
     def __init__(self, spec, count=1):
         self.spec = spec
-        self.name = spec.name
-        self.description = spec.description
         self.prerequisites = spec.prerequisites
 
         self.total_cost = spec.cost * count
@@ -125,6 +123,16 @@ class Buyable(object):
     @property
     def id(self):
         return self.spec.id
+
+    @property
+    def name(self):
+        if hasattr(self, '_name'):
+           return self._name
+        return self.spec.name
+
+    @property
+    def description(self):
+        return self.description
 
     # Note that this is a method, handled by a property to avoid confusing
     # pickle.

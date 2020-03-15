@@ -654,6 +654,8 @@ def _convert_base(base, save_version):
 
     if ("power_state" in base.__dict__):
         base._power_state = base.__dict__["power_state"]
+
+    base._name = base.__dict__['name']
         
     return base
 
