@@ -528,39 +528,31 @@ class YesNoDialog(TextDialog):
     """A Dialog with YES and NO buttons which exits the dialog with True and
     False return values, respectively.
     """
-    yes_type = widget.causes_rebuild("_yes_type")
-    no_type = widget.causes_rebuild("_no_type")
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
 
-        self.yes_type = kwargs.pop("yes_type", "yes")
-        self.no_type = kwargs.pop("no_type", "no")
+        yes_type = kwargs.pop("yes_type", N_("&YES"))
+        no_type = kwargs.pop("no_type", N_("&NO"))
         self.invert_enter = kwargs.pop("invert_enter", False)
         self.invert_escape = kwargs.pop("invert_escape", False)
 
         super(YesNoDialog, self).__init__(parent, *args, **kwargs)
 
-        self.yes_button = button.ExitDialogButton(self, (-.1,-.99), (-.3,-.1),
-                                                 anchor=constants.BOTTOM_LEFT,
-                                                 exit_code=True, default=False)
+        self.yes_button = button.ExitDialogButton(self, (-.1, -.99), (-.3, -.1),
+                                                  text=yes_type,
+                                                  autotranslate=True,
+                                                  anchor=constants.BOTTOM_LEFT,
+                                                  exit_code=True, default=False)
 
-        self.no_button = button.ExitDialogButton(self, (-.9,-.99), (-.3,-.1),
-                                                anchor=constants.BOTTOM_RIGHT,
-                                                exit_code=False, default=False)
+        self.no_button = button.ExitDialogButton(self, (-.9, -.99), (-.3, -.1),
+                                                 text=no_type,
+                                                 autotranslate=True,
+                                                 anchor=constants.BOTTOM_RIGHT,
+                                                 exit_code=False, default=False)
 
         self.add_key_handler(pygame.K_RETURN, self.on_return)
         self.add_key_handler(pygame.K_KP_ENTER, self.on_return)
         self.add_key_handler(pygame.K_ESCAPE, self.on_escape)
-
-    def rebuild(self):
-        super(YesNoDialog, self).rebuild()
-
-        self.yes_button.text      = g.buttons[self.yes_type]['text']
-        self.yes_button.underline = g.buttons[self.yes_type]['pos']
-        self.yes_button.hotkey    = g.buttons[self.yes_type]['key']
-        self.no_button.text       = g.buttons[self.no_type]['text']
-        self.no_button.underline  = g.buttons[self.no_type]['pos']
-        self.no_button.hotkey     = g.buttons[self.no_type]['key']
 
     def on_return(self, event):
         if event and event.type == pygame.KEYUP:
@@ -582,15 +574,16 @@ class YesNoDialog(TextDialog):
 class MessageDialog(TextDialog):
     """A Dialog with an OK button that exits the dialog, return value of None"""
 
-    ok_type = widget.causes_rebuild("_ok_type")
     def __init__(self, parent, **kwargs):
         self.parent = parent
 
-        self.ok_type = kwargs.pop("ok_type", "ok")
+        ok_type = kwargs.pop("ok_type", "ok")
 
         super(MessageDialog, self).__init__(parent, **kwargs)
 
-        self.ok_button = button.ExitDialogButton(self, (-.5,-.99), (-.3,-.1),
+        self.ok_button = button.ExitDialogButton(self, (-.5, -.99), (-.3, -.1),
+                                                 autotranslate=True,
+                                                 text=ok_type,
                                                  anchor=constants.BOTTOM_CENTER)
 
         self.add_key_handler(pygame.K_RETURN, self.on_return)
@@ -600,25 +593,17 @@ class MessageDialog(TextDialog):
         if event.type == pygame.KEYUP: return
         self.ok_button.activate_with_sound(event)
 
-    def rebuild(self):
-        super(MessageDialog, self).rebuild()
-
-        self.ok_button.text      = g.buttons[self.ok_type]['text']
-        self.ok_button.underline = g.buttons[self.ok_type]['pos']
-        self.ok_button.hotkey    = g.buttons[self.ok_type]['key']
-
 
 class TextEntryDialog(TextDialog, FocusDialog):
-    ok_type = widget.causes_rebuild("_ok_type")
-    cancel_type = widget.causes_rebuild("_cancel_type")
+
     def __init__(self, parent, pos=(-.50, -.50), size=(.50, .10),
                  anchor=constants.MID_CENTER, **kwargs):
         kwargs.setdefault('wrap', False)
         kwargs.setdefault("shrink_factor", 1)
         kwargs.setdefault("text_size", 20)
         self.default_text = kwargs.pop("default_text", "")
-        self.ok_type = kwargs.pop("ok_type", "ok")
-        self.cancel_type = kwargs.pop("cancel_type", "cancel")
+        ok_type = kwargs.pop("ok_type", N_("&OK"))
+        cancel_type = kwargs.pop("cancel_type", N_("&CANCEL"))
         super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self.text_field = text.EditableText(self, (0, -.50), (-.71, -.50),
@@ -626,24 +611,17 @@ class TextEntryDialog(TextDialog, FocusDialog):
                                             base_font="normal")
 
         self.ok_button = button.FunctionButton(self, (-.72, -.50), (-.14, -.50),
+                                               autotranslate=True,
+                                               text=ok_type,
                                                function=self.return_text)
         self.cancel_button = button.FunctionButton(self, (-.86, -.50), (-.14, -.50),
+                                                   autotranslate=True,
+                                                   text=cancel_type,
                                                    function=self.return_nothing)
 
         self.add_key_handler(pygame.K_RETURN, self.return_text)
         self.add_key_handler(pygame.K_KP_ENTER, self.return_text)
         self.add_key_handler(pygame.K_ESCAPE, self.return_nothing)
-
-    def rebuild(self):
-        super(TextEntryDialog, self).rebuild()
-        
-        self.ok_button.text      = g.buttons[self.ok_type]['text']
-        self.ok_button.underline = g.buttons[self.ok_type]['pos']
-        self.ok_button.hotkey    = g.buttons[self.ok_type]['key']
-        
-        self.cancel_button.text      = g.buttons[self.cancel_type]['text']
-        self.cancel_button.underline = g.buttons[self.cancel_type]['pos']
-        self.cancel_button.hotkey    = g.buttons[self.cancel_type]['key']
 
     def show(self):
         self.text_field.text = self.default_text
@@ -666,8 +644,8 @@ class ChoiceDialog(YesNoDialog):
         self.parent = parent
         self.list = kwargs.pop("list", [])
         self.default = kwargs.pop("default", None)
-        kwargs.setdefault("yes_type", "ok")
-        kwargs.setdefault("no_type", "back")
+        kwargs.setdefault("yes_type", N_("&OK"))
+        kwargs.setdefault("no_type", N_("&BACK"))
         kwargs.setdefault("background_color", "clear")
 
         super(ChoiceDialog, self).__init__(parent, *args, **kwargs)

@@ -83,10 +83,9 @@ class LogScreen(dialog.ChoiceDialog):
 
 class FilterLogDialog(dialog.MessageDialog):
     def __init__(self, parent, *args, **kwargs):
+        kwargs["ok_type"] = N_("&BACK")
         super(FilterLogDialog, self).__init__(parent, *args, **kwargs)
-        
-        self.ok_type = "back"
-        
+
         self.log_class_labels = {}
         self.log_class_toggles = {}
         

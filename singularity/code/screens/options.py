@@ -32,8 +32,8 @@ from singularity.code.pycompat import *
 
 class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("yes_type", "ok")
-        kwargs.setdefault("no_type", "cancel")
+        kwargs.setdefault("yes_type", N_("&OK"))
+        kwargs.setdefault("no_type", N_("&CANCEL"))
         super(OptionsScreen, self).__init__(*args, **kwargs)
         self.yes_button.function = self.check_restart
 

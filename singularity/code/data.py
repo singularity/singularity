@@ -542,24 +542,6 @@ def load_knowledge():
         knowledge[knowledge_id] = KnowledgeArea(knowledge_id, help_section["name"], help_entries)
 
 
-def load_buttons_defs():
-    buttons = {
-        "yes"      : g.hotkey(_("&YES")),
-        "no"       : g.hotkey(_("&NO")),
-        "ok"       : g.hotkey(_("&OK")),
-        "cancel"   : g.hotkey(_("&CANCEL")),
-        "destroy"  : g.hotkey(_("&DESTROY")),
-        "build"    : g.hotkey(_("&BUILD")),
-        "back"     : g.hotkey(_("&BACK")),
-        "pause"    : g.hotkey(_("&PAUSE")),
-        "load"     : g.hotkey(_("&LOAD")),
-        "continue" : g.hotkey(_("&CONTINUE")),
-        "skip"     : g.hotkey(_("&SKIP")),
-        "quit"     : g.hotkey(_("&QUIT")),
-    }
-    gg.buttons.update(buttons)
-
-
 def load_warning_defs():
     warning.warnings["cpu_usage"].name = _("Do not use all the available CPU.")
     warning.warnings["cpu_usage"].message = _("I didn't use all the available processor power. I will use the CPU time left to work whatever Jobs I can.")
@@ -572,7 +554,6 @@ def load_warning_defs():
 
 
 def load_strings():
-    load_buttons_defs()
     load_story_defs()
     load_warning_defs()
 

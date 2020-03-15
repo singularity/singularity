@@ -33,7 +33,7 @@ from singularity.code.pycompat import *
 
 class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):
-        super(SavegameScreen, self).__init__(parent, *args, yes_type="load", **kwargs)
+        super(SavegameScreen, self).__init__(parent, *args, yes_type=N_("&LOAD"), **kwargs)
 
         self.yes_button.pos = (-.03,-.99)
         self.yes_button.exit_code_func = self.return_savegame

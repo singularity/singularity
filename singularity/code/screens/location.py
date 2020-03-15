@@ -262,8 +262,8 @@ class LocationScreen(dialog.Dialog):
 class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
     def __init__(self, parent, pos=(0, 0), size = (-1, -1),
                  anchor=constants.TOP_LEFT, *args, **kwargs):
-        kwargs["yes_type"] = "ok"
-        kwargs["no_type"] = "back"
+        kwargs["yes_type"] = N_("&OK")
+        kwargs["no_type"] = N_("&BACK")
         super(NewBaseDialog, self).__init__(parent, pos, size, anchor, *args,
                                             **kwargs)
         self.listbox.size = (-.53, -.75)

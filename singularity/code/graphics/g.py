@@ -80,9 +80,6 @@ fonts = {}
 # Cache image dictionary.
 images = {}
 
-# TODO: Remove the needs of this dict.
-buttons = {}
-
 # Used to initialize surfaces that should have transparency.
 # Why the SRCALPHA parameter isn't working, I have no idea.
 ALPHA = None

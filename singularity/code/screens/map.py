@@ -682,9 +682,9 @@ class MapScreen(dialog.Dialog):
     def show_story_section(self, name):
         section = list(g.get_story_section(name))
 
-        first_dialog = dialog.YesNoDialog(self, yes_type="continue",
-                                          no_type="skip")
-        last_dialog = dialog.MessageDialog(self, ok_type="ok")
+        first_dialog = dialog.YesNoDialog(self, yes_type=N_("&CONTINUE"),
+                                          no_type=N_("&SKIP"))
+        last_dialog = dialog.MessageDialog(self, ok_type=N_("&OK"))
 
         for num, segment in enumerate(section):
             story_dialog = first_dialog if num != len(section) - 1 else last_dialog
@@ -719,7 +719,10 @@ https://github.com/singularity/singularity
 """ % (":\n" + g.logfile if g.logfile is not None else " console output."))
             d = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
                                    anchor=constants.MID_CENTER,
-                                   yes_type="continue", no_type="quit", text=msg)
+                                   yes_type=N_("&CONTINUE"),
+                                   no_type=N_("&QUIT"),
+                                   text=msg
+                                   )
             cont = dialog.call_dialog(d, self)
 
             if not cont:
