@@ -74,10 +74,10 @@ fullscreen = False
 #colors:
 colors = {}
 
-# Cache font dictionnary.
+# Cache font dictionary.
 fonts = {}
 
-# Cache image dictionnary.
+# Cache image dictionary.
 images = {}
 
 # TODO: Remove the needs of this dict.

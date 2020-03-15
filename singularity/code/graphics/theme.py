@@ -56,7 +56,7 @@ def set_theme(key, force_reload=False):
         theme = themes[default_theme]
 
     if theme is None:
-        sys.stderr.write("WARNING: The key '%s' does not exist in theme dictionnary. Use default theme.\n" % key)
+        sys.stderr.write("WARNING: The key '%s' does not exist in theme dictionary. Use default theme.\n" % key)
         theme = themes[default_theme]
 
     if force_reload or (not current == None and theme.id != current.id):
