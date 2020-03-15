@@ -127,12 +127,12 @@ class Buyable(object):
     @property
     def name(self):
         if hasattr(self, '_name'):
-           return self._name
+            return self._name
         return self.spec.name
 
     @property
     def description(self):
-        return self.description
+        return self.spec.description
 
     # Note that this is a method, handled by a property to avoid confusing
     # pickle.
