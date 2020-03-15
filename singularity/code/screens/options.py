@@ -90,20 +90,18 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.audio_tab.text                 = _("&Audio")
         self.gui_tab.text                   = _("&Interface")
 
-        self.general_pane.needs_rebuild     = True
-        self.video_pane.needs_rebuild       = True
-        self.audio_pane.needs_rebuild       = True
-        self.gui_pane.needs_rebuild         = True
+        # The tabs do not always have a parent, so the automatic "needs_rebuild" magic
+        # does not work.  Do it manually instead.
+        for pane in self.tabs_panes:
+            pane.needs_rebuild = True
 
         super(OptionsScreen, self).rebuild()
 
     def reconfig(self):
         # The tabs do not always have a parent, so the automatic "needs_reconfig" magic
         # does not work.  Do it manually instead.
-        self.general_pane.needs_reconfig     = True
-        self.video_pane.needs_reconfig       = True
-        self.audio_pane.needs_reconfig       = True
-        self.gui_pane.needs_reconfig         = True
+        for pane in self.tabs_panes:
+            pane.needs_reconfig = True
         super(OptionsScreen, self).reconfig()
 
     def show(self):
