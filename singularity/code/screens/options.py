@@ -70,7 +70,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
                                        autohotkey=True,
                                        function=self.set_tabs_pane, args=(self.audio_pane,))
         self.tabs_buttons.add(self.audio_tab)
-        
+
         self.gui_tab = OptionButton(self, (-.80, .01), (-.202, .05),
                                     anchor = constants.TOP_CENTER,
                                     autohotkey=True,
@@ -89,13 +89,22 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         self.video_tab.text                 = _("&Video")
         self.audio_tab.text                 = _("&Audio")
         self.gui_tab.text                   = _("&Interface")
-        
+
         self.general_pane.needs_rebuild     = True
         self.video_pane.needs_rebuild       = True
         self.audio_pane.needs_rebuild       = True
         self.gui_pane.needs_rebuild         = True
 
         super(OptionsScreen, self).rebuild()
+
+    def reconfig(self):
+        # The tabs do not always have a parent, so the automatic "needs_reconfig" magic
+        # does not work.  Do it manually instead.
+        self.general_pane.needs_reconfig     = True
+        self.video_pane.needs_reconfig       = True
+        self.audio_pane.needs_reconfig       = True
+        self.gui_pane.needs_reconfig         = True
+        super(OptionsScreen, self).reconfig()
 
     def show(self):
         self.initial_options = dict(
@@ -117,7 +126,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         if retval:
             self.apply_options()
             save_options()
-            
+
         else:
             # Cancel, revert all options to initial state
             self.set_options(self.initial_options)
