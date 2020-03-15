@@ -255,7 +255,6 @@ class VideoPane(widget.Widget):
             text.EditableText(self, (.16, .28), (.14, .05),
                               text=str(gg.default_screen_size[0]),
                               borders=constants.ALL,
-                              border_color="widget_border",
                               background_color='options_custom_resolution_background')
 
         self.resolution_custom_X = text.Text(self,
@@ -269,7 +268,6 @@ class VideoPane(widget.Widget):
             text.EditableText(self, (.32, .28), (.14, .05),
                               text=str(gg.default_screen_size[1]),
                               borders=constants.ALL,
-                              border_color="widget_border",
                               background_color='options_custom_resolution_background')
 
         self.fullscreen_label = button.HotkeyText(self, (.40, .01), (.30, .05),
