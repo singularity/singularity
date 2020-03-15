@@ -3,6 +3,10 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 USER-VISIBLE CHANGES:
+- Fix some minor color issues with the Nightmode theme, where
+  the default color was used or text became unreadable.
+  Thanks to Wuzzy2 for reporting the issue.  (Closes #225, #227)
+  (nthykier)
 - Make room for longer tech names in the Knowledge screen to
   account for some tech names being significantly longer in
   translations.  Thanks to Wuzzy2 for reporting the issue.
