@@ -27,7 +27,7 @@ from singularity.code import g
 from singularity.code.graphics import text, button, dialog, widget, constants, listbox
 
 
-class KnowledgeScreen(dialog.Dialog):
+class KnowledgeScreen(dialog.FocusDialog):
     def __init__(self, *args, **kwargs):
         super(KnowledgeScreen, self).__init__(*args, **kwargs)
 
@@ -35,7 +35,6 @@ class KnowledgeScreen(dialog.Dialog):
         self.cur_knowledge = None
         self.knowledge_inner_list = ()
         self.knowledge_inner_list_key = ()
-        self.cur_focus = 0
 
         self.knowledge_choice = \
             listbox.UpdateListbox(self, (0.05, .18), (.15, .25),
@@ -58,21 +57,8 @@ class KnowledgeScreen(dialog.Dialog):
                                                    anchor=constants.TOP_LEFT,
                                                    autohotkey=True)
 
-        #Set up the key handling.
-        #This is likely not the best way to do it.
+        self.took_focus(self.knowledge_choice)
 
-        self.remove_key_handler(pygame.K_UP, self.knowledge_choice.got_key)
-        self.remove_key_handler(pygame.K_DOWN, self.knowledge_choice.got_key)
-        self.remove_key_handler(pygame.K_PAGEUP, self.knowledge_choice.got_key)
-        self.remove_key_handler(pygame.K_PAGEDOWN, self.knowledge_choice.got_key)
-
-        self.remove_key_handler(pygame.K_UP, self.knowledge_inner.got_key)
-        self.remove_key_handler(pygame.K_DOWN, self.knowledge_inner.got_key)
-        self.remove_key_handler(pygame.K_PAGEUP, self.knowledge_inner.got_key)
-        self.remove_key_handler(pygame.K_PAGEDOWN, self.knowledge_inner.got_key)
-
-        self.add_key_handler(pygame.K_UP, self.key_handle)
-        self.add_key_handler(pygame.K_DOWN, self.key_handle)
         self.add_key_handler(pygame.K_LEFT, self.key_handle)
         self.add_key_handler(pygame.K_RIGHT, self.key_handle)
 
@@ -94,18 +80,10 @@ class KnowledgeScreen(dialog.Dialog):
 
     #custom key handler.
     def key_handle(self, event):
-        #TODO: Change keyboard focus when user clicks item with mouse
-        #This is tricky since selecting amn item type also re-selects
-        #first item in inner list
         if event.key == pygame.K_LEFT:
-            self.cur_focus = 0
+            self.took_focus(self.knowledge_choice)
         elif event.key == pygame.K_RIGHT:
-            self.cur_focus = 1
-        else:
-            if self.cur_focus == 0:
-                self.knowledge_choice.got_key(event)
-            elif self.cur_focus == 1:
-                self.knowledge_inner.got_key(event)
+            self.took_focus(self.knowledge_inner)
 
     #fill the right-hand listbox
     def set_inner_list(self, item_type):
@@ -140,7 +118,6 @@ class KnowledgeScreen(dialog.Dialog):
 
     #Make sure the left listbox is correct after moving around.
     def set_knowledge_type(self, list_pos):
-        self.cur_focus = 0
         if getattr(self, "knowledge_choice", None) is None:
             return # Not yet initialized.
         prev_know = self.cur_knowledge_type
@@ -153,11 +130,10 @@ class KnowledgeScreen(dialog.Dialog):
             self.knowledge_inner_list_key, self.knowledge_inner.list = \
                         self.set_inner_list(self.cur_knowledge_type)
             self.knowledge_inner.list_pos = 0
-            self.set_knowledge(0, set_focus=False)
+            self.set_knowledge(0)
 
     #Make sure the right-hand listbox is correct.
-    def set_knowledge(self, list_pos, set_focus=True):
-        if set_focus: self.cur_focus = 1
+    def set_knowledge(self, list_pos):
         if getattr(self, "knowledge_inner", None) is None:
             return # Not yet initialized.
         prev_know = self.cur_knowledge
