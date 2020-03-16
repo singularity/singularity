@@ -245,19 +245,8 @@ class Dialog(text.Text):
         self.handlers[type] = [h for h in self.handlers.get(type, [])
                                  if h[1] != handler]
 
-    def add_key_handler(self, key, handler, priority=100, only_on_event_type=None):
+    def add_key_handler(self, key, handler, priority=100):
         """Adds a key handler to the given key, with the given priority."""
-        if only_on_event_type is not None:
-            if isinstance(only_on_event_type, int):
-                only_on_event_type = {only_on_event_type}
-            else:
-                only_on_event_type = set(only_on_event_type)
-            orig_handler = handler
-
-            def _wrapper(event):
-                if event.type in only_on_event_type:
-                    orig_handler(event)
-            handler = _wrapper
         insort_right_w_key(self.key_handlers.setdefault(key, []),
                            (priority, handler), key=operator.itemgetter(0))
 
@@ -303,8 +292,6 @@ class Dialog(text.Text):
                     self.repeat_counter = 0
                     self.handle(self.key_down)
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
-            # Generic key event handlers.
-            handlers = self.handlers.get(constants.KEY, [])[:]
             
             # TODO: Dynamize global key handlers.
             # TODO: Allows customization of global key handlers.
@@ -328,6 +315,9 @@ class Dialog(text.Text):
                 # Generic keydown handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYDOWN, []))
 
+                # Generic key event handlers.
+                insort_all(handlers, self.handlers.get(constants.KEY, []))
+
                 if event.unicode:
                     # Unicode-based keydown handlers for this particular key.
                     insort_all(handlers, self.key_handlers.get(event.unicode, []))
@@ -346,9 +336,6 @@ class Dialog(text.Text):
 
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
-
-                # Keycode-based handlers for this particular key.
-                insort_all(handlers, self.key_handlers.get(event.key, []))
 
             # OLPC XO-1 ebook mode.
             if g.ebook_mode and event.key in KEYPAD:
@@ -448,8 +435,6 @@ class FocusDialog(Dialog):
         self.current_focus = None
 
     def change_focus(self, event):
-        if event is not None and event.type != pygame.KEYDOWN:
-            return
 
         if len(self.focus_list) == 0:
             raise constants.Handled

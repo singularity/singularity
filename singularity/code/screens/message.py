@@ -80,8 +80,8 @@ class MessageListDialog(dialog.YesNoDialog):
                                                  text_size=28,
                                                  function=self.next_message)            
                                
-        self.add_key_handler(pygame.K_LEFT, self.handle_key, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_RIGHT, self.handle_key, only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_LEFT, self.handle_key)
+        self.add_key_handler(pygame.K_RIGHT, self.handle_key)
         
         # TODO: Add button "Do not show this message again"
 

@@ -66,9 +66,6 @@ class SavegameScreen(dialog.ChoiceDialog):
         self.add_handler(constants.KEY, self._got_key, priority=5)
 
     def _got_key(self, event):
-        if event.type != pygame.KEYDOWN:
-            return
-
         if event.key == pygame.K_DELETE:
             if self.listbox.current_item() is not None:
                 self.delete_button.activated(event)

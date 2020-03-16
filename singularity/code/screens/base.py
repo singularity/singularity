@@ -93,8 +93,6 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         g.pl.considered_buyables = []
 
     def _got_key(self, event):
-        if event.type != pygame.KEYDOWN:
-            return
         self.listbox.got_key(event, require_focus=False)
 
 
@@ -128,8 +126,6 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
 
     def _got_key(self, event):
         super(MultipleBuildDialog, self)._got_key(event)
-        if event.type != pygame.KEYDOWN:
-            return
         self.count_slider.handle_key(event)
         self.count_field.cursor_pos = len(self.count_field.text)
         self.count_field.handle_key(event, require_focus=False)
@@ -261,8 +257,7 @@ class BaseScreen(dialog.Dialog):
                                   text=">", hotkey=">",
                                   function=self.switch_base,
                                   kwargs={"forwards": True})
-        self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activate_with_sound,
-                             only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_RIGHT, self.next_base_button.activate_with_sound)
 
         self.prev_base_button = \
             button.FunctionButton(self.name_display, (0, 0), (.03, -1),
@@ -270,8 +265,7 @@ class BaseScreen(dialog.Dialog):
                                   text="<", hotkey="<",
                                   function=self.switch_base,
                                   kwargs={"forwards": False})
-        self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activate_with_sound,
-                             only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_LEFT, self.prev_base_button.activate_with_sound)
 
         self.state_display = text.Text(self.header, (-.5,-.5), (-1, -.5),
                                        anchor=constants.TOP_CENTER,

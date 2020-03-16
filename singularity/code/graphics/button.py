@@ -240,7 +240,7 @@ class ExitDialogButton(FunctionButton):
             self.parent.remove_key_handler(pygame.K_ESCAPE, self.activate_default)
 
     def activate_default(self, event):
-        if event.type != pygame.KEYDOWN or not self.default:
+        if not self.default:
             return
 
         return self.activate_with_sound(event)

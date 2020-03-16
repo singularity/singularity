@@ -67,10 +67,10 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         if self.parent is not None:
             self.parent.add_handler(constants.CLICK, self.on_click, 90)
             self.parent.add_handler(constants.DOUBLECLICK, self.on_double_click, 200)
-            self.parent.add_key_handler(pygame.K_UP, self.got_key, only_on_event_type=pygame.KEYDOWN)
-            self.parent.add_key_handler(pygame.K_DOWN, self.got_key, only_on_event_type=pygame.KEYDOWN)
-            self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key, only_on_event_type=pygame.KEYDOWN)
-            self.parent.add_key_handler(pygame.K_PAGEDOWN, self.got_key, only_on_event_type=pygame.KEYDOWN)
+            self.parent.add_key_handler(pygame.K_UP, self.got_key)
+            self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
+            self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
+            self.parent.add_key_handler(pygame.K_PAGEDOWN, self.got_key)
 
     def remove_hooks(self):
         super(Listbox, self).remove_hooks()

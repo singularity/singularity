@@ -50,8 +50,6 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.add_handler(constants.KEY, self._got_key, priority=5)
 
     def _got_key(self, event):
-        if event.type != pygame.KEYDOWN:
-            return
         # If a valid slider is selected, we let it move first.
         if 0 <= self.listbox.list_pos < len(self.listbox.list):
             index = self.listbox.list_pos - self.listbox.scrollbar.scroll_pos

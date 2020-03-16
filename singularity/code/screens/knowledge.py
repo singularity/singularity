@@ -71,10 +71,10 @@ class KnowledgeScreen(dialog.Dialog):
         self.remove_key_handler(pygame.K_PAGEUP, self.knowledge_inner.got_key)
         self.remove_key_handler(pygame.K_PAGEDOWN, self.knowledge_inner.got_key)
 
-        self.add_key_handler(pygame.K_UP, self.key_handle, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_DOWN, self.key_handle, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_LEFT, self.key_handle, only_on_event_type=pygame.KEYDOWN)
-        self.add_key_handler(pygame.K_RIGHT, self.key_handle, only_on_event_type=pygame.KEYDOWN)
+        self.add_key_handler(pygame.K_UP, self.key_handle)
+        self.add_key_handler(pygame.K_DOWN, self.key_handle)
+        self.add_key_handler(pygame.K_LEFT, self.key_handle)
+        self.add_key_handler(pygame.K_RIGHT, self.key_handle)
 
     def rebuild(self):
         # Update knowledge lists

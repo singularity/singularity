@@ -606,8 +606,7 @@ class MapScreen(dialog.Dialog):
         self.add_key_handler(constants.XO1_SQUARE, self.got_XO1)
 
     def got_escape(self, event):
-        if event.type == pygame.KEYDOWN:
-            self.menu_button.activate_with_sound(event)
+        self.menu_button.activate_with_sound(event)
 
     def got_XO1(self, event):
         if event.key == constants.XO1_X:
