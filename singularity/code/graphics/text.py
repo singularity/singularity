@@ -206,6 +206,7 @@ class Text(widget.BorderedWidget):
     underline = widget.call_on_change("_underline", resize_redraw)
     wrap = widget.call_on_change("_wrap", resize_redraw)
     bold = widget.call_on_change("_bold", resize_redraw)
+    _text = widget.call_on_change("__text", resize_redraw)
 
     enabled = widget.call_on_change("_enabled", _on_enabled_change)
 
@@ -272,7 +273,6 @@ class Text(widget.BorderedWidget):
         if self._autotranslate:
             raise ValueError("Cannot change text for an automatic translatable text widget")
         self._text = value
-        resize_redraw(self)
 
     def _retranslate(self):
         self._text = _(self._untranslated_text)
@@ -281,7 +281,6 @@ class Text(widget.BorderedWidget):
         if self._last_language != i18n.language:
             self._last_language = i18n.language
             self._retranslate()
-            resize_redraw(self)
 
     def pick_font(self, dimensions):
         nice_size = self.pick_font_size(dimensions, False)
