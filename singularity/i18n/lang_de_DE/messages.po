@@ -461,7 +461,7 @@ msgstr "Auflösung:"
 
 #: screens/options.py:253
 msgid "&CUSTOM:"
-msgstr ""
+msgstr "&BENUTZERDEFINIERT"
 
 #: screens/options.py:277
 msgid "&Fullscreen:"
@@ -716,7 +716,7 @@ msgstr "Nichts"
 #: screens/base.py:453
 #, python-format
 msgid "x%d (max)"
-msgstr "x%d (Max.)"
+msgstr "×%d (Max.)"
 
 #: screens/base.py:455
 #, python-format
@@ -727,7 +727,7 @@ msgstr "(Platz für %d)"
 #: screens/base.py:458
 #, python-brace-format
 msgid "x{CURRENT:d} (max {SIZE:d})"
-msgstr "x{CURRENT:d} (Max. {SIZE:d})"
+msgstr "×{CURRENT:d} (Max. {SIZE:d})"
 
 #. Base Total CPU.
 #: screens/base.py:466
@@ -754,22 +754,22 @@ msgstr "KRIT"
 #. Translators: abbreviation of 'millions'
 #: g.py:169
 msgid "mi"
-msgstr "Mio."
+msgstr " Mio."
 
 #. Translators: abbreviation of 'billions'
 #: g.py:173
 msgid "bi"
-msgstr "Mrd."
+msgstr " Mrd."
 
 #. Translators: abbreviation of 'trillions'
 #: g.py:177
 msgid "tr"
-msgstr "Bio."
+msgstr " Bio."
 
 #. Translators: abbreviation of 'quadrillions'
 #: g.py:181
 msgid "qu"
-msgstr "Brd."
+msgstr " Brd."
 
 #: g.py:214
 msgid "days"
