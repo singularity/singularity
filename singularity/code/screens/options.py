@@ -248,10 +248,11 @@ class VideoPane(widget.Widget):
             listbox.UpdateListbox(self, (.16, .01), (.20, .25),
                                   update_func=self.update_resolution)
 
-        self.resolution_custom = OptionButton(self, (.01, .28), (.14, .05),
-                                              autotranslate=True,
-                                              text=N_("&CUSTOM:"),
-                                              function=self.set_resolution_custom)
+        self.resolution_custom = button.HotkeyText(self, (.01, .28), (.14, .05),
+                                                   autotranslate=True,
+                                                   text=N_("&Custom:"),
+                                                   align=constants.LEFT,
+                                                   background_color="clear")
 
         self.resolution_custom_horiz = \
             text.EditableText(self, (.16, .28), (.14, .05),
@@ -269,6 +270,13 @@ class VideoPane(widget.Widget):
             text.EditableText(self, (.32, .28), (.14, .05),
                               text=str(gg.default_screen_size[1]),
                               borders=constants.ALL)
+
+        self.resolution_custom_ok = button.FunctionButton(self, (.47, .28), (.05, .05),
+                                                          autotranslate=True,
+                                                          autohotkey=False,
+                                                          text=N_("OK"),
+                                                          function=self.set_resolution_custom)
+        self.resolution_custom.hotkey_target = self.resolution_custom_ok
 
         self.fullscreen_label = button.HotkeyText(self, (.40, .01), (.30, .05),
                                                   autotranslate=True,
@@ -340,7 +348,8 @@ class VideoPane(widget.Widget):
         self.set_resolution(options['resolution'])
 
     def apply_options(self):
-        if self.resolution_custom.active:
+        # Apply CUSTOM choice.
+        if self.resolution_choice.list_pos == 0:
             try:
                 old_size = gg.screen_size
                 gg.set_screen_size((int(self.resolution_custom_horiz.text),
@@ -363,11 +372,9 @@ class VideoPane(widget.Widget):
         for i, res in enumerate(self.resolutions):
             if res == current_res:
                 self.resolution_choice.list_pos = i + 1
-                self.resolution_custom.set_active(False)
                 custom = False
         if custom:
             self.resolution_choice.list_pos = 0
-            self.resolution_custom.set_active(True)
             self.resolution_custom_horiz.text = str(current_res[0])
             self.resolution_custom_vert.text = str(current_res[1])
             
@@ -411,7 +418,6 @@ class VideoPane(widget.Widget):
         else:
             res = self.resolutions[list_pos - 1]
             self.set_resolution(res)
-            self.resolution_custom.set_active(False)
 
     def set_resolution_custom(self):
         try:
@@ -419,7 +425,6 @@ class VideoPane(widget.Widget):
                            int(self.resolution_custom_vert.text))
             self.set_resolution(screen_size)
             self.resolution_choice.list_pos = 0
-            self.resolution_custom.set_active(True)
         except ValueError:
             pass
 
