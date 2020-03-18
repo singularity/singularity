@@ -528,8 +528,8 @@ class BorderedWidget(Widget):
     def redraw(self):
         super(BorderedWidget, self).redraw()
 
-        # TODO: Transparency do not work correctly.
-        # First: fill cannot use alpha channel with current surface.
+        # TODO: Transparency do not work correctly.
+        # First: fill cannot use alpha channel with current surface.
         # Second: Transparency needs the parent redraw to work correctly.
         # It make transparency unusable with some widget.
 
