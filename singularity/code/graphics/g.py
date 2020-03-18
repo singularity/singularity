@@ -45,6 +45,8 @@ screen_size = default_screen_size
 #if abstracted screen_size is a custom resolution
 real_screen_size = screen_size
 
+min_resolution = (800, 600)
+
 # Available resolutions
 resolutions = [
     ( 800, 600),
@@ -127,6 +129,10 @@ def set_fullscreen(value):
 def get_screen_size_list():
     res_list = set(resolutions + pygame.display.list_modes())
 
+    # Remove resolution inferior to minimal size since we will not allows them.
+    if min_resolution:
+        res_list = filter(lambda res: res[0] >= min_resolution[0] and res[1] >= min_resolution[1], res_list)
+
     # Remove resolution superior to desktop size since we will not allows them.
     if desktop_size:
         res_list = filter(lambda res: res[0] <= desktop_size[0] and res[1] <= desktop_size[1], res_list)
@@ -147,6 +153,11 @@ def set_screen_size(size=None, fs=None):
     # sets the new values
     screen_size = size
     fullscreen = fs
+
+    # Limit screen to minimal value
+    if min_resolution:
+        screen_size = (min_resolution[0] if screen_size[0] < min_resolution[0] else screen_size[0],
+                       min_resolution[1] if screen_size[1] < min_resolution[1] else screen_size[1]) 
 
     # Limit the screen size to desktop size
     if desktop_size and (screen_size[0] > desktop_size[0] or
