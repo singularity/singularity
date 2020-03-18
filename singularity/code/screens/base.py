@@ -457,7 +457,7 @@ class BaseScreen(dialog.Dialog):
         info_text = ""
 
         # Base Total CPU.
-        info_text += _("CPU: %d") % self.base.cpu + "\n"
+        info_text += _("CPU per day: %d") % self.base.cpu + "\n"
 
         # Maintenace cost.
         info_text += _("Maintenance:") + "\n"
