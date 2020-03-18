@@ -76,6 +76,7 @@ class BaseSpec(buyable.BuyableSpec):
         self.regions = regions
 
         self.detect_chance = detect_chance
+        # TODO: Maintenance should use CPU-second to be as cost.
         self.maintenance = maintenance
         self.flavor = []
 
@@ -101,6 +102,12 @@ class BaseSpec(buyable.BuyableSpec):
 
         return detect_chance
 
+    def describe_maintenance(self, maintenance):
+        m = buyable.array(maintenance, int64)
+        # describe_cost() expects CPU-seconds, not CPU-days
+        m[cpu] *= g.seconds_per_day
+        return self.describe_cost(m, True)
+
     def get_detect_info(self, location=None):
 
         detect_modifier = 1 / location.modifiers.get("stealth", 1) if location else 1
@@ -113,11 +120,9 @@ class BaseSpec(buyable.BuyableSpec):
         location.modify_cost(raw_cost)
         cost = self.describe_cost(raw_cost)
 
-        raw_maintenance = self.maintenance[:]
-        location.modify_maintenance(raw_maintenance)
-        # describe_cost() expects CPU-seconds, not CPU-days
-        raw_maintenance[cpu] *= g.seconds_per_day
-        maint = self.describe_cost(raw_maintenance, True)
+        mod_maint = self.maintenance[:]
+        location.modify_maintenance(mod_maint)
+        maint = self.describe_maintenance(mod_maint)
 
         detect = self.get_detect_info(location)
 

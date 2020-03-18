@@ -461,7 +461,7 @@ class BaseScreen(dialog.Dialog):
 
         # Maintenace cost.
         info_text += _("Maintenance:") + "\n"
-        info_text += self.base.spec.describe_cost(self.base.maintenance, True)
+        info_text += self.base.spec.describe_maintenance(self.base.maintenance)
         info_text += "\n"
     
         # Detection chance display.

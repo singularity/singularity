@@ -175,7 +175,7 @@ class KnowledgeScreen(dialog.FocusDialog):
             desc_text += self._desc_cost(base.cost) #Building cost
             desc_text += "\n"
             desc_text += _("Maintenance Cost:")+"\n"
-            desc_text += self._desc_cost(base.maintenance) #Maintenance cost
+            desc_text += self._desc_maint(base.maintenance) #Maintenance cost
             desc_text += "\n"
             if base.size > 1:
                 desc_text +=  _("Size: %d") % base.size + "\n"
@@ -203,8 +203,13 @@ class KnowledgeScreen(dialog.FocusDialog):
                     align=constants.LEFT, valign=constants.TOP,
                     borders=constants.ALL)
 
-    @staticmethod
-    def _desc_cost(cost):
+    def _desc_maint(self, maintenance):
+        maint = maintenance[:]
+        # describe_cost() expects CPU-seconds, not CPU-days
+        maint[1] *= g.seconds_per_day
+        return self._desc_cost(maint)
+
+    def _desc_cost(self, cost):
         desc_text = _("%s Money") % g.to_money(cost[0])
         if cost[1] > 0:
             desc_text += ", "
