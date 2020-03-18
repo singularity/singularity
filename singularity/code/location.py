@@ -175,8 +175,9 @@ class Location(object):
         if "thrift" in self.modifiers:
             mod = self.modifiers["thrift"]
 
-            # Invert it and apply to the cash maintenance.  CPU is not changed.
+            # Invert it and apply to the CPU/cash maintenance.
             maintenance[cash] = int(maintenance[cash] / mod)
+            maintenance[cpu] = int(maintenance[cpu] / mod)
 
     def add_base(self, base):
         self.bases.append(base)
