@@ -28,8 +28,6 @@ from singularity.code.graphics import text, button, dialog, constants, listbox
 import singularity.code.screens.base as basescreen
 
 state_colors = basescreen.state_colors
-state_list = base.power_states[:2]
-state_list.reverse()
 
 
 class LocationScreen(dialog.Dialog):
@@ -148,6 +146,8 @@ class LocationScreen(dialog.Dialog):
             canvas.name_display.text = name
             canvas.base_type.text = base.spec.name
             canvas.base_cpu.text = ""
+            canvas.power_display.text = base.power_state_name
+            canvas.power_display.color = state_colors[base.power_state]
             show_cpu = False
 
             if not base.done:
@@ -178,11 +178,8 @@ class LocationScreen(dialog.Dialog):
 
             if show_cpu:
                 canvas.base_cpu.text = _("%s CPU") % g.to_money(base.cpu)
-                canvas.power_display.text = base.power_state_name
-                canvas.power_display.color = state_colors[base.power_state]
             else:
                 canvas.base_cpu.text = ''
-                canvas.power_display.text = ''
 
     def show(self):
         self.listbox.has_focus = True
@@ -213,8 +210,7 @@ class LocationScreen(dialog.Dialog):
     def power_state(self):
         if 0 <= self.listbox.list_pos < len(self.listbox.key_list):
             base = self.listbox.key_list[self.listbox.list_pos]
-            old_index = state_list.index(base.power_state)
-            base.power_state = state_list[old_index-1]
+            base.switch_power()
             self.needs_rebuild = True
             self.parent.needs_rebuild = True
 

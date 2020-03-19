@@ -74,7 +74,7 @@ class Player(object):
         self.last_discovery = self.prev_discovery = None
 
         self.cpu_usage = {}
-        self.available_cpus = [1, 0, 0, 0, 0]
+        self.available_cpus = [0, 0, 0, 0, 0]
         self.sleeping_cpus = 0
         
         self.used_cpu = 0
@@ -441,7 +441,7 @@ class Player(object):
         self.sleeping_cpus = 0
         for base in g.all_bases():
             if base.done:
-                if base.power_state in ["active", "overclocked", "suicide"]:
+                if base.has_power():
                     self.available_cpus[:base.location.safety+1] += base.cpu
                 elif base.power_state == "sleep":
                     self.sleeping_cpus += base.cpu
