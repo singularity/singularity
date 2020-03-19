@@ -260,6 +260,7 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
     open = [loc for loc in pl.locations.values() if loc.available()]
     random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
+    pl.recalc_cpu()
 
 
 def new_game(difficulty_name):

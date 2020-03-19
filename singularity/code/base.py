@@ -37,7 +37,7 @@ from numpy import int64
 #This list only applies to 'Base' class, not 'BaseClass'
 #Changes to this list should also be reflected in Base.power_state_name property
 
-power_states = ['active','sleep']
+power_states = ['offline', 'active','sleep']
 #power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
 
 
@@ -166,18 +166,18 @@ class Base(buyable.Buyable):
             "security": None,
         }
 
-        if self.spec.force_cpu:
-            self.cpus = item.Item(g.items[self.spec.force_cpu],
-                                  base=self, count=self.spec.size)
-            self.cpus.finish(is_player=False)
+        self._power_state = "offline"
+        self.grace_over = False
+
+        self.maintenance = buyable.array(self.spec.maintenance, int64)
 
         if built:
             self.finish(is_player=False)
 
-        self._power_state = "active"
-        self.grace_over = False
-
-        self.maintenance = buyable.array(self.spec.maintenance, int64)
+        if self.spec.force_cpu:
+            self.cpus = item.Item(g.items[self.spec.force_cpu],
+                                  base=self, count=self.spec.size)
+            self.cpus.finish(is_player=False)
 
     @buyable.Buyable.name.setter
     def name(self, value):
@@ -204,16 +204,11 @@ class Base(buyable.Buyable):
     def power_state(self):
         return self._power_state
 
-    @power_state.setter
-    def power_state(self, value):
-        self._power_state = value
-        self.check_power()
-        g.pl.recalc_cpu()
-
     @property
     def power_state_name(self):
         """A read-only i18'zable version of power_state attribute, suitable for
         printing labels, captions, etc"""
+        if self.power_state == "offline"        : return _("Offline")
         if self.power_state == "active"         : return _("Active")
         if self.power_state == "sleep"          : return _("Sleep")
         if self.power_state == "overclocked"    : return _("Overclocked")
@@ -222,6 +217,30 @@ class Base(buyable.Buyable):
         if self.power_state == "entering_stasis": return _("Entering Stasis")
         if self.power_state == "leaving_stasis" : return _("Leaving Stasis")
         return ""
+
+    def switch_power(self):
+        if self.done and self.cpus and self.cpus.done:
+            if self._power_state == "active":
+                self._power_state = "sleep"
+            else:
+                self._power_state = "active"
+        else:
+            self._power_state = "offline"
+        g.pl.recalc_cpu()
+
+    def check_power(self):
+        if self.done and self.cpus and self.cpus.done:
+            if self._power_state == "offline":
+                self._power_state = "active"
+        else:
+            self._power_state = "offline"
+        g.pl.recalc_cpu()
+
+    def has_power(self):
+        if self._power_state == "active": 
+            return True
+        else:
+            return False
 
     def space_left_for(self, item_type):
         space_left = self.spec.size
@@ -232,15 +251,6 @@ class Base(buyable.Buyable):
             space_left -= self.cpus.count
             
         return space_left
-
-    def check_power(self):
-        if self.power_state == "sleep":
-            if self.done:
-                for item in self.all_items():
-                    if item is not None and not item.done:
-                        self.power_state = "active"
-            else:
-                self.power_state = "active"
 
     @property
     def compute_bonus(self):
@@ -334,7 +344,7 @@ class Base(buyable.Buyable):
                 detect_chance[group] //= 100
 
         # ... and its power state.
-        if self.done and self.power_state == "sleep":
+        if not self.has_power():
             for group in detect_chance:
                 detect_chance[group] //= 4
 
@@ -417,6 +427,11 @@ class Base(buyable.Buyable):
         # id(self) is thrown in at the end to make sure identical-looking
         # bases aren't considered equal.
         return (-self.spec.size, -self.cpu, self.name, id(self))
+
+    def finish(self, is_player=True, loading_savegame=False):
+        super(Base, self).finish(is_player=is_player, loading_savegame=loading_savegame)
+        self.recalc_cpu()
+        self.check_power()
 
     def __lt__(self, other):
         if isinstance(other, Base):

@@ -26,6 +26,7 @@ from singularity.code.graphics import constants, widget, dialog, text, button, s
 
 
 state_colors = dict(
+    offline         = "base_state_offline",
     active          = "base_state_active",
     sleep           = "base_state_sleep",
     overclocked     = "base_state_overclocked",

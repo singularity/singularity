@@ -98,6 +98,7 @@ save_valid      = green
 save_invalid    = red
 
 # Base state colors
+base_state_offline         = red
 base_state_active          = green
 base_state_sleep           = yellow
 base_state_overclocked     = orange

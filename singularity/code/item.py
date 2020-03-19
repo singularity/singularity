@@ -187,6 +187,7 @@ class Item(buyable.Buyable):
         super(Item, self).finish(is_player=is_player, loading_savegame=loading_savegame)
         if self.base:
             self.base.recalc_cpu()
+            self.base.check_power()
 
     def __iadd__(self, other):
         if isinstance(other, Item) and self.base == other.base \
