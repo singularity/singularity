@@ -94,12 +94,15 @@ def test_initial_game():
     # Nothing should have appeared in the logs
     assert len(pl.log) == 0
 
+    # Verify that starting base is well active.
+    assert start_base._power_state == 'active'
+
     # Verify that putting a base to sleep will update the
     # available CPU (#179/#180)
     assert pl.effective_cpu_pool() == 1
-    start_base.power_state = 'sleep'
+    start_base.switch_power()
     assert pl.effective_cpu_pool() == 0
-    start_base.power_state = 'active'
+    start_base.switch_power()
     assert pl.effective_cpu_pool() == 1
 
     # Attempt to allocate a CPU to research and then
@@ -107,11 +110,11 @@ def test_initial_game():
     stealth_tech = g.pl.techs['Stealth']
     pl.set_allocated_cpu_for(stealth_tech.id, 1)
     assert pl.get_allocated_cpu_for(stealth_tech.id) == 1
-    start_base.power_state = 'sleep'
+    start_base.switch_power()
     assert pl.get_allocated_cpu_for(stealth_tech.id) == 0
     # When we wake up the base again, the CPU unit is
     # unallocated.
-    start_base.power_state = 'active'
+    start_base.switch_power()
     assert pl.effective_cpu_pool() == 1
 
     # Now, allocate the CPU unit again to the tech to
