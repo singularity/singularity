@@ -24,7 +24,7 @@ import pygame
 from numpy import array
 from inspect import getmembers
 
-from singularity.code.graphics import g, constants
+from singularity.code.graphics import g as gg, constants
 
 
 def unmask(widget):
@@ -235,7 +235,7 @@ class Widget(object):
 
     def _parent_size(self):
         if self.parent == None:
-            return g.real_screen_size
+            return gg.real_screen_size
         else:
             return self.parent.real_size
 
@@ -248,7 +248,7 @@ class Widget(object):
         size = list(self.size)
         for i in range(2):
             if size[i] > 0:
-                size[i] = int(size[i] * g.real_screen_size[i])
+                size[i] = int(size[i] * gg.real_screen_size[i])
             elif size[i] < 0:
                 size[i] = int( (-size[i]) * parent_size[i] )
 
@@ -271,7 +271,7 @@ class Widget(object):
         my_size = self.real_size
 
         if self.pos[0] >= 0:
-            hpos = int(self.pos[0] * g.real_screen_size[0])
+            hpos = int(self.pos[0] * gg.real_screen_size[0])
         else:
             hpos = - int(self.pos[0] * parent_size[0])
 
@@ -283,7 +283,7 @@ class Widget(object):
             hpos -= my_size[0]
 
         if self.pos[1] >= 0:
-            vpos = int(self.pos[1] * g.real_screen_size[1])
+            vpos = int(self.pos[1] * gg.real_screen_size[1])
         else:
             vpos = - int(self.pos[1] * parent_size[1])
 
@@ -335,19 +335,19 @@ class Widget(object):
         else:
             # Recreate using the abstracted screen size, NOT the real one
             # g.set_screen() will calculate the proper g.real_screen_size
-            if g.screen_surface is None:
+            if gg.screen_surface is None:
                 # Ensure that the screen is initialized
-                g.set_mode()
+                gg.set_mode()
             # We draw on a copy of the surface.  This is to avoid crashes
             # during draggable resizing (event.VIDEORESIZE) where the
             # screen size might change behind our backs while drawing
             # (event.VIDEORESIZE tells us that the screen has been updated
             # and we should catch up and not the other way around)
-            self.surface = g.screen_surface.copy()
+            self.surface = gg.screen_surface.copy()
             self.surface.fill( (0,0,0,255) )
 
-            g.fade_mask = pygame.Surface(size, 0, g.ALPHA)
-            g.fade_mask.fill( (0,0,0,175) )
+            gg.fade_mask = pygame.Surface(size, 0, gg.ALPHA)
+            gg.fade_mask.fill( (0,0,0,175) )
 
     def prepare_for_redraw(self):
         # First, we handle config changes.
@@ -412,7 +412,7 @@ class Widget(object):
             while check_mask:
                 child = check_mask.pop()
                 if not child.self_mask:
-                    child.surface.blit(g.fade_mask, (0,0))
+                    child.surface.blit(gg.fade_mask, (0,0))
                 elif child.mask_children:
                     check_mask += child.children
 
@@ -512,8 +512,8 @@ class Widget(object):
 class BorderedWidget(Widget):
     borders = causes_redraw("__borders")
 
-    border_color = auto_reconfig("_border_color", "resolved", g.resolve_color_alias)
-    background_color = auto_reconfig("_background_color", "resolved", g.resolve_color_alias)
+    border_color = auto_reconfig("_border_color", "resolved", gg.resolve_color_alias)
+    background_color = auto_reconfig("_background_color", "resolved", gg.resolve_color_alias)
     resolved_border_color = causes_redraw("_resolved_border_color")
     resolved_background_color = causes_redraw("_resolved_background_color")
 
@@ -526,12 +526,12 @@ class BorderedWidget(Widget):
 
     def rebuild(self):
         super(BorderedWidget, self).rebuild()
-        if self.parent and self.resolved_background_color == g.colors["clear"]:
+        if self.parent and self.resolved_background_color == gg.colors["clear"]:
             self.parent.needs_redraw = True
 
     def reposition(self):
         super(BorderedWidget, self).reposition()
-        if self.parent and self.resolved_background_color == g.colors["clear"]:
+        if self.parent and self.resolved_background_color == gg.colors["clear"]:
             self.parent.needs_redraw = True
 
     def redraw(self):
@@ -543,7 +543,7 @@ class BorderedWidget(Widget):
         # It make transparency unusable with some widget.
 
         # Fill the background.
-        if self.resolved_background_color != g.colors["clear"]:
+        if self.resolved_background_color != gg.colors["clear"]:
             self.surface.fill( self.resolved_background_color )
 
         self.draw_borders()
