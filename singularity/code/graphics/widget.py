@@ -24,6 +24,7 @@ import pygame
 from numpy import array
 from inspect import getmembers
 
+from singularity.code import g
 from singularity.code.graphics import g as gg, constants
 
 
@@ -377,14 +378,24 @@ class Widget(object):
         # First we prepare everything for its redraw (if needed).
         self.prepare_for_redraw()
 
-        self._update()
+        _, updated_rects = self._update()
 
         # Oh, and if this is the top-level widget, we should flip the display.
         if not self.parent:
-            pygame.display.flip()
+            if g.debug and updated_rects:
+                # In debug mode, we also highlight where we have been redrawn
+                s = self.surface.copy()
+                for rect in updated_rects:
+                    pygame.draw.rect(self.surface, (0xff, 0, 0, 0), rect, 2)
+                pygame.display.update()
+                self.surface.blit(s, (0, 0))
+            else:
+                pygame.display.update(updated_rects)
 
     def _update(self):
         redrew_self = self.needs_redraw
+        update_full_rect = redrew_self
+        affected_rects = []
         if self.needs_redraw:
             self.redraw()
 
@@ -396,20 +407,29 @@ class Widget(object):
                 if child.is_above_mask:
                     above_mask.append(child)
                 else:
-                    check_mask += child._update()
+                    # update_full_rect = True  # We do not bother tracking this case
+                    child_mask, child_rects = child._update()
+                    check_mask.extend(child_mask)
+                    if child_rects and not update_full_rect:
+                        affected_rects.extend(child_rects)
 
         # Next, we handle the fade mask.
         if getattr(self, "faded", False):
             while check_mask:
                 child = check_mask.pop()
                 if not child.self_mask:
-                    child.surface.blit(gg.fade_mask, (0,0))
+                    # update_full_rect = True  # We do not bother tracking this case
+                    child_rect = child.surface.blit(gg.fade_mask, (0,0))
+                    if not update_full_rect:
+                        affected_rects.append(child_rect)
                 elif child.mask_children:
                     check_mask += child.children
 
         # And finally we update any children above the fade mask.
         for child in above_mask:
-            child._update()
+            _, child_rects = child._update()
+            if child_rects and not update_full_rect:
+                affected_rects.extend(child_rects)
 
         # Update complete.
         self.needs_update = False
@@ -421,7 +441,13 @@ class Widget(object):
             # needed, and redraw already propogated down to them.
             check_mask = [self]
 
-        return check_mask
+        if update_full_rect:
+            size = self.real_size
+            pos = self.real_pos
+
+            affected_rects = [self.collision_rect]
+
+        return check_mask, affected_rects
 
     def reconfig(self):
         # Find reconfig property and update them.
