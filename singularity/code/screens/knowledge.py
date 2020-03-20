@@ -37,18 +37,18 @@ class KnowledgeScreen(dialog.FocusDialog):
         self.knowledge_inner_list_key = ()
 
         self.knowledge_choice = \
-            listbox.UpdateListbox(self, (0.05, .18), (.15, .25),
+            listbox.UpdateListbox(self, (0.04, .18), (.18, .25),
                                   update_func=self.set_knowledge_type)
 
         # Tech names are typically a lot longer than knowledge concepts.
         # Therefore, we make knowledge_inner a lot wider than
         # knowledge_choice.
         self.knowledge_inner = \
-            listbox.UpdateListbox(self, (.24, .18), (.27, .25),
+            listbox.UpdateListbox(self, (.26, .18), (.37, .25),
                                   update_func=self.set_knowledge)
 
         self.description_pane = \
-            widget.BorderedWidget(self, (0.55, 0), (0.40, 0.7),
+            widget.BorderedWidget(self, (0.66, 0), (0.30, 0.7),
                                   anchor = constants.TOP_LEFT)
 
         self.back_button = button.ExitDialogButton(self, (0.17, 0.46), (-.3, -.1),
