@@ -24,6 +24,7 @@ import pygame
 from numpy import array
 from inspect import getmembers
 
+from singularity.code import g
 from singularity.code.graphics import g as gg, constants
 
 
@@ -132,6 +133,12 @@ class auto_reconfig(object):
     def reconfig(self, obj):
         updated_value = self.reconfig_func(getattr(obj, self.data_member))
         setattr(obj, self.reconfig_datamember, updated_value)
+
+
+# In debug mode, this list tracks which widgets (i.e. rects) where highlighted "last"
+# during a redraw, so they can be "re-updated" without the highlight
+debug_mode_undo_drawing_highlight = []
+
 
 class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
@@ -385,15 +392,34 @@ class Widget(object):
         # First we prepare everything for its redraw (if needed).
         self.prepare_for_redraw()
 
-        self._update()
+        _, updated_rect = self._update()
 
-        # Oh, and if this is the top-level widget, we should flip the display.
-        if not self.parent and g.screen_surface:
-            g.screen_surface.blit(self.surface, (0, 0))
-            pygame.display.flip()
+        # Oh, and if this is the top-level widget, we should update the display.
+        if not self.parent and gg.screen_surface:
+            root_surface = self.surface
+            if g.debug and updated_rect:
+                # In debug mode, draw red boxes to represent widgets that were updated.
+                global debug_mode_undo_drawing_highlight
+                try:
+                    # If the theme defines a color for this purpose, we will use it
+                    widget_highlight_color = gg.resolve_color_alias('debug_mode_highlight_redrawn_widget')
+                except KeyError:
+                    # ... and for every thing else, there is the color red.
+                    widget_highlight_color = 0xff, 0, 0, 0
+                root_surface = self.surface.copy()
+                n_updated_rect = []
+                for rect in updated_rect:
+                    n_updated_rect.append(pygame.draw.rect(root_surface, widget_highlight_color, rect, 1))
+                updated_rect.extend(debug_mode_undo_drawing_highlight)
+                debug_mode_undo_drawing_highlight = n_updated_rect
+
+            gg.screen_surface.blits(((root_surface, r, r) for r in updated_rect), doreturn=0)
+            pygame.display.update(updated_rect)
 
     def _update(self):
         redrew_self = self.needs_redraw
+        update_full_rect = redrew_self
+        affected_rects = []
         if self.needs_redraw:
             self.redraw()
 
@@ -405,20 +431,29 @@ class Widget(object):
                 if child.is_above_mask:
                     above_mask.append(child)
                 else:
-                    check_mask += child._update()
+                    # update_full_rect = True  # We do not bother tracking this case
+                    child_mask, child_rects = child._update()
+                    check_mask.extend(child_mask)
+                    if child_rects and not update_full_rect:
+                        affected_rects.extend(child_rects)
 
         # Next, we handle the fade mask.
         if getattr(self, "faded", False):
             while check_mask:
                 child = check_mask.pop()
                 if not child.self_mask:
-                    child.surface.blit(gg.fade_mask, (0,0))
+                    # update_full_rect = True  # We do not bother tracking this case
+                    child_rect = child.surface.blit(gg.fade_mask, (0,0))
+                    if not update_full_rect:
+                        affected_rects.append(child_rect)
                 elif child.mask_children:
                     check_mask += child.children
 
         # And finally we update any children above the fade mask.
         for child in above_mask:
-            child._update()
+            _, child_rects = child._update()
+            if child_rects and not update_full_rect:
+                affected_rects.extend(child_rects)
 
         # Update complete.
         self.needs_update = False
@@ -430,7 +465,13 @@ class Widget(object):
             # needed, and redraw already propogated down to them.
             check_mask = [self]
 
-        return check_mask
+        if update_full_rect:
+            size = self.real_size
+            pos = self.real_pos
+
+            affected_rects = [self.collision_rect]
+
+        return check_mask, affected_rects
 
     def reconfig(self):
         # Find reconfig property and update them.

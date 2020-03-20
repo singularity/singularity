@@ -101,3 +101,11 @@ base_state_leaving_stasis  = gray
 simple_menu_background = #400000ff
 simple_menu_border     = red
 
+
+###  Internal/Special purpose colors ###
+
+# This chooses the color to highlight widgets redrawn in debug mode
+# e.g. singularity --debug.  This should be visibly different from the
+# common border colors of the theme as the redraw lines are usually
+# (but not always) placed on the widget borders.
+debug_mode_highlight_redrawn_widget = light_blue
