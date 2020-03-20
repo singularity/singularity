@@ -444,7 +444,7 @@ class FastText(Text):
     """
        Reduces font searches by assuming a monospace font and single-line text.
     """
-    text = widget.call_on_change("_text", text_changed)
+    _text = widget.call_on_change("__text", text_changed)
     old_len = 0
     maybe_needs_refont = False
 
