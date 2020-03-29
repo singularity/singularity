@@ -59,3 +59,6 @@ class ExitDialog(Exception): pass
 XO1_X = object()
 XO1_O = object()
 XO1_SQUARE = object()
+
+# Characters set
+DIGIT_CHARS = set('0123456789')

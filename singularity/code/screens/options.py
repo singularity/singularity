@@ -257,6 +257,7 @@ class VideoPane(widget.Widget):
         self.resolution_custom_horiz = \
             text.EditableText(self, (.16, .28), (.14, .05),
                               text=str(gg.default_screen_size[0]),
+                              allowed_characters=constants.DIGIT_CHARS,
                               borders=constants.ALL)
 
         self.resolution_custom_X = text.Text(self,
@@ -269,6 +270,7 @@ class VideoPane(widget.Widget):
         self.resolution_custom_vert = \
             text.EditableText(self, (.32, .28), (.14, .05),
                               text=str(gg.default_screen_size[1]),
+                              allowed_characters=constants.DIGIT_CHARS,
                               borders=constants.ALL)
 
         self.resolution_custom_ok = button.FunctionButton(self, (.47, .28), (.05, .05),
