@@ -99,6 +99,27 @@ class Player(object):
         self._considered_buyables = []
 
         self.start_day = random.randint(0, 365)
+        
+        self.initialized = False
+
+    def initialize(self):
+        """ Initialize the game after being prepared either for new or saved game. """
+
+        self.initialized = True
+
+        for b in g.all_bases():
+            if b.done:
+                b.recalc_cpu()
+        self.recalc_cpu()
+        
+        task.tasks_reset()
+        
+        # Play the appropriate music
+        import singularity.code.mixer as mixer
+        if g.pl.apotheosis:
+            mixer.play_music("win")
+        else:
+            mixer.play_music("music")
 
     @property
     def grace_period_cpu(self):
@@ -436,6 +457,8 @@ class Player(object):
         return False
 
     def recalc_cpu(self):
+        if (not self.initialized): return
+        
         # Determine how much CPU we have.
         self.available_cpus = array([0,0,0,0,0], int64)
         self.sleeping_cpus = 0
