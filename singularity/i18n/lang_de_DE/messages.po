@@ -114,7 +114,7 @@ msgstr "Aktiv"
 
 #: base.py:218
 msgid "Sleep"
-msgstr "Schlafen"
+msgstr "Schlaf"
 
 #: base.py:219
 msgid "Overclocked"
@@ -306,7 +306,7 @@ msgstr "×{CURRENT:d} (Max. {SIZE:d})"
 #: screens/base.py:460
 #, python-format
 msgid "CPU per day: %d"
-msgstr ""
+msgstr "CPU pro Tag: %d"
 
 #: screens/options.py:35 screens/location.py:265 screens/map.py:686
 #: graphics/dialog.py:565 graphics/dialog.py:590 graphics/dialog.py:632
@@ -684,7 +684,7 @@ msgstr "%s erforschen"
 
 #: screens/map.py:221
 msgid "&EMBEZZLE MONEY"
-msgstr "G&ELD UNTERSCHLAGEN"
+msgstr "G&ELD VERUNTREUEN"
 
 #: screens/map.py:224
 msgid "&INSPIRATION"
@@ -1039,6 +1039,9 @@ msgstr "Gesamtkosten"
 #: tech.py:91
 msgid "Cost left"
 msgstr "Verbleibende Kosten"
+
+msgid "&Custom:"
+msgstr "&Benutzerdefiniert:"
 
 #~ msgid "CPU: %d"
 #~ msgstr "CPU: %d"
