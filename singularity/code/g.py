@@ -256,8 +256,6 @@ def new_game(difficulty_name, initial_speed=1):
 
     pl = player.Player(cash = diff.starting_cash, difficulty = diff)
 
-    tech.tech_reinitialized()
-
     for tech_id in diff.techs:
         pl.techs[tech_id].finish(is_player=False)
 
@@ -265,11 +263,8 @@ def new_game(difficulty_name, initial_speed=1):
     open = [loc for loc in pl.locations.values() if loc.available()]
     random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
-    pl.recalc_cpu()
 
-    from singularity.code import mixer
-    # Reset music
-    mixer.play_music("music")
+    pl.initialize()
 
 
 def read_modifiers_dict(modifiers_info):

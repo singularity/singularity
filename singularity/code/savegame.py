@@ -312,17 +312,7 @@ def before_load_savegame():
 
 
 def after_load_savegame():
-    tech.tech_reinitialized()
-    for b in g.all_bases():
-        if b.done:
-            b.recalc_cpu()
-    g.pl.recalc_cpu()
-
-    # Play the appropriate music
-    if g.pl.apotheosis:
-        mixer.play_music("win")
-    else:
-        mixer.play_music("music")
+    g.pl.initialize()
 
 
 def finally_load_savegame():

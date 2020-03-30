@@ -25,23 +25,12 @@ from singularity.code.stats import stat
 from singularity.code.spec import SpecDataField, spec_field_effect
 
 
-TECH_RESET_EVENT = []
 TECH_RESEARCH_EVENT = []
-
-
-def register_on_tech_reset_handler(func):
-    TECH_RESET_EVENT.append(func)
-    return func
 
 
 def register_on_tech_researched_handler(func):
     TECH_RESEARCH_EVENT.append(func)
     return func
-
-
-def tech_reinitialized():
-    for handler in TECH_RESET_EVENT:
-        handler()
 
 
 class TechSpec(buyable.BuyableSpec):

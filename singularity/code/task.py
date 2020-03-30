@@ -26,7 +26,6 @@ from singularity.code import g, prerequisite, tech
 current_task_cache = {}
 
 
-@tech.register_on_tech_reset_handler
 @tech.register_on_tech_researched_handler
 def _clear_current_task_cache(*args, **kwargs):
     current_task_cache.clear()
