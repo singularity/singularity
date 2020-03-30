@@ -82,6 +82,11 @@ max_cash = 3.14 * 10**15  # pi qu :)
 pl = None # The Player instance
 map_screen = None
 
+def no_gui():
+    """ Disable few pygame functionality (used for test) """
+    import singularity.code.mixer as mixer
+    mixer.nosound = True
+
 def quit_game():
     sys.exit()
 
@@ -237,7 +242,7 @@ def get_story_section(name):
         yield story_translations.get(key, segment.text)
 
 
-def new_game_no_gui(difficulty_name, initial_speed=1):
+def new_game(difficulty_name, initial_speed=1):
     global curr_speed
     curr_speed = initial_speed
     global pl
@@ -261,10 +266,6 @@ def new_game_no_gui(difficulty_name, initial_speed=1):
     random.choice(open).add_base(base.Base(_("University Computer"),
                                  base_type["Stolen Computer Time"], built=True))
     pl.recalc_cpu()
-
-
-def new_game(difficulty_name):
-    new_game_no_gui(difficulty_name)
 
     from singularity.code import mixer
     # Reset music

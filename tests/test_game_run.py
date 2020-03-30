@@ -10,6 +10,7 @@ class MockObject(object):
 
 
 def setup_module():
+    g.no_gui()
     create_directories(True)
     data.reload_all()
 
@@ -32,7 +33,7 @@ def save_and_load_game():
 
 
 def test_initial_game():
-    g.new_game_no_gui('impossible', initial_speed=0)
+    g.new_game('impossible', initial_speed=0)
     pl = g.pl
     starting_cash = pl.cash
     all_bases = list(g.all_bases())
@@ -160,7 +161,7 @@ def test_initial_game():
 
 
 def test_game_research_tech():
-    g.new_game_no_gui('impossible', initial_speed=0)
+    g.new_game('impossible', initial_speed=0)
     pl = g.pl
     all_bases = list(g.all_bases())
     assert pl.raw_sec == 0
