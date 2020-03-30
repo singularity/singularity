@@ -571,7 +571,7 @@ msgstr ""
 
 msgctxt "[Facility Interconnection Switch] name"
 msgid "Facility Interconnection Switch"
-msgstr "Anlagenverbindungsschalter"
+msgstr "Anlagenvernetzung"
 
 msgctxt "[Fuel Cell] description"
 msgid ""
@@ -1109,7 +1109,7 @@ msgstr ""
 
 msgctxt "[Advanced Autonomous Vehicles] name"
 msgid "Advanced Autonomous Vehicles"
-msgstr "Fortgeschrittene autonome Fahrzeuge"
+msgstr "Erweiterte autonome Fahrzeuge"
 
 msgctxt "[Advanced Autonomous Vehicles] result"
 msgid ""
@@ -1185,7 +1185,7 @@ msgstr ""
 
 msgctxt "[Advanced Fuel Oxidation] name"
 msgid "Advanced Fuel Oxidation"
-msgstr "Fortgeschrittene Treibstoffoxidation"
+msgstr "Erweiterte Treibstoffoxidation"
 
 msgctxt "[Advanced Fuel Oxidation] result"
 msgid "I can now construct Solid Fuel Cells."
@@ -1203,7 +1203,7 @@ msgstr ""
 
 msgctxt "[Advanced Fusion Power] name"
 msgid "Advanced Fusion Power"
-msgstr "Verbesserte Fusionsenergie"
+msgstr "Erweiterte Fusionsenergie"
 
 msgctxt "[Advanced Fusion Power] result"
 msgid "I can now construct High-Energy Fusion Reactors for my bases."
@@ -1221,7 +1221,7 @@ msgstr ""
 
 msgctxt "[Advanced Heat Signature Reduction] name"
 msgid "Advanced Heat Signature Reduction"
-msgstr "Fortgeschrittene Wärmesignaturreduktion"
+msgstr "Erweiterte Wärmesignaturreduktion"
 
 msgctxt "[Advanced Heat Signature Reduction] result"
 msgid ""
@@ -1514,7 +1514,7 @@ msgstr "Autonome Fahrzeuge"
 
 msgctxt "[Autonomous Vehicles] result"
 msgid "I can now construct Undersea Labs."
-msgstr "Ich kann jetzt Unterseelabore und Zeitkapseln bauen."
+msgstr "Ich kann jetzt Unterseelabore bauen."
 
 msgctxt "[Cluster Networking] description"
 msgid ""
@@ -1536,7 +1536,7 @@ msgid ""
 "With my new knowledge of networking, I can now construct Facility "
 "Interconnection Switches."
 msgstr ""
-"Aufgrund meiner neuen Erkenntnisse kann ich nun Anlagenverbindungsschalter "
+"Aufgrund meiner neuen Erkenntnisse kann ich nun Anlagenvernetzungen "
 "bauen."
 
 msgctxt "[Corporate Identification] description"
@@ -1922,7 +1922,7 @@ msgid ""
 "With my newfound identities, I can now work Basic Jobs and rent space in "
 "both Storage Units and Datacenters."
 msgstr ""
-"Mit meinen neuen Identitäten kann ich jetzt grundlegende Arbeiten verrichten "
+"Mit meinen neuen Identitäten kann ich jetzt einfache Arbeiten verrichten "
 "und Räume in sowohl Lagereinheiten als auch Rechenzentren mieten."
 
 msgctxt "[Pressure Domes] description"
@@ -1941,7 +1941,7 @@ msgstr "Druckkuppeln"
 
 msgctxt "[Pressure Domes] result"
 msgid "I can now construct Large Undersea Labs."
-msgstr "Ich kann jetzt Große Unterseelabore bauen."
+msgstr "Ich kann jetzt große Unterseelabore bauen."
 
 msgctxt "[Project: Impossibility Theorem] description"
 msgid ""
