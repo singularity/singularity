@@ -371,6 +371,12 @@ class Dialog(text.Text):
                                self.handlers.get(constants.DOUBLECLICK, []))
         elif event.type == pygame.QUIT:
             raise SystemExit
+        elif event.type == pygame.VIDEOEXPOSE:
+            # If a window is dragged over the singularity window, we will get a VIDEOEXPOSE event
+            # to notify us to redraw the window.  The issue is easier to trigger with pygame 2
+            # than with pygame 1.
+            self.needs_redraw = True
+            return constants.NO_RESULT
 
         return self.call_handlers(handlers, event)
 
