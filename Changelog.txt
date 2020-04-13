@@ -2,7 +2,47 @@ Endgame: Singularity Changelog
 
 V1.XX (2020.XX.XX):
 
+GAME CONTENT CHANGES:
+- Add a new power state `Offline`, which applies to all bases
+  under construction until they can become `Active`.  Bases in
+  the `Offline` state currently behave like they are in the
+  `Sleep` state.  Based on an idea from Wuzzy2 (Closes: #239,
+  #245) (Xenega)
+- The thrift modification from locations now also applies to
+  CPU maintenance.  (Xenega)
+
 USER-VISIBLE CHANGES:
+- Enable the game window to be resized like any other window
+  e.g. by dragging in the edges of the game window.  (nthykier)
+- Reliably redraw the singularity screen if another window
+  was moved over the game.  When singularity was run with
+  pygame 2, this behaviour introduced visible artifacts until
+  something in the game triggered a complete redraw.
+  (nthykier)
+- Fix a number of bugs related to the Power state of bases
+  under construction - like being able to change the power
+  state of an incomplete base.  Thanks to Wuzzy2 for reporting
+  the issue.  (Closes: #238, related to: #239, #245) (Xenega)
+- Limit resolution input fields in the Options screen to digit
+  characters only.  Thanks to Wuzzy2 for reporting the issue.
+  (related to: #236) (Xenega)
+- Show the correct CPU maintenance cost for bases in the base
+  screen.  Thanks to Wuzzy2 for reporting the issue.
+  (Closes: #243) (Xenega)
+- Fix a crash with "ridiculously" small resolutions by setting
+  a minimum resolution (during startup and in the options
+  screen).  Thanks to Wuzzy2 for reporting the issue.
+  (Closes: #240) (Xenega)
+- Add an `OK` button next to the custom resolution fields in
+  the Options screen.  Previously, there was a confusingly named
+  button labelled `Custom`, which people mistook for a label
+  rather than a button.  Thanks to Wuzzy2 for reporting the
+  issue.  (Closes:  #236, #242) (Xenega)
+- Fix focus handling in the Knowledge screen, making keyboard
+  and mouse-wheel actions much more predictable.  Thanks to
+  Wuzzy2 for reporting the issue.  (Closes: #220) (Xenega)
+- Fix bug where choosing `Cancel` in the Options menu would not
+  roll back changes to the selected theme.  (nthykier)
 - Fix some minor color issues with the Nightmode theme, where
   the default color was used or text became unreadable.
   Thanks to Wuzzy2 for reporting the issue.  (Closes #225, #227)
@@ -10,7 +50,7 @@ USER-VISIBLE CHANGES:
 - Make room for longer tech names in the Knowledge screen to
   account for some tech names being significantly longer in
   translations.  Thanks to Wuzzy2 for reporting the issue.
-  (Closes #219) (nthykier)
+  (Closes #219) (nthykier, Xenega)
 - Fix a regression where changing the language in game would
   fail to update the tech names and descriptions.
   (Closes: #232) (nthykier)
@@ -43,6 +83,16 @@ USER-VISIBLE CHANGES:
   (Wuzzy2)
 - Fix bug where "Concepts" in the "Knowledge" menu was not
   translatable.  (Closes: #216)  (nthykier)
+
+OTHER CHANGES:
+- In debug mode (--debug), highlight which part of the screen
+  has been redrawn by drawning a box around it.  (nthykier)
+- Fix some internal bugs that lead to unnecessary redraws of
+  some of the text panels in the map screen.  (nthykier)
+
+
+Thanks to Wuzzy2 for filing bugs, play testing and moral support.
+
 
 v1.0b1 (2020.02.16):
 
