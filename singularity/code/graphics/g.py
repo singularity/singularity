@@ -45,7 +45,7 @@ screen_size = default_screen_size
 #if abstracted screen_size is a custom resolution
 real_screen_size = screen_size
 
-min_resolution = (800, 600)
+min_resolution = (100, 100)
 
 # Available resolutions
 resolutions = [
