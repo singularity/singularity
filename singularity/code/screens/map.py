@@ -879,11 +879,11 @@ https://github.com/singularity/singularity
         # are.
         # A similar system applies to the danger levels shown.
         normal = (self.suspicion_bar.color, None, False)
-        self.suspicion_bar.chunks = ("  ["+_("SUSPICION")+"]",)
-        self.suspicion_bar.styles = (normal,)
-        self.danger_bar.chunks = ("["+_("DETECT RATE")+"]",)
-        self.danger_bar.styles = (normal,)
-        
+        suspicion_bar_chunks = ["  ["+_("SUSPICION")+"]"]
+        suspicion_bar_styles = [normal]
+        danger_bar_chunks = ["["+_("DETECT RATE")+"]"]
+        danger_bar_styles = [normal]
+
         for group in g.pl.groups.values():
             suspicion = group.suspicion
             suspicion_color = gg.resolve_color_alias("danger_level_%d" 
@@ -903,14 +903,19 @@ https://github.com/singularity/singularity
                 suspicion_display = g.suspicion_to_detect_str(suspicion)
                 danger_display = g.danger_level_to_detect_str(danger_level)
 
-            self.suspicion_bar.chunks += (" " + group.name + u":\xA0", suspicion_display)
-            self.suspicion_bar.styles += (normal, (suspicion_color, None, False) )
+            suspicion_bar_chunks.extend((" " + group.name + u":\xA0", suspicion_display))
+            suspicion_bar_styles.extend((normal, (suspicion_color, None, False)))
         
-            self.danger_bar.chunks += (" " + group.name + u":\xA0", danger_display)
-            self.danger_bar.styles += (normal, (detects_color, None, False) )
-        
+            danger_bar_chunks.extend((" " + group.name + u":\xA0", danger_display))
+            danger_bar_styles.extend((normal, (detects_color, None, False)))
+
         self.suspicion_bar.visible = not g.pl.had_grace
+        self.suspicion_bar.chunks = tuple(suspicion_bar_chunks)
+        self.suspicion_bar.styles = tuple(suspicion_bar_styles)
+
         self.danger_bar.visible = not g.pl.had_grace
+        self.danger_bar.chunks = tuple(danger_bar_chunks)
+        self.danger_bar.styles = tuple(danger_bar_styles)
 
         for id, location_button in self.location_buttons.items():
             location = g.pl.locations[id]
