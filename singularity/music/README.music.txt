@@ -1,9 +1,8 @@
-Here is where you can place both the official music pack (available at:
+Here is where you can place the official music pack available at:
 
-   http://endgame-singularity.googlecode.com
    https://github.com/singularity/singularity-music
 
-and linked to at the official website:
+And also at the official website:
 
    http://emhsoft.com/singularity
 
@@ -15,7 +14,9 @@ If you obtained Endgame: Singularity as a cloned git repository, you
 can also get the official music pack by fetching its singularity-music
 submodule. From the singularity root directory, run:
 
-git submodule update --init music/singularity-music
+    git submodule update --init singularity/music/singularity-music
+
+(or simply `git submodule update --init singularity-music` from this directory)
 
 There's also available a lossless version of the soundtrack in FLAC
 format, in case you want to generate the Ogg Vorbis files yourself:
@@ -23,7 +24,7 @@ format, in case you want to generate the Ogg Vorbis files yourself:
    https://github.com/singularity/singularity-music-lossless-original
    https://github.com/singularity/singularity-music-lossless-extended
 
-Both also available as git submodules:
+Both also available as git submodules. From repository root:
 
-git submodule update --init music/singularity-music-lossless-original
-git submodule update --init music/singularity-music-lossless-extended
+    git submodule update --init singularity/music/singularity-music-lossless-original
+    git submodule update --init singularity/music/singularity-music-lossless-extended
