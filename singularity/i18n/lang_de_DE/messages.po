@@ -847,7 +847,7 @@ msgstr "&Benutzerdefiniert:"
 
 #: screens/options.py:279
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: screens/options.py:285
 msgid "&Fullscreen:"
@@ -932,7 +932,7 @@ msgstr "Baukosten:"
 
 #: base.py:211
 msgid "Offline"
-msgstr ""
+msgstr "Offline"
 
 #: base.py:212
 msgid "Active"
