@@ -413,6 +413,7 @@ class VideoPane(widget.Widget):
     def set_resolution(self, value):
         if gg.screen_size != value:
             gg.set_screen_size(value)
+            gg.set_mode()
             dialog.Dialog.top.needs_resize = True
 
     def update_resolution(self, list_pos):
