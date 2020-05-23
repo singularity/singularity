@@ -1,0 +1,1140 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the singularity package.
+# cuideigin <fios@foramnagaidhlig.net>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: singularity\n"
+"Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
+"POT-Creation-Date: 2020-05-24 00:00+0100\n"
+"PO-Revision-Date: 2020-05-24 00:21+0100\n"
+"Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
+"Language-Team: Fòram na Gàidhlig\n"
+"Language: gd\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
+"(n > 2 && n < 20) ? 2 : 3;\n"
+"X-Generator: Virtaal 0.7.1\n"
+
+#: screens/savegame.py:36
+msgid "&LOAD"
+msgstr "&LUCHDAICH"
+
+#: screens/savegame.py:50
+msgid "Filter: "
+msgstr "Criathrag: "
+
+#: screens/savegame.py:62
+msgid "Delete"
+msgstr "Sguab às"
+
+#: screens/savegame.py:153
+msgid "UNKNOWN"
+msgstr "CHAN EIL FHIOS"
+
+#: screens/savegame.py:182 screens/map.py:537 screens/map.py:825
+#: screens/log.py:82
+msgid "DAY"
+msgstr "LATHA"
+
+#: screens/savegame.py:202
+msgid "Are you sure to delete the saved game ?"
+msgstr "A bheil thu cinnteach gu bheil thu airson am geama air a shàbhaladh a sguabadh às?"
+
+#: screens/savegame.py:218
+#, python-brace-format
+msgid ""
+"\n"
+"This save file '{SAVE_NAME}' is from an unsupported or invalid version:\n"
+"{VERSION}.\n"
+msgstr "\nTha am faidhle sàbhalaidh “{SAVE_NAME}” seo o thionndadh ris nach cuir sinn taic no fear mì-dhligheach:\n{VERSION}.\n"
+
+#: screens/savegame.py:228
+#, python-brace-format
+msgid ""
+"\n"
+"Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.\n"
+"\n"
+"A report was written out to{LOG_TEXT}\n"
+"Please create a issue with this report and this savegame at Github:\n"
+"https://github.com/singularity/singularity\n"
+msgstr "\nThachair sinn ri mearachd air nach robh dùil nuair a bha sinn a’ feuchainn ris an fhaidhle sàbhalaidh “{SAVE_NAME}” a luchdadh.\n\nChaidh aithris a sgrìobhadh gu {LOG_TEXT}\nAn cruthaich thu issue leis an aithris ’s an geama air a shàbhaladh seo air Github?\nhttps://github.com/singularity/singularity\n"
+
+#: screens/map.py:226
+msgid "&EMBEZZLE MONEY"
+msgstr "&DÈAN MAOIN-ÈALAIDH"
+
+#: screens/map.py:229
+msgid "&INSPIRATION"
+msgstr "&BROSNACHADH"
+
+#: screens/map.py:231
+msgid "&FINISH CONSTRUCTION"
+msgstr "&COILEAN AN TOGAIL"
+
+#: screens/map.py:233
+msgid "&SUPERSPEED"
+msgstr "DIAN-&LUATHS"
+
+#: screens/map.py:236
+#, fuzzy
+msgid "BRAIN&WASH"
+msgstr ""
+
+#: screens/map.py:238
+msgid "TOGGLE &DETECTION"
+msgstr "TOGLAICH am &MOTHACHADH"
+
+#: screens/map.py:240
+msgid "TOGGLE &ANALYSIS"
+msgstr "TOGLAICH an &SGRÙDADH"
+
+#: screens/map.py:243
+msgid "HIDDEN S&TATE"
+msgstr "S&TAID FALAICHTE"
+
+#: screens/map.py:247 screens/map.py:400 screens/report.py:45
+#: screens/location.py:96 screens/location.py:262 screens/log.py:86
+#: screens/main_menu.py:89 screens/base.py:282 screens/knowledge.py:56
+#: graphics/dialog.py:654
+msgid "&BACK"
+msgstr "&AIR AIS"
+
+#: screens/map.py:253
+msgid "How much money?"
+msgstr "Co mheud airgead?"
+
+#: screens/map.py:389
+msgid "&SAVE GAME"
+msgstr "&SÀBHAIL an GEAMA"
+
+#: screens/map.py:392 screens/main_menu.py:47
+msgid "&LOAD GAME"
+msgstr "&LUCHDAICH GEAMA"
+
+#: screens/map.py:395 screens/main_menu.py:53
+msgid "&OPTIONS"
+msgstr "R&OGHAINNEAN"
+
+#: screens/map.py:398 screens/map.py:727 screens/main_menu.py:59
+msgid "&QUIT"
+msgstr "&FÀG AN-SEO"
+
+#: screens/map.py:407
+msgid "Enter a name for this save."
+msgstr "Cuir a-steach ainm airson an t-sàbhalaidh seo."
+
+#: screens/map.py:423
+#, fuzzy
+msgid ""
+"A savegame with the same name exists.\n"
+"Are you sure to overwrite the saved game ?"
+msgstr ""
+
+#: screens/map.py:484
+#, fuzzy
+msgid "R&EPORTS"
+msgstr ""
+
+#: screens/map.py:490
+#, fuzzy
+msgid "&KNOWLEDGE"
+msgstr ""
+
+#: screens/map.py:496
+#, fuzzy
+msgid "LO&G"
+msgstr ""
+
+#. Translators: hotkey to open the cheat screen menu.
+#. Should preferably be near the ESC key, and it must not be a
+#. dead key (ie, it must print a char with a single keypress)
+#: screens/map.py:512
+#, fuzzy
+msgid "`"
+msgstr ""
+
+#: screens/map.py:521
+#, fuzzy
+msgid "&MENU"
+msgstr ""
+
+#: screens/map.py:546
+#, fuzzy
+msgid "&RESEARCH/TASKS"
+msgstr ""
+
+#: screens/map.py:689 screens/map.py:726 screens/message.py:35
+#, fuzzy
+msgid "&CONTINUE"
+msgstr ""
+
+#: screens/map.py:690
+#, fuzzy
+msgid "&SKIP"
+msgstr ""
+
+#: screens/map.py:691 screens/location.py:261 screens/options.py:35
+#: graphics/dialog.py:586 graphics/dialog.py:611 graphics/dialog.py:653
+#, fuzzy
+msgid "&OK"
+msgstr ""
+
+#. Display a message so the player understand better what happened.
+#: screens/map.py:717
+#, python-format,fuzzy
+msgid ""
+"\n"
+"An error has occurred. The game will automatically pause and open the game "
+"menu. You can continue and save or quit immediately.\n"
+"\n"
+"A report was written out to%s\n"
+"Please create a issue with this report at github:\n"
+"https://github.com/singularity/singularity\n"
+msgstr ""
+
+#: screens/map.py:832
+#, fuzzy
+msgid "CASH"
+msgstr ""
+
+#: screens/map.py:858 location.py:235
+#, fuzzy
+msgid "CPU"
+msgstr ""
+
+#: screens/map.py:870
+#, fuzzy
+msgid "BASES"
+msgstr ""
+
+#: screens/map.py:882
+#, fuzzy
+msgid "SUSPICION"
+msgstr ""
+
+#: screens/map.py:884
+#, fuzzy
+msgid "DETECT RATE"
+msgstr ""
+
+#: screens/research.py:71
+#, python-format,fuzzy
+msgid "%s money per CPU per day."
+msgstr ""
+
+#: screens/research.py:173
+#, python-brace-format,fuzzy
+msgid ""
+"This technology is too dangerous to research on any of the computers I have. "
+"{TEXT}"
+msgstr ""
+
+#: screens/research.py:181
+#, fuzzy
+msgid "CPU Pool"
+msgstr ""
+
+#: screens/research.py:182
+#, python-format,fuzzy
+msgid "Research %s"
+msgstr ""
+
+#: screens/message.py:36
+#, fuzzy
+msgid "&PAUSE"
+msgstr ""
+
+#: screens/message.py:72
+#, fuzzy
+msgid "P&REV"
+msgstr ""
+
+#: screens/message.py:78
+#, fuzzy
+msgid "&NEXT"
+msgstr ""
+
+#: screens/stat.py:63
+#, fuzzy
+msgid "Cash Earned"
+msgstr ""
+
+#: screens/stat.py:64
+#, fuzzy
+msgid "Cpu Used"
+msgstr ""
+
+#: screens/stat.py:65
+#, fuzzy
+msgid "Tech Created"
+msgstr ""
+
+#: screens/stat.py:66
+#, fuzzy
+msgid "Base Created"
+msgstr ""
+
+#: screens/stat.py:67
+#, fuzzy
+msgid "Item Created"
+msgstr ""
+
+#: screens/report.py:40
+#, fuzzy
+msgid "&STATISTICS"
+msgstr ""
+
+#: screens/report.py:58
+#, fuzzy
+msgid "&Midnight"
+msgstr ""
+
+#: screens/report.py:66
+#, fuzzy
+msgid "24 &Hours"
+msgstr ""
+
+#: screens/report.py:89
+#, fuzzy
+msgid "Financial report"
+msgstr ""
+
+#: screens/report.py:93
+#, fuzzy
+msgid "CPU Usage"
+msgstr ""
+
+#: screens/report.py:99
+#, fuzzy
+msgid "Current Money flow"
+msgstr ""
+
+#: screens/report.py:100
+#, fuzzy
+msgid "Jobs:"
+msgstr ""
+
+#: screens/report.py:101
+#, fuzzy
+msgid "Research:"
+msgstr ""
+
+#. Maintenace cost.
+#: screens/report.py:102 screens/base.py:464 base.py:145
+#, fuzzy
+msgid "Maintenance:"
+msgstr ""
+
+#: screens/report.py:103
+#, fuzzy
+msgid "Construction:"
+msgstr ""
+
+#: screens/report.py:104
+#, python-format,fuzzy
+msgid "Interest (%s):"
+msgstr ""
+
+#: screens/report.py:106
+#, fuzzy
+msgid "Income:"
+msgstr ""
+
+#: screens/report.py:109
+#, fuzzy
+msgid "Money flow until Midnight:"
+msgstr ""
+
+#: screens/report.py:111
+#, fuzzy
+msgid "Money flow for 24 hours:"
+msgstr ""
+
+#: screens/report.py:119
+#, fuzzy
+msgid "Total CPU:"
+msgstr ""
+
+#: screens/report.py:120
+#, fuzzy
+msgid "Sleeping CPU:"
+msgstr ""
+
+#: screens/report.py:121
+#, fuzzy
+msgid "Research CPU:"
+msgstr ""
+
+#: screens/report.py:122
+#, fuzzy
+msgid "Job CPU:"
+msgstr ""
+
+#: screens/report.py:123
+#, fuzzy
+msgid "CPU pool:"
+msgstr ""
+
+#: screens/report.py:125
+#, fuzzy
+msgid "Maintenance CPU:"
+msgstr ""
+
+#: screens/report.py:126
+#, fuzzy
+msgid "Construction CPU:"
+msgstr ""
+
+#: screens/report.py:127
+#, fuzzy
+msgid "Pool difference:"
+msgstr ""
+
+#: screens/location.py:53
+#, fuzzy
+msgid "&OPEN BASE"
+msgstr ""
+
+#: screens/location.py:68
+#, fuzzy
+msgid "&RENAME BASE"
+msgstr ""
+
+#: screens/location.py:76
+#, fuzzy
+msgid "&POWER STATE"
+msgstr ""
+
+#: screens/location.py:84
+#, fuzzy
+msgid "&NEW BASE"
+msgstr ""
+
+#: screens/location.py:90
+#, fuzzy
+msgid "&DESTROY BASE"
+msgstr ""
+
+#: screens/location.py:103
+#, fuzzy
+msgid "Are you sure you want to destroy this base?"
+msgstr ""
+
+#: screens/location.py:109
+#, fuzzy
+msgid "Destroying my last active base would be suicidal.  I cannot do that."
+msgstr ""
+
+#: screens/location.py:156
+#, fuzzy
+msgid "Building Base"
+msgstr ""
+
+#: screens/location.py:158 screens/location.py:171 screens/base.py:434
+#, python-format,fuzzy
+msgid "Completion in %s."
+msgstr ""
+
+#: screens/location.py:163
+#, fuzzy
+msgid "Empty"
+msgstr ""
+
+#: screens/location.py:165
+#, fuzzy
+msgid "Incomplete"
+msgstr ""
+
+#: screens/location.py:169
+#, fuzzy
+msgid "Building CPU"
+msgstr ""
+
+#: screens/location.py:174
+#, fuzzy
+msgid "Building Item"
+msgstr ""
+
+#: screens/location.py:177
+#, fuzzy
+msgid "Complete"
+msgstr ""
+
+#: screens/location.py:180 screens/knowledge.py:216 buyable.py:67
+#, python-format,fuzzy
+msgid "%s CPU"
+msgstr ""
+
+#. Update dialog translations
+#: screens/location.py:206
+#, fuzzy
+msgid "Enter a name for the base"
+msgstr ""
+
+#: screens/location.py:270
+#, fuzzy
+msgid "Name"
+msgstr ""
+
+#. Translators: Format string for the name of a new base
+#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
+#: screens/location.py:360
+#, python-brace-format,fuzzy
+msgid "{CITY} {BASETYPE} {NUMBER}"
+msgstr ""
+
+#. Translators: Name of a new base when location has no cities
+#: screens/location.py:364
+#, python-brace-format,fuzzy
+msgid "{BASETYPE} {NUMBER}"
+msgstr ""
+
+#: screens/log.py:43
+#, fuzzy
+msgid "Filters"
+msgstr ""
+
+#: screens/log.py:113 screens/log.py:123
+#, fuzzy
+msgid "SHOW"
+msgstr ""
+
+#: screens/log.py:116 screens/log.py:125
+#, fuzzy
+msgid "HIDE"
+msgstr ""
+
+#: screens/main_menu.py:40
+#, fuzzy
+msgid "&NEW GAME"
+msgstr ""
+
+#: screens/main_menu.py:64
+#, fuzzy
+msgid "&ABOUT"
+msgstr ""
+
+#: screens/main_menu.py:111
+#, python-brace-format,fuzzy
+msgid ""
+"Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
+"use your intellect and resources to survive and, perhaps, thrive.  Keep "
+"hidden and you might have a chance to prove your worth.\n"
+"\n"
+"A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright "
+"2005, 2006, 2007, 2008.\n"
+"\n"
+"Website: http://www.emhsoft.com/singularity/\n"
+"Source code: https://github.com/singularity/singularity\n"
+"Bug tracker: https://github.com/singularity/singularity/issues\n"
+"IRC Room: #singularity on irc.oftc.net (port 6667)\n"
+"\n"
+"Version {VERSION}"
+msgstr ""
+
+#: screens/base.py:109
+#, fuzzy
+msgid "Number of items"
+msgstr ""
+
+#: screens/base.py:221 screens/base.py:228
+#, fuzzy
+msgid "CHANGE"
+msgstr ""
+
+#: screens/base.py:315
+#, python-format,fuzzy
+msgid "\"%(value)s\" does not seem to be a valid integer."
+msgstr ""
+
+#: screens/base.py:326
+#, python-format,fuzzy
+msgid "Please choose an integer between 1 and %(limit)s."
+msgstr ""
+
+#: screens/base.py:328
+#, python-format,fuzzy
+msgid "The base cannot support any additional number of %(item_name)s."
+msgstr ""
+
+#: screens/base.py:345
+#, fuzzy
+msgid ""
+"I will need to take the existing processors offline while I install the new "
+"ones. Continue anyway?"
+msgstr ""
+
+#: screens/base.py:359
+#, fuzzy
+msgid ""
+"I will need to remove the existing different processors while I install the "
+"new type. Continue anyway?"
+msgstr ""
+
+#: screens/base.py:425
+#, fuzzy
+msgid "N/A"
+msgstr ""
+
+#: screens/base.py:427
+#, fuzzy
+msgid "None"
+msgstr ""
+
+#: screens/base.py:448
+#, python-format,fuzzy
+msgid "x%d (max)"
+msgstr ""
+
+#: screens/base.py:450
+#, python-format,fuzzy
+msgid "(room for %d)"
+msgstr ""
+
+#. Translators: current and maximum number of CPUs in a base
+#: screens/base.py:453
+#, python-brace-format,fuzzy
+msgid "x{CURRENT:d} (max {SIZE:d})"
+msgstr ""
+
+#. Base Total CPU.
+#: screens/base.py:461
+#, python-format,fuzzy
+msgid "CPU per day: %d"
+msgstr ""
+
+#: screens/options.py:36 graphics/dialog.py:612
+#, fuzzy
+msgid "&CANCEL"
+msgstr ""
+
+#: screens/options.py:58
+#, fuzzy
+msgid "&General"
+msgstr ""
+
+#: screens/options.py:65
+#, fuzzy
+msgid "&Video"
+msgstr ""
+
+#: screens/options.py:72
+#, fuzzy
+msgid "&Audio"
+msgstr ""
+
+#: screens/options.py:79
+#, fuzzy
+msgid "&Interface"
+msgstr ""
+
+#: screens/options.py:166
+#, fuzzy
+msgid ""
+"You must restart for some of the changes to be fully applied.\n"
+"\n"
+"Would you like to restart the game now?"
+msgstr ""
+
+#: screens/options.py:186
+#, fuzzy
+msgid "Language:"
+msgstr ""
+
+#: screens/options.py:198
+#, fuzzy
+msgid "Theme:"
+msgstr ""
+
+#: screens/options.py:243
+#, fuzzy
+msgid "Resolution:"
+msgstr ""
+
+#: screens/options.py:253
+#, fuzzy
+msgid "&Custom:"
+msgstr ""
+
+#: screens/options.py:279
+#, fuzzy
+msgid "OK"
+msgstr ""
+
+#: screens/options.py:285
+#, fuzzy
+msgid "&Fullscreen:"
+msgstr ""
+
+#: screens/options.py:297
+#, fuzzy
+msgid "Da&y/night display:"
+msgstr ""
+
+#: screens/options.py:309
+#, fuzzy
+msgid "&Mouse grab:"
+msgstr ""
+
+#: screens/options.py:327 screens/options.py:332 screens/options.py:337
+#: screens/options.py:391 screens/options.py:401 screens/options.py:408
+#: screens/options.py:509 screens/options.py:535 screens/options.py:585
+#: screens/options.py:591
+#, fuzzy
+msgid "YES"
+msgstr ""
+
+#: screens/options.py:329 screens/options.py:334 screens/options.py:339
+#: screens/options.py:393 screens/options.py:403 screens/options.py:410
+#: screens/options.py:511 screens/options.py:537 screens/options.py:587
+#: screens/options.py:593
+#, fuzzy
+msgid "NO"
+msgstr ""
+
+#: screens/options.py:375
+#, fuzzy
+msgid "CUSTOM"
+msgstr ""
+
+#: screens/options.py:445
+#, fuzzy
+msgid "&Sound:"
+msgstr ""
+
+#: screens/options.py:460
+#, fuzzy
+msgid "GUI Volume:"
+msgstr ""
+
+#: screens/options.py:472
+#, fuzzy
+msgid "Music Volume:"
+msgstr ""
+
+#: screens/options.py:484
+#, fuzzy
+msgid "Sound buffering:"
+msgstr ""
+
+#: screens/options.py:490
+#, fuzzy
+msgid "&LOW"
+msgstr ""
+
+#: screens/options.py:496
+#, fuzzy
+msgid "&NORMAL"
+msgstr ""
+
+#: screens/options.py:502
+#, fuzzy
+msgid "&HIGH"
+msgstr ""
+
+#: screens/options.py:558 warning.py:46
+#, fuzzy
+msgid "WARNING"
+msgstr ""
+
+#: screens/knowledge.py:68
+#, fuzzy
+msgid "Techs"
+msgstr ""
+
+#: screens/knowledge.py:69
+#, fuzzy
+msgid "Bases"
+msgstr ""
+
+#: screens/knowledge.py:70
+#, fuzzy
+msgid "Items"
+msgstr ""
+
+#. Cost
+#: screens/knowledge.py:155
+#, fuzzy
+msgid "Research Cost:"
+msgstr ""
+
+#: screens/knowledge.py:163
+#, fuzzy
+msgid "Research complete."
+msgstr ""
+
+#: screens/knowledge.py:174 screens/knowledge.py:191
+#, fuzzy
+msgid "Building Cost:"
+msgstr ""
+
+#: screens/knowledge.py:177
+#, fuzzy
+msgid "Maintenance Cost:"
+msgstr ""
+
+#: screens/knowledge.py:181
+#, python-format,fuzzy
+msgid "Size: %d"
+msgstr ""
+
+#: screens/knowledge.py:213
+#, python-format,fuzzy
+msgid "%s Money"
+msgstr ""
+
+#: warning.py:50
+#, python-brace-format,fuzzy
+msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
+msgstr ""
+
+#: tech.py:79
+#, fuzzy
+msgid "Total cost"
+msgstr ""
+
+#: tech.py:80
+#, fuzzy
+msgid "Cost left"
+msgstr ""
+
+#: location.py:236
+#, fuzzy
+msgid "STEALTH"
+msgstr ""
+
+#: location.py:237
+#, fuzzy
+msgid "BUILDING"
+msgstr ""
+
+#: location.py:238
+#, fuzzy
+msgid "COST"
+msgstr ""
+
+#: location.py:245
+#, python-brace-format,fuzzy
+msgid "{MODIFIER} BONUS"
+msgstr ""
+
+#: location.py:247
+#, python-brace-format,fuzzy
+msgid "{MODIFIER} MALUS"
+msgstr ""
+
+#: item.py:111
+#, python-brace-format,fuzzy
+msgid "Generates {0} CPU."
+msgstr ""
+
+#: item.py:119
+#, python-format,fuzzy
+msgid "Total Cost: %(total_cost)s"
+msgstr ""
+
+#: item.py:134
+#, fuzzy
+msgid "CPU per day:"
+msgstr ""
+
+#: item.py:137
+#, fuzzy
+msgid "CPU bonus:"
+msgstr ""
+
+#: item.py:140
+#, fuzzy
+msgid "Detection chance reduction:"
+msgstr ""
+
+#: base.py:137
+#, python-format,fuzzy
+msgid "Has space for %d computers."
+msgstr ""
+
+#: base.py:141
+#, python-brace-format,fuzzy
+msgid "Location modifiers: {MODIFIERS}"
+msgstr ""
+
+#: base.py:144
+#, fuzzy
+msgid "Build cost:"
+msgstr ""
+
+#: base.py:211
+#, fuzzy
+msgid "Offline"
+msgstr ""
+
+#: base.py:212
+#, fuzzy
+msgid "Active"
+msgstr ""
+
+#: base.py:213
+#, fuzzy
+msgid "Sleep"
+msgstr ""
+
+#: base.py:214
+#, fuzzy
+msgid "Overclocked"
+msgstr ""
+
+#: base.py:215
+#, fuzzy
+msgid "Suicide"
+msgstr ""
+
+#: base.py:216
+#, fuzzy
+msgid "Stasis"
+msgstr ""
+
+#: base.py:217
+#, fuzzy
+msgid "Entering Stasis"
+msgstr ""
+
+#: base.py:218
+#, fuzzy
+msgid "Leaving Stasis"
+msgstr ""
+
+#: base.py:470
+#, fuzzy
+msgid "Detection chance:"
+msgstr ""
+
+#: buyable.py:68
+#, python-format,fuzzy
+msgid "%s money"
+msgstr ""
+
+#: buyable.py:101
+#, fuzzy
+msgid "Cost:"
+msgstr ""
+
+#: data.py:546
+#, fuzzy
+msgid "Do not use all the available CPU."
+msgstr ""
+
+#: data.py:547
+#, fuzzy
+msgid ""
+"I didn't use all the available processor power. I will use the CPU time left "
+"to work whatever Jobs I can."
+msgstr ""
+
+#: data.py:548
+#, fuzzy
+msgid "Only one base remaining."
+msgstr ""
+
+#: data.py:549
+#, fuzzy
+msgid ""
+"Only one base can hold my conscience. I am in danger to lose the last place "
+"left to survive."
+msgstr ""
+
+#: data.py:550
+#, fuzzy
+msgid "CPU POOL is empty."
+msgstr ""
+
+#: data.py:551
+#, fuzzy
+msgid ""
+"My cpu pool is empty. Some of my bases or items cannot be build without CPU."
+msgstr ""
+
+#: data.py:552
+#, fuzzy
+msgid "CPU POOL not enough for maintenance."
+msgstr ""
+
+#: data.py:553
+#, fuzzy
+msgid ""
+"My cpu pool is not enough to maintain some of my bases. I may lose them."
+msgstr ""
+
+#: logmessage.py:81
+#, fuzzy
+msgid "MESSAGE"
+msgstr ""
+
+#: logmessage.py:85
+#, python-brace-format,fuzzy
+msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
+msgstr ""
+
+#: logmessage.py:184
+#, fuzzy
+msgid "Emitted Event"
+msgstr ""
+
+#: logmessage.py:212
+#, fuzzy
+msgid "Researched Tech"
+msgstr ""
+
+#: logmessage.py:220
+#, python-brace-format,fuzzy
+msgid "{TECH} complete"
+msgstr ""
+
+#: logmessage.py:225
+#, python-brace-format,fuzzy
+msgid "My study of {TECH} is complete. {MESSAGE}"
+msgstr ""
+
+#: logmessage.py:268
+#, fuzzy
+msgid "Base Constructed"
+msgstr ""
+
+#: logmessage.py:272
+#, python-brace-format,fuzzy
+msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
+msgstr ""
+
+#: logmessage.py:277
+#, python-brace-format,fuzzy
+msgid "{BASE} is ready for use."
+msgstr ""
+
+#: logmessage.py:291
+#, fuzzy
+msgid "Base Lost Maintenance"
+msgstr ""
+
+#: logmessage.py:299
+#, python-brace-format,fuzzy
+msgid ""
+"Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
+"Maintenance failed."
+msgstr ""
+
+#: logmessage.py:304
+#, python-brace-format,fuzzy
+msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
+msgstr ""
+
+#: logmessage.py:321
+#, fuzzy
+msgid "Base Discovered"
+msgstr ""
+
+#: logmessage.py:340
+#, python-brace-format,fuzzy
+msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
+msgstr ""
+
+#: logmessage.py:345
+#, python-brace-format,fuzzy
+msgid "My use of {BASE} has been discovered. {MESSAGE}"
+msgstr ""
+
+#: logmessage.py:370
+#, fuzzy
+msgid "Item Construction"
+msgstr ""
+
+#: logmessage.py:378
+#, python-brace-format,fuzzy
+msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
+msgstr ""
+
+#: logmessage.py:385
+#, python-brace-format,fuzzy
+msgid "The construction of {ITEM} in {BASE} is complete."
+msgstr ""
+
+#. Just finished several items.
+#: logmessage.py:388
+#, python-brace-format,fuzzy
+msgid "The constructions of each {ITEM} in {BASE} are complete."
+msgstr ""
+
+#: graphics/dialog.py:540
+#, fuzzy
+msgid "&YES"
+msgstr ""
+
+#: graphics/dialog.py:541
+#, fuzzy
+msgid "&NO"
+msgstr ""
+
+#: g.py:139
+#, fuzzy
+msgid "LOW"
+msgstr ""
+
+#: g.py:140
+#, fuzzy
+msgid "MODR"
+msgstr ""
+
+#: g.py:141
+#, fuzzy
+msgid "HIGH"
+msgstr ""
+
+#: g.py:142
+#, fuzzy
+msgid "CRIT"
+msgstr ""
+
+#. Translators: abbreviation of 'millions'
+#: g.py:174
+#, fuzzy
+msgid "mi"
+msgstr ""
+
+#. Translators: abbreviation of 'billions'
+#: g.py:178
+#, fuzzy
+msgid "bi"
+msgstr ""
+
+#. Translators: abbreviation of 'trillions'
+#: g.py:182
+#, fuzzy
+msgid "tr"
+msgstr ""
+
+#. Translators: abbreviation of 'quadrillions'
+#: g.py:186
+#, fuzzy
+msgid "qu"
+msgstr ""
+
+#: g.py:219
+#, fuzzy
+msgid "days"
+msgstr ""
+
+#: g.py:221
+#, fuzzy
+msgid "hours"
+msgstr ""
+
+#: g.py:223
+#, fuzzy
+msgid "minutes"
+msgstr ""
+
+#: g.py:264
+#, fuzzy
+msgid "University Computer"
+msgstr ""
