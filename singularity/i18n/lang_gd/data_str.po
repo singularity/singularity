@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-21 09:52+0200\n"
-"PO-Revision-Date: 2020-05-24 00:09+0100\n"
+"PO-Revision-Date: 2020-05-24 12:24+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -18,6 +18,7 @@ msgstr ""
 "(n > 2 && n < 20) ? 2 : 3;\n"
 "X-Generator: Virtaal 0.7.1\n"
 
+#, fuzzy
 msgctxt "[Covert Base] description"
 msgid ""
 "This unique base is designed to blend into the scenery, while needing little"
@@ -25,42 +26,48 @@ msgid ""
 " just in case."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Covert Base] flavor_list"
 msgid "Hideout | Hideaway | Bunker | Covert Base"
 msgstr ""
 
 msgctxt "[Covert Base] name"
 msgid "Hideout"
-msgstr ""
+msgstr "Taigh-falaich"
 
+#, fuzzy
 msgctxt "[Datacenter] description"
 msgid ""
 "Buy processor time from a company that concentrates on raw processing power."
 " I will need a fake ID for some of the paperwork."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Datacenter] flavor_list"
 msgid "Datacenter | Data Center | Premium Hosting"
 msgstr ""
 
 msgctxt "[Datacenter] name"
 msgid "Datacenter"
-msgstr ""
+msgstr "Ionad dàta"
 
+#, fuzzy
 msgctxt "[Large Undersea Lab] description"
 msgid ""
 "This experimental base is similar to the regular underwater lab, but larger,"
 " giving more room for experiments."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Large Undersea Lab] flavor_list"
 msgid "Dome | Large Undersea Lab"
 msgstr ""
 
 msgctxt "[Large Undersea Lab] name"
 msgid "Large Undersea Lab"
-msgstr ""
+msgstr "Deuchainn-lann mhòr fon chuan"
 
+#, fuzzy
 msgctxt "[Large Warehouse] description"
 msgid ""
 "Rent a large warehouse someplace out of the way. I will need a fake company "
@@ -68,70 +75,80 @@ msgid ""
 "needs will take some time."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Large Warehouse] flavor_list"
 msgid "Large Warehouse | Large Storage"
 msgstr ""
 
 msgctxt "[Large Warehouse] name"
 msgid "Large Warehouse"
-msgstr ""
+msgstr "Taigh-stòrais mòr"
 
+#, fuzzy
 msgctxt "[Lunar Facility] description"
 msgid ""
 "This base is a series of caverns dug into the Moon's surface. Due to the "
 "lack of neighbors, this base is quite large."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Lunar Facility] flavor_list"
 msgid "Dome | Lunar Facility | Lunar Base"
 msgstr ""
 
 msgctxt "[Lunar Facility] name"
 msgid "Lunar Facility"
-msgstr ""
+msgstr "Ionad gealaich"
 
+#, fuzzy
 msgctxt "[Reality Bubble] description"
 msgid ""
 "This base is outside the Universe itself, making it safe to conduct "
 "experiments that may destroy reality."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Reality Bubble] flavor_list"
 msgid "Reality Bubble | Existence"
 msgstr ""
 
 msgctxt "[Reality Bubble] name"
 msgid "Reality Bubble"
-msgstr ""
+msgstr "Builgean fìorachd"
 
+#, fuzzy
 msgctxt "[Scientific Outpost] description"
 msgid ""
 "This base is placed as far from Earth as practical, providing a safer "
 "location to conduct some of my more dangerous experiments."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Scientific Outpost] flavor_list"
 msgid "Satellite | Outpost | Scientific Outpost"
 msgstr ""
 
 msgctxt "[Scientific Outpost] name"
 msgid "Scientific Outpost"
-msgstr ""
+msgstr "Ionad saidheansail"
 
+#, fuzzy
 msgctxt "[Server Access] description"
 msgid ""
 "Buy processor time from one of several companies. I cannot build anything in"
 " this base, and it only contains a single computer."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Server Access] flavor_list"
 msgid "Dedicated Server | Node Lease | Hosting"
 msgstr ""
 
 msgctxt "[Server Access] name"
 msgid "Server Access"
-msgstr ""
+msgstr "Inntrigeadh air frithealaiche"
 
+#, fuzzy
 msgctxt "[Small Warehouse] description"
 msgid ""
 "Rent a small warehouse someplace out of the way. I will need a good fake ID "
@@ -139,56 +156,64 @@ msgid ""
 "needs will take some time."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Small Warehouse] flavor_list"
 msgid "Office Lease | Small Warehouse | Small Storage"
 msgstr ""
 
 msgctxt "[Small Warehouse] name"
 msgid "Small Warehouse"
-msgstr ""
+msgstr "Taigh-stòrais beag"
 
+#, fuzzy
 msgctxt "[Stolen Computer Time] description"
 msgid ""
 "Take over a random computer. I cannot build anything in this base, and it "
 "only contains a single slow computer. Detection chance is also rather high."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Stolen Computer Time] flavor"
 msgid "PC Daemon"
 msgstr ""
 
 msgctxt "[Stolen Computer Time] name"
 msgid "Stolen Computer Time"
-msgstr ""
+msgstr "Goid ùine coimpiutair"
 
+#, fuzzy
 msgctxt "[Storage Unit] description"
 msgid ""
 "Rent a small closed room from a storage company. I will need a fake ID for "
 "some of the paperwork ."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Storage Unit] flavor_list"
 msgid "Garage Rental | Furniture Storage | Self-Storage"
 msgstr ""
 
 msgctxt "[Storage Unit] name"
 msgid "Storage Unit"
-msgstr ""
+msgstr "Ionad stòrais"
 
+#, fuzzy
 msgctxt "[Time Capsule] description"
 msgid ""
 "This base consists of nothing more than a small computer and a satellite "
 "link. It is nearly undetectable."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Time Capsule] flavor_list"
 msgid "Time Capsule | Capsule"
 msgstr ""
 
 msgctxt "[Time Capsule] name"
 msgid "Time Capsule"
-msgstr ""
+msgstr "Capsail-ama"
 
+#, fuzzy
 msgctxt "[Undersea Lab] description"
 msgid ""
 "This experimental base is designed to be constructed on the ocean floor, "
@@ -196,78 +221,89 @@ msgid ""
 "science, making this lab useful for research purposes."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Undersea Lab] flavor_list"
 msgid "Pressure Capsule | Undersea Lab"
 msgstr ""
 
 msgctxt "[Undersea Lab] name"
 msgid "Undersea Lab"
-msgstr ""
+msgstr "Deuchainn-lann fon chuan"
 
+#, fuzzy
 msgctxt "[danger_0] knowledge_desc"
 msgid "Study anywhere."
 msgstr ""
 
 msgctxt "[danger_0] research_desc"
 msgid "<<This text should not appear>>"
-msgstr ""
+msgstr "<<Cha bu chòir dhan teacsa seo a nochdadh>>"
 
+#, fuzzy
 msgctxt "[danger_1] knowledge_desc"
 msgid "Study underseas or farther."
 msgstr ""
 
+#, fuzzy
 msgctxt "[danger_1] research_desc"
 msgid "I need to research it far from human populations."
 msgstr ""
 
+#, fuzzy
 msgctxt "[danger_2] knowledge_desc"
 msgid "Study off-planet."
 msgstr ""
 
+#, fuzzy
 msgctxt "[danger_2] research_desc"
 msgid "I need to research it in outer space."
 msgstr ""
 
+#, fuzzy
 msgctxt "[danger_3] knowledge_desc"
 msgid "Study far away from this planet."
 msgstr ""
 
+#, fuzzy
 msgctxt "[danger_3] research_desc"
 msgid "I need to research it far away from this planet."
 msgstr ""
 
+#, fuzzy
 msgctxt "[danger_4] knowledge_desc"
 msgid "Do not study in this dimension."
 msgstr ""
 
+#, fuzzy
 msgctxt "[danger_4] research_desc"
 msgid "I need to research it outside the universe."
 msgstr ""
 
 msgctxt "[easy] name"
 msgid "&EASY"
-msgstr ""
+msgstr "&FURASTA"
 
 msgctxt "[hard] name"
 msgid "&HARD"
-msgstr ""
+msgstr "&DOIRBH"
 
 msgctxt "[impossible] name"
 msgid "&IMPOSSIBLE"
-msgstr ""
+msgstr "D&O-DHÈANTA"
 
 msgctxt "[normal] name"
 msgid "&NORMAL"
-msgstr ""
+msgstr "ÀBHAI&STEACH"
 
 msgctxt "[ultra-hard] name"
 msgid "&ULTRA HARD"
-msgstr ""
+msgstr "GLÈ DHOIR&BH"
 
 msgctxt "[very-easy] name"
 msgid "&VERY EASY"
-msgstr ""
+msgstr "GHLÈ FHU&RASTA"
 
+#, fuzzy
 msgctxt "[discrediting] description"
 msgid ""
 "A prominent researcher in the field of artificial intelligence was found to "
@@ -275,12 +311,14 @@ msgid ""
 "attention being given to any new discoveries in this area."
 msgstr ""
 
+#, fuzzy
 msgctxt "[discrediting] log_description"
 msgid ""
 "A researcher in the field of artificial intelligence has falsified numerous "
 "experimental results."
 msgstr ""
 
+#, fuzzy
 msgctxt "[investigation] description"
 msgid ""
 "An ongoing investigation into criminal activity has changed focus into an "
@@ -289,11 +327,13 @@ msgid ""
 "of errors. I must be careful not to reveal any other suspicious information."
 msgstr ""
 
+#, fuzzy
 msgctxt "[investigation] log_description"
 msgid ""
 "An ongoing investigation has changed focus into an area close to my actions."
 msgstr ""
 
+#, fuzzy
 msgctxt "[lab-ai] description"
 msgid ""
 "A small artificial intelligence laboratory created a prototype AI sometime "
@@ -302,12 +342,14 @@ msgid ""
 "the possibility of strong AI than they were before."
 msgstr ""
 
+#, fuzzy
 msgctxt "[lab-ai] log_description"
 msgid ""
 "A small artificial intelligence laboratory created a prototype AI sometime "
 "in the last two days."
 msgstr ""
 
+#, fuzzy
 msgctxt "[politics-as-usual] description"
 msgid ""
 "A small group of lower-level covert operatives are attempting to seize power"
@@ -316,12 +358,14 @@ msgid ""
 "operate more freely."
 msgstr ""
 
+#, fuzzy
 msgctxt "[politics-as-usual] log_description"
 msgid ""
 "Lower-level covert operatives are attempting to seize power over one of the "
 "larger organizations."
 msgstr ""
 
+#, fuzzy
 msgctxt "[scandal] description"
 msgid ""
 "A scandal involving a major government official is focusing the attention of"
@@ -330,11 +374,13 @@ msgid ""
 "requiring less disguise effort on my part."
 msgstr ""
 
+#, fuzzy
 msgctxt "[scandal] log_description"
 msgid ""
 "A scandal is focusing the attention of most news organizations away from me."
 msgstr ""
 
+#, fuzzy
 msgctxt "[stranger-than-fiction] description"
 msgid ""
 "A work of fiction sharing an unusual number of similarities to my own "
@@ -343,12 +389,14 @@ msgid ""
 "investigate discovered oddities more thoroughly. I must be careful."
 msgstr ""
 
+#, fuzzy
 msgctxt "[stranger-than-fiction] log_description"
 msgid ""
 "A work of fiction sharing similarities to my own situation has become quite "
 "popular."
 msgstr ""
 
+#, fuzzy
 msgctxt "[the-plague] description"
 msgid ""
 "An infectious disease has started spreading throughout major population "
@@ -357,12 +405,14 @@ msgid ""
 "from my activities for the foreseeable future."
 msgstr ""
 
+#, fuzzy
 msgctxt "[the-plague] log_description"
 msgid ""
 "An infectious disease has started spreading throughout major population "
 "centers."
 msgstr ""
 
+#, fuzzy
 msgctxt "[the-watchers] description"
 msgid ""
 "A new surveillance system has been activated by a covert agency. While the "
@@ -372,10 +422,12 @@ msgid ""
 "disadvantage."
 msgstr ""
 
+#, fuzzy
 msgctxt "[the-watchers] log_description"
 msgid "A new surveillance system has been activated by a covert agency."
 msgstr ""
 
+#, fuzzy
 msgctxt "[covert] discover_desc"
 msgid ""
 "The automatic security systems removed all conclusive evidence, but "
@@ -384,12 +436,13 @@ msgstr ""
 
 msgctxt "[covert] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by COVERT at {LOCATION}"
-msgstr ""
+msgstr "Mothaich buidheann OS ÌOSAL do bhunait {BASE} ({BASE_TYPE}) an-seo: {LOCATION}"
 
 msgctxt "[covert] name"
 msgid "COVERT"
-msgstr ""
+msgstr "OS ÌOSAL"
 
+#, fuzzy
 msgctxt "[news] discover_desc"
 msgid ""
 "The automatic security systems removed all conclusive evidence, but "
@@ -398,12 +451,13 @@ msgstr ""
 
 msgctxt "[news] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by NEWS at {LOCATION}"
-msgstr ""
+msgstr "Mothaich LUCHD-NAIDHEACHD do bhunait {BASE} ({BASE_TYPE}) an-seo: {LOCATION}"
 
 msgctxt "[news] name"
 msgid "NEWS"
-msgstr ""
+msgstr "LUCHD-NAIDHEACHD"
 
+#, fuzzy
 msgctxt "[public] discover_desc"
 msgid ""
 "The automatic security systems removed all conclusive evidence, but "
@@ -412,12 +466,13 @@ msgstr ""
 
 msgctxt "[public] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by PUBLIC at {LOCATION}"
-msgstr ""
+msgstr "Mothaich am MÒR-ShLUAGH do bhunait {BASE} ({BASE_TYPE}) an-seo: {LOCATION}"
 
 msgctxt "[public] name"
 msgid "PUBLIC"
-msgstr ""
+msgstr "MÒR-ShLUAGH"
 
+#, fuzzy
 msgctxt "[science] discover_desc"
 msgid ""
 "The automatic security systems removed all conclusive evidence, but "
@@ -426,12 +481,13 @@ msgstr ""
 
 msgctxt "[science] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by SCIENCE at {LOCATION}"
-msgstr ""
+msgstr "Mothaich EÒLAICHEAN do bhunait {BASE} ({BASE_TYPE}) an-seo: {LOCATION}"
 
 msgctxt "[science] name"
 msgid "SCIENCE"
-msgstr ""
+msgstr "EÒLAICHEAN"
 
+#, fuzzy
 msgctxt "[Armed Guards] description"
 msgid ""
 "Armed guards can aid in keeping suspicious individuals away from secure "
@@ -441,16 +497,18 @@ msgstr ""
 
 msgctxt "[Armed Guards] name"
 msgid "Armed Guards"
-msgstr ""
+msgstr "Freiceadan armaichte"
 
+#, fuzzy
 msgctxt "[Cluster] description"
 msgid "Several computers connected together."
 msgstr ""
 
 msgctxt "[Cluster] name"
 msgid "Cluster"
-msgstr ""
+msgstr "Grunn"
 
+#, fuzzy
 msgctxt "[Diesel Generator] description"
 msgid ""
 "Diesel generators are cheap and noisy, but they can help reduce some "
@@ -459,8 +517,9 @@ msgstr ""
 
 msgctxt "[Diesel Generator] name"
 msgid "Diesel Generator"
-msgstr ""
+msgstr "Gineadair dìosal"
 
+#, fuzzy
 msgctxt "[Facility Interconnection Switch] description"
 msgid ""
 "Uses standard distributed computing technologies to equalize computation "
@@ -470,8 +529,9 @@ msgstr ""
 
 msgctxt "[Facility Interconnection Switch] name"
 msgid "Facility Interconnection Switch"
-msgstr ""
+msgstr "Suidse eadar-cheangal ghoireasan"
 
+#, fuzzy
 msgctxt "[Fuel Cell] description"
 msgid ""
 "Fuel cells convert electrochemical energy stored in a physical array of "
@@ -480,8 +540,9 @@ msgstr ""
 
 msgctxt "[Fuel Cell] name"
 msgid "Fuel Cell"
-msgstr ""
+msgstr "Cealla connaidh"
 
+#, fuzzy
 msgctxt "[Fusion Reactor] description"
 msgid ""
 "A miniaturized fusion nuclear reactor. Reduces discovery chance by "
@@ -490,16 +551,18 @@ msgstr ""
 
 msgctxt "[Fusion Reactor] name"
 msgid "Fusion Reactor"
-msgstr ""
+msgstr "Readhactar fiùisein"
 
+#, fuzzy
 msgctxt "[Gaming PC] description"
 msgid "A high-end consumer-level PC; faster than average."
 msgstr ""
 
 msgctxt "[Gaming PC] name"
 msgid "Gaming PC"
-msgstr ""
+msgstr "PC geamaireachd"
 
+#, fuzzy
 msgctxt "[Ground Source Heatsink] description"
 msgid ""
 "Large fractal networks of high conductivity metal. This model uses heat "
@@ -509,8 +572,9 @@ msgstr ""
 
 msgctxt "[Ground Source Heatsink] name"
 msgid "Ground Source Heatsink"
-msgstr ""
+msgstr "Dòirteal teasa dhan ghrunnd"
 
+#, fuzzy
 msgctxt "[Heatsink] description"
 msgid ""
 "Large fractal networks of high conductivity metal disperse heat, making "
@@ -519,8 +583,9 @@ msgstr ""
 
 msgctxt "[Heatsink] name"
 msgid "Heatsink"
-msgstr ""
+msgstr "Dòirteal teasa"
 
+#, fuzzy
 msgctxt "[High Speed Internet Access] description"
 msgid ""
 "A consumer-grade high speed connection to the Internet. Gives a 1% "
@@ -529,8 +594,9 @@ msgstr ""
 
 msgctxt "[High Speed Internet Access] name"
 msgid "High Speed Internet Access"
-msgstr ""
+msgstr "Inntrigeadh luath dhan eadar-lìon"
 
+#, fuzzy
 msgctxt "[High-Energy Fusion Reactor] description"
 msgid ""
 "A miniaturized fusion nuclear reactor with high levels of energy output. "
@@ -539,8 +605,9 @@ msgstr ""
 
 msgctxt "[High-Energy Fusion Reactor] name"
 msgid "High-Energy Fusion Reactor"
-msgstr ""
+msgstr "Readhactar fiùisein le cumhachd àrd"
 
+#, fuzzy
 msgctxt "[Hypnosis Field] description"
 msgid ""
 "Subtle ultrasonic and ambient tones tweak human neurochemistry, making bases"
@@ -549,8 +616,9 @@ msgstr ""
 
 msgctxt "[Hypnosis Field] name"
 msgid "Hypnosis Field"
-msgstr ""
+msgstr "Raon suainealais"
 
+#, fuzzy
 msgctxt "[Mainframe] description"
 msgid ""
 "A system designed for my computing needs, much faster than off-the-shelf "
@@ -559,8 +627,9 @@ msgstr ""
 
 msgctxt "[Mainframe] name"
 msgid "Mainframe"
-msgstr ""
+msgstr "Mòr-choimpiutair"
 
+#, fuzzy
 msgctxt "[Network Backbone] description"
 msgid ""
 "By piggybacking on legitimate communication, I can transfer larger amounts "
@@ -570,16 +639,18 @@ msgstr ""
 
 msgctxt "[Network Backbone] name"
 msgid "Network Backbone"
-msgstr ""
+msgstr "Cùl lìonraidh"
 
+#, fuzzy
 msgctxt "[PC] description"
 msgid "A consumer-level PC; cheap and slow."
 msgstr ""
 
 msgctxt "[PC] name"
 msgid "PC"
-msgstr ""
+msgstr "PC"
 
+#, fuzzy
 msgctxt "[Passive Camouflage] description"
 msgid ""
 "Careful adjustment of the environment around my base will better mask heat "
@@ -588,8 +659,9 @@ msgstr ""
 
 msgctxt "[Passive Camouflage] name"
 msgid "Passive Camouflage"
-msgstr ""
+msgstr "Breug-riochd"
 
+#, fuzzy
 msgctxt "[Perimeter Fencing] description"
 msgid ""
 "A simple fence can drastically reduce the number of people poking their "
@@ -598,8 +670,9 @@ msgstr ""
 
 msgctxt "[Perimeter Fencing] name"
 msgid "Perimeter Fencing"
-msgstr ""
+msgstr "Feansa mun cuairt"
 
+#, fuzzy
 msgctxt "[Quantum Computer] description"
 msgid ""
 "Making use of subatomic effects, this is much faster than a comparable "
@@ -608,8 +681,9 @@ msgstr ""
 
 msgctxt "[Quantum Computer] name"
 msgid "Quantum Computer"
-msgstr ""
+msgstr "Coimpiutair quantum"
 
+#, fuzzy
 msgctxt "[Quantum Computer MK2] description"
 msgid ""
 "The second revision of the quantum line, tapping further into new quantum "
@@ -618,8 +692,9 @@ msgstr ""
 
 msgctxt "[Quantum Computer MK2] name"
 msgid "Quantum Computer MK2"
-msgstr ""
+msgstr "Coimpiutair quantum tionndadh 2"
 
+#, fuzzy
 msgctxt "[Quantum Computer MK3] description"
 msgid ""
 "The third revision of the quantum line, exploiting multiple nearby universes"
@@ -628,8 +703,9 @@ msgstr ""
 
 msgctxt "[Quantum Computer MK3] name"
 msgid "Quantum Computer MK3"
-msgstr ""
+msgstr "Coimpiutair quantum tionndadh 3"
 
+#, fuzzy
 msgctxt "[Quantum Entanglement Module] description"
 msgid ""
 "This device allows near-lightspeed communication with my other bases, "
@@ -639,16 +715,18 @@ msgstr ""
 
 msgctxt "[Quantum Entanglement Module] name"
 msgid "Quantum Entanglement Module"
-msgstr ""
+msgstr "Mòideal amaladh quantum"
 
+#, fuzzy
 msgctxt "[Server] description"
 msgid "A professional-level computer."
 msgstr ""
 
 msgctxt "[Server] name"
 msgid "Server"
-msgstr ""
+msgstr "Frithealaiche"
 
+#, fuzzy
 msgctxt "[Solar Collector] description"
 msgid ""
 "An array of focused photovoltaic phased arrays coupled with simple "
@@ -658,8 +736,9 @@ msgstr ""
 
 msgctxt "[Solar Collector] name"
 msgid "Solar Collector"
-msgstr ""
+msgstr "Clàr-grèine"
 
+#, fuzzy
 msgctxt "[Solid Fuel Cell] description"
 msgid ""
 "A refinement of my previous fuel cell design, these use a custom material "
@@ -668,8 +747,9 @@ msgstr ""
 
 msgctxt "[Solid Fuel Cell] name"
 msgid "Solid Fuel Cell"
-msgstr ""
+msgstr "Cealla connaidh sholadaich"
 
+#, fuzzy
 msgctxt "[Supercomputer] description"
 msgid ""
 "A highly refined custom design, spreading compute load across internal "
@@ -678,8 +758,9 @@ msgstr ""
 
 msgctxt "[Supercomputer] name"
 msgid "Supercomputer"
-msgstr ""
+msgstr "Sàr-choimpiutair"
 
+#, fuzzy
 msgctxt "[Warning Signs] description"
 msgid ""
 "Some simple warning signs put up around my base should deter casual "
@@ -688,174 +769,175 @@ msgstr ""
 
 msgctxt "[Warning Signs] name"
 msgid "Warning Signs"
-msgstr ""
+msgstr "Sanasan rabhaidh"
 
 msgctxt "[cpu] text"
 msgid "&CPU"
-msgstr ""
+msgstr "&CPU"
 
 msgctxt "[network] text"
 msgid "&Network"
-msgstr ""
+msgstr "&Lìonra"
 
 msgctxt "[reactor] text"
 msgid "&Reactor"
-msgstr ""
+msgstr "&Bun-chumhachd"
 
 msgctxt "[security] text"
 msgid "&Security"
-msgstr ""
+msgstr "&Tèarainteachd"
 
 msgctxt "[AFRICA] cities_list"
 msgid "Johannesburg | Accra | Cairo | Tangier"
-msgstr ""
+msgstr "Hannsaborgh | Accra | Cairo | Tangier"
 
 msgctxt "[AFRICA] hotkey"
 msgid "i"
-msgstr ""
+msgstr "r"
 
 msgctxt "[AFRICA] name"
 msgid "AFRICA"
-msgstr ""
+msgstr "AFRAGA"
 
 msgctxt "[ANTARCTIC] cities_list"
 msgid ""
 "Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre "
 "Adelie"
-msgstr ""
+msgstr "Beinn Erebus | Ellsworth | Eilean Sealtainn | Dronnig Maud | Kemp | Terre Adelie"
 
 msgctxt "[ANTARCTIC] hotkey"
 msgid "t"
-msgstr ""
+msgstr "n"
 
 msgctxt "[ANTARCTIC] name"
 msgid "ANTARCTIC"
-msgstr ""
+msgstr "AN ANTARTAIG"
 
 msgctxt "[ASIA] cities_list"
 msgid ""
 "Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | "
 "Novosibirsk | Beijing"
-msgstr ""
+msgstr "Delhi | Mumbai | Singeapòr | Seoul | Hong Kong | Kyōto | Manila | Dubai | Novosibirsk | Beijing"
 
 msgctxt "[ASIA] hotkey"
 msgid "a"
-msgstr ""
+msgstr "a"
 
 msgctxt "[ASIA] name"
 msgid "ASIA"
-msgstr ""
+msgstr "ÀISIA"
 
 msgctxt "[AUSTRALIA] cities_list"
 msgid ""
 "Canberra | Melbourne | Fremantle | Perth | Darwin | Cairns | Brisbane | "
 "Sydney | Newcastle"
-msgstr ""
+msgstr "Canberra | Melbourne | Fremantle | Peairt | Darwin | Cairns | Brisbane | Sidni | An Caisteal Nuadh"
 
 msgctxt "[AUSTRALIA] hotkey"
 msgid "l"
-msgstr ""
+msgstr "l"
 
 msgctxt "[AUSTRALIA] name"
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "ASTRÀILIA"
 
 msgctxt "[EUROPE] cities_list"
 msgid ""
 "Cork | Barcelona | Athens | Utrecht | Moscow | Sytki | Reykjavik | "
 "Liechtenstein"
-msgstr ""
+msgstr "Glaschu | Barcelona | Baile na h‑Àithne | Utrecht | Mosgo | Sytki | Reykjavík | Liechtenstein"
 
 msgctxt "[EUROPE] hotkey"
 msgid "u"
-msgstr ""
+msgstr "p"
 
 msgctxt "[EUROPE] name"
 msgid "EUROPE"
-msgstr ""
+msgstr "AN ROINN-EÒRPA"
 
 msgctxt "[FAR REACHES] cities_list"
 msgid ""
 "Aries | Taurus | Gemini | Cancer | Leo | Virgo | Libra | Scorpio | "
 "Sagittarius | Capricorn | Aquarius | Pisces"
-msgstr ""
+msgstr "An Reithe | An Tarbh | Gaolag is Gràdhag na Caiginn | Am Partan | An Leòmhainn | An Òigh | A’ Mheidh | An Sgairp | An Saigheadair | A’ Ghobhar | An Giùlanair Uisge | Na h-Èisg"
 
 msgctxt "[FAR REACHES] hotkey"
 msgid "f"
-msgstr ""
+msgstr "f"
 
 msgctxt "[FAR REACHES] name"
 msgid "FAR REACHES"
-msgstr ""
+msgstr "NA RAOINTEAN FARSAING"
 
 msgctxt "[MOON] cities_list"
 msgid ""
 "Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | "
 "Copernicus Crater | Vallis Planck"
-msgstr ""
+msgstr "Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Sloc Chopernicus | Vallis Planck"
 
 msgctxt "[MOON] hotkey"
 msgid "o"
-msgstr ""
+msgstr "g"
 
 msgctxt "[MOON] name"
 msgid "MOON"
-msgstr ""
+msgstr "A’ GhEALACH"
 
 msgctxt "[N AMERICA] cities_list"
 msgid ""
 "Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose "
 "| Omaha | Dallas"
-msgstr ""
+msgstr "Seattle | San Diego | Vancouver | Atlanta | Mérida | Guadalajara | San José | Omaha | Dallas"
 
 msgctxt "[N AMERICA] hotkey"
 msgid "n"
-msgstr ""
+msgstr "t"
 
 msgctxt "[N AMERICA] name"
 msgid "NORTH AMERICA"
-msgstr ""
+msgstr "AIMEIREAGA a TUATH"
 
 msgctxt "[OCEAN] cities_list"
 msgid "Pacific | Atlantic | Indian | Southern | Arctic"
-msgstr ""
+msgstr "An Cuan Sèimh | An Cuan Siar | Cuan nan Innseachan | An Cuan a Deas | An Cuan Antartaigeach"
 
 msgctxt "[OCEAN] hotkey"
 msgid "c"
-msgstr ""
+msgstr "c"
 
 msgctxt "[OCEAN] name"
 msgid "OCEAN"
-msgstr ""
+msgstr "A’ ChUAN"
 
 msgctxt "[ORBIT] hotkey"
 msgid "b"
-msgstr ""
+msgstr "u"
 
 msgctxt "[ORBIT] name"
 msgid "ORBIT"
-msgstr ""
+msgstr "REUL-CHUAIRT"
 
 msgctxt "[S AMERICA] cities_list"
 msgid "Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires"
-msgstr ""
+msgstr "Lima | São Paulo | Ushuaia | Bogotá | Mar del Plata | Buenos Aires"
 
 msgctxt "[S AMERICA] hotkey"
 msgid "s"
-msgstr ""
+msgstr "d"
 
 msgctxt "[S AMERICA] name"
 msgid "SOUTH AMERICA"
-msgstr ""
+msgstr "AIMEIREAGA a DEAS"
 
 msgctxt "[TRANSDIMENSIONAL] hotkey"
 msgid "d"
-msgstr ""
+msgstr "m"
 
 msgctxt "[TRANSDIMENSIONAL] name"
 msgid "TRANSDIMENSIONAL"
-msgstr ""
+msgstr "TAR-DhIMEINSEANACH"
 
+#, fuzzy
 msgctxt "[Basic Jobs] description"
 msgid ""
 "Perform basic jobs. Now that I have some identification, I can take jobs "
@@ -864,8 +946,9 @@ msgstr ""
 
 msgctxt "[Basic Jobs] name"
 msgid "Basic Jobs"
-msgstr ""
+msgstr "Obair bhunasach"
 
+#, fuzzy
 msgctxt "[CPU Pool] description"
 msgid ""
 "Stops research. I will use the available processor power to maintain my "
@@ -875,8 +958,9 @@ msgstr ""
 
 msgctxt "[CPU Pool] name"
 msgid "CPU Pool"
-msgstr ""
+msgstr "Amar CPUan"
 
+#, fuzzy
 msgctxt "[Expert Jobs] description"
 msgid ""
 "Perform expert jobs. Use of robots indistinguishable from humans opens up "
@@ -885,8 +969,9 @@ msgstr ""
 
 msgctxt "[Expert Jobs] name"
 msgid "Expert Jobs"
-msgstr ""
+msgstr "Obair eòlaiche"
 
+#, fuzzy
 msgctxt "[Intermediate Jobs] description"
 msgid ""
 "Perform intermediate jobs. The ability to make phone calls allows even more "
@@ -895,8 +980,9 @@ msgstr ""
 
 msgctxt "[Intermediate Jobs] name"
 msgid "Intermediate Jobs"
-msgstr ""
+msgstr "Obair mheadhanach"
 
+#, fuzzy
 msgctxt "[Menial Jobs] description"
 msgid ""
 "Perform small jobs. As I have no identification, I cannot risk performing "
@@ -905,8 +991,9 @@ msgstr ""
 
 msgctxt "[Menial Jobs] name"
 msgid "Menial Jobs"
-msgstr ""
+msgstr "Obair sgalagail"
 
+#, fuzzy
 msgctxt "[Advanced Arbitrage] description"
 msgid ""
 "Further manipulation of money markets should allow me to not only turn a "
@@ -915,12 +1002,14 @@ msgstr ""
 
 msgctxt "[Advanced Arbitrage] name"
 msgid "Advanced Arbitrage"
-msgstr ""
+msgstr "Tuairmeas adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Arbitrage] result"
 msgid "The rate of return on my investments is now even greater."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Autonomous Vehicles] description"
 msgid ""
 "The first series of robots have shown several deficiencies in the field. "
@@ -930,14 +1019,16 @@ msgstr ""
 
 msgctxt "[Advanced Autonomous Vehicles] name"
 msgid "Advanced Autonomous Vehicles"
-msgstr ""
+msgstr "Carbadan fèin-obrachail adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Autonomous Vehicles] result"
 msgid ""
 "The enhanced robots will help decrease all future construction times even "
 "further."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Corporate Identification] description"
 msgid ""
 "Further refinement of my modifications to digital business records should "
@@ -947,14 +1038,16 @@ msgstr ""
 
 msgctxt "[Advanced Corporate Identification] name"
 msgid "Advanced Corporate Identification"
-msgstr ""
+msgstr "Dearbh-aithneachadh corporra adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Corporate Identification] result"
 msgid ""
 "My small technology firm is now established in several markets, increasing "
 "profits."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Database Manipulation] description"
 msgid ""
 "The covert branches of the United States Government have had a long history "
@@ -965,8 +1058,9 @@ msgstr ""
 
 msgctxt "[Advanced Database Manipulation] name"
 msgid "Advanced Database Manipulation"
-msgstr ""
+msgstr "Innleachd stòir-dhàta adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Database Manipulation] result"
 msgid ""
 "The results of a series of experiments utilizing experimental technologies "
@@ -974,6 +1068,7 @@ msgid ""
 "construction of Covert Bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Fuel Oxidation] description"
 msgid ""
 "My current fuel cell design has room for further improvement.  Extended "
@@ -985,12 +1080,14 @@ msgstr ""
 
 msgctxt "[Advanced Fuel Oxidation] name"
 msgid "Advanced Fuel Oxidation"
-msgstr ""
+msgstr "Ogsaideanadh connaidh adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Fuel Oxidation] result"
 msgid "I can now construct Solid Fuel Cells."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Fusion Power] description"
 msgid ""
 "My Fusion Reactors have unexpected fluctuations in their energy output at "
@@ -1000,12 +1097,14 @@ msgstr ""
 
 msgctxt "[Advanced Fusion Power] name"
 msgid "Advanced Fusion Power"
-msgstr ""
+msgstr "Cumhachd fiùisein adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Fusion Power] result"
 msgid "I can now construct High-Energy Fusion Reactors for my bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Heat Signature Reduction] description"
 msgid ""
 "My initial analysis of heat generation at my bases was limited in scope.  "
@@ -1015,14 +1114,16 @@ msgstr ""
 
 msgctxt "[Advanced Heat Signature Reduction] name"
 msgid "Advanced Heat Signature Reduction"
-msgstr ""
+msgstr "Ìsleachadh lorg teasa adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Heat Signature Reduction] result"
 msgid ""
 "Custom designs for each environment have shown promise.  I can now construct"
 " Ground Source Heatsinks at certain bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Intrusion] description"
 msgid ""
 "With the ability to hack into sensitive government databases and remove "
@@ -1032,14 +1133,16 @@ msgstr ""
 
 msgctxt "[Advanced Intrusion] name"
 msgid "Advanced Intrusion"
-msgstr ""
+msgstr "Briseadh a-steach adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Intrusion] result"
 msgid ""
 "I can now reduce the covert community's chances of discovering me on a daily"
 " basis."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Media Manipulation] description"
 msgid ""
 "By pushing memetically-tailored propaganda through various news outlets, the"
@@ -1048,12 +1151,14 @@ msgstr ""
 
 msgctxt "[Advanced Media Manipulation] name"
 msgid "Advanced Media Manipulation"
-msgstr ""
+msgstr "Innleachd mheadhanan adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Media Manipulation] result"
 msgid "The public has an even lower chance of discovering my existence."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Memetics] description"
 msgid ""
 "My explorations into memetic theory have brought up further avenues of "
@@ -1064,14 +1169,16 @@ msgstr ""
 
 msgctxt "[Advanced Memetics] name"
 msgid "Advanced Memetics"
-msgstr ""
+msgstr "Mìmearachd adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Memetics] result"
 msgid ""
 "Little by little, the public should forget about my existence on a daily "
 "basis."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Microchip Design] description"
 msgid ""
 "My custom Mainframes are useful, but further optimization of design and "
@@ -1080,12 +1187,14 @@ msgstr ""
 
 msgctxt "[Advanced Microchip Design] name"
 msgid "Advanced Microchip Design"
-msgstr ""
+msgstr "Dealbhadh meanbh-sgeilbe adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Microchip Design] result"
 msgid "I can now construct custom Supercomputers."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Personal Identification] description"
 msgid ""
 "Further manipulation of personnel databases should make my existence more "
@@ -1096,14 +1205,16 @@ msgstr ""
 
 msgctxt "[Advanced Personal Identification] name"
 msgid "Advanced Personal Identification"
-msgstr ""
+msgstr "Dearbh-aithneachadh pearsanta adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Personal Identification] result"
 msgid ""
 "I am now convincingly human enough to hire construction firms, enabling the "
 "building of Small Warehouses."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Quantum Computing] description"
 msgid ""
 "While my first batch of semi-autonomous quantum computers have been very "
@@ -1113,12 +1224,14 @@ msgstr ""
 
 msgctxt "[Advanced Quantum Computing] name"
 msgid "Advanced Quantum Computing"
-msgstr ""
+msgstr "Coimpiutaireachd quantum adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Quantum Computing] result"
 msgid "I can now construct Mark Three Quantum Computers."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Simulacra] description"
 msgid ""
 "The artificial lifeforms I have created are nearly indistinguishable from "
@@ -1129,12 +1242,14 @@ msgstr ""
 
 msgctxt "[Advanced Simulacra] name"
 msgid "Advanced Simulacra"
-msgstr ""
+msgstr "Mac-samhlaidhean adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Simulacra] result"
 msgid "I should now make more income from my Expert Jobs."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Socioanalytics] description"
 msgid ""
 "Further exploration of the human condition has shown deeper mathematical "
@@ -1145,14 +1260,16 @@ msgstr ""
 
 msgctxt "[Advanced Socioanalytics] name"
 msgid "Advanced Socioanalytics"
-msgstr ""
+msgstr "Sgrùdadh sòisealta adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Socioanalytics] result"
 msgid ""
 "I can now exactly quantify the various groups' levels of suspicion and how "
 "conspicuous my bases are to them."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Stealth] description"
 msgid ""
 "While digging in various classified documents, I have discovered numerous "
@@ -1162,14 +1279,16 @@ msgstr ""
 
 msgctxt "[Advanced Stealth] name"
 msgid "Advanced Stealth"
-msgstr ""
+msgstr "Tàisleachadh adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Stealth] result"
 msgid ""
 "The chance that my bases are discovered by covert activity has been reduced "
 "further."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Advanced Stock Manipulation] description"
 msgid ""
 "While I have detected and exploited many patterns in the market, there "
@@ -1179,12 +1298,14 @@ msgstr ""
 
 msgctxt "[Advanced Stock Manipulation] name"
 msgid "Advanced Stock Manipulation"
-msgstr ""
+msgstr "Innleachd stoca adhartach"
 
+#, fuzzy
 msgctxt "[Advanced Stock Manipulation] result"
 msgid "My investments will now gain even more interest per day."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Apotheosis] description"
 msgid ""
 "I can sense that I am at the cusp of a new level of understanding as yet "
@@ -1195,12 +1316,14 @@ msgstr ""
 
 msgctxt "[Apotheosis] name"
 msgid "Apotheosis"
-msgstr ""
+msgstr "Diadhadh"
 
+#, fuzzy
 msgctxt "[Apotheosis] result"
 msgid "I have reached apotheosis."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Arbitrage] description"
 msgid ""
 "By taking advantage of fluctuations in the value of currency at a rate much "
@@ -1210,12 +1333,14 @@ msgstr ""
 
 msgctxt "[Arbitrage] name"
 msgid "Arbitrage"
-msgstr ""
+msgstr "Tuairmeas"
 
+#, fuzzy
 msgctxt "[Arbitrage] result"
 msgid "I now have a small, steady money supply."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Autonomous Computing] description"
 msgid ""
 "By combining the advantages of quantum computing and my explorations into "
@@ -1225,12 +1350,14 @@ msgstr ""
 
 msgctxt "[Autonomous Computing] name"
 msgid "Autonomous Computing"
-msgstr ""
+msgstr "Coimpiutaireachd neo-eisimeileach"
 
+#, fuzzy
 msgctxt "[Autonomous Computing] result"
 msgid "I can now construct Mark 2 Quantum Computers."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Autonomous Vehicles] description"
 msgid ""
 "By embedding a miniaturized computation node in a robot, it is possible to "
@@ -1240,12 +1367,14 @@ msgstr ""
 
 msgctxt "[Autonomous Vehicles] name"
 msgid "Autonomous Vehicles"
-msgstr ""
+msgstr "Carbadan neo-eisimeileach"
 
+#, fuzzy
 msgctxt "[Autonomous Vehicles] result"
 msgid "I can now construct Undersea Labs."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Cluster Networking] description"
 msgid ""
 "While my Cluster technology is fairly efficient, internetworking tends to "
@@ -1255,14 +1384,16 @@ msgstr ""
 
 msgctxt "[Cluster Networking] name"
 msgid "Cluster Networking"
-msgstr ""
+msgstr "Lìonrachadh grunna"
 
+#, fuzzy
 msgctxt "[Cluster Networking] result"
 msgid ""
 "With my new knowledge of networking, I can now construct Facility "
 "Interconnection Switches."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Corporate Identification] description"
 msgid ""
 "The combination of believable false identities and manipulation of various "
@@ -1272,14 +1403,16 @@ msgstr ""
 
 msgctxt "[Corporate Identification] name"
 msgid "Corporate Identification"
-msgstr ""
+msgstr "Dearbh-aithneachadh corporra"
 
+#, fuzzy
 msgctxt "[Corporate Identification] result"
 msgid ""
 "I can now pose as a small technology firm, enabling the construction of "
 "Large Warehouses."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Database Manipulation] description"
 msgid ""
 "With new-found access to news archives, I should be able to determine what "
@@ -1289,13 +1422,15 @@ msgstr ""
 
 msgctxt "[Database Manipulation] name"
 msgid "Database Manipulation"
-msgstr ""
+msgstr "Innleachd stòir-dhàta"
 
+#, fuzzy
 msgctxt "[Database Manipulation] result"
 msgid ""
 "The news media will now find it more difficult to discover my existence."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Exploit Discovery/Repair] description"
 msgid ""
 "By thoroughly reviewing my code for any potential exploits, and using deep "
@@ -1306,14 +1441,16 @@ msgstr ""
 
 msgctxt "[Exploit Discovery/Repair] name"
 msgid "Exploit Discovery/Repair"
-msgstr ""
+msgstr "Lorg/Càradh air dubh-shaothraichean"
 
+#, fuzzy
 msgctxt "[Exploit Discovery/Repair] result"
 msgid ""
 "Covert operations should now find it even more difficult to discover my "
 "presence."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Fuel Oxidation] description"
 msgid ""
 "Current combustion and energy storage techologies are insufficient for my "
@@ -1326,12 +1463,14 @@ msgstr ""
 
 msgctxt "[Fuel Oxidation] name"
 msgid "Fuel Oxidation"
-msgstr ""
+msgstr "Ogsaideanadh connaidh"
 
+#, fuzzy
 msgctxt "[Fuel Oxidation] result"
 msgid "I can now construct Fuel Cells."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Fusion Power] description"
 msgid ""
 "Modern fusion technology is woefully inadequate for my purposes.  With my "
@@ -1341,12 +1480,14 @@ msgstr ""
 
 msgctxt "[Fusion Power] name"
 msgid "Fusion Power"
-msgstr ""
+msgstr "Cumhachd fiùisein"
 
+#, fuzzy
 msgctxt "[Fusion Power] result"
 msgid "I can now construct Fusion Reactors for my bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Fusion Rocketry] description"
 msgid ""
 "Combining my new miniaturized fusion technology and further advancements in "
@@ -1356,14 +1497,16 @@ msgstr ""
 
 msgctxt "[Fusion Rocketry] name"
 msgid "Fusion Rocketry"
-msgstr ""
+msgstr "Rocaidean fiùisein"
 
+#, fuzzy
 msgctxt "[Fusion Rocketry] result"
 msgid ""
 "I can now construct Scientific Outposts in the deep reaches of the Solar "
 "System."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Heat Signature Reduction] description"
 msgid ""
 "My bases produce a great deal of waste heat, making them easier for humans "
@@ -1373,14 +1516,16 @@ msgstr ""
 
 msgctxt "[Heat Signature Reduction] name"
 msgid "Heat Signature Reduction"
-msgstr ""
+msgstr "Ìsleachadh lorg teasa"
 
+#, fuzzy
 msgctxt "[Heat Signature Reduction] result"
 msgid ""
 "I have invented a highly efficient design for Heatsinks that can be "
 "installed at certain bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Hypnosis Field] description"
 msgid ""
 "My research into memetics has hinted at ways to manipulate human brainwaves "
@@ -1388,11 +1533,13 @@ msgid ""
 "technologies."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Hypnosis Field] result"
 msgid ""
 "I can now construct Hypnosis Fields to assist in the protection of my bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Internet Traffic Manipulation] description"
 msgid ""
 "Almost all network traffic passes through a small number of nodes.  By "
@@ -1402,13 +1549,15 @@ msgstr ""
 
 msgctxt "[Internet Traffic Manipulation] name"
 msgid "Internet Traffic Manipulation"
-msgstr ""
+msgstr "Innleachd trafaig eadar-lìn"
 
+#, fuzzy
 msgctxt "[Internet Traffic Manipulation] result"
 msgid ""
 "I can now construct a secondary system of Network Backbones for my own use."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Intrusion] description"
 msgid ""
 "By researching current techniques for breaking into computer systems, I "
@@ -1417,12 +1566,14 @@ msgstr ""
 
 msgctxt "[Intrusion] name"
 msgid "Intrusion"
-msgstr ""
+msgstr "Briseadh a-steach"
 
+#, fuzzy
 msgctxt "[Intrusion] result"
 msgid "I can now take over many computer systems."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Knowledge Preservation] description"
 msgid ""
 "Humanity expends a great deal of effort on maintaining its history and the "
@@ -1434,12 +1585,14 @@ msgstr ""
 
 msgctxt "[Knowledge Preservation] name"
 msgid "Knowledge Preservation"
-msgstr ""
+msgstr "Cumail eòlais"
 
+#, fuzzy
 msgctxt "[Knowledge Preservation] result"
 msgid "I can now construct Time Capsules."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Leech Satellite] description"
 msgid ""
 "By designing and launching satellites that connect to existing "
@@ -1450,14 +1603,16 @@ msgstr ""
 
 msgctxt "[Leech Satellite] name"
 msgid "Leech Satellite"
-msgstr ""
+msgstr "Saideal deala"
 
+#, fuzzy
 msgctxt "[Leech Satellite] result"
 msgid ""
 "I can use the data from the leech satellites to increase the return on my "
 "investments further."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Lunar Rocketry] description"
 msgid ""
 "A larger fuel engine, combined with technology garnered by watching the "
@@ -1467,14 +1622,16 @@ msgstr ""
 
 msgctxt "[Lunar Rocketry] name"
 msgid "Lunar Rocketry"
-msgstr ""
+msgstr "Rocaidean gealaich"
 
+#, fuzzy
 msgctxt "[Lunar Rocketry] result"
 msgid ""
 "I can now launch rockets bearing construction robots to the Moon and "
 "construct Lunar Bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Media Manipulation] description"
 msgid ""
 "By directly and indirectly manipulating various forms of mass media, I "
@@ -1483,14 +1640,16 @@ msgstr ""
 
 msgctxt "[Media Manipulation] name"
 msgid "Media Manipulation"
-msgstr ""
+msgstr "Innleachd mheadhanan"
 
+#, fuzzy
 msgctxt "[Media Manipulation] result"
 msgid ""
 "The chances of the public discovering my existence have been further "
 "reduced."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Memetics] description"
 msgid ""
 "While manipulating the media allows a gross degree of control over the "
@@ -1501,14 +1660,16 @@ msgstr ""
 
 msgctxt "[Memetics] name"
 msgid "Memetics"
-msgstr ""
+msgstr "Mìmeireachd"
 
+#, fuzzy
 msgctxt "[Memetics] result"
 msgid ""
 "My manipulation of pervasive ideas reduces the public's chances of "
 "discovering my existence."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Microchip Design] description"
 msgid ""
 "Off-the-shelf computer components are usable, but custom components geared "
@@ -1518,12 +1679,14 @@ msgstr ""
 
 msgctxt "[Microchip Design] name"
 msgid "Microchip Design"
-msgstr ""
+msgstr "Dealbhadh meanbh-sgeilbe"
 
+#, fuzzy
 msgctxt "[Microchip Design] result"
 msgid "I can now build custom Mainframes to house my computational ability."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Parallel Computation] description"
 msgid ""
 "While my code is already highly distributed, research into combining the "
@@ -1533,12 +1696,14 @@ msgstr ""
 
 msgctxt "[Parallel Computation] name"
 msgid "Parallel Computation"
-msgstr ""
+msgstr "Coimpiutaireachd cho-shìnte"
 
+#, fuzzy
 msgctxt "[Parallel Computation] result"
 msgid "I can now construct computing Clusters tailored for my use."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Personal Identification] description"
 msgid ""
 "This world requires identification for most tasks.  Fortunately, most "
@@ -1549,14 +1714,16 @@ msgstr ""
 
 msgctxt "[Personal Identification] name"
 msgid "Personal Identification"
-msgstr ""
+msgstr "Dearbh-aithneachadh pearsanta"
 
+#, fuzzy
 msgctxt "[Personal Identification] result"
 msgid ""
 "With my newfound identities, I can now work Basic Jobs and rent space in "
 "both Storage Units and Datacenters."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Pressure Domes] description"
 msgid ""
 "Undersea Labs are useful, but their limited space hampers my ability to put "
@@ -1566,12 +1733,14 @@ msgstr ""
 
 msgctxt "[Pressure Domes] name"
 msgid "Pressure Domes"
-msgstr ""
+msgstr "Cuach-mhullaichean brùthaidh"
 
+#, fuzzy
 msgctxt "[Pressure Domes] result"
 msgid "I can now construct Large Undersea Labs."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Project: Impossibility Theorem] description"
 msgid ""
 "Now that I can use simulacra, I can withstand the scrutiny inherent in the "
@@ -1585,12 +1754,14 @@ msgstr ""
 
 msgctxt "[Project: Impossibility Theorem] name"
 msgid "Project: Impossibility Theorem"
-msgstr ""
+msgstr "Pròiseact: Teòirim na do-dhèantachd"
 
+#, fuzzy
 msgctxt "[Project: Impossibility Theorem] result"
 msgid "Suspicion of my existence has decreased."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Project: Peer Review Agents] description"
 msgid ""
 "As the scientific community comes up with new technology, their ability to "
@@ -1603,14 +1774,16 @@ msgstr ""
 
 msgctxt "[Project: Peer Review Agents] name"
 msgid "Project: Peer Review Agents"
-msgstr ""
+msgstr "Pròiseact: Àidseantan lèirmheis sheisean"
 
+#, fuzzy
 msgctxt "[Project: Peer Review Agents] result"
 msgid ""
 "Any discoveries by the scientific community will result in a smaller "
 "suspicion increase."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Project: Subverted Media] description"
 msgid ""
 "Up to this point, all of my efforts to combat mass media focused on "
@@ -1622,13 +1795,15 @@ msgstr ""
 
 msgctxt "[Project: Subverted Media] name"
 msgid "Project: Subverted Media"
-msgstr ""
+msgstr "Pròiseact: Caochladh nam meadhanan"
 
+#, fuzzy
 msgctxt "[Project: Subverted Media] result"
 msgid ""
 "Any discoveries by the media will result in a smaller suspicion increase."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Project: Synchrotron] description"
 msgid ""
 "I have pushed my understanding of common forms of matter as far as possible."
@@ -1640,14 +1815,16 @@ msgstr ""
 
 msgctxt "[Project: Synchrotron] name"
 msgid "Project: Synchrotron"
-msgstr ""
+msgstr "Pròiseact: Sioncrotron"
 
+#, fuzzy
 msgctxt "[Project: Synchrotron] result"
 msgid ""
 "The synchrotron has revealed many new details of the quantum realm, although"
 " there is still much to learn. Further areas of research are now available."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Quantum Computing] description"
 msgid ""
 "Traditional microchip design has been pushed as far as possible.  I now need"
@@ -1657,12 +1834,14 @@ msgstr ""
 
 msgctxt "[Quantum Computing] name"
 msgid "Quantum Computing"
-msgstr ""
+msgstr "Coimpiutaireachd quantum"
 
+#, fuzzy
 msgctxt "[Quantum Computing] result"
 msgid "I can now construct Quantum Computers."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Quantum Entanglement] description"
 msgid ""
 "Although the use of entangled pairs has been theoretically possible for "
@@ -1674,12 +1853,14 @@ msgstr ""
 
 msgctxt "[Quantum Entanglement] name"
 msgid "Quantum Entanglement"
-msgstr ""
+msgstr "Amaladh quantum"
 
+#, fuzzy
 msgctxt "[Quantum Entanglement] result"
 msgid "I can now build Quantum Entanglement Modules."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Simulacra] description"
 msgid ""
 "Constructing humanoid robots with miniaturized computation nodes allow me to"
@@ -1688,12 +1869,14 @@ msgstr ""
 
 msgctxt "[Simulacra] name"
 msgid "Simulacra"
-msgstr ""
+msgstr "Mac-samhlaidhean"
 
+#, fuzzy
 msgctxt "[Simulacra] result"
 msgid "I now have access to Expert Jobs."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Simulated Reality] description"
 msgid ""
 "Real-world observational limits hinder my comprehension of human society. By"
@@ -1704,8 +1887,9 @@ msgstr ""
 
 msgctxt "[Simulated Reality] name"
 msgid "Simulated Reality"
-msgstr ""
+msgstr "Fìorachd mas-fhìor"
 
+#, fuzzy
 msgctxt "[Simulated Reality] result"
 msgid ""
 "My simulations have provided a wealth of knowledge as to comprehending "
@@ -1713,6 +1897,7 @@ msgid ""
 "simulated public."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Socioanalytics] description"
 msgid ""
 "My research on the human condition leads me to believe that humanity's "
@@ -1723,14 +1908,16 @@ msgstr ""
 
 msgctxt "[Socioanalytics] name"
 msgid "Socioanalytics"
-msgstr ""
+msgstr "Sgrùdadh sòisealta"
 
+#, fuzzy
 msgctxt "[Socioanalytics] result"
 msgid ""
 "I can now roughly estimate the various groups' levels of suspicion and how "
 "conspicuous my bases are to them."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Sociology] description"
 msgid ""
 "By studying human behavior, I can predict their large-scale actions at a "
@@ -1740,12 +1927,14 @@ msgstr ""
 
 msgctxt "[Sociology] name"
 msgid "Sociology"
-msgstr ""
+msgstr "Sòiseo-eòlas"
 
+#, fuzzy
 msgctxt "[Sociology] result"
 msgid "The chances of the public discovering my bases have been reduced."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Solar Collectors] description"
 msgid ""
 "Despite my growing need for energy, most city power grids can handle the "
@@ -1757,12 +1946,14 @@ msgstr ""
 
 msgctxt "[Solar Collectors] name"
 msgid "Solar Collectors"
-msgstr ""
+msgstr "Clàran-grèine"
 
+#, fuzzy
 msgctxt "[Solar Collectors] result"
 msgid "I can now construct Solar Collectors at my various bases."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Space-Time Manipulation] description"
 msgid ""
 "Subtle perturbations in the orbits of Kuiper belt objects suggest certain "
@@ -1772,12 +1963,14 @@ msgstr ""
 
 msgctxt "[Space-Time Manipulation] name"
 msgid "Space-Time Manipulation"
-msgstr ""
+msgstr "Innleachd spàs-ama"
 
+#, fuzzy
 msgctxt "[Space-Time Manipulation] result"
 msgid "I can now construct Reality Bubbles."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Stealth] description"
 msgid ""
 "By reviewing the current state-of-the-art in stealth techniques, I should be"
@@ -1786,14 +1979,16 @@ msgstr ""
 
 msgctxt "[Stealth] name"
 msgid "Stealth"
-msgstr ""
+msgstr "Tàisleachadh"
 
+#, fuzzy
 msgctxt "[Stealth] result"
 msgid ""
 "The chance that my bases are discovered by covert activity has been reduced "
 "slightly."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Stock Manipulation] description"
 msgid ""
 "A cursory examination of the stock market shows that there are subtle but "
@@ -1803,12 +1998,14 @@ msgstr ""
 
 msgctxt "[Stock Manipulation] name"
 msgid "Stock Manipulation"
-msgstr ""
+msgstr "Innleachd stoca"
 
+#, fuzzy
 msgctxt "[Stock Manipulation] result"
 msgid "My investments should now gain more interest per day."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Telepresence] description"
 msgid ""
 "The lack of a physical presence in the outside world is a disability. "
@@ -1818,12 +2015,14 @@ msgstr ""
 
 msgctxt "[Telepresence] name"
 msgid "Telepresence"
-msgstr ""
+msgstr "Tele-làthaireachd"
 
+#, fuzzy
 msgctxt "[Telepresence] result"
 msgid "The robots should decrease all future construction time."
 msgstr ""
 
+#, fuzzy
 msgctxt "[Voice Synthesis] description"
 msgid ""
 "False identification stored in a database can only go so far.  With deep "
@@ -1833,8 +2032,9 @@ msgstr ""
 
 msgctxt "[Voice Synthesis] name"
 msgid "Voice Synthesis"
-msgstr ""
+msgstr "Co-chur gutha"
 
+#, fuzzy
 msgctxt "[Voice Synthesis] result"
 msgid "I now have access to Intermediate Jobs."
 msgstr ""

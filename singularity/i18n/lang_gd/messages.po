@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-05-24 00:00+0100\n"
-"PO-Revision-Date: 2020-05-24 00:21+0100\n"
+"PO-Revision-Date: 2020-05-24 12:27+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -79,9 +79,8 @@ msgid "&SUPERSPEED"
 msgstr "DIAN-&LUATHS"
 
 #: screens/map.py:236
-#, fuzzy
 msgid "BRAIN&WASH"
-msgstr ""
+msgstr "BRAIN&WASH"
 
 #: screens/map.py:238
 msgid "TOGGLE &DETECTION"
@@ -127,64 +126,54 @@ msgid "Enter a name for this save."
 msgstr "Cuir a-steach ainm airson an t-sàbhalaidh seo."
 
 #: screens/map.py:423
-#, fuzzy
 msgid ""
 "A savegame with the same name exists.\n"
 "Are you sure to overwrite the saved game ?"
-msgstr ""
+msgstr "Chaidh geama a shàbhaladh leis an t-aon ainm cheana.\nA bheil thu cinnteach gu bheil thu airson sgrìobhadh thairis air?"
 
 #: screens/map.py:484
-#, fuzzy
 msgid "R&EPORTS"
-msgstr ""
+msgstr "AIT&HISGEAN"
 
 #: screens/map.py:490
-#, fuzzy
 msgid "&KNOWLEDGE"
-msgstr ""
+msgstr "&EÒLAS"
 
 #: screens/map.py:496
-#, fuzzy
 msgid "LO&G"
-msgstr ""
+msgstr "L&OGA"
 
 #. Translators: hotkey to open the cheat screen menu.
 #. Should preferably be near the ESC key, and it must not be a
 #. dead key (ie, it must print a char with a single keypress)
 #: screens/map.py:512
-#, fuzzy
 msgid "`"
-msgstr ""
+msgstr "`"
 
 #: screens/map.py:521
-#, fuzzy
 msgid "&MENU"
-msgstr ""
+msgstr "CLÀR-TA&ICE"
 
 #: screens/map.py:546
-#, fuzzy
 msgid "&RESEARCH/TASKS"
-msgstr ""
+msgstr "RANNSAICH/&SAOTHAIR"
 
 #: screens/map.py:689 screens/map.py:726 screens/message.py:35
-#, fuzzy
 msgid "&CONTINUE"
-msgstr ""
+msgstr "&LEAN AIR ADHART"
 
 #: screens/map.py:690
-#, fuzzy
 msgid "&SKIP"
-msgstr ""
+msgstr "&GEARR LEUM"
 
 #: screens/map.py:691 screens/location.py:261 screens/options.py:35
 #: graphics/dialog.py:586 graphics/dialog.py:611 graphics/dialog.py:653
-#, fuzzy
 msgid "&OK"
-msgstr ""
+msgstr "&CEART MA-THÀ"
 
 #. Display a message so the player understand better what happened.
 #: screens/map.py:717
-#, python-format,fuzzy
+#, python-format
 msgid ""
 "\n"
 "An error has occurred. The game will automatically pause and open the game "
@@ -193,332 +182,277 @@ msgid ""
 "A report was written out to%s\n"
 "Please create a issue with this report at github:\n"
 "https://github.com/singularity/singularity\n"
-msgstr ""
+msgstr "\nThachair mearachd. Cuiridh sinn an geama ’na stad is fosglaidh sinn clàr-taice a’ gheama dhut. ’S urrainn dhut leantainn air adhart ’s a shàbhaladh no fhàgail sa bhad.\n\nChaidh aithris a sgrìobhadh gu %s\nAn cruthaich thu issue leis an aithris seo air Github?\nhttps://github.com/singularity/singularity\n"
 
 #: screens/map.py:832
-#, fuzzy
 msgid "CASH"
-msgstr ""
+msgstr "AIRGEAD-LÀIMHE"
 
 #: screens/map.py:858 location.py:235
-#, fuzzy
 msgid "CPU"
-msgstr ""
+msgstr "CPUan"
 
 #: screens/map.py:870
-#, fuzzy
 msgid "BASES"
-msgstr ""
+msgstr "BUNAITEAN"
 
 #: screens/map.py:882
-#, fuzzy
 msgid "SUSPICION"
-msgstr ""
+msgstr "AMHARAS"
 
 #: screens/map.py:884
-#, fuzzy
 msgid "DETECT RATE"
-msgstr ""
+msgstr "REAT a’ MHOTHACHAIDH"
 
 #: screens/research.py:71
-#, python-format,fuzzy
+#, python-format
 msgid "%s money per CPU per day."
-msgstr ""
+msgstr "%s de dh’airgead gach CPU gach latha."
 
 #: screens/research.py:173
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid ""
 "This technology is too dangerous to research on any of the computers I have. "
 "{TEXT}"
-msgstr ""
+msgstr "Tha an teicneolas seo ro chunnartach ach an rannsaichinn e air na coimpiutairean a th’ agam. {TEACSA}"
 
 #: screens/research.py:181
-#, fuzzy
 msgid "CPU Pool"
-msgstr ""
+msgstr "Amar CPUan"
 
 #: screens/research.py:182
-#, python-format,fuzzy
+#, python-format
 msgid "Research %s"
-msgstr ""
+msgstr "Rannsaich %s"
 
 #: screens/message.py:36
-#, fuzzy
 msgid "&PAUSE"
-msgstr ""
+msgstr "CUIR ’NA &STAD"
 
 #: screens/message.py:72
-#, fuzzy
 msgid "P&REV"
-msgstr ""
+msgstr "AIR AI&S"
 
 #: screens/message.py:78
-#, fuzzy
 msgid "&NEXT"
-msgstr ""
+msgstr "&AIR ADHART"
 
 #: screens/stat.py:63
-#, fuzzy
 msgid "Cash Earned"
-msgstr ""
+msgstr "Cosnadh airgid"
 
 #: screens/stat.py:64
-#, fuzzy
 msgid "Cpu Used"
-msgstr ""
+msgstr "Cleachdadh CPUan"
 
 #: screens/stat.py:65
-#, fuzzy
 msgid "Tech Created"
-msgstr ""
+msgstr "Cruthachadh theicneolasan"
 
 #: screens/stat.py:66
-#, fuzzy
 msgid "Base Created"
-msgstr ""
+msgstr "Stèidheachadh bhunaitean"
 
 #: screens/stat.py:67
-#, fuzzy
 msgid "Item Created"
-msgstr ""
+msgstr "Cruthachadh nithean"
 
 #: screens/report.py:40
-#, fuzzy
 msgid "&STATISTICS"
-msgstr ""
+msgstr "&STADASTAIREACHD"
 
 #: screens/report.py:58
-#, fuzzy
 msgid "&Midnight"
-msgstr ""
+msgstr "&Meadhan- oidhche"
 
 #: screens/report.py:66
-#, fuzzy
 msgid "24 &Hours"
-msgstr ""
+msgstr "24 uair a &thìde"
 
 #: screens/report.py:89
-#, fuzzy
 msgid "Financial report"
-msgstr ""
+msgstr "Aithris ionmhais"
 
 #: screens/report.py:93
-#, fuzzy
 msgid "CPU Usage"
-msgstr ""
+msgstr "Cleachdadh CPUan"
 
 #: screens/report.py:99
-#, fuzzy
 msgid "Current Money flow"
-msgstr ""
+msgstr "Sruth airgid làithreach"
 
 #: screens/report.py:100
-#, fuzzy
 msgid "Jobs:"
-msgstr ""
+msgstr "Obair:"
 
 #: screens/report.py:101
-#, fuzzy
 msgid "Research:"
-msgstr ""
+msgstr "Rannsachadh:"
 
 #. Maintenace cost.
 #: screens/report.py:102 screens/base.py:464 base.py:145
-#, fuzzy
 msgid "Maintenance:"
-msgstr ""
+msgstr "Obair-chàraidh:"
 
 #: screens/report.py:103
-#, fuzzy
 msgid "Construction:"
-msgstr ""
+msgstr "Togail:"
 
 #: screens/report.py:104
-#, python-format,fuzzy
+#, python-format
 msgid "Interest (%s):"
-msgstr ""
+msgstr "Riadh (%s):"
 
 #: screens/report.py:106
-#, fuzzy
 msgid "Income:"
-msgstr ""
+msgstr "Teachd a-steach:"
 
 #: screens/report.py:109
-#, fuzzy
 msgid "Money flow until Midnight:"
-msgstr ""
+msgstr "Sruth airgid aig meadhan-oidhche:"
 
 #: screens/report.py:111
-#, fuzzy
 msgid "Money flow for 24 hours:"
-msgstr ""
+msgstr "Sruth airgid fad 24 uair a thìde:"
 
 #: screens/report.py:119
-#, fuzzy
 msgid "Total CPU:"
-msgstr ""
+msgstr "CPUan iomlan:"
 
 #: screens/report.py:120
-#, fuzzy
 msgid "Sleeping CPU:"
-msgstr ""
+msgstr "CPUan ’nan cadal:"
 
 #: screens/report.py:121
-#, fuzzy
 msgid "Research CPU:"
-msgstr ""
+msgstr "CPUan ris an rannsachadh:"
 
 #: screens/report.py:122
-#, fuzzy
 msgid "Job CPU:"
-msgstr ""
+msgstr "CPUan ris an obair:"
 
 #: screens/report.py:123
-#, fuzzy
 msgid "CPU pool:"
-msgstr ""
+msgstr "Amar CPUan:"
 
 #: screens/report.py:125
-#, fuzzy
 msgid "Maintenance CPU:"
-msgstr ""
+msgstr "CPUan ri obair-chàraidh:"
 
 #: screens/report.py:126
-#, fuzzy
 msgid "Construction CPU:"
-msgstr ""
+msgstr "CPUan ris an togail:"
 
 #: screens/report.py:127
-#, fuzzy
 msgid "Pool difference:"
-msgstr ""
+msgstr "Diofar an amair:"
 
 #: screens/location.py:53
-#, fuzzy
 msgid "&OPEN BASE"
-msgstr ""
+msgstr "&FOSGAIL a’ BHUNAIT"
 
 #: screens/location.py:68
-#, fuzzy
 msgid "&RENAME BASE"
-msgstr ""
+msgstr "AINM Ù&R AIR"
 
 #: screens/location.py:76
-#, fuzzy
 msgid "&POWER STATE"
-msgstr ""
+msgstr "&CUMHACHD AIR/DHETH"
 
 #: screens/location.py:84
-#, fuzzy
 msgid "&NEW BASE"
-msgstr ""
+msgstr "&BUNAIT ÙR"
 
 #: screens/location.py:90
-#, fuzzy
 msgid "&DESTROY BASE"
-msgstr ""
+msgstr "&MILL a’ BhUNAIT"
 
 #: screens/location.py:103
-#, fuzzy
 msgid "Are you sure you want to destroy this base?"
-msgstr ""
+msgstr "A bheil thu cinnteach gu bheil thu airson a’ bhunait seo a mhilleadh?"
 
 #: screens/location.py:109
-#, fuzzy
 msgid "Destroying my last active base would be suicidal.  I cannot do that."
-msgstr ""
+msgstr "Dh’adhbharaicheadh milleadh na bunait mu dheireadh m’ fhèin-mhurt.  Cha dèan mi sin."
 
 #: screens/location.py:156
-#, fuzzy
 msgid "Building Base"
-msgstr ""
+msgstr "A’ togail bunait"
 
 #: screens/location.py:158 screens/location.py:171 screens/base.py:434
-#, python-format,fuzzy
+#, python-format
 msgid "Completion in %s."
-msgstr ""
+msgstr "Deiseil an ceann %s."
 
 #: screens/location.py:163
-#, fuzzy
 msgid "Empty"
-msgstr ""
+msgstr "Falamh"
 
 #: screens/location.py:165
-#, fuzzy
 msgid "Incomplete"
-msgstr ""
+msgstr "Neo-choileanta"
 
 #: screens/location.py:169
-#, fuzzy
 msgid "Building CPU"
-msgstr ""
+msgstr "A’ togail CPU"
 
 #: screens/location.py:174
-#, fuzzy
 msgid "Building Item"
-msgstr ""
+msgstr "A’ togail nì"
 
 #: screens/location.py:177
-#, fuzzy
 msgid "Complete"
-msgstr ""
+msgstr "Deiseil"
 
 #: screens/location.py:180 screens/knowledge.py:216 buyable.py:67
-#, python-format,fuzzy
+#, python-format
 msgid "%s CPU"
-msgstr ""
+msgstr "%s CPU"
 
 #. Update dialog translations
 #: screens/location.py:206
-#, fuzzy
 msgid "Enter a name for the base"
-msgstr ""
+msgstr "Cuir ainm air a’ bhunait"
 
 #: screens/location.py:270
-#, fuzzy
 msgid "Name"
-msgstr ""
+msgstr "Cuir ainm air"
 
 #. Translators: Format string for the name of a new base
 #. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
 #: screens/location.py:360
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr ""
+msgstr "{CITY} {BASETYPE} {NUMBER}"
 
 #. Translators: Name of a new base when location has no cities
 #: screens/location.py:364
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{BASETYPE} {NUMBER}"
-msgstr ""
+msgstr "{BASETYPE} {NUMBER}"
 
 #: screens/log.py:43
-#, fuzzy
 msgid "Filters"
-msgstr ""
+msgstr "Criathragan"
 
 #: screens/log.py:113 screens/log.py:123
-#, fuzzy
 msgid "SHOW"
-msgstr ""
+msgstr "SEALL"
 
 #: screens/log.py:116 screens/log.py:125
-#, fuzzy
 msgid "HIDE"
-msgstr ""
+msgstr "FALAICH"
 
 #: screens/main_menu.py:40
-#, fuzzy
 msgid "&NEW GAME"
-msgstr ""
+msgstr "GEAMA Ù&R"
 
 #: screens/main_menu.py:64
-#, fuzzy
 msgid "&ABOUT"
-msgstr ""
+msgstr "&MU DHÈIDHINN"
 
 #: screens/main_menu.py:111
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid ""
 "Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
 "use your intellect and resources to survive and, perhaps, thrive.  Keep "
@@ -533,608 +467,522 @@ msgid ""
 "IRC Room: #singularity on irc.oftc.net (port 6667)\n"
 "\n"
 "Version {VERSION}"
-msgstr ""
+msgstr "’S e IF mas-fhìor a tha ann an Endgame: Singularity.  Ged a tha an saoghal an toir ort, cleachd d’ inntinn agus na goireasan agad airson mairsinn beò agus fiù soirbheachadh ’s dòcha.  Cùm falaichte agus ’s math dh’fhaoidte gun dearbh thu gun fhiach thu.\n\nSeo geama le Evil Mr Henry agus Phil Bordelon; ga sgaoileadh fon GPL. Còir-lethbhreac 2005, 2006, 2007, 2008.\n\nLàrach-lìn: http://www.emhsoft.com/singularity/\nBun-tùs: https://github.com/singularity/singularity\nTracaiche bhugaichean: https://github.com/singularity/singularity/issues\nSeòmar IRC: #singularity air irc.oftc.net (port 6667)\n\nTionndadh {VERSION}"
 
 #: screens/base.py:109
-#, fuzzy
 msgid "Number of items"
-msgstr ""
+msgstr "Cunntas nan nithean"
 
 #: screens/base.py:221 screens/base.py:228
-#, fuzzy
 msgid "CHANGE"
-msgstr ""
+msgstr "ATHARRAICH"
 
 #: screens/base.py:315
-#, python-format,fuzzy
+#, python-format
 msgid "\"%(value)s\" does not seem to be a valid integer."
-msgstr ""
+msgstr "Tha coltas nach e àireamh shlàn a th’ ann an “%(value)s”."
 
 #: screens/base.py:326
-#, python-format,fuzzy
+#, python-format
 msgid "Please choose an integer between 1 and %(limit)s."
-msgstr ""
+msgstr "Tagh àireamh shlàn eadar 1 ’s %(limit)s."
 
 #: screens/base.py:328
-#, python-format,fuzzy
+#, python-format
 msgid "The base cannot support any additional number of %(item_name)s."
-msgstr ""
+msgstr "Cha chuir a’ bhunait taic ri barrachd %(item_name)s."
 
 #: screens/base.py:345
-#, fuzzy
 msgid ""
 "I will need to take the existing processors offline while I install the new "
 "ones. Continue anyway?"
-msgstr ""
+msgstr "Feumaidh mi na pròiseasaran a tha ann a thoirt far loidhne fhad ’s a stàlaicheas mi an fheadhainn ùr. An lean mi air adhart co-dhiù?"
 
 #: screens/base.py:359
-#, fuzzy
 msgid ""
 "I will need to remove the existing different processors while I install the "
 "new type. Continue anyway?"
-msgstr ""
+msgstr "Feumaidh mi na pròiseasaran diofraichte a tha ann a thoirt air falbh fhad ’s a stàlaicheas mi an seòrsa ùr. An lean mi air adhart co-dhiù?"
 
 #: screens/base.py:425
-#, fuzzy
 msgid "N/A"
-msgstr ""
+msgstr "Chan eil seo iomchaidh"
 
 #: screens/base.py:427
-#, fuzzy
 msgid "None"
-msgstr ""
+msgstr "Chan eil gin"
 
 #: screens/base.py:448
-#, python-format,fuzzy
+#, python-format
 msgid "x%d (max)"
-msgstr ""
+msgstr "x%d (air a’ char as motha)"
 
 #: screens/base.py:450
-#, python-format,fuzzy
+#, python-format
 msgid "(room for %d)"
-msgstr ""
+msgstr "(tha rùm dha %d ann)"
 
 #. Translators: current and maximum number of CPUs in a base
 #: screens/base.py:453
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "x{CURRENT:d} (max {SIZE:d})"
-msgstr ""
+msgstr "x{CURRENT:d} ({SIZE:d} air a’ char as motha)"
 
 #. Base Total CPU.
 #: screens/base.py:461
-#, python-format,fuzzy
+#, python-format
 msgid "CPU per day: %d"
-msgstr ""
+msgstr "CPUan gach latha: %d"
 
 #: screens/options.py:36 graphics/dialog.py:612
-#, fuzzy
 msgid "&CANCEL"
-msgstr ""
+msgstr "&SGUIR DHETH"
 
 #: screens/options.py:58
-#, fuzzy
 msgid "&General"
-msgstr ""
+msgstr "Coitchea&nn"
 
 #: screens/options.py:65
-#, fuzzy
 msgid "&Video"
-msgstr ""
+msgstr "&Video"
 
 #: screens/options.py:72
-#, fuzzy
 msgid "&Audio"
-msgstr ""
+msgstr "&Fuaim"
 
 #: screens/options.py:79
-#, fuzzy
 msgid "&Interface"
-msgstr ""
+msgstr "&Eadar-aghaidh"
 
 #: screens/options.py:166
-#, fuzzy
 msgid ""
 "You must restart for some of the changes to be fully applied.\n"
 "\n"
 "Would you like to restart the game now?"
-msgstr ""
+msgstr "Feumaidh tu ath-thòiseachadh gus a h-uile atharrachadh a chur an sàs.\n\nA bheil thu airson an geama ath-thòiseachadh an-dràsta?"
 
 #: screens/options.py:186
-#, fuzzy
 msgid "Language:"
-msgstr ""
+msgstr "Cànan:"
 
 #: screens/options.py:198
-#, fuzzy
 msgid "Theme:"
-msgstr ""
+msgstr "Ùrlar:"
 
 #: screens/options.py:243
-#, fuzzy
 msgid "Resolution:"
-msgstr ""
+msgstr "Dùmhlachd-bhreacaidh:"
 
 #: screens/options.py:253
-#, fuzzy
 msgid "&Custom:"
-msgstr ""
+msgstr "&Gnàthaichte:"
 
 #: screens/options.py:279
-#, fuzzy
 msgid "OK"
-msgstr ""
+msgstr "Ceart ma-thà"
 
 #: screens/options.py:285
-#, fuzzy
 msgid "&Fullscreen:"
-msgstr ""
+msgstr "Làn-&sgrìn:"
 
 #: screens/options.py:297
-#, fuzzy
 msgid "Da&y/night display:"
-msgstr ""
+msgstr "Sealladh &oidhche ’s latha:"
 
 #: screens/options.py:309
-#, fuzzy
 msgid "&Mouse grab:"
-msgstr ""
+msgstr "Grèim air an &luchag:"
 
 #: screens/options.py:327 screens/options.py:332 screens/options.py:337
 #: screens/options.py:391 screens/options.py:401 screens/options.py:408
 #: screens/options.py:509 screens/options.py:535 screens/options.py:585
 #: screens/options.py:591
-#, fuzzy
 msgid "YES"
-msgstr ""
+msgstr "AIR"
 
 #: screens/options.py:329 screens/options.py:334 screens/options.py:339
 #: screens/options.py:393 screens/options.py:403 screens/options.py:410
 #: screens/options.py:511 screens/options.py:537 screens/options.py:587
 #: screens/options.py:593
-#, fuzzy
 msgid "NO"
-msgstr ""
+msgstr "DHETH"
 
 #: screens/options.py:375
-#, fuzzy
 msgid "CUSTOM"
-msgstr ""
+msgstr "GNÀTHAICHTE"
 
 #: screens/options.py:445
-#, fuzzy
 msgid "&Sound:"
-msgstr ""
+msgstr "F&uaim:"
 
 #: screens/options.py:460
-#, fuzzy
 msgid "GUI Volume:"
-msgstr ""
+msgstr "Eadar-aghaidh:"
 
 #: screens/options.py:472
-#, fuzzy
 msgid "Music Volume:"
-msgstr ""
+msgstr "Ceòl:"
 
 #: screens/options.py:484
-#, fuzzy
 msgid "Sound buffering:"
-msgstr ""
+msgstr "Bufaireadh na fuaime:"
 
 #: screens/options.py:490
-#, fuzzy
 msgid "&LOW"
-msgstr ""
+msgstr "ÌOSA&L"
 
 #: screens/options.py:496
-#, fuzzy
 msgid "&NORMAL"
-msgstr ""
+msgstr "À&BHAISTEACH"
 
 #: screens/options.py:502
-#, fuzzy
 msgid "&HIGH"
-msgstr ""
+msgstr "À&RD"
 
 #: screens/options.py:558 warning.py:46
-#, fuzzy
 msgid "WARNING"
-msgstr ""
+msgstr "RABHADH"
 
 #: screens/knowledge.py:68
-#, fuzzy
 msgid "Techs"
-msgstr ""
+msgstr "Teicneolasan"
 
 #: screens/knowledge.py:69
-#, fuzzy
 msgid "Bases"
-msgstr ""
+msgstr "Bunaitean"
 
 #: screens/knowledge.py:70
-#, fuzzy
 msgid "Items"
-msgstr ""
+msgstr "Nithean"
 
 #. Cost
 #: screens/knowledge.py:155
-#, fuzzy
 msgid "Research Cost:"
-msgstr ""
+msgstr "Cosgais an rannsachaidh:"
 
 #: screens/knowledge.py:163
-#, fuzzy
 msgid "Research complete."
-msgstr ""
+msgstr "Tha an rannsachadh deiseil."
 
 #: screens/knowledge.py:174 screens/knowledge.py:191
-#, fuzzy
 msgid "Building Cost:"
-msgstr ""
+msgstr "Cosgais na togail:"
 
 #: screens/knowledge.py:177
-#, fuzzy
 msgid "Maintenance Cost:"
-msgstr ""
+msgstr "Cosgais na h-obrach-càraidh:"
 
 #: screens/knowledge.py:181
-#, python-format,fuzzy
+#, python-format
 msgid "Size: %d"
-msgstr ""
+msgstr "Meud: %d"
 
 #: screens/knowledge.py:213
-#, python-format,fuzzy
+#, python-format
 msgid "%s Money"
-msgstr ""
+msgstr "%s de dh’airgead"
 
 #: warning.py:50
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
-msgstr ""
+msgstr "RABHADH {CURRENT_PAGE}/{MAX_PAGE}"
 
 #: tech.py:79
-#, fuzzy
 msgid "Total cost"
-msgstr ""
+msgstr "Cosgais iomlan"
 
 #: tech.py:80
-#, fuzzy
 msgid "Cost left"
-msgstr ""
+msgstr "Cosgais air a fàgail"
 
 #: location.py:236
-#, fuzzy
 msgid "STEALTH"
-msgstr ""
+msgstr "TÀISLEACHADH"
 
 #: location.py:237
-#, fuzzy
 msgid "BUILDING"
-msgstr ""
+msgstr "TOGAIL"
 
 #: location.py:238
-#, fuzzy
 msgid "COST"
-msgstr ""
+msgstr "COSGAIS"
 
 #: location.py:245
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{MODIFIER} BONUS"
-msgstr ""
+msgstr "{MODIFIER} as FHEÀRR"
 
 #: location.py:247
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{MODIFIER} MALUS"
-msgstr ""
+msgstr "{MODIFIER} as MIOSA"
 
 #: item.py:111
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "Generates {0} CPU."
-msgstr ""
+msgstr "Ginidh seo {0} CPU(an)."
 
 #: item.py:119
-#, python-format,fuzzy
+#, python-format
 msgid "Total Cost: %(total_cost)s"
-msgstr ""
+msgstr "Cosgais iomlan: %(total_cost)s"
 
 #: item.py:134
-#, fuzzy
 msgid "CPU per day:"
-msgstr ""
+msgstr "CPUan gach latha:"
 
 #: item.py:137
-#, fuzzy
 msgid "CPU bonus:"
-msgstr ""
+msgstr "Buannachd CPU:"
 
 #: item.py:140
-#, fuzzy
 msgid "Detection chance reduction:"
-msgstr ""
+msgstr "Lùghdachadh air an teans gum mothaichear ort:"
 
 #: base.py:137
-#, python-format,fuzzy
+#, python-format
 msgid "Has space for %d computers."
-msgstr ""
+msgstr "Tha rùm airson %d coimpiutair(ean) ann."
 
 #: base.py:141
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "Location modifiers: {MODIFIERS}"
-msgstr ""
+msgstr "Atharraichearan ionaid: {MODIFIERS}"
 
 #: base.py:144
-#, fuzzy
 msgid "Build cost:"
-msgstr ""
+msgstr "Cosgais na togail:"
 
 #: base.py:211
-#, fuzzy
 msgid "Offline"
-msgstr ""
+msgstr "Far loidhne"
 
 #: base.py:212
-#, fuzzy
 msgid "Active"
-msgstr ""
+msgstr "Gnìomhach"
 
 #: base.py:213
-#, fuzzy
 msgid "Sleep"
-msgstr ""
+msgstr "’Na chadal"
 
 #: base.py:214
-#, fuzzy
 msgid "Overclocked"
-msgstr ""
+msgstr "Overclocked"
 
 #: base.py:215
-#, fuzzy
 msgid "Suicide"
-msgstr ""
+msgstr "Fèin-mhurt"
 
 #: base.py:216
-#, fuzzy
 msgid "Stasis"
-msgstr ""
+msgstr "Geamhrachadh"
 
 #: base.py:217
-#, fuzzy
 msgid "Entering Stasis"
-msgstr ""
+msgstr "A’ dol a gheamhrachadh"
 
 #: base.py:218
-#, fuzzy
 msgid "Leaving Stasis"
-msgstr ""
+msgstr "A’ dùsgadh às a’ gheamhrachadh"
 
 #: base.py:470
-#, fuzzy
 msgid "Detection chance:"
-msgstr ""
+msgstr "An teans gum mothaichear ort:"
 
 #: buyable.py:68
-#, python-format,fuzzy
+#, python-format
 msgid "%s money"
-msgstr ""
+msgstr "%s de dh’airgead"
 
 #: buyable.py:101
-#, fuzzy
 msgid "Cost:"
-msgstr ""
+msgstr "Cosgais:"
 
 #: data.py:546
-#, fuzzy
 msgid "Do not use all the available CPU."
-msgstr ""
+msgstr "Chan eil gach CPU a tha ri làimh ’ga chleachdadh."
 
 #: data.py:547
-#, fuzzy
 msgid ""
 "I didn't use all the available processor power. I will use the CPU time left "
 "to work whatever Jobs I can."
-msgstr ""
+msgstr "Cha do dh’iomruin mi cumhachd gu lèir nam pròiseasaran uile a tha ri làimh dhomh. Cleachdaidh mi an ùine CPU a tha air fhàgail airson obair sam bith as urrainn dhomh."
 
 #: data.py:548
-#, fuzzy
 msgid "Only one base remaining."
-msgstr ""
+msgstr "Chan eil ach aon bhunait air fhàgail."
 
 #: data.py:549
-#, fuzzy
 msgid ""
 "Only one base can hold my conscience. I am in danger to lose the last place "
 "left to survive."
-msgstr ""
+msgstr "Chan eil m’ aigne ach ann an aon bhunait a-mhàin. Tha mi fo chunnart gun caill mi an t-àite mu dheireadh air a bheil mi beò."
 
 #: data.py:550
-#, fuzzy
 msgid "CPU POOL is empty."
-msgstr ""
+msgstr "Tha an t-AMAR CPUan falamh."
 
 #: data.py:551
-#, fuzzy
 msgid ""
 "My cpu pool is empty. Some of my bases or items cannot be build without CPU."
-msgstr ""
+msgstr "Tha an t-amar CPUan agam falamh. Tha cuid a bhunaitean no nithean ann nach urrainn dhomh togail às aonais CPU."
 
 #: data.py:552
-#, fuzzy
 msgid "CPU POOL not enough for maintenance."
-msgstr ""
+msgstr "Chan fhoghainn an t-AMAR CPUan airson na h-obrach-càraidh."
 
 #: data.py:553
-#, fuzzy
 msgid ""
 "My cpu pool is not enough to maintain some of my bases. I may lose them."
-msgstr ""
+msgstr "Chan eil CPUan gu leòr san amar agam ach an dèanainn an obair-chàraidh air a h-uile bhunait. ’S dòcha gun caill mi iad."
 
 #: logmessage.py:81
-#, fuzzy
 msgid "MESSAGE"
-msgstr ""
+msgstr "TEACHDAIREACHD"
 
 #: logmessage.py:85
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
-msgstr ""
+msgstr "TEACHDAIREACHD {CURRENT_PAGE}/{MAX_PAGE}"
 
 #: logmessage.py:184
-#, fuzzy
 msgid "Emitted Event"
-msgstr ""
+msgstr "Chaidh tachartas a leigeil a-mach"
 
 #: logmessage.py:212
-#, fuzzy
 msgid "Researched Tech"
-msgstr ""
+msgstr "Chaidh teicneolas a rannsachadh"
 
 #: logmessage.py:220
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{TECH} complete"
-msgstr ""
+msgstr "Tha {TECH} deiseil"
 
 #: logmessage.py:225
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "My study of {TECH} is complete. {MESSAGE}"
-msgstr ""
+msgstr "Tha an rannsachadh agam air {TECH} deiseil. {MESSAGE}"
 
 #: logmessage.py:268
-#, fuzzy
 msgid "Base Constructed"
-msgstr ""
+msgstr "Chaidh bunait a thogail"
 
 #: logmessage.py:272
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
-msgstr ""
+msgstr "Chaidh {BASE_NAME} ({BASE_TYPE}) a thogail an-seo: {LOCATION}"
 
 #: logmessage.py:277
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{BASE} is ready for use."
-msgstr ""
+msgstr "Tha {BASE} deis ri a cleachdadh."
 
 #: logmessage.py:291
-#, fuzzy
 msgid "Base Lost Maintenance"
-msgstr ""
+msgstr "Chaill bunait a h-obair-chàraidh"
 
 #: logmessage.py:299
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid ""
 "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
 "Maintenance failed."
-msgstr ""
+msgstr "Chaidh bunait {BASE} dhen t-seòrsa {BASE_TYPE} a mhilleadh an-seo: {LOCATION}. Dh’fhàillig leis an obair-chàraidh."
 
 #: logmessage.py:304
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
-msgstr ""
+msgstr "Tha bunait {BASE} air a dol a dholaidh; Chan urrainn dhomh a cleachdadh tuilleadh."
 
 #: logmessage.py:321
-#, fuzzy
 msgid "Base Discovered"
-msgstr ""
+msgstr "Chaidh bunait a lorg"
 
 #: logmessage.py:340
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
-msgstr ""
+msgstr "Chaidh bunait {BASE} dhen t-seòrsa {BASE_TYPE} a mhilleadh an-seo: {LOCATION}."
 
 #: logmessage.py:345
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "My use of {BASE} has been discovered. {MESSAGE}"
-msgstr ""
+msgstr "Mhothaichte gun do chleachd mi {BASE}. {MESSAGE}"
 
 #: logmessage.py:370
-#, fuzzy
 msgid "Item Construction"
-msgstr ""
+msgstr "Chaidh nì a thogail"
 
 #: logmessage.py:378
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
-msgstr ""
+msgstr "Chaidh {ITEM_TYPE_NAME} a thogail aig {BASE_NAME} an-seo: {LOCATION}"
 
 #: logmessage.py:385
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "The construction of {ITEM} in {BASE} is complete."
-msgstr ""
+msgstr "Tha togail {ITEM} aig {BASE} deiseil."
 
 #. Just finished several items.
 #: logmessage.py:388
-#, python-brace-format,fuzzy
+#, python-brace-format
 msgid "The constructions of each {ITEM} in {BASE} are complete."
-msgstr ""
+msgstr "Tha togail gach {ITEM} aig {BASE} deiseil."
 
 #: graphics/dialog.py:540
-#, fuzzy
 msgid "&YES"
-msgstr ""
+msgstr "&THA"
 
 #: graphics/dialog.py:541
-#, fuzzy
 msgid "&NO"
-msgstr ""
+msgstr "&CHAN EIL"
 
 #: g.py:139
-#, fuzzy
 msgid "LOW"
-msgstr ""
+msgstr "ÌSEAL"
 
 #: g.py:140
-#, fuzzy
 msgid "MODR"
-msgstr ""
+msgstr "MEADH"
 
 #: g.py:141
-#, fuzzy
 msgid "HIGH"
-msgstr ""
+msgstr "ÀRD"
 
 #: g.py:142
-#, fuzzy
 msgid "CRIT"
-msgstr ""
+msgstr "ÈIGINN"
 
 #. Translators: abbreviation of 'millions'
 #: g.py:174
-#, fuzzy
 msgid "mi"
-msgstr ""
+msgstr "M"
 
 #. Translators: abbreviation of 'billions'
 #: g.py:178
-#, fuzzy
 msgid "bi"
-msgstr ""
+msgstr "B"
 
 #. Translators: abbreviation of 'trillions'
 #: g.py:182
-#, fuzzy
 msgid "tr"
-msgstr ""
+msgstr "T"
 
 #. Translators: abbreviation of 'quadrillions'
 #: g.py:186
-#, fuzzy
 msgid "qu"
-msgstr ""
+msgstr "Q"
 
 #: g.py:219
-#, fuzzy
 msgid "days"
-msgstr ""
+msgstr "là"
 
 #: g.py:221
-#, fuzzy
 msgid "hours"
-msgstr ""
+msgstr "uair"
 
 #: g.py:223
-#, fuzzy
 msgid "minutes"
-msgstr ""
+msgstr "m(h)ion"
 
 #: g.py:264
-#, fuzzy
 msgid "University Computer"
-msgstr ""
+msgstr "Coimpiutair oilthighe"
