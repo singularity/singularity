@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-05-24 00:00+0100\n"
-"PO-Revision-Date: 2020-05-24 12:27+0100\n"
+"PO-Revision-Date: 2020-05-24 16:25+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -160,11 +160,11 @@ msgstr "RANNSAICH/&SAOTHAIR"
 
 #: screens/map.py:689 screens/map.py:726 screens/message.py:35
 msgid "&CONTINUE"
-msgstr "&LEAN AIR ADHART"
+msgstr "&AIR ADHART"
 
 #: screens/map.py:690
 msgid "&SKIP"
-msgstr "&GEARR LEUM"
+msgstr "&GEÀRR LEUM"
 
 #: screens/map.py:691 screens/location.py:261 screens/options.py:35
 #: graphics/dialog.py:586 graphics/dialog.py:611 graphics/dialog.py:653
@@ -423,7 +423,7 @@ msgstr "Cuir ainm air"
 #: screens/location.py:360
 #, python-brace-format
 msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr "{CITY} {BASETYPE} {NUMBER}"
+msgstr "{CITY}: {BASETYPE} {NUMBER}"
 
 #. Translators: Name of a new base when location has no cities
 #: screens/location.py:364
@@ -697,7 +697,7 @@ msgstr "Cosgais air a fàgail"
 
 #: location.py:236
 msgid "STEALTH"
-msgstr "TÀISLEACHADH"
+msgstr "DÌOMHAIREACHD"
 
 #: location.py:237
 msgid "BUILDING"
@@ -737,7 +737,7 @@ msgstr "Buannachd CPU:"
 
 #: item.py:140
 msgid "Detection chance reduction:"
-msgstr "Lùghdachadh air an teans gum mothaichear ort:"
+msgstr "Lùghdachadh air an teans gum mothaichear orm:"
 
 #: base.py:137
 #, python-format
@@ -787,7 +787,7 @@ msgstr "A’ dùsgadh às a’ gheamhrachadh"
 
 #: base.py:470
 msgid "Detection chance:"
-msgstr "An teans gum mothaichear ort:"
+msgstr "An teans gum mothaichear orm:"
 
 #: buyable.py:68
 #, python-format
@@ -806,7 +806,7 @@ msgstr "Chan eil gach CPU a tha ri làimh ’ga chleachdadh."
 msgid ""
 "I didn't use all the available processor power. I will use the CPU time left "
 "to work whatever Jobs I can."
-msgstr "Cha do dh’iomruin mi cumhachd gu lèir nam pròiseasaran uile a tha ri làimh dhomh. Cleachdaidh mi an ùine CPU a tha air fhàgail airson obair sam bith as urrainn dhomh."
+msgstr "Cha do dh’iomruin mi cumhachd gu lèir nam pròiseasaran uile a tha ri làimh dhomh. Cleachdaidh mi an ùine CPU a tha air fhàgail airson obair sam bith as urrainn dhomh dèanamh."
 
 #: data.py:548
 msgid "Only one base remaining."
@@ -847,11 +847,11 @@ msgstr "TEACHDAIREACHD {CURRENT_PAGE}/{MAX_PAGE}"
 
 #: logmessage.py:184
 msgid "Emitted Event"
-msgstr "Chaidh tachartas a leigeil a-mach"
+msgstr "Tachartasan"
 
 #: logmessage.py:212
 msgid "Researched Tech"
-msgstr "Chaidh teicneolas a rannsachadh"
+msgstr "Rannsachadh"
 
 #: logmessage.py:220
 #, python-brace-format
@@ -865,7 +865,7 @@ msgstr "Tha an rannsachadh agam air {TECH} deiseil. {MESSAGE}"
 
 #: logmessage.py:268
 msgid "Base Constructed"
-msgstr "Chaidh bunait a thogail"
+msgstr "Togail bunait"
 
 #: logmessage.py:272
 #, python-brace-format
@@ -879,7 +879,7 @@ msgstr "Tha {BASE} deis ri a cleachdadh."
 
 #: logmessage.py:291
 msgid "Base Lost Maintenance"
-msgstr "Chaill bunait a h-obair-chàraidh"
+msgstr "Call obrach-càraidh"
 
 #: logmessage.py:299
 #, python-brace-format
@@ -895,7 +895,7 @@ msgstr "Tha bunait {BASE} air a dol a dholaidh; Chan urrainn dhomh a cleachdadh 
 
 #: logmessage.py:321
 msgid "Base Discovered"
-msgstr "Chaidh bunait a lorg"
+msgstr "Mothachadh do bhunait"
 
 #: logmessage.py:340
 #, python-brace-format
@@ -909,7 +909,7 @@ msgstr "Mhothaichte gun do chleachd mi {BASE}. {MESSAGE}"
 
 #: logmessage.py:370
 msgid "Item Construction"
-msgstr "Chaidh nì a thogail"
+msgstr "Togail nithean"
 
 #: logmessage.py:378
 #, python-brace-format
@@ -981,7 +981,7 @@ msgstr "uair"
 
 #: g.py:223
 msgid "minutes"
-msgstr "m(h)ion"
+msgstr "mion"
 
 #: g.py:264
 msgid "University Computer"
