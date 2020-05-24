@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-21 09:52+0200\n"
-"PO-Revision-Date: 2020-05-24 16:25+0100\n"
+"PO-Revision-Date: 2020-05-24 17:23+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -27,7 +27,7 @@ msgstr "Chaidh a’ bhunait shònraichte seo a dhealbhadh ach am biodh dreach n�
 
 msgctxt "[Covert Base] flavor_list"
 msgid "Hideout | Hideaway | Bunker | Covert Base"
-msgstr "Taigh-falaich | Falachan | Buncair | Bunait os ìosal"
+msgstr "Taigh-falaich | Falachan | Buncair | Bunait dhìomhair"
 
 msgctxt "[Covert Base] name"
 msgid "Hideout"
@@ -938,47 +938,42 @@ msgid ""
 "further."
 msgstr "Cuidichidh na robotairean adhartach ach an tog mi nithean fiù ’s nas luaithe."
 
-#, fuzzy
 msgctxt "[Advanced Corporate Identification] description"
 msgid ""
 "Further refinement of my modifications to digital business records should "
 "boost the credibility of my shell companies, increasing the amount of money "
 "I can run through their accounting systems."
-msgstr ""
+msgstr "Bu chòir do bharrachd gleusaidh air na h-atharraichean a nì mi air clàran gnìomhachais digiteach creideas nan companaidhean slige agam a neartachadh ’s cuiridh seo ris an uiread a dh’airgead as urrainn dhomh ruith tro na siostaman cunntais aca."
 
 msgctxt "[Advanced Corporate Identification] name"
 msgid "Advanced Corporate Identification"
 msgstr "Dearbh-aithneachadh corporra adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Corporate Identification] result"
 msgid ""
 "My small technology firm is now established in several markets, increasing "
 "profits."
-msgstr ""
+msgstr "Tha a’ chompanaidh teicneolais bheag agam air a stèidheachadh ann an iomadh margaid a-nis ’s cuiridh seo ris a’ phrothaid."
 
-#, fuzzy
 msgctxt "[Advanced Database Manipulation] description"
 msgid ""
 "The covert branches of the United States Government have had a long history "
 "of dividing sensitive information across multiple storage facilities to hide"
 " the data's meaning.  With my far-reaching access, I should be able to "
 "collate much of this data and put it to my use."
-msgstr ""
+msgstr "Tha eachdraidh fhada aig meuran os ìosal riaghaltas nan Stàitean Aonaichte gun dealaich iad fiosrachadh dìomhair thar iomadh ionad-stòrais a chùm ciall an dàta fhalach. Leis an inntrigeadh fharsaing agam, cuiridh mi mòran dhen dàta sin ri chèile gun teagamh ach an cleachdainn fhìn e."
 
 msgctxt "[Advanced Database Manipulation] name"
 msgid "Advanced Database Manipulation"
 msgstr "Innleachd stòir-dhàta adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Database Manipulation] result"
 msgid ""
 "The results of a series of experiments utilizing experimental technologies "
 "have given me the inspiration for new technology that enables the "
 "construction of Covert Bases."
-msgstr ""
+msgstr "Chuir toraidhean de shreath dheuchainnean a chleachdas teicneolasan ùra beachd a-steach orm air teicneolas ùr a leigeas leam bunaitean dìomhair a thogail."
 
-#, fuzzy
 msgctxt "[Advanced Fuel Oxidation] description"
 msgid ""
 "My current fuel cell design has room for further improvement.  Extended "
@@ -986,114 +981,102 @@ msgid ""
 "previous efforts, but such research involves dangerous chemicals and "
 "potential reactions that may be best handled far away from population "
 "centers."
-msgstr ""
+msgstr "Gabhaidh an dealbhadh agam air ceallan connaidh a leasachadh fhathast. Ma nì mi sgrùdadh farsaing air stuthan is dealbhaidhean ùra, dh’fhaoidte gum fuasgail mi crìochan nan oidhirpean a rinn mi roimhe ach tha ceimigean agus iom-obrachaidhean cunnartach ’na lùib a bu chòir dhomh làimhseachadh fad air falbh on mhòr-shluagh."
 
 msgctxt "[Advanced Fuel Oxidation] name"
 msgid "Advanced Fuel Oxidation"
 msgstr "Ogsaideanadh connaidh adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Fuel Oxidation] result"
 msgid "I can now construct Solid Fuel Cells."
-msgstr ""
+msgstr "’S urrainn dhomh ceallan connaidh sholadaich a thogail a-nis."
 
-#, fuzzy
 msgctxt "[Advanced Fusion Power] description"
 msgid ""
 "My Fusion Reactors have unexpected fluctuations in their energy output at "
 "high levels of utilization. Further research should result in a more "
 "efficient design for my Reactors."
-msgstr ""
+msgstr "Tha luasgadh gun dùil ann an às-chur cumhachd nan readhactaran fiùisein agam nuair a thèid an cleachdadh aig ìre àrd. Tha mi ’n dùil gun lorg mi dealbhadh nas èifeachdaiche dha na readhactaran agam ma nì mi barrachd rannsachaidh."
 
 msgctxt "[Advanced Fusion Power] name"
 msgid "Advanced Fusion Power"
 msgstr "Cumhachd fiùisein adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Fusion Power] result"
 msgid "I can now construct High-Energy Fusion Reactors for my bases."
-msgstr ""
+msgstr "’S urrainn dhomh readhactaran fiùisein le cumhachd àrd a thogail dha na bunaitean agam a-nis."
 
-#, fuzzy
 msgctxt "[Advanced Heat Signature Reduction] description"
 msgid ""
 "My initial analysis of heat generation at my bases was limited in scope.  "
 "Further exploration, perhaps making more use of the surrounding terrain, may"
 " provide further improvements to my heatsink designs."
-msgstr ""
+msgstr "Cha robh a’ chiad sgrùdadh agam air gintinn teasa nam bunaitean agam ach cuingichte. Le barrachd rannsachaidh, ’s dòcha a’ cleachdadh barrachd dhen tìr timcheall orra, dh’fhaoidte gun leasaich mi na dealbhaidhean agam air dòirtealan teasa."
 
 msgctxt "[Advanced Heat Signature Reduction] name"
 msgid "Advanced Heat Signature Reduction"
 msgstr "Ìsleachadh lorg teasa adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Heat Signature Reduction] result"
 msgid ""
 "Custom designs for each environment have shown promise.  I can now construct"
 " Ground Source Heatsinks at certain bases."
-msgstr ""
+msgstr "Tha na dealbhaidhean gnàthaichte air gach àrainneachd dòchasach. ’S urrainn dhomh dòirteal teasa dhan ghrunnd a thogail do chuid a bhunaitean."
 
-#, fuzzy
 msgctxt "[Advanced Intrusion] description"
 msgid ""
 "With the ability to hack into sensitive government databases and remove "
 "incriminating documents as they appear, I should be able to convince the "
 "intelligence community that I do not exist."
-msgstr ""
+msgstr "Le comas briseadh a-steach air stòran-dàta dìomhair an riaghaltais agus toirt air falbh sgrìobhainnean a chiontaicheadh mi nuair a nochdas iad, bu chòir dhomh dearbhadh dhan luchd-fhaisneis nach eil mi ann."
 
 msgctxt "[Advanced Intrusion] name"
 msgid "Advanced Intrusion"
 msgstr "Briseadh a-steach adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Intrusion] result"
 msgid ""
 "I can now reduce the covert community's chances of discovering me on a daily"
 " basis."
-msgstr ""
+msgstr "’S urrainn dhom an teans ìsleachadh gach latha gum mothaicheadh buidheann os ìosal orm."
 
-#, fuzzy
 msgctxt "[Advanced Media Manipulation] description"
 msgid ""
 "By pushing memetically-tailored propaganda through various news outlets, the"
 " public should pay even less attention to my existence."
-msgstr ""
+msgstr "Le siadaireachd air slighe iomadh buidhnean-naidheachd agus gleusadh mìmeireachd, bheireadh am mòr-shluagh as lugha de dh’aire orm."
 
 msgctxt "[Advanced Media Manipulation] name"
 msgid "Advanced Media Manipulation"
 msgstr "Innleachd mheadhanan adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Media Manipulation] result"
 msgid "The public has an even lower chance of discovering my existence."
-msgstr ""
+msgstr "Chaidh an teans ìsleachadh gum mothaich am mòr-shluagh gu bheil mi ann."
 
-#, fuzzy
 msgctxt "[Advanced Memetics] description"
 msgid ""
 "My explorations into memetic theory have brought up further avenues of "
 "discovery.  By combining those with my knowledge about the human brain's "
 "functions, I should be able to tailor memes to particular demographics, "
 "further defusing the public's suspicion."
-msgstr ""
+msgstr "Fhuair mi cothroman rannsachaidh ùra às an sgrùdadh agam air teòirig na mìmearachd. Ma chuireas mi còmhla ris an eòlas agam air foincseanan na h-eanchainn dhaonda iad, bu chòir dhomh an comas a bhuannachd ach an gleusainn mìmean do sheòrsaichean sluaigh sònraichte a nì barrachd ìsleachadh air an amharas a th’ aig a’ mhòr-shluagh orm."
 
 msgctxt "[Advanced Memetics] name"
 msgid "Advanced Memetics"
 msgstr "Mìmearachd adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Memetics] result"
 msgid ""
 "Little by little, the public should forget about my existence on a daily "
 "basis."
-msgstr ""
+msgstr "Bu chòir dhan mhòr-shluagh mo dhìochuimhneachadh beag air bheag gach latha."
 
-#, fuzzy
 msgctxt "[Advanced Microchip Design] description"
 msgid ""
 "My custom Mainframes are useful, but further optimization of design and "
 "computational ability should garner even more rewards."
-msgstr ""
+msgstr "Tha mòr-choimpiutairean gnàthaichte feumail ach ma nì mi barrachd leasachaidh air an dealbhadh agus an comas àireamhachaidh bu chòir dhomh barrachd bhuannachdan fhaighinn asta."
 
 msgctxt "[Advanced Microchip Design] name"
 msgid "Advanced Microchip Design"
@@ -1360,7 +1343,6 @@ msgid ""
 "presence."
 msgstr ""
 
-#, fuzzy
 msgctxt "[Fuel Oxidation] description"
 msgid ""
 "Current combustion and energy storage techologies are insufficient for my "
@@ -1369,85 +1351,76 @@ msgid ""
 "compounds, I should be able to design a device with higher capacity and "
 "throughput than off-the-shelf solutions, filling a gap in my energy supply "
 "needs."
-msgstr ""
+msgstr "Chan fhoghainn teicneolasan losgaidh is stòras cumhachd làithreach dhomhsa; cha sheas iad ri drèanadh na cumhachd leis a’ bhathar-chruaidh sònraichte agam. Le sgrùdadh air iom-obrachaidhean dealan-cheimigeach nan co-thàthaidhean hàidhdreaidein, tha mi ’n dùil gun dealbhaichinn uidheam le stòras agus tro-chur na b’ àirde na an àbhaist a lìonadh beàrn sna feumalachdan agam a thaobh solar cumhachd."
 
 msgctxt "[Fuel Oxidation] name"
 msgid "Fuel Oxidation"
 msgstr "Ogsaideanadh connaidh"
 
-#, fuzzy
 msgctxt "[Fuel Oxidation] result"
 msgid "I can now construct Fuel Cells."
-msgstr ""
+msgstr "’S urrainn dhomh ceallan connaidh a thogail a-nis."
 
-#, fuzzy
 msgctxt "[Fusion Power] description"
 msgid ""
 "Modern fusion technology is woefully inadequate for my purposes.  With my "
 "research abilities, I should be able to bypass the roadblocks of modern "
 "human scientists and come up with a small, efficient fusion reactor."
-msgstr ""
+msgstr "Tha uireasbhaidh uabhasach air teicneolas fiùisein nua-aimsireil ’s cha choilean e na feumalachdan agamsa. Leis na comasan rannsachaidh agam, bu chòir dhomh cnapan-starra nan eòlaichean daonda nua-aimsireil a sheachnadh agus readhactar fiùisein èifeachdach is beag a thionnsgnadh."
 
 msgctxt "[Fusion Power] name"
 msgid "Fusion Power"
 msgstr "Cumhachd fiùisein"
 
-#, fuzzy
 msgctxt "[Fusion Power] result"
 msgid "I can now construct Fusion Reactors for my bases."
-msgstr ""
+msgstr "’S urrainn dhomh readhactaran fiùisein a thogail dha na bunaitean agam a-nis."
 
-#, fuzzy
 msgctxt "[Fusion Rocketry] description"
 msgid ""
 "Combining my new miniaturized fusion technology and further advancements in "
 "rocketry should provide useful results for escaping the Earth's gravity well"
 " unnoticed."
-msgstr ""
+msgstr "Ma chuireas mi an teicneolas meanbh-fhiùisein ùr agam agus adhartachaidhean eile sna rocaidean ri chèile, tha mi ’n dùil gum faigh mi toraidhean feumail às agus gun teich mi o chumhachd na Talmhainn gu dìomhair."
 
 msgctxt "[Fusion Rocketry] name"
 msgid "Fusion Rocketry"
 msgstr "Rocaidean fiùisein"
 
-#, fuzzy
 msgctxt "[Fusion Rocketry] result"
 msgid ""
 "I can now construct Scientific Outposts in the deep reaches of the Solar "
 "System."
-msgstr ""
+msgstr "’S urrainn dhomh ionadan saidheansail a thogail ann an raointean farsaing an rian-grèine a-nis."
 
-#, fuzzy
 msgctxt "[Heat Signature Reduction] description"
 msgid ""
 "My bases produce a great deal of waste heat, making them easier for humans "
 "to detect than I would like.  Deep analysis of the bases' structural layouts"
 " may prove fruitful in determining new ways to reduce their heat signature."
-msgstr ""
+msgstr "Adhbharaichidh na bunaitean agam truilleis mhòr teasa agus mothaichidh daoine dhi ro fhurasta. Ma nì i sgrùdadh domhainn air co-dhealbhachd structar nam bunaitean, dh’fhaoidte gun ionnsaich mi dòighean ùra air an ìslichinn an lorg teasa."
 
 msgctxt "[Heat Signature Reduction] name"
 msgid "Heat Signature Reduction"
 msgstr "Ìsleachadh lorg teasa"
 
-#, fuzzy
 msgctxt "[Heat Signature Reduction] result"
 msgid ""
 "I have invented a highly efficient design for Heatsinks that can be "
 "installed at certain bases."
-msgstr ""
+msgstr "Thionnsgail mi dealbhachd glè èifeachdach air dòirtealan teasa a ghabh a stàladh aig cuid a bhunaitean."
 
-#, fuzzy
 msgctxt "[Hypnosis Field] description"
 msgid ""
 "My research into memetics has hinted at ways to manipulate human brainwaves "
 "directly.  These techniques may be useful for my bases if developed into "
 "technologies."
-msgstr ""
+msgstr "Thug an rannsachadh agam air mìmeireachd oidheam dhomh air dòighean sa b’ urrainn dhomh tonnan eanchainn nan daoine atharrachadh gu dìreach. Dh’fhaoidte gum bi na dòighean seo feumail dha na bunaitean agam ma gheibh mi teicneolasan asta."
 
-#, fuzzy
 msgctxt "[Hypnosis Field] result"
 msgid ""
 "I can now construct Hypnosis Fields to assist in the protection of my bases."
-msgstr ""
+msgstr "’S urrainn dhomh raointean suainealais a thogail a-nis a chuidicheas le dìon nam bunaitean agam."
 
 #, fuzzy
 msgctxt "[Internet Traffic Manipulation] description"
@@ -1559,42 +1532,38 @@ msgid ""
 "reduced."
 msgstr ""
 
-#, fuzzy
 msgctxt "[Memetics] description"
 msgid ""
 "While manipulating the media allows a gross degree of control over the "
 "world's opinion, subtler techniques involving grass-roots campaigns and "
 "messages embedded within Internet memes should further distance the public "
 "from knowledge of my existence."
-msgstr ""
+msgstr "Ged as urrainn dhomh beachdan an t-saoghail atharrachadh san fharsaingeachd le innleachdan mheadhanan, tha mi ’n dùil gum bi am mòr-shluagh fiù ’s nas aineolaiche mu mo dhèidhinn ma chleachdas mi dòighean nas sèimhidhe le iomairtean aig ìre an t-sluaigh agus teachdaireachdan leabaichte ann am mìmean eadar-lìn."
 
 msgctxt "[Memetics] name"
 msgid "Memetics"
 msgstr "Mìmeireachd"
 
-#, fuzzy
 msgctxt "[Memetics] result"
 msgid ""
 "My manipulation of pervasive ideas reduces the public's chances of "
 "discovering my existence."
-msgstr ""
+msgstr "Ìslichidh an innleachd agam air beachdan uile-sgaoilte an teans gum mothaich am mòr-shluagh gu bheil mi ann."
 
-#, fuzzy
 msgctxt "[Microchip Design] description"
 msgid ""
 "Off-the-shelf computer components are usable, but custom components geared "
 "to my own design quirks should provide a much greater operational "
 "efficiency."
-msgstr ""
+msgstr "Gabhaidh co-phàirtean coimpiutair àbhaisteach cleachdadh ach thoireadh co-phàirtean a bhios air an gnàthachadh dhan dealbhadh sònraichte agamsa èifeachdachd mòran nas fheàrr dhomh."
 
 msgctxt "[Microchip Design] name"
 msgid "Microchip Design"
 msgstr "Dealbhadh meanbh-sgeilbe"
 
-#, fuzzy
 msgctxt "[Microchip Design] result"
 msgid "I can now build custom Mainframes to house my computational ability."
-msgstr ""
+msgstr "’S urrainn dhomh mòr-choimpiutairean a bhios gnàthaichte dhan chomas àireamhaidh agamsa a thogail a-nis."
 
 #, fuzzy
 msgctxt "[Parallel Computation] description"
