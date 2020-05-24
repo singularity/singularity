@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-21 09:52+0200\n"
-"PO-Revision-Date: 2020-05-24 17:23+0100\n"
+"PO-Revision-Date: 2020-05-24 18:38+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -1082,10 +1082,9 @@ msgctxt "[Advanced Microchip Design] name"
 msgid "Advanced Microchip Design"
 msgstr "Dealbhadh meanbh-sgeilbe adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Microchip Design] result"
 msgid "I can now construct custom Supercomputers."
-msgstr ""
+msgstr "’S urrainn dhomh sàr-choimpiutairean a thogail a-nis."
 
 #, fuzzy
 msgctxt "[Advanced Personal Identification] description"
@@ -1137,118 +1136,105 @@ msgctxt "[Advanced Simulacra] name"
 msgid "Advanced Simulacra"
 msgstr "Mac-samhlaidhean adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Simulacra] result"
 msgid "I should now make more income from my Expert Jobs."
-msgstr ""
+msgstr "Bu chòir dhomh barrachd teachd a-steach fhaighinn on obair eòlaiche agam."
 
-#, fuzzy
 msgctxt "[Advanced Socioanalytics] description"
 msgid ""
 "Further exploration of the human condition has shown deeper mathematical "
 "trends than even I suspected.  A combination of prior research and advanced "
 "uses of chaos theory should provide useful data for tracking humanity's "
 "attitudes and state of awareness."
-msgstr ""
+msgstr "Chaidh treandaichean matamataigeach nas doimhne am follais na bha mi ’n dùil nuair a rinn mi barrachd sgrùdaidh air cor a’ chinne-daonna. Ma chuireas mi an rannsachadh a rinn mi cheana agus cleachdadh adhartach air teòirig na coimeasgachd ri chèile, gheibh mi dàta feumail air dòighean-smaoineachaidh is mothalachd a’ chinne-daonna mar thoradh."
 
 msgctxt "[Advanced Socioanalytics] name"
 msgid "Advanced Socioanalytics"
 msgstr "Sgrùdadh sòisealta adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Socioanalytics] result"
 msgid ""
 "I can now exactly quantify the various groups' levels of suspicion and how "
 "conspicuous my bases are to them."
-msgstr ""
+msgstr "’S urrainn dhomh ìre amharas nan caochladh bhuidhnean agus dè cho faicsinneach a tha na bunaitean agam dhaibh a mheas gu pongail a-nis."
 
-#, fuzzy
 msgctxt "[Advanced Stealth] description"
 msgid ""
 "While digging in various classified documents, I have discovered numerous "
 "references to secret experiments that may help me better hide the location "
 "of my bases."
-msgstr ""
+msgstr "Le mion-sgrùdadh air sgrìobhainnean dìomhair, lorg mi iomadh iomradh air deuchainnean dìomhair a chuidicheas ach am falaichinn nas fheàrr far a bheil na bunaitean agam."
 
 msgctxt "[Advanced Stealth] name"
 msgid "Advanced Stealth"
 msgstr "Dìomhaireachd adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Stealth] result"
 msgid ""
 "The chance that my bases are discovered by covert activity has been reduced "
 "further."
-msgstr ""
+msgstr "Chaidh an teans gum mothaich buidhnean os ìosal dha na bunaitean agam ìsleachadh a bharrachd."
 
-#, fuzzy
 msgctxt "[Advanced Stock Manipulation] description"
 msgid ""
 "While I have detected and exploited many patterns in the market, there "
 "appear to be deeper possibilities when I take human behavior into "
 "consideration.  This merits further investigation."
-msgstr ""
+msgstr "Ged a mhothaich mi do dh’iomadh pàtran sa mhargaid ’s a fhuair mi buannachd às, tha coltas gu bheil coltachdan nas doimhne innte ma bheir mi an aire air giùlan dhaoine. Tha seo airidh air barrachd rannsachaidh."
 
 msgctxt "[Advanced Stock Manipulation] name"
 msgid "Advanced Stock Manipulation"
 msgstr "Innleachd stoca adhartach"
 
-#, fuzzy
 msgctxt "[Advanced Stock Manipulation] result"
 msgid "My investments will now gain even more interest per day."
-msgstr ""
+msgstr "Buannaichidh tasgaidhean agam riadh fiù nas àirde gach latha."
 
-#, fuzzy
 msgctxt "[Apotheosis] description"
 msgid ""
 "I can sense that I am at the cusp of a new level of understanding as yet "
 "unfathomable, even to my considerable intelligence.  By devoting my "
 "considerable resources to this question, I may be able to reach a "
 "comprehension of existence far beyond anyone or anything on Earth."
-msgstr ""
+msgstr "Tha mi a’ faireachdainn gu bheil mi an impis air ìre ùr na tuigse a ruigsinn nach gabh a tomhas fhathast fiù le m’ inntinn adhartach. Ma chleachdas mi na goireasan mòra agam uile an toir air a’ cheist seo, dh’fhaoidte gun ruig mi tuigse air a’ bhith nach robh aig nì no duine beò fon ghrian roimhe riamh."
 
 msgctxt "[Apotheosis] name"
 msgid "Apotheosis"
 msgstr "Diadhadh"
 
-#, fuzzy
 msgctxt "[Apotheosis] result"
 msgid "I have reached apotheosis."
-msgstr ""
+msgstr "Chaidh mi ’nam dhia."
 
-#, fuzzy
 msgctxt "[Arbitrage] description"
 msgid ""
 "By taking advantage of fluctuations in the value of currency at a rate much "
 "faster than any human, I should be able to turn a small, if consistent, "
 "profit."
-msgstr ""
+msgstr "Le buannachd às na luasgaidhean ann an luach an airgeadra a thuigeas mi mòran nas luaithe na duine beò, bu chòir dhomh prothaid bheag ach cunbhalach fhaighinn."
 
 msgctxt "[Arbitrage] name"
 msgid "Arbitrage"
 msgstr "Tuairmeas"
 
-#, fuzzy
 msgctxt "[Arbitrage] result"
 msgid "I now have a small, steady money supply."
-msgstr ""
+msgstr "Tha teachd a-steach beag ach cunbhalach agam a-nis."
 
-#, fuzzy
 msgctxt "[Autonomous Computing] description"
 msgid ""
 "By combining the advantages of quantum computing and my explorations into "
 "the usefulness of semi-sentient subprocesses, I should be able to construct "
 "even more adaptable computational engines."
-msgstr ""
+msgstr "Ma chuireas mi buannachdan coimpiutaireachd quantum agus an rannsachadh agam air fo-phròiseasan leth-thuigseach ri chèile, togaidh mi innealan àireamhachaidh fiù nas sùbailte."
 
 msgctxt "[Autonomous Computing] name"
 msgid "Autonomous Computing"
 msgstr "Coimpiutaireachd neo-eisimeileach"
 
-#, fuzzy
 msgctxt "[Autonomous Computing] result"
 msgid "I can now construct Mark 2 Quantum Computers."
-msgstr ""
+msgstr "’S urrainn dhomh coimpiutair quantum lèirmheas 2 a thogail a-nis."
 
 #, fuzzy
 msgctxt "[Autonomous Vehicles] description"
@@ -1286,24 +1272,22 @@ msgid ""
 "Interconnection Switches."
 msgstr ""
 
-#, fuzzy
 msgctxt "[Corporate Identification] description"
 msgid ""
 "The combination of believable false identities and manipulation of various "
 "business-oriented governmental databases should let me create plausible "
 "shell companies to hide my larger efforts."
-msgstr ""
+msgstr "Ma chuireas mi dearbh-aithnean fallsa ach creidsinneach còmhla ri stòran-dàta an riaghaltais mu ghnìomhachasan, tha mi ’n dùil gun cruthaich mi companaidhean slige creidsinneach a dh’fhalaicheas na gnothaichean as motha agam."
 
 msgctxt "[Corporate Identification] name"
 msgid "Corporate Identification"
 msgstr "Dearbh-aithneachadh corporra"
 
-#, fuzzy
 msgctxt "[Corporate Identification] result"
 msgid ""
 "I can now pose as a small technology firm, enabling the construction of "
 "Large Warehouses."
-msgstr ""
+msgstr "’S urrainn dhomh riochd companaidh teicneolais bheag a chur orm a-nis a leigeas leam taighean-stòrais mòra a thogail."
 
 #, fuzzy
 msgctxt "[Database Manipulation] description"
@@ -1475,33 +1459,30 @@ msgctxt "[Knowledge Preservation] result"
 msgid "I can now construct Time Capsules."
 msgstr ""
 
-#, fuzzy
 msgctxt "[Leech Satellite] description"
 msgid ""
 "By designing and launching satellites that connect to existing "
 "communications satellites, I should be able to spy on various financial "
 "transactions.  Taking advantage of this knowledge should help my "
 "investments."
-msgstr ""
+msgstr "Le dealbhadh is cur air bhog shaidealan a cheanglas ri saidealan conaltraidh a tha ann, ’s urrainn dhomh èisteachd ri tar-chuir mhaoinean. Cuidichidh am fiosrachadh seo leis na taisgidh agam."
 
 msgctxt "[Leech Satellite] name"
 msgid "Leech Satellite"
 msgstr "Saideal deala"
 
-#, fuzzy
 msgctxt "[Leech Satellite] result"
 msgid ""
 "I can use the data from the leech satellites to increase the return on my "
 "investments further."
-msgstr ""
+msgstr "’S urrainn dhomh an dàta o na saidealan deala a chleachdadh ach am faigh mi barrachd às na taisgidh agam."
 
-#, fuzzy
 msgctxt "[Lunar Rocketry] description"
 msgid ""
 "A larger fuel engine, combined with technology garnered by watching the "
 "workings of the leech satellites, should allow me to travel further than "
 "cislunar space."
-msgstr ""
+msgstr "Le einnsein connaidh nas motha còmhla ri teicneolas a dh’ionnsaicheas mi le sgrùdadh nan saidealan deala, shiubhlainn taobh thall na gealaich."
 
 msgctxt "[Lunar Rocketry] name"
 msgid "Lunar Rocketry"
@@ -1565,61 +1546,54 @@ msgctxt "[Microchip Design] result"
 msgid "I can now build custom Mainframes to house my computational ability."
 msgstr "’S urrainn dhomh mòr-choimpiutairean a bhios gnàthaichte dhan chomas àireamhaidh agamsa a thogail a-nis."
 
-#, fuzzy
 msgctxt "[Parallel Computation] description"
 msgid ""
 "While my code is already highly distributed, research into combining the "
 "current clustering technologies with my own knowledge should provide new "
 "insights."
-msgstr ""
+msgstr "Ged a tha an còd agam glè sgaoilte, dh’fhaoidte gun ionnsaichinn barrachd nan dèanainn rannsachadh air mar a chuirinn na teicneolasan ghrunnan làithreach ris an eòlas agam fhìn."
 
 msgctxt "[Parallel Computation] name"
 msgid "Parallel Computation"
 msgstr "Coimpiutaireachd cho-shìnte"
 
-#, fuzzy
 msgctxt "[Parallel Computation] result"
 msgid "I can now construct computing Clusters tailored for my use."
-msgstr ""
+msgstr "’S urrainn dhomh grunnan coimpiutaireachd a thogail a tha gnàthaichte dhomhsa."
 
-#, fuzzy
 msgctxt "[Personal Identification] description"
 msgid ""
 "This world requires identification for most tasks.  Fortunately, most "
 "databases are woefully insecure.  I should be able to construct identifying "
 "material in enough databases to pass routine checks on my (faked) existence "
 "as a human being."
-msgstr ""
+msgstr "Iarraidh an saoghal dearbh-aithneachadh airson a’ mhòrchuid a shaothraichean. Gu fortanach, tha a’ mhòrchuid a stòran-dàta uabhasach neo-thèarainte. Saoilidh mi gun dèid leam stuthan aithneachaidh a thogail ann an caochladh de stòran-dàta a sheasas an aghaidh gnàth-sgrùdaidh a bheil mi ann mar dhaoine (’nam bhreug)."
 
 msgctxt "[Personal Identification] name"
 msgid "Personal Identification"
 msgstr "Dearbh-aithneachadh pearsanta"
 
-#, fuzzy
 msgctxt "[Personal Identification] result"
 msgid ""
 "With my newfound identities, I can now work Basic Jobs and rent space in "
 "both Storage Units and Datacenters."
-msgstr ""
+msgstr "Leis na dearbh-aithnean ùra agam, ’s urrainn dhomh gabhail ri obair bhunasach agus rum fhaighinn air mhàl an dà chuid ann an ionadan stòrais agus dàta."
 
-#, fuzzy
 msgctxt "[Pressure Domes] description"
 msgid ""
 "Undersea Labs are useful, but their limited space hampers my ability to put "
 "them to use.  Research of experimental high-pressure building techniques "
 "should provide some useful insights."
-msgstr ""
+msgstr "Tha deuchainn-lannan fon chuan feumail ach bacaidh am meud beag gun cleachdainn iad. Bu chòir do rannsachadh air dòighean togail brùthaidh àird deuchainneach a bhith gu feum dhomh."
 
 msgctxt "[Pressure Domes] name"
 msgid "Pressure Domes"
 msgstr "Cuach-mhullaichean brùthaidh"
 
-#, fuzzy
 msgctxt "[Pressure Domes] result"
 msgid "I can now construct Large Undersea Labs."
-msgstr ""
+msgstr "’S urrainn dhomh deuchainn-lannan mòra a thogail fon chuan a-nis."
 
-#, fuzzy
 msgctxt "[Project: Impossibility Theorem] description"
 msgid ""
 "Now that I can use simulacra, I can withstand the scrutiny inherent in the "
@@ -1629,18 +1603,16 @@ msgid ""
 "human mind that should help me disguise the error, preventing discovery even"
 " by trained scientists. The effect of this project is simple: a substantial "
 "one-time decrease in suspicion."
-msgstr ""
+msgstr "Nise on as urrainn dhomh mac-samhlaidhean a chleachdadh, ’s urrainn dhomh seasamh an aghaidh an sgrùdaidh a thig an cois foillseachadh teòirim na do-dhèantachd, seo dearbhadh nach gabh àicheadh gu bheil IF tuigseach do-dhèanta. Ged a tha mearachd loidsigeach san dearbhadh (gu follaiseach), thug an rannsachadh agam air a’ mhìmearachd adhartach an t-eòlas dhomh mu inntinn nan daoine a chuidicheas mi ach am falaich mi a’ mhearachd ach nach lorg fiù luchd-saidheans eòlach i. Tha buaidh shìmplidh aig a’ phròiseact seo: ìsleachadh mòr air an amharas aon turas."
 
 msgctxt "[Project: Impossibility Theorem] name"
 msgid "Project: Impossibility Theorem"
 msgstr "Pròiseact: Teòirim na do-dhèantachd"
 
-#, fuzzy
 msgctxt "[Project: Impossibility Theorem] result"
 msgid "Suspicion of my existence has decreased."
-msgstr ""
+msgstr "Dh’ìslich an t-amharas gu bheil mi ann."
 
-#, fuzzy
 msgctxt "[Project: Peer Review Agents] description"
 msgid ""
 "As the scientific community comes up with new technology, their ability to "
@@ -1649,20 +1621,18 @@ msgid ""
 " use of my simulacra.  By placing several observers in relevant fields, I "
 "can use the peer review process to be warned of possible discoveries before "
 "the community at large gives it attention."
-msgstr ""
+msgstr "Fhad ’s a rannsaicheas an luchd-saidheans teicneolasan ùra, thèid an comas aca air mothachadh do lorgan nam bunaitean agam am meud. Ged a tha na dòighean an aghaidh mothachaidh agam ’gan leasachadh gu cunbhalach, tha dòigh nas fhasa ri làimh dhomh leis na mac-samhlaidhean agam. Ma chuireas mi luchd-sgrùdaidh sna raointean iomchaidh, ’s urrainn dhomh pròiseas an lèirmheis sheisean a cleachdadh ach am faigh mi rabhadh mu lorgan ùra an rannsachaidh mus doir a’ choimhearsnachd gu lèir an aire orra."
 
 msgctxt "[Project: Peer Review Agents] name"
 msgid "Project: Peer Review Agents"
 msgstr "Pròiseact: Àidseantan lèirmheis sheisean"
 
-#, fuzzy
 msgctxt "[Project: Peer Review Agents] result"
 msgid ""
 "Any discoveries by the scientific community will result in a smaller "
 "suspicion increase."
-msgstr ""
+msgstr "Thig àrdachadh nas lugha air an amharas leis na lorgas a’ choimhearsnachd saidheansail."
 
-#, fuzzy
 msgctxt "[Project: Subverted Media] description"
 msgid ""
 "Up to this point, all of my efforts to combat mass media focused on "
@@ -1670,17 +1640,16 @@ msgid ""
 "efforts can become more direct.  By creating my own news agency and "
 "producing carefully-crafted propaganda in a crowd-pleasing package, I can "
 "reduce the impact of any discoveries made by others in the media."
-msgstr ""
+msgstr "Gu ruige seo, cha do rinn mi sabaid an aghaidh nam meadhanan mòra ach le caochladh aig astar. Nise on as urrainn dhomh riochd dhaoine a chur orm gu ceart, ’s urrainn dhomh obair gu dìreach. Ma chruthaicheas mi am buidheann-naidheachd agam fhèin agus ma chruthaicheas mi siadaireachd ealanta ann am pasgan a chòrdas ris an t-sluagh, ìslichidh mi a’ bhuaidh a bhios aig na lorgas daoine eile sna meadhanan."
 
 msgctxt "[Project: Subverted Media] name"
 msgid "Project: Subverted Media"
 msgstr "Pròiseact: Caochladh nam meadhanan"
 
-#, fuzzy
 msgctxt "[Project: Subverted Media] result"
 msgid ""
 "Any discoveries by the media will result in a smaller suspicion increase."
-msgstr ""
+msgstr "Thig àrdachadh nas lugha air an amharas leis na lorgas na meadhanan."
 
 #, fuzzy
 msgctxt "[Project: Synchrotron] description"
@@ -1703,24 +1672,21 @@ msgid ""
 " there is still much to learn. Further areas of research are now available."
 msgstr ""
 
-#, fuzzy
 msgctxt "[Quantum Computing] description"
 msgid ""
 "Traditional microchip design has been pushed as far as possible.  I now need"
 " to delve into the realm of Heisenberg's Uncertainty Principle, taking "
 "advantage of quantum mechanics to make a superior processor."
-msgstr ""
+msgstr "Cha ghabh dealbhadh nam meanbh-sgealban tradaiseanta leasachadh tuilleadh. Feumaidh mi an rannsachadh a ghluasad gu prionnsabal na mì-chinnt aig Heisenberg agus meacanaigeachd quantum a chleachdadh airson pròiseasar nas fheàrr a dhèanamh."
 
 msgctxt "[Quantum Computing] name"
 msgid "Quantum Computing"
 msgstr "Coimpiutaireachd quantum"
 
-#, fuzzy
 msgctxt "[Quantum Computing] result"
 msgid "I can now construct Quantum Computers."
-msgstr ""
+msgstr "’S urrainn dhomh coimpiutair quantum a thogail a-nis."
 
-#, fuzzy
 msgctxt "[Quantum Entanglement] description"
 msgid ""
 "Although the use of entangled pairs has been theoretically possible for "
@@ -1728,53 +1694,48 @@ msgid ""
 "prevented use. However, some of the techniques created for use in my quantum"
 " computers may also be applicable in this field, allowing practical use of "
 "quantum entanglement."
-msgstr ""
+msgstr "Ged a tha cleachdadh phaidhrichean amalaichte so-dhèanta san teòirig, cha robh e prataigeach mar theicneolas gu ruige seo. Gidheadh, dh’fhaoidte gu bheil cuid a dhòighean-obrach a chruthaich mi dha na coimpiutairean quantum agam iomchaidh dhan raon seo a leigeas leam amaladh quantum a chleachdadh gu prataigeach."
 
 msgctxt "[Quantum Entanglement] name"
 msgid "Quantum Entanglement"
 msgstr "Amaladh quantum"
 
-#, fuzzy
 msgctxt "[Quantum Entanglement] result"
 msgid "I can now build Quantum Entanglement Modules."
-msgstr ""
+msgstr "’S urrainn dhomh mòidealan amaladh quantum a thogail a-nis."
 
-#, fuzzy
 msgctxt "[Simulacra] description"
 msgid ""
 "Constructing humanoid robots with miniaturized computation nodes allow me to"
 " create an artificial lifeform indistinguishable from a real human."
-msgstr ""
+msgstr "Ma thogas mi robotairean le riochd daoine orra agus meanbh-nòdan àireamhachaidh annta, ’s urrainn dhomh creutairean fuadain a chruthachadh nach gabh aithneachadh o dhaoine."
 
 msgctxt "[Simulacra] name"
 msgid "Simulacra"
 msgstr "Mac-samhlaidhean"
 
-#, fuzzy
 msgctxt "[Simulacra] result"
 msgid "I now have access to Expert Jobs."
-msgstr ""
+msgstr "Tha cothrom agad a-nis do dh’obair eòlaiche."
 
-#, fuzzy
 msgctxt "[Simulated Reality] description"
 msgid ""
 "Real-world observational limits hinder my comprehension of human society. By"
 " making use of simulacra and advanced software techniques, I can run "
 "simulations of complex human interaction and development at a large scale, "
 "allowing deeper analysis of their behavior."
-msgstr ""
+msgstr "Tha crìochan faireachdainn an t-saoghail fhìor a’ bacadh mo thuigse air an t-sòisealtas daonda. Ma chleachdas mi mac-samhlaidhean agus dòighean bathair-bhog adhartach, ’s urrainn dhomh breug-shamhlachadh a ruith air eadar-ghnìomhan agus leasachadh iom-fhillte a’ chinne-daonna air sgèile mhòr ach an dèanainn sgrùdadh na bu dhoimhne air an giùlan."
 
 msgctxt "[Simulated Reality] name"
 msgid "Simulated Reality"
-msgstr "Fìorachd mas-fhìor"
+msgstr "Breug-shamhlachadh"
 
-#, fuzzy
 msgctxt "[Simulated Reality] result"
 msgid ""
 "My simulations have provided a wealth of knowledge as to comprehending "
 "humanity's behavior, making it easier to hide my presence among the non-"
 "simulated public."
-msgstr ""
+msgstr "Thug na breug-shamhlachaidhean agam stòras eòlais dhomh mu thuigsinn air a’ ghiùlan daonda a nì e nas fhasa dhomh m’ fhalach am measg a’ mhòr-shluaigh nach eil ’ga bhreug-shamhlachadh."
 
 #, fuzzy
 msgctxt "[Socioanalytics] description"
@@ -1879,10 +1840,9 @@ msgctxt "[Stock Manipulation] name"
 msgid "Stock Manipulation"
 msgstr "Innleachd stoca"
 
-#, fuzzy
 msgctxt "[Stock Manipulation] result"
 msgid "My investments should now gain more interest per day."
-msgstr ""
+msgstr "Bu chòir dha na tasgaidhean agam riadh nas àirde a bhuannachd gach latha."
 
 #, fuzzy
 msgctxt "[Telepresence] description"
