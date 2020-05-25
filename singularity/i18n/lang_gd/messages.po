@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-05-24 00:00+0100\n"
-"PO-Revision-Date: 2020-05-24 16:25+0100\n"
+"PO-Revision-Date: 2020-05-25 09:27+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -520,7 +520,7 @@ msgstr "x%d (air a’ char as motha)"
 #: screens/base.py:450
 #, python-format
 msgid "(room for %d)"
-msgstr "(tha rùm dha %d ann)"
+msgstr "(tha rùm do %d ann)"
 
 #. Translators: current and maximum number of CPUs in a base
 #: screens/base.py:453
@@ -886,7 +886,7 @@ msgstr "Call obrach-càraidh"
 msgid ""
 "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
 "Maintenance failed."
-msgstr "Chaidh bunait {BASE} dhen t-seòrsa {BASE_TYPE} a mhilleadh an-seo: {LOCATION}. Dh’fhàillig leis an obair-chàraidh."
+msgstr "Chaidh bunait {BASE} den t-seòrsa {BASE_TYPE} a mhilleadh an-seo: {LOCATION}. Dh’fhàillig leis an obair-chàraidh."
 
 #: logmessage.py:304
 #, python-brace-format
@@ -900,7 +900,7 @@ msgstr "Mothachadh do bhunait"
 #: logmessage.py:340
 #, python-brace-format
 msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
-msgstr "Chaidh bunait {BASE} dhen t-seòrsa {BASE_TYPE} a mhilleadh an-seo: {LOCATION}."
+msgstr "Chaidh bunait {BASE} den t-seòrsa {BASE_TYPE} a mhilleadh an-seo: {LOCATION}."
 
 #: logmessage.py:345
 #, python-brace-format
