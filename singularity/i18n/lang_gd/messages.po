@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-05-24 00:00+0100\n"
-"PO-Revision-Date: 2020-05-25 16:20+0100\n"
+"PO-Revision-Date: 2020-05-25 20:10+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -186,11 +186,11 @@ msgstr "\nThachair mearachd. Cuiridh sinn an geama ’na stad is fosglaidh sinn 
 
 #: screens/map.py:832
 msgid "CASH"
-msgstr "AIRGEAD-LÀIMHE"
+msgstr "AIRGEAD"
 
 #: screens/map.py:858 location.py:235
 msgid "CPU"
-msgstr "CPUan"
+msgstr "CPU"
 
 #: screens/map.py:870
 msgid "BASES"
@@ -207,7 +207,7 @@ msgstr "REAT MOTHACHAIDH"
 #: screens/research.py:71
 #, python-format
 msgid "%s money per CPU per day."
-msgstr "%s de dh’airgead gach CPU gach latha."
+msgstr "%s £ gach CPU gach latha."
 
 #: screens/research.py:173
 #, python-brace-format
@@ -471,7 +471,7 @@ msgstr "’S e IF mas-fhìor a tha ann an Endgame: Singularity.  Ged a tha an sa
 
 #: screens/base.py:109
 msgid "Number of items"
-msgstr "Cunntas nan nithean"
+msgstr "Co mheud"
 
 #: screens/base.py:221 screens/base.py:228
 msgid "CHANGE"
@@ -680,7 +680,7 @@ msgstr "Meud: %d"
 #: screens/knowledge.py:213
 #, python-format
 msgid "%s Money"
-msgstr "%s de dh’airgead"
+msgstr "%s £"
 
 #: warning.py:50
 #, python-brace-format
@@ -792,7 +792,7 @@ msgstr "An teans gum mothaichear orm:"
 #: buyable.py:68
 #, python-format
 msgid "%s money"
-msgstr "%s de dh’airgead"
+msgstr "%s £"
 
 #: buyable.py:101
 msgid "Cost:"
