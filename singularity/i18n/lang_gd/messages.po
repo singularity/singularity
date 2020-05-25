@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-05-24 00:00+0100\n"
-"PO-Revision-Date: 2020-05-25 10:37+0100\n"
+"PO-Revision-Date: 2020-05-25 16:20+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -309,11 +309,11 @@ msgstr "Teachd a-steach:"
 
 #: screens/report.py:109
 msgid "Money flow until Midnight:"
-msgstr "Sruth airgid aig meadhan-oidhche:"
+msgstr "Toradh air meadhan-oidhche:"
 
 #: screens/report.py:111
 msgid "Money flow for 24 hours:"
-msgstr "Sruth airgid fad 24 uair a thìde:"
+msgstr "Toradh fad 24 uair a thìde:"
 
 #: screens/report.py:119
 msgid "Total CPU:"
@@ -423,7 +423,7 @@ msgstr "Cuir ainm air"
 #: screens/location.py:360
 #, python-brace-format
 msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr "{CITY}: {BASETYPE} {NUMBER}"
+msgstr "{BASETYPE} {NUMBER}: {CITY}"
 
 #. Translators: Name of a new base when location has no cities
 #: screens/location.py:364
@@ -856,7 +856,7 @@ msgstr "Rannsachadh"
 #: logmessage.py:220
 #, python-brace-format
 msgid "{TECH} complete"
-msgstr "Tha {TECH} deiseil"
+msgstr "Tha {TECH} air a rannsachadh"
 
 #: logmessage.py:225
 #, python-brace-format
@@ -870,7 +870,7 @@ msgstr "Togail bunait"
 #: logmessage.py:272
 #, python-brace-format
 msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
-msgstr "Chaidh {BASE_NAME} ({BASE_TYPE}) a thogail. Ranntair: {LOCATION}"
+msgstr "Chaidh {BASE_TYPE} a thogail. {BASE_NAME}: {LOCATION}"
 
 #: logmessage.py:277
 #, python-brace-format
@@ -886,7 +886,7 @@ msgstr "Call obrach-càraidh"
 msgid ""
 "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
 "Maintenance failed."
-msgstr "Chaidh bunait {BASE} den t-seòrsa {BASE_TYPE} a mhilleadh. Ranntair: {LOCATION}. Dh’fhàillig leis an obair-chàraidh."
+msgstr "Chaidh bunait {BASE}: {LOCATION} den t-seòrsa {BASE_TYPE} a mhilleadh. Dh’fhàillig leis an obair-chàraidh."
 
 #: logmessage.py:304
 #, python-brace-format
@@ -900,12 +900,12 @@ msgstr "Mothachadh do bhunait"
 #: logmessage.py:340
 #, python-brace-format
 msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
-msgstr "Chaidh bunait {BASE} den t-seòrsa {BASE_TYPE} a mhilleadh. Ranntair: {LOCATION}."
+msgstr "Chaidh bunait {BASE}: {LOCATION} den t-seòrsa {BASE_TYPE} a mhilleadh."
 
 #: logmessage.py:345
 #, python-brace-format
 msgid "My use of {BASE} has been discovered. {MESSAGE}"
-msgstr "Mhothaichte gun do chleachd mi {BASE}. {MESSAGE}"
+msgstr "Mhothaichte mo chleachdadh air {BASE}. {MESSAGE}"
 
 #: logmessage.py:370
 msgid "Item Construction"
@@ -914,7 +914,7 @@ msgstr "Togail nithean"
 #: logmessage.py:378
 #, python-brace-format
 msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
-msgstr "Chaidh {ITEM_TYPE_NAME} a thogail aig {BASE_NAME}. Ranntair: {LOCATION}"
+msgstr "Chaidh {ITEM_TYPE_NAME} a thogail aig {BASE_NAME}: {LOCATION}"
 
 #: logmessage.py:385
 #, python-brace-format

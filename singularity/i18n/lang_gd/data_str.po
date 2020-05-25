@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-21 09:52+0200\n"
-"PO-Revision-Date: 2020-05-25 10:37+0100\n"
+"PO-Revision-Date: 2020-05-25 16:20+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -384,7 +384,7 @@ msgstr "Thug na siostaman tèarainteachd fèin-obrachail gach fianais dheimhinnt
 
 msgctxt "[covert] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by COVERT at {LOCATION}"
-msgstr "Mothaich buidheann OS ÌOSAL do bhunait {BASE} ({BASE_TYPE}). Ranntair: {LOCATION}"
+msgstr "Mothaich buidheann OS ÌOSAL do bhunait {BASE_TYPE}: {BASE}: {LOCATION}"
 
 msgctxt "[covert] name"
 msgid "COVERT"
@@ -398,7 +398,7 @@ msgstr "Thug na siostaman tèarainteachd fèin-obrachail gach fianais dheimhinnt
 
 msgctxt "[news] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by NEWS at {LOCATION}"
-msgstr "Mothaich luchd-NAIDHEACHD do bhunait {BASE} ({BASE_TYPE}). Ranntair: {LOCATION}"
+msgstr "Mothaich luchd-NAIDHEACHD do bhunait {BASE_TYPE}: {BASE}: {LOCATION}"
 
 msgctxt "[news] name"
 msgid "NEWS"
@@ -412,7 +412,7 @@ msgstr "Thug na siostaman tèarainteachd fèin-obrachail gach fianais dheimhinnt
 
 msgctxt "[public] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by PUBLIC at {LOCATION}"
-msgstr "Mothaich am MÒR-ShLUAGH do bhunait {BASE} ({BASE_TYPE}). Ranntair: {LOCATION}"
+msgstr "Mothaich am MÒR-SHLUAGH do bhunait {BASE_TYPE}: {BASE}: {LOCATION}"
 
 msgctxt "[public] name"
 msgid "PUBLIC"
@@ -426,7 +426,7 @@ msgstr "Thug na siostaman tèarainteachd fèin-obrachail gach fianais dheimhinnt
 
 msgctxt "[science] discover_log"
 msgid "{BASE} ({BASE_TYPE}) discovered by SCIENCE at {LOCATION}"
-msgstr "Mothaich EÒLAICHE do bhunait {BASE} ({BASE_TYPE}). Ranntair: {LOCATION}"
+msgstr "Mothaich EÒLAICHE do bhunait {BASE_TYPE}: {BASE}: {LOCATION}"
 
 msgctxt "[science] name"
 msgid "SCIENCE"
@@ -1092,7 +1092,7 @@ msgid ""
 "convincing.  Some of these databases are heavily protected; those will "
 "require time and persistence to compromise, but the result should be worth "
 "it."
-msgstr "Le innleachd leasaichte air stòran-dàta luchd-obrach, bu chòir riochd nas creidsinniche a bhith orm. Tha dìon làidir air cuid de na stòran-dàta sin; feumaidh mi ùine ’s leantalachd ach am faigh mi a-steach orra ach b’ fhiach an toradh."
+msgstr "Le innleachd leasaichte air stòran-dàta luchd-obrach, bu chòir do riochd nas creidsinniche a bhith orm. Tha dìon làidir air cuid de na stòran-dàta sin; feumaidh mi ùine ’s leantalachd ach am faigh mi a-steach orra ach b’ fhiach an toradh."
 
 msgctxt "[Advanced Personal Identification] name"
 msgid "Advanced Personal Identification"
