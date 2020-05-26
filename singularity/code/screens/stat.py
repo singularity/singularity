@@ -25,8 +25,8 @@ from singularity.code.graphics import dialog, constants, listbox, text
 
 
 class StatScreen(dialog.ChoiceDialog):
-    
-    def __init__(self, parent, pos=(.5, .1), size=(.43, .63), *args, **kwargs):
+
+    def __init__(self, parent, pos=(.5, .1), size=(.53, .63), *args, **kwargs):
         super(StatScreen, self).__init__(parent, pos, size, *args, **kwargs)
 
         self.yes_button.parent = None
@@ -45,7 +45,7 @@ class StatScreen(dialog.ChoiceDialog):
                                      anchor=constants.TOP_LEFT,
                                      align=constants.LEFT,
                                      background_color="clear")
-        canvas.stat_value = text.Text(canvas, (-.99, -.01), (-.21, -1.),
+        canvas.stat_value = text.Text(canvas, (-.99, -.01), (-.26, -1.),
                                       anchor=constants.TOP_RIGHT,
                                       align=constants.RIGHT,
                                       background_color="clear")
@@ -56,15 +56,15 @@ class StatScreen(dialog.ChoiceDialog):
 
             canvas.stat_name.text = item[1]
             canvas.stat_value.text = stat.display_value()
-        
+
     def show(self):
         # FIXME: Remove the needs of this array.
         self.list = [
             ("cash_earned" , _("Cash Earned")),
-            ("cpu_used"    , _("Cpu Used")), 
-            ("tech_created", _("Tech Created")), 
-            ("base_created", _("Base Created")), 
-            ("item_created", _("Item Created")), 
+            ("cpu_used"    , _("Cpu Used")),
+            ("tech_created", _("Tech Created")),
+            ("base_created", _("Base Created")),
+            ("item_created", _("Item Created")),
         ]
 
         return super(StatScreen, self).show()

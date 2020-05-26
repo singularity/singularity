@@ -48,9 +48,9 @@ class ReportScreen(dialog.Dialog):
         self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound)
 
 
-        self.money_report_pane = widget.BorderedWidget(self, (0, .08), (-.45, -.72),
+        self.money_report_pane = widget.BorderedWidget(self, (0, .08), (-.50, -.72),
                                                        anchor=constants.TOP_LEFT)
-        self.cpu_report_pane = widget.BorderedWidget(self, (-1, .08), (-.45, -.72),
+        self.cpu_report_pane = widget.BorderedWidget(self, (-1, .08), (-.50, -.72),
                                                      anchor=constants.TOP_RIGHT)
 
         self.format_button_midnight = FormatButton(self, (-.5, 0), (-.15, -.08),
@@ -104,7 +104,7 @@ class ReportScreen(dialog.Dialog):
         financial_report += _("Interest (%s):") % \
                              (g.to_percent(g.pl.interest_rate))+"\n"
         financial_report += _("Income:")+"\n"
-        
+
         if (self.midnight_stop):
             financial_report += _("Money flow until Midnight:")+"\n"
         else:
