@@ -35,7 +35,7 @@ class LocationScreen(dialog.Dialog):
         super(LocationScreen, self).__init__(*args, **kwargs)
         self.pos = (-.5, -.5)
         self.anchor = constants.MID_CENTER
-        self.size = (.75, .70)
+        self.size = (.90, .70)
 
         self.name_display = text.Text(self, (0,0), (-1, -.08),
                                       anchor=constants.TOP_LEFT,
@@ -43,7 +43,7 @@ class LocationScreen(dialog.Dialog):
                                       border_color="pane_background",
                                       background_color="pane_background_empty",
                                       shrink_factor=1, bold=True)
-        self.modifier_display = text.Text(self, (-.75, -.01), (-.25, -.06),
+        self.modifier_display = text.Text(self, (-.65, -.01), (-.35, -.06),
                                           anchor=constants.TOP_LEFT,
                                           background_color="clear")
 
@@ -126,13 +126,13 @@ class LocationScreen(dialog.Dialog):
         canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.23, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_cpu       = text.Text(canvas, (-.50,-.05), (-.13, -.99),
+        canvas.base_cpu       = text.Text(canvas, (-.48,-.05), (-.13, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.status_display = text.Text(canvas, (-.63,-.05), (-.35, -.99),
+        canvas.status_display = text.Text(canvas, (-.59,-.05), (-.36, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.power_display  = text.Text(canvas, (-.93,-.05), (-.07, -.99),
+        canvas.power_display  = text.Text(canvas, (-.90,-.05), (-.10, -.99),
                                           background_color="clear")
 
 
