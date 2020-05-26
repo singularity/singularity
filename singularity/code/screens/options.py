@@ -53,28 +53,28 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         # Tabs buttons
         self.tabs_buttons = button.ButtonGroup()
 
-        self.general_tab = OptionButton(self, (-.20, .01), (-.20, .05),
+        self.general_tab = OptionButton(self, (-.135, .01), (-.240, .05),
                                         autotranslate=True,
                                         text=N_("&General"),
                                         anchor=constants.TOP_CENTER,
                                         function=self.set_tabs_pane, args=(self.general_pane,))
         self.tabs_buttons.add(self.general_tab)
 
-        self.video_tab = OptionButton(self, (-.40, .01), (-.20, .05),
+        self.video_tab = OptionButton(self, (-.3790, .01), (-.240, .05),
                                       autotranslate=True,
                                       text=N_("&Video"),
                                       anchor = constants.TOP_CENTER,
                                       function=self.set_tabs_pane, args=(self.video_pane,))
         self.tabs_buttons.add(self.video_tab)
 
-        self.audio_tab = OptionButton(self, (-.60, .01), (-.20, .05),
+        self.audio_tab = OptionButton(self, (-.6230, .01), (-.240, .05),
                                       autotranslate=True,
                                       text=N_("&Audio"),
                                       anchor=constants.TOP_CENTER,
                                       function=self.set_tabs_pane, args=(self.audio_pane,))
         self.tabs_buttons.add(self.audio_tab)
 
-        self.gui_tab = OptionButton(self, (-.80, .01), (-.202, .05),
+        self.gui_tab = OptionButton(self, (-.865, .01), (-.235, .05),
                                     autotranslate=True,
                                     text=N_("&Interface"),
                                     anchor=constants.TOP_CENTER,
@@ -178,7 +178,7 @@ Would you like to restart the game now?"""),)
 
 class GeneralPane(widget.Widget):
     def __init__(self, *args, **kwargs):
-        
+
         super(GeneralPane, self).__init__(*args, **kwargs)
 
         self.language_label = text.Text(self, (.01, .01), (.14, .05),
@@ -235,9 +235,9 @@ class GeneralPane(widget.Widget):
 class VideoPane(widget.Widget):
     def __init__(self, *args, **kwargs):
         super(VideoPane, self).__init__(*args, **kwargs)
-        
+
         self.resolution_initialized = False
-        
+
         self.resolution_label = text.Text(self, (.01, .01), (.14, .05),
                                           autotranslate=True,
                                           text=N_("Resolution:"),
@@ -273,7 +273,7 @@ class VideoPane(widget.Widget):
                               allowed_characters=constants.DIGIT_CHARS,
                               borders=constants.ALL)
 
-        self.resolution_custom_ok = button.FunctionButton(self, (.47, .28), (.05, .05),
+        self.resolution_custom_ok = button.FunctionButton(self, (.47, .28), (.14, .05),
                                                           autotranslate=True,
                                                           autohotkey=False,
                                                           text=N_("OK"),
@@ -285,7 +285,7 @@ class VideoPane(widget.Widget):
                                                   text=N_("&Fullscreen:"),
                                                   align=constants.LEFT,
                                                   background_color="clear")
-        self.fullscreen_toggle = OptionButton(self, (.71, .01), (.07, .05),
+        self.fullscreen_toggle = OptionButton(self, (.715, .01), (.07, .05),
                                               text_shrink_factor=.75,
                                               force_underline=-1,
                                               function=self.set_fullscreen,
@@ -297,7 +297,7 @@ class VideoPane(widget.Widget):
                                                 text=N_("Da&y/night display:"),
                                                 align=constants.LEFT,
                                                 background_color="clear")
-        self.daynight_toggle = OptionButton(self, (.71, .08), (.07, .05),
+        self.daynight_toggle = OptionButton(self, (.715, .08), (.07, .05),
                                             text_shrink_factor=.75,
                                             force_underline=-1,
                                             function=self.set_daynight,
@@ -309,7 +309,7 @@ class VideoPane(widget.Widget):
                                             text=N_("&Mouse grab:"),
                                             align=constants.LEFT,
                                             background_color="clear")
-        self.grab_toggle = OptionButton(self, (.71, .15), (.07, .05),
+        self.grab_toggle = OptionButton(self, (.715, .15), (.07, .05),
                                         text_shrink_factor=.75,
                                         force_underline=-1,
                                         function=self.set_grab,
@@ -322,7 +322,7 @@ class VideoPane(widget.Widget):
 
     def rebuild(self):
         self.update_resolution_list()
-        
+
         if gg.fullscreen:
             self.fullscreen_toggle.text = _("YES")
         else:
@@ -332,7 +332,7 @@ class VideoPane(widget.Widget):
             self.grab_toggle.text = _("YES")
         else:
             self.grab_toggle.text = _("NO")
-            
+
         if g.daynight:
             self.daynight_toggle.text = _("YES")
         else:
@@ -367,13 +367,13 @@ class VideoPane(widget.Widget):
 
     def update_resolution_list(self, current_res=None):
         self.resolution_initialized = False
-    
+
         if (current_res == None):
             current_res = (int(gg.screen_size[0]), int(gg.screen_size[1]))
-              
+
         self.resolutions = gg.get_screen_size_list()
         self.resolution_choice.list = [_("CUSTOM")] + ["%sx%s" % res for res in self.resolutions]
-            
+
         custom = True
         for i, res in enumerate(self.resolutions):
             if res == current_res:
@@ -383,7 +383,7 @@ class VideoPane(widget.Widget):
             self.resolution_choice.list_pos = 0
             self.resolution_custom_horiz.text = str(current_res[0])
             self.resolution_custom_vert.text = str(current_res[1])
-            
+
         self.resolution_initialized = True
 
     def set_fullscreen(self, value):
@@ -391,7 +391,7 @@ class VideoPane(widget.Widget):
             self.fullscreen_toggle.text = _("YES")
         else:
             self.fullscreen_toggle.text = _("NO")
-            
+
         if gg.fullscreen != value:
             gg.set_fullscreen(value)
             dialog.Dialog.top.needs_resize = True
@@ -419,7 +419,7 @@ class VideoPane(widget.Widget):
     def update_resolution(self, list_pos):
         if not self.resolution_initialized:
             return # Not yet initialized.
-            
+
         if (list_pos == 0):
             self.set_resolution_custom()
         else:
@@ -461,7 +461,7 @@ class AudioPane(widget.Widget):
                                    anchor=constants.TOP_LEFT,
                                    align=constants.LEFT,
                                    background_color="clear")
-        self.gui_slider = slider.UpdateSlider(self, (.24, .08), (.53, .05),
+        self.gui_slider = slider.UpdateSlider(self, (.24, .08), (.545, .05),
                                               anchor = constants.TOP_LEFT,
                                               horizontal=True, priority=150,
                                               slider_max=100, slider_size=5)
@@ -473,7 +473,7 @@ class AudioPane(widget.Widget):
                                      anchor=constants.TOP_LEFT,
                                      align=constants.LEFT,
                                      background_color="clear")
-        self.music_slider = slider.UpdateSlider(self, (.24, .15), (.53, .05),
+        self.music_slider = slider.UpdateSlider(self, (.24, .15), (.545, .05),
                                                 anchor = constants.TOP_LEFT,
                                                 horizontal=True, priority=150,
                                                 slider_max=100, slider_size=5)
@@ -486,19 +486,19 @@ class AudioPane(widget.Widget):
                                         background_color="clear")
         self.soundbuf_group = button.ButtonGroup()
 
-        self.soundbuf_low = OptionButton(self, (.24, .22), (.14, .05),
+        self.soundbuf_low = OptionButton(self, (.24, .22), (.145, .05),
                                          text=_("&LOW"), autotranslate=True,
                                          function=self.set_soundbuf,
                                          args=(1024,))
         self.soundbuf_group.add(self.soundbuf_low)
 
-        self.soundbuf_normal = OptionButton(self, (.42, .22), (.17, .05),
+        self.soundbuf_normal = OptionButton(self, (.425, .22), (.175, .05),
                                             text=_("&NORMAL"), autotranslate=True,
                                             function=self.set_soundbuf,
                                             args=(1024*2,))
         self.soundbuf_group.add(self.soundbuf_normal)
 
-        self.soundbuf_high = OptionButton(self, (.63, .22), (.14, .05),
+        self.soundbuf_high = OptionButton(self, (.64, .22), (.145, .05),
                                           text=_("&HIGH"), autotranslate=True,
                                           function=self.set_soundbuf,
                                           args=(1024*4,))
@@ -552,20 +552,20 @@ class AudioPane(widget.Widget):
 class GUIPane(widget.Widget):
     def __init__(self, *args, **kwargs):
         super(GUIPane, self).__init__(*args, **kwargs)
-        
+
         self.warning_title = text.Text(self, (.13, .01), (.14, .05),
                                        autotranslate=True,
                                        text=N_("WARNING"),
                                        align=constants.LEFT,
                                        background_color="clear")
-        
+
         self.warning_labels = {}
         self.warning_toggles = {}
-        
+
         for i, (warn_id, warn) in enumerate(warning.warnings.items()):
             x = .01
             y = .08 + i * .06
-            
+
             self.warning_labels[warn_id] = text.Text(self, (x, y), (.30, .05),
                                                      align=constants.LEFT,
                                                      background_color="clear")
@@ -574,7 +574,7 @@ class GUIPane(widget.Widget):
                                                           force_underline=-1,
                                                           function=self.set_warning,
                                                           args=(button.WIDGET_SELF, button.TOGGLE_VALUE, warn))
- 
+
     def rebuild(self):
         super(GUIPane, self).rebuild()
 
