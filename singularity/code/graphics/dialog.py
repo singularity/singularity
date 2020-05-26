@@ -291,10 +291,10 @@ class Dialog(text.Text):
                     self.repeat_counter = 0
                     self.handle(self.key_down)
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
-            
+
             # TODO: Dynamize global key handlers.
             # TODO: Allows customization of global key handlers.
-            # Important: Global key handlers should always be a combination 
+            # Important: Global key handlers should always be a combination
             # of two keys or F# keys.
             if event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
                 if event.type == pygame.KEYDOWN:
@@ -460,15 +460,15 @@ class FocusDialog(Dialog):
         if len(self.focus_list) == 0:
             raise constants.Handled
         elif len(self.focus_list) == 1:
-            
+
             has_focus = not self.focus_list[0].has_focus
             self.focus_list[0].has_focus = has_focus
-            
+
             if has_focus:
                 self.current_focus = self.focus_list[0]
             else:
                 self.current_focus = None
-                
+
             raise constants.Handled
 
         backwards = bool(pygame.key.get_mods() & pygame.KMOD_SHIFT)
@@ -489,7 +489,7 @@ class FocusDialog(Dialog):
                 index = old_index + 1
                 if index > len(self.focus_list):
                     index = 0
-        
+
         if index == -1 or index == len(self.focus_list):
             self.current_focus = None
         else:
@@ -602,7 +602,7 @@ class MessageDialog(TextDialog):
 
 class TextEntryDialog(TextDialog, FocusDialog):
 
-    def __init__(self, parent, pos=(-.50, -.50), size=(.50, .10),
+    def __init__(self, parent, pos=(-.50, -.50), size=(.50, .20),
                  anchor=constants.MID_CENTER, **kwargs):
         kwargs.setdefault('wrap', False)
         kwargs.setdefault("shrink_factor", 1)
@@ -612,15 +612,15 @@ class TextEntryDialog(TextDialog, FocusDialog):
         cancel_type = kwargs.pop("cancel_type", N_("&CANCEL"))
         super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
-        self.text_field = text.EditableText(self, (0, -.50), (-.71, -.50),
+        self.text_field = text.EditableText(self, (-.05, -.25), (-.90, -.25),
                                             borders=constants.ALL,
                                             base_font="normal")
 
-        self.ok_button = button.FunctionButton(self, (-.72, -.50), (-.14, -.50),
+        self.ok_button = button.FunctionButton(self, (-.14, -.65), (-.30, -.25),
                                                autotranslate=True,
                                                text=ok_type,
                                                function=self.return_text)
-        self.cancel_button = button.FunctionButton(self, (-.86, -.50), (-.14, -.50),
+        self.cancel_button = button.FunctionButton(self, (-.56, -.65), (-.30, -.25),
                                                    autotranslate=True,
                                                    text=cancel_type,
                                                    function=self.return_nothing)
