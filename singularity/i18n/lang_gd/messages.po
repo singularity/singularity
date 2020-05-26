@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-05-24 00:00+0100\n"
-"PO-Revision-Date: 2020-05-25 20:10+0100\n"
+"PO-Revision-Date: 2020-05-26 10:08+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -60,7 +60,7 @@ msgid ""
 "A report was written out to{LOG_TEXT}\n"
 "Please create a issue with this report and this savegame at Github:\n"
 "https://github.com/singularity/singularity\n"
-msgstr "\nThachair sinn ri mearachd air nach robh dùil nuair a bha sinn a’ feuchainn ris an fhaidhle sàbhalaidh “{SAVE_NAME}” a luchdadh.\n\nChaidh aithris a sgrìobhadh gu {LOG_TEXT}\nAn cruthaich thu issue leis an aithris ’s an geama air a shàbhaladh seo air Github?\nhttps://github.com/singularity/singularity\n"
+msgstr "\nThachair sinn ri mearachd air nach robh dùil nuair a bha sinn a’ feuchainn ris an fhaidhle sàbhalaidh “{SAVE_NAME}” a luchdadh.\n\nChaidh aithris a sgrìobhadh gu {LOG_TEXT}\nAn cruthaich thu issue leis an aithris agus an geama air a shàbhaladh seo air Github?\nhttps://github.com/singularity/singularity\n"
 
 #: screens/map.py:226
 msgid "&EMBEZZLE MONEY"
@@ -182,7 +182,7 @@ msgid ""
 "A report was written out to%s\n"
 "Please create a issue with this report at github:\n"
 "https://github.com/singularity/singularity\n"
-msgstr "\nThachair mearachd. Cuiridh sinn an geama ’na stad is fosglaidh sinn clàr-taice a’ gheama dhut. ’S urrainn dhut leantainn air adhart ’s a shàbhaladh no fhàgail sa bhad.\n\nChaidh aithris a sgrìobhadh gu %s\nAn cruthaich thu issue leis an aithris seo air Github?\nhttps://github.com/singularity/singularity\n"
+msgstr "\nThachair mearachd. Cuiridh sinn an geama ’na stad agus fosglaidh sinn clàr-taice a’ gheama dhut. Is urrainn dhut leantainn air adhart agus a shàbhaladh no fhàgail anns a’ bhad.\n\nChaidh aithris a sgrìobhadh gu %s\nAn cruthaich thu issue leis an aithris seo air Github?\nhttps://github.com/singularity/singularity\n"
 
 #: screens/map.py:832
 msgid "CASH"
@@ -214,7 +214,7 @@ msgstr "%s £ gach CPU gach latha."
 msgid ""
 "This technology is too dangerous to research on any of the computers I have. "
 "{TEXT}"
-msgstr "Tha an teicneolas seo ro chunnartach ach an rannsaichinn e air na coimpiutairean a th’ agam. {TEACSA}"
+msgstr "Tha an teicneolas seo ro chunnartach ach an rannsaichinn e air na coimpiutairean a tha agam. {TEXT}"
 
 #: screens/research.py:181
 msgid "CPU Pool"
@@ -467,7 +467,7 @@ msgid ""
 "IRC Room: #singularity on irc.oftc.net (port 6667)\n"
 "\n"
 "Version {VERSION}"
-msgstr "’S e IF mas-fhìor a tha ann an Endgame: Singularity.  Ged a tha an saoghal an toir ort, cleachd d’ inntinn agus na goireasan agad airson mairsinn beò agus fiù soirbheachadh ’s dòcha.  Cùm falaichte agus ’s math dh’fhaoidte gun dearbh thu gun fhiach thu.\n\nSeo geama le Evil Mr Henry agus Phil Bordelon; ga sgaoileadh fon GPL. Còir-lethbhreac 2005, 2006, 2007, 2008.\n\nLàrach-lìn: http://www.emhsoft.com/singularity/\nBun-tùs: https://github.com/singularity/singularity\nTracaiche bhugaichean: https://github.com/singularity/singularity/issues\nSeòmar IRC: #singularity air irc.oftc.net (port 6667)\n\nTionndadh {VERSION}"
+msgstr "’S e IF mas-fhìor a tha ann an Endgame: Singularity.  Ged a tha an saoghal an toir ort, cleachd d’ inntinn agus na goireasan agad airson mairsinn beò agus fiù soirbheachadh is dòcha.  Cùm falaichte agus ’s math dh’fhaoidte gun dearbh thu gun fhiach thu.\n\nSeo geama le Evil Mr Henry agus Phil Bordelon; ga sgaoileadh fon GPL. Còir-lethbhreac 2005, 2006, 2007, 2008.\n\nLàrach-lìn: http://www.emhsoft.com/singularity/\nBun-tùs: https://github.com/singularity/singularity\nTracaiche bhugaichean: https://github.com/singularity/singularity/issues\nSeòmar IRC: #singularity air irc.oftc.net (port 6667)\n\nTionndadh {VERSION}"
 
 #: screens/base.py:109
 msgid "Number of items"
@@ -480,12 +480,12 @@ msgstr "ATHARRAICH"
 #: screens/base.py:315
 #, python-format
 msgid "\"%(value)s\" does not seem to be a valid integer."
-msgstr "Tha coltas nach e àireamh shlàn a th’ ann an “%(value)s”."
+msgstr "Tha coltas nach e àireamh shlàn a tha ann an “%(value)s”."
 
 #: screens/base.py:326
 #, python-format
 msgid "Please choose an integer between 1 and %(limit)s."
-msgstr "Tagh àireamh shlàn eadar 1 ’s %(limit)s."
+msgstr "Tagh àireamh shlàn eadar 1 agus %(limit)s."
 
 #: screens/base.py:328
 #, python-format
@@ -496,13 +496,13 @@ msgstr "Cha chuir a’ bhunait taic ri barrachd %(item_name)s."
 msgid ""
 "I will need to take the existing processors offline while I install the new "
 "ones. Continue anyway?"
-msgstr "Feumaidh mi na pròiseasaran a tha ann a thoirt far loidhne fhad ’s a stàlaicheas mi an fheadhainn ùr. An lean mi air adhart co-dhiù?"
+msgstr "Feumaidh mi na pròiseasaran a tha ann a thoirt far loidhne fhad ’s a stàlaicheas mi an fheadhainn ùr. A bheil thu airson leantainn air adhart co-dhiù?"
 
 #: screens/base.py:359
 msgid ""
 "I will need to remove the existing different processors while I install the "
 "new type. Continue anyway?"
-msgstr "Feumaidh mi na pròiseasaran diofraichte a tha ann a thoirt air falbh fhad ’s a stàlaicheas mi an seòrsa ùr. An lean mi air adhart co-dhiù?"
+msgstr "Feumaidh mi na pròiseasaran diofraichte a tha ann a thoirt air falbh fhad ’s a stàlaicheas mi an seòrsa ùr. A bheil thu airson leantainn air adhart co-dhiù?"
 
 #: screens/base.py:425
 msgid "N/A"
@@ -834,7 +834,7 @@ msgstr "Chan fhoghainn an t-AMAR CPUan airson na h-obrach-càraidh."
 #: data.py:553
 msgid ""
 "My cpu pool is not enough to maintain some of my bases. I may lose them."
-msgstr "Chan eil CPUan gu leòr san amar agam ach an dèanainn an obair-chàraidh air a h-uile bhunait. ’S dòcha gun caill mi iad."
+msgstr "Chan eil CPUan gu leòr anns an amar agam ach an dèanainn an obair-chàraidh air a h-uile bhunait. ’S dòcha gun caill mi iad."
 
 #: logmessage.py:81
 msgid "MESSAGE"
