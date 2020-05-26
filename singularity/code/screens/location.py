@@ -91,7 +91,7 @@ class LocationScreen(dialog.Dialog):
                                   anchor=constants.TOP_CENTER,
                                   autohotkey=True,
                                   function=self.destroy_base)
-        self.back_button = button.ExitDialogButton(self, (-1, -.9), (-.3, -.09),
+        self.back_button = button.ExitDialogButton(self, (-1, -.91), (-.3, -.09),
                                                    autotranslate=True,
                                                    text=N_("&BACK"),
                                                    anchor=constants.TOP_RIGHT,
