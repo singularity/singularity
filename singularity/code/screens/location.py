@@ -277,6 +277,7 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
                                             anchor=constants.BOTTOM_LEFT,
                                             borders=constants.ALL,
+                                            background_color="text_entry_background",
                                             base_font="normal")
 
         self.desc_func = self.on_change
