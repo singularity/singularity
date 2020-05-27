@@ -456,6 +456,7 @@ class MapScreen(dialog.Dialog):
             b = button.FunctionButton(button_parent, (loc.x, loc.y),
                                       anchor=constants.MID_CENTER,
                                       function=self.open_location,
+                                      text_size=28, # Make extraterrestrial locations fit
                                       args=(loc.id,))
             self.location_buttons[loc.id] = b
 
@@ -501,7 +502,7 @@ class MapScreen(dialog.Dialog):
         if g.cheater:
             # Create cheat menu
             # Cheat menu button must be created before menu button to avoid bug.
-            
+
             self.cheat_dialog = CheatMenuDialog(self)
             self.cheat_button = button.DialogButton(
                 self, (0, 0), (.01, .01),
@@ -765,7 +766,7 @@ https://github.com/singularity/singularity
 
             # Run this tick.
             mins_passed = g.pl.give_time(secs)
-            
+
             # Display any message stacked.
             self.messages.show_list(logmessage.AbstractLogMessage, g.pl.curr_log)
 
@@ -786,7 +787,7 @@ https://github.com/singularity/singularity
         lost = g.pl.lost_game()
         if lost > 0:
             lost_story = ["", "Lost No Bases", "Lost Suspicion"]
-            
+
             mixer.play_music("lose")
             self.show_story_section(lost_story[lost])
             raise constants.ExitDialog
@@ -886,13 +887,13 @@ https://github.com/singularity/singularity
 
         for group in g.pl.groups.values():
             suspicion = group.suspicion
-            suspicion_color = gg.resolve_color_alias("danger_level_%d" 
+            suspicion_color = gg.resolve_color_alias("danger_level_%d"
                                                      % g.suspicion_to_danger_level(suspicion))
 
             detects = detects_per_day[group.spec.id]
             danger_level = group.detects_per_day_to_danger_level(detects)
             detects_color = gg.resolve_color_alias("danger_level_%d" % danger_level)
- 
+
             if g.pl.display_discover == "full":
                 suspicion_display = g.to_percent(suspicion, True)
                 danger_display = g.to_percent(detects*10000, True)
@@ -905,7 +906,7 @@ https://github.com/singularity/singularity
 
             suspicion_bar_chunks.extend((" " + group.name + u":\xA0", suspicion_display))
             suspicion_bar_styles.extend((normal, (suspicion_color, None, False)))
-        
+
             danger_bar_chunks.extend((" " + group.name + u":\xA0", danger_display))
             danger_bar_styles.extend((normal, (detects_color, None, False)))
 

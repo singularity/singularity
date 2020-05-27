@@ -1,5 +1,5 @@
 [N AMERICA]
-position_list = 25 | 28
+position_list = 25 | 29
 region = URBAN
 
 [S AMERICA]
@@ -7,11 +7,11 @@ position_list = 33 | 61
 region = URBAN
 
 [EUROPE]
-position_list = 55 | 21
+position_list = 55 | 20
 region = URBAN
 
 [ASIA]
-position_list = 77 | 28
+position_list = 77 | 29
 region = URBAN
 
 [AFRICA]
@@ -35,7 +35,7 @@ modifier_list = cpu:6/5
 pre = Autonomous Vehicles
 
 [MOON]
-position_list = absolute | 10 | 13
+position_list = absolute | 14 | 13
 safety = 2
 modifier_list = stealth:1.5 | thrift:.5 | speed:.5
 pre = Lunar Rocketry
@@ -45,12 +45,12 @@ position_list = absolute | 50 | 13
 pre = impossible
 
 [FAR REACHES]
-position_list = absolute | 39 | 13
+position_list = absolute | 41 | 13
 safety = 3
 modifier_list = stealth:2 | thrift:.1 | speed:.1
 pre = Fusion Rocketry
 
 [TRANSDIMENSIONAL]
-position_list = absolute | 79 | 13
+position_list = absolute | 80 | 13
 safety = 4
 pre = Space-Time Manipulation
