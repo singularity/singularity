@@ -196,7 +196,7 @@ def translate_plural(singular, plural, number, *args, **kwargs):
     if singular in g.messages:
         try:
             s = g.messages[singular][get_plural_index(number)]
-        except KeyError as reason:
+        except KeyError:
             sys.stderr.write(
                 "Error translating '%s', plural '%s' for number %d in %r:\n  Missing index msgstr[%s] in translation\n"
                 % (singular, plural, number, language_searchlist(default=False),
