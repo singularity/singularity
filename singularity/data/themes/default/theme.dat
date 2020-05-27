@@ -18,6 +18,7 @@ gray            = #808080ff
 dark_red        = #800000ff
 dark_green      = #008000ff
 dark_blue       = #000080ff
+darker_blue1    = #000050ff
 darker_blue     = #000032ff
 light_red       = #ff3232ff
 light_green     = #32ff32ff
@@ -42,6 +43,7 @@ pane_background_empty    = black
 
 # Dialog colors
 text_dialog_background   = dark_blue
+text_entry_background    = darker_blue1
 text_dialog_border       = white
 
 # Widget colors
@@ -63,7 +65,7 @@ progress_background_progress   = blue
 progress_border                = white
 
 # Slider colors dark_blue light_blue white
-slider_background = dark_blue 
+slider_background = dark_blue
 slider_background_slider = light_blue
 slider_border = white
 

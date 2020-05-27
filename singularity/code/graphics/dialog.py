@@ -614,6 +614,7 @@ class TextEntryDialog(TextDialog, FocusDialog):
 
         self.text_field = text.EditableText(self, (-.05, -.25), (-.90, -.25),
                                             borders=constants.ALL,
+                                            background_color="text_entry_background",
                                             base_font="normal")
 
         self.ok_button = button.FunctionButton(self, (-.14, -.65), (-.30, -.25),

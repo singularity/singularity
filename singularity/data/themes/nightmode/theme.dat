@@ -13,6 +13,7 @@ orange          = #ff8000ff
 gray            = #808080ff
 dark_gray       = #404040ff
 dark_red        = #800000ff
+darker_red      = #280000ff
 dark_green      = #008000ff
 dark_blue       = #000080ff
 darker_blue     = #000032ff
@@ -26,7 +27,7 @@ main_menu_background     = black
 about_dialog_background  = black
 map_background           = black
 options_background       = black
-singularity_title        = dark_red
+singularity_title        = gray
 hidden_state_menu        = black
 
 # Pane colors
@@ -35,6 +36,7 @@ pane_background_empty    = black
 
 # Dialog colors
 text_dialog_background   = black
+text_entry_background    = darker_red
 text_dialog_border       = dark_red
 
 # Widget colors

@@ -55,6 +55,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                                                   borders=constants.ALL,
                                                   anchor=constants.TOP_LEFT,
                                                   update_func=self._search_for_savegame,
+                                                  background_color="text_entry_background",
                                                   base_font="normal")
 
         self.delete_button = button.FunctionButton(self, (-.50, -.99), (-.3, -.1),
@@ -128,7 +129,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                                              anchor=constants.BOTTOM_LEFT,
                                              align=constants.LEFT,
                                              color="save_time",
-                                             background_color="clear")                               
+                                             background_color="clear")
         item.version_display     = text.Text(item, (-.99, -.01), (-.45, -.60),
                                              anchor=constants.TOP_RIGHT,
                                              align=constants.RIGHT,
@@ -186,7 +187,7 @@ class SavegameScreen(dialog.ChoiceDialog):
 
                 dif = save.headers.get("difficulty", "")
                 dif_str = g.strip_hotkey(getattr(difficulty.difficulties.get(dif, None), "name", ""))
-                
+
                 item.time_display.text = tm_str + " | " + gtm_str if tm_str else gtm_str
                 item.difficulty_display.text = dif_str
 
