@@ -18,3 +18,15 @@ def test_plural(gd_locale):
     assert g.to_time(2) == "2 mhionaid"
     assert g.to_time(3) == "3 mionaidean"
     assert g.to_time(20) == "20 mionaid"
+
+def test_translation(gd_locale):
+    assert _('SHOW') == 'SEALL'
+
+def test_translation_fallback(gd_locale):
+    assert _('foobarbaz') == 'foobarbaz'
+    assert ngettext('foo', 'bar', 1) == 'foo'
+    assert ngettext('foo', 'bar', 5) == 'bar'
+
+def test_nonsense_locale():
+    i18n.set_language("foobarbaz")
+    assert _('SHOW') == 'SHOW'
