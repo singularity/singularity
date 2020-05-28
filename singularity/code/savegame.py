@@ -48,7 +48,7 @@ from singularity.code import g, mixer, dirs, player, group, logmessage
 from singularity.code import base, tech, item, event, location, buyable, difficulty, effect
 from singularity.code.stats import itself as stats
 
-default_savegame_name = u"Default Save"
+default_savegame_name = _("Default Save")
 
 
 class SavegameFormatDefinition(object):
@@ -163,7 +163,7 @@ def get_savegames():
             try:
                 with open(filepath, 'rb') as loadfile:
                     version_line, headers = parse_headers(loadfile)
-                
+
                     if version_line in savefile_translation:
                         version_name = savefile_translation[version_line].display_version
             except Exception:
@@ -604,7 +604,7 @@ def _convert_base(base, save_version):
             "cpu": base.__dict__["cpus"]
         }
         del base.__dict__["cpus"]
-    
+
     if save_version < 4.91: # < r5_pre
         for cpu in base.cpus:
             if cpu:
@@ -635,18 +635,18 @@ def _convert_base(base, save_version):
 
     if save_version < 99.3: # < 1.0 (dev)
         extra_items = iter(base.__dict__["extra_items"])
-        
+
         base.items["reactor"] = next(extra_items, None)
         base.items["network"] = next(extra_items, None)
         base.items["security"] = next(extra_items, None)
-                    
+
         del base.__dict__["extra_items"]
 
     if ("power_state" in base.__dict__):
         base._power_state = base.__dict__["power_state"]
 
     base._name = base.__dict__['name']
-        
+
     return base
 
 def _convert_item(item, save_version):
