@@ -23,6 +23,7 @@
 
 from __future__ import absolute_import
 
+#import gettext
 import os
 import sys
 import locale
@@ -39,6 +40,14 @@ except ImportError:
 #It is required that default language have all data files and all of them
 # must have all available entries
 default_language = "en_US"
+#default_textdomain = 'messages'
+
+# Prepare main locale dir
+# TODO put this in the correct dir and do this in the dirs.py script. We need to rename the textdomains first."
+main_localedir='singularity/locales'
+if not os.path.isdir(main_localedir):
+  os.makedirs(main_localedir)
+
 try:
     language = locale.getdefaultlocale()[0] or default_language
 except RuntimeError:
@@ -85,6 +94,12 @@ def set_language(lang=None, force=False):
     load_data_str()
     load_story_translations()
 
+    #gettext.bindtextdomain('messages', localedir=None)
+
+    #gettext.install('messages', localedir=None, codeset=None, names=None)
+
+
+
 
 def load_messages():
     _load_po_file(g.messages, 'messages.po', use_context=False)
@@ -108,6 +123,14 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
     for lang, pofile in files:
         try:
             po = polib.pofile(pofile)
+            # Create MO files
+            locale_mo_dir = os.path.join(main_localedir, lang, 'LC_MESSAGES')
+            if not os.path.isdir(locale_mo_dir):
+                os.makedirs(locale_mo_dir)
+
+            mofile_path = os.path.join(locale_mo_dir, os.path.basename(pofile).split('.')[0] + '.mo')
+            print("Installing translation file: " + mofile_path)
+            po.save_as_mofile(mofile_path)
         except IOError:
             # silently ignore non-existing files
             continue
