@@ -30,3 +30,14 @@ def test_translation_fallback(gd_locale):
 def test_nonsense_locale():
     i18n.set_language("foobarbaz")
     assert _('SHOW') == 'SHOW'
+
+def test_data_translation(gd_locale):
+    assert data.get_def_translation('Sociology', 'name', 'Sociology') == 'Sòiseo-eòlas'
+
+def test_knowledge_translation(gd_locale):
+    assert data.get_def_translation('concept/construction', 'name', 'Construction') == 'Togail'
+
+def test_story_translation():
+    i18n.set_language('en')
+    story_section = list(g.get_story_section('Intro'))
+    assert story_section[0] == '48656C6C6F2C20\n776F726C6421\n21\n21\n21\n\nUTF-8.  en_US.\nEnglish.  Hello.\nLanguage acquisition complete.\n'
