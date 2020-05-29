@@ -695,8 +695,6 @@ def sanitize_filename(filename):
     # http://www.linfo.org/file_name.html
     # https://kb.acronis.com/content/39790
 
-    # Characters that are allowed in filenames, but not at the beginning
-    filename = re.sub('^[.-]', '_', filename)
 
     # Characters that are disallowed anywhere in a filename
     # No potential file separators or other potentially illegal characters
@@ -704,6 +702,10 @@ def sanitize_filename(filename):
 
     # Replace whitespace
     filename = re.sub('\s', '_', filename).strip('_')
+
+    # Characters that are allowed in filenames, but not at the beginning
+    if re.match('^[.-]', filename):
+        filename = '_' + filename
 
     # Reserved filenames under Windows
     windows_reserved = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
