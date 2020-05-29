@@ -690,24 +690,23 @@ def savegame_exists(savegame_name):
 
 def sanitize_filename(filename):
     """Create filename that's safe for all operating systems"""
-    filename = filename.strip()
+
     # https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
     # http://www.linfo.org/file_name.html
     # https://kb.acronis.com/content/39790
-
 
     # Characters that are disallowed anywhere in a filename
     # No potential file separators or other potentially illegal characters
     filename = re.sub('[<>:"|?*/\\\\]', '_', filename)
 
-    # Replace whitespace
+    # Replace whitespace with _ and strip leading & trailing whitespace/_
     filename = re.sub('\s', '_', filename).strip('_')
 
-    # Characters that are allowed in filenames, but not at the beginning
+    # Characters that are allowed in filenames, but not at the beginning - prepend _
     if re.match('^[.-]', filename):
         filename = '_' + filename
 
-    # Reserved filenames under Windows
+    # Append _ to filenames that are reserved under Windows
     windows_reserved = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
                         'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
                         'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9']

@@ -103,7 +103,6 @@ class MainMenu(dialog.TopDialog):
             g.new_game(difficulty)
             dialog.call_dialog(self.map_screen, self)
 
-
     def load_game(self):
         did_load = dialog.call_dialog(self.load_dialog, self)
         if did_load:
