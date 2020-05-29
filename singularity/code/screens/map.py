@@ -418,9 +418,8 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
         if not sv.last_savegame_name:
             sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
         self.savename_dialog.default_text = sv.desanitize_filename(sv.last_savegame_name)
-        name = dialog.call_dialog(self.savename_dialog, self)
-        if sv.sanitize_filename(name):
-            name = sv.sanitize_filename(name)
+        name = sv.sanitize_filename(dialog.call_dialog(self.savename_dialog, self))
+        if name:
             if sv.savegame_exists(name):
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
                                         anchor=constants.MID_CENTER,
