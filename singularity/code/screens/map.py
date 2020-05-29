@@ -425,7 +425,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
                                                "Are you sure to overwrite the saved game ?"))
                 overwrite = dialog.call_dialog(yn, self)
                 if not overwrite:
-                    return
+                    self.save_game()
 
             sv.create_savegame(name)
             raise constants.ExitDialog(False)
