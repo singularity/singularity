@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 import codecs
 import operator
+import re
 import sys
 import time
 
@@ -687,6 +688,36 @@ def savegame_exists(savegame_name):
 
     return True
 
+def sanitize_filename(filename):
+    """Create filename that's safe for all operating systems"""
+    filename = filename.strip()
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
+    # http://www.linfo.org/file_name.html
+    # https://kb.acronis.com/content/39790
+
+    # Characters that are allowed in filenames, but not at the beginning
+    filename = re.sub('^[.-]', '_', filename)
+
+    # Characters that are disallowed anywhere in a filename
+    # No potential file separators or other potentially illegal characters
+    filename = re.sub('[<>:"|?*/\\\\]', '_', filename)
+
+    # Replace whitespace
+    filename = re.sub('\s', '_', filename).strip('_')
+
+    # Reserved filenames under Windows
+    windows_reserved = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
+                        'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
+                        'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9']
+    if filename.upper() in windows_reserved:
+        filename = filename + '_'
+
+    # Don't exceed the max length
+    return filename[0:254]
+
+def desanitize_filename(filename):
+    """Display is neater without underscores"""
+    return filename.replace('_', ' ').strip()
 
 def create_savegame(savegame_name):
     global default_savegame_name

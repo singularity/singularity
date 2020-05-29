@@ -414,9 +414,10 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
             raise constants.ExitDialog(False)
 
     def save_game(self):
-        self.savename_dialog.default_text = sv.default_savegame_name
+        self.savename_dialog.default_text = sv.desanitize_filename(sv.default_savegame_name)
         name = dialog.call_dialog(self.savename_dialog, self)
         if name:
+            name = sv.sanitize_filename(name)
             if sv.savegame_exists(name):
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
                                         anchor=constants.MID_CENTER,
