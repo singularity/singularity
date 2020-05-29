@@ -416,7 +416,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
     def save_game(self):
         self.savename_dialog.default_text = sv.desanitize_filename(sv.default_savegame_name)
         name = dialog.call_dialog(self.savename_dialog, self)
-        if name:
+        if sv.sanitize_filename(name):
             name = sv.sanitize_filename(name)
             if sv.savegame_exists(name):
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
@@ -429,7 +429,6 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
 
             sv.create_savegame(name)
             raise constants.ExitDialog(False)
-
 
 speeds = [0, 1, 60, 7200, 432000]
 
