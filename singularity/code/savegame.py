@@ -49,7 +49,7 @@ from singularity.code import g, mixer, dirs, player, group, logmessage
 from singularity.code import base, tech, item, event, location, buyable, difficulty, effect
 from singularity.code.stats import itself as stats
 
-default_savegame_name = _("Default Save")
+last_savegame_name = None
 
 
 class SavegameFormatDefinition(object):
@@ -286,7 +286,7 @@ def recursive_fix_pickle(the_object, seen):
 
 
 def load_savegame(savegame):
-    global default_savegame_name
+    global last_savegame_name
 
     load_path = savegame.filepath
 
@@ -296,7 +296,7 @@ def load_savegame(savegame):
     with open(load_path, 'rb') as fd:
         load_savegame_fd(savegame.load_file, fd)
 
-    default_savegame_name = savegame.name
+    last_savegame_name = savegame.name
 
 
 def load_savegame_fd(loader_func, fd):
@@ -722,8 +722,8 @@ def desanitize_filename(filename):
     return filename.replace('_', ' ').strip()
 
 def create_savegame(savegame_name):
-    global default_savegame_name
-    default_savegame_name = savegame_name
+    global last_savegame_name
+    last_savegame_name = savegame_name
     save_loc = convert_string_to_path_name(dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves"))
     # Save in new "JSONish" format
     with open(save_loc, 'wb') as savefile:

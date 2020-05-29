@@ -414,7 +414,10 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
             raise constants.ExitDialog(False)
 
     def save_game(self):
-        self.savename_dialog.default_text = sv.desanitize_filename(sv.default_savegame_name)
+        # If no savename was set yet, use current difficulty
+        if not sv.last_savegame_name:
+            sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
+        self.savename_dialog.default_text = sv.desanitize_filename(sv.last_savegame_name)
         name = dialog.call_dialog(self.savename_dialog, self)
         if sv.sanitize_filename(name):
             name = sv.sanitize_filename(name)
