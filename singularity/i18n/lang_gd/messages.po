@@ -371,7 +371,7 @@ msgstr "&FOSGAIL a’ BHUNAIT"
 
 #: screens/location.py:68
 msgid "&RENAME BASE"
-msgstr "AINM Ù&R AIR"
+msgstr "CUIR AINM Ù&R AIR"
 
 #: screens/location.py:76
 msgid "&POWER STATE"
