@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-05-24 00:00+0100\n"
-"PO-Revision-Date: 2020-05-26 10:08+0100\n"
+"PO-Revision-Date: 2020-05-30 11:06+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -60,7 +60,15 @@ msgid ""
 "A report was written out to{LOG_TEXT}\n"
 "Please create a issue with this report and this savegame at Github:\n"
 "https://github.com/singularity/singularity\n"
-msgstr "\nThachair sinn ri mearachd air nach robh dùil nuair a bha sinn a’ feuchainn ris an fhaidhle sàbhalaidh “{SAVE_NAME}” a luchdadh.\n\nChaidh aithris a sgrìobhadh gu {LOG_TEXT}\nAn cruthaich thu issue leis an aithris agus an geama air a shàbhaladh seo air Github?\nhttps://github.com/singularity/singularity\n"
+msgstr ""
+"\n"
+"Thachair sinn ri mearachd air nach robh dùil nuair a bha sinn a’ feuchainn "
+"ris an fhaidhle sàbhalaidh “{SAVE_NAME}” a luchdadh.\n"
+"\n"
+"Chaidh aithris a sgrìobhadh gu {LOG_TEXT}\n"
+"An cruthaich thu issue leis an aithris agus an geama air a shàbhaladh seo "
+"air Github?\n"
+"https://github.com/singularity/singularity\n"
 
 #: screens/map.py:226
 msgid "&EMBEZZLE MONEY"
@@ -80,7 +88,7 @@ msgstr "DIAN-&LUATHS"
 
 #: screens/map.py:236
 msgid "BRAIN&WASH"
-msgstr "BRAIN&WASH"
+msgstr "DÌOCH&UIMHNE ORM"
 
 #: screens/map.py:238
 msgid "TOGGLE &DETECTION"
@@ -92,7 +100,7 @@ msgstr "TOGLAICH an &SGRÙDADH"
 
 #: screens/map.py:243
 msgid "HIDDEN S&TATE"
-msgstr "S&TAID FALAICHTE"
+msgstr "S&TAID FHALAICHTE"
 
 #: screens/map.py:247 screens/map.py:400 screens/report.py:45
 #: screens/location.py:96 screens/location.py:262 screens/log.py:86
@@ -129,7 +137,9 @@ msgstr "Cuir a-steach ainm airson an t-sàbhalaidh seo."
 msgid ""
 "A savegame with the same name exists.\n"
 "Are you sure to overwrite the saved game ?"
-msgstr "Chaidh geama a shàbhaladh leis an t-aon ainm cheana.\nA bheil thu cinnteach gu bheil thu airson sgrìobhadh thairis air?"
+msgstr ""
+"Chaidh geama a shàbhaladh leis an t-aon ainm cheana.\n"
+"A bheil thu cinnteach gu bheil thu airson sgrìobhadh thairis air?"
 
 #: screens/map.py:484
 msgid "R&EPORTS"
@@ -148,7 +158,7 @@ msgstr "L&OGA"
 #. dead key (ie, it must print a char with a single keypress)
 #: screens/map.py:512
 msgid "`"
-msgstr "`"
+msgstr "#"
 
 #: screens/map.py:521
 msgid "&MENU"
@@ -182,7 +192,15 @@ msgid ""
 "A report was written out to%s\n"
 "Please create a issue with this report at github:\n"
 "https://github.com/singularity/singularity\n"
-msgstr "\nThachair mearachd. Cuiridh sinn an geama ’na stad agus fosglaidh sinn clàr-taice a’ gheama dhut. Is urrainn dhut leantainn air adhart agus a shàbhaladh no fhàgail anns a’ bhad.\n\nChaidh aithris a sgrìobhadh gu %s\nAn cruthaich thu issue leis an aithris seo air Github?\nhttps://github.com/singularity/singularity\n"
+msgstr ""
+"\n"
+"Thachair mearachd. Cuiridh sinn an geama ’na stad agus fosglaidh sinn clàr-"
+"taice a’ gheama dhut. Is urrainn dhut leantainn air adhart agus a shàbhaladh "
+"no fhàgail anns a’ bhad.\n"
+"\n"
+"Chaidh aithris a sgrìobhadh gu %s\n"
+"An cruthaich thu issue leis an aithris seo air Github?\n"
+"https://github.com/singularity/singularity\n"
 
 #: screens/map.py:832
 msgid "CASH"
@@ -662,7 +680,7 @@ msgstr "Cosgais an rannsachaidh:"
 
 #: screens/knowledge.py:163
 msgid "Research complete."
-msgstr "Tha an rannsachadh deiseil."
+msgstr "Tha mi air a rannsachadh."
 
 #: screens/knowledge.py:174 screens/knowledge.py:191
 msgid "Building Cost:"
@@ -670,7 +688,7 @@ msgstr "Cosgais na togail:"
 
 #: screens/knowledge.py:177
 msgid "Maintenance Cost:"
-msgstr "Cosgais na h-obrach-càraidh:"
+msgstr "Obair-chàraidh:"
 
 #: screens/knowledge.py:181
 #, python-format
@@ -737,7 +755,7 @@ msgstr "Buannachd CPU:"
 
 #: item.py:140
 msgid "Detection chance reduction:"
-msgstr "Lùghdachadh air an teans gum mothaichear orm:"
+msgstr "Lùghdachadh air teans a’ mhothachaidh:"
 
 #: base.py:137
 #, python-format
@@ -787,7 +805,7 @@ msgstr "A’ dùsgadh às a’ gheamhrachadh"
 
 #: base.py:470
 msgid "Detection chance:"
-msgstr "An teans gum mothaichear orm:"
+msgstr "Teans a’ mhothachaidh:"
 
 #: buyable.py:68
 #, python-format
@@ -886,12 +904,16 @@ msgstr "Call obrach-càraidh"
 msgid ""
 "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
 "Maintenance failed."
-msgstr "Chaidh bunait {BASE}: {LOCATION} den t-seòrsa {BASE_TYPE} a mhilleadh. Dh’fhàillig leis an obair-chàraidh."
+msgstr ""
+"Chaidh bunait {BASE}: {LOCATION} ({BASE_TYPE}) a mhilleadh. Dh’fhàillig leis "
+"an obair-chàraidh."
 
 #: logmessage.py:304
 #, python-brace-format
 msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
-msgstr "Tha bunait {BASE} air a dol a dholaidh; Chan urrainn dhomh a cleachdadh tuilleadh."
+msgstr ""
+"Tha bunait {BASE} air a dol a dholaidh; Chan urrainn dhomh a cleachdadh "
+"tuilleadh."
 
 #: logmessage.py:321
 msgid "Base Discovered"
@@ -900,7 +922,7 @@ msgstr "Mothachadh do bhunait"
 #: logmessage.py:340
 #, python-brace-format
 msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
-msgstr "Chaidh bunait {BASE}: {LOCATION} den t-seòrsa {BASE_TYPE} a mhilleadh."
+msgstr "Chaidh bunait {BASE}: {LOCATION} ({BASE_TYPE}) a mhilleadh."
 
 #: logmessage.py:345
 #, python-brace-format
@@ -914,7 +936,7 @@ msgstr "Togail nithean"
 #: logmessage.py:378
 #, python-brace-format
 msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
-msgstr "Chaidh {ITEM_TYPE_NAME} a thogail aig {BASE_NAME}: {LOCATION}"
+msgstr "Chaidh {ITEM_TYPE_NAME} a thogail. {BASE_NAME}: {LOCATION}"
 
 #: logmessage.py:385
 #, python-brace-format

@@ -35,10 +35,10 @@ class LogScreen(dialog.ChoiceDialog):
         self.yes_button.parent = None
         self.no_button.pos = (-.5,-.99)
         self.no_button.anchor = constants.BOTTOM_CENTER
-        
+
         self.filter_log_dialog = FilterLogDialog(self)
-        
-        self.filter_log = button.FunctionButton(self, (-1., 0.), (-.15, -.08),
+
+        self.filter_log = button.FunctionButton(self, (-1.0, 0.), (-.18, -.08),
                                                 autotranslate=True,
                                                 text=N_("Filters"),
                                                 anchor=constants.TOP_RIGHT,
@@ -88,10 +88,10 @@ class FilterLogDialog(dialog.MessageDialog):
 
         self.log_class_labels = {}
         self.log_class_toggles = {}
-        
+
         for i, (log_type, log_class) in enumerate(logmessage.SAVEABLE_LOG_MESSAGES.items()):
             y = .01 + i * .06
-            
+
             self.log_class_labels[log_type] = text.Text(self, (-.01, y), (-.70, .05),
                                                         align = constants.LEFT,
                                                         background_color="clear")
@@ -108,7 +108,7 @@ class FilterLogDialog(dialog.MessageDialog):
     def rebuild(self):
         for log_type, log_class in logmessage.SAVEABLE_LOG_MESSAGES.items():
             self.log_class_labels[log_type].text = log_class.log_name()
-            
+
             if not log_class in filtered_log_class:
                 self.log_class_toggles[log_type].text = _("SHOW")
                 self.log_class_toggles[log_type].set_active(True)
