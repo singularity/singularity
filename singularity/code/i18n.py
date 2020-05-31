@@ -16,7 +16,7 @@
 #along with Endgame: Singularity; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains all functions to internationalize and localize the 
+#This file contains all functions to internationalize and localize the
 #application.
 #
 #IMPORTANT: A portion of translation is still done with data files in g.
@@ -43,7 +43,6 @@ try:
     language = locale.getdefaultlocale()[0] or default_language
 except RuntimeError:
     language = default_language
-
 
 def set_language(lang=None, force=False):
     global language # required, since we're going to change it
@@ -167,6 +166,20 @@ try:
     import builtins
 except ImportError:
     import __builtin__ as builtins
+
+
+def lex_sorting_form(name):
+    """For lexicographic sorting when languages use characters not in 7-bit ASCII. e.g. é or ü.
+
+    Use like this:
+
+    listdata.sort(key=lambda an_object: i18n.lex_sorting_form(an_object.name))"""
+
+    # Collator returns wrong keys for DE locale
+    if language == 'de' or language.startswith('de_'):
+        name = name.replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue')
+
+    return locale.strxfrm(name)
 
 # The official gettext version does not support any additional
 # parameters.  We use a lambda to make the signature match the

@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import pygame
 import collections
 
-from singularity.code import g
+from singularity.code import i18n, g
 from singularity.code.graphics import text, button, dialog, widget, constants, listbox
 
 
@@ -106,7 +106,7 @@ class KnowledgeScreen(dialog.FocusDialog):
         else:
             items = []
 
-        items.sort()
+        items.sort(key=lambda item: i18n.lex_sorting_form(item[0]))
 
         return_list1 = []
         return_list2 = []
@@ -168,7 +168,7 @@ class KnowledgeScreen(dialog.FocusDialog):
 
         elif knowledge_type == "bases":
             base = g.base_type[knowledge_key]
-            
+
             desc_text = base.name + "\n\n"
             desc_text += _("Building Cost:")+"\n"
             desc_text += self._desc_cost(base.cost) #Building cost
@@ -185,7 +185,7 @@ class KnowledgeScreen(dialog.FocusDialog):
 
         elif knowledge_type == "items":
             item = g.items[knowledge_key]
-            
+
             desc_text = item.name + "\n\n"
             desc_text += _("Building Cost:")+"\n"
             desc_text += self._desc_cost(item.cost)  # Building cost
@@ -213,10 +213,10 @@ class KnowledgeScreen(dialog.FocusDialog):
         if cost[1] > 0:
             desc_text += ", "
             desc_text += _("%s CPU") % g.to_cpu(cost[1])
-        if cost[2] > 0: 
+        if cost[2] > 0:
             desc_text += ", "
             desc_text += g.to_time(cost[2])
-        
+
         return desc_text
 
     def show(self):

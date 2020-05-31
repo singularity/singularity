@@ -24,12 +24,11 @@ import time
 
 import pygame
 
-from singularity.code import g, savegame as sv, difficulty
+from singularity.code import i18n, g, savegame as sv, difficulty
 from singularity.code.graphics import dialog, button, text, constants, listbox
 
 from singularity.code.safety import log_func_exc
 from singularity.code.pycompat import *
-
 
 class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):
@@ -193,7 +192,7 @@ class SavegameScreen(dialog.ChoiceDialog):
 
     def reload_savegames(self):
         savegames = sv.get_savegames()
-        savegames.sort(key=lambda savegame: savegame.name.lower())
+        savegames.sort(key=lambda savegame: i18n.lex_sorting_form(savegame.name))
         self._all_savegames_sorted = savegames
         self.list = savegames
         self.yes_button.enabled = True if self.list else False
