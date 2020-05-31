@@ -29,6 +29,7 @@ setup(
         'numpy',
         'pygame',
         'polib>=0.7',
+        'unidecode'
     ],
     entry_points={
         'gui_scripts': [

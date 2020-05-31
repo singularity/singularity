@@ -23,8 +23,9 @@ You will need to install the following software to play Endgame: Singularity:
  * Python 3 (https://python.org/download/)
  * pygame (https://www.pygame.org/download.shtml)
  * NumPy (https://www.scipy.org/install.html)
+ * unidecode (https://pypi.org/project/Unidecode/)
 
-Remember to install pygame and NumPy for Python 3!  Depending on your
+Remember to install pygame, NumPy and unidecode for Python 3!  Depending on your
 situation this may involve adding a `3` somewhere (e.g.
 `pip3 install ...` instead of `pip install` or
 `apt install python3-pygame`)
@@ -39,18 +40,18 @@ install:
 On some Linux distributions, you can install the dependencies via your
 distribution package manager.  E.g. for Debian/Ubuntu, this would be:
 
-    sudo apt install python3 python3-pygame python3-numpy
+    sudo apt install python3 python3-pygame python3-numpy python3-unidecode
 
 ### MAC OS X FROM SOURCE
 Macintosh is mostly unsupported, but it should work. You will need to install
-Python, pygame, and NumPy first, which can be tricky. Some fonts are incorrect,
+Python, pygame, NumPy and unidecode first, which can be tricky. Some fonts are incorrect,
 but the game itself should work properly.
 
 Contributions to improve MAC OS X support are very welcome!
 
 Known issues:
 
- * macOS 13 "Catalina": Using `brew install python` + `pip3 install pygame numpy` is reported to work
+ * macOS 13 "Catalina": Using `brew install python` + `pip3 install pygame numpy unidecode` is reported to work
  * macOS 14 "Mojave": Downloading Python 3.7.2 (or newer) from https://python.org and using pygame 2.0.0.dev3
    (`pip install pygame==2.0.0.dev3`) is reported to work.
 
@@ -77,7 +78,7 @@ start singularity.
                           install directory
     --multidir            keep saved games and settings in an OS-specific,
                           per-user directory (default)
-    
+
     Display Options:
       --fullscreen        start in fullscreen mode
       --windowed          start in windowed mode (default)

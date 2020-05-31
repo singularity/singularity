@@ -30,7 +30,6 @@ from singularity.code.graphics import dialog, button, text, constants, listbox
 from singularity.code.safety import log_func_exc
 from singularity.code.pycompat import *
 
-
 class SavegameScreen(dialog.ChoiceDialog):
     def __init__(self, parent, *args, **kwargs):
         super(SavegameScreen, self).__init__(parent, *args, yes_type=N_("&LOAD"), **kwargs)
@@ -193,7 +192,7 @@ class SavegameScreen(dialog.ChoiceDialog):
 
     def reload_savegames(self):
         savegames = sv.get_savegames()
-        savegames.sort(key=lambda savegame: savegame.name.lower())
+        savegames.sort(key=lambda savegame: lex_sorting_form(unicode(savegame.name)))
         self._all_savegames_sorted = savegames
         self.list = savegames
 

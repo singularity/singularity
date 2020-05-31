@@ -16,7 +16,7 @@
 #along with Endgame: Singularity; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains all functions to internationalize and localize the 
+#This file contains all functions to internationalize and localize the
 #application.
 #
 #IMPORTANT: A portion of translation is still done with data files in g.
@@ -26,6 +26,8 @@ from __future__ import absolute_import
 import os
 import sys
 import locale
+
+from unidecode import unidecode
 
 from singularity.code import g, dirs
 from singularity.code.pycompat import *
@@ -167,6 +169,18 @@ try:
     import builtins
 except ImportError:
     import __builtin__ as builtins
+
+
+def lex_sorting_form(name):
+    """For lexicographic sorting when languages use characters not in 7-bit ASCII. e.g. é or ü.
+
+    Use like this:
+
+    listdata.sort(key=lambda an_object: lex_sorting_form(an_object.name))"""
+
+    return unidecode(unicode(name)).lower()
+
+builtins.__dict__['lex_sorting_form'] = lex_sorting_form
 
 builtins.__dict__['_'] = translate
 # Mark string as translatable but defer translation until later.

@@ -177,7 +177,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def show(self):
         techs = [tech for tech in g.pl.techs.values() if tech.available()
                                                       and not tech.done]
-        techs.sort()
+        techs.sort(key=lambda tech: lex_sorting_form(tech.spec.name))
         self.list = [_("CPU Pool"), task.get_current("jobs").name] + \
                     [_("Research %s") % tech.name for tech in techs]
         self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]
