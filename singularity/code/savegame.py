@@ -49,6 +49,11 @@ from singularity.code import g, mixer, dirs, player, group, logmessage
 from singularity.code import base, tech, item, event, location, buyable, difficulty, effect
 from singularity.code.stats import itself as stats
 
+# Filenames that are reserved under Windows
+WINDOWS_RESERVED = {'CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
+                    'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
+                    'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'}
+
 last_savegame_name = None
 
 
@@ -707,10 +712,7 @@ def sanitize_filename(filename):
         filename = '_' + filename
 
     # Append _ to filenames that are reserved under Windows
-    windows_reserved = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
-                        'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
-                        'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9']
-    if filename.upper() in windows_reserved:
+    if filename.upper() in WINDOWS_RESERVED:
         filename = filename + '_'
 
     # Don't exceed the max length
