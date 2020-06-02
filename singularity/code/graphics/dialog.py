@@ -518,7 +518,7 @@ class TopDialog(Dialog):
 
 
 class TextDialog(Dialog):
-    def __init__(self, parent, pos=(.5, .1), size=(.45, .5),
+    def __init__(self, parent, pos=(.5, .1), size=(.50, .5),
                  anchor=constants.TOP_CENTER, **kwargs):
         kwargs.setdefault("valign", constants.TOP)
         kwargs.setdefault("align", constants.LEFT)
