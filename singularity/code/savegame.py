@@ -698,8 +698,6 @@ def check_filename_illegal(filename):
 
     Returns an error message if a violation was found and None otherwise."""
 
-    result = None
-
     # https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
     # http://www.linfo.org/file_name.html
     # https://kb.acronis.com/content/39790
@@ -721,7 +719,7 @@ def check_filename_illegal(filename):
     if len(filename) > 244:
         return 'Filename too long'
 
-    return result
+    return None
 
 def create_savegame(savegame_name):
     global last_savegame_name
