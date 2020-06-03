@@ -720,8 +720,8 @@ def check_filename_illegal(filename):
 
     # Don't exceed the max length. For Windows, it's the whole path.
     # Max allowed is 255, but we cut off a bit earlier to make room for adding a file extension.
-    filepath = os.path.normpath(dirs.get_writable_file_in_dirs(filename, "saves"))
-    if len(filepath) > 250:
+    filepath = os.path.abspath(dirs.get_writable_file_in_dirs(filename, "saves"))
+    if len(os.fsencode(filepath)) > 250:
         return 'Filename too long'
 
     return None
