@@ -148,7 +148,7 @@ class SavegameScreen(dialog.ChoiceDialog):
             item.version_display.text = ""
             item.difficulty_display.text = ""
         else:
-            item.name_display.text = sv.desanitize_filename(save.name)
+            item.name_display.text = save.name
 
             if save.version is None:
                 item.version_display.text  = _("UNKNOWN")

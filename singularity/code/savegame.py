@@ -693,8 +693,12 @@ def savegame_exists(savegame_name):
 
     return True
 
-def sanitize_filename(filename):
-    """Create filename that's safe for all operating systems"""
+def check_filename_illegal(filename):
+    """Check if the filename is safe for all operating systems.
+
+    Returns an error message if a violation was found and None otherwise."""
+
+    result = None
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
     # http://www.linfo.org/file_name.html
@@ -702,25 +706,22 @@ def sanitize_filename(filename):
 
     # Characters that are disallowed anywhere in a filename
     # No potential file separators or other potentially illegal characters
-    filename = re.sub('[<>:"|?*/\\\\]', '_', filename)
-
-    # Replace whitespace with _ and strip leading & trailing whitespace/_
-    filename = re.sub('\s', '_', filename).strip('_')
+    if re.match('.*[<>:"|?*/\\\\].*', filename):
+        return _('Do not use any of these characters in filename: {CHARACTERS}').format(CHARACTERS='<>:"|?*/\\\\')
 
     # Characters that are allowed in filenames, but not at the beginning - prepend _
     if re.match('^[.-]', filename):
-        filename = '_' + filename
+        return _('Filename must not start with any of these characters: {CHARACTERS}').format(CHARACTERS='.-')
 
     # Append _ to filenames that are reserved under Windows
     if filename.upper() in WINDOWS_RESERVED:
-        filename = filename + '_'
+        return _('This is a reserved filename. Please choose a different filename.')
 
-    # Don't exceed the max length
-    return filename[0:254]
+    # Don't exceed the max length. TODO fix this, eg. for Windows, it's the whole path
+    if len(filename) > 244:
+        return 'Filename too long'
 
-def desanitize_filename(filename):
-    """Display is neater without underscores"""
-    return filename.replace('_', ' ').strip()
+    return result
 
 def create_savegame(savegame_name):
     global last_savegame_name

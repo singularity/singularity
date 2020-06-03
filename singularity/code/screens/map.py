@@ -413,12 +413,25 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
             self._map_screen.force_update()
             raise constants.ExitDialog(False)
 
+    def check_filename(self, event):
+        """Disables the OK button and shows an error message if filename in self.savename_dialog is illegal"""
+        filename = self.savename_dialog.text_field.text
+        error_message = sv.check_filename_illegal(filename)
+        if error_message:
+            self.savename_dialog.ok_button.enabled = False
+            self.savename_dialog.text = _("Enter a name for this save.") + "\n" + error_message
+        else:
+            self.savename_dialog.ok_button.enabled = True
+            self.savename_dialog.text = _("Enter a name for this save.")
+
     def save_game(self):
         # If no savename was set yet, use current difficulty
         if not sv.last_savegame_name:
             sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
-        self.savename_dialog.default_text = sv.desanitize_filename(sv.last_savegame_name)
-        name = sv.sanitize_filename(dialog.call_dialog(self.savename_dialog, self))
+        self.savename_dialog.default_text = sv.last_savegame_name
+        self.savename_dialog.add_handler(constants.KEYUP, self.check_filename)
+
+        name = dialog.call_dialog(self.savename_dialog, self)
         if name:
             if sv.savegame_exists(name):
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
