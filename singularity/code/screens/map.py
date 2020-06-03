@@ -431,7 +431,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
         self.savename_dialog.default_text = sv.last_savegame_name
         self.savename_dialog.add_handler(constants.KEYUP, self.check_filename)
 
-        name = dialog.call_dialog(self.savename_dialog, self)
+        name = dialog.call_dialog(self.savename_dialog, self).strip()
         if name:
             if sv.savegame_exists(name):
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
