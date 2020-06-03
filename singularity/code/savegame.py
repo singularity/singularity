@@ -710,11 +710,11 @@ def check_filename_illegal(filename):
     if re.match('.*[<>:"|?*/\\\\].*', filename):
         return _('Do not use any of these characters in filename: {CHARACTERS}').format(CHARACTERS='<>:"|?*/\\\\')
 
-    # Characters that are allowed in filenames, but not at the beginning - prepend _
+    # Characters that are allowed in filenames, but not at the beginning
     if re.match('^[.-]', filename):
         return _('Filename must not start with any of these characters: {CHARACTERS}').format(CHARACTERS='.-')
 
-    # Append _ to filenames that are reserved under Windows
+    # Filenames that are reserved under Windows
     if filename.upper() in WINDOWS_RESERVED:
         return _('This is a reserved filename. Please choose a different filename.')
 
