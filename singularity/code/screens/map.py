@@ -24,7 +24,7 @@ from __future__ import absolute_import
 import collections
 import pygame
 
-from singularity.code import g, savegame as sv, mixer
+from singularity.code import g, dirs, savegame as sv, mixer
 from singularity.code import chance, difficulty, logmessage, warning
 from singularity.code.location import Location
 from singularity.code.graphics import g as gg
@@ -416,7 +416,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
     def check_filename(self, event):
         """Disables the OK button and shows an error message if filename in self.savename_dialog is illegal"""
         filename = self.savename_dialog.text_field.text
-        error_message = sv.check_filename_illegal(filename)
+        error_message = sv.check_filename_illegal(dirs.get_writable_file_in_dirs(filename, "saves"), filename, '.s2')
         if error_message:
             self.savename_dialog.ok_button.enabled = False
             self.savename_dialog.text = _("Enter a name for this save.") + "\n" + error_message
