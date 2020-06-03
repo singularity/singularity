@@ -697,7 +697,7 @@ def check_filename_illegal(directory, filename, extension):
     """Check if the filename is safe for all operating systems.
 
     Keyword arguments:
-    directory -- the direcory that the file will be placed in.
+    directory -- the directory that the file will be placed in.
     filename -- a base filename without file extension.
     filename -- file extension including the dot. Can be empty.
 
@@ -721,9 +721,8 @@ def check_filename_illegal(directory, filename, extension):
         return _('This is a reserved filename. Please choose a different filename.')
 
     # Don't exceed the max length. For Windows, it's the whole path.
-    # Max allowed is 255, but we cut off a bit earlier to make room for adding a file extension.
     filepath = os.path.abspath(os.path.join(directory, filename, extension))
-    if len(os.fsencode(filepath)) > 250:
+    if len(os.fsencode(filepath)) > 255:
         return 'Filename too long'
 
     return None
