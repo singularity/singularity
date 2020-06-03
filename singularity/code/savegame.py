@@ -696,6 +696,9 @@ def savegame_exists(savegame_name):
 def check_filename_illegal(filename):
     """Check if the filename is safe for all operating systems.
 
+    Keyword arguments:
+    filename -- a base filename without file extension.
+
     Returns an error message if a violation was found and None otherwise."""
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
@@ -715,8 +718,10 @@ def check_filename_illegal(filename):
     if filename.upper() in WINDOWS_RESERVED:
         return _('This is a reserved filename. Please choose a different filename.')
 
-    # Don't exceed the max length. TODO fix this, eg. for Windows, it's the whole path
-    if len(filename) > 244:
+    # Don't exceed the max length. For Windows, it's the whole path.
+    # Max allowed is 255, but we cut off a bit earlier to make room for adding a file extension.
+    filepath = os.path.normpath(dirs.get_writable_file_in_dirs(filename, "saves"))
+    if len(filepath) > 250:
         return 'Filename too long'
 
     return None
