@@ -23,7 +23,7 @@ from __future__ import absolute_import
 from numpy import array, int64
 import pygame
 
-from singularity.code import g, task
+from singularity.code import i18n, g, task
 from singularity.code.graphics import dialog, button, slider, text, constants, listbox
 
 
@@ -177,7 +177,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
     def show(self):
         techs = [tech for tech in g.pl.techs.values() if tech.available()
                                                       and not tech.done]
-        techs.sort(key=lambda tech: lex_sorting_form(tech.spec.name))
+        techs.sort(key=lambda tech: i18n.lex_sorting_form(tech.spec.name))
         self.list = [_("CPU Pool"), task.get_current("jobs").name] + \
                     [_("Research %s") % tech.name for tech in techs]
         self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]

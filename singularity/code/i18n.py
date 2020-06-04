@@ -26,8 +26,7 @@ from __future__ import absolute_import
 import os
 import sys
 import locale
-
-from unidecode import unidecode
+import icu
 
 from singularity.code import g, dirs
 from singularity.code.pycompat import *
@@ -46,9 +45,11 @@ try:
 except RuntimeError:
     language = default_language
 
+# For string sorting
+collator = icu.Collator.createInstance(icu.Locale(language))
 
 def set_language(lang=None, force=False):
-    global language # required, since we're going to change it
+    global language, collator # required, since we're going to change it
     if lang is None: lang = language
 
     if lang == language and not force:
@@ -86,6 +87,8 @@ def set_language(lang=None, force=False):
     load_messages()
     load_data_str()
     load_story_translations()
+
+    collator = icu.Collator.createInstance(icu.Locale(language))
 
 
 def load_messages():
@@ -176,11 +179,13 @@ def lex_sorting_form(name):
 
     Use like this:
 
-    listdata.sort(key=lambda an_object: lex_sorting_form(an_object.name))"""
+    listdata.sort(key=lambda an_object: i18n.lex_sorting_form(an_object.name))"""
 
-    return unidecode(unicode(name)).lower()
+    # ICU collator returns wrong keys for DE locale
+    if language == 'de' or language.startswith('de_'):
+        name = name.replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('u', 'ue')
 
-builtins.__dict__['lex_sorting_form'] = lex_sorting_form
+    return collator.getSortKey(name)
 
 builtins.__dict__['_'] = translate
 # Mark string as translatable but defer translation until later.

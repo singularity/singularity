@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import pygame
 import collections
 
-from singularity.code import g
+from singularity.code import i18n, g
 from singularity.code.graphics import text, button, dialog, widget, constants, listbox
 
 
@@ -107,7 +107,7 @@ class KnowledgeScreen(dialog.FocusDialog):
         else:
             items = []
 
-        items.sort(key=lambda item: lex_sorting_form(item[0]))
+        items.sort(key=lambda item: i18n.lex_sorting_form(item[0]))
 
         return_list1 = []
         return_list2 = []
