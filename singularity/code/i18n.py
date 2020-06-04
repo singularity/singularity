@@ -183,7 +183,7 @@ def lex_sorting_form(name):
 
     # ICU collator returns wrong keys for DE locale
     if language == 'de' or language.startswith('de_'):
-        name = name.replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('u', 'ue')
+        name = name.replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue')
 
     return collator.getSortKey(name)
 
