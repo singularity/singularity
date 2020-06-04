@@ -28,7 +28,7 @@ setup(
     install_requires=[
         'numpy',
         'pygame',
-        'polib>=0.7'
+        'polib>=0.7',
     ],
     entry_points={
         'gui_scripts': [
