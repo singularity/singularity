@@ -710,7 +710,7 @@ def check_filename_illegal(directory, filename, extension):
     # Characters that are disallowed anywhere in a filename
     # No potential file separators or other potentially illegal characters
     if re.match('.*[<>:"|?*/\\\\].*', filename):
-        return _('Do not use any of these characters in filename: {CHARACTERS}').format(CHARACTERS='<>:"|?*/\\\\')
+        return _('Filename must not contain any of these characters: {CHARACTERS}').format(CHARACTERS='<>:"|?*/\\\\')
 
     # Characters that are allowed in filenames, but not at the beginning
     if re.match('^[.-]', filename):
