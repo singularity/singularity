@@ -723,7 +723,7 @@ def check_filename_illegal(directory, filename, extension):
     # Don't exceed the max length. For Windows, it's the whole path.
     filepath = os.path.abspath(os.path.join(directory, filename, extension))
     if len(os.fsencode(filepath)) > 255:
-        return 'Filename too long'
+        return _('Filename is too long')
 
     return None
 
