@@ -23,13 +23,16 @@
 
 from __future__ import absolute_import
 
-#import gettext
+import gettext
 import os
 import sys
 import locale
 
 from singularity.code import g, dirs
 from singularity.code.pycompat import *
+
+# Candidate for packaging: https://pypi.org/project/van.potomo/
+# https://pypi.org/project/zest.pocompile/
 
 try:
     import polib
@@ -95,8 +98,9 @@ def set_language(lang=None, force=False):
     load_story_translations()
 
     #gettext.bindtextdomain('messages', localedir=None)
+    gettext.bindtextdomain('messages', main_localedir)
 
-    #gettext.install('messages', localedir=None, codeset=None, names=None)
+    gettext.install('messages', main_localedir)
 
 
 
@@ -124,13 +128,19 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
         try:
             po = polib.pofile(pofile)
             # Create MO files
+            """
             locale_mo_dir = os.path.join(main_localedir, lang, 'LC_MESSAGES')
             if not os.path.isdir(locale_mo_dir):
                 os.makedirs(locale_mo_dir)
 
             mofile_path = os.path.join(locale_mo_dir, os.path.basename(pofile).split('.')[0] + '.mo')
             print("Installing translation file: " + mofile_path)
-            po.save_as_mofile(mofile_path)
+            mo = Msgfmt(pofile).get()
+            with open(mofile_path, 'w', encoding='utf-8') as writme:
+                writme.write(mo.getAsFile())
+
+            #po.save_as_mofile(mofile_path)
+            """
         except IOError:
             # silently ignore non-existing files
             continue
@@ -257,6 +267,6 @@ try:
 except ImportError:
     import __builtin__ as builtins
 
-builtins.__dict__['_'] = translate
+builtins.__dict__['_'] = gettext.gettext
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x
