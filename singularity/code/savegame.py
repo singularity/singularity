@@ -720,6 +720,9 @@ def check_filename_illegal(directory, filename, extension):
     if filename.upper() in WINDOWS_RESERVED:
         return _('This is a reserved filename. Please choose a different filename.')
 
+    if filename.strip() == '':
+        return _('Please enter a non-whitespace character.')
+
     # Don't exceed the max length. For Windows, it's the whole path.
     filepath = os.path.abspath(os.path.join(directory, filename, extension))
     if len(os.fsencode(filepath)) > 255:
