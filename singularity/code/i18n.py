@@ -215,6 +215,7 @@ def get_plural_index(number):
     else:
         return 1
 
+# TODO get rid
 def translate_plural(singular, plural, number, *args, **kwargs):
     if singular in g.messages:
         try:
@@ -257,6 +258,5 @@ except ImportError:
     import __builtin__ as builtins
 
 builtins.__dict__['_'] = translate
-builtins.__dict__['ngettext'] = translate_plural
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x

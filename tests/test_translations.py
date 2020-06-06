@@ -1,3 +1,4 @@
+import gettext
 import pytest
 
 from singularity.code import g, data, i18n
@@ -24,8 +25,8 @@ def test_translation(gd_locale):
 
 def test_translation_fallback(gd_locale):
     assert _('foobarbaz') == 'foobarbaz'
-    assert ngettext('foo', 'bar', 1) == 'foo'
-    assert ngettext('foo', 'bar', 5) == 'bar'
+    assert gettext.ngettext('foo', 'bar', 1) == 'foo'
+    assert gettext.ngettext('foo', 'bar', 5) == 'bar'
 
 def test_nonsense_locale():
     i18n.set_language("foobarbaz")
