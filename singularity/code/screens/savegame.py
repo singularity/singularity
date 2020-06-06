@@ -36,7 +36,7 @@ class SavegameScreen(dialog.ChoiceDialog):
         super(SavegameScreen, self).__init__(parent, *args, yes_type=N_("&LOAD"), **kwargs)
 
         self.yes_button.pos = (-.03,-.99)
-        self.yes_button.exit_code_func = self.return_savegame
+        self.yes_button.function = self.exit_savegame
         self.yes_button.force_underline = -1  # Work around #224
 
         self.no_button.pos = (-.97,-.99)
@@ -198,21 +198,24 @@ class SavegameScreen(dialog.ChoiceDialog):
         self.list = savegames
 
     def delete_savegame(self):
+        save = self.listbox.current_item()
+        if save is None: return
+
         yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
                                 anchor=constants.MID_CENTER,
                                 text=_("Are you sure to delete the saved game ?"))
         delete = dialog.call_dialog(yn, self)
         yn.parent = None
         if delete:
-            save = self.listbox.current_item()
             sv.delete_savegame(save)
             self.reload_savegames()
 
-    def return_savegame(self):
+    def exit_savegame(self):
         save = self.listbox.current_item()
+        if save is None: return
+
         try:
             sv.load_savegame(save)
-            return True
         except sv.SavegameVersionException as e:
             md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
                                       anchor=constants.MID_CENTER,
@@ -222,6 +225,7 @@ This save file '{SAVE_NAME}' is from an unsupported or invalid version:
 """, SAVE_NAME=save.name, VERSION=e.version))
 
             dialog.call_dialog(md, self)
+            return
         except Exception:
             log_func_exc(sv.load_savegame)
             md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
@@ -236,7 +240,9 @@ https://github.com/singularity/singularity
 SAVE_NAME = save.name, \
 LOG_TEXT = (":\n" + g.logfile if g.logfile is not None else " console output.")))
             dialog.call_dialog(md, self)
-            return False
+            return
+
+        raise constants.ExitDialog(True)
 
     def show(self):
         self.reload_savegames()
