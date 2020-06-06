@@ -47,4 +47,5 @@ def test_de_collation():
     i18n.set_language("de_DE")
     collator_locale = i18n.collator.getLocale()
     assert collator_locale.getLanguage() == "de"
-    assert i18n.lex_sorting_form("ö") == i18n.lex_sorting_form("oe")
+    assert i18n.lex_sorting_form("ö") > i18n.lex_sorting_form("od")
+    assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("of")
