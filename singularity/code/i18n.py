@@ -210,6 +210,6 @@ try:
 except ImportError:
     import __builtin__ as builtins
 
-# builtins.__dict__['_'] = gettext.gettext
+builtins.__dict__['_'] = gettext.gettext
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x

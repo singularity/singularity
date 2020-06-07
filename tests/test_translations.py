@@ -23,6 +23,10 @@ def test_plural(gd_locale):
 def test_translation(gd_locale):
     assert _('SHOW') == 'SEALL'
 
+def test_second_locale():
+    i18n.set_language("fr_FR")
+    assert _('DAY') == 'JOUR'
+
 def test_translation_fallback(gd_locale):
     assert _('foobarbaz') == 'foobarbaz'
     assert gettext.ngettext('foo', 'bar', 1) == 'foo'
@@ -45,3 +49,12 @@ def test_story_translation():
     i18n.set_language('en')
     story_section = list(g.get_story_section('Intro'))
     assert story_section[0] == '48656C6C6F2C20\n776F726C6421\n21\n21\n21\n\nUTF-8.  en_US.\nEnglish.  Hello.\nLanguage acquisition complete.\n'
+
+"""
+n = len(os.listdir('.'))
+cat = GNUTranslations(somefile)
+message = cat.ngettext(
+    'There is %(num)d file in this directory',
+    'There are %(num)d files in this directory',
+    n) % {'num': n}
+"""
