@@ -32,14 +32,37 @@ class HotkeyText(text.Text):
 
     def __init__(self, *args, **kwargs):
         # Force early initialization of _hotkey
-        self._hotkey = ""
+        self._hotkey = None
+        self.hotkey_func = kwargs.pop('hotkey_func', False)
         self.hotkey_target = kwargs.pop('hotkey_target', None)
-        self.hotkey = kwargs.pop('hotkey', False)
+
         # Auto-translatable defaults to auto-hotkey as it is the most sane default in that case
         self.autohotkey = kwargs.pop('autohotkey', kwargs.get('autotranslate', False))
+
         self.force_underline = kwargs.pop('force_underline', None)
+        self.priority = kwargs.pop('priority', 100)
+        
+        hotkey = kwargs.pop('hotkey', False)
 
         super(HotkeyText, self).__init__(*args, **kwargs)
+
+        # Do not use hotkey with auto-hotkey
+        if not self.autohotkey:
+            self.hotkey = hotkey
+        elif hotkey:
+            raise ValueError("Cannot use hotkey with automatic hotkey")
+
+    def add_hooks(self):
+        super(text.Text, self).add_hooks()
+        if self.parent is not None:
+            if self._hotkey:
+                self.parent.add_key_handler(self._hotkey, self.handle_hotkey, self.priority)
+
+    def remove_hooks(self):
+        super(text.Text, self).remove_hooks()
+        if self.parent is not None:
+            if self._hotkey:
+                self.parent.remove_key_handler(self._hotkey, self.handle_hotkey)
 
     @property
     def hotkey_target(self):
@@ -57,15 +80,23 @@ class HotkeyText(text.Text):
 
     @hotkey.setter
     def hotkey(self, hotkey):
-        # The auto* fields might not be set yet (during construction)
-        if hasattr(self, 'autohotkey') and self.autohotkey and hasattr(self, 'autotranslate') and self.autotranslate:
-            raise ValueError("Cannot change hotkey for an automatic translatable text widget with automatic hotkey")
+        if getattr(self, 'autohotkey', False):
+            raise ValueError("Cannot change hotkey with automatic hotkey")
         self._new_hotkey(hotkey)
 
     def _new_hotkey(self, hotkey):
+        old_hotkey = self._hotkey
         self._hotkey = hotkey
-        if self.hotkey_target is not None:
-            self.hotkey_target.hotkey = self._hotkey
+
+        if self.parent is not None:
+            if self.hotkey_func is not None:
+                if old_hotkey:
+                    self.parent.remove_key_handler(old_hotkey, self.handle_hotkey)
+                if hotkey:
+                    self.parent.add_key_handler(hotkey, self.handle_hotkey, self.priority)
+            elif self.hotkey_target is not None:
+                self.hotkey_target.hotkey = self._hotkey
+
         self.needs_rebuild = True
 
     def _extract_and_set_hotkey(self, text_value):
@@ -73,6 +104,12 @@ class HotkeyText(text.Text):
         parsed_hotkey = hotkey(text_value)
         self._new_hotkey(parsed_hotkey['key'])
         return parsed_hotkey['text']
+
+    def handle_hotkey(self, event):
+        if event.type == pygame.KEYDOWN:
+            if self.visible and self.enabled and self.hotkey in (event.unicode, event.key):
+                if self.hotkey_func:
+                    self.hotkey_func(event)
 
     def _retranslate(self):
         new_text = _(self._untranslated_text)
@@ -121,11 +158,8 @@ class Button(text.SelectableText, HotkeyText):
         super(Button, self)._new_hotkey(value)
 
     def __init__(self, parent, pos, size = (0, .045), base_font = None,
-                 borders = constants.ALL, text_shrink_factor = .825,
-                 priority = 100, **kwargs):
+                 borders = constants.ALL, text_shrink_factor = .825, **kwargs):
         self.parent = parent
-
-        self.priority = priority
 
         kwargs.setdefault('text_size', 'button')
         super(Button, self).__init__(parent, pos, size, **kwargs)
@@ -134,6 +168,7 @@ class Button(text.SelectableText, HotkeyText):
         self.borders = borders
         self.shrink_factor = text_shrink_factor
 
+        self.hotkey_func = self.activate_with_sound
         self.selected = False
 
     def add_hooks(self):
@@ -143,17 +178,12 @@ class Button(text.SelectableText, HotkeyText):
                                     self.priority)
             self.parent.add_handler(constants.CLICK, self.handle_event,
                                 self.priority)
-            if self.hotkey:
-                self.parent.add_key_handler(self.hotkey, self.handle_event,
-                                            self.priority)
 
     def remove_hooks(self):
         super(Button, self).remove_hooks()
         if self.parent:
             self.parent.remove_handler(constants.MOUSEMOTION, self.watch_mouse)
             self.parent.remove_handler(constants.CLICK, self.handle_event)
-            if self.hotkey:
-                self.parent.remove_key_handler(self.hotkey, self.handle_event)
 
     def watch_mouse(self, event):
         """Selects the button if the mouse is over it."""
@@ -166,9 +196,6 @@ class Button(text.SelectableText, HotkeyText):
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP:
             if self.visible and self.enabled and self.is_over(event.pos):
-                self.activate_with_sound(event)
-        elif event.type == pygame.KEYDOWN:
-            if self.visible and self.enabled and self.hotkey in (event.unicode, event.key):
                 self.activate_with_sound(event)
 
     def activate_with_sound(self, event):
