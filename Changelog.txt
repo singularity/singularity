@@ -12,6 +12,30 @@ GAME CONTENT CHANGES:
   CPU maintenance.  (Xenega)
 
 USER-VISIBLE CHANGES:
+- Ensure that singularity can start when installed and loaded
+  via pkg_resources.load_entry_point.  (Closes #272)  (nthykier)
+- Improve savegame dialog to use a translated version of the
+  difficulity as default savegame and reject some invalid
+  path names with a simple error message rather than an
+  exception.  Furthermore, the "OK" button is now disabled when
+  the savegame name in invalid.  (Closes #267)  (gunchleoc)
+- Disable Load and Delete buttons in the load savegame dialog
+  when there are no savegames.  (nthykier)
+- Avoid a crash when clicking Load or Delete in the load
+  savegame dialog where no savegames are available.
+  (Closes: #274)  (Xenega)
+- Add number separators in statistics screen.  (Closes: #266)
+  (gunchleoc)
+- Give text fields a distinct backgrond color to make it easier
+  to see if something is a text field and make title visible
+  in darktheme.  (Closes #260) (gunchleoc)
+- Add Scottish Gaelic translation.  (Closes: #256, #268, #263)
+  (gunchleoc)
+- Text resizing and layout changes to better accommodate for
+  translations that need more space than the English text.
+  (Closes: #258, #259, #263, #264, #269) (gunchleoc)
+- Minimum resolution has been reduced to 100x100.
+  (rofl0r, nthykier)
 - Enable the game window to be resized like any other window
   e.g. by dragging in the edges of the game window.  (nthykier)
 - Reliably redraw the singularity screen if another window
@@ -85,13 +109,18 @@ USER-VISIBLE CHANGES:
   translatable.  (Closes: #216)  (nthykier)
 
 OTHER CHANGES:
+- Update path name for AUTHORS.txt and Changelog.txt in
+  MANIFEST.in  (Closes: #275)  (nthykier)
+- Update the URLs to the music to reflect their new location.
+  (MestreLion)
 - In debug mode (--debug), highlight which part of the screen
   has been redrawn by drawning a box around it.  (nthykier)
 - Fix some internal bugs that lead to unnecessary redraws of
   some of the text panels in the map screen.  (nthykier)
 
 
-Thanks to Wuzzy2 for filing bugs, play testing and moral support.
+Thanks to Wuzzy2, rofl0r, gunchleoc, and LW-archlinux, Quix0r for
+filing bugs, play testing and moral support.
 
 
 v1.0b1 (2020.02.16):
