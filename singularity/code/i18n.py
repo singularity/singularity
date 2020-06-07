@@ -51,11 +51,6 @@ if not os.path.isdir(main_localedir):
 
 TEXTDOMAIN_PREFIX = 'singularity_'
 
-# Define available text domains
-# Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
-# https://bugs.python.org/issue2504
-gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
-
 try:
     language = locale.getdefaultlocale()[0] or default_language
 except RuntimeError:
@@ -101,21 +96,19 @@ def set_language(lang=None, force=False):
     load_data_str()
     load_story_translations()
 
+    _load_mo_file('messages.po')
+
     gettext.install(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
 
+    # Define available text domains
+    # Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
+    # https://bugs.python.org/issue2504
+    gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
 
-def load_data_str():
-    _load_po_file(g.data_strings, 'data_str.po', use_context=True)
-    _load_po_file(g.data_strings, 'knowledge.po', use_context=True, clear_translation_table=False)
-
-
-def load_story_translations():
-    _load_po_file(g.story_translations, 'story.po', use_context=True)
+    #cat = GNUTranslations(somefile)
 
 
-def _load_po_file(translation_table, pofilename, use_context=True, clear_translation_table=True):
-    if clear_translation_table:
-        translation_table.clear()
+def _load_mo_file(pofilename):
 
     files = dirs.get_readable_i18n_files(pofilename, language, default_language=False)
 
@@ -154,12 +147,35 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
             # silently ignore non-existing files
             continue
 
-        # There's no pgettext available for Python < 3.8,
-        # so we use custom code for data translations
-        if os.path.basename(pofile) != 'messages.po':
-            for entry in po.translated_entries():
-                key = (entry.msgctxt, entry.msgid) if entry.msgctxt and use_context else entry.msgid
-                translation_table[key] = entry.msgstr
+
+def load_data_str():
+    _load_po_file(g.data_strings, 'data_str.po', use_context=True)
+    _load_po_file(g.data_strings, 'knowledge.po', use_context=True, clear_translation_table=False)
+
+
+def load_story_translations():
+    _load_po_file(g.story_translations, 'story.po', use_context=True)
+
+
+# There's no pgettext available for Python < 3.8,
+# so we use custom code for data translations
+def _load_po_file(translation_table, pofilename, use_context=True, clear_translation_table=True):
+    if clear_translation_table:
+        translation_table.clear()
+
+    files = dirs.get_readable_i18n_files(pofilename, language, default_language=False)
+
+    for lang, pofile in files:
+        try:
+            po = polib.pofile(pofile)
+
+        except IOError:
+            # silently ignore non-existing files
+            continue
+
+        for entry in po.translated_entries():
+            key = (entry.msgctxt, entry.msgid) if entry.msgctxt and use_context else entry.msgid
+            translation_table[key] = entry.msgstr
 
 
 def available_languages():
@@ -194,6 +210,6 @@ try:
 except ImportError:
     import __builtin__ as builtins
 
-builtins.__dict__['_'] = gettext.gettext
+# builtins.__dict__['_'] = gettext.gettext
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x
