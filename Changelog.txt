@@ -12,6 +12,9 @@ GAME CONTENT CHANGES:
   CPU maintenance.  (Xenega)
 
 USER-VISIBLE CHANGES:
+- Location screen now disables buttons that have no effect when
+  there is no base selected.  Previously, they would just do
+  "nothing" but where still clickable.  (nthykier)
 - Ensure that singularity can start when installed and loaded
   via pkg_resources.load_entry_point.  (Closes #272)  (nthykier)
 - Improve savegame dialog to use a translated version of the
