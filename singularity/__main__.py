@@ -20,7 +20,7 @@
 
 #This file is the starting file for the game. Run it to start the game.
 
-import singularity
+from singularity import main
 
 if __name__ == '__main__':
-    singularity.main()
+    main()

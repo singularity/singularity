@@ -173,7 +173,6 @@ try:
 except ImportError:
     import __builtin__ as builtins
 
-
 def lex_sorting_form(name):
     """For lexicographic sorting when languages use characters not in 7-bit ASCII. e.g. é or ü.
 
@@ -187,6 +186,9 @@ def lex_sorting_form(name):
 
     return collator.getSortKey(name)
 
-builtins.__dict__['_'] = translate
+# The official gettext version does not support any additional
+# parameters.  We use a lambda to make the signature match the
+# official gettext version to ease the transition to it.
+builtins.__dict__['_'] = lambda x: translate(x)
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x

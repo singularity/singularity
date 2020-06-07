@@ -123,10 +123,10 @@ class LocationScreen(dialog.Dialog):
         canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.27, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.23, -.99),
+        canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.22, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_cpu       = text.Text(canvas, (-.48,-.05), (-.13, -.99),
+        canvas.base_cpu       = text.Text(canvas, (-.47,-.05), (-.13, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
         canvas.status_display = text.Text(canvas, (-.59,-.05), (-.36, -.99),
@@ -358,11 +358,11 @@ def generate_base_name(location, base_type):
         if city:
             #Translators: Format string for the name of a new base
             #Example: "${NUMBER} ${BASETYPE} in ${CITY}"
-            name = _("{CITY} {BASETYPE} {NUMBER}",
+            name = _("{CITY} {BASETYPE} {NUMBER}").format(
                      CITY=city, BASETYPE=flavor, NUMBER=number)
         else:
             #Translators: Name of a new base when location has no cities
-            name = _("{BASETYPE} {NUMBER}",
+            name = _("{BASETYPE} {NUMBER}").format(
                      NUMBER=number, BASETYPE=flavor)
 
         # Damn translators omitting the ${NUMBER} in template string!

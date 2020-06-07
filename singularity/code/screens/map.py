@@ -24,7 +24,7 @@ from __future__ import absolute_import
 import collections
 import pygame
 
-from singularity.code import g, savegame as sv, mixer
+from singularity.code import g, dirs, savegame as sv, mixer
 from singularity.code import chance, difficulty, logmessage, warning
 from singularity.code.location import Location
 from singularity.code.graphics import g as gg
@@ -413,9 +413,26 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
             self._map_screen.force_update()
             raise constants.ExitDialog(False)
 
+    def check_filename(self, event):
+        """Disables the OK button and shows an error message if filename in self.savename_dialog is illegal"""
+        filename = self.savename_dialog.text_field.text.strip()
+        error_message = sv.check_filename_illegal(dirs.get_writable_file_in_dirs(filename, "saves"), filename, '.s2')
+        if error_message:
+            self.savename_dialog.ok_button.enabled = False
+            self.savename_dialog.text = _("Enter a name for this save.") + "\n" + error_message
+        else:
+            self.savename_dialog.ok_button.enabled = True
+            self.savename_dialog.text = _("Enter a name for this save.")
+
     def save_game(self):
-        self.savename_dialog.default_text = sv.default_savegame_name
-        name = dialog.call_dialog(self.savename_dialog, self)
+        # If no savename was set yet, use current difficulty
+        if not sv.last_savegame_name:
+            sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
+        self.savename_dialog.default_text = sv.last_savegame_name
+        self.savename_dialog.add_handler(constants.KEYUP, self.check_filename)
+        self.savename_dialog.text_field.has_focus = True
+
+        name = dialog.call_dialog(self.savename_dialog, self).strip()
         if name:
             if sv.savegame_exists(name):
                 yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
@@ -424,11 +441,10 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
                                                "Are you sure to overwrite the saved game ?"))
                 overwrite = dialog.call_dialog(yn, self)
                 if not overwrite:
-                    return
+                    self.save_game()
 
             sv.create_savegame(name)
             raise constants.ExitDialog(False)
-
 
 speeds = [0, 1, 60, 7200, 432000]
 

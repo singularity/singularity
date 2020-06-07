@@ -450,7 +450,7 @@ class BaseScreen(dialog.Dialog):
                 count = _("(room for %d)") % size
             else:
                 #Translators: current and maximum number of CPUs in a base
-                count = _("x{CURRENT:d} (max {SIZE:d})",
+                count = _("x{CURRENT:d} (max {SIZE:d})").format(
                           CURRENT=current, SIZE=size)
 
         self.cpu_pane.name_panel.text += " " + count
