@@ -108,9 +108,8 @@ class ItemSpec(buyable.BuyableSpec):
         basic_text = super(ItemSpec, self).get_info()
         if self.has_quality_for("cpu"):
             cpu = self.get_quality_for("cpu")
-            return basic_text.replace("---", _("Generates {0} CPU.",
-                                               g.add_commas(cpu)) + \
-                                      "\n---")
+            cpu_text = _("Generates {0} CPU.").format(g.add_commas(cpu))
+            return basic_text.replace("---", cpu_text + "\n---")
         return basic_text
 
     def get_total_cost_info(self, count):

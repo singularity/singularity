@@ -242,8 +242,8 @@ class Location(object):
 
         for modifier_id, modifier_value in self.modifiers.items():
             if (modifier_value > 1):
-                modifiers.append(_("{MODIFIER} BONUS", MODIFIER=modifier_names[modifier_id]))
+                modifiers.append(_("{MODIFIER} BONUS").format(MODIFIER=modifier_names[modifier_id]))
             elif (modifier_value < 1):
-                modifiers.append(_("{MODIFIER} MALUS", MODIFIER=modifier_names[modifier_id]))
+                modifiers.append(_("{MODIFIER} MALUS").format(MODIFIER=modifier_names[modifier_id]))
 
         return ", ".join(modifiers)
