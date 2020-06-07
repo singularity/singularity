@@ -707,6 +707,9 @@ def check_filename_illegal(directory, filename, extension):
     # http://www.linfo.org/file_name.html
     # https://kb.acronis.com/content/39790
 
+    if filename.strip() != filename:
+        raise ValueError("Filename must be stripped before calling check_filename_illegal")
+
     # Characters that are disallowed anywhere in a filename
     # No potential file separators or other potentially illegal characters
     if re.match('.*[<>:"|?*/\\\\].*', filename):
@@ -720,7 +723,7 @@ def check_filename_illegal(directory, filename, extension):
     if filename.upper() in WINDOWS_RESERVED:
         return _('This is a reserved filename. Please choose a different filename.')
 
-    if filename.strip() == '':
+    if filename == '':
         return _('Please enter a non-whitespace character.')
 
     # Don't exceed the max length. For Windows, it's the whole path.

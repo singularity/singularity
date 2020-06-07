@@ -415,7 +415,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
 
     def check_filename(self, event):
         """Disables the OK button and shows an error message if filename in self.savename_dialog is illegal"""
-        filename = self.savename_dialog.text_field.text
+        filename = self.savename_dialog.text_field.text.strip()
         error_message = sv.check_filename_illegal(dirs.get_writable_file_in_dirs(filename, "saves"), filename, '.s2')
         if error_message:
             self.savename_dialog.ok_button.enabled = False
