@@ -193,90 +193,9 @@ def language_searchlist(lang=None, default=True):
 
     return lang_list
 
-# TODO get rid
+# TODO get rid and use gettext as builtin without the wrapper
 def translate(string):
     return gettext.gettext(string)
-    if string in g.messages: s = g.messages[string]
-    else:                    s = string
-
-    if args or kwargs:
-        try:
-            # format() is favored over interpolation for 2 reasons:
-            # - parsing occurs here, allowing centralized try/except handling
-            # - it is the new standard in Python 3
-            return unicode(s).format(*args, **kwargs)
-
-        except Exception as reason:
-            sys.stderr.write(
-                "Error translating '%s' to '%s' with %r,%r in %r:\n%s: %s\n"
-                % (string, s, args, kwargs, language_searchlist(default=False),
-                   type(reason).__name__, reason))
-            s = string # Discard the translation
-
-    return s
-
-def get_plural_index(number):
-    """Hard-coded plural rules.
-
-    Only languages that don't follow the pattern 1, * need to be added here."""
-
-    number = int(number)
-    if language == "gd":
-        # nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;
-        if number == 1 or number == 11:
-            return 0
-        if number == 2 or number == 12:
-            return 1
-        if number > 0 and number < 20:
-            return 2
-        return 3
-    elif language == "ru_RU":
-        # nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);
-        if number % 10 == 1 and number % 100 != 11:
-            return 0
-        if number % 10 >= 2 and number % 10 <= 4 and (number % 100 < 10 or number % 100 >= 20):
-            return 1
-        return 2
-    elif number == 1:
-        return 0
-    else:
-        return 1
-
-# TODO get rid
-def translate_plural(singular, plural, number, *args, **kwargs):
-    if singular in g.messages:
-        try:
-            s = g.messages[singular][get_plural_index(number)]
-        except KeyError:
-            sys.stderr.write(
-                "Error translating '%s', plural '%s' for number %d in %r:\n  Missing index msgstr[%s] in translation\n"
-                % (singular, plural, number, language_searchlist(default=False),
-                  get_plural_index(number)))
-            if number == 1: # Discard the translation
-                s = singular
-            else:
-                s = plural
-    elif number == 1:
-        s = singular
-    else:
-        s = plural
-    s = unicode(s).format(number)
-
-    if args or kwargs:
-        try:
-            # format() is favored over interpolation for 2 reasons:
-            # - parsing occurs here, allowing centralized try/except handling
-            # - it is the new standard in Python 3
-            return unicode(s).format(*args, **kwargs)
-
-        except Exception as reason:
-            sys.stderr.write(
-                "Error translating '%s' to '%s' with %r,%r in %r:\n%s: %s\n"
-                % (singular, s, args, kwargs, language_searchlist(default=False),
-                   type(reason).__name__, reason))
-            s = singular # Discard the translation
-
-    return s
 
 # Initialization code
 try:
