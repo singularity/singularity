@@ -58,7 +58,6 @@ significant_numbers = []
 internal_id_forward = {}
 internal_id_backward = {}
 dangers = {}
-messages = {}
 data_strings = {}
 story_translations = {}
 story = {}

@@ -32,9 +32,6 @@ import locale
 from singularity.code import g, dirs
 from singularity.code.pycompat import *
 
-# Candidate for packaging: https://pypi.org/project/van.potomo/
-# https://pypi.org/project/zest.pocompile/
-
 try:
     import polib
 except ImportError:
@@ -55,10 +52,9 @@ if not os.path.isdir(main_localedir):
 TEXTDOMAIN_PREFIX = 'singularity_'
 
 # Define available text domains
-gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'data_str', main_localedir)
-gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'knowledge', main_localedir)
+# Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
+# https://bugs.python.org/issue2504
 gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
-gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'story', main_localedir)
 
 try:
     language = locale.getdefaultlocale()[0] or default_language
@@ -102,17 +98,10 @@ def set_language(lang=None, force=False):
         except locale.Error:
             continue
 
-    load_messages()
     load_data_str()
     load_story_translations()
 
-
-
     gettext.install(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
-
-
-def load_messages():
-    _load_po_file(g.messages, 'messages.po', use_context=False)
 
 
 def load_data_str():
@@ -132,7 +121,7 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
 
     for lang, pofile in files:
         try:
-            po = polib.pofile(pofile) # TODO move this down to mo generation after everything has been redesigned
+            po = polib.pofile(pofile)
 
             # Use hash to check whether the.po file has changed, then generate .mo file as needed
             sha_base_filename = os.path.basename(os.path.dirname(pofile)) + '_' + os.path.basename(pofile)
@@ -164,13 +153,13 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
         except IOError:
             # silently ignore non-existing files
             continue
-        for entry in po.translated_entries():
-            key = (entry.msgctxt, entry.msgid) if entry.msgctxt and use_context else entry.msgid
-            if entry.msgid_plural:
-                translation_table[key] = entry.msgstr_plural
-            else:
-                translation_table[key] = entry.msgstr
 
+        # There's no pgettext available for Python < 3.8,
+        # so we use custom code for data translations
+        if os.path.basename(pofile) != 'messages.po':
+            for entry in po.translated_entries():
+                key = (entry.msgctxt, entry.msgid) if entry.msgctxt and use_context else entry.msgid
+                translation_table[key] = entry.msgstr
 
 
 def available_languages():
@@ -198,9 +187,6 @@ def language_searchlist(lang=None, default=True):
 
     return lang_list
 
-# TODO get rid and use gettext as builtin without the wrapper
-def translate(string):
-    return gettext.gettext(string)
 
 # Initialization code
 try:
@@ -208,11 +194,6 @@ try:
 except ImportError:
     import __builtin__ as builtins
 
-# TODO use this
-#builtins.__dict__['_'] = gettext.gettext
-# The official gettext version does not support any additional
-# parameters.  We use a lambda to make the signature match the
-# official gettext version to ease the transition to it.
-builtins.__dict__['_'] = lambda x: translate(x)
+builtins.__dict__['_'] = gettext.gettext
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x
