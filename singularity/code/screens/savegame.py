@@ -238,9 +238,10 @@ Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.
 A report was written out to{LOG_TEXT}
 Please create a issue with this report and this savegame at Github:
 https://github.com/singularity/singularity
-""".format(
-SAVE_NAME = save.name,
-LOG_TEXT = (":\n" + g.logfile if g.logfile is not None else " console output.")))
+""").format(
+SAVE_NAME=save.name,
+LOG_TEXT=(":\n" + g.logfile if g.logfile is not None else " console output."))
+            )
             dialog.call_dialog(md, self)
             return
 
