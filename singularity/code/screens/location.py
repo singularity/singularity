@@ -149,12 +149,19 @@ class LocationScreen(dialog.Dialog):
 
         if current_item is None:
             base_manipulation_button_state = False
+            power_button_state = False
         else:
             base_manipulation_button_state = True
+            # "current_item" is just the base name; not the base object itself
+            selected_base = self.listbox.key_list[self.listbox.list_pos]
+            if len(selected_base.available_power_states) == 1:
+                power_button_state = False
+            else:
+                power_button_state = True
         self.open_button.enabled = base_manipulation_button_state
         self.rename_button.enabled = base_manipulation_button_state
         self.destroy_button.enabled = base_manipulation_button_state
-        self.power_button.enabled = base_manipulation_button_state
+        self.power_button.enabled = power_button_state
 
     def update_item(self, canvas, name, base):
         if base is None:
