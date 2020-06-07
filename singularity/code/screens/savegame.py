@@ -128,7 +128,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                                              anchor=constants.BOTTOM_LEFT,
                                              align=constants.LEFT,
                                              color="save_time",
-                                             background_color="clear")                               
+                                             background_color="clear")
         item.version_display     = text.Text(item, (-.99, -.01), (-.45, -.60),
                                              anchor=constants.TOP_RIGHT,
                                              align=constants.RIGHT,
@@ -186,7 +186,7 @@ class SavegameScreen(dialog.ChoiceDialog):
 
                 dif = save.headers.get("difficulty", "")
                 dif_str = g.strip_hotkey(getattr(difficulty.difficulties.get(dif, None), "name", ""))
-                
+
                 item.time_display.text = tm_str + " | " + gtm_str if tm_str else gtm_str
                 item.difficulty_display.text = dif_str
 
@@ -218,7 +218,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                                       text=_("""
 This save file '{SAVE_NAME}' is from an unsupported or invalid version:
 {VERSION}.
-""", SAVE_NAME=save.name, VERSION=e.version))
+""").format(SAVE_NAME=save.name, VERSION=e.version))
 
             dialog.call_dialog(md, self)
         except Exception:
@@ -231,7 +231,7 @@ Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.
 A report was written out to{LOG_TEXT}
 Please create a issue with this report and this savegame at Github:
 https://github.com/singularity/singularity
-""", \
+""").format( \
 SAVE_NAME = save.name, \
 LOG_TEXT = (":\n" + g.logfile if g.logfile is not None else " console output.")))
             dialog.call_dialog(md, self)

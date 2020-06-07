@@ -138,8 +138,8 @@ class BaseSpec(buyable.BuyableSpec):
 
         location_message = ""
         if location.has_modifiers():
-            location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}".format(
-                                           MODIFIERS=location.get_modifiers_info()))
+            location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}").format(
+                                           MODIFIERS=location.get_modifiers_info())
 
         template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
                    _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s\n%s"
