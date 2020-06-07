@@ -48,9 +48,17 @@ default_language = "en_US"
 
 # Prepare main locale dir
 # TODO put this in the correct dir and do this in the dirs.py script. We need to rename the textdomains first."
-main_localedir='singularity/locales'
+main_localedir='singularity/locale'
 if not os.path.isdir(main_localedir):
   os.makedirs(main_localedir)
+
+TEXTDOMAIN_PREFIX = 'singularity_'
+
+# Define available text domains
+gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'data_str', main_localedir)
+gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'knowledge', main_localedir)
+gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
+gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'story', main_localedir)
 
 try:
     language = locale.getdefaultlocale()[0] or default_language
@@ -98,12 +106,9 @@ def set_language(lang=None, force=False):
     load_data_str()
     load_story_translations()
 
-    #gettext.bindtextdomain('messages', localedir=None)
-    gettext.bindtextdomain('messages', main_localedir)
-
-    gettext.install('messages', main_localedir)
 
 
+    gettext.install(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
 
 
 def load_messages():
@@ -147,7 +152,7 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
             if not os.path.isdir(locale_mo_dir):
                 os.makedirs(locale_mo_dir)
 
-            mofile_path = os.path.join(locale_mo_dir, os.path.basename(pofile).split('.')[0] + '.mo')
+            mofile_path = os.path.join(locale_mo_dir, TEXTDOMAIN_PREFIX + os.path.basename(pofile).split('.')[0] + '.mo')
 
             # Create MO file and write new hash
             if new_hash != previous_hash or not os.path.exists(mofile_path):
