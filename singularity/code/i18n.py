@@ -193,7 +193,9 @@ def language_searchlist(lang=None, default=True):
 
     return lang_list
 
-def translate(string, *args, **kwargs):
+# TODO get rid
+def translate(string):
+    return gettext.gettext(string)
     if string in g.messages: s = g.messages[string]
     else:                    s = string
 
@@ -282,6 +284,11 @@ try:
 except ImportError:
     import __builtin__ as builtins
 
-builtins.__dict__['_'] = gettext.gettext
+# TODO use this
+#builtins.__dict__['_'] = gettext.gettext
+# The official gettext version does not support any additional
+# parameters.  We use a lambda to make the signature match the
+# official gettext version to ease the transition to it.
+builtins.__dict__['_'] = lambda x: translate(x)
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x

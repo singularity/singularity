@@ -19,25 +19,27 @@
 #This file contains the Statistic class, used for saving/loading single-game
 #statistics.
 
+from singularity.code import g
+
 
 class Statistics(object):
 
     def __init__(self):
         super(Statistics, self).__init__()
         self._stats = {}
-    
+
     def __len__(self):
         len(self._stats)
-    
+
     def __getitem__(self, key):
         stat = self._stats.get(key, None)
-        
+
         if (stat is None):
             stat = Statistic(key)
             self._stats[key] = stat
-        
+
         return stat
-    
+
     def __iter__(self):
         return iter(self._stats.values())
 
@@ -61,9 +63,9 @@ class Statistic(object):
 
     def display_value(self):
         if (hasattr(self, "_display") and callable(self._display)):
-            return str(self._display(self.value))
+            return g.add_commas(self._display(self.value))
         else:
-            return str(self.value)
+            return g.add_commas(self.value)
 
 itself = Statistics()
 
@@ -82,7 +84,7 @@ def observe(name, data_member, display=None):
             old_value = 0
 
         change = new_value - old_value
-        
+
         if change > 0:
             itself[name].value += change
 
@@ -99,6 +101,6 @@ def stat(name, display=None):
         return itself[name].value
 
     def set(self, new_value):
-        itself[name].value = new_value 
+        itself[name].value = new_value
 
     return property(get, set)

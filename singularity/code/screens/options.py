@@ -193,7 +193,7 @@ class GeneralPane(widget.Widget):
                                   list=[lang[1] for lang in self.languages],
                                   update_func=self.set_language)
 
-        self.theme_label = text.Text(self, (.37, .01), (.09, .05),
+        self.theme_label = text.Text(self, (.46, .01), (.09, .05),
                                      autotranslate=True,
                                      text=N_("Theme:"),
                                      align=constants.LEFT,
@@ -201,7 +201,7 @@ class GeneralPane(widget.Widget):
                                      )
 
         self.theme_choice = \
-            listbox.UpdateListbox(self, (.47, .01), (.12, .25),
+            listbox.UpdateListbox(self, (.56, .01), (.20, .25),
                                   update_func=theme.set_theme,
                                   list_pos=theme.get_theme_pos())
 

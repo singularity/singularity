@@ -123,10 +123,10 @@ class LocationScreen(dialog.Dialog):
         canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.27, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.23, -.99),
+        canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.22, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_cpu       = text.Text(canvas, (-.48,-.05), (-.13, -.99),
+        canvas.base_cpu       = text.Text(canvas, (-.47,-.05), (-.13, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
         canvas.status_display = text.Text(canvas, (-.59,-.05), (-.36, -.99),
@@ -277,6 +277,7 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
                                             anchor=constants.BOTTOM_LEFT,
                                             borders=constants.ALL,
+                                            background_color="text_entry_background",
                                             base_font="normal")
 
         self.desc_func = self.on_change

@@ -518,7 +518,7 @@ class TopDialog(Dialog):
 
 
 class TextDialog(Dialog):
-    def __init__(self, parent, pos=(.5, .1), size=(.45, .5),
+    def __init__(self, parent, pos=(.5, .1), size=(.50, .5),
                  anchor=constants.TOP_CENTER, **kwargs):
         kwargs.setdefault("valign", constants.TOP)
         kwargs.setdefault("align", constants.LEFT)
@@ -602,7 +602,7 @@ class MessageDialog(TextDialog):
 
 class TextEntryDialog(TextDialog, FocusDialog):
 
-    def __init__(self, parent, pos=(-.50, -.50), size=(.50, .20),
+    def __init__(self, parent, pos=(-.50, -.50), size=(.55, .25),
                  anchor=constants.MID_CENTER, **kwargs):
         kwargs.setdefault('wrap', False)
         kwargs.setdefault("shrink_factor", 1)
@@ -612,8 +612,9 @@ class TextEntryDialog(TextDialog, FocusDialog):
         cancel_type = kwargs.pop("cancel_type", N_("&CANCEL"))
         super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
-        self.text_field = text.EditableText(self, (-.05, -.25), (-.90, -.25),
+        self.text_field = text.EditableText(self, (-.05, -.30), (-.90, -.25),
                                             borders=constants.ALL,
+                                            background_color="text_entry_background",
                                             base_font="normal")
 
         self.ok_button = button.FunctionButton(self, (-.14, -.65), (-.30, -.25),
