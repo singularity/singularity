@@ -22,6 +22,7 @@
 from __future__ import division
 
 from functools import reduce
+import gettext
 
 from singularity.code import g, chance, item, buyable
 from singularity.code.buyable import cpu
@@ -134,7 +135,7 @@ class BaseSpec(buyable.BuyableSpec):
             fake_base.location = location
             size = "\n" + forced_cpu_spec.get_quality_info(if_installed_in_base=fake_base, count=self.size)
         elif self.size > 1:
-            size = "\n" + _("Has space for %d computers.") % self.size
+            size = "\n" + gettext.ngettext("Has space for {COUNT} computer.", "Has space for {COUNT} computers.", self.size).format(COUNT=self.size)
 
         location_message = ""
         if location.has_modifiers():

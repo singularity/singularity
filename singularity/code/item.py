@@ -20,6 +20,8 @@
 
 from __future__ import absolute_import
 
+import gettext
+
 from singularity.code import g, buyable
 from singularity.code.stats import stat
 from singularity.code.spec import GenericSpec, SpecDataField, validate_must_be_list, promote_to_list
@@ -108,7 +110,7 @@ class ItemSpec(buyable.BuyableSpec):
         basic_text = super(ItemSpec, self).get_info()
         if self.has_quality_for("cpu"):
             cpu = self.get_quality_for("cpu")
-            cpu_text = _("Generates {0} CPU.").format(g.add_commas(cpu))
+            cpu_text = gettext.ngettext("Generates {0} CPU.", "Generates {0} CPU.", cpu).format(g.add_commas(cpu))
             return basic_text.replace("---", cpu_text + "\n---")
         return basic_text
 
