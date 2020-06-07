@@ -430,6 +430,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
             sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
         self.savename_dialog.default_text = sv.last_savegame_name
         self.savename_dialog.add_handler(constants.KEYUP, self.check_filename)
+        self.savename_dialog.text_field.has_focus = True
 
         name = dialog.call_dialog(self.savename_dialog, self).strip()
         if name:
