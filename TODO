@@ -11,8 +11,6 @@ TODO:
         # per-tech time to completion (from day 0 to start, then time to completion)
     - Add more items.
     - Consistent use of stderr and print, preferably using available Logger
-    - Fix hotkeys and reload all dialogs and buttons when language changes, or
-      provide Options Screen a way to restart the game
     - Create a hook for dialogs to auto-detect hotkey conflicts
     - Detect user's desktop resolution and set game's default resolution
       accordingly. For windowed mode (current default), leave room for borders
@@ -20,15 +18,10 @@ TODO:
     - Use the difficulties list and names in creative ways, such as:
       - display current difficulty in options screen instead of map, or,
         even better, in map's menu dialog (Load/Save/Options/Quit)
-      - prefix saved games filenames with difficulty, and/or keep a list of
-        known games' difficulties in a text file in <prefs_dir>, update it
-        on every load/save, and show them on load/save dialogs
       - disable difficulties not beaten by player, keeping track in prefs.dat
 
     - Current Theme system works, but it sucks in many ways:
       - weak support for changes other than background night/day map image
-      - themes should inherit values from default theme instead of using symlinks
-      - user themes (in prefs dir) should inherit values from system themes
       - code for changing theme values (images, fonts, etc) through game screens
         should be compatible with the upcoming on-the-fly i18n of texts and
         labels when language changes. See testing/options branch in git repository.
