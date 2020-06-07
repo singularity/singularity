@@ -358,11 +358,11 @@ def generate_base_name(location, base_type):
         if city:
             #Translators: Format string for the name of a new base
             #Example: "${NUMBER} ${BASETYPE} in ${CITY}"
-            name = _("{CITY} {BASETYPE} {NUMBER}",
+            name = _("{CITY} {BASETYPE} {NUMBER}").format(
                      CITY=city, BASETYPE=flavor, NUMBER=number)
         else:
             #Translators: Name of a new base when location has no cities
-            name = _("{BASETYPE} {NUMBER}",
+            name = _("{BASETYPE} {NUMBER}").format(
                      NUMBER=number, BASETYPE=flavor)
 
         # Damn translators omitting the ${NUMBER} in template string!
