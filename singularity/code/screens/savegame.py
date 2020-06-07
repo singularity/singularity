@@ -196,6 +196,8 @@ class SavegameScreen(dialog.ChoiceDialog):
         savegames.sort(key=lambda savegame: savegame.name.lower())
         self._all_savegames_sorted = savegames
         self.list = savegames
+        self.yes_button.enabled = True if self.list else False
+        self.delete_button.enabled = True if self.list else False
 
     def delete_savegame(self):
         save = self.listbox.current_item()
