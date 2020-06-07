@@ -23,6 +23,7 @@
 
 from __future__ import absolute_import
 
+import hashlib
 import gettext
 import os
 import sys
@@ -126,21 +127,35 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
 
     for lang, pofile in files:
         try:
-            po = polib.pofile(pofile)
-            # Create MO files
-            """
+            po = polib.pofile(pofile) # TODO move this down to mo generation after everything has been redesigned
+
+            # Use hash to check whether the.po file has changed, then generate .mo file as needed
+            sha_base_filename = os.path.basename(os.path.dirname(pofile)) + '_' + os.path.basename(pofile)
+            sha_filename = dirs.get_writable_file_in_dirs(sha_base_filename + ".sha1", "temp")
+
+            previous_hash = ''
+            new_hash = ''
+            if os.path.exists(sha_filename):
+                with open(sha_filename, 'r') as sha_file:
+                    previous_hash = sha_file.read()
+
+            with open(pofile, 'rb') as currentpo:
+                new_hash = hashlib.sha1(currentpo.read()).hexdigest()
+
+            # Ensure directory exists before writing
             locale_mo_dir = os.path.join(main_localedir, lang, 'LC_MESSAGES')
             if not os.path.isdir(locale_mo_dir):
                 os.makedirs(locale_mo_dir)
 
             mofile_path = os.path.join(locale_mo_dir, os.path.basename(pofile).split('.')[0] + '.mo')
-            print("Installing translation file: " + mofile_path)
-            mo = Msgfmt(pofile).get()
-            with open(mofile_path, 'w', encoding='utf-8') as writme:
-                writme.write(mo.getAsFile())
 
-            #po.save_as_mofile(mofile_path)
-            """
+            # Create MO file and write new hash
+            if new_hash != previous_hash or not os.path.exists(mofile_path):
+                print("Installing translation file: " + mofile_path)
+                po.save_as_mofile(mofile_path)
+                with open(sha_filename, 'w') as sha_file:
+                    sha_file.write(new_hash)
+
         except IOError:
             # silently ignore non-existing files
             continue

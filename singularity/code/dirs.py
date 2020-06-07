@@ -77,6 +77,12 @@ dir_defs = (
         {"parent": "old_home",    "path": "saves",          }, # Old .endgame dir
         {"parent": "root",        "path": "saves",          }, # Single dir
     ),
+    ( {"name":"temp", "writable": True},
+        {"parent": "files_home",  "path": "temp",           }, # New XDG dir
+        {"parent": "config_home", "path": "temp",           },
+        {"parent": "old_home",    "path": "temp",           }, # Old .endgame dir
+        {"parent": "root",        "path": "temp",           }, # Single dir
+    ),
     ( {"name":"pref", "writable": True},
         {"parent": "config_home", "path": version_dir,      },
         {"parent": "config_home", "path": "",               },
@@ -229,7 +235,7 @@ def get_writable_file_in_dirs(filename, dir_name, outer_paths=None):
     else:
         return None
 
-def get_readable_i18n_files(filename, lang=None, default_language=True, 
+def get_readable_i18n_files(filename, lang=None, default_language=True,
         localized_item=True, only_last=False, outer_paths=None):
     from singularity.code import i18n
     files = []
