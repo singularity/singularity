@@ -170,8 +170,8 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.parent.needs_rebuild = True
 
     def show_help(self, danger_level):
-        self.help_dialog.text = _("This technology is too dangerous to research on any of the computers I have. {TEXT}",
-                                  TEXT=g.dangers[danger_level].research_desc)
+        self.help_dialog.text = _("This technology is too dangerous to research on any of the computers I have. {TEXT}".format(
+                                  TEXT=g.dangers[danger_level].research_desc))
         dialog.call_dialog(self.help_dialog, self)
 
     def show(self):

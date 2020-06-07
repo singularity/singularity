@@ -138,8 +138,8 @@ class BaseSpec(buyable.BuyableSpec):
 
         location_message = ""
         if location.has_modifiers():
-            location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}", 
-                                           MODIFIERS=location.get_modifiers_info())
+            location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}".format(
+                                           MODIFIERS=location.get_modifiers_info()))
 
         template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
                    _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s\n%s"
@@ -237,7 +237,7 @@ class Base(buyable.Buyable):
         g.pl.recalc_cpu()
 
     def has_power(self):
-        if self._power_state == "active": 
+        if self._power_state == "active":
             return True
         else:
             return False
@@ -249,7 +249,7 @@ class Base(buyable.Buyable):
         if self.cpus is not None \
                 and self.cpus.spec == item_type:
             space_left -= self.cpus.count
-            
+
         return space_left
 
     @property
@@ -292,7 +292,7 @@ class Base(buyable.Buyable):
         spec = g.base_type[spec_id]
         name = obj_data.get('name')
         base = Base(name, spec)
-        
+
         base.restore_buyable_fields(obj_data, game_version)
 
         if not base.spec.force_cpu:
@@ -359,7 +359,7 @@ class Base(buyable.Buyable):
     def get_quality_for(self, quality):
         gen = (item.get_quality_for(quality) for item in self.all_items()
                                              if item and item.done)
-        
+
         if quality.endswith("_modifier"):
             # Use add_chance to sum modifier.
             return reduce(chance.add, (qual / 10000 for qual in gen), 0) * 10000
@@ -376,7 +376,7 @@ class Base(buyable.Buyable):
             if item and not item.done:
                 return True
         return False
-        
+
     def is_building_extra(self):
         for item in self.all_items():
             if item and item.spec.item_type.is_extra and not item.done:
@@ -446,9 +446,9 @@ class Base(buyable.Buyable):
     def get_detect_info(self):
         accurate = (g.pl.display_discover == "full")
         chance = self.get_detect_chance(accurate)
-        
+
         return get_detect_info(chance)
-        
+
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.
@@ -469,16 +469,16 @@ def detect_chance_to_danger_level(detects_per_day):
 def get_detect_info(detect_chance):
     detect_template = _("Detection chance:") + "\n"
     chances = []
-    
+
     for group in g.pl.groups.values():
         detect_template += group.name + u":\xA0%s\n"
         chances.append(detect_chance.get(group.spec.id, 0))
 
     if g.pl.display_discover == "full":
         return detect_template % tuple(g.to_percent(c) for c in chances)
-    elif g.pl.display_discover == "partial":                                 
-        return detect_template % tuple(g.to_percent(g.nearest_percent(c, 25)) for c in chances)                               
-    else:              
-        return detect_template % tuple(g.danger_level_to_detect_str(detect_chance_to_danger_level(c)) 
+    elif g.pl.display_discover == "partial":
+        return detect_template % tuple(g.to_percent(g.nearest_percent(c, 25)) for c in chances)
+    else:
+        return detect_template % tuple(g.danger_level_to_detect_str(detect_chance_to_danger_level(c))
                                        for c in chances)
 
