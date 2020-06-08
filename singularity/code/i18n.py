@@ -45,8 +45,13 @@ default_language = "en_US"
 gettext_language = None
 
 # Prepare main locale dir
-# TODO put this in the correct dir and do this in the dirs.py script. We need to rename the textdomains first."
-main_localedir='singularity/locale'
+try:
+    main_localedir = dirs.get_writable_file_in_dirs('locale', 'i18n')
+except KeyError:
+    # Catch KeyError: 'i18n'
+    # Which happens with the test suite only
+    main_localedir = 'singularity/locale'
+
 if not os.path.isdir(main_localedir):
   os.makedirs(main_localedir)
 
@@ -120,7 +125,7 @@ def _load_mo_file(pofilename):
 
             # Use hash to check whether the.po file has changed, then generate .mo file as needed
             sha_base_filename = os.path.basename(os.path.dirname(pofile)) + '_' + os.path.basename(pofile)
-            sha_filename = dirs.get_writable_file_in_dirs(sha_base_filename + ".sha1", "temp")
+            sha_filename = dirs.get_writable_file_in_dirs(sha_base_filename + ".sha1", "i18n")
 
             previous_hash = ''
             new_hash = ''

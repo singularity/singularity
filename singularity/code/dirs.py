@@ -77,12 +77,6 @@ dir_defs = (
         {"parent": "old_home",    "path": "saves",          }, # Old .endgame dir
         {"parent": "root",        "path": "saves",          }, # Single dir
     ),
-    ( {"name":"temp", "writable": True},
-        {"parent": "files_home",  "path": "temp",           }, # New XDG dir
-        {"parent": "config_home", "path": "temp",           },
-        {"parent": "old_home",    "path": "temp",           }, # Old .endgame dir
-        {"parent": "root",        "path": "temp",           }, # Single dir
-    ),
     ( {"name":"pref", "writable": True},
         {"parent": "config_home", "path": version_dir,      },
         {"parent": "config_home", "path": "",               },
