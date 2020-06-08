@@ -56,7 +56,6 @@ try:
 except RuntimeError:
     language = default_language
 
-
 def set_language(lang=None, force=False):
     global language # required, since we're going to change it
     if lang is None: lang = language
@@ -98,14 +97,13 @@ def set_language(lang=None, force=False):
 
     _load_mo_file('messages.po')
 
-    gettext.install(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
+    # Switch gettext language
+    gettext.translation(TEXTDOMAIN_PREFIX + 'messages', main_localedir, languages=[lang], fallback=True).install()
 
     # Define available text domains
     # Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
     # https://bugs.python.org/issue2504
     gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
-
-    #cat = GNUTranslations(somefile)
 
 
 def _load_mo_file(pofilename):
