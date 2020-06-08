@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-06-07 09:16+0200\n"
-"PO-Revision-Date: 2020-05-30 11:06+0100\n"
+"PO-Revision-Date: 2020-06-08 07:30+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -1055,20 +1055,24 @@ msgstr "Coimpiutair oilthighe"
 #, python-brace-format
 msgid "Filename must not contain any of these characters: {CHARACTERS}"
 msgstr ""
+"Chan fhaod gin de na caractaran seo a bhith am broinn ainm faidhle: "
+"{CHARACTERS}"
 
 #: savegame.py:720
 #, python-brace-format
 msgid "Filename must not start with any of these characters: {CHARACTERS}"
 msgstr ""
+"Chan fhaod ainm faidhle a thòiseachadh le gin dhe na caractaran seo: "
+"{CHARACTERS}"
 
 #: savegame.py:724
 msgid "This is a reserved filename. Please choose a different filename."
-msgstr ""
+msgstr "Seo ainm faidhle glèidhte. Tagh ainm faidhle eile."
 
 #: savegame.py:727
 msgid "Please enter a non-whitespace character."
-msgstr ""
+msgstr "Cuir a-steach caractar nach eil ’na gheal-spàs."
 
 #: savegame.py:732
 msgid "Filename is too long"
-msgstr ""
+msgstr "Tha an t-ainm faidhle ro fhada"
