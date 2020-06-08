@@ -29,8 +29,8 @@ def test_second_locale():
 
 def test_translation_fallback(gd_locale):
     assert _('foobarbaz') == 'foobarbaz'
-    assert gettext.ngettext('foo', 'bar', 1) == 'foo'
-    assert gettext.ngettext('foo', 'bar', 5) == 'bar'
+    assert ngettext('foo', 'bar', 1) == 'foo'
+    assert ngettext('foo', 'bar', 5) == 'bar'
 
 """
 TODO revisit this test once everything works

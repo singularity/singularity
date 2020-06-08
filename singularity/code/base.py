@@ -135,7 +135,7 @@ class BaseSpec(buyable.BuyableSpec):
             fake_base.location = location
             size = "\n" + forced_cpu_spec.get_quality_info(if_installed_in_base=fake_base, count=self.size)
         elif self.size > 1:
-            size = "\n" + gettext.ngettext("Has space for {COUNT} computer.", "Has space for {COUNT} computers.", self.size).format(COUNT=self.size)
+            size = "\n" + ngettext("Has space for {COUNT} computer.", "Has space for {COUNT} computers.", self.size).format(COUNT=self.size)
 
         location_message = ""
         if location.has_modifiers():

@@ -216,11 +216,11 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 def to_time(raw_time):
     if raw_time//60 > 48:
         time_number = raw_time // (24*60)
-        return gettext.ngettext("{0} day", "{0} days", time_number).format(time_number)
+        return ngettext("{0} day", "{0} days", time_number).format(time_number)
     if raw_time//60 > 1:
         time_number = raw_time // 60
-        return gettext.ngettext("{0} hour", "{0} hours", time_number).format(time_number)
-    return gettext.ngettext("{0} minute", "{0} minutes", raw_time).format(raw_time)
+        return ngettext("{0} hour", "{0} hours", time_number).format(time_number)
+    return ngettext("{0} minute", "{0} minutes", raw_time).format(raw_time)
 
 
 # Generator function for iterating through all bases.

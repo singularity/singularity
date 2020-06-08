@@ -41,7 +41,8 @@ except ImportError:
 #It is required that default language have all data files and all of them
 # must have all available entries
 default_language = "en_US"
-#default_textdomain = 'messages'
+
+gettext_language = None
 
 # Prepare main locale dir
 # TODO put this in the correct dir and do this in the dirs.py script. We need to rename the textdomains first."
@@ -98,7 +99,10 @@ def set_language(lang=None, force=False):
     _load_mo_file('messages.po')
 
     # Switch gettext language
-    gettext.translation(TEXTDOMAIN_PREFIX + 'messages', main_localedir, languages=[lang], fallback=True).install()
+    gettext_language = gettext.translation(TEXTDOMAIN_PREFIX + 'messages', main_localedir, languages=[lang], fallback=True)
+    gettext_language.install()
+    builtins.__dict__['_'] = gettext_language.gettext
+    builtins.__dict__['ngettext'] = gettext_language.ngettext
 
     # Define available text domains
     # Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
@@ -201,7 +205,6 @@ def language_searchlist(lang=None, default=True):
 
     return lang_list
 
-
 # Initialization code
 try:
     import builtins
@@ -209,5 +212,6 @@ except ImportError:
     import __builtin__ as builtins
 
 builtins.__dict__['_'] = gettext.gettext
+builtins.__dict__['ngettext'] = gettext.ngettext
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x

@@ -110,7 +110,7 @@ class ItemSpec(buyable.BuyableSpec):
         basic_text = super(ItemSpec, self).get_info()
         if self.has_quality_for("cpu"):
             cpu = self.get_quality_for("cpu")
-            cpu_text = gettext.ngettext("Generates {0} CPU.", "Generates {0} CPU.", cpu).format(g.add_commas(cpu))
+            cpu_text = ngettext("Generates {0} CPU.", "Generates {0} CPU.", cpu).format(g.add_commas(cpu))
             return basic_text.replace("---", cpu_text + "\n---")
         return basic_text
 

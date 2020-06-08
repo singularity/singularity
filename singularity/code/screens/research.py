@@ -72,7 +72,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         elif key == "jobs":
             job = task.get_current("jobs")
             profit = job.get_profit()
-            template = "%s\n" + gettext.ngettext("%s money per CPU per day.", "%s money per CPU per day.", profit) + "\n---\n%s"
+            template = "%s\n" + ngettext("%s money per CPU per day.", "%s money per CPU per day.", profit) + "\n---\n%s"
             description = template % (job.name, profit, job.description)
         else:
             description = ""
