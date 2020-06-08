@@ -22,7 +22,6 @@
 from __future__ import division
 
 from functools import reduce
-import gettext
 
 from singularity.code import g, chance, item, buyable
 from singularity.code.buyable import cpu

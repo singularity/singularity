@@ -21,8 +21,8 @@
 
 from __future__ import absolute_import
 
+
 import collections
-import gettext
 import random
 import sys
 

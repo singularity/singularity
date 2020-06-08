@@ -170,14 +170,13 @@ def _load_po_file(translation_table, pofilename, use_context=True, clear_transla
     for lang, pofile in files:
         try:
             po = polib.pofile(pofile)
-
         except IOError:
             # silently ignore non-existing files
             continue
-
         for entry in po.translated_entries():
             key = (entry.msgctxt, entry.msgid) if entry.msgctxt and use_context else entry.msgid
             translation_table[key] = entry.msgstr
+
 
 
 def available_languages():

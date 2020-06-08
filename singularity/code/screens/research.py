@@ -20,8 +20,6 @@
 
 from __future__ import absolute_import
 
-import gettext
-
 from numpy import array, int64
 import pygame
 
