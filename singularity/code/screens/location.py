@@ -225,6 +225,11 @@ class LocationScreen(dialog.Dialog):
 
             self.listbox.needs_rebuild = True
 
+        # Ensure that the buttons have the correct state if we have rebuilt
+        # the list (or the base state changed in between).
+        # Related bug: #282
+        self._selection_change()
+
         # Rebuild dialogs
         self.confirm_destroy.needs_rebuild = True
         self.base_dialog.needs_rebuild = True
