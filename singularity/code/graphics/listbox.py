@@ -126,8 +126,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         if event.y == 0:
             # Ignore vertical scrolls
             return
-        # Note the direction is based on direction as we used under in
-        # pygame 1/SDL 1 (this avoids confusing users when they migrate
+        # Note the direction is based on the direction that we used under
+        # in pygame 1/SDL 1 (this avoids confusing users when they migrate
         # to pygame 2 with SDL 2)
         direction = -1 if event.y > 0 else 1
 
@@ -137,7 +137,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         # Number of items moved by a scroll
         diff = self.scrollbar.window - 1
         new_pos = self.list_pos + direction * diff
-        self._scroll_to(new_pos)
+        self._scroll_to_and_raise_event_handled(new_pos)
 
     def got_key(self, event, require_focus=True):
         if not self.item_selectable:
@@ -156,9 +156,9 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         else:
             return
 
-        self._scroll_to(new_pos)
+        self._scroll_to_and_raise_event_handled(new_pos)
 
-    def _scroll_to(self, new_pos):
+    def _scroll_to_and_raise_event_handled(self, new_pos):
         self.list_pos = self.safe_pos(new_pos)
         self.scrollbar.scroll_to(self.list_pos)
         raise constants.Handled
