@@ -297,11 +297,12 @@ class UpdateListbox(Listbox):
 class CustomListbox(UpdateListbox):
     remake_func = widget.causes_rebuild("_remake_func")
     rebuild_func = widget.causes_rebuild("_rebuild_func")
+
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
         self.key_list = kwargs.pop("key_list", None)
         self.remake_func = kwargs.pop("remake_func", lambda value: None)
-        self.rebuild_func = kwargs.pop("rebuild_func", lambda value: None)
+        self.rebuild_func = kwargs.pop("rebuild_func", lambda *args: None)
         super(CustomListbox, self).__init__(parent, *args, **kwargs)
 
     def make_element(self):
