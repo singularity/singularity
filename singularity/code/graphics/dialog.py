@@ -164,7 +164,6 @@ class Dialog(text.Text):
         self.add_handler(constants.CLICK, self.fake_escape, 200)
 
     def lost_focus(self):
-        self.key_down = None
         self.faded = True
         self.stop_timer()
 
@@ -207,7 +206,6 @@ class Dialog(text.Text):
         from singularity.code.mixer import play_music
 
         self.visible = True
-        self.key_down = None
         self.needs_rebuild = True
         self.start_timer()
 
@@ -284,12 +282,6 @@ class Dialog(text.Text):
             # Timer tick handlers.
             handlers = self.handlers.get(constants.TICK, [])
 
-            # Generate repeated keys.
-            if self.key_down:
-                self.repeat_counter += 1
-                if self.repeat_counter >= 5:
-                    self.repeat_counter = 0
-                    self.handle(self.key_down)
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
 
             # TODO: Dynamize global key handlers.
@@ -323,15 +315,7 @@ class Dialog(text.Text):
                 # Keycode-based handlers for this particular key.
                 insort_all(handlers, self.key_handlers.get(event.key, []))
 
-                # Begin repeating keys.
-                if self.key_down is not event:
-                    self.key_down = event
-                    self.repeat_counter = -10
-                    self.start_timer(force = True)
-            else: # event.type == pygame.KEYUP:
-                # Stop repeating keys.
-                self.key_down = None
-                self.reset_timer()
+            else:  # event.type == pygame.KEYUP:
 
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
