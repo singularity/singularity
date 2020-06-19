@@ -26,7 +26,6 @@ from __future__ import absolute_import
 import os
 import sys
 import locale
-import icu
 
 from singularity.code import g, dirs
 from singularity.code.pycompat import *
@@ -45,11 +44,8 @@ try:
 except RuntimeError:
     language = default_language
 
-# For string sorting
-collator = icu.Collator.createInstance(icu.Locale(language))
-
 def set_language(lang=None, force=False):
-    global language, collator # required, since we're going to change it
+    global language # required, since we're going to change it
     if lang is None: lang = language
 
     if lang == language and not force:
@@ -87,8 +83,6 @@ def set_language(lang=None, force=False):
     load_messages()
     load_data_str()
     load_story_translations()
-
-    collator = icu.Collator.createInstance(icu.Locale(language))
 
 
 def load_messages():
@@ -180,11 +174,11 @@ def lex_sorting_form(name):
 
     listdata.sort(key=lambda an_object: i18n.lex_sorting_form(an_object.name))"""
 
-    # ICU collator returns wrong keys for DE locale
+    # Collator returns wrong keys for DE locale
     if language == 'de' or language.startswith('de_'):
         name = name.replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue')
 
-    return collator.getSortKey(name)
+    return locale.strxfrm(name)
 
 # The official gettext version does not support any additional
 # parameters.  We use a lambda to make the signature match the

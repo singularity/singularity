@@ -36,16 +36,13 @@ def test_story_translation():
     assert story_section[0] == '48656C6C6F2C20\n776F726C6421\n21\n21\n21\n\nUTF-8.  en_US.\nEnglish.  Hello.\nLanguage acquisition complete.\n'
 
 def test_root_collation(gd_locale):
-    # Test root fallback for locale
-    collator_locale = i18n.collator.getLocale()
-    assert collator_locale.getLanguage() == "root"
+    # Locale without special rules
+    assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("oa")
     assert i18n.lex_sorting_form("ö") != i18n.lex_sorting_form("oe")
     assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("p")
 
 def test_de_collation():
     # Test specific sorting requirements for de
     i18n.set_language("de_DE")
-    collator_locale = i18n.collator.getLocale()
-    assert collator_locale.getLanguage() == "de"
     assert i18n.lex_sorting_form("ö") > i18n.lex_sorting_form("od")
     assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("of")
