@@ -12,6 +12,10 @@ GAME CONTENT CHANGES:
   CPU maintenance.  (Xenega)
 
 USER-VISIBLE CHANGES:
+- It is now possible to convert old savegames to the new format
+  via the `Upgrade` button on the `Load` menu.  This avoids the
+  hassle of having to manually load and save each game.
+  (nthykier)
 - Implement lexicographic sorting of strings by using Python's
   `locale.strxfrm`.  This provides better sorting order for
   non-English languages on all platforms where `locale.strxfrm`
