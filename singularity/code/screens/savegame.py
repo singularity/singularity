@@ -205,7 +205,10 @@ class SavegameScreen(dialog.ChoiceDialog):
                     gtm_str = ""
 
                 dif = save.headers.get("difficulty", "")
-                dif_str = g.strip_hotkey(getattr(difficulty.difficulties.get(dif, None), "name", ""))
+                dif_obj = difficulty.difficulties.get(dif, None)
+                dif_str = ""
+                if dif_obj is not None:
+                    dif_str = g.strip_hotkey(getattr(dif_obj, "name", ""))
 
                 item.time_display.text = tm_str + " | " + gtm_str if tm_str else gtm_str
                 item.difficulty_display.text = dif_str
