@@ -45,7 +45,7 @@ from numpy import array, int64
 from io import open, BytesIO
 import base64
 
-from singularity.code import g, mixer, dirs, player, group, logmessage
+from singularity.code import g, dirs, player, group, logmessage
 from singularity.code import base, tech, item, event, location, buyable, difficulty, effect
 from singularity.code.stats import itself as stats
 
@@ -91,9 +91,23 @@ savefile_translation = {
 }
 
 # We always save in the highest version (internal_version)
-current_save_version = max(savefile_translation.values(), key=operator.attrgetter('internal_version')).magic_value
+current_save_format = max(savefile_translation.values(), key=operator.attrgetter('internal_version'))
+current_save_version = current_save_format.magic_value
 
-Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version', 'headers', 'load_file'])
+_Savegame = collections.namedtuple('_Savegame', ['name', 'filepath', 'savegame_format', 'headers', 'load_file'])
+
+
+class Savegame(_Savegame):
+
+    @property
+    def version(self):
+        if self.savegame_format is None:
+            return None
+        return self.savegame_format.display_version
+
+    @property
+    def is_latest_version(self):
+        return True if self.version == current_save_version else False
 
 
 def convert_string_to_path_name(name):
@@ -164,18 +178,18 @@ def get_savegames():
                 continue
 
             filepath = os.path.join(saves_dir, file_name)
-            version_name = None # None == Unknown version
+            version_format = None # None == Unknown version
 
             try:
                 with open(filepath, 'rb') as loadfile:
                     version_line, headers = parse_headers(loadfile)
 
                     if version_line in savefile_translation:
-                        version_name = savefile_translation[version_line].display_version
+                        version_format = savefile_translation[version_line]
             except Exception:
-                version_name = None # To be sure.
+                version_format = None # To be sure.
 
-            savegame = Savegame(convert_path_name_to_str(name), filepath, version_name, headers, load_file)
+            savegame = Savegame(convert_path_name_to_str(name), filepath, version_format, headers, load_file)
             all_savegames.append(savegame)
 
     return all_savegames
