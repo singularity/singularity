@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-06-07 09:16+0200\n"
-"PO-Revision-Date: 2020-06-08 07:30+0100\n"
+"PO-Revision-Date: 2020-06-20 12:08+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -1005,7 +1005,7 @@ msgstr "ÌSEAL"
 
 #: g.py:140
 msgid "MODR"
-msgstr "MEADH"
+msgstr "MEADHANACH"
 
 #: g.py:141
 msgid "HIGH"
@@ -1013,7 +1013,7 @@ msgstr "ÀRD"
 
 #: g.py:142
 msgid "CRIT"
-msgstr "ÈIGINN"
+msgstr "ÈIGINNEACH"
 
 #. Translators: abbreviation of 'millions'
 #: g.py:174
