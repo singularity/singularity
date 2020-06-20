@@ -348,6 +348,8 @@ def load_savegame_by_json(fd):
     load_version = savefile_translation[load_version_string].internal_version
     difficulty_id = headers['difficulty']
     game_time = int(headers['game_time'])
+    if game_time < 0:
+        raise ValueError("Corrupt save; game time is before game start")
     next_byte = fd.peek(1)[0]
     if next_byte == b'{'[0]:
         game_data = json.load(fd)

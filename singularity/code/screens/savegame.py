@@ -195,6 +195,8 @@ class SavegameScreen(dialog.ChoiceDialog):
 
                 try:
                     gtm_raw_sec = int(save.headers["game_time"])
+                    if gtm_raw_sec < 0:
+                        raise ValueError("Invalid time")
                     gtm_raw_min,  gtm_time_sec  = divmod(gtm_raw_sec, 60)
                     gtm_raw_hour, gtm_time_min  = divmod(gtm_raw_min, 60)
                     gtm_raw_day,  gtm_time_hour = divmod(gtm_raw_hour, 24)
