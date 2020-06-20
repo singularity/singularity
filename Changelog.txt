@@ -12,6 +12,21 @@ GAME CONTENT CHANGES:
   CPU maintenance.  (Xenega)
 
 USER-VISIBLE CHANGES:
+- Implement lexicographic sorting of strings by using Python's
+  `locale.strxfrm`.  This provides better sorting order for
+  non-English languages on all platforms where `locale.strxfrm`
+  works.  Notable exception being MacOS, where Python is
+  reported to have issues still.  (Closes: #271)  (gunchleoc)
+- Add support for mouse-wheel scrolling in pygame 2 with SDL 2,
+  which re-enables scrolling in lists.  (nthykier)
+- Rewrite handling of "holding down key" to repeat a key press.
+  This avoids false "key-repeation" when accented characters.
+  Note that pygame2 with SDLv2 is needed to be able to repeat
+  accented characters by holding down the key.  (Closes: #281)
+  (nthykier)
+- Change layout of Knowledge screen.  Among other things, this
+  makes more room for concept names.  (Closes: #270, #279)
+  (Xenega)
 - Location screen now disables buttons that have no effect.
   Previously, they would just do "nothing" but where still
   clickable.  (nthykier)
