@@ -271,9 +271,6 @@ def new_game(difficulty_name, initial_speed=1):
 def read_modifiers_dict(modifiers_info):
     modifiers_dict = {}
 
-    if modifiers_info is list:
-        modifiers_info = [modifiers_info]
-
     for modifier_str in modifiers_info:
         key, value = modifier_str.split(":")
         key = key.lower().strip()
