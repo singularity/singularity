@@ -297,9 +297,12 @@ class DialogButton(FunctionButton):
 
 TOGGLE_VALUE = object()
 WIDGET_SELF = object()
-class ToggleButton(Button):
+
+
+class _FunctionButtonSupportShim(object):
+
     active = False
-    button_group = None
+    _args = ()
 
     def replace_args(self, value):
         if value is TOGGLE_VALUE:
@@ -308,13 +311,57 @@ class ToggleButton(Button):
             return self
         else:
             return value
-            
+
     def get_args(self):
         return tuple(self.replace_args(value) for value in self._args)
-        
+
     def set_args(self, args):
         self._args = args
+
     args = property(get_args, set_args)
+
+
+# "On/Off" button that "stays" in its current activation status until it is
+# clicked/"activated"
+class StickyOnOffButton(Button, _FunctionButtonSupportShim):
+
+    def __init__(self, *args, **kwargs):
+        self._active = kwargs.pop('active', False)
+        self._on_text = kwargs.pop('on_text', N_('YES'))
+        self._off_text = kwargs.pop('off_text', N_('NO'))
+        kwargs['text'] = self._on_text if self.active else self._off_text
+        super(StickyOnOffButton, self).__init__(*args, **kwargs)
+
+    @property
+    def active(self):
+        return self._active
+
+    @active.setter
+    def active(self, new_value):
+        self._active = new_value
+        self.selected = new_value
+        new_text = self._on_text if self.active else self._off_text
+        if self.autotranslate:
+            self._untranslated_text = new_text
+            new_text = _(new_text)
+        self._text = new_text
+        if hasattr(self, "_collision_rect"):
+            self.watch_mouse(None)
+
+    def activated(self, event):
+        self.active = not self.active
+        super(StickyOnOffButton, self).activated(event)
+
+    def watch_mouse(self, event):
+        if not self.active:
+            super(StickyOnOffButton, self).watch_mouse(event)
+
+
+# Grouped "On/Off" button that "stays" in its current activation status until
+# it is clicked/"activated" OR another button in its group is clicked/activated
+class ToggleButton(Button, _FunctionButtonSupportShim):
+    active = False
+    button_group = None
 
     def chosen_one(self):
         if self.button_group is not None:
@@ -337,6 +384,7 @@ class ToggleButton(Button):
     def watch_mouse(self, event):
         if not self.active:
             super(ToggleButton, self).watch_mouse(event)
+
 
 class ButtonGroup(list):
     def add(self, button):
