@@ -682,5 +682,4 @@ def get_languages_list():
 
         #Choose native or english name
         output.append((code, name[1] or name[0]))
-
-    return sorted(output)
+    return sorted(output, key=lambda lang_info: i18n.lex_sorting_form(lang_info[1]))

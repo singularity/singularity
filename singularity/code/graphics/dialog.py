@@ -32,6 +32,9 @@ KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
           pygame.K_KP9: 9}
 
 
+SDL_V2 = True if pygame.get_sdl_version()[0] == 2 else False
+
+
 def insort_right_w_key(a, x, lo=0, hi=None, key=lambda v: v):
     """Insert item x in list a, and keep it sorted assuming a is sorted.
 
@@ -164,7 +167,6 @@ class Dialog(text.Text):
         self.add_handler(constants.CLICK, self.fake_escape, 200)
 
     def lost_focus(self):
-        self.key_down = None
         self.faded = True
         self.stop_timer()
 
@@ -207,7 +209,6 @@ class Dialog(text.Text):
         from singularity.code.mixer import play_music
 
         self.visible = True
-        self.key_down = None
         self.needs_rebuild = True
         self.start_timer()
 
@@ -277,6 +278,9 @@ class Dialog(text.Text):
             # Drag handlers.
             if event.buttons[0]:
                 insort_all(handlers, self.handlers.get(constants.DRAG, []))
+        elif SDL_V2 and event.type == pygame.MOUSEWHEEL:
+            # Generic mouse wheel handlers.
+            handlers = self.handlers.get(constants.MOUSEWHEEL, [])[:]
         elif event.type == pygame.USEREVENT:
             # Clear excess timer ticks.
             pygame.event.clear(pygame.USEREVENT)
@@ -284,12 +288,6 @@ class Dialog(text.Text):
             # Timer tick handlers.
             handlers = self.handlers.get(constants.TICK, [])
 
-            # Generate repeated keys.
-            if self.key_down:
-                self.repeat_counter += 1
-                if self.repeat_counter >= 5:
-                    self.repeat_counter = 0
-                    self.handle(self.key_down)
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
 
             # TODO: Dynamize global key handlers.
@@ -323,15 +321,7 @@ class Dialog(text.Text):
                 # Keycode-based handlers for this particular key.
                 insort_all(handlers, self.key_handlers.get(event.key, []))
 
-                # Begin repeating keys.
-                if self.key_down is not event:
-                    self.key_down = event
-                    self.repeat_counter = -10
-                    self.start_timer(force = True)
-            else: # event.type == pygame.KEYUP:
-                # Stop repeating keys.
-                self.key_down = None
-                self.reset_timer()
+            else:  # event.type == pygame.KEYUP:
 
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
@@ -342,11 +332,15 @@ class Dialog(text.Text):
         elif event.type == pygame.MOUSEBUTTONUP:
             # Handle mouse scrolls by imitating PageUp/Dn
             if event.button in (4, 5):
-                if event.button == 4:
-                    key = pygame.K_PAGEUP
-                else:
-                    key = pygame.K_PAGEDOWN
-                fake_key(key)
+                # With SDLv2, there is a SDL Mouse wheel event and we react
+                # to that instead.  This guard is to avoid double-acting on
+                # it while pygame injects a compat MOUSEBUTTON event.
+                if not SDL_V2:
+                    if event.button == 4:
+                        key = pygame.K_PAGEUP
+                    else:
+                        key = pygame.K_PAGEDOWN
+                    fake_key(key)
                 return constants.NO_RESULT
 
             # Mouse click handlers.

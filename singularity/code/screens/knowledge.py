@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import pygame
 import collections
 
-from singularity.code import g
+from singularity.code import i18n, g
 from singularity.code.graphics import text, button, dialog, widget, constants, listbox
 
 
@@ -36,31 +36,37 @@ class KnowledgeScreen(dialog.FocusDialog):
         self.knowledge_inner_list = ()
         self.knowledge_inner_list_key = ()
 
+        self.knowledge_choice_title = button.HotkeyText(self, (.08, .04), (.42, .05),
+                                                        autotranslate=True,
+                                                        text=N_("&Sections:"),
+                                                        align=constants.LEFT,
+                                                        background_color="clear")
         self.knowledge_choice = \
-            listbox.UpdateListbox(self, (0.04, .18), (.18, .25),
+            listbox.UpdateListbox(self, (.08, .09), (.42, .22),
                                   update_func=self.set_knowledge_type)
+        self.knowledge_choice_title.hotkey_func = lambda e: self.took_focus(self.knowledge_choice)
 
-        # Tech names are typically a lot longer than knowledge concepts.
-        # Therefore, we make knowledge_inner a lot wider than
-        # knowledge_choice.
+        self.knowledge_inner_title = button.HotkeyText(self, (.08, .35), (.42, .05),
+                                                       autotranslate=True,
+                                                       text=N_("&Entries:"),
+                                                       align=constants.LEFT,
+                                                       background_color="clear")
         self.knowledge_inner = \
-            listbox.UpdateListbox(self, (.26, .18), (.37, .25),
+            listbox.UpdateListbox(self, (.08, .40), (.42, .22),
                                   update_func=self.set_knowledge)
+        self.knowledge_inner_title.hotkey_func = lambda e: self.took_focus(self.knowledge_inner)
 
         self.description_pane = \
-            widget.BorderedWidget(self, (0.66, 0), (0.30, 0.7),
+            widget.BorderedWidget(self, (.54, .04), (.38, .70),
                                   anchor = constants.TOP_LEFT)
 
-        self.back_button = button.ExitDialogButton(self, (0.17, 0.46), (-.3, -.1),
+        self.back_button = button.ExitDialogButton(self, (.18, .68), (.22, .06),
                                                    autotranslate=True,
                                                    text=N_("&BACK"),
                                                    anchor=constants.TOP_LEFT,
                                                    autohotkey=True)
 
         self.took_focus(self.knowledge_choice)
-
-        self.add_key_handler(pygame.K_LEFT, self.key_handle)
-        self.add_key_handler(pygame.K_RIGHT, self.key_handle)
 
     def rebuild(self):
         # Update knowledge lists
@@ -77,13 +83,6 @@ class KnowledgeScreen(dialog.FocusDialog):
         self.knowledge_choice.needs_rebuild = True
 
         super(KnowledgeScreen, self).rebuild()
-
-    #custom key handler.
-    def key_handle(self, event):
-        if event.key == pygame.K_LEFT:
-            self.took_focus(self.knowledge_choice)
-        elif event.key == pygame.K_RIGHT:
-            self.took_focus(self.knowledge_inner)
 
     #fill the right-hand listbox
     def set_inner_list(self, item_type):
@@ -107,7 +106,7 @@ class KnowledgeScreen(dialog.FocusDialog):
         else:
             items = []
 
-        items.sort()
+        items.sort(key=lambda item: i18n.lex_sorting_form(item[0]))
 
         return_list1 = []
         return_list2 = []
@@ -169,7 +168,7 @@ class KnowledgeScreen(dialog.FocusDialog):
 
         elif knowledge_type == "bases":
             base = g.base_type[knowledge_key]
-            
+
             desc_text = base.name + "\n\n"
             desc_text += _("Building Cost:")+"\n"
             desc_text += self._desc_cost(base.cost) #Building cost
@@ -186,7 +185,7 @@ class KnowledgeScreen(dialog.FocusDialog):
 
         elif knowledge_type == "items":
             item = g.items[knowledge_key]
-            
+
             desc_text = item.name + "\n\n"
             desc_text += _("Building Cost:")+"\n"
             desc_text += self._desc_cost(item.cost)  # Building cost
@@ -214,10 +213,10 @@ class KnowledgeScreen(dialog.FocusDialog):
         if cost[1] > 0:
             desc_text += ", "
             desc_text += _("%s CPU") % g.to_cpu(cost[1])
-        if cost[2] > 0: 
+        if cost[2] > 0:
             desc_text += ", "
             desc_text += g.to_time(cost[2])
-        
+
         return desc_text
 
     def show(self):

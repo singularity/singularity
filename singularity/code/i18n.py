@@ -209,12 +209,25 @@ def language_searchlist(lang=None, default=True):
 
     return lang_list
 
+
+def lex_sorting_form(name):
+    """For lexicographic sorting when languages use characters not in 7-bit ASCII. e.g. é or ü.
+
+    Use like this:
+
+    listdata.sort(key=lambda an_object: i18n.lex_sorting_form(an_object.name))"""
+
+    # Collator returns wrong keys for DE locale
+    if language == 'de' or language.startswith('de_'):
+        name = name.replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue')
+
+    return locale.strxfrm(name)
+
 # Initialization code
 try:
     import builtins
 except ImportError:
     import __builtin__ as builtins
-
 builtins.__dict__['_'] = gettext.gettext
 builtins.__dict__['ngettext'] = gettext.ngettext
 # Mark string as translatable but defer translation until later.

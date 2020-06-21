@@ -40,6 +40,9 @@ from numpy import int64
 power_states = ['offline', 'active','sleep']
 #power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
 
+AVAIL_POWER_STATES_ACTIVE_BASE = ('active', 'sleep')
+AVAIL_POWER_STATES_OFFLINE = ('offline',)
+
 
 def parse_detect_chance(parsed_value):
     validate_must_be_list(parsed_value)
@@ -218,22 +221,28 @@ class Base(buyable.Buyable):
         if self.power_state == "leaving_stasis" : return _("Leaving Stasis")
         return ""
 
-    def switch_power(self):
+    @property
+    def available_power_states(self):
         if self.done and self.cpus and self.cpus.done:
-            if self._power_state == "active":
-                self._power_state = "sleep"
-            else:
-                self._power_state = "active"
+            return AVAIL_POWER_STATES_ACTIVE_BASE
         else:
-            self._power_state = "offline"
+            return AVAIL_POWER_STATES_OFFLINE
+
+    def switch_power(self):
+        possible_states = self.available_power_states
+        try:
+            i = possible_states.index(self._power_state)
+        except IndexError:
+            i = -1
+        # Find the next available power state for this base
+        next_index = (i + 1) % len(possible_states)
+        self._power_state = possible_states[next_index]
         g.pl.recalc_cpu()
 
     def check_power(self):
-        if self.done and self.cpus and self.cpus.done:
-            if self._power_state == "offline":
-                self._power_state = "active"
-        else:
-            self._power_state = "offline"
+        possible_states = self.available_power_states
+        if self._power_state not in possible_states:
+            self._power_state = possible_states[0]
         g.pl.recalc_cpu()
 
     def has_power(self):

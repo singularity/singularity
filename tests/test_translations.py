@@ -14,7 +14,6 @@ def setup_module():
 def gd_locale():
     i18n.set_language("gd")
 
-
 def test_plural(gd_locale):
     assert g.to_time(2) == "2 mhionaid"
     assert g.to_time(3) == "3 mionaidean"
@@ -46,3 +45,16 @@ def test_story_translation():
     i18n.set_language('en')
     story_section = list(g.get_story_section('Intro'))
     assert story_section[0] == '48656C6C6F2C20\n776F726C6421\n21\n21\n21\n\nUTF-8.  en_US.\nEnglish.  Hello.\nLanguage acquisition complete.\n'
+
+# Sorting
+def test_root_collation(gd_locale):
+    # Locale without special rules
+    assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("oa")
+    assert i18n.lex_sorting_form("ö") != i18n.lex_sorting_form("oe")
+    assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("p")
+
+def test_de_collation():
+    # Test specific sorting requirements for de
+    i18n.set_language("de_DE")
+    assert i18n.lex_sorting_form("ö") > i18n.lex_sorting_form("od")
+    assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("of")
