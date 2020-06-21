@@ -250,8 +250,9 @@ def new_game(difficulty_name, initial_speed=1):
     from singularity.code.stats import itself as stats
     stats.reset()
 
-    from singularity.code import data, difficulty, player, base, tech
+    from singularity.code import difficulty, player, base, savegame
 
+    savegame.last_savegame_name = None
     diff = difficulty.difficulties[difficulty_name]
 
     pl = player.Player(cash = diff.starting_cash, difficulty = diff)
