@@ -47,6 +47,7 @@ gettext_language = None
 # Prepare main locale dir
 main_localedir = None
 
+# We have to use lazy initialization, otherwise the tests will break
 def _get_main_localedir():
     global main_localedir
     if main_localedir is None:
@@ -105,13 +106,15 @@ def set_language(lang=None, force=False):
     # Switch gettext language
     gettext_language = gettext.translation(TEXTDOMAIN_PREFIX + 'messages', _get_main_localedir(), languages=[lang], fallback=True)
     gettext_language.install()
+
+    # Update builtins with the new language
     builtins.__dict__['_'] = gettext_language.gettext
     builtins.__dict__['ngettext'] = gettext_language.ngettext
 
     # Define available text domains
     # Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
     # https://bugs.python.org/issue2504
-    gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', _get_main_localedir())
+    gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
 
 
 def _load_mo_file(pofilename):
