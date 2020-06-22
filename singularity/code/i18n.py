@@ -54,7 +54,7 @@ def _get_main_localedir():
         main_localedir = dirs.get_writable_file_in_dirs('locale', 'i18n')
     return main_localedir
 
-
+# Minimize potential name collisions with other projects
 TEXTDOMAIN_PREFIX = 'singularity_'
 
 try:
