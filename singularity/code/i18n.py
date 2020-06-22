@@ -45,15 +45,14 @@ default_language = "en_US"
 gettext_language = None
 
 # Prepare main locale dir
-try:
-    main_localedir = dirs.get_writable_file_in_dirs('locale', 'i18n')
-except KeyError:
-    # Catch KeyError: 'i18n'
-    # Which happens with the test suite only
-    main_localedir = 'singularity/locale'
+main_localedir = None
 
-if not os.path.isdir(main_localedir):
-  os.makedirs(main_localedir)
+def _get_main_localedir():
+    global main_localedir
+    if main_localedir is None:
+        main_localedir = dirs.get_writable_file_in_dirs('locale', 'i18n')
+    return main_localedir
+
 
 TEXTDOMAIN_PREFIX = 'singularity_'
 
@@ -104,7 +103,7 @@ def set_language(lang=None, force=False):
     _load_mo_file('messages.po')
 
     # Switch gettext language
-    gettext_language = gettext.translation(TEXTDOMAIN_PREFIX + 'messages', main_localedir, languages=[lang], fallback=True)
+    gettext_language = gettext.translation(TEXTDOMAIN_PREFIX + 'messages', _get_main_localedir(), languages=[lang], fallback=True)
     gettext_language.install()
     builtins.__dict__['_'] = gettext_language.gettext
     builtins.__dict__['ngettext'] = gettext_language.ngettext
@@ -112,7 +111,7 @@ def set_language(lang=None, force=False):
     # Define available text domains
     # Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
     # https://bugs.python.org/issue2504
-    gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
+    gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', _get_main_localedir())
 
 
 def _load_mo_file(pofilename):
@@ -137,7 +136,7 @@ def _load_mo_file(pofilename):
                 new_hash = hashlib.sha1(currentpo.read()).hexdigest()
 
             # Ensure directory exists before writing
-            locale_mo_dir = os.path.join(main_localedir, lang, 'LC_MESSAGES')
+            locale_mo_dir = os.path.join(_get_main_localedir(), lang, 'LC_MESSAGES')
             if not os.path.isdir(locale_mo_dir):
                 os.makedirs(locale_mo_dir)
 
