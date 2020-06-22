@@ -20,7 +20,6 @@
 
 from __future__ import absolute_import
 
-import pygame
 import collections
 
 from singularity.code import i18n, g
@@ -31,6 +30,8 @@ class KnowledgeScreen(dialog.FocusDialog):
     def __init__(self, *args, **kwargs):
         super(KnowledgeScreen, self).__init__(*args, **kwargs)
 
+        self.knowledge_types = collections.OrderedDict()
+        self.knowledge_type_index = collections.defaultdict(int)
         self.cur_knowledge_type = ""
         self.cur_knowledge = None
         self.knowledge_inner_list = ()
@@ -115,10 +116,10 @@ class KnowledgeScreen(dialog.FocusDialog):
             return_list2.append(name)
         return return_list1, return_list2
 
-    #Make sure the left listbox is correct after moving around.
+    # Make sure the left listbox is correct after moving around.
     def set_knowledge_type(self, list_pos):
         if getattr(self, "knowledge_choice", None) is None:
-            return # Not yet initialized.
+            return  # Not yet initialized.
         prev_know = self.cur_knowledge_type
         if list_pos == -1:
             prev_know = ""
@@ -126,15 +127,17 @@ class KnowledgeScreen(dialog.FocusDialog):
         if 0 <= list_pos < len(self.knowledge_choice.list):
             self.cur_knowledge_type = self.knowledge_choice.list[list_pos]
         if prev_know != self.cur_knowledge_type:
+            self.knowledge_type_index[prev_know] = self.knowledge_inner.list_pos
+            index = self.knowledge_type_index[self.cur_knowledge_type]
             self.knowledge_inner_list_key, self.knowledge_inner.list = \
                         self.set_inner_list(self.cur_knowledge_type)
-            self.knowledge_inner.list_pos = 0
+            self.knowledge_inner.list_pos = index
             self.set_knowledge(0)
 
-    #Make sure the right-hand listbox is correct.
+    # Make sure the right-hand listbox is correct.
     def set_knowledge(self, list_pos):
         if getattr(self, "knowledge_inner", None) is None:
-            return # Not yet initialized.
+            return  # Not yet initialized.
         prev_know = self.cur_knowledge
         if 0 <= list_pos < len(self.knowledge_inner.list):
             self.cur_knowledge = self.knowledge_inner.list[list_pos]

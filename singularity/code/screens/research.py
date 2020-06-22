@@ -148,7 +148,16 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.slider.slider_max = total_cpu
         canvas.slider.slider_size = ss = g.pl.available_cpus[0] // 10 + 1
         full_size = -.98
-        size_fraction = (total_cpu + ss) / float(g.pl.available_cpus[0] + ss)
+        if total_cpu:
+            size_fraction = (total_cpu + ss) / float(g.pl.available_cpus[0] + ss)
+        else:
+            # If people put all their bases to sleep, then total_cpu (and
+            # g.pl.available_cpus[0]) are both 0.  This causes size_fraction
+            # to become 1 and the slider will then take the entire width of
+            # the research screen.  However, that looks odd - especially with
+            # a help button, so we special case this here to ensure it looks
+            # reasonable.
+            size_fraction = .10
         canvas.slider.size = (full_size * size_fraction, -.4)
         canvas.alloc_cpus.text = g.add_commas(cpu)
 

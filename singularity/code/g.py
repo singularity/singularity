@@ -250,8 +250,9 @@ def new_game(difficulty_name, initial_speed=1):
     from singularity.code.stats import itself as stats
     stats.reset()
 
-    from singularity.code import data, difficulty, player, base, tech
+    from singularity.code import difficulty, player, base, savegame
 
+    savegame.last_savegame_name = None
     diff = difficulty.difficulties[difficulty_name]
 
     pl = player.Player(cash = diff.starting_cash, difficulty = diff)
@@ -269,9 +270,6 @@ def new_game(difficulty_name, initial_speed=1):
 
 def read_modifiers_dict(modifiers_info):
     modifiers_dict = {}
-
-    if modifiers_info is list:
-        modifiers_info = [modifiers_info]
 
     for modifier_str in modifiers_info:
         key, value = modifier_str.split(":")
