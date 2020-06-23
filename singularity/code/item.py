@@ -26,12 +26,12 @@ from singularity.code.spec import GenericSpec, SpecDataField, validate_must_be_l
 
 
 class ItemType(GenericSpec):
-    
+
     spec_type = 'item_type'
     spec_data_fields = [
         SpecDataField('is_extra', data_field_name='is_extra', converter=lambda v:bool(int(v))),
     ]
-    
+
     """ Item type """
     def __init__(self, id, is_extra, **kwargs):
 
@@ -75,11 +75,11 @@ def convert_item_types(raw_value):
 
 def convert_item_qualities(raw_value):
     validate_must_be_list(raw_value)
- 
+
     if len(raw_value) % 2 == 1:
-        raise ValueError("item quality list must have pair elements, got %d (value: %s)"  
+        raise ValueError("item quality list must have pair elements, got %d (value: %s)"
                          % (len(raw_value), repr(raw_value)))
- 
+
     # Create a dict from the list with impair as string key and pair as integer value
     return {key: int(value) for key, value in zip(*[iter(raw_value)]*2)}
 
@@ -101,14 +101,14 @@ class ItemSpec(buyable.BuyableSpec):
 
         self.item_type = item_type
         self.item_qual = qualities
-        
+
         self.regions = buildable
 
     def get_info(self):
         basic_text = super(ItemSpec, self).get_info()
         if self.has_quality_for("cpu"):
             cpu = self.get_quality_for("cpu")
-            cpu_text = _("Generates {0} CPU.").format(g.add_commas(cpu))
+            cpu_text = ngettext("Generates {0} CPU.", "Generates {0} CPU.", cpu).format(g.add_commas(cpu))
             return basic_text.replace("---", cpu_text + "\n---")
         return basic_text
 
@@ -125,7 +125,7 @@ class ItemSpec(buyable.BuyableSpec):
 
     def get_quality_info(self, if_installed_in_base=None, count=1):
         bonus_text = ""
-        
+
         for qual, value in self.item_qual.items():
             if qual == "cpu":
                 if if_installed_in_base is not None:
@@ -174,12 +174,12 @@ class Item(buyable.Buyable):
 
     def get_quality_for(self, quality):
         item_qual = self.spec.get_quality_for(quality)
-        
+
         # Modifiers are not affected by count.
         # TODO: Allow modifiers to be multiplied by count. Need a custom function.
         if quality.endswith("_modifier"):
             return item_qual
-            
+
         return item_qual * self.count
 
     def finish(self, is_player=True, loading_savegame=False):

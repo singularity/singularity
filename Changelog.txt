@@ -3,6 +3,8 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 GAME CONTENT CHANGES:
+- Locations with higher risk are now highlighted provided the
+  relevant techs have been researched.  (nthykier)
 - Add a new power state `Offline`, which applies to all bases
   under construction until they can become `Active`.  Bases in
   the `Offline` state currently behave like they are in the
@@ -12,6 +14,29 @@ GAME CONTENT CHANGES:
   CPU maintenance.  (Xenega)
 
 USER-VISIBLE CHANGES:
+- Support better translations of strings involving numbers
+  such as "X Days" or "Y Hours".  (Closes: #262)  (gunchleoc)
+- Fix a visual glitch in the ResearchScreen if the AI had no
+  available CPU because all bases are asleep.  (nthykier)
+- It is now possible to convert old savegames to the new format
+  via the `Upgrade` button on the `Load` menu.  This avoids the
+  hassle of having to manually load and save each game.
+  (nthykier)
+- Implement lexicographic sorting of strings by using Python's
+  `locale.strxfrm`.  This provides better sorting order for
+  non-English languages on all platforms where `locale.strxfrm`
+  works.  Notable exception being MacOS, where Python is
+  reported to have issues still.  (Closes: #271)  (gunchleoc)
+- Add support for mouse-wheel scrolling in pygame 2 with SDL 2,
+  which re-enables scrolling in lists.  (nthykier)
+- Rewrite handling of "holding down key" to repeat a key press.
+  This avoids false "key-repeation" when accented characters.
+  Note that pygame2 with SDLv2 is needed to be able to repeat
+  accented characters by holding down the key.  (Closes: #281)
+  (nthykier)
+- Change layout of Knowledge screen.  Among other things, this
+  makes more room for concept names.  (Closes: #270, #279)
+  (Xenega)
 - Location screen now disables buttons that have no effect.
   Previously, they would just do "nothing" but where still
   clickable.  (nthykier)
@@ -32,8 +57,8 @@ USER-VISIBLE CHANGES:
 - Give text fields a distinct backgrond color to make it easier
   to see if something is a text field and make title visible
   in darktheme.  (Closes #260) (gunchleoc)
-- Add Scottish Gaelic translation.  (Closes: #256, #268, #263)
-  (gunchleoc)
+- Add Scottish Gaelic translation.
+  (Closes: #256, #268, #263, #268)  (gunchleoc)
 - Text resizing and layout changes to better accommodate for
   translations that need more space than the English text.
   (Closes: #258, #259, #263, #264, #269) (gunchleoc)

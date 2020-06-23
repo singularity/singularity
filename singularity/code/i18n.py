@@ -16,19 +16,19 @@
 #along with Endgame: Singularity; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains all functions to internationalize and localize the 
+#This file contains all functions to internationalize and localize the
 #application.
 #
 #IMPORTANT: A portion of translation is still done with data files in g.
 
 from __future__ import absolute_import
 
+import hashlib
+import gettext
 import os
-import sys
 import locale
 
 from singularity.code import g, dirs
-from singularity.code.pycompat import *
 
 try:
     import polib
@@ -39,11 +39,26 @@ except ImportError:
 #It is required that default language have all data files and all of them
 # must have all available entries
 default_language = "en_US"
+
+gettext_language = None
+
+# Prepare main locale dir
+main_localedir = None
+
+# We have to use lazy initialization, otherwise the tests will break
+def _get_main_localedir():
+    global main_localedir
+    if main_localedir is None:
+        main_localedir = dirs.get_writable_file_in_dirs('locale', 'i18n')
+    return main_localedir
+
+# Minimize potential name collisions with other projects
+TEXTDOMAIN_PREFIX = 'singularity_'
+
 try:
     language = locale.getdefaultlocale()[0] or default_language
 except RuntimeError:
     language = default_language
-
 
 def set_language(lang=None, force=False):
     global language # required, since we're going to change it
@@ -81,13 +96,61 @@ def set_language(lang=None, force=False):
         except locale.Error:
             continue
 
-    load_messages()
     load_data_str()
     load_story_translations()
 
+    _load_mo_file('messages.po')
 
-def load_messages():
-    _load_po_file(g.messages, 'messages.po', use_context=False)
+    # Switch gettext language
+    gettext_language = gettext.translation(TEXTDOMAIN_PREFIX + 'messages', _get_main_localedir(), languages=[lang], fallback=True)
+    gettext_language.install()
+
+    # Update builtins with the new language
+    builtins.__dict__['_'] = gettext_language.gettext
+    builtins.__dict__['ngettext'] = gettext_language.ngettext
+
+    # Define available text domains
+    # Since pgettext is only available from Python 3.8 onwards, we use our own custom code for the data translations.
+    # https://bugs.python.org/issue2504
+    gettext.bindtextdomain(TEXTDOMAIN_PREFIX + 'messages', main_localedir)
+
+
+def _load_mo_file(pofilename):
+
+    files = dirs.get_readable_i18n_files(pofilename, language, default_language=False)
+
+    for lang, pofile in files:
+        try:
+            po = polib.pofile(pofile)
+
+            # Use hash to check whether the.po file has changed, then generate .mo file as needed
+            sha_base_filename = os.path.basename(os.path.dirname(pofile)) + '_' + os.path.basename(pofile)
+            sha_filename = dirs.get_writable_file_in_dirs(sha_base_filename + ".sha1", "i18n")
+
+            previous_hash = ''
+            new_hash = ''
+            if os.path.exists(sha_filename):
+                with open(sha_filename, 'r') as sha_file:
+                    previous_hash = sha_file.read()
+
+            with open(pofile, 'rb') as currentpo:
+                new_hash = hashlib.sha1(currentpo.read()).hexdigest()
+
+            # Ensure directory exists before writing
+            locale_mo_dir = os.path.join(_get_main_localedir(), lang, 'LC_MESSAGES')
+            dirs.makedirs_if_not_exist(locale_mo_dir)
+            mofile_path = os.path.join(locale_mo_dir, TEXTDOMAIN_PREFIX + os.path.basename(pofile).split('.')[0] + '.mo')
+
+            # Create MO file and write new hash
+            if new_hash != previous_hash or not os.path.exists(mofile_path):
+                print("Installing translation file: " + mofile_path)
+                po.save_as_mofile(mofile_path)
+                with open(sha_filename, 'w') as sha_file:
+                    sha_file.write(new_hash)
+
+        except IOError:
+            # silently ignore non-existing files
+            continue
 
 
 def load_data_str():
@@ -99,6 +162,8 @@ def load_story_translations():
     _load_po_file(g.story_translations, 'story.po', use_context=True)
 
 
+# There's no pgettext available for Python < 3.8,
+# so we use custom code for data translations
 def _load_po_file(translation_table, pofilename, use_context=True, clear_translation_table=True):
     if clear_translation_table:
         translation_table.clear()
@@ -142,35 +207,26 @@ def language_searchlist(lang=None, default=True):
 
     return lang_list
 
-def translate(string, *args, **kwargs):
-    if string in g.messages: s = g.messages[string]
-    else:                    s = string
 
-    if args or kwargs:
-        try:
-            # format() is favored over interpolation for 2 reasons:
-            # - parsing occurs here, allowing centralized try/except handling
-            # - it is the new standard in Python 3
-            return unicode(s).format(*args, **kwargs)
+def lex_sorting_form(name):
+    """For lexicographic sorting when languages use characters not in 7-bit ASCII. e.g. é or ü.
 
-        except Exception as reason:
-            sys.stderr.write(
-                "Error translating '%s' to '%s' with %r,%r in %r:\n%s: %s\n"
-                % (string, s, args, kwargs, language_searchlist(default=False),
-                   type(reason).__name__, reason))
-            s = string # Discard the translation
+    Use like this:
 
-    return s
+    listdata.sort(key=lambda an_object: i18n.lex_sorting_form(an_object.name))"""
+
+    # Collator returns wrong keys for DE locale
+    if language == 'de' or language.startswith('de_'):
+        name = name.replace('Ä', 'Ae').replace('ä', 'ae').replace('Ö', 'Oe').replace('ö', 'oe').replace('Ü', 'Ue').replace('ü', 'ue')
+
+    return locale.strxfrm(name)
 
 # Initialization code
 try:
     import builtins
 except ImportError:
     import __builtin__ as builtins
-
-# The official gettext version does not support any additional
-# parameters.  We use a lambda to make the signature match the
-# official gettext version to ease the transition to it.
-builtins.__dict__['_'] = lambda x: translate(x)
+builtins.__dict__['_'] = gettext.gettext
+builtins.__dict__['ngettext'] = gettext.ngettext
 # Mark string as translatable but defer translation until later.
 builtins.__dict__['N_'] = lambda x: x

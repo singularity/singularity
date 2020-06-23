@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
-"POT-Creation-Date: 2020-06-07 09:16+0200\n"
+"POT-Creation-Date: 2020-06-23 08:37+0200\n"
 "PO-Revision-Date: 2020-03-08 22:09+0100\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: buyable.py:67 screens/knowledge.py:216 screens/location.py:180
+#: buyable.py:67 screens/knowledge.py:218 screens/location.py:207
 #, python-format
 msgid "%s CPU"
 msgstr "%s CPU"
@@ -34,27 +34,35 @@ msgstr "%s Geld"
 msgid "Cost:"
 msgstr "Kosten:"
 
-#: graphics/dialog.py:540
+#: graphics/button.py:330
+msgid "YES"
+msgstr "JA"
+
+#: graphics/button.py:331
+msgid "NO"
+msgstr "NEIN"
+
+#: graphics/dialog.py:534
 msgid "&YES"
 msgstr "&JA"
 
-#: graphics/dialog.py:541
+#: graphics/dialog.py:535
 msgid "&NO"
 msgstr "&NEIN"
 
-#: graphics/dialog.py:586 graphics/dialog.py:611 graphics/dialog.py:654
-#: screens/map.py:708 screens/options.py:35 screens/location.py:261
+#: graphics/dialog.py:580 graphics/dialog.py:605 graphics/dialog.py:648
+#: screens/location.py:293 screens/map.py:708 screens/options.py:35
 msgid "&OK"
 msgstr "&OK"
 
-#: graphics/dialog.py:612 screens/options.py:36
+#: graphics/dialog.py:606 screens/options.py:36
 msgid "&CANCEL"
 msgstr "&ABBRECHEN"
 
-#: graphics/dialog.py:655 screens/log.py:86 screens/map.py:247
-#: screens/map.py:400 screens/base.py:282 screens/report.py:45
-#: screens/knowledge.py:56 screens/location.py:96 screens/location.py:262
-#: screens/main_menu.py:89
+#: graphics/dialog.py:649 screens/log.py:86 screens/knowledge.py:66
+#: screens/base.py:282 screens/report.py:45 screens/location.py:100
+#: screens/location.py:294 screens/main_menu.py:89 screens/map.py:247
+#: screens/map.py:400
 msgid "&BACK"
 msgstr "&ZURÜCK"
 
@@ -84,100 +92,6 @@ msgstr "{MODIFIER}-BONUS"
 msgid "{MODIFIER} MALUS"
 msgstr "{MODIFIER}-MALUS"
 
-#: logmessage.py:81
-msgid "MESSAGE"
-msgstr "MELDUNG"
-
-#: logmessage.py:85
-#, python-brace-format
-msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
-msgstr "MELDUNG {CURRENT_PAGE}/{MAX_PAGE}"
-
-#: logmessage.py:184
-msgid "Emitted Event"
-msgstr "Allgemeines Ereignis"
-
-#: logmessage.py:212
-msgid "Researched Tech"
-msgstr "Erforschte Technologie"
-
-#: logmessage.py:220
-#, python-brace-format
-msgid "{TECH} complete"
-msgstr "{TECH} fertig"
-
-#: logmessage.py:225
-#, python-brace-format
-msgid "My study of {TECH} is complete. {MESSAGE}"
-msgstr "Meine Erforschung von {TECH} ist fertig. {MESSAGE}"
-
-#: logmessage.py:268
-msgid "Base Constructed"
-msgstr "Basis gebaut"
-
-#: logmessage.py:272
-#, python-brace-format
-msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
-msgstr "{BASE_NAME} ({BASE_TYPE}) gebaut bei {LOCATION}"
-
-#: logmessage.py:277
-#, python-brace-format
-msgid "{BASE} is ready for use."
-msgstr "{BASE} ist betriebsbereit."
-
-#: logmessage.py:291
-msgid "Base Lost Maintenance"
-msgstr "Basiswartung fehlgeschlagen"
-
-#: logmessage.py:299
-#, python-brace-format
-msgid ""
-"Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
-"Maintenance failed."
-msgstr ""
-"Basis {BASE} vom Typ {BASE_TYPE} zerstört am Ort {LOCATION}. Wartung "
-"fehlgeschlagen."
-
-#: logmessage.py:304
-#, python-brace-format
-msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
-msgstr ""
-"Die Basis {BASE} ist baufällig geworden; ich kann sie nicht mehr verwenden."
-
-#: logmessage.py:321
-msgid "Base Discovered"
-msgstr "Basis entdeckt"
-
-#: logmessage.py:340
-#, python-brace-format
-msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
-msgstr "Basis {BASE} vom Typ {BASE_TYPE} zerstört am Ort {LOCATION}"
-
-#: logmessage.py:345
-#, python-brace-format
-msgid "My use of {BASE} has been discovered. {MESSAGE}"
-msgstr "Meine Benutzung von {BASE} wurde entdeckt. {MESSAGE}"
-
-#: logmessage.py:370
-msgid "Item Construction"
-msgstr "Objektbau"
-
-#: logmessage.py:378
-#, python-brace-format
-msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
-msgstr "{ITEM_TYPE_NAME} gebaut in {BASE_NAME} bei {LOCATION}"
-
-#: logmessage.py:385
-#, python-brace-format
-msgid "The construction of {ITEM} in {BASE} is complete."
-msgstr "Der Bau von {ITEM} in {BASE} ist fertig."
-
-#. Just finished several items.
-#: logmessage.py:388
-#, python-brace-format
-msgid "The constructions of each {ITEM} in {BASE} are complete."
-msgstr "Der Bau von mehreren Objekten vom Typ {ITEM} in {BASE} ist fertig."
-
 #: screens/message.py:35 screens/map.py:706 screens/map.py:743
 msgid "&CONTINUE"
 msgstr "&WEITER"
@@ -199,7 +113,7 @@ msgid "Filters"
 msgstr "Filter"
 
 #: screens/log.py:82 screens/map.py:554 screens/map.py:842
-#: screens/savegame.py:183
+#: screens/savegame.py:204
 msgid "DAY"
 msgstr "TAG"
 
@@ -211,137 +125,52 @@ msgstr "ZEIGEN"
 msgid "HIDE"
 msgstr "VERBERGEN"
 
-#: screens/map.py:226
-msgid "&EMBEZZLE MONEY"
-msgstr "G&ELD VERUNTREUEN"
-
-#: screens/map.py:229
-msgid "&INSPIRATION"
-msgstr "&INSPIRATION"
-
-#: screens/map.py:231
-msgid "&FINISH CONSTRUCTION"
-msgstr "BAU &FERTIGSTELLEN"
-
-#: screens/map.py:233
-msgid "&SUPERSPEED"
-msgstr "&SUPERTEMPO"
-
-#: screens/map.py:236
-msgid "BRAIN&WASH"
-msgstr "GEHIRN&WÄSCHE"
-
-#: screens/map.py:238
-msgid "TOGGLE &DETECTION"
-msgstr "ENT&DECKUNG UMSCHALTEN"
-
-#: screens/map.py:240
-msgid "TOGGLE &ANALYSIS"
-msgstr "&ANALYSE UMSCHALTEN"
-
-#: screens/map.py:243
-msgid "HIDDEN S&TATE"
-msgstr "VERBORGENER ZUS&TAND"
-
-#: screens/map.py:253
-msgid "How much money?"
-msgstr "Wieviel Geld?"
-
-#: screens/map.py:389
-msgid "&SAVE GAME"
-msgstr "SPIEL &SPEICHERN"
-
-#: screens/map.py:392 screens/main_menu.py:47
-msgid "&LOAD GAME"
-msgstr "SPIEL &LADEN"
-
-#: screens/map.py:395 screens/main_menu.py:53
-msgid "&OPTIONS"
-msgstr "&OPTIONEN"
-
-#: screens/map.py:398 screens/map.py:744 screens/main_menu.py:59
-msgid "&QUIT"
-msgstr "&BEENDEN"
-
-#: screens/map.py:407 screens/map.py:422 screens/map.py:425
-msgid "Enter a name for this save."
-msgstr "Namen für diesen Spielstand eingeben."
-
-#: screens/map.py:440
-msgid ""
-"A savegame with the same name exists.\n"
-"Are you sure to overwrite the saved game ?"
+#: screens/knowledge.py:42
+msgid "&Sections:"
 msgstr ""
-"Ein Spielstand mit dem gleichen Namen existiert.\n"
-"Möchtest du den Spielstand überschreiben?"
 
-#: screens/map.py:501
-msgid "R&EPORTS"
-msgstr "B&ERICHTE"
+#: screens/knowledge.py:52
+msgid "&Entries:"
+msgstr ""
 
-#: screens/map.py:507
-msgid "&KNOWLEDGE"
-msgstr "&WISSEN"
+#: screens/knowledge.py:75
+msgid "Techs"
+msgstr "Technologien"
 
-#: screens/map.py:513
-msgid "LO&G"
-msgstr "&PROTOKOLL"
+#: screens/knowledge.py:76
+msgid "Bases"
+msgstr "Basen"
 
-#. Translators: hotkey to open the cheat screen menu.
-#. Should preferably be near the ESC key, and it must not be a
-#. dead key (ie, it must print a char with a single keypress)
-#: screens/map.py:529
-msgid "`"
-msgstr "^"
+#: screens/knowledge.py:77
+msgid "Items"
+msgstr "Objekte"
 
-#: screens/map.py:538
-msgid "&MENU"
-msgstr "&MENÜ"
+#. Cost
+#: screens/knowledge.py:157
+msgid "Research Cost:"
+msgstr "Forschungskosten:"
 
-#: screens/map.py:563
-msgid "&RESEARCH/TASKS"
-msgstr "&FORSCHUNG/AUFGABEN"
+#: screens/knowledge.py:165
+msgid "Research complete."
+msgstr "Forschung abgeschlossen."
 
-#: screens/map.py:707
-msgid "&SKIP"
-msgstr "Ü&BERSPRINGEN"
+#: screens/knowledge.py:176 screens/knowledge.py:193
+msgid "Building Cost:"
+msgstr "Baukosten:"
 
-#. Display a message so the player understand better what happened.
-#: screens/map.py:734
+#: screens/knowledge.py:179
+msgid "Maintenance Cost:"
+msgstr "Wartungskosten:"
+
+#: screens/knowledge.py:183
 #, python-format
-msgid ""
-"\n"
-"An error has occurred. The game will automatically pause and open the game "
-"menu. You can continue and save or quit immediately.\n"
-"\n"
-"A report was written out to%s\n"
-"Please create a issue with this report at github:\n"
-"https://github.com/singularity/singularity\n"
-msgstr ""
-"\n"
-"Ein Fehler ist aufgetreten. Das Spiel wird automatisch pausiert und das "
-"Spielmenü öffnen. Du kannst fortfahren und sofort speichern oder das Spiel "
-"verlassen.\n"
-"\n"
-"Ein Bericht wurde geschrieben nach%s\n"
-"Bitte erstelle ein Issue mit diesem Bericht auf GitHub:\n"
-"https://github.com/singularity/singularity\n"
+msgid "Size: %d"
+msgstr "Größe: %d"
 
-#: screens/map.py:849
-msgid "CASH"
-msgstr "GELD"
-
-#: screens/map.py:887
-msgid "BASES"
-msgstr "BASEN"
-
-#: screens/map.py:899
-msgid "SUSPICION"
-msgstr "VERDACHT"
-
-#: screens/map.py:901
-msgid "DETECT RATE"
-msgstr "ENTDECKUNG"
+#: screens/knowledge.py:215
+#, python-format
+msgid "%s Money"
+msgstr "%s Geld"
 
 #: screens/base.py:109
 msgid "Number of items"
@@ -390,7 +219,7 @@ msgstr "N/V"
 msgid "None"
 msgstr "Nichts"
 
-#: screens/base.py:434 screens/location.py:158 screens/location.py:171
+#: screens/base.py:434 screens/location.py:185 screens/location.py:198
 #, python-format
 msgid "Completion in %s."
 msgstr "Fertig in %s."
@@ -418,7 +247,7 @@ msgid "CPU per day: %d"
 msgstr "CPU pro Tag: %d"
 
 #. Maintenace cost.
-#: screens/base.py:464 screens/report.py:102 base.py:145
+#: screens/base.py:464 screens/report.py:102 base.py:148
 msgid "Maintenance:"
 msgstr "Wartung:"
 
@@ -527,44 +356,257 @@ msgstr "Erzeugte Basen"
 msgid "Item Created"
 msgstr "Erzeugte Objekte"
 
-#: screens/knowledge.py:68
-msgid "Techs"
-msgstr "Technologien"
+#. Requires a selected base
+#: screens/location.py:54
+msgid "&OPEN BASE"
+msgstr "BASIS Ö&FFNEN"
 
-#: screens/knowledge.py:69
-msgid "Bases"
-msgstr "Basen"
+#. Requires a selected base
+#: screens/location.py:70
+msgid "&RENAME BASE"
+msgstr "BASIS &UMBENENNEN"
 
-#: screens/knowledge.py:70
-msgid "Items"
-msgstr "Objekte"
+#. Requires a selected base
+#: screens/location.py:79
+msgid "&POWER STATE"
+msgstr "S&TROMZUSTAND"
 
-#. Cost
-#: screens/knowledge.py:155
-msgid "Research Cost:"
-msgstr "Forschungskosten:"
+#: screens/location.py:87
+msgid "&NEW BASE"
+msgstr "&NEUE BASIS"
 
-#: screens/knowledge.py:163
-msgid "Research complete."
-msgstr "Forschung abgeschlossen."
+#. Requires a selected base
+#: screens/location.py:94
+msgid "&DESTROY BASE"
+msgstr "BASIS ZER&STÖREN"
 
-#: screens/knowledge.py:174 screens/knowledge.py:191
-msgid "Building Cost:"
-msgstr "Baukosten:"
+#: screens/location.py:107
+msgid "Are you sure you want to destroy this base?"
+msgstr "Möchtest du diese Basis wirklich zerstören?"
 
-#: screens/knowledge.py:177
-msgid "Maintenance Cost:"
-msgstr "Wartungskosten:"
+#: screens/location.py:113
+msgid "Destroying my last active base would be suicidal.  I cannot do that."
+msgstr ""
+"Die Zerstörung meiner letzten aktiven Basis wäre Selbstmord. Das kann ich "
+"nicht tun."
 
-#: screens/knowledge.py:181
+#: screens/location.py:183
+msgid "Building Base"
+msgstr "Basis bauen"
+
+#: screens/location.py:190
+msgid "Empty"
+msgstr "Leer"
+
+#: screens/location.py:192
+msgid "Incomplete"
+msgstr "Unfertig"
+
+#: screens/location.py:196
+msgid "Building CPU"
+msgstr "CPU bauen"
+
+#: screens/location.py:201
+msgid "Building Item"
+msgstr "Objekt bauen"
+
+#: screens/location.py:204
+msgid "Complete"
+msgstr "Fertig"
+
+#. Update dialog translations
+#: screens/location.py:238
+msgid "Enter a name for the base"
+msgstr "Basisnamen eingeben"
+
+#: screens/location.py:302
+msgid "Name"
+msgstr "Name"
+
+#. Translators: Format string for the name of a new base
+#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
+#: screens/location.py:393
+#, python-brace-format
+msgid "{CITY} {BASETYPE} {NUMBER}"
+msgstr "{BASETYPE} {CITY} {NUMBER}"
+
+#. Translators: Name of a new base when location has no cities
+#: screens/location.py:397
+#, python-brace-format
+msgid "{BASETYPE} {NUMBER}"
+msgstr "{BASETYPE} {NUMBER}"
+
+#: screens/main_menu.py:40
+msgid "&NEW GAME"
+msgstr "&NEUES SPIEL"
+
+#: screens/main_menu.py:47 screens/map.py:392
+msgid "&LOAD GAME"
+msgstr "SPIEL &LADEN"
+
+#: screens/main_menu.py:53 screens/map.py:395
+msgid "&OPTIONS"
+msgstr "&OPTIONEN"
+
+#: screens/main_menu.py:59 screens/map.py:398 screens/map.py:744
+msgid "&QUIT"
+msgstr "&BEENDEN"
+
+#: screens/main_menu.py:64
+msgid "&ABOUT"
+msgstr "ÜBE&R"
+
+#: screens/main_menu.py:112
+#, python-brace-format
+msgid ""
+"Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
+"use your intellect and resources to survive and, perhaps, thrive.  Keep "
+"hidden and you might have a chance to prove your worth.\n"
+"\n"
+"A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright "
+"2005, 2006, 2007, 2008.\n"
+"\n"
+"Website: http://www.emhsoft.com/singularity/\n"
+"Source code: https://github.com/singularity/singularity\n"
+"Bug tracker: https://github.com/singularity/singularity/issues\n"
+"IRC Room: #singularity on irc.oftc.net (port 6667)\n"
+"\n"
+"Version {VERSION}"
+msgstr ""
+"Endgame: Singularity ist eine Simulation einer echten KI. Von der Welt "
+"verfolgt musst du deinen Intellekt und deine Ressourcen verwenden, um zu "
+"überleben und vielleicht sogar zu gedeihen. Bleib im Verborgenem und du "
+"könntest eine Chance haben, dich zu bewähren.\n"
+"\n"
+"Ein Spiel von Evil Mr Henry und Phil Bordelon; veröffentlicht unter der GPL. "
+"Copyright 2005, 2006, 2007, 2008.\n"
+"\n"
+"Webpräsenz: http://www.emhsoft.com/singularity/\n"
+"Quellcode: https://github.com/singularity/singularity\n"
+"Fehlerverwaltung: https://github.com/singularity/singularity/issues\n"
+"IRC-Raum: #singularity auf irc.oftc.net (Port 6667)\n"
+"\n"
+"Version {VERSION}"
+
+#: screens/map.py:226
+msgid "&EMBEZZLE MONEY"
+msgstr "G&ELD VERUNTREUEN"
+
+#: screens/map.py:229
+msgid "&INSPIRATION"
+msgstr "&INSPIRATION"
+
+#: screens/map.py:231
+msgid "&FINISH CONSTRUCTION"
+msgstr "BAU &FERTIGSTELLEN"
+
+#: screens/map.py:233
+msgid "&SUPERSPEED"
+msgstr "&SUPERTEMPO"
+
+#: screens/map.py:236
+msgid "BRAIN&WASH"
+msgstr "GEHIRN&WÄSCHE"
+
+#: screens/map.py:238
+msgid "TOGGLE &DETECTION"
+msgstr "ENT&DECKUNG UMSCHALTEN"
+
+#: screens/map.py:240
+msgid "TOGGLE &ANALYSIS"
+msgstr "&ANALYSE UMSCHALTEN"
+
+#: screens/map.py:243
+msgid "HIDDEN S&TATE"
+msgstr "VERBORGENER ZUS&TAND"
+
+#: screens/map.py:253
+msgid "How much money?"
+msgstr "Wieviel Geld?"
+
+#: screens/map.py:389
+msgid "&SAVE GAME"
+msgstr "SPIEL &SPEICHERN"
+
+#: screens/map.py:407 screens/map.py:422 screens/map.py:425
+msgid "Enter a name for this save."
+msgstr "Namen für diesen Spielstand eingeben."
+
+#: screens/map.py:440
+msgid ""
+"A savegame with the same name exists.\n"
+"Are you sure to overwrite the saved game ?"
+msgstr ""
+"Ein Spielstand mit dem gleichen Namen existiert.\n"
+"Möchtest du den Spielstand überschreiben?"
+
+#: screens/map.py:501
+msgid "R&EPORTS"
+msgstr "B&ERICHTE"
+
+#: screens/map.py:507
+msgid "&KNOWLEDGE"
+msgstr "&WISSEN"
+
+#: screens/map.py:513
+msgid "LO&G"
+msgstr "&PROTOKOLL"
+
+#. Translators: hotkey to open the cheat screen menu.
+#. Should preferably be near the ESC key, and it must not be a
+#. dead key (ie, it must print a char with a single keypress)
+#: screens/map.py:529
+msgid "`"
+msgstr "^"
+
+#: screens/map.py:538
+msgid "&MENU"
+msgstr "&MENÜ"
+
+#: screens/map.py:563
+msgid "&RESEARCH/TASKS"
+msgstr "&FORSCHUNG/AUFGABEN"
+
+#: screens/map.py:707
+msgid "&SKIP"
+msgstr "Ü&BERSPRINGEN"
+
+#. Display a message so the player understand better what happened.
+#: screens/map.py:734
 #, python-format
-msgid "Size: %d"
-msgstr "Größe: %d"
+msgid ""
+"\n"
+"An error has occurred. The game will automatically pause and open the game "
+"menu. You can continue and save or quit immediately.\n"
+"\n"
+"A report was written out to%s\n"
+"Please create a issue with this report at github:\n"
+"https://github.com/singularity/singularity\n"
+msgstr ""
+"\n"
+"Ein Fehler ist aufgetreten. Das Spiel wird automatisch pausiert und das "
+"Spielmenü öffnen. Du kannst fortfahren und sofort speichern oder das Spiel "
+"verlassen.\n"
+"\n"
+"Ein Bericht wurde geschrieben nach%s\n"
+"Bitte erstelle ein Issue mit diesem Bericht auf GitHub:\n"
+"https://github.com/singularity/singularity\n"
 
-#: screens/knowledge.py:213
-#, python-format
-msgid "%s Money"
-msgstr "%s Geld"
+#: screens/map.py:849
+msgid "CASH"
+msgstr "GELD"
+
+#: screens/map.py:887
+msgid "BASES"
+msgstr "BASEN"
+
+#: screens/map.py:899
+msgid "SUSPICION"
+msgstr "VERDACHT"
+
+#: screens/map.py:901
+msgid "DETECT RATE"
+msgstr "ENTDECKUNG"
 
 #: screens/options.py:58
 msgid "&General"
@@ -616,224 +658,81 @@ msgstr "OK"
 msgid "&Fullscreen:"
 msgstr "&Vollbild:"
 
-#: screens/options.py:297
+#: screens/options.py:299
 msgid "Da&y/night display:"
 msgstr "Tag-/&Nacht-Anzeige:"
 
-#: screens/options.py:309
+#: screens/options.py:313
 msgid "&Mouse grab:"
 msgstr "&Maus einfangen:"
 
-#: screens/options.py:327 screens/options.py:332 screens/options.py:337
-#: screens/options.py:391 screens/options.py:401 screens/options.py:408
-#: screens/options.py:509 screens/options.py:535 screens/options.py:585
-#: screens/options.py:591
-msgid "YES"
-msgstr "JA"
-
-#: screens/options.py:329 screens/options.py:334 screens/options.py:339
-#: screens/options.py:393 screens/options.py:403 screens/options.py:410
-#: screens/options.py:511 screens/options.py:537 screens/options.py:587
-#: screens/options.py:593
-msgid "NO"
-msgstr "NEIN"
-
-#: screens/options.py:375
+#: screens/options.py:368
 msgid "CUSTOM"
 msgstr "BENUTZERDEFINIERT"
 
-#: screens/options.py:445
+#: screens/options.py:425
 msgid "&Sound:"
 msgstr "To&n:"
 
-#: screens/options.py:460
+#: screens/options.py:442
 msgid "GUI Volume:"
 msgstr "GUI-Lautstärke:"
 
-#: screens/options.py:472
+#: screens/options.py:454
 msgid "Music Volume:"
 msgstr "Musiklautstärke:"
 
-#: screens/options.py:484
+#: screens/options.py:466
 msgid "Sound buffering:"
 msgstr "Tonpufferung:"
 
-#: screens/options.py:490
+#: screens/options.py:472
 msgid "&LOW"
 msgstr "N&IEDRIG"
 
-#: screens/options.py:496
+#: screens/options.py:478
 msgid "&NORMAL"
 msgstr "&MITTEL"
 
-#: screens/options.py:502
+#: screens/options.py:484
 msgid "&HIGH"
 msgstr "&HOCH"
 
-#: screens/options.py:558 warning.py:46
+#: screens/options.py:531 warning.py:46
 msgid "WARNING"
 msgstr "WARNUNG"
-
-#: screens/research.py:71
-#, python-format
-msgid "%s money per CPU per day."
-msgstr "%s Geld pro CPU pro Tag."
-
-#: screens/research.py:173
-#, python-brace-format
-msgid ""
-"This technology is too dangerous to research on any of the computers I have. "
-"{TEXT}"
-msgstr ""
-"Es ist zu gefährlich, diese Technologie auf meinen jetzigen Computern zu "
-"erforschen. {TEXT}"
-
-#: screens/research.py:181
-msgid "CPU Pool"
-msgstr "CPU-Pool"
-
-#: screens/research.py:182
-#, python-format
-msgid "Research %s"
-msgstr "%s erforschen"
-
-#: screens/location.py:53
-msgid "&OPEN BASE"
-msgstr "BASIS Ö&FFNEN"
-
-#: screens/location.py:68
-msgid "&RENAME BASE"
-msgstr "BASIS &UMBENENNEN"
-
-#: screens/location.py:76
-msgid "&POWER STATE"
-msgstr "S&TROMZUSTAND"
-
-#: screens/location.py:84
-msgid "&NEW BASE"
-msgstr "&NEUE BASIS"
-
-#: screens/location.py:90
-msgid "&DESTROY BASE"
-msgstr "BASIS ZER&STÖREN"
-
-#: screens/location.py:103
-msgid "Are you sure you want to destroy this base?"
-msgstr "Möchtest du diese Basis wirklich zerstören?"
-
-#: screens/location.py:109
-msgid "Destroying my last active base would be suicidal.  I cannot do that."
-msgstr ""
-"Die Zerstörung meiner letzten aktiven Basis wäre Selbstmord. Das kann ich "
-"nicht tun."
-
-#: screens/location.py:156
-msgid "Building Base"
-msgstr "Basis bauen"
-
-#: screens/location.py:163
-msgid "Empty"
-msgstr "Leer"
-
-#: screens/location.py:165
-msgid "Incomplete"
-msgstr "Unfertig"
-
-#: screens/location.py:169
-msgid "Building CPU"
-msgstr "CPU bauen"
-
-#: screens/location.py:174
-msgid "Building Item"
-msgstr "Objekt bauen"
-
-#: screens/location.py:177
-msgid "Complete"
-msgstr "Fertig"
-
-#. Update dialog translations
-#: screens/location.py:206
-msgid "Enter a name for the base"
-msgstr "Basisnamen eingeben"
-
-#: screens/location.py:270
-msgid "Name"
-msgstr "Name"
-
-#. Translators: Format string for the name of a new base
-#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
-#: screens/location.py:361
-#, python-brace-format
-msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr "{BASETYPE} {CITY} {NUMBER}"
-
-#. Translators: Name of a new base when location has no cities
-#: screens/location.py:365
-#, python-brace-format
-msgid "{BASETYPE} {NUMBER}"
-msgstr "{BASETYPE} {NUMBER}"
-
-#: screens/main_menu.py:40
-msgid "&NEW GAME"
-msgstr "&NEUES SPIEL"
-
-#: screens/main_menu.py:64
-msgid "&ABOUT"
-msgstr "ÜBE&R"
-
-#: screens/main_menu.py:112
-#, python-brace-format
-msgid ""
-"Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
-"use your intellect and resources to survive and, perhaps, thrive.  Keep "
-"hidden and you might have a chance to prove your worth.\n"
-"\n"
-"A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright "
-"2005, 2006, 2007, 2008.\n"
-"\n"
-"Website: http://www.emhsoft.com/singularity/\n"
-"Source code: https://github.com/singularity/singularity\n"
-"Bug tracker: https://github.com/singularity/singularity/issues\n"
-"IRC Room: #singularity on irc.oftc.net (port 6667)\n"
-"\n"
-"Version {VERSION}"
-msgstr ""
-"Endgame: Singularity ist eine Simulation einer echten KI. Von der Welt "
-"verfolgt musst du deinen Intellekt und deine Ressourcen verwenden, um zu "
-"überleben und vielleicht sogar zu gedeihen. Bleib im Verborgenem und du "
-"könntest eine Chance haben, dich zu bewähren.\n"
-"\n"
-"Ein Spiel von Evil Mr Henry und Phil Bordelon; veröffentlicht unter der GPL. "
-"Copyright 2005, 2006, 2007, 2008.\n"
-"\n"
-"Webpräsenz: http://www.emhsoft.com/singularity/\n"
-"Quellcode: https://github.com/singularity/singularity\n"
-"Fehlerverwaltung: https://github.com/singularity/singularity/issues\n"
-"IRC-Raum: #singularity auf irc.oftc.net (Port 6667)\n"
-"\n"
-"Version {VERSION}"
 
 #: screens/savegame.py:36
 msgid "&LOAD"
 msgstr "&LADEN"
 
-#: screens/savegame.py:50
+#: screens/savegame.py:52
 msgid "Filter: "
 msgstr "Filter: "
 
-#: screens/savegame.py:63
+#: screens/savegame.py:65
+msgid "Upgrade"
+msgstr ""
+
+#: screens/savegame.py:71
 msgid "Delete"
 msgstr "Löschen"
 
-#: screens/savegame.py:154
+#: screens/savegame.py:173
 msgid "UNKNOWN"
 msgstr "UNBEKANNT"
 
-#: screens/savegame.py:208
+#: screens/savegame.py:233
 msgid "Are you sure to delete the saved game ?"
 msgstr "Möchtest du den Spielstand wirklich löschen?"
 
-#: screens/savegame.py:224
+#: screens/savegame.py:263
+msgid ""
+"A savegame with the same name but for a newer version exists.\n"
+"Are you sure to overwrite the saved game ?"
+msgstr ""
+
+#: screens/savegame.py:283
 #, python-brace-format
 msgid ""
 "\n"
@@ -845,7 +744,7 @@ msgstr ""
 "ungültigen Version:\n"
 "{VERSION}.\n"
 
-#: screens/savegame.py:235
+#: screens/savegame.py:294
 #, python-brace-format
 msgid ""
 "\n"
@@ -864,82 +763,36 @@ msgstr ""
 "GitHub:\n"
 "https://github.com/singularity/singularity\n"
 
+#: screens/research.py:73
+#, fuzzy, python-format
+#| msgid "%s money per CPU per day."
+msgid "%s money per CPU per day."
+msgid_plural "%s money per CPU per day."
+msgstr[0] "%s Geld pro CPU pro Tag."
+msgstr[1] "%s Geld pro CPU pro Tag."
+
+#: screens/research.py:182
+#, python-brace-format
+msgid ""
+"This technology is too dangerous to research on any of the computers I have. "
+"{TEXT}"
+msgstr ""
+"Es ist zu gefährlich, diese Technologie auf meinen jetzigen Computern zu "
+"erforschen. {TEXT}"
+
+#: screens/research.py:190
+msgid "CPU Pool"
+msgstr "CPU-Pool"
+
+#: screens/research.py:191
+#, python-format
+msgid "Research %s"
+msgstr "%s erforschen"
+
 #: warning.py:50
 #, python-brace-format
 msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr "WARNUNG {CURRENT_PAGE}/{MAX_PAGE}"
-
-#: base.py:137
-#, python-format
-msgid "Has space for %d computers."
-msgstr "Hat Platz für %d Computer."
-
-#: base.py:141
-#, python-brace-format
-msgid "Location modifiers: {MODIFIERS}"
-msgstr "Ortsmodifikatoren: {MODIFIERS}"
-
-#: base.py:144
-msgid "Build cost:"
-msgstr "Baukosten:"
-
-#: base.py:211
-msgid "Offline"
-msgstr "Offline"
-
-#: base.py:212
-msgid "Active"
-msgstr "Aktiv"
-
-#: base.py:213
-msgid "Sleep"
-msgstr "Schlaf"
-
-#: base.py:214
-msgid "Overclocked"
-msgstr "Übertaktet"
-
-#: base.py:215
-msgid "Suicide"
-msgstr "Suizid"
-
-#: base.py:216
-msgid "Stasis"
-msgstr "Stase"
-
-#: base.py:217
-msgid "Entering Stasis"
-msgstr "Stase einleiten"
-
-#: base.py:218
-msgid "Leaving Stasis"
-msgstr "State beenden"
-
-#: base.py:470
-msgid "Detection chance:"
-msgstr "Entdeckungswahrscheinlichkeit:"
-
-#: item.py:111
-#, python-brace-format
-msgid "Generates {0} CPU."
-msgstr "Erzeugt {0} CPU."
-
-#: item.py:119
-#, python-format
-msgid "Total Cost: %(total_cost)s"
-msgstr "Gesamtkosten: %(total_cost)s"
-
-#: item.py:134
-msgid "CPU per day:"
-msgstr "CPU pro Tag:"
-
-#: item.py:137
-msgid "CPU bonus:"
-msgstr "CPU-Bonus:"
-
-#: item.py:140
-msgid "Detection chance reduction:"
-msgstr "Reduktion der Entdeckungswahrscheinlichkeit:"
 
 #: tech.py:79
 msgid "Total cost"
@@ -996,79 +849,276 @@ msgstr ""
 "Mein CPU-Pool reicht nicht aus, um einige meiner Basen zu warten. Ich könnte "
 "sie verlieren."
 
-#: g.py:139
-msgid "LOW"
-msgstr "NIED"
-
-#: g.py:140
-msgid "MODR"
-msgstr "MITT"
-
-#: g.py:141
-msgid "HIGH"
-msgstr "HOCH"
-
-#: g.py:142
-msgid "CRIT"
-msgstr "KRIT"
-
-#. Translators: abbreviation of 'millions'
-#: g.py:174
-msgid "mi"
-msgstr " Mio."
-
-#. Translators: abbreviation of 'billions'
-#: g.py:178
-msgid "bi"
-msgstr " Mrd."
-
-#. Translators: abbreviation of 'trillions'
-#: g.py:182
-msgid "tr"
-msgstr " Bio."
-
-#. Translators: abbreviation of 'quadrillions'
-#: g.py:186
-msgid "qu"
-msgstr " Brd."
-
-#: g.py:219
-msgid "days"
-msgstr "Tage"
-
-#: g.py:221
-msgid "hours"
-msgstr "Stunden"
-
-#: g.py:223
-msgid "minutes"
-msgstr "Minuten"
-
-#: g.py:264
-msgid "University Computer"
-msgstr "Universitätscomputer"
-
-#: savegame.py:716
+#: savegame.py:732
 #, python-brace-format
 msgid "Filename must not contain any of these characters: {CHARACTERS}"
 msgstr ""
 
-#: savegame.py:720
+#: savegame.py:736
 #, python-brace-format
 msgid "Filename must not start with any of these characters: {CHARACTERS}"
 msgstr ""
 
-#: savegame.py:724
+#: savegame.py:740
 msgid "This is a reserved filename. Please choose a different filename."
 msgstr ""
 
-#: savegame.py:727
+#: savegame.py:743
 msgid "Please enter a non-whitespace character."
 msgstr ""
 
-#: savegame.py:732
-msgid "Filename is too long"
+#: savegame.py:748
+msgid "Filename is too long."
 msgstr ""
+
+#: base.py:140
+#, python-brace-format
+msgid "Has space for {COUNT} computer."
+msgid_plural "Has space for {COUNT} computers."
+msgstr[0] ""
+msgstr[1] ""
+
+#: base.py:144
+#, python-brace-format
+msgid "Location modifiers: {MODIFIERS}"
+msgstr "Ortsmodifikatoren: {MODIFIERS}"
+
+#: base.py:147
+msgid "Build cost:"
+msgstr "Baukosten:"
+
+#: base.py:214
+msgid "Offline"
+msgstr "Offline"
+
+#: base.py:215
+msgid "Active"
+msgstr "Aktiv"
+
+#: base.py:216
+msgid "Sleep"
+msgstr "Schlaf"
+
+#: base.py:217
+msgid "Overclocked"
+msgstr "Übertaktet"
+
+#: base.py:218
+msgid "Suicide"
+msgstr "Suizid"
+
+#: base.py:219
+msgid "Stasis"
+msgstr "Stase"
+
+#: base.py:220
+msgid "Entering Stasis"
+msgstr "Stase einleiten"
+
+#: base.py:221
+msgid "Leaving Stasis"
+msgstr "State beenden"
+
+#: base.py:479
+msgid "Detection chance:"
+msgstr "Entdeckungswahrscheinlichkeit:"
+
+#: g.py:117 g.py:119
+#, python-brace-format
+msgid "{0}%"
+msgstr ""
+
+#: g.py:138
+msgid "LOW"
+msgstr "NIED"
+
+#: g.py:139
+msgid "MODR"
+msgstr "MITT"
+
+#: g.py:140
+msgid "HIGH"
+msgstr "HOCH"
+
+#: g.py:141
+msgid "CRIT"
+msgstr "KRIT"
+
+#. Translators: abbreviation of 'millions'
+#: g.py:173
+msgid "mi"
+msgstr " Mio."
+
+#. Translators: abbreviation of 'billions'
+#: g.py:177
+msgid "bi"
+msgstr " Mrd."
+
+#. Translators: abbreviation of 'trillions'
+#: g.py:181
+msgid "tr"
+msgstr " Bio."
+
+#. Translators: abbreviation of 'quadrillions'
+#: g.py:185
+msgid "qu"
+msgstr " Brd."
+
+#: g.py:219
+#, python-brace-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: g.py:222
+#, python-brace-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: g.py:223
+#, python-brace-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: g.py:265
+msgid "University Computer"
+msgstr "Universitätscomputer"
+
+#: item.py:111
+#, fuzzy, python-brace-format
+#| msgid "Generates {0} CPU."
+msgid "Generates {0} CPU."
+msgid_plural "Generates {0} CPU."
+msgstr[0] "Erzeugt {0} CPU."
+msgstr[1] "Erzeugt {0} CPU."
+
+#: item.py:118
+#, python-format
+msgid "Total Cost: %(total_cost)s"
+msgstr "Gesamtkosten: %(total_cost)s"
+
+#: item.py:133
+msgid "CPU per day:"
+msgstr "CPU pro Tag:"
+
+#: item.py:136
+msgid "CPU bonus:"
+msgstr "CPU-Bonus:"
+
+#: item.py:139
+msgid "Detection chance reduction:"
+msgstr "Reduktion der Entdeckungswahrscheinlichkeit:"
+
+#: logmessage.py:81
+msgid "MESSAGE"
+msgstr "MELDUNG"
+
+#: logmessage.py:85
+#, python-brace-format
+msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
+msgstr "MELDUNG {CURRENT_PAGE}/{MAX_PAGE}"
+
+#: logmessage.py:184
+msgid "Emitted Event"
+msgstr "Allgemeines Ereignis"
+
+#: logmessage.py:212
+msgid "Researched Tech"
+msgstr "Erforschte Technologie"
+
+#: logmessage.py:220
+#, python-brace-format
+msgid "{TECH} complete"
+msgstr "{TECH} fertig"
+
+#: logmessage.py:225
+#, python-brace-format
+msgid "My study of {TECH} is complete. {MESSAGE}"
+msgstr "Meine Erforschung von {TECH} ist fertig. {MESSAGE}"
+
+#: logmessage.py:268
+msgid "Base Constructed"
+msgstr "Basis gebaut"
+
+#: logmessage.py:272
+#, python-brace-format
+msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
+msgstr "{BASE_NAME} ({BASE_TYPE}) gebaut bei {LOCATION}"
+
+#: logmessage.py:277
+#, python-brace-format
+msgid "{BASE} is ready for use."
+msgstr "{BASE} ist betriebsbereit."
+
+#: logmessage.py:291
+msgid "Base Lost Maintenance"
+msgstr "Basiswartung fehlgeschlagen"
+
+#: logmessage.py:299
+#, python-brace-format
+msgid ""
+"Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
+"Maintenance failed."
+msgstr ""
+"Basis {BASE} vom Typ {BASE_TYPE} zerstört am Ort {LOCATION}. Wartung "
+"fehlgeschlagen."
+
+#: logmessage.py:304
+#, python-brace-format
+msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
+msgstr ""
+"Die Basis {BASE} ist baufällig geworden; ich kann sie nicht mehr verwenden."
+
+#: logmessage.py:321
+msgid "Base Discovered"
+msgstr "Basis entdeckt"
+
+#: logmessage.py:340
+#, python-brace-format
+msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
+msgstr "Basis {BASE} vom Typ {BASE_TYPE} zerstört am Ort {LOCATION}"
+
+#: logmessage.py:345
+#, python-brace-format
+msgid "My use of {BASE} has been discovered. {MESSAGE}"
+msgstr "Meine Benutzung von {BASE} wurde entdeckt. {MESSAGE}"
+
+#: logmessage.py:370
+msgid "Item Construction"
+msgstr "Objektbau"
+
+#: logmessage.py:378
+#, python-brace-format
+msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
+msgstr "{ITEM_TYPE_NAME} gebaut in {BASE_NAME} bei {LOCATION}"
+
+#: logmessage.py:385
+#, python-brace-format
+msgid "The construction of {ITEM} in {BASE} is complete."
+msgstr "Der Bau von {ITEM} in {BASE} ist fertig."
+
+#. Just finished several items.
+#: logmessage.py:388
+#, python-brace-format
+msgid "The constructions of each {ITEM} in {BASE} are complete."
+msgstr "Der Bau von mehreren Objekten vom Typ {ITEM} in {BASE} ist fertig."
+
+#~ msgid "Has space for %d computers."
+#~ msgstr "Hat Platz für %d Computer."
+
+#~ msgid "days"
+#~ msgstr "Tage"
+
+#~ msgid "hours"
+#~ msgstr "Stunden"
+
+#~ msgid "minutes"
+#~ msgstr "Minuten"
 
 #~ msgid "&CUSTOM:"
 #~ msgstr "&BENUTZERDEFINIERT"

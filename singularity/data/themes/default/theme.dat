@@ -109,6 +109,19 @@ base_state_stasis          = gray
 base_state_entering_stasis = gray
 base_state_leaving_stasis  = gray
 
+### Location colors
+
+# Color hints to users about how risky a location is based on previous
+# discoveries (ordered from lowest to highest risk).
+#
+# Note when testing: These hints are only presented after discovery of
+# techs that give insight to detection stats (both discoveries needed
+# for testing all colors).
+location_name_normal             = text
+location_name_prev_discover      = yellow
+location_name_last_discover      = orange
+location_name_last_prev_discover = red
+
 ###  Internal/Special purpose colors ###
 
 # This chooses the color to highlight widgets redrawn in debug mode

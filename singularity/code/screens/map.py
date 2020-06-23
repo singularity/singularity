@@ -41,6 +41,14 @@ from pygame.surfarray import pixels_alpha
 from numpy import array, sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
 
+LOCATION_RECENT_DISCOVERIES_TO_TEXT_COLOR = (
+    'location_name_normal',
+    'location_name_prev_discover',
+    'location_name_last_discover',
+    'location_name_last_prev_discover',
+)
+
+
 class EarthImage(image.Image):
     def __init__(self, parent):
         super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
@@ -382,7 +390,7 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
         self.options_dialog = OptionsScreen(self)
         self.savename_dialog = dialog.TextEntryDialog(self)
         self.load_dialog = savegame.SavegameScreen(self,
-                                                   (.5,.5), (.75,.75),
+                                                   (.5, .5), (.90, .90),
                                                    anchor=constants.MID_CENTER)
         self._buttons = [
             button.FunctionButton(None, None, None,
@@ -936,9 +944,18 @@ https://github.com/singularity/singularity
 
         for id, location_button in self.location_buttons.items():
             location = g.pl.locations[id]
+            danger_level = 0
+            if g.pl.display_discover in ('full', 'partial'):
+                if g.pl.last_discovery == location:
+                    danger_level += 2
+                # Partial only gets last discovery
+                if g.pl.display_discover == 'full' and g.pl.prev_discovery == location:
+                    danger_level += 1
+
             location_button.text = "%s (%d)" % (location.name, len(location.bases))
             location_button.hotkey = location.hotkey
             location_button.visible = location.available()
+            location_button.color = LOCATION_RECENT_DISCOVERIES_TO_TEXT_COLOR[danger_level]
 
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):
