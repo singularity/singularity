@@ -575,8 +575,6 @@ class MessageDialog(TextDialog):
     """A Dialog with an OK button that exits the dialog, return value of None"""
 
     def __init__(self, parent, **kwargs):
-        self.parent = parent
-
         ok_type = kwargs.pop("ok_type", N_("&OK"))
 
         super(MessageDialog, self).__init__(parent, **kwargs)

@@ -27,9 +27,11 @@ from singularity.code.graphics import dialog, constants, text, button, listbox
 
 filtered_log_class = set()
 
+
 class LogScreen(dialog.ChoiceDialog):
     def __init__(self, parent, pos=(.5, .5), size=(.73, .63), *args, **kwargs):
         super(LogScreen, self).__init__(parent, pos, size, *args, **kwargs)
+        self.key_list = []
         self.anchor = constants.MID_CENTER
 
         self.yes_button.parent = None
