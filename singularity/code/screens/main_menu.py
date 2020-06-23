@@ -20,6 +20,8 @@
 
 from __future__ import absolute_import
 
+import pygame
+
 import singularity
 from singularity.code.graphics import dialog, button, text, constants
 from singularity.code.screens import map, options, savegame
@@ -118,7 +120,10 @@ Source code: https://github.com/singularity/singularity
 Bug tracker: https://github.com/singularity/singularity/issues
 IRC Room: #singularity on irc.oftc.net (port 6667)
 
-Version {VERSION}""")
+Game Version: {VERSION}
+Pygame version: {PG_VERSION}
+SDL version: {SDL_VERSION}
+""")
 
 
 class AboutDialog(dialog.MessageDialog):
@@ -130,4 +135,8 @@ class AboutDialog(dialog.MessageDialog):
     def rebuild(self):
         super(AboutDialog, self).rebuild()
 
-        self.text = _(about_message).format(VERSION=singularity.__full_version__)
+        self.text = _(about_message).format(
+            VERSION=singularity.__full_version__,
+            PG_VERSION=pygame.version.ver,
+            SDL_VERSION=".".join(str(x) for x in pygame.get_sdl_version()),
+        )
