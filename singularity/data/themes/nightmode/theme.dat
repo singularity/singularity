@@ -103,6 +103,18 @@ base_state_leaving_stasis  = gray
 simple_menu_background = #400000ff
 simple_menu_border     = red
 
+### Location colors
+
+# Color hints to users about how risky a location is based on previous
+# discoveries (ordered from lowest to highest risk).
+#
+# Note when testing: These hints are only presented after discovery of
+# techs that give insight to detection stats (both discoveries needed
+# for testing all colors).
+location_name_normal             = text
+location_name_prev_discover      = #5500AAff
+location_name_last_discover      = #AA0055ff
+location_name_last_prev_discover = white
 
 ###  Internal/Special purpose colors ###
 
