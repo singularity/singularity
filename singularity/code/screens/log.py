@@ -113,10 +113,14 @@ class FilterLogDialog(dialog.MessageDialog):
                                                         align = constants.LEFT,
                                                         background_color="clear")
             self.log_class_toggles[log_type] = FilterButton(self, (-.71, y), (-.28, .05),
+                                                            autotranslate=True,
+                                                            autohotkey=False,
+                                                            on_text=N_('SHOW'),
+                                                            off_text=N_('HIDE'),
                                                             text_shrink_factor=.75,
                                                             force_underline=-1,
                                                             function=self.toggle_log_class,
-                                                            args=(button.WIDGET_SELF, button.TOGGLE_VALUE, log_class))
+                                                            args=(button.TOGGLE_VALUE, log_class))
 
         self.pos = (-.50, 0)
         self.size = (-.50, (y + .07) / .9)
@@ -125,26 +129,16 @@ class FilterLogDialog(dialog.MessageDialog):
     def rebuild(self):
         for log_type, log_class in logmessage.SAVEABLE_LOG_MESSAGES.items():
             self.log_class_labels[log_type].text = log_class.log_name()
-
-            if not log_class in filtered_log_class:
-                self.log_class_toggles[log_type].text = _("SHOW")
-                self.log_class_toggles[log_type].set_active(True)
-            else:
-                self.log_class_toggles[log_type].text = _("HIDE")
-                self.log_class_toggles[log_type].set_active(False)
+            self.log_class_toggles[log_type].active = log_class not in filtered_log_class
 
         super(FilterLogDialog, self).rebuild()
 
-    def toggle_log_class(self, widget, value, log_class):
-        if value:
-            widget.text = _("SHOW")
-        else:
-            widget.text = _("HIDE")
-
+    def toggle_log_class(self, value, log_class):
         if value:
             filtered_log_class.remove(log_class)
         else:
             filtered_log_class.add(log_class)
 
-class FilterButton(button.ToggleButton, button.FunctionButton):
+
+class FilterButton(button.StickyOnOffButton, button.FunctionButton):
     pass
