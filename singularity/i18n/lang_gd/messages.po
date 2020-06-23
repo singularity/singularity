@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-06-23 09:11+0100\n"
-"PO-Revision-Date: 2020-05-26 10:08+0100\n"
+"PO-Revision-Date: 2020-06-23 09:16+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -22,23 +22,27 @@ msgstr ""
 #, python-brace-format
 msgid "Filename must not contain any of these characters: {CHARACTERS}"
 msgstr ""
+"Chan fhaod gin de na caractaran seo a bhith am broinn ainm faidhle: "
+"{CHARACTERS}"
 
 #: savegame.py:736
 #, python-brace-format
 msgid "Filename must not start with any of these characters: {CHARACTERS}"
 msgstr ""
+"Chan fhaod ainm faidhle a thòiseachadh le gin dhe na caractaran seo: "
+"{CHARACTERS}"
 
 #: savegame.py:740
 msgid "This is a reserved filename. Please choose a different filename."
-msgstr ""
+msgstr "Seo ainm faidhle glèidhte. Tagh ainm faidhle eile."
 
 #: savegame.py:743
 msgid "Please enter a non-whitespace character."
-msgstr ""
+msgstr "Cuir a-steach caractar nach eil ’na gheal-spàs."
 
 #: savegame.py:748
 msgid "Filename is too long."
-msgstr ""
+msgstr "Tha an t-ainm faidhle ro fhada."
 
 #: screens/savegame.py:36
 msgid "&LOAD"
@@ -50,7 +54,7 @@ msgstr "Criathrag: "
 
 #: screens/savegame.py:65
 msgid "Upgrade"
-msgstr ""
+msgstr "Àrdaich"
 
 #: screens/savegame.py:71
 msgid "Delete"
@@ -76,6 +80,9 @@ msgid ""
 "A savegame with the same name but for a newer version exists.\n"
 "Are you sure to overwrite the saved game ?"
 msgstr ""
+"Chaidh geama a shàbhaladh leis an t-aon ainm cheana ach airson tionndadh nas "
+"ùire.\n"
+"A bheil thu cinnteach gu bheil thu airson sgrìobhadh thairis air?"
 
 #: screens/savegame.py:283
 #, python-brace-format
@@ -261,7 +268,7 @@ msgid "DETECT RATE"
 msgstr "REAT MOTHACHAIDH"
 
 #: screens/research.py:73
-#, fuzzy, python-format
+#, python-format
 #| msgid "%s money per CPU per day."
 msgid "%s money per CPU per day."
 msgid_plural "%s money per CPU per day."
@@ -723,11 +730,11 @@ msgstr "RABHADH"
 
 #: screens/knowledge.py:42
 msgid "&Sections:"
-msgstr ""
+msgstr "&Earrannan:"
 
 #: screens/knowledge.py:52
 msgid "&Entries:"
-msgstr ""
+msgstr "&Nithean:"
 
 #: screens/knowledge.py:75
 msgid "Techs"
@@ -804,14 +811,14 @@ msgid "{MODIFIER} MALUS"
 msgstr "{MODIFIER} as MIOSA"
 
 #: item.py:111
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Generates {0} CPU."
 msgid "Generates {0} CPU."
 msgid_plural "Generates {0} CPU."
-msgstr[0] "Ginidh seo {0} CPU(an)."
-msgstr[1] "Ginidh seo {0} CPU(an)."
-msgstr[2] "Ginidh seo {0} CPU(an)."
-msgstr[3] "Ginidh seo {0} CPU(an)."
+msgstr[0] "Ginidh seo {0} CPU."
+msgstr[1] "Ginidh seo {0} CPU."
+msgstr[2] "Ginidh seo {0} CPUan."
+msgstr[3] "Ginidh seo {0} CPU."
 
 #: item.py:118
 #, python-format
@@ -834,10 +841,10 @@ msgstr "Lùghdachadh air an teans gum mothaichear orm:"
 #, python-brace-format
 msgid "Has space for {COUNT} computer."
 msgid_plural "Has space for {COUNT} computers."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Tha rùm airson {COUNT} choimpiutair ann."
+msgstr[1] "Tha rùm airson {COUNT} choimpiutair ann."
+msgstr[2] "Tha rùm airson {COUNT} coimpiutairean ann."
+msgstr[3] "Tha rùm airson {COUNT} coimpiutair ann."
 
 #: base.py:144
 #, python-brace-format
@@ -1054,7 +1061,7 @@ msgstr "&CHAN EIL"
 #: g.py:117 g.py:119
 #, python-brace-format
 msgid "{0}%"
-msgstr ""
+msgstr "{0}%"
 
 #: g.py:138
 msgid "LOW"
@@ -1096,28 +1103,28 @@ msgstr "Q"
 #, python-brace-format
 msgid "{0} day"
 msgid_plural "{0} days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{0} latha"
+msgstr[1] "{0} latha"
+msgstr[2] "{0} làithean"
+msgstr[3] "{0} latha"
 
 #: g.py:222
 #, python-brace-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{0} uair a thìde"
+msgstr[1] "{0} uair a thìde"
+msgstr[2] "{0} uairean a thìde"
+msgstr[3] "{0} uair a thìde"
 
 #: g.py:223
 #, python-brace-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{0} mhionaid"
+msgstr[1] "{0} mhionaid"
+msgstr[2] "{0} mionaidean"
+msgstr[3] "{0} mionaid"
 
 #: g.py:264
 msgid "University Computer"
