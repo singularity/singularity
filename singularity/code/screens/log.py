@@ -56,10 +56,25 @@ class LogScreen(dialog.ChoiceDialog):
     def handle_double_click(self, event):
         if self.listbox.is_over(event.pos) and 0 <= self.listbox.list_pos < len(self.key_list):
             message = self.key_list[self.listbox.list_pos]
-            message_dialog = dialog.MessageDialog(self, text_size=20)
+            # use the MapScreen (our parent) as parent for the dialog to match
+            # how it is originally shown (plus to avoid "cannot fit" warnings
+            # when the dialog is larger than the log screen)
+            message_dialog = dialog.MessageDialog(self.parent, text_size=20)
             message_dialog.text = message.full_message
             message_dialog.color = message.full_message_color
-            dialog.call_dialog(message_dialog, self)
+
+            # Because we need to use the MapScreen as parent, we need to juggle
+            # things manually (as call_dialog works with a different assumption
+            # than we need).
+            try:
+                self.visible = False
+                dialog.call_dialog(message_dialog, self.parent)
+            finally:
+                self.visible = True
+                self.needs_rebuild = True
+                self.parent.needs_rebuild = True
+                self.parent.lost_focus()
+                self.regained_focus()
 
     def rebuild(self):
         self.key_list = [message for message in g.pl.log if not type(message) in filtered_log_class]
