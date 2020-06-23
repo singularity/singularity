@@ -58,7 +58,7 @@ USER-VISIBLE CHANGES:
   to see if something is a text field and make title visible
   in darktheme.  (Closes #260) (gunchleoc)
 - Add Scottish Gaelic translation.
-  (Closes: #256, #268, #263, #268)  (gunchleoc)
+  (Closes: #256, #268, #263, #286, #287)  (gunchleoc)
 - Text resizing and layout changes to better accommodate for
   translations that need more space than the English text.
   (Closes: #258, #259, #263, #264, #269) (gunchleoc)
