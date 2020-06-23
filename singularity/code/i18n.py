@@ -140,9 +140,7 @@ def _load_mo_file(pofilename):
 
             # Ensure directory exists before writing
             locale_mo_dir = os.path.join(_get_main_localedir(), lang, 'LC_MESSAGES')
-            if not os.path.isdir(locale_mo_dir):
-                os.makedirs(locale_mo_dir)
-
+            dirs.makedirs_if_not_exist(locale_mo_dir)
             mofile_path = os.path.join(locale_mo_dir, TEXTDOMAIN_PREFIX + os.path.basename(pofile).split('.')[0] + '.mo')
 
             # Create MO file and write new hash
