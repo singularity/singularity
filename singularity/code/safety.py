@@ -74,7 +74,7 @@ def safe_call(func, args=(), kwargs={}, on_error=None):
             log_error("Singularity version %s", __full_version__)
             log_error("Python version %s", sys.version.replace("\n", ''))
             log_error("Pygame version %s", pygame.version.ver)
-            log_error("SDL version %s", ".".join(pygame.get_sdl_version()))
+            log_error("SDL version %s", ".".join(str(x) for x in pygame.get_sdl_version()))
             FIRST_ERROR = False
         log_func_exc(func)
 
