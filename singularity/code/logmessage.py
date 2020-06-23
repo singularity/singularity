@@ -18,12 +18,13 @@
 
 #This file contains the log message related classes.
 
+import collections
 import inspect
 
 from singularity.code import g
 
 
-SAVEABLE_LOG_MESSAGES = {}
+SAVEABLE_LOG_MESSAGES = collections.OrderedDict()
 
 
 def register_saveable_log_message(cls):
