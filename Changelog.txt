@@ -30,7 +30,7 @@ USER-VISIBLE CHANGES:
 - Add support for mouse-wheel scrolling in pygame 2 with SDL 2,
   which re-enables scrolling in lists.  (nthykier)
 - Rewrite handling of "holding down key" to repeat a key press.
-  This avoids false "key-repeation" when accented characters.
+  This avoids false "key-repetition" when accented characters.
   Note that pygame2 with SDLv2 is needed to be able to repeat
   accented characters by holding down the key.  (Closes: #281)
   (nthykier)
@@ -43,7 +43,7 @@ USER-VISIBLE CHANGES:
 - Ensure that singularity can start when installed and loaded
   via pkg_resources.load_entry_point.  (Closes #272)  (nthykier)
 - Improve savegame dialog to use a translated version of the
-  difficulity as default savegame and reject some invalid
+  difficulty as default savegame and reject some invalid
   path names with a simple error message rather than an
   exception.  Furthermore, the "OK" button is now disabled when
   the savegame name in invalid.  (Closes #267)  (gunchleoc)
@@ -54,7 +54,7 @@ USER-VISIBLE CHANGES:
   (Closes: #274)  (Xenega)
 - Add number separators in statistics screen.  (Closes: #266)
   (gunchleoc)
-- Give text fields a distinct backgrond color to make it easier
+- Give text fields a distinct background color to make it easier
   to see if something is a text field and make title visible
   in darktheme.  (Closes #260) (gunchleoc)
 - Add Scottish Gaelic translation.
@@ -110,7 +110,7 @@ USER-VISIBLE CHANGES:
   was selected.  (nthykier)
 - When building bases or CPU for a base, show the correct CPU
   provided when the base/CPU is constructed.  Previously it would
-  not take location and base modifiers into account. T hanks to
+  not take location and base modifiers into account. Thanks to
   Wuzzy2 for reporting the issue.  (Closes: #230) (nthykier)
 - Fix bug where clicking Cancel in the Options menu would still
   commit changes to selected warnings.  Thanks to Wuzzy2 for
@@ -246,7 +246,7 @@ GAME CONTENT CHANGES:
 - New early-midgame bases to make the progression into the
   midgame more smooth (Xenega)
 - All CPUs have been rebalanced.  Notably midgame CPUs have
-  a much better cost/effeciency ratio and endgame CPUs have
+  a much better cost/efficiency ratio and endgame CPUs have
   been nerfed considerably (Xenega)
 - New security and reactor items are now available
   (Xenega)
@@ -267,7 +267,7 @@ USER-VISIBLE CHANGES:
   pages.  This new dialog also supports resuming the game
   instead of forcing the game to be paused (Xenega)
 - Events can now expire and two non-unique events now do.
-  Previously, they could reappear continously possibly
+  Previously, they could reappear continuously possibly
   making the game almost impossible (or completely
   neutering the affected group)  (nthykier)
 - The cash display now shows the expected cash change over
