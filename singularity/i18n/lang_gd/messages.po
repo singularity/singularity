@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
-"POT-Creation-Date: 2020-06-07 09:16+0200\n"
-"PO-Revision-Date: 2020-05-30 11:06+0100\n"
+"POT-Creation-Date: 2020-05-27 05:44+0100\n"
+"PO-Revision-Date: 2020-05-26 10:08+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -1035,19 +1035,34 @@ msgstr "T"
 msgid "qu"
 msgstr "Q"
 
-#: g.py:219
-msgid "days"
-msgstr "là"
+#: g.py:222
+#, python-brace-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} latha"
+msgstr[1] "{0} latha"
+msgstr[2] "{0} làithean"
+msgstr[3] "{0} latha"
 
-#: g.py:221
-msgid "hours"
-msgstr "uair"
+#: g.py:225
+#, python-brace-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] "{0} uair"
+msgstr[1] "{0} uair"
+msgstr[2] "{0} uairean"
+msgstr[3] "{0} uair"
 
-#: g.py:223
-msgid "minutes"
-msgstr "mion"
+#: g.py:228
+#, python-brace-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] "{0} mhionaid"
+msgstr[1] "{0} mhionaid"
+msgstr[2] "{0} mionaidean"
+msgstr[3] "{0} mionaid"
 
-#: g.py:264
+#: g.py:270
 msgid "University Computer"
 msgstr "Coimpiutair oilthighe"
 

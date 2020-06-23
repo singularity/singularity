@@ -137,7 +137,7 @@ class AbstractLogMessage(object):
                 obj_data[serial_name] = converter.serialize(field)
             else:
                 obj_data[serial_name] = field
-        
+
         obj_data['log_id'] = self.__class__.log_message_serial_id
         return obj_data
 
