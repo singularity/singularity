@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: singularity 0.31alpha1\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
 "POT-Creation-Date: 2020-06-23 08:37+0200\n"
-"PO-Revision-Date: 2020-03-08 22:09+0100\n"
-"Last-Translator: Wuzzy <almikes@aol.com>\n"
+"PO-Revision-Date: 2020-06-23 15:13+0200\n"
+"Last-Translator: Wuzzy <Wuzzy2@mail.ru>\n"
 "Language-Team: German\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -127,11 +127,11 @@ msgstr "VERBERGEN"
 
 #: screens/knowledge.py:42
 msgid "&Sections:"
-msgstr ""
+msgstr "&Abschnitte:"
 
 #: screens/knowledge.py:52
 msgid "&Entries:"
-msgstr ""
+msgstr "&Einträge:"
 
 #: screens/knowledge.py:75
 msgid "Techs"
@@ -712,7 +712,7 @@ msgstr "Filter: "
 
 #: screens/savegame.py:65
 msgid "Upgrade"
-msgstr ""
+msgstr "Hochstufen"
 
 #: screens/savegame.py:71
 msgid "Delete"
@@ -731,6 +731,9 @@ msgid ""
 "A savegame with the same name but for a newer version exists.\n"
 "Are you sure to overwrite the saved game ?"
 msgstr ""
+"Ein Spielstand mit dem gleichen Namen aber für eine neuere Version "
+"existiert.\n"
+"Bist du dir sicher, den Spielstand zu überschreiben?"
 
 #: screens/savegame.py:283
 #, python-brace-format
@@ -764,8 +767,7 @@ msgstr ""
 "https://github.com/singularity/singularity\n"
 
 #: screens/research.py:73
-#, fuzzy, python-format
-#| msgid "%s money per CPU per day."
+#, python-format
 msgid "%s money per CPU per day."
 msgid_plural "%s money per CPU per day."
 msgstr[0] "%s Geld pro CPU pro Tag."
@@ -852,31 +854,33 @@ msgstr ""
 #: savegame.py:732
 #, python-brace-format
 msgid "Filename must not contain any of these characters: {CHARACTERS}"
-msgstr ""
+msgstr "Dateiname darf keines der folgenden Zeichen enthalten: {CHARACTERS}"
 
 #: savegame.py:736
 #, python-brace-format
 msgid "Filename must not start with any of these characters: {CHARACTERS}"
-msgstr ""
+msgstr "Dateiname darf mit keinem der folgenden Zeichen beginnen: {CHARACTERS}"
 
 #: savegame.py:740
 msgid "This is a reserved filename. Please choose a different filename."
 msgstr ""
+"Dies ist ein reservierter Dateiname. Bitte wähle einen anderen Dateinamen."
 
 #: savegame.py:743
 msgid "Please enter a non-whitespace character."
 msgstr ""
+"Bitte gib ein Zeichen, dass kein Leerzeichen (oder ähnliches) ist, ein."
 
 #: savegame.py:748
 msgid "Filename is too long."
-msgstr ""
+msgstr "Dateiname ist zu lang."
 
 #: base.py:140
 #, python-brace-format
 msgid "Has space for {COUNT} computer."
 msgid_plural "Has space for {COUNT} computers."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Has Platz für {COUNT} Computer."
+msgstr[1] "Has Platz für {COUNT} Computer."
 
 #: base.py:144
 #, python-brace-format
@@ -926,7 +930,7 @@ msgstr "Entdeckungswahrscheinlichkeit:"
 #: g.py:117 g.py:119
 #, python-brace-format
 msgid "{0}%"
-msgstr ""
+msgstr "{0}%"
 
 #: g.py:138
 msgid "LOW"
@@ -968,30 +972,29 @@ msgstr " Brd."
 #, python-brace-format
 msgid "{0} day"
 msgid_plural "{0} days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} Tag"
+msgstr[1] "{0} Tage"
 
 #: g.py:222
 #, python-brace-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} Stunde"
+msgstr[1] "{0} Stunden"
 
 #: g.py:223
 #, python-brace-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} Minute"
+msgstr[1] "{0} Minuten"
 
 #: g.py:265
 msgid "University Computer"
 msgstr "Universitätscomputer"
 
 #: item.py:111
-#, fuzzy, python-brace-format
-#| msgid "Generates {0} CPU."
+#, python-brace-format
 msgid "Generates {0} CPU."
 msgid_plural "Generates {0} CPU."
 msgstr[0] "Erzeugt {0} CPU."
