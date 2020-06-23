@@ -26,11 +26,9 @@ from __future__ import absolute_import
 import hashlib
 import gettext
 import os
-import sys
 import locale
 
 from singularity.code import g, dirs
-from singularity.code.pycompat import *
 
 try:
     import polib
