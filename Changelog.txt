@@ -30,7 +30,7 @@ USER-VISIBLE CHANGES:
 - Add support for mouse-wheel scrolling in pygame 2 with SDL 2,
   which re-enables scrolling in lists.  (nthykier)
 - Rewrite handling of "holding down key" to repeat a key press.
-  This avoids false "key-repetition" when accented characters.
+  This avoids false "key-repetition" with accented characters.
   Note that pygame2 with SDLv2 is needed to be able to repeat
   accented characters by holding down the key.  (Closes: #281)
   (nthykier)
