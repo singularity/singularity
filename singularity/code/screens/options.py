@@ -602,15 +602,15 @@ def save_options():
     prefs.set("Preferences", "lang",         str(i18n.language))
     prefs.set("Preferences", "theme",        str(theme.current.id))
 
-    for name in mixer.itervolumes():
+    for name in sorted(mixer.itervolumes()):
         prefs.set("Preferences", name + "_volume", str(mixer.get_volume(name)))
 
     prefs.add_section("Warning")
-    for warn_id, warn in warning.warnings.items():
+    for warn_id, warn in sorted(warning.warnings.items()):
         prefs.set("Warning", warn_id, str(bool(warn.active)))
 
     prefs.add_section("Textsizes")
-    for text_size_id, text_size in gg.configured_text_sizes.items():
+    for text_size_id, text_size in sorted(gg.configured_text_sizes.items()):
         prefs.set("Textsizes", text_size_id, str(text_size))
 
     # Actually write the preferences out.
