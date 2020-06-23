@@ -3,6 +3,8 @@ Endgame: Singularity Changelog
 V1.XX (2020.XX.XX):
 
 GAME CONTENT CHANGES:
+- Locations with higher risk are now highlighted provided the
+  relevant techs have been researched.  (nthykier)
 - Add a new power state `Offline`, which applies to all bases
   under construction until they can become `Active`.  Bases in
   the `Offline` state currently behave like they are in the
@@ -12,6 +14,10 @@ GAME CONTENT CHANGES:
   CPU maintenance.  (Xenega)
 
 USER-VISIBLE CHANGES:
+- Support better translations of strings involving numbers
+  such as "X Days" or "Y Hours".  (Closes: #262)  (gunchleoc)
+- Fix a visual glitch in the ResearchScreen if the AI had no
+  available CPU because all bases are asleep.  (nthykier)
 - It is now possible to convert old savegames to the new format
   via the `Upgrade` button on the `Load` menu.  This avoids the
   hassle of having to manually load and save each game.
