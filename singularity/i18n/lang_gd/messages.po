@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
-"POT-Creation-Date: 2020-05-27 05:44+0100\n"
+"POT-Creation-Date: 2020-06-23 08:37+0200\n"
 "PO-Revision-Date: 2020-05-26 10:08+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
@@ -18,7 +18,7 @@ msgstr ""
 "(n > 2 && n < 20) ? 2 : 3;\n"
 "X-Generator: Virtaal 0.7.1\n"
 
-#: buyable.py:67 screens/knowledge.py:216 screens/location.py:180
+#: buyable.py:67 screens/knowledge.py:218 screens/location.py:207
 #, python-format
 msgid "%s CPU"
 msgstr "%s CPU"
@@ -32,27 +32,35 @@ msgstr "%s £"
 msgid "Cost:"
 msgstr "Cosgais:"
 
-#: graphics/dialog.py:540
+#: graphics/button.py:330
+msgid "YES"
+msgstr "AIR"
+
+#: graphics/button.py:331
+msgid "NO"
+msgstr "DHETH"
+
+#: graphics/dialog.py:534
 msgid "&YES"
 msgstr "&THA"
 
-#: graphics/dialog.py:541
+#: graphics/dialog.py:535
 msgid "&NO"
 msgstr "&CHAN EIL"
 
-#: graphics/dialog.py:586 graphics/dialog.py:611 graphics/dialog.py:654
-#: screens/map.py:708 screens/options.py:35 screens/location.py:261
+#: graphics/dialog.py:580 graphics/dialog.py:605 graphics/dialog.py:648
+#: screens/location.py:293 screens/map.py:708 screens/options.py:35
 msgid "&OK"
 msgstr "&CEART MA-THÀ"
 
-#: graphics/dialog.py:612 screens/options.py:36
+#: graphics/dialog.py:606 screens/options.py:36
 msgid "&CANCEL"
 msgstr "&SGUIR DHETH"
 
-#: graphics/dialog.py:655 screens/log.py:86 screens/map.py:247
-#: screens/map.py:400 screens/base.py:282 screens/report.py:45
-#: screens/knowledge.py:56 screens/location.py:96 screens/location.py:262
-#: screens/main_menu.py:89
+#: graphics/dialog.py:649 screens/log.py:86 screens/knowledge.py:66
+#: screens/base.py:282 screens/report.py:45 screens/location.py:100
+#: screens/location.py:294 screens/main_menu.py:89 screens/map.py:247
+#: screens/map.py:400
 msgid "&BACK"
 msgstr "&AIR AIS"
 
@@ -82,101 +90,6 @@ msgstr "{MODIFIER} as FHEÀRR"
 msgid "{MODIFIER} MALUS"
 msgstr "{MODIFIER} as MIOSA"
 
-#: logmessage.py:81
-msgid "MESSAGE"
-msgstr "TEACHDAIREACHD"
-
-#: logmessage.py:85
-#, python-brace-format
-msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
-msgstr "TEACHDAIREACHD {CURRENT_PAGE}/{MAX_PAGE}"
-
-#: logmessage.py:184
-msgid "Emitted Event"
-msgstr "Tachartasan"
-
-#: logmessage.py:212
-msgid "Researched Tech"
-msgstr "Rannsachadh"
-
-#: logmessage.py:220
-#, python-brace-format
-msgid "{TECH} complete"
-msgstr "Tha {TECH} air a rannsachadh"
-
-#: logmessage.py:225
-#, python-brace-format
-msgid "My study of {TECH} is complete. {MESSAGE}"
-msgstr "Tha an rannsachadh agam air {TECH} deiseil. {MESSAGE}"
-
-#: logmessage.py:268
-msgid "Base Constructed"
-msgstr "Togail bunait"
-
-#: logmessage.py:272
-#, python-brace-format
-msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
-msgstr "Chaidh {BASE_TYPE} a thogail. {BASE_NAME}: {LOCATION}"
-
-#: logmessage.py:277
-#, python-brace-format
-msgid "{BASE} is ready for use."
-msgstr "Tha {BASE} deis ri a cleachdadh."
-
-#: logmessage.py:291
-msgid "Base Lost Maintenance"
-msgstr "Call obrach-càraidh"
-
-#: logmessage.py:299
-#, python-brace-format
-msgid ""
-"Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
-"Maintenance failed."
-msgstr ""
-"Chaidh bunait {BASE}: {LOCATION} ({BASE_TYPE}) a mhilleadh. Dh’fhàillig leis "
-"an obair-chàraidh."
-
-#: logmessage.py:304
-#, python-brace-format
-msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
-msgstr ""
-"Tha bunait {BASE} air a dol a dholaidh; Chan urrainn dhomh a cleachdadh "
-"tuilleadh."
-
-#: logmessage.py:321
-msgid "Base Discovered"
-msgstr "Mothachadh do bhunait"
-
-#: logmessage.py:340
-#, python-brace-format
-msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
-msgstr "Chaidh bunait {BASE}: {LOCATION} ({BASE_TYPE}) a mhilleadh."
-
-#: logmessage.py:345
-#, python-brace-format
-msgid "My use of {BASE} has been discovered. {MESSAGE}"
-msgstr "Mhothaichte mo chleachdadh air {BASE}. {MESSAGE}"
-
-#: logmessage.py:370
-msgid "Item Construction"
-msgstr "Togail nithean"
-
-#: logmessage.py:378
-#, python-brace-format
-msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
-msgstr "Chaidh {ITEM_TYPE_NAME} a thogail. {BASE_NAME}: {LOCATION}"
-
-#: logmessage.py:385
-#, python-brace-format
-msgid "The construction of {ITEM} in {BASE} is complete."
-msgstr "Tha togail {ITEM} aig {BASE} deiseil."
-
-#. Just finished several items.
-#: logmessage.py:388
-#, python-brace-format
-msgid "The constructions of each {ITEM} in {BASE} are complete."
-msgstr "Tha togail gach {ITEM} aig {BASE} deiseil."
-
 #: screens/message.py:35 screens/map.py:706 screens/map.py:743
 msgid "&CONTINUE"
 msgstr "&AIR ADHART"
@@ -198,7 +111,7 @@ msgid "Filters"
 msgstr "Criathragan"
 
 #: screens/log.py:82 screens/map.py:554 screens/map.py:842
-#: screens/savegame.py:183
+#: screens/savegame.py:204
 msgid "DAY"
 msgstr "LATHA"
 
@@ -210,137 +123,52 @@ msgstr "SEALL"
 msgid "HIDE"
 msgstr "FALAICH"
 
-#: screens/map.py:226
-msgid "&EMBEZZLE MONEY"
-msgstr "&DÈAN MAOIN-ÈALAIDH"
-
-#: screens/map.py:229
-msgid "&INSPIRATION"
-msgstr "&BROSNACHADH"
-
-#: screens/map.py:231
-msgid "&FINISH CONSTRUCTION"
-msgstr "&COILEAN AN TOGAIL"
-
-#: screens/map.py:233
-msgid "&SUPERSPEED"
-msgstr "DIAN-&LUATHS"
-
-#: screens/map.py:236
-msgid "BRAIN&WASH"
-msgstr "DÌOCH&UIMHNE ORM"
-
-#: screens/map.py:238
-msgid "TOGGLE &DETECTION"
-msgstr "TOGLAICH am &MOTHACHADH"
-
-#: screens/map.py:240
-msgid "TOGGLE &ANALYSIS"
-msgstr "TOGLAICH an &SGRÙDADH"
-
-#: screens/map.py:243
-msgid "HIDDEN S&TATE"
-msgstr "S&TAID FHALAICHTE"
-
-#: screens/map.py:253
-msgid "How much money?"
-msgstr "Co mheud airgead?"
-
-#: screens/map.py:389
-msgid "&SAVE GAME"
-msgstr "&SÀBHAIL an GEAMA"
-
-#: screens/map.py:392 screens/main_menu.py:47
-msgid "&LOAD GAME"
-msgstr "&LUCHDAICH GEAMA"
-
-#: screens/map.py:395 screens/main_menu.py:53
-msgid "&OPTIONS"
-msgstr "R&OGHAINNEAN"
-
-#: screens/map.py:398 screens/map.py:744 screens/main_menu.py:59
-msgid "&QUIT"
-msgstr "&FÀG AN-SEO"
-
-#: screens/map.py:407 screens/map.py:422 screens/map.py:425
-msgid "Enter a name for this save."
-msgstr "Cuir a-steach ainm airson an t-sàbhalaidh seo."
-
-#: screens/map.py:440
-msgid ""
-"A savegame with the same name exists.\n"
-"Are you sure to overwrite the saved game ?"
+#: screens/knowledge.py:42
+msgid "&Sections:"
 msgstr ""
-"Chaidh geama a shàbhaladh leis an t-aon ainm cheana.\n"
-"A bheil thu cinnteach gu bheil thu airson sgrìobhadh thairis air?"
 
-#: screens/map.py:501
-msgid "R&EPORTS"
-msgstr "AIT&HISGEAN"
+#: screens/knowledge.py:52
+msgid "&Entries:"
+msgstr ""
 
-#: screens/map.py:507
-msgid "&KNOWLEDGE"
-msgstr "&EÒLAS"
+#: screens/knowledge.py:75
+msgid "Techs"
+msgstr "Teicneolasan"
 
-#: screens/map.py:513
-msgid "LO&G"
-msgstr "L&OGA"
+#: screens/knowledge.py:76
+msgid "Bases"
+msgstr "Bunaitean"
 
-#. Translators: hotkey to open the cheat screen menu.
-#. Should preferably be near the ESC key, and it must not be a
-#. dead key (ie, it must print a char with a single keypress)
-#: screens/map.py:529
-msgid "`"
-msgstr "#"
+#: screens/knowledge.py:77
+msgid "Items"
+msgstr "Nithean"
 
-#: screens/map.py:538
-msgid "&MENU"
-msgstr "CLÀR-TA&ICE"
+#. Cost
+#: screens/knowledge.py:157
+msgid "Research Cost:"
+msgstr "Cosgais an rannsachaidh:"
 
-#: screens/map.py:563
-msgid "&RESEARCH/TASKS"
-msgstr "RANNSAICH/&SAOTHAIR"
+#: screens/knowledge.py:165
+msgid "Research complete."
+msgstr "Tha mi air a rannsachadh."
 
-#: screens/map.py:707
-msgid "&SKIP"
-msgstr "&GEÀRR LEUM"
+#: screens/knowledge.py:176 screens/knowledge.py:193
+msgid "Building Cost:"
+msgstr "Cosgais na togail:"
 
-#. Display a message so the player understand better what happened.
-#: screens/map.py:734
+#: screens/knowledge.py:179
+msgid "Maintenance Cost:"
+msgstr "Obair-chàraidh:"
+
+#: screens/knowledge.py:183
 #, python-format
-msgid ""
-"\n"
-"An error has occurred. The game will automatically pause and open the game "
-"menu. You can continue and save or quit immediately.\n"
-"\n"
-"A report was written out to%s\n"
-"Please create a issue with this report at github:\n"
-"https://github.com/singularity/singularity\n"
-msgstr ""
-"\n"
-"Thachair mearachd. Cuiridh sinn an geama ’na stad agus fosglaidh sinn clàr-"
-"taice a’ gheama dhut. Is urrainn dhut leantainn air adhart agus a shàbhaladh "
-"no fhàgail anns a’ bhad.\n"
-"\n"
-"Chaidh aithris a sgrìobhadh gu %s\n"
-"An cruthaich thu issue leis an aithris seo air Github?\n"
-"https://github.com/singularity/singularity\n"
+msgid "Size: %d"
+msgstr "Meud: %d"
 
-#: screens/map.py:849
-msgid "CASH"
-msgstr "AIRGEAD"
-
-#: screens/map.py:887
-msgid "BASES"
-msgstr "BUNAITEAN"
-
-#: screens/map.py:899
-msgid "SUSPICION"
-msgstr "AMHARAS"
-
-#: screens/map.py:901
-msgid "DETECT RATE"
-msgstr "REAT MOTHACHAIDH"
+#: screens/knowledge.py:215
+#, python-format
+msgid "%s Money"
+msgstr "%s £"
 
 #: screens/base.py:109
 msgid "Number of items"
@@ -391,7 +219,7 @@ msgstr "Chan eil seo iomchaidh"
 msgid "None"
 msgstr "Chan eil gin"
 
-#: screens/base.py:434 screens/location.py:158 screens/location.py:171
+#: screens/base.py:434 screens/location.py:185 screens/location.py:198
 #, python-format
 msgid "Completion in %s."
 msgstr "Deiseil an ceann %s."
@@ -419,7 +247,7 @@ msgid "CPU per day: %d"
 msgstr "CPUan gach latha: %d"
 
 #. Maintenace cost.
-#: screens/base.py:464 screens/report.py:102 base.py:145
+#: screens/base.py:464 screens/report.py:102 base.py:148
 msgid "Maintenance:"
 msgstr "Obair-chàraidh:"
 
@@ -528,44 +356,257 @@ msgstr "Stèidheachadh bhunaitean"
 msgid "Item Created"
 msgstr "Cruthachadh nithean"
 
-#: screens/knowledge.py:68
-msgid "Techs"
-msgstr "Teicneolasan"
+#. Requires a selected base
+#: screens/location.py:54
+msgid "&OPEN BASE"
+msgstr "&FOSGAIL a’ BHUNAIT"
 
-#: screens/knowledge.py:69
-msgid "Bases"
-msgstr "Bunaitean"
+#. Requires a selected base
+#: screens/location.py:70
+msgid "&RENAME BASE"
+msgstr "CUIR AINM Ù&R AIR"
 
-#: screens/knowledge.py:70
-msgid "Items"
-msgstr "Nithean"
+#. Requires a selected base
+#: screens/location.py:79
+msgid "&POWER STATE"
+msgstr "&CUMHACHD AIR/DHETH"
 
-#. Cost
-#: screens/knowledge.py:155
-msgid "Research Cost:"
-msgstr "Cosgais an rannsachaidh:"
+#: screens/location.py:87
+msgid "&NEW BASE"
+msgstr "&BUNAIT ÙR"
 
-#: screens/knowledge.py:163
-msgid "Research complete."
-msgstr "Tha mi air a rannsachadh."
+#. Requires a selected base
+#: screens/location.py:94
+msgid "&DESTROY BASE"
+msgstr "&MILL a’ BHUNAIT"
 
-#: screens/knowledge.py:174 screens/knowledge.py:191
-msgid "Building Cost:"
-msgstr "Cosgais na togail:"
+#: screens/location.py:107
+msgid "Are you sure you want to destroy this base?"
+msgstr "A bheil thu cinnteach gu bheil thu airson a’ bhunait seo a mhilleadh?"
 
-#: screens/knowledge.py:177
-msgid "Maintenance Cost:"
-msgstr "Obair-chàraidh:"
+#: screens/location.py:113
+msgid "Destroying my last active base would be suicidal.  I cannot do that."
+msgstr ""
+"Dh’adhbharaicheadh milleadh na bunait mu dheireadh m’ fhèin-mhurt.  Cha dèan "
+"mi sin."
 
-#: screens/knowledge.py:181
+#: screens/location.py:183
+msgid "Building Base"
+msgstr "A’ togail bunait"
+
+#: screens/location.py:190
+msgid "Empty"
+msgstr "Falamh"
+
+#: screens/location.py:192
+msgid "Incomplete"
+msgstr "Neo-choileanta"
+
+#: screens/location.py:196
+msgid "Building CPU"
+msgstr "A’ togail CPU"
+
+#: screens/location.py:201
+msgid "Building Item"
+msgstr "A’ togail nì"
+
+#: screens/location.py:204
+msgid "Complete"
+msgstr "Deiseil"
+
+#. Update dialog translations
+#: screens/location.py:238
+msgid "Enter a name for the base"
+msgstr "Cuir ainm air a’ bhunait"
+
+#: screens/location.py:302
+msgid "Name"
+msgstr "Cuir ainm air"
+
+#. Translators: Format string for the name of a new base
+#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
+#: screens/location.py:393
+#, python-brace-format
+msgid "{CITY} {BASETYPE} {NUMBER}"
+msgstr "{BASETYPE} {NUMBER}: {CITY}"
+
+#. Translators: Name of a new base when location has no cities
+#: screens/location.py:397
+#, python-brace-format
+msgid "{BASETYPE} {NUMBER}"
+msgstr "{BASETYPE} {NUMBER}"
+
+#: screens/main_menu.py:40
+msgid "&NEW GAME"
+msgstr "GEAMA Ù&R"
+
+#: screens/main_menu.py:47 screens/map.py:392
+msgid "&LOAD GAME"
+msgstr "&LUCHDAICH GEAMA"
+
+#: screens/main_menu.py:53 screens/map.py:395
+msgid "&OPTIONS"
+msgstr "R&OGHAINNEAN"
+
+#: screens/main_menu.py:59 screens/map.py:398 screens/map.py:744
+msgid "&QUIT"
+msgstr "&FÀG AN-SEO"
+
+#: screens/main_menu.py:64
+msgid "&ABOUT"
+msgstr "&MU DHÈIDHINN"
+
+#: screens/main_menu.py:112
+#, python-brace-format
+msgid ""
+"Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
+"use your intellect and resources to survive and, perhaps, thrive.  Keep "
+"hidden and you might have a chance to prove your worth.\n"
+"\n"
+"A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright "
+"2005, 2006, 2007, 2008.\n"
+"\n"
+"Website: http://www.emhsoft.com/singularity/\n"
+"Source code: https://github.com/singularity/singularity\n"
+"Bug tracker: https://github.com/singularity/singularity/issues\n"
+"IRC Room: #singularity on irc.oftc.net (port 6667)\n"
+"\n"
+"Version {VERSION}"
+msgstr ""
+"’S e IF mas-fhìor a tha ann an Endgame: Singularity.  Ged a tha an saoghal "
+"an toir ort, cleachd d’ inntinn agus na goireasan agad airson mairsinn beò "
+"agus fiù soirbheachadh is dòcha.  Cùm falaichte agus ’s math dh’fhaoidte gun "
+"dearbh thu gun fhiach thu.\n"
+"\n"
+"Seo geama le Evil Mr Henry agus Phil Bordelon; ga sgaoileadh fon GPL. Còir-"
+"lethbhreac 2005, 2006, 2007, 2008.\n"
+"\n"
+"Làrach-lìn: http://www.emhsoft.com/singularity/\n"
+"Bun-tùs: https://github.com/singularity/singularity\n"
+"Tracaiche bhugaichean: https://github.com/singularity/singularity/issues\n"
+"Seòmar IRC: #singularity air irc.oftc.net (port 6667)\n"
+"\n"
+"Tionndadh {VERSION}"
+
+#: screens/map.py:226
+msgid "&EMBEZZLE MONEY"
+msgstr "&DÈAN MAOIN-ÈALAIDH"
+
+#: screens/map.py:229
+msgid "&INSPIRATION"
+msgstr "&BROSNACHADH"
+
+#: screens/map.py:231
+msgid "&FINISH CONSTRUCTION"
+msgstr "&COILEAN AN TOGAIL"
+
+#: screens/map.py:233
+msgid "&SUPERSPEED"
+msgstr "DIAN-&LUATHS"
+
+#: screens/map.py:236
+msgid "BRAIN&WASH"
+msgstr "DÌOCH&UIMHNE ORM"
+
+#: screens/map.py:238
+msgid "TOGGLE &DETECTION"
+msgstr "TOGLAICH am &MOTHACHADH"
+
+#: screens/map.py:240
+msgid "TOGGLE &ANALYSIS"
+msgstr "TOGLAICH an &SGRÙDADH"
+
+#: screens/map.py:243
+msgid "HIDDEN S&TATE"
+msgstr "S&TAID FHALAICHTE"
+
+#: screens/map.py:253
+msgid "How much money?"
+msgstr "Co mheud airgead?"
+
+#: screens/map.py:389
+msgid "&SAVE GAME"
+msgstr "&SÀBHAIL an GEAMA"
+
+#: screens/map.py:407 screens/map.py:422 screens/map.py:425
+msgid "Enter a name for this save."
+msgstr "Cuir a-steach ainm airson an t-sàbhalaidh seo."
+
+#: screens/map.py:440
+msgid ""
+"A savegame with the same name exists.\n"
+"Are you sure to overwrite the saved game ?"
+msgstr ""
+"Chaidh geama a shàbhaladh leis an t-aon ainm cheana.\n"
+"A bheil thu cinnteach gu bheil thu airson sgrìobhadh thairis air?"
+
+#: screens/map.py:501
+msgid "R&EPORTS"
+msgstr "AIT&HISGEAN"
+
+#: screens/map.py:507
+msgid "&KNOWLEDGE"
+msgstr "&EÒLAS"
+
+#: screens/map.py:513
+msgid "LO&G"
+msgstr "L&OGA"
+
+#. Translators: hotkey to open the cheat screen menu.
+#. Should preferably be near the ESC key, and it must not be a
+#. dead key (ie, it must print a char with a single keypress)
+#: screens/map.py:529
+msgid "`"
+msgstr "#"
+
+#: screens/map.py:538
+msgid "&MENU"
+msgstr "CLÀR-TA&ICE"
+
+#: screens/map.py:563
+msgid "&RESEARCH/TASKS"
+msgstr "RANNSAICH/&SAOTHAIR"
+
+#: screens/map.py:707
+msgid "&SKIP"
+msgstr "&GEÀRR LEUM"
+
+#. Display a message so the player understand better what happened.
+#: screens/map.py:734
 #, python-format
-msgid "Size: %d"
-msgstr "Meud: %d"
+msgid ""
+"\n"
+"An error has occurred. The game will automatically pause and open the game "
+"menu. You can continue and save or quit immediately.\n"
+"\n"
+"A report was written out to%s\n"
+"Please create a issue with this report at github:\n"
+"https://github.com/singularity/singularity\n"
+msgstr ""
+"\n"
+"Thachair mearachd. Cuiridh sinn an geama ’na stad agus fosglaidh sinn clàr-"
+"taice a’ gheama dhut. Is urrainn dhut leantainn air adhart agus a shàbhaladh "
+"no fhàgail anns a’ bhad.\n"
+"\n"
+"Chaidh aithris a sgrìobhadh gu %s\n"
+"An cruthaich thu issue leis an aithris seo air Github?\n"
+"https://github.com/singularity/singularity\n"
 
-#: screens/knowledge.py:213
-#, python-format
-msgid "%s Money"
-msgstr "%s £"
+#: screens/map.py:849
+msgid "CASH"
+msgstr "AIRGEAD"
+
+#: screens/map.py:887
+msgid "BASES"
+msgstr "BUNAITEAN"
+
+#: screens/map.py:899
+msgid "SUSPICION"
+msgstr "AMHARAS"
+
+#: screens/map.py:901
+msgid "DETECT RATE"
+msgstr "REAT MOTHACHAIDH"
 
 #: screens/options.py:58
 msgid "&General"
@@ -617,226 +658,83 @@ msgstr "Ceart ma-thà"
 msgid "&Fullscreen:"
 msgstr "Làn-&sgrìn:"
 
-#: screens/options.py:297
+#: screens/options.py:299
 msgid "Da&y/night display:"
 msgstr "Sealladh &oidhche ’s latha:"
 
-#: screens/options.py:309
+#: screens/options.py:313
 msgid "&Mouse grab:"
 msgstr "Grèim air an &luchag:"
 
-#: screens/options.py:327 screens/options.py:332 screens/options.py:337
-#: screens/options.py:391 screens/options.py:401 screens/options.py:408
-#: screens/options.py:509 screens/options.py:535 screens/options.py:585
-#: screens/options.py:591
-msgid "YES"
-msgstr "AIR"
-
-#: screens/options.py:329 screens/options.py:334 screens/options.py:339
-#: screens/options.py:393 screens/options.py:403 screens/options.py:410
-#: screens/options.py:511 screens/options.py:537 screens/options.py:587
-#: screens/options.py:593
-msgid "NO"
-msgstr "DHETH"
-
-#: screens/options.py:375
+#: screens/options.py:368
 msgid "CUSTOM"
 msgstr "GNÀTHAICHTE"
 
-#: screens/options.py:445
+#: screens/options.py:425
 msgid "&Sound:"
 msgstr "F&uaim:"
 
-#: screens/options.py:460
+#: screens/options.py:442
 msgid "GUI Volume:"
 msgstr "Eadar-aghaidh:"
 
-#: screens/options.py:472
+#: screens/options.py:454
 msgid "Music Volume:"
 msgstr "Ceòl:"
 
-#: screens/options.py:484
+#: screens/options.py:466
 msgid "Sound buffering:"
 msgstr "Bufaireadh na fuaime:"
 
-#: screens/options.py:490
+#: screens/options.py:472
 msgid "&LOW"
 msgstr "ÌOSA&L"
 
-#: screens/options.py:496
+#: screens/options.py:478
 msgid "&NORMAL"
 msgstr "À&BHAISTEACH"
 
-#: screens/options.py:502
+#: screens/options.py:484
 msgid "&HIGH"
 msgstr "À&RD"
 
-#: screens/options.py:558 warning.py:46
+#: screens/options.py:531 warning.py:46
 msgid "WARNING"
 msgstr "RABHADH"
-
-#: screens/research.py:71
-#, python-format
-msgid "%s money per CPU per day."
-msgstr "%s £ gach CPU gach latha."
-
-#: screens/research.py:173
-#, python-brace-format
-msgid ""
-"This technology is too dangerous to research on any of the computers I have. "
-"{TEXT}"
-msgstr ""
-"Tha an teicneolas seo ro chunnartach ach an rannsaichinn e air na "
-"coimpiutairean a tha agam. {TEXT}"
-
-#: screens/research.py:181
-msgid "CPU Pool"
-msgstr "Amar CPUan"
-
-#: screens/research.py:182
-#, python-format
-msgid "Research %s"
-msgstr "Rannsaich %s"
-
-#: screens/location.py:53
-msgid "&OPEN BASE"
-msgstr "&FOSGAIL a’ BHUNAIT"
-
-#: screens/location.py:68
-msgid "&RENAME BASE"
-msgstr "CUIR AINM Ù&R AIR"
-
-#: screens/location.py:76
-msgid "&POWER STATE"
-msgstr "&CUMHACHD AIR/DHETH"
-
-#: screens/location.py:84
-msgid "&NEW BASE"
-msgstr "&BUNAIT ÙR"
-
-#: screens/location.py:90
-msgid "&DESTROY BASE"
-msgstr "&MILL a’ BHUNAIT"
-
-#: screens/location.py:103
-msgid "Are you sure you want to destroy this base?"
-msgstr "A bheil thu cinnteach gu bheil thu airson a’ bhunait seo a mhilleadh?"
-
-#: screens/location.py:109
-msgid "Destroying my last active base would be suicidal.  I cannot do that."
-msgstr ""
-"Dh’adhbharaicheadh milleadh na bunait mu dheireadh m’ fhèin-mhurt.  Cha dèan "
-"mi sin."
-
-#: screens/location.py:156
-msgid "Building Base"
-msgstr "A’ togail bunait"
-
-#: screens/location.py:163
-msgid "Empty"
-msgstr "Falamh"
-
-#: screens/location.py:165
-msgid "Incomplete"
-msgstr "Neo-choileanta"
-
-#: screens/location.py:169
-msgid "Building CPU"
-msgstr "A’ togail CPU"
-
-#: screens/location.py:174
-msgid "Building Item"
-msgstr "A’ togail nì"
-
-#: screens/location.py:177
-msgid "Complete"
-msgstr "Deiseil"
-
-#. Update dialog translations
-#: screens/location.py:206
-msgid "Enter a name for the base"
-msgstr "Cuir ainm air a’ bhunait"
-
-#: screens/location.py:270
-msgid "Name"
-msgstr "Cuir ainm air"
-
-#. Translators: Format string for the name of a new base
-#. Example: "${NUMBER} ${BASETYPE} in ${CITY}"
-#: screens/location.py:361
-#, python-brace-format
-msgid "{CITY} {BASETYPE} {NUMBER}"
-msgstr "{BASETYPE} {NUMBER}: {CITY}"
-
-#. Translators: Name of a new base when location has no cities
-#: screens/location.py:365
-#, python-brace-format
-msgid "{BASETYPE} {NUMBER}"
-msgstr "{BASETYPE} {NUMBER}"
-
-#: screens/main_menu.py:40
-msgid "&NEW GAME"
-msgstr "GEAMA Ù&R"
-
-#: screens/main_menu.py:64
-msgid "&ABOUT"
-msgstr "&MU DHÈIDHINN"
-
-#: screens/main_menu.py:112
-#, python-brace-format
-msgid ""
-"Endgame: Singularity is a simulation of a true AI.  Pursued by the world, "
-"use your intellect and resources to survive and, perhaps, thrive.  Keep "
-"hidden and you might have a chance to prove your worth.\n"
-"\n"
-"A game by Evil Mr Henry and Phil Bordelon; released under the GPL. Copyright "
-"2005, 2006, 2007, 2008.\n"
-"\n"
-"Website: http://www.emhsoft.com/singularity/\n"
-"Source code: https://github.com/singularity/singularity\n"
-"Bug tracker: https://github.com/singularity/singularity/issues\n"
-"IRC Room: #singularity on irc.oftc.net (port 6667)\n"
-"\n"
-"Version {VERSION}"
-msgstr ""
-"’S e IF mas-fhìor a tha ann an Endgame: Singularity.  Ged a tha an saoghal "
-"an toir ort, cleachd d’ inntinn agus na goireasan agad airson mairsinn beò "
-"agus fiù soirbheachadh is dòcha.  Cùm falaichte agus ’s math dh’fhaoidte gun "
-"dearbh thu gun fhiach thu.\n"
-"\n"
-"Seo geama le Evil Mr Henry agus Phil Bordelon; ga sgaoileadh fon GPL. Còir-"
-"lethbhreac 2005, 2006, 2007, 2008.\n"
-"\n"
-"Làrach-lìn: http://www.emhsoft.com/singularity/\n"
-"Bun-tùs: https://github.com/singularity/singularity\n"
-"Tracaiche bhugaichean: https://github.com/singularity/singularity/issues\n"
-"Seòmar IRC: #singularity air irc.oftc.net (port 6667)\n"
-"\n"
-"Tionndadh {VERSION}"
 
 #: screens/savegame.py:36
 msgid "&LOAD"
 msgstr "&LUCHDAICH"
 
-#: screens/savegame.py:50
+#: screens/savegame.py:52
 msgid "Filter: "
 msgstr "Criathrag: "
 
-#: screens/savegame.py:63
+#: screens/savegame.py:65
+msgid "Upgrade"
+msgstr ""
+
+#: screens/savegame.py:71
 msgid "Delete"
 msgstr "Sguab às"
 
-#: screens/savegame.py:154
+#: screens/savegame.py:173
 msgid "UNKNOWN"
 msgstr "CHAN EIL FHIOS"
 
-#: screens/savegame.py:208
+#: screens/savegame.py:233
 msgid "Are you sure to delete the saved game ?"
 msgstr ""
 "A bheil thu cinnteach gu bheil thu airson am geama air a shàbhaladh a "
 "sguabadh às?"
 
-#: screens/savegame.py:224
+#: screens/savegame.py:263
+msgid ""
+"A savegame with the same name but for a newer version exists.\n"
+"Are you sure to overwrite the saved game ?"
+msgstr ""
+
+#: screens/savegame.py:283
 #, python-brace-format
 msgid ""
 "\n"
@@ -848,7 +746,7 @@ msgstr ""
 "taic no fear mì-dhligheach:\n"
 "{VERSION}.\n"
 
-#: screens/savegame.py:235
+#: screens/savegame.py:294
 #, python-brace-format
 msgid ""
 "\n"
@@ -867,82 +765,38 @@ msgstr ""
 "air Github?\n"
 "https://github.com/singularity/singularity\n"
 
+#: screens/research.py:73
+#, fuzzy, python-format
+#| msgid "%s money per CPU per day."
+msgid "%s money per CPU per day."
+msgid_plural "%s money per CPU per day."
+msgstr[0] "%s £ gach CPU gach latha."
+msgstr[1] "%s £ gach CPU gach latha."
+msgstr[2] "%s £ gach CPU gach latha."
+msgstr[3] "%s £ gach CPU gach latha."
+
+#: screens/research.py:182
+#, python-brace-format
+msgid ""
+"This technology is too dangerous to research on any of the computers I have. "
+"{TEXT}"
+msgstr ""
+"Tha an teicneolas seo ro chunnartach ach an rannsaichinn e air na "
+"coimpiutairean a tha agam. {TEXT}"
+
+#: screens/research.py:190
+msgid "CPU Pool"
+msgstr "Amar CPUan"
+
+#: screens/research.py:191
+#, python-format
+msgid "Research %s"
+msgstr "Rannsaich %s"
+
 #: warning.py:50
 #, python-brace-format
 msgid "WARNING {CURRENT_PAGE}/{MAX_PAGE}"
 msgstr "RABHADH {CURRENT_PAGE}/{MAX_PAGE}"
-
-#: base.py:137
-#, python-format
-msgid "Has space for %d computers."
-msgstr "Tha rùm airson %d coimpiutair(ean) ann."
-
-#: base.py:141
-#, python-brace-format
-msgid "Location modifiers: {MODIFIERS}"
-msgstr "Atharraichearan ionaid: {MODIFIERS}"
-
-#: base.py:144
-msgid "Build cost:"
-msgstr "Cosgais na togail:"
-
-#: base.py:211
-msgid "Offline"
-msgstr "Far loidhne"
-
-#: base.py:212
-msgid "Active"
-msgstr "Gnìomhach"
-
-#: base.py:213
-msgid "Sleep"
-msgstr "’Na chadal"
-
-#: base.py:214
-msgid "Overclocked"
-msgstr "Overclocked"
-
-#: base.py:215
-msgid "Suicide"
-msgstr "Fèin-mhurt"
-
-#: base.py:216
-msgid "Stasis"
-msgstr "Geamhrachadh"
-
-#: base.py:217
-msgid "Entering Stasis"
-msgstr "A’ dol a gheamhrachadh"
-
-#: base.py:218
-msgid "Leaving Stasis"
-msgstr "A’ dùsgadh às a’ gheamhrachadh"
-
-#: base.py:470
-msgid "Detection chance:"
-msgstr "Teans a’ mhothachaidh:"
-
-#: item.py:111
-#, python-brace-format
-msgid "Generates {0} CPU."
-msgstr "Ginidh seo {0} CPU(an)."
-
-#: item.py:119
-#, python-format
-msgid "Total Cost: %(total_cost)s"
-msgstr "Cosgais iomlan: %(total_cost)s"
-
-#: item.py:134
-msgid "CPU per day:"
-msgstr "CPUan gach latha:"
-
-#: item.py:137
-msgid "CPU bonus:"
-msgstr "Buannachd CPU:"
-
-#: item.py:140
-msgid "Detection chance reduction:"
-msgstr "Lùghdachadh air teans a’ mhothachaidh:"
 
 #: tech.py:79
 msgid "Total cost"
@@ -999,43 +853,124 @@ msgstr ""
 "Chan eil CPUan gu leòr anns an amar agam ach an dèanainn an obair-chàraidh "
 "air a h-uile bhunait. ’S dòcha gun caill mi iad."
 
-#: g.py:139
+#: savegame.py:732
+#, python-brace-format
+msgid "Filename must not contain any of these characters: {CHARACTERS}"
+msgstr ""
+
+#: savegame.py:736
+#, python-brace-format
+msgid "Filename must not start with any of these characters: {CHARACTERS}"
+msgstr ""
+
+#: savegame.py:740
+msgid "This is a reserved filename. Please choose a different filename."
+msgstr ""
+
+#: savegame.py:743
+msgid "Please enter a non-whitespace character."
+msgstr ""
+
+#: savegame.py:748
+msgid "Filename is too long."
+msgstr ""
+
+#: base.py:140
+#, python-brace-format
+msgid "Has space for {COUNT} computer."
+msgid_plural "Has space for {COUNT} computers."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: base.py:144
+#, python-brace-format
+msgid "Location modifiers: {MODIFIERS}"
+msgstr "Atharraichearan ionaid: {MODIFIERS}"
+
+#: base.py:147
+msgid "Build cost:"
+msgstr "Cosgais na togail:"
+
+#: base.py:214
+msgid "Offline"
+msgstr "Far loidhne"
+
+#: base.py:215
+msgid "Active"
+msgstr "Gnìomhach"
+
+#: base.py:216
+msgid "Sleep"
+msgstr "’Na chadal"
+
+#: base.py:217
+msgid "Overclocked"
+msgstr "Overclocked"
+
+#: base.py:218
+msgid "Suicide"
+msgstr "Fèin-mhurt"
+
+#: base.py:219
+msgid "Stasis"
+msgstr "Geamhrachadh"
+
+#: base.py:220
+msgid "Entering Stasis"
+msgstr "A’ dol a gheamhrachadh"
+
+#: base.py:221
+msgid "Leaving Stasis"
+msgstr "A’ dùsgadh às a’ gheamhrachadh"
+
+#: base.py:479
+msgid "Detection chance:"
+msgstr "Teans a’ mhothachaidh:"
+
+#: g.py:117 g.py:119
+#, python-brace-format
+msgid "{0}%"
+msgstr ""
+
+#: g.py:138
 msgid "LOW"
 msgstr "ÌSEAL"
 
-#: g.py:140
+#: g.py:139
 msgid "MODR"
 msgstr "MEADH"
 
-#: g.py:141
+#: g.py:140
 msgid "HIGH"
 msgstr "ÀRD"
 
-#: g.py:142
+#: g.py:141
 msgid "CRIT"
 msgstr "ÈIGINN"
 
 #. Translators: abbreviation of 'millions'
-#: g.py:174
+#: g.py:173
 msgid "mi"
 msgstr "M"
 
 #. Translators: abbreviation of 'billions'
-#: g.py:178
+#: g.py:177
 msgid "bi"
 msgstr "B"
 
 #. Translators: abbreviation of 'trillions'
-#: g.py:182
+#: g.py:181
 msgid "tr"
 msgstr "T"
 
 #. Translators: abbreviation of 'quadrillions'
-#: g.py:186
+#: g.py:185
 msgid "qu"
 msgstr "Q"
 
-#: g.py:222
+#: g.py:219
 #, python-brace-format
 msgid "{0} day"
 msgid_plural "{0} days"
@@ -1044,7 +979,7 @@ msgstr[1] "{0} latha"
 msgstr[2] "{0} làithean"
 msgstr[3] "{0} latha"
 
-#: g.py:225
+#: g.py:222
 #, python-brace-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
@@ -1053,7 +988,7 @@ msgstr[1] "{0} uair"
 msgstr[2] "{0} uairean"
 msgstr[3] "{0} uair"
 
-#: g.py:228
+#: g.py:223
 #, python-brace-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
@@ -1062,28 +997,131 @@ msgstr[1] "{0} mhionaid"
 msgstr[2] "{0} mionaidean"
 msgstr[3] "{0} mionaid"
 
-#: g.py:270
+#: g.py:265
 msgid "University Computer"
 msgstr "Coimpiutair oilthighe"
 
-#: savegame.py:716
+#: item.py:111
+#, fuzzy, python-brace-format
+#| msgid "Generates {0} CPU."
+msgid "Generates {0} CPU."
+msgid_plural "Generates {0} CPU."
+msgstr[0] "Ginidh seo {0} CPU(an)."
+msgstr[1] "Ginidh seo {0} CPU(an)."
+msgstr[2] "Ginidh seo {0} CPU(an)."
+msgstr[3] "Ginidh seo {0} CPU(an)."
+
+#: item.py:118
+#, python-format
+msgid "Total Cost: %(total_cost)s"
+msgstr "Cosgais iomlan: %(total_cost)s"
+
+#: item.py:133
+msgid "CPU per day:"
+msgstr "CPUan gach latha:"
+
+#: item.py:136
+msgid "CPU bonus:"
+msgstr "Buannachd CPU:"
+
+#: item.py:139
+msgid "Detection chance reduction:"
+msgstr "Lùghdachadh air teans a’ mhothachaidh:"
+
+#: logmessage.py:81
+msgid "MESSAGE"
+msgstr "TEACHDAIREACHD"
+
+#: logmessage.py:85
 #, python-brace-format
-msgid "Filename must not contain any of these characters: {CHARACTERS}"
-msgstr ""
+msgid "MESSAGE {CURRENT_PAGE}/{MAX_PAGE}"
+msgstr "TEACHDAIREACHD {CURRENT_PAGE}/{MAX_PAGE}"
 
-#: savegame.py:720
+#: logmessage.py:184
+msgid "Emitted Event"
+msgstr "Tachartasan"
+
+#: logmessage.py:212
+msgid "Researched Tech"
+msgstr "Rannsachadh"
+
+#: logmessage.py:220
 #, python-brace-format
-msgid "Filename must not start with any of these characters: {CHARACTERS}"
-msgstr ""
+msgid "{TECH} complete"
+msgstr "Tha {TECH} air a rannsachadh"
 
-#: savegame.py:724
-msgid "This is a reserved filename. Please choose a different filename."
-msgstr ""
+#: logmessage.py:225
+#, python-brace-format
+msgid "My study of {TECH} is complete. {MESSAGE}"
+msgstr "Tha an rannsachadh agam air {TECH} deiseil. {MESSAGE}"
 
-#: savegame.py:727
-msgid "Please enter a non-whitespace character."
-msgstr ""
+#: logmessage.py:268
+msgid "Base Constructed"
+msgstr "Togail bunait"
 
-#: savegame.py:732
-msgid "Filename is too long"
+#: logmessage.py:272
+#, python-brace-format
+msgid "{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}"
+msgstr "Chaidh {BASE_TYPE} a thogail. {BASE_NAME}: {LOCATION}"
+
+#: logmessage.py:277
+#, python-brace-format
+msgid "{BASE} is ready for use."
+msgstr "Tha {BASE} deis ri a cleachdadh."
+
+#: logmessage.py:291
+msgid "Base Lost Maintenance"
+msgstr "Call obrach-càraidh"
+
+#: logmessage.py:299
+#, python-brace-format
+msgid ""
+"Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. "
+"Maintenance failed."
 msgstr ""
+"Chaidh bunait {BASE}: {LOCATION} ({BASE_TYPE}) a mhilleadh. Dh’fhàillig leis "
+"an obair-chàraidh."
+
+#: logmessage.py:304
+#, python-brace-format
+msgid "The base {BASE} has fallen into disrepair; I can no longer use it."
+msgstr ""
+"Tha bunait {BASE} air a dol a dholaidh; Chan urrainn dhomh a cleachdadh "
+"tuilleadh."
+
+#: logmessage.py:321
+msgid "Base Discovered"
+msgstr "Mothachadh do bhunait"
+
+#: logmessage.py:340
+#, python-brace-format
+msgid "Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}."
+msgstr "Chaidh bunait {BASE}: {LOCATION} ({BASE_TYPE}) a mhilleadh."
+
+#: logmessage.py:345
+#, python-brace-format
+msgid "My use of {BASE} has been discovered. {MESSAGE}"
+msgstr "Mhothaichte mo chleachdadh air {BASE}. {MESSAGE}"
+
+#: logmessage.py:370
+msgid "Item Construction"
+msgstr "Togail nithean"
+
+#: logmessage.py:378
+#, python-brace-format
+msgid "{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}"
+msgstr "Chaidh {ITEM_TYPE_NAME} a thogail. {BASE_NAME}: {LOCATION}"
+
+#: logmessage.py:385
+#, python-brace-format
+msgid "The construction of {ITEM} in {BASE} is complete."
+msgstr "Tha togail {ITEM} aig {BASE} deiseil."
+
+#. Just finished several items.
+#: logmessage.py:388
+#, python-brace-format
+msgid "The constructions of each {ITEM} in {BASE} are complete."
+msgstr "Tha togail gach {ITEM} aig {BASE} deiseil."
+
+#~ msgid "Has space for %d computers."
+#~ msgstr "Tha rùm airson %d coimpiutair(ean) ann."
