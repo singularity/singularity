@@ -408,6 +408,10 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
             button.ExitDialogButton(None, None, None, text=_("&BACK"), autotranslate=True,
                                     exit_code=False),
         ]
+        # Hide hotkeys (#289) to avoid confusion due to poor focus visibility
+        self.savename_dialog.ok_button.force_underline = -1
+        self.savename_dialog.cancel_button.force_underline = -1
+
         self.needs_rebuild = True
 
     def rebuild(self):
