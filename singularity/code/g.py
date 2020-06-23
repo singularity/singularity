@@ -58,7 +58,6 @@ significant_numbers = []
 internal_id_forward = {}
 internal_id_backward = {}
 dangers = {}
-messages = {}
 data_strings = {}
 story_translations = {}
 story = {}
@@ -93,7 +92,7 @@ def quit_game():
 #Takes a number and adds commas to it to aid in human viewing.
 def add_commas(number, fixed_size=False):
     # Do not use unicode strings to fix python2 format bug. It doesn't work and crash.
-    # See the correct fix at the end of function. 
+    # See the correct fix at the end of function.
     raw_with_commas = locale.format_string("%0.2f", number,
                                     grouping=True)
     locale_test = locale.format_string("%01.1f", 0.1) if not fixed_size else ''
@@ -115,9 +114,9 @@ def add_commas(number, fixed_size=False):
 #This converts that format to a human-readable one.
 def to_percent(raw_percent, show_full = False):
     if raw_percent % 100 != 0 or show_full:
-        return locale.format_string(u"%.2f", raw_percent / 100.) + "%"
+        return _('{0}%').format(locale.format_string(u"%.2f", raw_percent / 100.))
     else:
-        return locale.format_string(u"%d", raw_percent // 100) + "%"
+        return _('{0}%').format(locale.format_string(u"%d", raw_percent // 100))
 
 
 # nearest_percent takes values in the internal representation and modifies
@@ -216,11 +215,12 @@ def current_share(num_per_day, time_of_day, seconds_passed):
 # Takes a number of minutes, and returns a string suitable for display.
 def to_time(raw_time):
     if raw_time//60 > 48:
-        return str(raw_time // (24*60)) + " " + _("days")
-    elif raw_time//60 > 1:
-        return str(raw_time // 60) + " " +_("hours")
-    else:
-        return str(raw_time) + " "+ _("minutes")
+        time_number = raw_time // (24*60)
+        return ngettext("{0} day", "{0} days", time_number).format(time_number)
+    if raw_time//60 > 1:
+        time_number = raw_time // 60
+        return ngettext("{0} hour", "{0} hours", time_number).format(time_number)
+    return ngettext("{0} minute", "{0} minutes", raw_time).format(raw_time)
 
 
 # Generator function for iterating through all bases.
@@ -250,7 +250,7 @@ def new_game(difficulty_name, initial_speed=1):
     from singularity.code.stats import itself as stats
     stats.reset()
 
-    from singularity.code import data, difficulty, player, base, tech
+    from singularity.code import difficulty, player, base
 
     diff = difficulty.difficulties[difficulty_name]
 
@@ -269,9 +269,6 @@ def new_game(difficulty_name, initial_speed=1):
 
 def read_modifiers_dict(modifiers_info):
     modifiers_dict = {}
-
-    if modifiers_info is list:
-        modifiers_info = [modifiers_info]
 
     for modifier_str in modifiers_info:
         key, value = modifier_str.split(":")
@@ -297,7 +294,7 @@ def to_internal_id(obj_type, obj_id):
             return internal_id_forward[obj_type + "_" + internal_id_version][obj_id]
         except KeyError:
             pass
-    
+
     try:
         return internal_id_forward[obj_type][obj_id]
     except KeyError:
@@ -313,14 +310,14 @@ def from_internal_id(obj_type, obj_internal_id):
 def convert_internal_id(id_type, id_value):
     if id_value is None:
         return None
-    
+
     internal_id = id_value
-    
+
     # Not a internal ID, transform to it.
     if not internal_id.startswith("0x"):
         internal_id = to_internal_id(id_type, id_value)
 
-    return from_internal_id(id_type, internal_id) 
+    return from_internal_id(id_type, internal_id)
 
 #TODO: This is begging to become a class... ;)
 def hotkey(string):

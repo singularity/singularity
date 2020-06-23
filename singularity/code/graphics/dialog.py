@@ -32,6 +32,9 @@ KEYPAD = {pygame.K_KP1: 1, pygame.K_KP2: 2, pygame.K_KP3: 3, pygame.K_KP4: 4,
           pygame.K_KP9: 9}
 
 
+SDL_V2 = True if pygame.get_sdl_version()[0] == 2 else False
+
+
 def insort_right_w_key(a, x, lo=0, hi=None, key=lambda v: v):
     """Insert item x in list a, and keep it sorted assuming a is sorted.
 
@@ -164,7 +167,6 @@ class Dialog(text.Text):
         self.add_handler(constants.CLICK, self.fake_escape, 200)
 
     def lost_focus(self):
-        self.key_down = None
         self.faded = True
         self.stop_timer()
 
@@ -207,7 +209,6 @@ class Dialog(text.Text):
         from singularity.code.mixer import play_music
 
         self.visible = True
-        self.key_down = None
         self.needs_rebuild = True
         self.start_timer()
 
@@ -277,6 +278,9 @@ class Dialog(text.Text):
             # Drag handlers.
             if event.buttons[0]:
                 insort_all(handlers, self.handlers.get(constants.DRAG, []))
+        elif SDL_V2 and event.type == pygame.MOUSEWHEEL:
+            # Generic mouse wheel handlers.
+            handlers = self.handlers.get(constants.MOUSEWHEEL, [])[:]
         elif event.type == pygame.USEREVENT:
             # Clear excess timer ticks.
             pygame.event.clear(pygame.USEREVENT)
@@ -284,17 +288,11 @@ class Dialog(text.Text):
             # Timer tick handlers.
             handlers = self.handlers.get(constants.TICK, [])
 
-            # Generate repeated keys.
-            if self.key_down:
-                self.repeat_counter += 1
-                if self.repeat_counter >= 5:
-                    self.repeat_counter = 0
-                    self.handle(self.key_down)
         elif event.type in (pygame.KEYDOWN, pygame.KEYUP):
-            
+
             # TODO: Dynamize global key handlers.
             # TODO: Allows customization of global key handlers.
-            # Important: Global key handlers should always be a combination 
+            # Important: Global key handlers should always be a combination
             # of two keys or F# keys.
             if event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
                 if event.type == pygame.KEYDOWN:
@@ -323,15 +321,7 @@ class Dialog(text.Text):
                 # Keycode-based handlers for this particular key.
                 insort_all(handlers, self.key_handlers.get(event.key, []))
 
-                # Begin repeating keys.
-                if self.key_down is not event:
-                    self.key_down = event
-                    self.repeat_counter = -10
-                    self.start_timer(force = True)
-            else: # event.type == pygame.KEYUP:
-                # Stop repeating keys.
-                self.key_down = None
-                self.reset_timer()
+            else:  # event.type == pygame.KEYUP:
 
                 # Generic keyup handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYUP, []))
@@ -342,11 +332,15 @@ class Dialog(text.Text):
         elif event.type == pygame.MOUSEBUTTONUP:
             # Handle mouse scrolls by imitating PageUp/Dn
             if event.button in (4, 5):
-                if event.button == 4:
-                    key = pygame.K_PAGEUP
-                else:
-                    key = pygame.K_PAGEDOWN
-                fake_key(key)
+                # With SDLv2, there is a SDL Mouse wheel event and we react
+                # to that instead.  This guard is to avoid double-acting on
+                # it while pygame injects a compat MOUSEBUTTON event.
+                if not SDL_V2:
+                    if event.button == 4:
+                        key = pygame.K_PAGEUP
+                    else:
+                        key = pygame.K_PAGEDOWN
+                    fake_key(key)
                 return constants.NO_RESULT
 
             # Mouse click handlers.
@@ -460,15 +454,15 @@ class FocusDialog(Dialog):
         if len(self.focus_list) == 0:
             raise constants.Handled
         elif len(self.focus_list) == 1:
-            
+
             has_focus = not self.focus_list[0].has_focus
             self.focus_list[0].has_focus = has_focus
-            
+
             if has_focus:
                 self.current_focus = self.focus_list[0]
             else:
                 self.current_focus = None
-                
+
             raise constants.Handled
 
         backwards = bool(pygame.key.get_mods() & pygame.KMOD_SHIFT)
@@ -489,7 +483,7 @@ class FocusDialog(Dialog):
                 index = old_index + 1
                 if index > len(self.focus_list):
                     index = 0
-        
+
         if index == -1 or index == len(self.focus_list):
             self.current_focus = None
         else:
@@ -518,7 +512,7 @@ class TopDialog(Dialog):
 
 
 class TextDialog(Dialog):
-    def __init__(self, parent, pos=(.5, .1), size=(.45, .5),
+    def __init__(self, parent, pos=(.5, .1), size=(.50, .5),
                  anchor=constants.TOP_CENTER, **kwargs):
         kwargs.setdefault("valign", constants.TOP)
         kwargs.setdefault("align", constants.LEFT)
@@ -602,7 +596,7 @@ class MessageDialog(TextDialog):
 
 class TextEntryDialog(TextDialog, FocusDialog):
 
-    def __init__(self, parent, pos=(-.50, -.50), size=(.50, .10),
+    def __init__(self, parent, pos=(-.50, -.50), size=(.55, .25),
                  anchor=constants.MID_CENTER, **kwargs):
         kwargs.setdefault('wrap', False)
         kwargs.setdefault("shrink_factor", 1)
@@ -612,15 +606,16 @@ class TextEntryDialog(TextDialog, FocusDialog):
         cancel_type = kwargs.pop("cancel_type", N_("&CANCEL"))
         super(TextEntryDialog, self).__init__(parent, pos, size, anchor, **kwargs)
 
-        self.text_field = text.EditableText(self, (0, -.50), (-.71, -.50),
+        self.text_field = text.EditableText(self, (-.05, -.30), (-.90, -.25),
                                             borders=constants.ALL,
+                                            background_color="text_entry_background",
                                             base_font="normal")
 
-        self.ok_button = button.FunctionButton(self, (-.72, -.50), (-.14, -.50),
+        self.ok_button = button.FunctionButton(self, (-.14, -.65), (-.30, -.25),
                                                autotranslate=True,
                                                text=ok_type,
                                                function=self.return_text)
-        self.cancel_button = button.FunctionButton(self, (-.86, -.50), (-.14, -.50),
+        self.cancel_button = button.FunctionButton(self, (-.56, -.65), (-.30, -.25),
                                                    autotranslate=True,
                                                    text=cancel_type,
                                                    function=self.return_nothing)

@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import singularity
 from singularity.code.graphics import dialog, button, text, constants
 from singularity.code.screens import map, options, savegame
-from singularity.code import g, difficulty
+from singularity.code import g, difficulty, savegame as sv
 
 
 class MainMenu(dialog.TopDialog):
@@ -75,7 +75,7 @@ class MainMenu(dialog.TopDialog):
 
         self.difficulty_dialog = dialog.SimpleMenuDialog(self)
 
-        self.load_dialog = savegame.SavegameScreen(self, (.5,.5), (.75,.75),
+        self.load_dialog = savegame.SavegameScreen(self, (.5, .5), (.90, .90),
                                                    anchor=constants.MID_CENTER)
 
     def rebuild(self):
@@ -99,6 +99,7 @@ class MainMenu(dialog.TopDialog):
     def new_game(self):
         difficulty = dialog.call_dialog(self.difficulty_dialog, self)
         if difficulty is not None:
+            sv.last_savegame_name = None
             g.new_game(difficulty)
             dialog.call_dialog(self.map_screen, self)
 

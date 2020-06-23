@@ -23,7 +23,7 @@ from __future__ import absolute_import
 from numpy import array, int64
 import pygame
 
-from singularity.code import g, task
+from singularity.code import i18n, g, task
 from singularity.code.graphics import dialog, button, slider, text, constants, listbox
 
 
@@ -68,9 +68,9 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             cpu_pool = task.get_current("cpu_pool")
             description = template % (cpu_pool.name, cpu_pool.description)
         elif key == "jobs":
-            template = "%s\n" + _("%s money per CPU per day.") + "\n---\n%s"
             job = task.get_current("jobs")
             profit = job.get_profit()
+            template = "%s\n" + ngettext("%s money per CPU per day.", "%s money per CPU per day.", profit) + "\n---\n%s"
             description = template % (job.name, profit, job.description)
         else:
             description = ""
@@ -148,7 +148,16 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.slider.slider_max = total_cpu
         canvas.slider.slider_size = ss = g.pl.available_cpus[0] // 10 + 1
         full_size = -.98
-        size_fraction = (total_cpu + ss) / float(g.pl.available_cpus[0] + ss)
+        if total_cpu:
+            size_fraction = (total_cpu + ss) / float(g.pl.available_cpus[0] + ss)
+        else:
+            # If people put all their bases to sleep, then total_cpu (and
+            # g.pl.available_cpus[0]) are both 0.  This causes size_fraction
+            # to become 1 and the slider will then take the entire width of
+            # the research screen.  However, that looks odd - especially with
+            # a help button, so we special case this here to ensure it looks
+            # reasonable.
+            size_fraction = .10
         canvas.slider.size = (full_size * size_fraction, -.4)
         canvas.alloc_cpus.text = g.add_commas(cpu)
 
@@ -170,14 +179,14 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.parent.needs_rebuild = True
 
     def show_help(self, danger_level):
-        self.help_dialog.text = _("This technology is too dangerous to research on any of the computers I have. {TEXT}",
+        self.help_dialog.text = _("This technology is too dangerous to research on any of the computers I have. {TEXT}").format(
                                   TEXT=g.dangers[danger_level].research_desc)
         dialog.call_dialog(self.help_dialog, self)
 
     def show(self):
         techs = [tech for tech in g.pl.techs.values() if tech.available()
                                                       and not tech.done]
-        techs.sort()
+        techs.sort(key=lambda tech: i18n.lex_sorting_form(tech.spec.name))
         self.list = [_("CPU Pool"), task.get_current("jobs").name] + \
                     [_("Research %s") % tech.name for tech in techs]
         self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]

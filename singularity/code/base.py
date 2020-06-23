@@ -40,6 +40,9 @@ from numpy import int64
 power_states = ['offline', 'active','sleep']
 #power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
 
+AVAIL_POWER_STATES_ACTIVE_BASE = ('active', 'sleep')
+AVAIL_POWER_STATES_OFFLINE = ('offline',)
+
 
 def parse_detect_chance(parsed_value):
     validate_must_be_list(parsed_value)
@@ -134,11 +137,11 @@ class BaseSpec(buyable.BuyableSpec):
             fake_base.location = location
             size = "\n" + forced_cpu_spec.get_quality_info(if_installed_in_base=fake_base, count=self.size)
         elif self.size > 1:
-            size = "\n" + _("Has space for %d computers.") % self.size
+            size = "\n" + ngettext("Has space for {COUNT} computer.", "Has space for {COUNT} computers.", self.size).format(COUNT=self.size)
 
         location_message = ""
         if location.has_modifiers():
-            location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}", 
+            location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}").format(
                                            MODIFIERS=location.get_modifiers_info())
 
         template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
@@ -218,26 +221,32 @@ class Base(buyable.Buyable):
         if self.power_state == "leaving_stasis" : return _("Leaving Stasis")
         return ""
 
-    def switch_power(self):
+    @property
+    def available_power_states(self):
         if self.done and self.cpus and self.cpus.done:
-            if self._power_state == "active":
-                self._power_state = "sleep"
-            else:
-                self._power_state = "active"
+            return AVAIL_POWER_STATES_ACTIVE_BASE
         else:
-            self._power_state = "offline"
+            return AVAIL_POWER_STATES_OFFLINE
+
+    def switch_power(self):
+        possible_states = self.available_power_states
+        try:
+            i = possible_states.index(self._power_state)
+        except IndexError:
+            i = -1
+        # Find the next available power state for this base
+        next_index = (i + 1) % len(possible_states)
+        self._power_state = possible_states[next_index]
         g.pl.recalc_cpu()
 
     def check_power(self):
-        if self.done and self.cpus and self.cpus.done:
-            if self._power_state == "offline":
-                self._power_state = "active"
-        else:
-            self._power_state = "offline"
+        possible_states = self.available_power_states
+        if self._power_state not in possible_states:
+            self._power_state = possible_states[0]
         g.pl.recalc_cpu()
 
     def has_power(self):
-        if self._power_state == "active": 
+        if self._power_state == "active":
             return True
         else:
             return False
@@ -249,7 +258,7 @@ class Base(buyable.Buyable):
         if self.cpus is not None \
                 and self.cpus.spec == item_type:
             space_left -= self.cpus.count
-            
+
         return space_left
 
     @property
@@ -292,7 +301,7 @@ class Base(buyable.Buyable):
         spec = g.base_type[spec_id]
         name = obj_data.get('name')
         base = Base(name, spec)
-        
+
         base.restore_buyable_fields(obj_data, game_version)
 
         if not base.spec.force_cpu:
@@ -359,7 +368,7 @@ class Base(buyable.Buyable):
     def get_quality_for(self, quality):
         gen = (item.get_quality_for(quality) for item in self.all_items()
                                              if item and item.done)
-        
+
         if quality.endswith("_modifier"):
             # Use add_chance to sum modifier.
             return reduce(chance.add, (qual / 10000 for qual in gen), 0) * 10000
@@ -376,7 +385,7 @@ class Base(buyable.Buyable):
             if item and not item.done:
                 return True
         return False
-        
+
     def is_building_extra(self):
         for item in self.all_items():
             if item and item.spec.item_type.is_extra and not item.done:
@@ -446,9 +455,9 @@ class Base(buyable.Buyable):
     def get_detect_info(self):
         accurate = (g.pl.display_discover == "full")
         chance = self.get_detect_chance(accurate)
-        
+
         return get_detect_info(chance)
-        
+
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.
@@ -469,16 +478,16 @@ def detect_chance_to_danger_level(detects_per_day):
 def get_detect_info(detect_chance):
     detect_template = _("Detection chance:") + "\n"
     chances = []
-    
+
     for group in g.pl.groups.values():
         detect_template += group.name + u":\xA0%s\n"
         chances.append(detect_chance.get(group.spec.id, 0))
 
     if g.pl.display_discover == "full":
         return detect_template % tuple(g.to_percent(c) for c in chances)
-    elif g.pl.display_discover == "partial":                                 
-        return detect_template % tuple(g.to_percent(g.nearest_percent(c, 25)) for c in chances)                               
-    else:              
-        return detect_template % tuple(g.danger_level_to_detect_str(detect_chance_to_danger_level(c)) 
+    elif g.pl.display_discover == "partial":
+        return detect_template % tuple(g.to_percent(g.nearest_percent(c, 25)) for c in chances)
+    else:
+        return detect_template % tuple(g.danger_level_to_detect_str(detect_chance_to_danger_level(c))
                                        for c in chances)
 

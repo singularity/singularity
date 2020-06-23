@@ -35,7 +35,7 @@ class LocationScreen(dialog.Dialog):
         super(LocationScreen, self).__init__(*args, **kwargs)
         self.pos = (-.5, -.5)
         self.anchor = constants.MID_CENTER
-        self.size = (.75, .70)
+        self.size = (.90, .70)
 
         self.name_display = text.Text(self, (0,0), (-1, -.08),
                                       anchor=constants.TOP_LEFT,
@@ -43,28 +43,30 @@ class LocationScreen(dialog.Dialog):
                                       border_color="pane_background",
                                       background_color="pane_background_empty",
                                       shrink_factor=1, bold=True)
-        self.modifier_display = text.Text(self, (-.75, -.01), (-.25, -.06),
+        self.modifier_display = text.Text(self, (-.65, -.01), (-.35, -.06),
                                           anchor=constants.TOP_LEFT,
                                           background_color="clear")
 
         self.open_button = \
             button.FunctionButton(self, (0, -.8), (-.3, -.09),
                                   autotranslate=True,
+                                  enabled=False,  # Requires a selected base
                                   text=N_("&OPEN BASE"),
                                   anchor=constants.TOP_LEFT,
                                   autohotkey=True,
                                   function=self.open_base)
 
-
         self.listbox = listbox.CustomListbox(self, (0,-.09), (-1, -.69),
                                              remake_func=self.make_item,
                                              rebuild_func=self.update_item,
+                                             update_func=self._selection_change,
                                              on_double_click_on_item=self.open_button.activated,
                                              )
 
         self.rename_button = \
             button.FunctionButton(self, (-.50, -.8), (-.3, -.09),
                                   autotranslate=True,
+                                  enabled=False,  # Requires a selected base
                                   text=N_("&RENAME BASE"),
                                   anchor=constants.TOP_CENTER,
                                   autohotkey=True,
@@ -73,6 +75,7 @@ class LocationScreen(dialog.Dialog):
         self.power_button = \
             button.FunctionButton(self, (-1, -.8), (-.3, -.09),
                                   autotranslate=True,
+                                  enabled=False,  # Requires a selected base
                                   text=N_("&POWER STATE"),
                                   anchor=constants.TOP_RIGHT,
                                   autohotkey=True,
@@ -87,11 +90,12 @@ class LocationScreen(dialog.Dialog):
         self.destroy_button = \
             button.FunctionButton(self, (-.50, -.91), (-.3, -.09),
                                   autotranslate=True,
+                                  enabled=False,  # Requires a selected base
                                   text=N_("&DESTROY BASE"),
                                   anchor=constants.TOP_CENTER,
                                   autohotkey=True,
                                   function=self.destroy_base)
-        self.back_button = button.ExitDialogButton(self, (-1, -.9), (-.3, -.09),
+        self.back_button = button.ExitDialogButton(self, (-1, -.91), (-.3, -.09),
                                                    autotranslate=True,
                                                    text=N_("&BACK"),
                                                    anchor=constants.TOP_RIGHT,
@@ -123,18 +127,41 @@ class LocationScreen(dialog.Dialog):
         canvas.name_display   = text.Text(canvas, (-.01,-.05), (-.27, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.23, -.99),
+        canvas.base_type      = text.Text(canvas, (-.27,-.05), (-.22, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.base_cpu       = text.Text(canvas, (-.50,-.05), (-.13, -.99),
+        canvas.base_cpu       = text.Text(canvas, (-.47,-.05), (-.13, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.status_display = text.Text(canvas, (-.63,-.05), (-.35, -.99),
+        canvas.status_display = text.Text(canvas, (-.59,-.05), (-.36, -.99),
                                           align=constants.LEFT,
                                           background_color="clear")
-        canvas.power_display  = text.Text(canvas, (-.93,-.05), (-.07, -.99),
+        canvas.power_display  = text.Text(canvas, (-.90,-.05), (-.10, -.99),
                                           background_color="clear")
 
+    def _selection_change(self, *args, **kwargs):
+        try:
+            current_item = self.listbox.current_item()
+        except AttributeError:
+            # Occurs when the dialog is created and the list box has not
+            # yet been fully initialized.
+            return
+
+        if current_item is None:
+            base_manipulation_button_state = False
+            power_button_state = False
+        else:
+            base_manipulation_button_state = True
+            # "current_item" is just the base name; not the base object itself
+            selected_base = self.listbox.key_list[self.listbox.list_pos]
+            if len(selected_base.available_power_states) == 1:
+                power_button_state = False
+            else:
+                power_button_state = True
+        self.open_button.enabled = base_manipulation_button_state
+        self.rename_button.enabled = base_manipulation_button_state
+        self.destroy_button.enabled = base_manipulation_button_state
+        self.power_button.enabled = power_button_state
 
     def update_item(self, canvas, name, base):
         if base is None:
@@ -197,6 +224,11 @@ class LocationScreen(dialog.Dialog):
             self.modifier_display.text = self.location.get_modifiers_info()
 
             self.listbox.needs_rebuild = True
+
+        # Ensure that the buttons have the correct state if we have rebuilt
+        # the list (or the base state changed in between).
+        # Related bug: #282
+        self._selection_change()
 
         # Rebuild dialogs
         self.confirm_destroy.needs_rebuild = True
@@ -277,6 +309,7 @@ class NewBaseDialog(dialog.FocusDialog, dialog.ChoiceDescriptionDialog):
         self.text_field = text.EditableText(self, (-.26, -.87), (-.73, -.1),
                                             anchor=constants.BOTTOM_LEFT,
                                             borders=constants.ALL,
+                                            background_color="text_entry_background",
                                             base_font="normal")
 
         self.desc_func = self.on_change
@@ -357,11 +390,11 @@ def generate_base_name(location, base_type):
         if city:
             #Translators: Format string for the name of a new base
             #Example: "${NUMBER} ${BASETYPE} in ${CITY}"
-            name = _("{CITY} {BASETYPE} {NUMBER}",
+            name = _("{CITY} {BASETYPE} {NUMBER}").format(
                      CITY=city, BASETYPE=flavor, NUMBER=number)
         else:
             #Translators: Name of a new base when location has no cities
-            name = _("{BASETYPE} {NUMBER}",
+            name = _("{BASETYPE} {NUMBER}").format(
                      NUMBER=number, BASETYPE=flavor)
 
         # Damn translators omitting the ${NUMBER} in template string!

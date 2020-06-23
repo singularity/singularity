@@ -76,7 +76,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
 
     def on_change(self, description_pane, item):
         self.item = item
-        
+
         self.description = text.Text(self.description_pane, (0, 0), (-1, -1), text="",
                              background_color="pane_background",
                              align=constants.LEFT, valign=constants.TOP,
@@ -151,14 +151,14 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
 
     def on_change(self, description_pane, item):
         space_left = self.parent.base.space_left_for(item)
-        
+
         self.count_slider.slider_size = space_left // 10 + 1
         self.count_slider.slider_max = space_left
 
         self.count_slider.slider_pos = 0
         if (space_left > 0):
             self.count_slider.slider_pos = 1
-            
+
         super(MultipleBuildDialog, self).on_change(description_pane, item)
 
     def on_field_change(self, value):
@@ -184,14 +184,14 @@ class MultipleBuildDialog(dialog.FocusDialog, BuildDialog):
     def on_slider_change(self, value):
         if (not hasattr(self, "count_field") or not hasattr(self, "count_slider")):
             return # Not initialized
-        
+
         self.count_field.text = str(self.count_slider.slider_pos)
         self.on_description_change()
 
 
 class ItemPane(widget.BorderedWidget):
     item_type = widget.causes_rebuild("_item_type")
-    def __init__(self, parent, pos, size=(.48, .06), anchor=constants.TOP_LEFT,
+    def __init__(self, parent, pos, size=(.58, .06), anchor=constants.TOP_LEFT,
                  item_type=None, **kwargs):
 
         kwargs.setdefault("background_color", "pane_background")
@@ -203,20 +203,20 @@ class ItemPane(widget.BorderedWidget):
 
         self.item_type = item_type
 
-        self.name_panel = text.Text(self, (0,0), (.35, .03),
+        self.name_panel = text.Text(self, (0,0), (.45, .03),
                                     anchor=constants.TOP_LEFT,
                                     align=constants.LEFT,
                                     background_color=self.background_color,
                                     bold=True)
 
-        self.build_panel = text.Text(self, (0,.03), (.35, .03),
+        self.build_panel = text.Text(self, (0,.03), (.45, .03),
                                      anchor=constants.TOP_LEFT,
                                      align=constants.LEFT,
                                      background_color=self.background_color,
                                      text="", bold=True)
 
         self.change_button = button.FunctionButton(
-            self, (.36,.01), (.12, .04),
+            self, (.415,.01), (.16, .04),
             anchor=constants.TOP_LEFT,
             force_underline=len(_("CHANGE")) + 2,
             autohotkey=True,
@@ -233,7 +233,7 @@ class BaseScreen(dialog.Dialog):
     base = widget.causes_rebuild("_base")
     def __init__(self, *args, **kwargs):
         if len(args) < 3:
-            kwargs.setdefault("size", (.75, .70))
+            kwargs.setdefault("size", (.90, .70))
         base = kwargs.pop("base", None)
         super(BaseScreen, self).__init__(*args, **kwargs)
 
@@ -283,7 +283,7 @@ class BaseScreen(dialog.Dialog):
                                     anchor=constants.BOTTOM_CENTER,
                                     )
 
-        self.info_frame = text.Text(self, (-1, .09), (.21, .53),
+        self.info_frame = text.Text(self, (-1, .09), (.26, .53),
                                       anchor=constants.TOP_RIGHT,
                                       background_color="pane_background",
                                       borders=constants.ALL,
@@ -292,7 +292,7 @@ class BaseScreen(dialog.Dialog):
                                       valign=constants.TOP)
 
         self.contents_frame = \
-            widget.BorderedWidget(self, (0, .09), (.50, .53),
+            widget.BorderedWidget(self, (0, .09), (.60, .53),
                                   anchor=constants.TOP_LEFT,
                                   background_color="pane_background",
                                   borders=range(6))
@@ -308,7 +308,7 @@ class BaseScreen(dialog.Dialog):
     def set_current(self, type, item_type, count):
         if type.id == "cpu":
             space_left = self.base.space_left_for(item_type)
-            
+
             try:
                 count = int(count)
             except ValueError:
@@ -320,7 +320,7 @@ class BaseScreen(dialog.Dialog):
                 dialog.call_dialog(md, self)
                 md.parent = None
                 return
-            
+
             if count > space_left or count <= 0 or space_left == 0:
                 if space_left > 0:
                     msg = _("Please choose an integer between 1 and %(limit)s.") % {"limit": space_left}
@@ -334,7 +334,7 @@ class BaseScreen(dialog.Dialog):
                 dialog.call_dialog(md, self)
                 md.parent = None
                 return
-            
+
             # If there are any existing CPUs of this type, warn that they will
             # be taken offline until construction finishes.
             cpu_added = self.base.cpus is not None \
@@ -384,17 +384,17 @@ class BaseScreen(dialog.Dialog):
             build_dialog = self.multiple_build_dialog
         else:
             build_dialog = self.build_dialog
-        
+
         build_dialog.type = type
-        
+
         result = dialog.call_dialog(build_dialog, self)
         if result is not None and 0 <= result < len(build_dialog.key_list):
             item_type = build_dialog.key_list[result]
-            
+
             count = 1
             if (type.id == "cpu"):
                 count = build_dialog.count
-            
+
             self.set_current(type, item_type, count)
             self.needs_rebuild = True
             self.parent.parent.needs_rebuild = True
@@ -450,7 +450,7 @@ class BaseScreen(dialog.Dialog):
                 count = _("(room for %d)") % size
             else:
                 #Translators: current and maximum number of CPUs in a base
-                count = _("x{CURRENT:d} (max {SIZE:d})",
+                count = _("x{CURRENT:d} (max {SIZE:d})").format(
                           CURRENT=current, SIZE=size)
 
         self.cpu_pane.name_panel.text += " " + count
@@ -464,7 +464,7 @@ class BaseScreen(dialog.Dialog):
         info_text += _("Maintenance:") + "\n"
         info_text += self.base.spec.describe_maintenance(self.base.maintenance)
         info_text += "\n"
-    
+
         # Detection chance display.
         info_text += self.base.get_detect_info()
 

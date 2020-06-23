@@ -24,7 +24,7 @@ import time
 
 import pygame
 
-from singularity.code import g, savegame as sv, difficulty
+from singularity.code import i18n, g, savegame as sv, difficulty
 from singularity.code.graphics import dialog, button, text, constants, listbox
 
 from singularity.code.safety import log_func_exc
@@ -36,10 +36,12 @@ class SavegameScreen(dialog.ChoiceDialog):
         super(SavegameScreen, self).__init__(parent, *args, yes_type=N_("&LOAD"), **kwargs)
 
         self.yes_button.pos = (-.03,-.99)
-        self.yes_button.exit_code_func = self.return_savegame
+        self.yes_button.size = (-.22, -.1)
+        self.yes_button.function = self.exit_savegame
         self.yes_button.force_underline = -1  # Work around #224
 
         self.no_button.pos = (-.97,-.99)
+        self.no_button.size = (-.22, -.1)
         self.no_button.exit_code = None
         self.no_button.force_underline = -1  # Work around #224
 
@@ -55,12 +57,19 @@ class SavegameScreen(dialog.ChoiceDialog):
                                                   borders=constants.ALL,
                                                   anchor=constants.TOP_LEFT,
                                                   update_func=self._search_for_savegame,
+                                                  background_color="text_entry_background",
                                                   base_font="normal")
 
-        self.delete_button = button.FunctionButton(self, (-.50, -.99), (-.3, -.1),
+        self.convert_button = button.FunctionButton(self, (-.27, -.99), (-.22, -.1),
+                                                    autotranslate=True,
+                                                    text=N_("Upgrade"),
+                                                    anchor=constants.BOTTOM_LEFT,
+                                                    function=self.convert_save)
+
+        self.delete_button = button.FunctionButton(self, (-.51, -.99), (-.22, -.1),
                                                    autotranslate=True,
                                                    text=N_("Delete"),
-                                                   anchor=constants.BOTTOM_CENTER,
+                                                   anchor=constants.BOTTOM_LEFT,
                                                    function=self.delete_savegame)
 
         self.add_handler(constants.KEY, self._got_key, priority=5)
@@ -110,12 +119,24 @@ class SavegameScreen(dialog.ChoiceDialog):
         if not match_prev:
             self.listbox.list_pos = 0
 
+    def _new_item_selected(self, *args, **kwargs):
+        if not hasattr(self, 'listbox'):
+            # Not properly initialized
+            return
+
+        current_save = self.listbox.current_item()
+        if current_save is not None and current_save.savegame_format != sv.current_save_format:
+            self.convert_button.enabled = True
+        else:
+            self.convert_button.enabled = False
+
     def make_listbox(self):
         return listbox.CustomListbox(self, (0, -.10), (-1, -.77),
                                      list_item_height=0.06,
                                      anchor=constants.TOP_LEFT,
                                      remake_func=self.make_item,
                                      rebuild_func=self.update_item,
+                                     update_func=self._new_item_selected,
                                      on_double_click_on_item=self.yes_button.activated)
 
     def make_item(self, item):
@@ -128,7 +149,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                                              anchor=constants.BOTTOM_LEFT,
                                              align=constants.LEFT,
                                              color="save_time",
-                                             background_color="clear")                               
+                                             background_color="clear")
         item.version_display     = text.Text(item, (-.99, -.01), (-.45, -.60),
                                              anchor=constants.TOP_RIGHT,
                                              align=constants.RIGHT,
@@ -138,7 +159,6 @@ class SavegameScreen(dialog.ChoiceDialog):
                                              align=constants.RIGHT,
                                              color="save_difficulty",
                                              background_color="clear")
-
 
     def update_item(self, item, save):
         if save is None:
@@ -175,6 +195,8 @@ class SavegameScreen(dialog.ChoiceDialog):
 
                 try:
                     gtm_raw_sec = int(save.headers["game_time"])
+                    if gtm_raw_sec < 0:
+                        raise ValueError("Invalid time")
                     gtm_raw_min,  gtm_time_sec  = divmod(gtm_raw_sec, 60)
                     gtm_raw_hour, gtm_time_min  = divmod(gtm_raw_min, 60)
                     gtm_raw_day,  gtm_time_hour = divmod(gtm_raw_hour, 24)
@@ -185,42 +207,86 @@ class SavegameScreen(dialog.ChoiceDialog):
                     gtm_str = ""
 
                 dif = save.headers.get("difficulty", "")
-                dif_str = g.strip_hotkey(getattr(difficulty.difficulties.get(dif, None), "name", ""))
-                
+                dif_obj = difficulty.difficulties.get(dif, None)
+                dif_str = ""
+                if dif_obj is not None:
+                    dif_str = g.strip_hotkey(getattr(dif_obj, "name", ""))
+
                 item.time_display.text = tm_str + " | " + gtm_str if tm_str else gtm_str
                 item.difficulty_display.text = dif_str
 
     def reload_savegames(self):
         savegames = sv.get_savegames()
-        savegames.sort(key=lambda savegame: savegame.name.lower())
+        savegames.sort(key=lambda savegame: i18n.lex_sorting_form(savegame.name))
         self._all_savegames_sorted = savegames
         self.list = savegames
+        self.yes_button.enabled = True if self.list else False
+        self.delete_button.enabled = True if self.list else False
+        self._new_item_selected()
 
     def delete_savegame(self):
-        yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-1),
+        save = self.listbox.current_item()
+        if save is None: return
+
+        yn = dialog.YesNoDialog(self, pos=(-.5, -.5), size=(-.5, -.75),
                                 anchor=constants.MID_CENTER,
                                 text=_("Are you sure to delete the saved game ?"))
         delete = dialog.call_dialog(yn, self)
         yn.parent = None
         if delete:
-            save = self.listbox.current_item()
             sv.delete_savegame(save)
             self.reload_savegames()
 
-    def return_savegame(self):
+    def exit_savegame(self):
         save = self.listbox.current_item()
+        if save is None:
+            return
+        if not self._load_savegame(save):
+            return
+        raise constants.ExitDialog(True)
+
+    def convert_save(self):
+        save = self.listbox.current_item()
+        if save is None:
+            return
+        if not self._load_savegame(save):
+            return
+        # For ".sav" files, we end up creating a parallel ".s2" file and need
+        # to clean up the ".sav" file manually.
+        overwrites_in_place = False
+        if sv.savegame_exists(save.name):
+            if save.savegame_format.internal_version < 99.8:
+                # We seem to be updating a ".sav" file but there is an ".s2"
+                # file?  This should only happen to beta testers
+                yn = dialog.YesNoDialog(self, pos=(-.5, -.5), size=(-.5, -.5),
+                                        anchor=constants.MID_CENTER,
+                                        text=_("A savegame with the same name but for a newer version exists.\n"
+                                               "Are you sure to overwrite the saved game ?"))
+                overwrite = dialog.call_dialog(yn, self)
+                if not overwrite:
+                    return
+            else:
+                # Saving will override in place;
+                overwrites_in_place = True
+
+        sv.create_savegame(save.name)
+        if not overwrites_in_place:
+            sv.delete_savegame(save)
+        self.reload_savegames()
+
+    def _load_savegame(self, save):
         try:
             sv.load_savegame(save)
-            return True
         except sv.SavegameVersionException as e:
             md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
                                       anchor=constants.MID_CENTER,
                                       text=_("""
 This save file '{SAVE_NAME}' is from an unsupported or invalid version:
 {VERSION}.
-""", SAVE_NAME=save.name, VERSION=e.version))
+""").format(SAVE_NAME=save.name, VERSION=e.version))
 
             dialog.call_dialog(md, self)
+            return False
         except Exception:
             log_func_exc(sv.load_savegame)
             md = dialog.MessageDialog(self, pos=(-.5,-.5), size=(.5,.5),
@@ -231,11 +297,13 @@ Attempting to load the save file '{SAVE_NAME}' caused an unexpected error.
 A report was written out to{LOG_TEXT}
 Please create a issue with this report and this savegame at Github:
 https://github.com/singularity/singularity
-""", \
-SAVE_NAME = save.name, \
-LOG_TEXT = (":\n" + g.logfile if g.logfile is not None else " console output.")))
+""").format(
+SAVE_NAME=save.name,
+LOG_TEXT=(":\n" + g.logfile if g.logfile is not None else " console output."))
+            )
             dialog.call_dialog(md, self)
             return False
+        return True
 
     def show(self):
         self.reload_savegames()

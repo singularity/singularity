@@ -13,3 +13,8 @@ _build
 !.codecov.yml
 !.gitignore
 !.gitattributes
+
+singularity/i18n/*.po.sha1
+singularity/i18n/locale/
+singularity-*.tar.gz
+singularity-*.tar.gz.asc

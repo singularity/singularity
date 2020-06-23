@@ -1,5 +1,5 @@
-include AUTHORS
-include Changelog
+include AUTHORS.txt
+include Changelog.txt
 include TODO
 include LICENSE*
 include README.md

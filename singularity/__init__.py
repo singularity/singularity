@@ -346,7 +346,7 @@ def main():
     pygame.init()
     mixer.update()
     font.init()
-    pygame.key.set_repeat(1000, 50)
+    pygame.key.set_repeat(500, 50)
 
     if desired_set_grab is not None:
         pygame.event.set_grab(desired_set_grab)

@@ -67,6 +67,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         if self.parent is not None:
             self.parent.add_handler(constants.CLICK, self.on_click, 90)
             self.parent.add_handler(constants.DOUBLECLICK, self.on_double_click, 200)
+            self.parent.add_handler(constants.MOUSEWHEEL, self.on_mousewheel, 200)
             self.parent.add_key_handler(pygame.K_UP, self.got_key)
             self.parent.add_key_handler(pygame.K_DOWN, self.got_key)
             self.parent.add_key_handler(pygame.K_PAGEUP, self.got_key)
@@ -77,6 +78,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         if self.parent is not None:
             self.parent.remove_handler(constants.CLICK, self.on_click)
             self.parent.remove_handler(constants.DOUBLECLICK, self.on_double_click)
+            self.parent.remove_handler(constants.MOUSEWHEEL, self.on_mousewheel)
             self.parent.remove_key_handler(pygame.K_UP, self.got_key)
             self.parent.remove_key_handler(pygame.K_DOWN, self.got_key)
             self.parent.remove_key_handler(pygame.K_PAGEUP, self.got_key)
@@ -120,6 +122,23 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     def safe_pos(self, raw_pos):
         return max(0, min(len(self.list) - 1, raw_pos))
 
+    def on_mousewheel(self, event):
+        if event.y == 0:
+            # Ignore vertical scrolls
+            return
+        # Note the direction is based on the direction that we used under
+        # in pygame 1/SDL 1 (this avoids confusing users when they migrate
+        # to pygame 2 with SDL 2)
+        direction = -1 if event.y > 0 else 1
+
+        if event.flipped:
+            direction *= -1
+
+        # Number of items moved by a scroll
+        diff = self.scrollbar.window - 1
+        new_pos = self.list_pos + direction * diff
+        self._scroll_to_and_raise_event_handled(new_pos)
+
     def got_key(self, event, require_focus=True):
         if not self.item_selectable:
             return
@@ -137,10 +156,12 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         else:
             return
 
+        self._scroll_to_and_raise_event_handled(new_pos)
+
+    def _scroll_to_and_raise_event_handled(self, new_pos):
         self.list_pos = self.safe_pos(new_pos)
         self.scrollbar.scroll_to(self.list_pos)
         raise constants.Handled
-
 
     def num_elements(self):
         # TODO: If needed, add a paramater to display a fixed number of element.
@@ -276,11 +297,12 @@ class UpdateListbox(Listbox):
 class CustomListbox(UpdateListbox):
     remake_func = widget.causes_rebuild("_remake_func")
     rebuild_func = widget.causes_rebuild("_rebuild_func")
+
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
         self.key_list = kwargs.pop("key_list", None)
         self.remake_func = kwargs.pop("remake_func", lambda value: None)
-        self.rebuild_func = kwargs.pop("rebuild_func", lambda value: None)
+        self.rebuild_func = kwargs.pop("rebuild_func", lambda *args: None)
         super(CustomListbox, self).__init__(parent, *args, **kwargs)
 
     def make_element(self):

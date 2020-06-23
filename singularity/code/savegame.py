@@ -22,6 +22,7 @@ from __future__ import absolute_import
 
 import codecs
 import operator
+import re
 import sys
 import time
 
@@ -44,11 +45,16 @@ from numpy import array, int64
 from io import open, BytesIO
 import base64
 
-from singularity.code import g, mixer, dirs, player, group, logmessage
+from singularity.code import g, dirs, player, group, logmessage
 from singularity.code import base, tech, item, event, location, buyable, difficulty, effect
 from singularity.code.stats import itself as stats
 
-default_savegame_name = u"Default Save"
+# Filenames that are reserved under Windows
+WINDOWS_RESERVED = {'CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
+                    'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
+                    'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'}
+
+last_savegame_name = None
 
 
 class SavegameFormatDefinition(object):
@@ -85,9 +91,23 @@ savefile_translation = {
 }
 
 # We always save in the highest version (internal_version)
-current_save_version = max(savefile_translation.values(), key=operator.attrgetter('internal_version')).magic_value
+current_save_format = max(savefile_translation.values(), key=operator.attrgetter('internal_version'))
+current_save_version = current_save_format.magic_value
 
-Savegame = collections.namedtuple('Savegame', ['name', 'filepath', 'version', 'headers', 'load_file'])
+_Savegame = collections.namedtuple('_Savegame', ['name', 'filepath', 'savegame_format', 'headers', 'load_file'])
+
+
+class Savegame(_Savegame):
+
+    @property
+    def version(self):
+        if self.savegame_format is None:
+            return None
+        return self.savegame_format.display_version
+
+    @property
+    def is_latest_version(self):
+        return True if self.version == current_save_version else False
 
 
 def convert_string_to_path_name(name):
@@ -158,18 +178,18 @@ def get_savegames():
                 continue
 
             filepath = os.path.join(saves_dir, file_name)
-            version_name = None # None == Unknown version
+            version_format = None # None == Unknown version
 
             try:
                 with open(filepath, 'rb') as loadfile:
                     version_line, headers = parse_headers(loadfile)
-                
-                    if version_line in savefile_translation:
-                        version_name = savefile_translation[version_line].display_version
-            except Exception:
-                version_name = None # To be sure.
 
-            savegame = Savegame(convert_path_name_to_str(name), filepath, version_name, headers, load_file)
+                    if version_line in savefile_translation:
+                        version_format = savefile_translation[version_line]
+            except Exception:
+                version_format = None # To be sure.
+
+            savegame = Savegame(convert_path_name_to_str(name), filepath, version_format, headers, load_file)
             all_savegames.append(savegame)
 
     return all_savegames
@@ -285,7 +305,7 @@ def recursive_fix_pickle(the_object, seen):
 
 
 def load_savegame(savegame):
-    global default_savegame_name
+    global last_savegame_name
 
     load_path = savegame.filepath
 
@@ -295,7 +315,7 @@ def load_savegame(savegame):
     with open(load_path, 'rb') as fd:
         load_savegame_fd(savegame.load_file, fd)
 
-    default_savegame_name = savegame.name
+    last_savegame_name = savegame.name
 
 
 def load_savegame_fd(loader_func, fd):
@@ -328,6 +348,8 @@ def load_savegame_by_json(fd):
     load_version = savefile_translation[load_version_string].internal_version
     difficulty_id = headers['difficulty']
     game_time = int(headers['game_time'])
+    if game_time < 0:
+        raise ValueError("Corrupt save; game time is before game start")
     next_byte = fd.peek(1)[0]
     if next_byte == b'{'[0]:
         game_data = json.load(fd)
@@ -604,7 +626,7 @@ def _convert_base(base, save_version):
             "cpu": base.__dict__["cpus"]
         }
         del base.__dict__["cpus"]
-    
+
     if save_version < 4.91: # < r5_pre
         for cpu in base.cpus:
             if cpu:
@@ -635,18 +657,18 @@ def _convert_base(base, save_version):
 
     if save_version < 99.3: # < 1.0 (dev)
         extra_items = iter(base.__dict__["extra_items"])
-        
+
         base.items["reactor"] = next(extra_items, None)
         base.items["network"] = next(extra_items, None)
         base.items["security"] = next(extra_items, None)
-                    
+
         del base.__dict__["extra_items"]
 
     if ("power_state" in base.__dict__):
         base._power_state = base.__dict__["power_state"]
 
     base._name = base.__dict__['name']
-        
+
     return base
 
 def _convert_item(item, save_version):
@@ -687,10 +709,49 @@ def savegame_exists(savegame_name):
 
     return True
 
+def check_filename_illegal(directory, filename, extension):
+    """Check if the filename is safe for all operating systems.
+
+    Keyword arguments:
+    directory -- the directory that the file will be placed in.
+    filename -- a base filename without file extension.
+    filename -- file extension including the dot. Can be empty.
+
+    Returns an error message if a violation was found and None otherwise."""
+
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
+    # http://www.linfo.org/file_name.html
+    # https://kb.acronis.com/content/39790
+
+    if filename.strip() != filename:
+        raise ValueError("Filename must be stripped before calling check_filename_illegal")
+
+    # Characters that are disallowed anywhere in a filename
+    # No potential file separators or other potentially illegal characters
+    if re.match('.*[<>:"|?*/\\\\].*', filename):
+        return _('Filename must not contain any of these characters: {CHARACTERS}').format(CHARACTERS='<>:"|?*/\\\\')
+
+    # Characters that are allowed in filenames, but not at the beginning
+    if re.match('^[.-]', filename):
+        return _('Filename must not start with any of these characters: {CHARACTERS}').format(CHARACTERS='.-')
+
+    # Filenames that are reserved under Windows
+    if filename.upper() in WINDOWS_RESERVED:
+        return _('This is a reserved filename. Please choose a different filename.')
+
+    if filename == '':
+        return _('Please enter a non-whitespace character.')
+
+    # Don't exceed the max length. For Windows, it's the whole path.
+    filepath = os.path.abspath(os.path.join(directory, filename, extension))
+    if len(os.fsencode(filepath)) > 255:
+        return _('Filename is too long.')
+
+    return None
 
 def create_savegame(savegame_name):
-    global default_savegame_name
-    default_savegame_name = savegame_name
+    global last_savegame_name
+    last_savegame_name = savegame_name
     save_loc = convert_string_to_path_name(dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves"))
     # Save in new "JSONish" format
     with open(save_loc, 'wb') as savefile:

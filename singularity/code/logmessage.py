@@ -137,7 +137,7 @@ class AbstractLogMessage(object):
                 obj_data[serial_name] = converter.serialize(field)
             else:
                 obj_data[serial_name] = field
-        
+
         obj_data['log_id'] = self.__class__.log_message_serial_id
         return obj_data
 
@@ -217,12 +217,12 @@ class LogResearchedTech(AbstractLogMessage):
 
     @property
     def log_line(self):
-        return _('{TECH} complete', TECH=self.tech_spec.name)
+        return _('{TECH} complete').format(TECH=self.tech_spec.name)
 
     @property
     def full_message(self):
         tech = self.tech_spec
-        return _("My study of {TECH} is complete. {MESSAGE}", TECH=tech.name, MESSAGE=tech.result)
+        return _("My study of {TECH} is complete. {MESSAGE}").format(TECH=tech.name, MESSAGE=tech.result)
 
 
 class AbstractBaseRelatedLogMessage(AbstractLogMessage):
@@ -269,12 +269,12 @@ class LogBaseConstructed(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        return _("{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}",
+        return _("{BASE_NAME} ({BASE_TYPE}) built at {LOCATION}").format(
                  BASE_NAME=self._base_name, BASE_TYPE=self.base_type.name, LOCATION=self.location.name)
 
     @property
     def full_message(self):
-        return _("{BASE} is ready for use.", BASE=self._base_name)
+        return _("{BASE} is ready for use.").format(BASE=self._base_name)
 
 
 @register_saveable_log_message
@@ -296,12 +296,12 @@ class LogBaseLostMaintenance(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        return _("Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. Maintenance failed.",
+        return _("Base {BASE} of type {BASE_TYPE} destroyed at location {LOCATION}. Maintenance failed.").format(
                   BASE=self._base_name, BASE_TYPE=self.base_type.name, LOCATION=self.location.name)
 
     @property
     def full_message(self):
-        return _("The base {BASE} has fallen into disrepair; I can no longer use it.",
+        return _("The base {BASE} has fallen into disrepair; I can no longer use it.").format(
                   BASE=self._base_name)
 
 
@@ -342,7 +342,7 @@ class LogBaseDiscovered(AbstractBaseRelatedLogMessage):
 
     @property
     def full_message(self):
-        return _("My use of {BASE} has been discovered. {MESSAGE}", 
+        return _("My use of {BASE} has been discovered. {MESSAGE}").format(
                  BASE=self._base_name, MESSAGE=self.group_spec.discover_desc)
 
 
@@ -375,17 +375,17 @@ class LogItemConstructionComplete(AbstractBaseRelatedLogMessage):
 
     @property
     def log_line(self):
-        return _("{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}",
+        return _("{ITEM_TYPE_NAME} built in {BASE_NAME} at {LOCATION}").format(
                  ITEM_TYPE_NAME=self.item_spec.name, BASE_NAME=self._base_name, BASE_TYPE=self.base_type.name,
                  LOCATION=self.location.name)
 
     @property
     def full_message(self):
         if self._item_count == 1:
-            text = _("The construction of {ITEM} in {BASE} is complete.",
+            text = _("The construction of {ITEM} in {BASE} is complete.").format(
                      ITEM=self.item_spec.name, BASE=self._base_name)
         else:  # Just finished several items.
-            text = _("The constructions of each {ITEM} in {BASE} are complete.",
+            text = _("The constructions of each {ITEM} in {BASE} are complete.").format(
                      ITEM=self.item_spec.name, BASE=self._base_name)
         return text
 

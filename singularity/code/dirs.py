@@ -229,7 +229,7 @@ def get_writable_file_in_dirs(filename, dir_name, outer_paths=None):
     else:
         return None
 
-def get_readable_i18n_files(filename, lang=None, default_language=True, 
+def get_readable_i18n_files(filename, lang=None, default_language=True,
         localized_item=True, only_last=False, outer_paths=None):
     from singularity.code import i18n
     files = []

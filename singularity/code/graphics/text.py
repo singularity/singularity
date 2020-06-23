@@ -230,6 +230,7 @@ class Text(widget.BorderedWidget):
                  underline=-1, wrap=True, bold=False, text_size="default", **kwargs):
         kwargs.setdefault("background_color", "text_background")
         kwargs.setdefault("border_color", "text_border")
+        enabled = kwargs.pop('enabled', True)
         super(Text, self).__init__(parent, pos, size, anchor, **kwargs)
 
         self._autotranslate = autotranslate
@@ -254,7 +255,7 @@ class Text(widget.BorderedWidget):
         self.bold = bold
         self.text_size = text_size
         self.on_enable_change_func = on_enable_change
-        self.enabled = True
+        self.enabled = enabled
 
     max_size = property(lambda self: min(len(self.resolved_base_font)-1,
                                          convert_font_size(self._resolved_text_size)))
