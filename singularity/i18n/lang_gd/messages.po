@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singularity\n"
 "Report-Msgid-Bugs-To: https://github.com/singularity/singularity/issues\n"
-"POT-Creation-Date: 2020-06-23 09:11+0100\n"
+"POT-Creation-Date: 2020-06-23 09:21+0100\n"
 "PO-Revision-Date: 2020-06-23 09:16+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
@@ -269,7 +269,6 @@ msgstr "REAT MOTHACHAIDH"
 
 #: screens/research.py:73
 #, python-format
-#| msgid "%s money per CPU per day."
 msgid "%s money per CPU per day."
 msgid_plural "%s money per CPU per day."
 msgstr[0] "%s £ gach CPU gach latha."
@@ -812,7 +811,6 @@ msgstr "{MODIFIER} as MIOSA"
 
 #: item.py:111
 #, python-brace-format
-#| msgid "Generates {0} CPU."
 msgid "Generates {0} CPU."
 msgid_plural "Generates {0} CPU."
 msgstr[0] "Ginidh seo {0} CPU."
