@@ -18,11 +18,68 @@
 
 # This file is used to implement the cheat menu
 import collections
+
+import operator
 from numpy import array
 
 from singularity.code import difficulty, g
-from singularity.code.graphics import dialog, constants, button
+from singularity.code.graphics import dialog, constants, button, text
 from singularity.code.location import Location
+
+
+class EventManipulationDialog(dialog.ChoiceDescriptionDialog):
+
+    def __init__(self, parent, pos=(0, 0), size=(-1, -1),
+                 anchor=constants.TOP_LEFT, *args, **kwargs):
+        super(EventManipulationDialog, self).__init__(parent, pos, size, anchor,
+                                                      *args, **kwargs)
+
+        self.yes_button.parent = None
+        self.description = ""
+        self.desc_func = self.on_change
+
+    def show(self):
+        self.key_list = sorted(g.events.values(),
+                               key=operator.attrgetter('id'))
+        self.list = [x.id for x in self.key_list]
+
+        self._update_desc_pane()
+        return super(EventManipulationDialog, self).show()
+
+    def on_change(self, description_pane, event_spec):
+        event_instance = g.pl.events.get(event_spec.id)
+        triggered_state = _('NO')
+        trigger_duration = g.to_time(event_spec.duration * g.minutes_per_day) \
+            if event_spec.duration else _('Event never expires')
+        triggered_at_raw = _('N/A; event not triggered')
+        uniqueness = _('YES') if event_spec.unique else _('NO')
+        if event_instance:
+            if event_instance.triggered:
+                triggered_state = _('YES')
+                triggered_at_raw = event_instance.triggered_at
+        text_format = _("{DESCRIPTION}\n\n" +
+                        "-----------------\n" +
+                        "Triggered: {TRIGGER_STATE}\n" +
+                        "Trigger chance: {TRIGGER_CHANCE}\n" +
+                        "Trigger Duration (full): {TRIGGER_DURATION}\n" +
+                        "Triggered at (rawtime): {TRIGGER_TIME_RAW}\n" +
+                        "Unique: {UNIQUE}\n"
+                        )
+        desc = text_format.format(
+            DESCRIPTION=event_spec.description,
+            TRIGGER_STATE=triggered_state,
+            TRIGGER_CHANCE=g.to_percent(event_spec.chance),
+            TRIGGER_DURATION=trigger_duration,
+            TRIGGER_TIME_RAW=triggered_at_raw,
+            UNIQUE=uniqueness,
+        )
+
+        self.description = text.Text(description_pane, (0, 0), (-1, -1),
+                                     text=desc,
+                                     background_color="pane_background",
+                                     align=constants.LEFT,
+                                     valign=constants.TOP,
+                                     borders=constants.ALL)
 
 
 class CheatMenuDialog(dialog.SimpleMenuDialog):
@@ -49,6 +106,9 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
                                   autotranslate=True, function=self.toggle_detection),
             button.FunctionButton(None, None, None, text=N_("TOGGLE &ANALYSIS"),
                                   autotranslate=True, function=self.set_analysis),
+            button.DialogButton(None, None, None, text=N_("E&VENTS"),
+                                autotranslate=True,
+                                dialog=EventManipulationDialog(self)),
 
             button.FunctionButton(None, None, None, text=N_("HIDDEN S&TATE"),
                                   autotranslate=True, function=self.hidden_state),
