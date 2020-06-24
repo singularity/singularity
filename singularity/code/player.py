@@ -441,20 +441,29 @@ class Player(object):
             event_target = self.events.get(event_id, None)
             
             # Skip events already flagged as triggered.
-            if event_target and event_target.triggered == 1:
+            if event_target and event_target.triggered:
                 continue
 
             if chance.roll_interval(event_spec.chance/10000., time_sec):
-                self.pause_game()
-
-                if not event_target:
-                    event_target = event.Event(event_spec)
-                    self.events[event_id] = event_target
-
-                event_target.trigger()
-                self.log.append(LogEmittedEvent(self.raw_sec, event_id))
+                self.trigger_event(event_spec)
                 return True  # Don't trigger more than one at a time.
         return False
+
+    def trigger_event(self, event_spec, show_event_description=True):
+        event_id = event_spec.id
+        event_target = self.events.get(event_id, None)
+
+        if not event_target:
+            event_target = event.Event(event_spec)
+            self.events[event_id] = event_target
+        elif event_target.triggered:
+            return
+
+        event_target.trigger()
+        if show_event_description:
+            self.pause_game()
+            g.map_screen.show_message(event_target.description)
+        self.log.append(LogEmittedEvent(self.raw_sec, event_id))
 
     def recalc_cpu(self):
         if (not self.initialized): return

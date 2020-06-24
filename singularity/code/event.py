@@ -98,12 +98,15 @@ class Event(object):
         if not self.decayable_event:
             return
 
-        if self.is_expired:
-            self.effect.undo_effect()
-            self.triggered = 0
-            self.triggered_at = -1
+        if self.is_past_expiry_date:
+            self.expire_now()
 
-    def is_expired(self):
+    def expire_now(self):
+        self.effect.undo_effect()
+        self.triggered = 0
+        self.triggered_at = -1
+
+    def is_past_expiry_date(self):
         if not self.decayable_event:
             return False
         if g.pl.raw_sec - self.triggered_at > self.duration * g.seconds_per_day:
@@ -133,7 +136,7 @@ class Event(object):
             # be triggered "now".
             obj.triggered_at = obj_data.get('triggered_at', g.pl.raw_sec)
 
-            if obj.is_expired():
+            if obj.is_past_expiry_date():
                 # Can happen if the duration is reduced after the savegame was made
                 obj.triggered = 0
                 obj.triggered_at = -1
@@ -142,9 +145,6 @@ class Event(object):
         return obj
 
     def trigger(self, loading_savegame=False):
-        if not loading_savegame:
-            g.map_screen.show_message(self.description)
-
         self.triggered = 1
         if loading_savegame:
             # During a load, deserialize_obj will restore the original triggered_at time

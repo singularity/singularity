@@ -34,9 +34,40 @@ class EventManipulationDialog(dialog.ChoiceDescriptionDialog):
         super(EventManipulationDialog, self).__init__(parent, pos, size, anchor,
                                                       *args, **kwargs)
 
+        self.selected_event_spec = None
+
         self.yes_button.parent = None
+
+        self.no_button.pos = (-.97,-.99)
+        self.no_button.size = (-.22, -.1)
+
+        self.trigger_event_button = button.FunctionButton(self, (-.27, -.99), (-.22, -.1),
+                                                          autotranslate=True,
+                                                          enabled=False,
+                                                          text=N_("Trigger"),
+                                                          anchor=constants.BOTTOM_LEFT,
+                                                          function=self._trigger_event)
+        self.expire_event_button = button.FunctionButton(self, (-.51, -.99), (-.22, -.1),
+                                                         autotranslate=True,
+                                                         enabled=False,
+                                                         text=N_("Expire"),
+                                                         anchor=constants.BOTTOM_LEFT,
+                                                         function=self._expire_event)
         self.description = ""
         self.desc_func = self.on_change
+
+    def _trigger_event(self):
+        g.pl.trigger_event(self.selected_event_spec, show_event_description=False)
+        self.needs_rebuild = True
+
+    def _expire_event(self):
+        event_instance = g.pl.events.get(self.selected_event_spec.id)
+        if not event_instance or not event_instance.triggered:
+            return
+        if not event_instance.decayable_event:
+            return
+        event_instance.expire_now()
+        self.needs_rebuild = True
 
     def show(self):
         self.key_list = sorted(g.events.values(),
@@ -47,6 +78,9 @@ class EventManipulationDialog(dialog.ChoiceDescriptionDialog):
         return super(EventManipulationDialog, self).show()
 
     def on_change(self, description_pane, event_spec):
+        self.selected_event_spec = event_spec
+        self.trigger_event_button.enabled = True
+        self.expire_event_button.enabled = False
         event_instance = g.pl.events.get(event_spec.id)
         triggered_state = _('NO')
         trigger_duration = g.to_time(event_spec.duration * g.minutes_per_day) \
@@ -55,6 +89,8 @@ class EventManipulationDialog(dialog.ChoiceDescriptionDialog):
         uniqueness = _('YES') if event_spec.unique else _('NO')
         if event_instance:
             if event_instance.triggered:
+                self.trigger_event_button.enabled = False
+                self.expire_event_button.enabled = event_instance.decayable_event
                 triggered_state = _('YES')
                 triggered_at_raw = event_instance.triggered_at
         text_format = _("{DESCRIPTION}\n\n" +
