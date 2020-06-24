@@ -33,28 +33,28 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
 
         self.steal_amount_dialog = None
         self.buttons = [
-            button.FunctionButton(None, None, None, text=_("&EMBEZZLE MONEY"),
+            button.FunctionButton(None, None, None, text=N_("&EMBEZZLE MONEY"),
                                   autotranslate=True, function=self.steal_money),
 
-            button.FunctionButton(None, None, None, text=_("&INSPIRATION"),
+            button.FunctionButton(None, None, None, text=N_("&INSPIRATION"),
                                   autotranslate=True, function=self.inspiration),
-            button.FunctionButton(None, None, None, text=_("&FINISH CONSTRUCTION"),
+            button.FunctionButton(None, None, None, text=N_("&FINISH CONSTRUCTION"),
                                   autotranslate=True, function=self.end_construction),
-            button.FunctionButton(None, None, None, text=_("&SUPERSPEED"),
+            button.FunctionButton(None, None, None, text=N_("&SUPERSPEED"),
                                   autotranslate=True, function=self._map_screen.set_speed,
                                   args=(864000,)),
-            button.FunctionButton(None, None, None, text=_("BRAIN&WASH"),
+            button.FunctionButton(None, None, None, text=N_("BRAIN&WASH"),
                                   autotranslate=True, function=self.brainwash),
-            button.FunctionButton(None, None, None, text=_("TOGGLE &DETECTION"),
+            button.FunctionButton(None, None, None, text=N_("TOGGLE &DETECTION"),
                                   autotranslate=True, function=self.toggle_detection),
-            button.FunctionButton(None, None, None, text=_("TOGGLE &ANALYSIS"),
+            button.FunctionButton(None, None, None, text=N_("TOGGLE &ANALYSIS"),
                                   autotranslate=True, function=self.set_analysis),
 
-            button.FunctionButton(None, None, None, text=_("HIDDEN S&TATE"),
+            button.FunctionButton(None, None, None, text=N_("HIDDEN S&TATE"),
                                   autotranslate=True, function=self.hidden_state),
 
             button.ExitDialogButton(None, None, None,
-                                    text=_("&BACK"),
+                                    text=N_("&BACK"),
                                     autotranslate=True),
         ]
         self.needs_rebuild = True
