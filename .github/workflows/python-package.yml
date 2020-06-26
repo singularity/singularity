@@ -1,0 +1,51 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python package
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-with-distro-pkgs:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python-pytest python-numpy python-pygame python-pytest-cov python-coverage python-polib
+    - name: Test with pytest
+      run: |
+        PYTHONPATH=. py.test -v
+
+  build-with-pypi-pkgs-pygame1:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        echo 'man-db man-db/auto-update boolean false' | sudo debconf-set-selections
+        sudo apt-get update
+        sudo apt-get install -y libsdl1.2-dev libsdl-ttf2.0-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libportmidi-dev libpng-dev libjpeg-dev
+        pip3 install pytest numpy pygame
+    - name: Test with pytest
+      run: |
+        locale -a
+        python3 --version || python --version
+        PYTHONPATH=. LC_ALL=C.UTF-8 pytest -v
