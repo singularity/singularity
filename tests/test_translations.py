@@ -1,8 +1,12 @@
 # coding=utf-8
 import pytest
+import sys
 
 from singularity.code import g, data, i18n
 from singularity.code.dirs import create_directories
+
+
+IS_PY2 = sys.version_info[0] == 2
 
 
 def setup_module():
@@ -35,6 +39,7 @@ def test_nonsense_locale():
     i18n.set_language("foobarbaz")
     assert _('SHOW') == 'SHOW'
 
+@pytest.mark.skipif(IS_PY2, reason="Unicode issues under python2")
 def test_data_translation(gd_locale):
     assert data.get_def_translation('Sociology', 'name', 'Sociology') == 'Sòiseo-eòlas'
 
@@ -47,12 +52,14 @@ def test_story_translation():
     assert story_section[0] == '48656C6C6F2C20\n776F726C6421\n21\n21\n21\n\nUTF-8.  en_US.\nEnglish.  Hello.\nLanguage acquisition complete.\n'
 
 # Sorting
+@pytest.mark.skipif(IS_PY2, reason="Lexical sorting is disabling in python2")
 def test_root_collation(gd_locale):
     # Locale without special rules
     assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("oa")
     assert i18n.lex_sorting_form("ö") != i18n.lex_sorting_form("oe")
     assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("p")
 
+@pytest.mark.skipif(IS_PY2, reason="Lexical sorting is disabling in python2")
 def test_de_collation():
     # Test specific sorting requirements for de
     i18n.set_language("de_DE")
