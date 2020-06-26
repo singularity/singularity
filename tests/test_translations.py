@@ -1,3 +1,4 @@
+# coding=utf-8
 import pytest
 
 from singularity.code import g, data, i18n
