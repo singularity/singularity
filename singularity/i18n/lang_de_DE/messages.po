@@ -879,8 +879,8 @@ msgstr "Dateiname ist zu lang."
 #, python-brace-format
 msgid "Has space for {COUNT} computer."
 msgid_plural "Has space for {COUNT} computers."
-msgstr[0] "Has Platz für {COUNT} Computer."
-msgstr[1] "Has Platz für {COUNT} Computer."
+msgstr[0] "Hat Platz für {COUNT} Computer."
+msgstr[1] "Hat Platz für {COUNT} Computer."
 
 #: base.py:144
 #, python-brace-format
