@@ -33,7 +33,7 @@ from singularity.code import g, dirs
 from singularity.code.pycompat import *
 
 
-__version__ = "1.0b1"
+__version__ = "1.00"
 __release_commit__ = '$Format:%H$'
 if __release_commit__[1:-1] == 'Format:%H':
     try:

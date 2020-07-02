@@ -1,4 +1,4 @@
-# Endgame: Singularity 1.0b1
+# Endgame: Singularity 1.00
 
 ## REQUIREMENTS
 

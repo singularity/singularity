@@ -85,8 +85,10 @@ savefile_translation = {
         SavegameFormatDefinition(99.5, "1.0 (dev)"),
         SavegameFormatDefinition(99.6, "1.0 (dev)"),
         SavegameFormatDefinition(99.7, "1.0 (dev)"),
+        # .sav/pickle based above this line vs. .s2/json based below
         SavegameFormatDefinition(99.8, "1.0 (alpha1)"),
         SavegameFormatDefinition(100,  "1.0 (beta1)"),
+        SavegameFormatDefinition(101,  "1.00"),
     ]
 }
 

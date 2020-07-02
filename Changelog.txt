@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-V1.XX (2020.XX.XX):
+V1.00 (2020.07.02):
 
 GAME CONTENT CHANGES:
 - Locations with higher risk are now highlighted provided the
