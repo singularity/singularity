@@ -412,8 +412,9 @@ class Widget(object):
                     n_updated_rect.append(pygame.draw.rect(root_surface, widget_highlight_color, rect, 1))
                 updated_rect.extend(debug_mode_undo_drawing_highlight)
                 debug_mode_undo_drawing_highlight = n_updated_rect
-
-            gg.screen_surface.blits(((root_surface, r, r) for r in updated_rect), doreturn=0)
+            for r in updated_rect:
+                gg.screen_surface.blit(root_surface, r, area=r)
+            # gg.screen_surface.blits(((root_surface, r, r) for r in updated_rect), doreturn=0)
             pygame.display.update(updated_rect)
 
     def _update(self):
