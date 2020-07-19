@@ -27,6 +27,13 @@ from inspect import getmembers
 from singularity.code import g
 from singularity.code.graphics import g as gg, constants
 
+# surface.blits is available in 1.9.4 but it is not really useful until
+# 1.9.5 or 1.9.6.  We pick 1.9.6 to be sure it works.
+if pygame.version.vernum > (1, 9, 5):
+    HAS_FUNCTIONAL_BLITS = True
+else:
+    HAS_FUNCTIONAL_BLITS = False
+
 
 def unmask(widget):
     """Causes the widget to exist above its parent's fade mask.  The widget's
@@ -413,7 +420,12 @@ class Widget(object):
                 updated_rect.extend(debug_mode_undo_drawing_highlight)
                 debug_mode_undo_drawing_highlight = n_updated_rect
 
-            gg.screen_surface.blits(((root_surface, r, r) for r in updated_rect), doreturn=0)
+            if HAS_FUNCTIONAL_BLITS:
+                gg.screen_surface.blits(((root_surface, r, r) for r in updated_rect), doreturn=0)
+            else:
+                for r in updated_rect:
+                    gg.screen_surface.blit(root_surface, r, area=r)
+
             pygame.display.update(updated_rect)
 
     def _update(self):
