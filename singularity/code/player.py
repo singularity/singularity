@@ -279,14 +279,14 @@ class Player(object):
         self.do_jobs(job_cpu)
 
         # Pay maintenance cash, if we can.
-        cash_maintenance = g.current_share(int(maintenance_cost[cash]),
+        unpaid_cash_maintenance = g.current_share(int(maintenance_cost[cash]),
                                            time_of_day, secs_passed)
-        if cash_maintenance > self.cash:
-            cash_maintenance -= self.cash
+        if unpaid_cash_maintenance > self.cash:
+            unpaid_cash_maintenance -= self.cash
             self.cash = 0
         else:
-            self.cash -= cash_maintenance
-            cash_maintenance = 0
+            self.cash -= unpaid_cash_maintenance
+            unpaid_cash_maintenance = 0
 
         # Do research, fill the CPU pool.
         default_cpu = self.available_cpus[0]
@@ -306,13 +306,13 @@ class Player(object):
 
         # And now we use the CPU pool.
         # Maintenance CPU.
-        cpu_maintenance = maintenance_cost[cpu] * secs_passed
-        if cpu_maintenance > self.cpu_pool:
-            cpu_maintenance -= self.cpu_pool
+        unpaid_cpu_maintenance = maintenance_cost[cpu] * secs_passed
+        if unpaid_cpu_maintenance > self.cpu_pool:
+            unpaid_cpu_maintenance -= self.cpu_pool
             self.cpu_pool = 0
         else:
-            self.cpu_pool -= int(cpu_maintenance)
-            cpu_maintenance = 0
+            self.cpu_pool -= int(unpaid_cpu_maintenance)
+            unpaid_cpu_maintenance = 0
 
         # Base construction.
         for base in bases_under_construction:
@@ -329,14 +329,14 @@ class Player(object):
             self.do_jobs(self.cpu_pool)
 
         # Second attempt at paying off our maintenance cash.
-        if cash_maintenance > self.cash:
+        if unpaid_cash_maintenance > self.cash:
             # In the words of Scooby Doo, "Ruh roh."
-            cash_maintenance -= self.cash
+            unpaid_cash_maintenance -= self.cash
             self.cash = 0
         else:
             # Yay, we made it!
-            self.cash -= cash_maintenance
-            cash_maintenance = 0
+            self.cash -= unpaid_cash_maintenance
+            unpaid_cash_maintenance = 0
 
         # Apply max cash cap to avoid overflow @ 9.220 qu
         self.cash = min(self.cash, g.max_cash)
@@ -385,20 +385,20 @@ class Player(object):
 
             # Maintenance deaths.
             if base.done:
-                if cpu_maintenance and base.maintenance[cpu]:
+                if unpaid_cpu_maintenance and base.maintenance[cpu]:
                     refund = base.maintenance[cpu] * secs_passed
-                    cpu_maintenance = max(0, cpu_maintenance - refund)
+                    unpaid_cpu_maintenance = max(0, unpaid_cpu_maintenance - refund)
 
                     #Chance of base destruction if cpu-unmaintained: 1.5%
                     if not dead and chance.roll_interval(.015, secs_passed):
                         dead_bases.append( (base, "maint") )
                         dead = True
 
-                if cash_maintenance:
+                if unpaid_cash_maintenance:
                     base_needs = g.current_share(base.maintenance[cash],
                                                  time_of_day, secs_passed)
                     if base_needs:
-                        cash_maintenance = max(0, cash_maintenance - base_needs)
+                        unpaid_cash_maintenance = max(0, unpaid_cash_maintenance - base_needs)
                         #Chance of base destruction if cash-unmaintained: 1.5%
                         if not dead and chance.roll_interval(.015, secs_passed):
                             dead_bases.append( (base, "maint") )
