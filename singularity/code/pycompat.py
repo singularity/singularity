@@ -1,4 +1,4 @@
-# A minimal python compatiability layer to support the bare minimum requirements
+# A minimal python compatibility layer to support the bare minimum requirements
 # that singularity need to be python2 and python3 compatible at the same time.
 #
 # We could use the six module for this, but it seems like overkill given how
