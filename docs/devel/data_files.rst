@@ -9,7 +9,7 @@ remember:
    (e.g. ``data/bases.dat`` describes all types of bases)
 
  * ``data/X_str.dat`` contains English text for each of the data set
-   in ``data/X.dat`` (e.g. ``data/bases_str.dat`` contans the English
+   in ``data/X.dat`` (e.g. ``data/bases_str.dat`` contains the English
    names and descriptions for the bases).
 
  * ``i18n/lang_ll_LL/data_str.po`` contains the translations of the
@@ -74,8 +74,8 @@ The Singularity game special cases all fields that end with ``_list``.
 These read as pipe-separated (i.e. ``|``) lists versions of the field
 (after removing ``_list``).  A very common usage is when item has more
 than one prerequisites.  Prerequisites are normally written in the field
-``pre``. However, if the item has more than one preequisites then they
-are listed in ``pre_list`` with ``|`` seperating each entry.
+``pre``. However, if the item has more than one prerequisites then they
+are listed in ``pre_list`` with ``|`` separating each entry.
 
 As an example, consider the previous example again::
 

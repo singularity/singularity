@@ -332,7 +332,7 @@ def hotkey(string):
     text: the string stripped of all '&'s that precedes a valid hotkey char, if
           any. All '&&' are also replaced for '&'. Other '&'s, if any, are kept
 
-    Examples: (showing only key, pos, orig, text as a touple for clarity)
+    Examples: (showing only key, pos, orig, text as a tuple for clarity)
     hotkey(E&XIT)           => ('x', 1, 2, 'EXIT')
     hotkey(&Play D&&D)      => ('p', 0, 1, 'Play D&D')
     hotkey(Romeo & &Juliet) => ('j', 8, 9, 'Romeo & Juliet')

@@ -474,7 +474,7 @@ class Widget(object):
         if redrew_self:
             # If we redrew this widget, we tell our parent to consider it
             # instead.  The parent will recurse down to any descendants if
-            # needed, and redraw already propogated down to them.
+            # needed, and redraw already propagated down to them.
             check_mask = [self]
 
         if update_full_rect:
