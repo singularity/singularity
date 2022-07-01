@@ -184,7 +184,7 @@ should be converted by the ``int`` function before passing it to the
 constructor.
 
 On the other hand, the ``force_cpu`` field is optional and in its
-abence, the constructor receives a ``None``.  Finally, ``danger`` is
+absence, the constructor receives a ``None``.  Finally, ``danger`` is
 optional (defaulting to ``0``).  However, if the ``danger`` field is
 present, the value will be converted by ``int`` (like with ``size``).
 
