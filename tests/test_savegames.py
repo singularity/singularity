@@ -101,6 +101,5 @@ def test_savegames(savegame_dirs):
         savegame_reference_data = load_save_data_reference(full_filename + ".json")
         compare_loaded_game_with_reference_data(filename, savegame_reference_data)
 
-def test_save_keybind():
-    assert
-    
+# def test_save_keybind():
+#     assert
