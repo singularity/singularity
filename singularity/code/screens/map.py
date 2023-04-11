@@ -315,6 +315,11 @@ class MapScreen(dialog.Dialog):
 
         self.map = EarthImage(self)
 
+        self.savename_dialog = dialog.TextEntryDialog(self)
+        self.load_dialog = savegame.SavegameScreen(self,
+                                                   (.5, .5), (.90, .90),
+                                                   anchor=constants.MID_CENTER)
+
         self.location_buttons = {}
         for loc in g.locations.values():
             if loc.absolute:
@@ -482,10 +487,6 @@ class MapScreen(dialog.Dialog):
 
         self.add_key_handler(pygame.K_j, self.save_game)
     
-        self.savename_dialog = dialog.TextEntryDialog(self)
-        self.load_dialog = savegame.SavegameScreen(self,
-                                                   (.5, .5), (.90, .90),
-                                                   anchor=constants.MID_CENTER)
         self.savename_dialog.ok_button.force_underline = -1
         self.savename_dialog.cancel_button.force_underline = -1
 
@@ -507,7 +508,7 @@ class MapScreen(dialog.Dialog):
             self.savename_dialog.ok_button.enabled = True
             self.savename_dialog.text = _("Enter a name for this save.")
 
-    def save_game(self):
+    def save_game(self, placeholder):
         # If no savename was set yet, use current difficulty
         if not sv.last_savegame_name:
             sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
