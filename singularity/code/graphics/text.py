@@ -495,6 +495,8 @@ class EditableText(widget.FocusWidget, Text):
             self.cursor_pos = len(self.text)
         elif event.key == pygame.K_ESCAPE:
             return
+        elif event.key == pygame.K_UP:
+            return
         elif event.unicode:
             char = event.unicode
             if char in (u"\r\n", u"\n", u"\r", u"\v", u"\f", u"\x1e", 
@@ -807,7 +809,7 @@ class ProtoWidget(EditableText):
 
                 mod_keys = pygame.key.get_mods()
                 shift = mod_keys & pygame.KMOD_SHIFT
-                control = mod_keys & pygame.KMOD_CTRL
+                control = mod_keys & pygame.K_UP
                 if shift and control:
                     self.drag_state = 0
                     new_size = tuple(d/2 for d in self.size)

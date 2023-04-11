@@ -474,6 +474,7 @@ class MapScreen(dialog.Dialog):
         self.needs_warning = True
 
         self.add_key_handler(pygame.K_ESCAPE, self.got_escape)
+        self.add_key_handler(pygame.K_UP, self.got_escape)
 
         self.add_key_handler(constants.XO1_X, self.got_XO1)
         self.add_key_handler(constants.XO1_O, self.got_XO1)
