@@ -480,6 +480,55 @@ class MapScreen(dialog.Dialog):
         self.add_key_handler(constants.XO1_O, self.got_XO1)
         self.add_key_handler(constants.XO1_SQUARE, self.got_XO1)
 
+        self.add_key_handler(pygame.K_j, self.save_game)
+    
+        self.savename_dialog = dialog.TextEntryDialog(self)
+        self.load_dialog = savegame.SavegameScreen(self,
+                                                   (.5, .5), (.90, .90),
+                                                   anchor=constants.MID_CENTER)
+        self.savename_dialog.ok_button.force_underline = -1
+        self.savename_dialog.cancel_button.force_underline = -1
+
+        self.needs_rebuild = True
+    
+    def rebuild(self):
+        self.options_dialog.needs_rebuild = True
+        self.savename_dialog.text = _("Enter a name for this save.")
+        super(GameMenuDialog, self).rebuild()
+
+    def check_filename(self, event):
+        """Disables the OK button and shows an error message if filename in self.savename_dialog is illegal"""
+        filename = self.savename_dialog.text_field.text.strip()
+        error_message = sv.check_filename_illegal(dirs.get_writable_file_in_dirs(filename, "saves"), filename, '.s2')
+        if error_message:
+            self.savename_dialog.ok_button.enabled = False
+            self.savename_dialog.text = _("Enter a name for this save.") + "\n" + error_message
+        else:
+            self.savename_dialog.ok_button.enabled = True
+            self.savename_dialog.text = _("Enter a name for this save.")
+
+    def save_game(self):
+        # If no savename was set yet, use current difficulty
+        if not sv.last_savegame_name:
+            sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
+        self.savename_dialog.default_text = sv.last_savegame_name
+        self.savename_dialog.add_handler(constants.KEYUP, self.check_filename)
+        self.savename_dialog.text_field.has_focus = True
+
+        name = dialog.call_dialog(self.savename_dialog, self).strip()
+        if name:
+            if sv.savegame_exists(name):
+                yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
+                                        anchor=constants.MID_CENTER,
+                                        text=_("A savegame with the same name exists.\n"
+                                               "Are you sure to overwrite the saved game ?"))
+                overwrite = dialog.call_dialog(yn, self)
+                if not overwrite:
+                    self.save_game()
+
+            sv.create_savegame(name)
+            raise constants.ExitDialog(False)
+
     def got_escape(self, event):
         self.menu_button.activate_with_sound(event)
 
