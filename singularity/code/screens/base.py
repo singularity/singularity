@@ -19,32 +19,16 @@
 
 #This file contains the screen to display the base screen.
 
-import pygame
-
-from singularity.code import g, item, buyable, savegame
-from singularity.code.graphics import constants, widget, dialog, text, button, slide
-
 from __future__ import absolute_import
 
 import pygame
 
-from singularity.code import g, dirs, savegame as sv, mixer
-from singularity.code import chance, logmessage, warning
-from singularity.code.graphics import g as gg
-from singularity.code.graphics import dialog, constants, image, button, text, widget
-from singularity.code.screens import research, knowledge, report, log, message, savegame
-from singularity.code.screens.cheat_menu import CheatMenuDialog
-from singularity.code.screens.location import LocationScreen
-from singularity.code.screens.options import OptionsScreen
+from singularity.code import g, item, buyable, savegame
+from singularity.code.graphics import constants, widget, dialog, text, button, slider
 
-import math
-import time
-
-from pygame.surfarray import pixels_alpha
-
-from numpy import sin, cos, linspace, pi, tanh, round, newaxis, uint8
-
-
+from singularity.code import g, savegame as sv
+from singularity.code.graphics import dialog, constants, button, text, widget
+from singularity.code.screens import savegame
 
 state_colors = dict(
     offline         = "base_state_offline",
