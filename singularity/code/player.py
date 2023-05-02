@@ -26,19 +26,17 @@ import collections
 from operator import truediv
 from numpy import array, int64
 
-from singularity.code import g, difficulty, task, chance, location, group, event, region, tech
+from singularity.code import g, difficulty, task, chance, location, group, event, region, tech, savegame
 from singularity.code.buyable import cash, cpu
 from singularity.code.logmessage import LogEmittedEvent, LogResearchedTech, LogBaseLostMaintenance, LogBaseDiscovered, \
     LogBaseConstructed, LogItemConstructionComplete, AbstractLogMessage
 from singularity.code.stats import observe
-
 
 class DryRunInfo(object):
     pass
 
 
 class Player(object):
-
     cash = observe("cash_earned", "_cash")
     used_cpu = observe("cpu_used", "_used_cpu", display=lambda value: value // g.seconds_per_day)
 
@@ -105,6 +103,7 @@ class Player(object):
     def initialize(self):
         """ Initialize the game after being prepared either for new or saved game. """
 
+        self.autosave_number = 1
         self.initialized = True
 
         for b in g.all_bases():
@@ -544,7 +543,8 @@ class Player(object):
 
     #Run every day at midnight.
     def new_day(self):
-        
+        savegame.create_savegame("autosave day #" + str(self.autosave_number))
+        self.autosave_number += 1
         # Reduce suspicion.
         for group in self.groups.values():
             group.new_day()
