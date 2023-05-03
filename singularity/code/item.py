@@ -133,10 +133,10 @@ class ItemSpec(buyable.BuyableSpec):
                 bonus_text += _("CPU per day(Basic Output:")+" "
                 bonus_text += g.add_commas(value * count)
             elif qual == "cpu_modifier":
-                bonus_text += _("CPU bonus(Usable Output):")+" "
+                bonus_text += _("CPU bonus(Usable Output): ")+" "
                 bonus_text += g.to_percent(value)
             elif qual == "discover_modifier":
-                bonus_text += _("Detection chance reduction:")+" "
+                bonus_text += _("Detection chance reduction: ")+" "
                 bonus_text += g.to_percent(value)
             else:
                 continue
