@@ -432,7 +432,9 @@ msgstr ""
 
 msgctxt "[Armed Guards] description"
 msgid ""
-"Armed guards offer double the security compared to perimeter fences, efficiently deterring unwanted visitors from protected areas. However, they come with a higher price tag and require an extended construction period."
+"Armed guards offer double the security compared to perimeter fences,"
+ "efficiently deterring unwanted visitors from protected areas."
+  "However, they come with a higher price tag and require an extended construction period."
 msgstr ""
 
 msgctxt "[Armed Guards] name"
