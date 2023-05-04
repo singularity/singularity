@@ -74,7 +74,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             description = template % (job.name, profit, job.description)
         else:
             description = ""
-
+        #set to use a transpatrent background to allow for better vision due to github issue new enhancement request
         text.Text(self.description_pane, (0,0), (-1,-1), text=description,
                   background_color="transparent_pane_background", text_size=18,
                   align=constants.LEFT, valign=constants.TOP,

@@ -485,6 +485,7 @@ class MapScreen(dialog.Dialog):
         self.add_key_handler(constants.XO1_O, self.got_XO1)
         self.add_key_handler(constants.XO1_SQUARE, self.got_XO1)
 
+        # add j as a quick save hotkey
         self.add_key_handler(pygame.K_j, self.save_game)
     
         self.savename_dialog.ok_button.force_underline = -1
@@ -507,7 +508,7 @@ class MapScreen(dialog.Dialog):
         else:
             self.savename_dialog.ok_button.enabled = True
             self.savename_dialog.text = _("Enter a name for this save.")
-
+    #place save game function here for use in j hotkey, with place holder to ignore parameter error
     def save_game(self, placeholder):
         # If no savename was set yet, use current difficulty
         if not sv.last_savegame_name:

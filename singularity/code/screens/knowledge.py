@@ -199,7 +199,7 @@ class KnowledgeScreen(dialog.FocusDialog):
         elif knowledge_type is not None:
             help_entry = g.knowledge[knowledge_type].help_entries[knowledge_key]
             desc_text = help_entry.name + "\n\n" + help_entry.description
-
+        #set to use a transpatrent background to allow for better vision due to github issue new enhancement request
         text.Text(self.description_pane, (0, 0), (-1, -1), text=desc_text,
                     background_color="transparent_pane_background", text_size=20,
                     align=constants.LEFT, valign=constants.TOP,
