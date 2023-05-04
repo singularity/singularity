@@ -163,7 +163,10 @@ def to_cpu(amount):
 # to represent it if it's more than 999999.
 def to_money(amount, fixed_size=False):
     abs_amount = abs(amount)
-    if abs_amount < 10**6:
+    # for numbers that are less than 1,000, adding a comma is not necessary
+    if abs_amount < 1000:
+        return int(amount)
+    elif abs_amount < 10**6:
         return add_commas(amount, fixed_size=fixed_size)
 
     prec = 2

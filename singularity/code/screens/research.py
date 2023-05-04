@@ -76,7 +76,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             description = ""
 
         text.Text(self.description_pane, (0,0), (-1,-1), text=description,
-                  background_color="pane_background", text_size=18,
+                  background_color="transparent_pane_background", text_size=18,
                   align=constants.LEFT, valign=constants.TOP,
                   borders=constants.ALL)
 
