@@ -46,6 +46,7 @@ class ReportScreen(dialog.Dialog):
                                                    anchor=constants.BOTTOM_LEFT,
                                                    )
         self.add_key_handler(pygame.K_ESCAPE, self.back_button.activate_with_sound)
+        self.add_key_handler(pygame.K_UP, self.back_button.activate_with_sound)
 
 
         self.money_report_pane = widget.BorderedWidget(self, (0, .08), (-.50, -.72),

@@ -88,7 +88,7 @@ description = A simple fence can drastically reduce the number of people poking 
 
 [Armed Guards]
 name = Armed Guards
-description = Armed guards can aid in keeping suspicious individuals away from secure locations.  However, the very presence of the guards may itself invite greater suspicion.
+description = Armed guards offer double the security compared to perimeter fences, efficiently deterring unwanted visitors from protected areas. However, they come with a higher price tag and require an extended construction period.
 
 [Passive Camouflage]
 name = Passive Camouflage

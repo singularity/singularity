@@ -180,7 +180,7 @@ class Slider(button.Button):
         go_lower = event.key in (pygame.K_LEFT, pygame.K_KP_MINUS)
         if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
             big_jump = (event.mod & pygame.KMOD_SHIFT)
-            tiny_jump = (event.mod & pygame.KMOD_CTRL)
+            tiny_jump = (event.mod & pygame.K_UP)
         else:
             tiny_jump = big_jump = False
         self.jump(go_lower, big_jump=big_jump, tiny_jump=tiny_jump)

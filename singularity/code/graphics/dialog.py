@@ -173,6 +173,7 @@ class Dialog(text.Text):
     def fake_escape(self, event):
         if event.button == 3:
             fake_key(pygame.K_ESCAPE)
+            fake_key(pygame.K_UP)
             raise constants.Handled
 
     def regained_focus(self):
@@ -553,6 +554,7 @@ class YesNoDialog(TextDialog):
         self.add_key_handler(pygame.K_RETURN, self.on_return)
         self.add_key_handler(pygame.K_KP_ENTER, self.on_return)
         self.add_key_handler(pygame.K_ESCAPE, self.on_escape)
+        self.add_key_handler(pygame.K_UP, self.on_escape)
 
     def on_return(self, event):
         if event and event.type == pygame.KEYUP:
@@ -621,6 +623,7 @@ class TextEntryDialog(TextDialog, FocusDialog):
         self.add_key_handler(pygame.K_RETURN, self.return_text)
         self.add_key_handler(pygame.K_KP_ENTER, self.return_text)
         self.add_key_handler(pygame.K_ESCAPE, self.return_nothing)
+        self.add_key_handler(pygame.K_UP, self.return_nothing)
 
     def show(self):
         self.text_field.text = self.default_text

@@ -19,11 +19,16 @@
 
 #This file contains the screen to display the base screen.
 
+from __future__ import absolute_import
+
 import pygame
 
-from singularity.code import g, item, buyable
+from singularity.code import g, item, buyable, savegame
 from singularity.code.graphics import constants, widget, dialog, text, button, slider
 
+from singularity.code import g, savegame as sv
+from singularity.code.graphics import dialog, constants, button, text, widget
+from singularity.code.screens import savegame
 
 state_colors = dict(
     offline         = "base_state_offline",
@@ -49,6 +54,7 @@ class BuildDialog(dialog.ChoiceDescriptionDialog):
         self.item = None
         self.desc_func = self.on_change
         self.add_handler(constants.KEY, self._got_key, priority=5)
+
 
     def show(self):
         self.list = []
@@ -241,9 +247,16 @@ class BaseScreen(dialog.Dialog):
 
         self.build_dialog = BuildDialog(self)
         self.multiple_build_dialog = MultipleBuildDialog(self)
+        self.savename_dialog = dialog.TextEntryDialog(self)
+
+        self.load_dialog = savegame.SavegameScreen(self,
+                                                   (.5, .5), (.90, .90),
+                                                   anchor=constants.MID_CENTER)
 
         self.header = widget.Widget(self, (0,0), (-1, .08),
                                     anchor=constants.TOP_LEFT)
+
+        self.add_key_handler(pygame.K_j, self.save_game)
 
         self.name_display = text.Text(self.header, (-.5,0), (-1, -.5),
                                       anchor=constants.TOP_CENTER,
@@ -304,6 +317,8 @@ class BaseScreen(dialog.Dialog):
 
     def get_current(self, type):
         return self.base.items[type.id]
+
+
 
     def set_current(self, type, item_type, count):
         if type.id == "cpu":
@@ -378,7 +393,27 @@ class BaseScreen(dialog.Dialog):
                 self.base.check_power()
 
         self.base.recalc_cpu()
+    def save_game(self, placeholder):
+        # If no savename was set yet, use current difficulty
+        if not sv.last_savegame_name:
+            sv.last_savegame_name = g.strip_hotkey(g.pl.difficulty.name)
+        self.savename_dialog.default_text = sv.last_savegame_name
+        self.savename_dialog.add_handler(constants.KEYUP, self.check_filename)
+        self.savename_dialog.text_field.has_focus = True
 
+        name = dialog.call_dialog(self.savename_dialog, self).strip()
+        if name:
+            if sv.savegame_exists(name):
+                yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
+                                        anchor=constants.MID_CENTER,
+                                        text=_("A savegame with the same name exists.\n"
+                                               "Are you sure to overwrite the saved game ?"))
+                overwrite = dialog.call_dialog(yn, self)
+                if not overwrite:
+                    self.save_game()
+
+            sv.create_savegame(name)
+            raise constants.ExitDialog(False)
     def build_item(self, type):
         if (type.id == "cpu"):
             build_dialog = self.multiple_build_dialog

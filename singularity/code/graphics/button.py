@@ -260,11 +260,13 @@ class ExitDialogButton(FunctionButton):
         super(ExitDialogButton, self).add_hooks()
         if self.parent:
             self.parent.add_key_handler(pygame.K_ESCAPE, self.activate_default)
+            self.parent.add_key_handler(pygame.K_UP, self.activate_default)
 
     def remove_hooks(self):
         super(ExitDialogButton, self).remove_hooks()
         if self.parent:
             self.parent.remove_key_handler(pygame.K_ESCAPE, self.activate_default)
+            self.parent.remove_key_handler(pygame.K_UP, self.activate_default)
 
     def activate_default(self, event):
         if not self.default:

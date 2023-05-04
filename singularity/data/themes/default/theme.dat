@@ -24,6 +24,7 @@ light_red       = #ff3232ff
 light_green     = #32ff32ff
 light_blue      = #3232ffff
 clear           = #00000000
+transparent_blue = #00008080 
 
 # Screen colors
 main_menu_background     = black
@@ -39,6 +40,7 @@ simple_menu_border         = white
 
 # Pane colors
 pane_background          = dark_blue
+transparent_pane_background = transparent_blue
 pane_background_empty    = black
 
 # Dialog colors
