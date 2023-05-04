@@ -432,9 +432,7 @@ msgstr ""
 
 msgctxt "[Armed Guards] description"
 msgid ""
-"Armed guards can aid in keeping suspicious individuals away from secure "
-"locations.  However, the very presence of the guards may itself invite "
-"greater suspicion."
+"Armed guards offer double the security compared to perimeter fences, efficiently deterring unwanted visitors from protected areas. However, they come with a higher price tag and require an extended construction period."
 msgstr ""
 
 msgctxt "[Armed Guards] name"
