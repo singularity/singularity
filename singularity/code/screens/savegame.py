@@ -20,6 +20,7 @@
 
 from __future__ import absolute_import
 
+import operator
 import time
 
 import pygame
@@ -264,7 +265,7 @@ class SavegameScreen(dialog.ChoiceDialog):
 
     def reload_savegames(self):
         savegames = sv.get_savegames()
-        savegames.sort(key=lambda savegame: i18n.lex_sorting_form(savegame.name))
+        savegames.sort(key=operator.attrgetter("mtime"), reverse=True)
         self._all_savegames_sorted = savegames
         self.list = savegames
         self.yes_button.enabled = True if self.list else False

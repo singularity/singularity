@@ -251,6 +251,11 @@ def get_story_section(name):
         yield story_translations.get(key, segment.text)
 
 
+def is_game_running() -> bool:
+    global pl
+    return pl is not None
+
+
 def new_game(difficulty_name, initial_speed=1):
     global curr_speed
     curr_speed = initial_speed

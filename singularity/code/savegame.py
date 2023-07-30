@@ -23,13 +23,14 @@ from __future__ import absolute_import
 import codecs
 import operator
 import re
-import sys
 import time
 import pickle
 import collections
 import gzip
 import json
 import os
+from typing import Optional
+
 import numpy
 from numpy import array, int64
 
@@ -48,6 +49,9 @@ from singularity.code import (
     effect,
 )
 from singularity.code.stats import itself as stats
+
+QUICKSAVE_NAME = "quicksave"
+
 
 # Filenames that are reserved under Windows
 WINDOWS_RESERVED = {
@@ -121,7 +125,8 @@ current_save_format = max(
 current_save_version = current_save_format.magic_value
 
 _Savegame = collections.namedtuple(
-    "_Savegame", ["name", "filepath", "savegame_format", "headers", "load_file"]
+    "_Savegame",
+    ["name", "filepath", "savegame_format", "headers", "load_file", "mtime"],
 )
 
 
@@ -204,6 +209,7 @@ def get_savegames():
                 version_format,
                 headers,
                 load_file,
+                os.stat(filepath).st_mtime,
             )
             all_savegames.append(savegame)
 
@@ -825,7 +831,7 @@ def create_savegame(savegame_name):
         write_game_to_fd(savefile, gzipped=gzipped)
 
 
-def write_game_to_fd(fd, gzipped=True):
+def write_game_to_fd(fd, gzipped=True, save_type: Optional[str] = None):
     version_line = "%s\n" % current_save_version
     fd.write(version_line.encode("utf-8"))
     headers = [

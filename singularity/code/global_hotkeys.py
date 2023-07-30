@@ -82,7 +82,8 @@ def reset_hotkeys():
 
     # FIXME: Make these configurable
     add_hotkey(pygame.K_RETURN, hka.toggle_fullscreen, hotkey_modifiers=pygame.KMOD_ALT)
-    add_hotkey(pygame.K_F5, hka.reload_theme)
+    add_hotkey(pygame.K_F5, hka.quicksave)
+    add_hotkey(pygame.K_F6, hka.reload_theme)
 
 
 def add_hotkey(key: int, action: HotkeyAction, *, hotkey_modifiers: int = 0) -> None:
