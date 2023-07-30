@@ -4,12 +4,9 @@
 import sys
 import os.path
 from io import open
+import polib
 from singularity.code.pycompat import *
 
-try:
-    import polib
-except ImportError:
-    import singularity.code.polib as polib
 
 
 def get_esdir(myname):
