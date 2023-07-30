@@ -21,6 +21,8 @@
 from __future__ import absolute_import
 
 import time
+from typing import Optional
+
 import pygame
 import operator
 
@@ -152,7 +154,8 @@ def insort_all(sorted_list, items):
 class Dialog(text.Text):
     """A Dialog is a Widget that has its own event loop and can be faded out."""
 
-    top = None  # The top-level dialog.
+    top: Optional["Dialog"] = None  # The top-level dialog.
+    current_dialog: Optional["Dialog"] = None  # The current dialog
 
     faded = widget.causes_redraw("_faded")
 
@@ -241,6 +244,9 @@ class Dialog(text.Text):
             Dialog.top.maybe_update()
             pygame.display.flip()
 
+        d = Dialog.current_dialog
+        Dialog.current_dialog = self
+
         while True:
             # Update handles updates of all kinds to all widgets, as needed.
             Dialog.top.maybe_update()
@@ -251,6 +257,7 @@ class Dialog(text.Text):
                 break
         self.stop_timer()
         self.visible = False
+        Dialog.current_dialog = d
         return result
 
     def add_handler(self, type, handler, priority=100):

@@ -5,9 +5,11 @@ V1.XX (YYYY.YY.YY):
 USER-VISIBLE CHANGES:
 - The game now requires `polib`. Previously, we had an embedded
   copy as fallback. However, it did not work with python3.11.
+- New feature: Quicksaves - save on `F5` (replacing "reload theme")
+  and load on `F9`. Loading can only occur on the map screen.
+  Note the quicksave currently do not provide feedback on success.
 - The hotkey `F5` is now "quicksave" rather than "reload theme".
-  (Reload theme is now `F6`). The "quicksave" is a new feature,
-  but sadly does not provide any feedback on success for now.
+  (Reload theme is now `F6`).
 - Save games are now ordered by time (most recent first) rather
   than name. This makes it easier to find the latest savegame.
 

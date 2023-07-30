@@ -141,6 +141,10 @@ class Savegame(_Savegame):
     def is_latest_version(self):
         return True if self.version == current_save_version else False
 
+    @property
+    def is_special_save(self) -> bool:
+        return self.name == QUICKSAVE_NAME
+
 
 def convert_string_to_path_name(name):
     # Some filesystems require unicode (e.g. Windows) whereas Linux needs bytes.
@@ -330,7 +334,7 @@ def recursive_fix_pickle(the_object, seen):
     return the_object
 
 
-def load_savegame(savegame):
+def load_savegame(savegame: Savegame):
     global last_savegame_name
 
     load_path = savegame.filepath
@@ -341,7 +345,7 @@ def load_savegame(savegame):
     with open(load_path, "rb") as fd:
         load_savegame_fd(savegame.load_file, fd)
 
-    last_savegame_name = savegame.name
+    last_savegame_name = savegame.name if savegame.is_special_save else None
 
 
 def load_savegame_fd(loader_func, fd):
