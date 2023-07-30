@@ -24,6 +24,7 @@ import time
 import pygame
 import operator
 
+from singularity.code.global_hotkeys import detect_global_hotkey
 from singularity.code.graphics import g, constants, widget, text, button, listbox
 
 
@@ -318,22 +319,10 @@ class Dialog(text.Text):
             # TODO: Allows customization of global key handlers.
             # Important: Global key handlers should always be a combination
             # of two keys or F# keys.
-            if event.key == pygame.K_RETURN and pygame.key.get_mods() & pygame.KMOD_ALT:
-                if event.type == pygame.KEYDOWN:
-                    g.set_fullscreen(not g.fullscreen)
-                    Dialog.top.needs_resize = True
 
-            elif event.key == pygame.K_F5:
-                if event.type == pygame.KEYDOWN:
-                    import singularity.code.graphics.theme as theme
-
-                    if theme.current:
-                        import singularity.code.data as data
-
-                        theme_id = theme.current.id
-                        data.load_themes()
-                        theme.set_theme(theme_id, force_reload=True)
-
+            hotkey_action = detect_global_hotkey(event)
+            if hotkey_action is not None:
+                hotkey_action()
             elif event.type == pygame.KEYDOWN:
                 # Generic keydown handlers.
                 insort_all(handlers, self.handlers.get(constants.KEYDOWN, []))
