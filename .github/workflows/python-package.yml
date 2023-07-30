@@ -21,7 +21,7 @@ jobs:
         sudo apt-get install -y python3-pytest python3-numpy python3-pygame python3-pytest-cov python3-coverage python3-polib
     - name: Test with pytest
       run: |
-        PYTHONPATH=. py.test -v
+        PYTHONPATH=. py.test-3 -v
 
   build-with-pypi-pkgs-pygame1:
 
@@ -48,4 +48,4 @@ jobs:
       run: |
         locale -a
         python3 --version || python --version
-        PYTHONPATH=. LC_ALL=C.UTF-8 pytest-3 -v
+        PYTHONPATH=. LC_ALL=C.UTF-8 pytest -v
