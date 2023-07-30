@@ -1,22 +1,22 @@
-#file: task.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: task.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the Task class.
+# This file contains the Task class.
 
 from __future__ import absolute_import
 
@@ -56,7 +56,6 @@ def get_current(task_type):
 
 
 class Task(prerequisite.Prerequisite):
-
     def __init__(self, id, type, value, prerequisites):
         super(Task, self).__init__(prerequisites)
         self.id = id
@@ -66,7 +65,8 @@ class Task(prerequisite.Prerequisite):
         self.value = value
 
     def get_profit(self):
-        if (self.type != "jobs"): return 0
+        if self.type != "jobs":
+            return 0
 
         profit = int((self.value * g.pl.job_bonus) // 10000)
 

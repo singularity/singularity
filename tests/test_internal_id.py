@@ -74,7 +74,12 @@ def test_internal_id_events(events):
 def check_internal_id(obj_type, obj_list):
     assert obj_type in g.internal_id_forward, "Type '%s'" % (obj_type)
     assert obj_type in g.internal_id_backward, "Type '%s'" % (obj_type)
-    
+
     for obj in obj_list:
-        assert obj.id in g.internal_id_forward[obj_type], "Type '%s' Id '%s'" % (obj_type, obj.id)
-        assert any(obj.id == obj_id for obj_id in g.internal_id_backward[obj_type].values()), "Type '%s' Id '%s'" % (obj_type, obj.id)
+        assert obj.id in g.internal_id_forward[obj_type], "Type '%s' Id '%s'" % (
+            obj_type,
+            obj.id,
+        )
+        assert any(
+            obj.id == obj_id for obj_id in g.internal_id_backward[obj_type].values()
+        ), "Type '%s' Id '%s'" % (obj_type, obj.id)

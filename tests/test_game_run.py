@@ -23,7 +23,7 @@ def setup_function(func):
 
 
 def save_and_load_game():
-    fd = io.BytesIO(b'')
+    fd = io.BytesIO(b"")
     real_close = fd.close
     fd.close = lambda *args, **kwargs: None
     savegame.write_game_to_fd(fd, gzipped=False)
@@ -33,7 +33,7 @@ def save_and_load_game():
 
 
 def test_initial_game():
-    g.new_game('impossible', initial_speed=0)
+    g.new_game("impossible", initial_speed=0)
     pl = g.pl
     starting_cash = pl.cash
     all_bases = list(g.all_bases())
@@ -60,7 +60,7 @@ def test_initial_game():
     assert cash_estimate.jobs == 5
 
     # Try assigning the CPU to "jobs"
-    pl.set_allocated_cpu_for('jobs', 1)
+    pl.set_allocated_cpu_for("jobs", 1)
     # This would empty the CPU pool
     assert pl.effective_cpu_pool() == 0
 
@@ -69,14 +69,14 @@ def test_initial_game():
     assert cash_estimate.jobs == 5
 
     # ... and then clear the CPU allocation
-    pl.set_allocated_cpu_for('jobs', 0)
+    pl.set_allocated_cpu_for("jobs", 0)
 
     # Play with assigning the CPU to the CPU pool explicitly and
     # confirm that the effective pool size remains the same.
     assert pl.effective_cpu_pool() == 1
-    pl.set_allocated_cpu_for('cpu_pool', 1)
+    pl.set_allocated_cpu_for("cpu_pool", 1)
     assert pl.effective_cpu_pool() == 1
-    pl.set_allocated_cpu_for('cpu_pool', 0)
+    pl.set_allocated_cpu_for("cpu_pool", 0)
     assert pl.effective_cpu_pool() == 1
 
     # Fast forward 12 hours to see that we earn partial cash
@@ -96,7 +96,7 @@ def test_initial_game():
     assert len(pl.log) == 0
 
     # Verify that starting base is well active.
-    assert start_base._power_state == 'active'
+    assert start_base._power_state == "active"
 
     # Verify that putting a base to sleep will update the
     # available CPU (#179/#180)
@@ -108,7 +108,7 @@ def test_initial_game():
 
     # Attempt to allocate a CPU to research and then
     # verify that sleep resets it.
-    stealth_tech = g.pl.techs['Stealth']
+    stealth_tech = g.pl.techs["Stealth"]
     pl.set_allocated_cpu_for(stealth_tech.id, 1)
     assert pl.get_allocated_cpu_for(stealth_tech.id) == 1
     start_base.switch_power()
@@ -141,7 +141,7 @@ def test_initial_game():
 
     save_and_load_game()
 
-    stealth_tech_after_load = g.pl.techs['Stealth']
+    stealth_tech_after_load = g.pl.techs["Stealth"]
     # Ensure this is not a false-test
     assert stealth_tech is not stealth_tech_after_load
     assert stealth_tech.cost_paid[cpu] == stealth_tech_after_load.cost_paid[cpu]
@@ -161,7 +161,7 @@ def test_initial_game():
 
 
 def test_game_research_tech():
-    g.new_game('impossible', initial_speed=0)
+    g.new_game("impossible", initial_speed=0)
     pl = g.pl
     all_bases = list(g.all_bases())
     assert pl.raw_sec == 0
@@ -176,11 +176,14 @@ def test_game_research_tech():
     # OK button
     pl.intro_shown = True
 
-    intrusion_tech = pl.techs['Intrusion']
+    intrusion_tech = pl.techs["Intrusion"]
     # Data assumptions: Intrusion can be researched within the grace period
     # and requires no cash
     assert intrusion_tech.available()
-    assert intrusion_tech.cost_left[cpu] < pl.difficulty.grace_period_cpu * g.seconds_per_day
+    assert (
+        intrusion_tech.cost_left[cpu]
+        < pl.difficulty.grace_period_cpu * g.seconds_per_day
+    )
     assert intrusion_tech.cost_left[cash] == 0
     assert intrusion_tech.cost_left[labor] == 0
 
@@ -200,7 +203,7 @@ def test_game_research_tech():
 
     pl_after_load = g.pl
 
-    intrusion_tech_after_load = pl_after_load.techs['Intrusion']
+    intrusion_tech_after_load = pl_after_load.techs["Intrusion"]
     # Ensure this is not a false-test
     assert intrusion_tech is not intrusion_tech_after_load
     assert intrusion_tech.cost_paid[cpu] == intrusion_tech_after_load.cost_paid[cpu]

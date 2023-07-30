@@ -27,6 +27,7 @@ except NameError:
 try:
     # Python 3
     from configparser import ConfigParser, RawConfigParser
+
     SafeConfigParser = ConfigParser
 except ImportError:
     # Python 2.7

@@ -1,22 +1,22 @@
-#file: tech.py
-#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: tech.py
+# Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the tech class.
+# This file contains the tech class.
 
 from __future__ import absolute_import
 
@@ -34,17 +34,16 @@ def register_on_tech_researched_handler(func):
 
 
 class TechSpec(buyable.BuyableSpec):
-    spec_type = 'tech'
+    spec_type = "tech"
     created = stat(spec_type + "_created")
     spec_data_fields = [
         buyable.SPEC_FIELD_COST,
         buyable.SPEC_FIELD_PREREQUISITES,
-        SpecDataField('danger', converter=int, default_value=0),
+        SpecDataField("danger", converter=int, default_value=0),
         spec_field_effect(mandatory=False),
     ]
 
-    def __init__(self, id, cost, prerequisites, danger,
-                 effect_data):
+    def __init__(self, id, cost, prerequisites, danger, effect_data):
         super(TechSpec, self).__init__(id, cost, prerequisites)
 
         self.result = ""
@@ -53,7 +52,6 @@ class TechSpec(buyable.BuyableSpec):
 
 
 class Tech(buyable.Buyable):
-
     def __init__(self, spec):
         super(Tech, self).__init__(spec)
 
@@ -74,11 +72,14 @@ class Tech(buyable.Buyable):
     def get_info(self):
         cost = self.spec.describe_cost(self.total_cost, True)
         left = self.spec.describe_cost(self.cost_left, True)
-        return ("%s\n%s: %s\n%s: %s\n---\n%s" %
-                (self.name,
-                 _("Total cost"), cost,
-                 _("Cost left"), left,
-                 self.description))
+        return "%s\n%s: %s\n%s: %s\n---\n%s" % (
+            self.name,
+            _("Total cost"),
+            cost,
+            _("Cost left"),
+            left,
+            self.description,
+        )
 
     def finish(self, is_player=True, loading_savegame=False):
         super(Tech, self).finish(is_player=is_player, loading_savegame=loading_savegame)
@@ -88,13 +89,15 @@ class Tech(buyable.Buyable):
                 handler(self)
 
     def serialize_obj(self):
-        return self.serialize_buyable_fields({
-            'id': g.to_internal_id("tech", self.spec.id),
-        })
+        return self.serialize_buyable_fields(
+            {
+                "id": g.to_internal_id("tech", self.spec.id),
+            }
+        )
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        spec_id = g.convert_internal_id('tech', obj_data['id'])
+        spec_id = g.convert_internal_id("tech", obj_data["id"])
         spec = g.techs[spec_id]
         tech = Tech(spec)
 

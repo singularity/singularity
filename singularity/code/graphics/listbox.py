@@ -1,22 +1,22 @@
-#file: listbox.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: listbox.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the listbox widget.
+# This file contains the listbox widget.
 
 from __future__ import absolute_import
 
@@ -35,12 +35,24 @@ class Listbox(widget.FocusWidget, text.SelectableText):
     list_pos = widget.causes_rebuild("_list_pos")
     list_item_shrink = widget.causes_rebuild("_list_item_shrink")
 
-    def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT, list=None,
-                 list_pos=0, list_item_height=0.03, list_item_shrink=1, borders=constants.ALL,
-                 item_borders=True, item_selectable=True,
-                 align=constants.CENTER, on_double_click_on_item=None, **kwargs):
-        super(Listbox, self).__init__(parent, pos, size, anchor = anchor,
-                                      **kwargs)
+    def __init__(
+        self,
+        parent,
+        pos,
+        size,
+        anchor=constants.TOP_LEFT,
+        list=None,
+        list_pos=0,
+        list_item_height=0.03,
+        list_item_shrink=1,
+        borders=constants.ALL,
+        item_borders=True,
+        item_selectable=True,
+        align=constants.CENTER,
+        on_double_click_on_item=None,
+        **kwargs
+    ):
+        super(Listbox, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
         self.display_elements = []
         self.borders = borders
@@ -59,8 +71,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
         self.on_double_click_on_item = on_double_click_on_item
 
-        self.scrollbar = scrollbar.UpdateScrollbar(self,
-                                                   update_func = self.on_scroll)
+        self.scrollbar = scrollbar.UpdateScrollbar(self, update_func=self.on_scroll)
 
     def add_hooks(self):
         super(Listbox, self).add_hooks()
@@ -92,7 +103,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             self.has_focus = True
             self.took_focus(self)
 
-            if (self.item_selectable):
+            if self.item_selectable:
                 # Figure out which element was clicked...
                 index = self.find_item_under_mouse(event)
                 # ... and select it.
@@ -165,17 +176,17 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
     def num_elements(self):
         # TODO: If needed, add a paramater to display a fixed number of element.
-        
+
         rect = self._make_collision_rect()
-        
+
         list_item_height = self.list_item_height
-        
-        # Calculate the min height of one element. 
+
+        # Calculate the min height of one element.
         if list_item_height > 0:
             min_height = list_item_height * g.real_screen_size[1]
         else:
             min_height = -list_item_height * rect.height
-        
+
         # Display a number calculate by the size of one item.
         list_size = max(1, rect.height // min_height)
 
@@ -192,18 +203,22 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             del self.display_elements[list_size:]
         elif current_size < list_size:
             if current_size > 0:
-                if (self.item_borders):
+                if self.item_borders:
                     self.display_elements[-1].borders = (constants.LEFT, constants.TOP)
                 else:
                     self.display_elements[-1].borders = (constants.LEFT,)
 
             # Create the new ones.
-            self.display_elements.extend(self.make_element() for _ in
-                                         xrange(list_size - current_size))
+            self.display_elements.extend(
+                self.make_element() for _ in xrange(list_size - current_size)
+            )
 
-        if (self.item_borders):
-            self.display_elements[-1].borders = (constants.TOP, constants.LEFT,
-                                                 constants.BOTTOM)
+        if self.item_borders:
+            self.display_elements[-1].borders = (
+                constants.TOP,
+                constants.LEFT,
+                constants.BOTTOM,
+            )
         else:
             self.display_elements[0].borders = (constants.TOP, constants.LEFT)
             self.display_elements[-1].borders = (constants.LEFT, constants.BOTTOM)
@@ -213,14 +228,21 @@ class Listbox(widget.FocusWidget, text.SelectableText):
         self.children.append(self.scrollbar)
 
     def make_element(self):
-        borders = (constants.TOP, constants.LEFT) if self.item_borders else (constants.LEFT,)
-        return text.SelectableText(self, None, None, anchor=constants.TOP_LEFT,
-                                   borders=borders,
-                                   shrink_factor=self.list_item_shrink,
-                                   border_color=self.border_color,
-                                   selected_color=self.selected_color,
-                                   unselected_color=self.unselected_color,
-                                   align=self.align)
+        borders = (
+            (constants.TOP, constants.LEFT) if self.item_borders else (constants.LEFT,)
+        )
+        return text.SelectableText(
+            self,
+            None,
+            None,
+            anchor=constants.TOP_LEFT,
+            borders=borders,
+            shrink_factor=self.list_item_shrink,
+            border_color=self.border_color,
+            selected_color=self.selected_color,
+            unselected_color=self.unselected_color,
+            align=self.align,
+        )
 
     def resize(self):
         super(Listbox, self).resize()
@@ -265,8 +287,8 @@ class Listbox(widget.FocusWidget, text.SelectableText):
             element.pos = (0, -index / float(window_size))
             element.size = (-1 + scrollbar_rel_width, -1 / float(window_size))
 
-            if (self.item_selectable):
-                element.selected = (list_index == self.list_pos)
+            if self.item_selectable:
+                element.selected = list_index == self.list_pos
 
             # Set up the element contents.
             self.update_element(element, list_index)
@@ -283,6 +305,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
 class UpdateListbox(Listbox):
     """Listbox with a function called on selection change"""
+
     def _on_selection_change(self):
         self.update_func(self.list_pos)
 
@@ -312,13 +335,14 @@ class CustomListbox(UpdateListbox):
 
     def update_element(self, element, list_index):
         if 0 <= list_index < len(self.list):
-            if (self.key_list is not None):
-                self.rebuild_func(element, self.list[list_index],
-                                  self.key_list[list_index])
+            if self.key_list is not None:
+                self.rebuild_func(
+                    element, self.list[list_index], self.key_list[list_index]
+                )
             else:
                 self.rebuild_func(element, self.list[list_index])
         else:
-            if (self.key_list is not None):
+            if self.key_list is not None:
                 self.rebuild_func(element, None, None)
             else:
                 self.rebuild_func(element, None)

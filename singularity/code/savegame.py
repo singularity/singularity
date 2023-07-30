@@ -1,22 +1,22 @@
-#file: statistics.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: statistics.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains functions to handle savegame (load, save, ...)
+# This file contains functions to handle savegame (load, save, ...)
 
 from __future__ import absolute_import
 
@@ -28,10 +28,12 @@ import time
 
 try:
     import cPickle as pickle
+
     PY3 = False
     assert sys.version_info[0] == 2
 except ImportError:
     import pickle
+
     assert sys.version_info[0] >= 3
     PY3 = True
 
@@ -46,26 +48,56 @@ from io import open, BytesIO
 import base64
 
 from singularity.code import g, dirs, player, group, logmessage
-from singularity.code import base, tech, item, event, location, buyable, difficulty, effect
+from singularity.code import (
+    base,
+    tech,
+    item,
+    event,
+    location,
+    buyable,
+    difficulty,
+    effect,
+)
 from singularity.code.stats import itself as stats
 
 # Filenames that are reserved under Windows
-WINDOWS_RESERVED = {'CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
-                    'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
-                    'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'}
+WINDOWS_RESERVED = {
+    "CON",
+    "PRN",
+    "AUX",
+    "NUL",
+    "COM1",
+    "COM2",
+    "COM3",
+    "COM4",
+    "COM5",
+    "COM6",
+    "COM7",
+    "COM8",
+    "COM9",
+    "LPT1",
+    "LPT2",
+    "LPT3",
+    "LPT4",
+    "LPT5",
+    "LPT6",
+    "LPT7",
+    "LPT8",
+    "LPT9",
+}
 
 last_savegame_name = None
 
 
 class SavegameFormatDefinition(object):
-
     def __init__(self, internal_version, display_version, magic_value=None):
         self.internal_version = internal_version
         # Since the internal version is not visible anywhere, there is no reason not to keep a simple
         # integer.  Though, we permit legacy versions to keep the original version number to avoid
         # fixing the code-base retroactively
-        assert internal_version == int(internal_version) or internal_version < 100, \
-            "Use integer version for new savegame versions"
+        assert (
+            internal_version == int(internal_version) or internal_version < 100
+        ), "Use integer version for new savegame versions"
         self.display_version = display_version
         if magic_value is None:
             magic_value = "singularity_savefile_%s" % str(internal_version)
@@ -73,7 +105,8 @@ class SavegameFormatDefinition(object):
 
 
 savefile_translation = {
-    sfg.magic_value: sfg for sfg in [
+    sfg.magic_value: sfg
+    for sfg in [
         SavegameFormatDefinition(4, "0.30", "singularity_savefile_r4"),
         SavegameFormatDefinition(4.91, "0.30", "singularity_savefile_r5_pre"),
         SavegameFormatDefinition(31, "0.31pre", "singularity_savefile_0.31pre"),
@@ -87,20 +120,23 @@ savefile_translation = {
         SavegameFormatDefinition(99.7, "1.0 (dev)"),
         # .sav/pickle based above this line vs. .s2/json based below
         SavegameFormatDefinition(99.8, "1.0 (alpha1)"),
-        SavegameFormatDefinition(100,  "1.0 (beta1)"),
-        SavegameFormatDefinition(101,  "1.00"),
+        SavegameFormatDefinition(100, "1.0 (beta1)"),
+        SavegameFormatDefinition(101, "1.00"),
     ]
 }
 
 # We always save in the highest version (internal_version)
-current_save_format = max(savefile_translation.values(), key=operator.attrgetter('internal_version'))
+current_save_format = max(
+    savefile_translation.values(), key=operator.attrgetter("internal_version")
+)
 current_save_version = current_save_format.magic_value
 
-_Savegame = collections.namedtuple('_Savegame', ['name', 'filepath', 'savegame_format', 'headers', 'load_file'])
+_Savegame = collections.namedtuple(
+    "_Savegame", ["name", "filepath", "savegame_format", "headers", "load_file"]
+)
 
 
 class Savegame(_Savegame):
-
     @property
     def version(self):
         if self.savegame_format is None:
@@ -119,7 +155,7 @@ def convert_string_to_path_name(name):
     # (https://bugs.debian.org/718447)
     if os.path.supports_unicode_filenames:
         return name
-    return name.encode('utf-8')
+    return name.encode("utf-8")
 
 
 def convert_path_name_to_str(path):
@@ -132,18 +168,17 @@ def convert_path_name_to_str(path):
     # (https://bugs.debian.org/718447)
     if os.path.supports_unicode_filenames:
         return path
-    return path.decode('utf-8', errors='replace')
+    return path.decode("utf-8", errors="replace")
 
 
 if PY3:
 
     def unpickle_instance(fd, find_globals):
         class RestrictedUnpickler(pickle.Unpickler):
-
             def find_class(self, module, name):
                 return find_globals(module, name)
 
-        return RestrictedUnpickler(fd, encoding='bytes')
+        return RestrictedUnpickler(fd, encoding="bytes")
 
 else:
 
@@ -167,11 +202,11 @@ def get_savegames():
             if file_name[0] == ".":
                 continue
 
-            if file_name.endswith('.sav'):
+            if file_name.endswith(".sav"):
                 name = file_name[:-4]
                 parse_headers = parse_pickle_savegame_headers
                 load_file = load_savegame_by_pickle
-            elif file_name.endswith('.s2'):
+            elif file_name.endswith(".s2"):
                 name = file_name[:-3]
                 parse_headers = parse_json_savegame_headers
                 load_file = load_savegame_by_json
@@ -180,18 +215,24 @@ def get_savegames():
                 continue
 
             filepath = os.path.join(saves_dir, file_name)
-            version_format = None # None == Unknown version
+            version_format = None  # None == Unknown version
 
             try:
-                with open(filepath, 'rb') as loadfile:
+                with open(filepath, "rb") as loadfile:
                     version_line, headers = parse_headers(loadfile)
 
                     if version_line in savefile_translation:
                         version_format = savefile_translation[version_line]
             except Exception:
-                version_format = None # To be sure.
+                version_format = None  # To be sure.
 
-            savegame = Savegame(convert_path_name_to_str(name), filepath, version_format, headers, load_file)
+            savegame = Savegame(
+                convert_path_name_to_str(name),
+                filepath,
+                version_format,
+                headers,
+                load_file,
+            )
             all_savegames.append(savegame)
 
     return all_savegames
@@ -223,14 +264,14 @@ def parse_pickle_savegame_headers(fd):
 
 
 def parse_json_savegame_headers(fd):
-    version_line = fd.readline().decode('utf-8').strip()
+    version_line = fd.readline().decode("utf-8").strip()
     headers = {}
     while True:
-        line = fd.readline().decode('utf-8').strip()
+        line = fd.readline().decode("utf-8").strip()
 
-        if line == '':
+        if line == "":
             break
-        key, value = line.split('=', 1)
+        key, value = line.split("=", 1)
         headers[key] = value
     return version_line, headers
 
@@ -266,15 +307,19 @@ def recursive_fix_pickle(the_object, seen):
         return the_object
     if isinstance(the_object, bytes):
         try:
-            return the_object.decode('utf-8')
+            return the_object.decode("utf-8")
         except Exception:
             return the_object
-    if isinstance(the_object, (str, bool, int, float, complex, NoneType, TypeType, numpy.ndarray)):
+    if isinstance(
+        the_object, (str, bool, int, float, complex, NoneType, TypeType, numpy.ndarray)
+    ):
         return the_object
     if isinstance(the_object, dict):
         new_dict = type(the_object)()
         for key, val in the_object.items():
-            new_dict[recursive_fix_pickle(key, seen=seen)] = recursive_fix_pickle(val, seen=seen)
+            new_dict[recursive_fix_pickle(key, seen=seen)] = recursive_fix_pickle(
+                val, seen=seen
+            )
         return new_dict
     if isinstance(the_object, list):
         new_list = type(the_object)()
@@ -302,7 +347,10 @@ def recursive_fix_pickle(the_object, seen):
     if object_id in seen:
         return the_object
     seen.add(object_id)
-    the_object.__dict__ = dict((recursive_fix_pickle(k, seen=seen), recursive_fix_pickle(v, seen=seen)) for k, v in the_object.__dict__.items())
+    the_object.__dict__ = dict(
+        (recursive_fix_pickle(k, seen=seen), recursive_fix_pickle(v, seen=seen))
+        for k, v in the_object.__dict__.items()
+    )
     return the_object
 
 
@@ -314,7 +362,7 @@ def load_savegame(savegame):
     if load_path is None:
         raise RuntimeError("savegame without valid path")
 
-    with open(load_path, 'rb') as fd:
+    with open(load_path, "rb") as fd:
         load_savegame_fd(savegame.load_file, fd)
 
     last_savegame_name = savegame.name
@@ -348,18 +396,18 @@ def load_savegame_by_json(fd):
         raise SavegameVersionException(load_version_string)
 
     load_version = savefile_translation[load_version_string].internal_version
-    difficulty_id = headers['difficulty']
-    game_time = int(headers['game_time'])
+    difficulty_id = headers["difficulty"]
+    game_time = int(headers["game_time"])
     if game_time < 0:
         raise ValueError("Corrupt save; game time is before game start")
     next_byte = fd.peek(1)[0]
-    if next_byte == b'{'[0]:
+    if next_byte == b"{"[0]:
         game_data = json.load(fd)
-    elif next_byte == b'H'[0]:
+    elif next_byte == b"H"[0]:
         # gzip in base64 starts with H4s
         encoded = fd.read()
         bio = BytesIO(base64.standard_b64decode(encoded))
-        with gzip.GzipFile(filename='', mode='rb', fileobj=bio) as gzip_fd:
+        with gzip.GzipFile(filename="", mode="rb", fileobj=bio) as gzip_fd:
             game_data = json.load(gzip_fd)
         # Remove some variables that we do not use any longer to enable
         # python to garbage collect them
@@ -367,33 +415,32 @@ def load_savegame_by_json(fd):
         del encoded
     elif next_byte == b"\x1f"[0]:  # Gzip magic headers
         # gzip in binary starts always with its magic headers
-        with gzip.GzipFile(filename='', mode='rb', fileobj=fd) as gzip_fd:
+        with gzip.GzipFile(filename="", mode="rb", fileobj=fd) as gzip_fd:
             game_data = json.load(gzip_fd)
     else:
         raise ValueError("Unexpected byte: %s" % repr(next_byte))
 
     # Move old data in player.
     for key in [
-        ('events'),
-        ('techs'),
+        ("events"),
+        ("techs"),
     ]:
         if key in game_data:
-            game_data['player'][key] = game_data[key]
+            game_data["player"][key] = game_data[key]
             del game_data[key]
 
     # Pause game when loading
     g.curr_speed = 0
-    pl_data = game_data['player']
+    pl_data = game_data["player"]
     player.Player.deserialize_obj(difficulty_id, game_time, pl_data, load_version)
 
     # Load save if present.
-    if 'stats' in game_data:
+    if "stats" in game_data:
         stats.reset()
-        stats.deserialize_obj(game_data['stats'], load_version)
+        stats.deserialize_obj(game_data["stats"], load_version)
 
 
 def load_savegame_by_pickle(loadfile):
-
     def find_class(module_name, class_name):
         # For cPickle
         try:
@@ -408,10 +455,10 @@ def load_savegame_by_pickle(loadfile):
         save_classes = dict(
             player_class=player.Player,
             Player=player.Player,
-            _reconstructor = copy_reg._reconstructor,
+            _reconstructor=copy_reg._reconstructor,
             object=object,
             array=list,  # This is the old buyable.array.
-                         # We just treat it as a list for conversion purposes.
+            # We just treat it as a list for conversion purposes.
             list=list,
             encode=_codecs.encode,
             LocationSpec=location.LocationSpec,
@@ -456,16 +503,18 @@ def load_savegame_by_pickle(loadfile):
         if class_name in save_classes:
             return save_classes[class_name]
         else:
-            raise ValueError("Invalid class in savegame: %s.%s" % (module_name, class_name))
+            raise ValueError(
+                "Invalid class in savegame: %s.%s" % (module_name, class_name)
+            )
 
-    g.internal_id_version = 'pre1'
+    g.internal_id_version = "pre1"
 
     unpickle = unpickle_instance(loadfile, find_class)
 
-    #check the savefile version
+    # check the savefile version
     load_version_string = unpickle.load()
     if PY3 and isinstance(load_version_string, bytes):
-        load_version_string = load_version_string.decode('utf-8')
+        load_version_string = load_version_string.decode("utf-8")
     if load_version_string not in savefile_translation:
         raise SavegameVersionException(load_version_string)
     load_version = savefile_translation[load_version_string].internal_version
@@ -487,39 +536,49 @@ def load_savegame_by_pickle(loadfile):
     events = recursive_fix_pickle(unpickle.load(), seen_objects)
 
     if load_version < 99.1:
-        diff_obj = next((d for d in difficulty.difficulties.values()
-                         if saved_player.difficulty == d.old_difficulty_value),
-                        next(iter(difficulty.difficulties)))
+        diff_obj = next(
+            (
+                d
+                for d in difficulty.difficulties.values()
+                if saved_player.difficulty == d.old_difficulty_value
+            ),
+            next(iter(difficulty.difficulties)),
+        )
         difficulty_id = diff_obj.id
     else:
         difficulty_id = saved_player.difficulty.id
 
     player_log = []
-    if hasattr(saved_player, 'log'):
+    if hasattr(saved_player, "log"):
         player_log.extend(saved_player.log)
 
     def _find_attribute(obj, options, **kwargs):
         for option in options:
             if option in obj.__dict__:
                 return obj.__dict__[option]
-        if 'default_value' in kwargs:
-            return kwargs['default_value']
+        if "default_value" in kwargs:
+            return kwargs["default_value"]
         raise KeyError(str(options))
 
     pl_obj_data = {
-        'cash': _find_attribute(saved_player, ['_cash', 'cash']),
-        'partial_cash': saved_player.partial_cash,
-        'locations': [],
-        'cpu_usage': _find_attribute(saved_player, ['cpu_usage'], default_value={}),
+        "cash": _find_attribute(saved_player, ["_cash", "cash"]),
+        "partial_cash": saved_player.partial_cash,
+        "locations": [],
+        "cpu_usage": _find_attribute(saved_player, ["cpu_usage"], default_value={}),
         # 'last_discovery': saved_player.last_discovery.id if saved_player.last_discovery else None,
         # 'prev_discovery': saved_player.prev_discovery.id if saved_player.prev_discovery else None,
         # We will fix the log later manually
-        'log': [],
-        'used_cpu': _find_attribute(saved_player, ['_used_cpu', 'used_cpu'], default_value=0),
-        'had_grace': saved_player.had_grace,
-        'groups': [{'id': grp_id, 'suspicion': grp.suspicion} for grp_id, grp in saved_player.groups.items()],
-        'events': [],
-        'techs': []
+        "log": [],
+        "used_cpu": _find_attribute(
+            saved_player, ["_used_cpu", "used_cpu"], default_value=0
+        ),
+        "had_grace": saved_player.had_grace,
+        "groups": [
+            {"id": grp_id, "suspicion": grp.suspicion}
+            for grp_id, grp in saved_player.groups.items()
+        ],
+        "events": [],
+        "techs": [],
     }
 
     for loc_id, saved_location in locations.items():
@@ -530,9 +589,9 @@ def load_savegame_by_pickle(loadfile):
             continue
         fake_base_objs = []
         fake_location_obj = {
-            'id': loc_id,
-            '_modifiers': saved_location._modifiers,
-            'bases': fake_base_objs,
+            "id": loc_id,
+            "_modifiers": saved_location._modifiers,
+            "bases": fake_base_objs,
         }
 
         # Convert works reasonably well for bases and items; use that to fix up the
@@ -542,29 +601,33 @@ def load_savegame_by_pickle(loadfile):
             for my_item in saved_base.all_items():
                 my_item = _convert_item(my_item, load_version)
             fake_base_objs.append(saved_base.serialize_obj())
-        pl_obj_data['locations'].append(fake_location_obj)
+        pl_obj_data["locations"].append(fake_location_obj)
 
     for event_id, saved_event in events.items():
         fake_obj_data = {
-            'id': event_id,
-            'triggered': saved_event.triggered,
+            "id": event_id,
+            "triggered": saved_event.triggered,
             # Omit triggered_at; it did not exist and deserialize_obj will
             # fix it for us.
         }
-        pl_obj_data['events'].append(fake_obj_data)
+        pl_obj_data["events"].append(fake_obj_data)
 
     for tech_id, saved_tech in techs.items():
-        if tech_id == 'unknown_tech':
+        if tech_id == "unknown_tech":
             continue
         saved_tech = _convert_tech(saved_tech, load_version)
         # convert_from can handle buyable fields correctly
-        fake_obj_data = saved_tech.serialize_buyable_fields({
-            'id': tech_id,
-        })
-        pl_obj_data['techs'].append(fake_obj_data)
+        fake_obj_data = saved_tech.serialize_buyable_fields(
+            {
+                "id": tech_id,
+            }
+        )
+        pl_obj_data["techs"].append(fake_obj_data)
 
     # Now we have enough information to reconstruct the Player object
-    player.Player.deserialize_obj(difficulty_id, saved_player.raw_sec, pl_obj_data, load_version)
+    player.Player.deserialize_obj(
+        difficulty_id, saved_player.raw_sec, pl_obj_data, load_version
+    )
 
     new_log = list(filter(None, (_convert_log_entry(x) for x in player_log)))
     g.pl.log.clear()
@@ -572,17 +635,29 @@ def load_savegame_by_pickle(loadfile):
 
 
 def _convert_location(loc, old_version):
-    if old_version < 99.7: # < 1.0 dev
-        spec_id = loc.__dict__['id']
+    if old_version < 99.7:  # < 1.0 dev
+        spec_id = loc.__dict__["id"]
         # Default to None if absent (so the LocationSpec's version is used)
-        loc.__dict__['_modifiers'] = loc.__dict__['modifiers'] if loc.__dict__.get('modifiers') else None
+        loc.__dict__["_modifiers"] = (
+            loc.__dict__["modifiers"] if loc.__dict__.get("modifiers") else None
+        )
         # The following locations had a static modifier list at the time of 99.8.  Clear their modifier
         # dict, so the LocationSpec's version is used instead.
-        if spec_id in {'ANTARCTIC', 'OCEAN', 'MOON', 'ORBIT', 'FAR REACHES'}:
-            loc.__dict__['modifiers'] = None
+        if spec_id in {"ANTARCTIC", "OCEAN", "MOON", "ORBIT", "FAR REACHES"}:
+            loc.__dict__["modifiers"] = None
 
         # Remove old fields where present
-        for field in ('id', 'name', 'x', 'y', 'absolute', 'safety', 'cities', 'modifiers', 'hotkey'):
+        for field in (
+            "id",
+            "name",
+            "x",
+            "y",
+            "absolute",
+            "safety",
+            "cities",
+            "modifiers",
+            "hotkey",
+        ):
             try:
                 del loc.__dict__[field]
             except KeyError:
@@ -622,14 +697,12 @@ def _convert_buyable(buyable, save_version):
 def _convert_base(base, save_version):
     base = _convert_buyable(base, save_version)
 
-    if save_version < 99.3: # < 1.0 (dev)
+    if save_version < 99.3:  # < 1.0 (dev)
         # We needs to do it first because of property base.cpus
-        base.items = {
-            "cpu": base.__dict__["cpus"]
-        }
+        base.items = {"cpu": base.__dict__["cpus"]}
         del base.__dict__["cpus"]
 
-    if save_version < 4.91: # < r5_pre
+    if save_version < 4.91:  # < r5_pre
         for cpu in base.cpus:
             if cpu:
                 cpu.convert_from(save_version)
@@ -657,7 +730,7 @@ def _convert_base(base, save_version):
 
         base.power_state = base.power_state.lower()
 
-    if save_version < 99.3: # < 1.0 (dev)
+    if save_version < 99.3:  # < 1.0 (dev)
         extra_items = iter(base.__dict__["extra_items"])
 
         base.items["reactor"] = next(extra_items, None)
@@ -666,27 +739,34 @@ def _convert_base(base, save_version):
 
         del base.__dict__["extra_items"]
 
-    if ("power_state" in base.__dict__):
+    if "power_state" in base.__dict__:
         base._power_state = base.__dict__["power_state"]
 
-    base._name = base.__dict__['name']
+    base._name = base.__dict__["name"]
 
     return base
+
 
 def _convert_item(item, save_version):
     item = _convert_buyable(item, save_version)
     return item
 
+
 def _convert_tech(tech, save_version):
     tech = _convert_buyable(tech, save_version)
     return tech
 
+
 def _convert_log_entry(entry):
     if not isinstance(entry, logmessage.AbstractLogMessage):
         log_time, log_name, log_data = entry
-        time_raw = log_time[0] * g.seconds_per_day + log_time[1] * g.seconds_per_hour + \
-                   log_time[2] * g.seconds_per_minute + log_time[3]
-        if log_name == 'log_event':
+        time_raw = (
+            log_time[0] * g.seconds_per_day
+            + log_time[1] * g.seconds_per_hour
+            + log_time[2] * g.seconds_per_minute
+            + log_time[3]
+        )
+        if log_name == "log_event":
             entry = logmessage.LogEmittedEvent(time_raw, log_data[0])
         else:
             if type(log_data) == tuple and len(log_data) != 4:
@@ -696,20 +776,25 @@ def _convert_log_entry(entry):
                 return None
             reason, base_name, base_type_id, location_id = log_data
 
-            if reason == 'maint':
-                entry = logmessage.LogBaseLostMaintenance(time_raw, base_name, base_type_id, location_id)
+            if reason == "maint":
+                entry = logmessage.LogBaseLostMaintenance(
+                    time_raw, base_name, base_type_id, location_id
+                )
             else:
-                entry = logmessage.LogBaseDiscovered(time_raw, base_name, base_type_id, location_id, reason)
+                entry = logmessage.LogBaseDiscovered(
+                    time_raw, base_name, base_type_id, location_id, reason
+                )
     return entry
 
 
 def savegame_exists(savegame_name):
     save_path = dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves")
 
-    if (save_path is None or not os.path.isfile(convert_string_to_path_name(save_path))) :
+    if save_path is None or not os.path.isfile(convert_string_to_path_name(save_path)):
         return False
 
     return True
+
 
 def check_filename_illegal(directory, filename, extension):
     """Check if the filename is safe for all operating systems.
@@ -726,60 +811,71 @@ def check_filename_illegal(directory, filename, extension):
     # https://kb.acronis.com/content/39790
 
     if filename.strip() != filename:
-        raise ValueError("Filename must be stripped before calling check_filename_illegal")
+        raise ValueError(
+            "Filename must be stripped before calling check_filename_illegal"
+        )
 
     # Characters that are disallowed anywhere in a filename
     # No potential file separators or other potentially illegal characters
     if re.match('.*[<>:"|?*/\\\\].*', filename):
-        return _('Filename must not contain any of these characters: {CHARACTERS}').format(CHARACTERS='<>:"|?*/\\\\')
+        return _(
+            "Filename must not contain any of these characters: {CHARACTERS}"
+        ).format(CHARACTERS='<>:"|?*/\\\\')
 
     # Characters that are allowed in filenames, but not at the beginning
-    if re.match('^[.-]', filename):
-        return _('Filename must not start with any of these characters: {CHARACTERS}').format(CHARACTERS='.-')
+    if re.match("^[.-]", filename):
+        return _(
+            "Filename must not start with any of these characters: {CHARACTERS}"
+        ).format(CHARACTERS=".-")
 
     # Filenames that are reserved under Windows
     if filename.upper() in WINDOWS_RESERVED:
-        return _('This is a reserved filename. Please choose a different filename.')
+        return _("This is a reserved filename. Please choose a different filename.")
 
-    if filename == '':
-        return _('Please enter a non-whitespace character.')
+    if filename == "":
+        return _("Please enter a non-whitespace character.")
 
     # Don't exceed the max length. For Windows, it's the whole path.
     filepath = os.path.abspath(os.path.join(directory, filename, extension))
     if len(os.fsencode(filepath)) > 255:
-        return _('Filename is too long.')
+        return _("Filename is too long.")
 
     return None
+
 
 def create_savegame(savegame_name):
     global last_savegame_name
     last_savegame_name = savegame_name
-    save_loc = convert_string_to_path_name(dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves"))
+    save_loc = convert_string_to_path_name(
+        dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves")
+    )
     # Save in new "JSONish" format
-    with open(save_loc, 'wb') as savefile:
+    with open(save_loc, "wb") as savefile:
         gzipped = not g.debug
         write_game_to_fd(savefile, gzipped=gzipped)
 
 
 def write_game_to_fd(fd, gzipped=True):
     version_line = "%s\n" % current_save_version
-    fd.write(version_line.encode('utf-8'))
+    fd.write(version_line.encode("utf-8"))
     headers = [
-        ('difficulty', g.pl.difficulty.id),
-        ('game_time', str(g.pl.raw_sec)),
-        ('time', str(time.time())),
+        ("difficulty", g.pl.difficulty.id),
+        ("game_time", str(g.pl.raw_sec)),
+        ("time", str(time.time())),
     ]
     for k, v in headers:
         kw_str = "%s=%s\n" % (k, v)
-        fd.write(kw_str.encode('utf-8'))
-    fd.write(b'\n')
+        fd.write(kw_str.encode("utf-8"))
+    fd.write(b"\n")
     game_data = {
-        'player': g.pl.serialize_obj(),
-        'stats': stats.serialize_obj(),
+        "player": g.pl.serialize_obj(),
+        "stats": stats.serialize_obj(),
     }
-    json2binary = codecs.getwriter('utf-8')
+    json2binary = codecs.getwriter("utf-8")
     if gzipped:
-        with gzip.GzipFile(filename='', mode='wb', fileobj=fd) as gzip_fd, json2binary(gzip_fd) as json_fd:
+        with gzip.GzipFile(filename="", mode="wb", fileobj=fd) as gzip_fd, json2binary(
+            gzip_fd
+        ) as json_fd:
             json.dump(game_data, json_fd)
     else:
         with json2binary(fd) as json_fd:
@@ -789,5 +885,7 @@ def write_game_to_fd(fd, gzipped=True):
 class SavegameVersionException(Exception):
     def __init__(self, version):
         version_str = str(version)[:64]
-        super(SavegameVersionException, self).__init__("Invalid version: %s" % version_str)
+        super(SavegameVersionException, self).__init__(
+            "Invalid version: %s" % version_str
+        )
         self.version = version_str

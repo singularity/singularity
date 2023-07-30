@@ -18,9 +18,9 @@ def get_esdir(myname):
 
 
 def write_po_file(po_entries, output_file):
-
-    with open(output_file, "w+", encoding='utf-8') as fd:
-        fd.write(u"""
+    with open(output_file, "w+", encoding="utf-8") as fd:
+        fd.write(
+            """
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the singularity package.
@@ -38,7 +38,8 @@ msgstr ""
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=CHARSET\\n"
 "Content-Transfer-Encoding: 8bit\\n"
-""")
+"""
+        )
 
     po = polib.pofile(output_file)
     for text, ctxt, comment in po_entries:
@@ -75,9 +76,9 @@ def generate_knowledge_translations():
     data.load_knowledge()
 
     for know_area_id, know_area in sorted(g.knowledge.items()):
-        know_area_id_ctxt = '[%s] name' % know_area_id
+        know_area_id_ctxt = "[%s] name" % know_area_id
         know_area = g.knowledge[know_area_id]
-        yield know_area.untranslated_name, know_area_id_ctxt, 'Name of the Knowledge area in the Knowledge screen'
+        yield know_area.untranslated_name, know_area_id_ctxt, "Name of the Knowledge area in the Knowledge screen"
         for entry_id, entry in sorted(know_area.help_entries.items()):
             full_id_name = "[%s/%s] name" % (know_area_id, entry_id)
             full_id_text = "[%s/%s] description" % (know_area_id, entry_id)
@@ -94,13 +95,13 @@ def generate_data_str_translations():
         if not filename.endswith("_str.dat"):
             continue
 
-        if filename == 'knowledge_str.dat':
+        if filename == "knowledge_str.dat":
             # knowledge is handled separately
             continue
-        
+
         filepath = os.path.join(datadir, filename)
 
-        with open(filepath, encoding='utf-8') as fd:
+        with open(filepath, encoding="utf-8") as fd:
             config = RawConfigParser()
             config.read_file(fd)
 
@@ -112,22 +113,33 @@ def generate_data_str_translations():
 
 
 CATALOGS = {
-    'data_str': generate_data_str_translations,
-    'story': generate_story_translations,
-    'knowledge': generate_knowledge_translations,
+    "data_str": generate_data_str_translations,
+    "story": generate_story_translations,
+    "knowledge": generate_knowledge_translations,
 }
 
 
 def build_option_parser():
     import argparse
 
-    description = '''Find data strings and save them for translation.'''
+    description = """Find data strings and save them for translation."""
 
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument("--catalog", dest="catalog", choices=sorted(CATALOGS),
-                        help="What translation catalog to generate", metavar="CATALOG")
-    parser.add_argument("-o", "--output", dest="output", default=None,
-                        help="PO/POT File output", metavar="FILE")
+    parser.add_argument(
+        "--catalog",
+        dest="catalog",
+        choices=sorted(CATALOGS),
+        help="What translation catalog to generate",
+        metavar="CATALOG",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        dest="output",
+        default=None,
+        help="PO/POT File output",
+        metavar="FILE",
+    )
 
     return parser.parse_args()
 
@@ -143,7 +155,7 @@ def main():
     write_po_file(generator(), args.output)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         sys.exit(main())
     except KeyboardInterrupt:

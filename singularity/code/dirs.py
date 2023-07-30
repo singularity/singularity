@@ -1,24 +1,24 @@
-#file: dirs.py
-#Copyright (C) 2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: dirs.py
+# Copyright (C) 2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains all functions to find and create singularity directory.
-#Get the proper folder on Linux/Win/Mac, and possibly others.
-#Assumes that all platforms that have HOME and XDG_CONFIG_HOME defined have them
+# This file contains all functions to find and create singularity directory.
+# Get the proper folder on Linux/Win/Mac, and possibly others.
+# Assumes that all platforms that have HOME and XDG_CONFIG_HOME defined have them
 # defined properly.
 
 from __future__ import absolute_import
@@ -32,7 +32,7 @@ read_dirs = {}
 write_dirs = {}
 
 # Used to differentiate between version.
-version_dir = '1.0'
+version_dir = "1.0"
 
 """ Definition of generated directories for E:S
     Directories are grouped with a symbolic name.
@@ -52,55 +52,129 @@ version_dir = '1.0'
     Writable directory is never mandatory, but will be created if possible.
 """
 dir_defs = (
-    ( {"name":"data", "mandatory": True},
-        {"parent": "root",        "path": "data",           },
+    (
+        {"name": "data", "mandatory": True},
+        {
+            "parent": "root",
+            "path": "data",
+        },
     ),
-    ( {"name":"i18n", "writable": True},
-        {"parent": "files_home",  "path": "i18n",           }, # New XDG dir
-        {"parent": "root",        "path": "i18n",           },
+    (
+        {"name": "i18n", "writable": True},
+        {
+            "parent": "files_home",
+            "path": "i18n",
+        },  # New XDG dir
+        {
+            "parent": "root",
+            "path": "i18n",
+        },
     ),
-    ( {"name":"music", },
-        {"parent": "files_home",  "path": "music",          }, # New XDG dir
-        {"parent": "old_home",    "path": "music",          }, # Old .endgame dir
-        {"parent": "root",        "path": "music",          },
+    (
+        {
+            "name": "music",
+        },
+        {
+            "parent": "files_home",
+            "path": "music",
+        },  # New XDG dir
+        {
+            "parent": "old_home",
+            "path": "music",
+        },  # Old .endgame dir
+        {
+            "parent": "root",
+            "path": "music",
+        },
     ),
-    ( {"name":"sounds", },
-        {"parent": "data",        "path": "sounds"          },
+    (
+        {
+            "name": "sounds",
+        },
+        {"parent": "data", "path": "sounds"},
     ),
-    ( {"name":"themes", "mandatory": True, "writable": True},
-        {"parent": "files_home",  "path": "themes",         }, # New XDG dir
-        {"parent": "data",        "path": "themes",         },
+    (
+        {"name": "themes", "mandatory": True, "writable": True},
+        {
+            "parent": "files_home",
+            "path": "themes",
+        },  # New XDG dir
+        {
+            "parent": "data",
+            "path": "themes",
+        },
     ),
-    ( {"name":"saves", "writable": True},
-        {"parent": "files_home",  "path": "saves",          }, # New XDG dir
-        {"parent": "config_home", "path": "saves",          },
-        {"parent": "old_home",    "path": "saves",          }, # Old .endgame dir
-        {"parent": "root",        "path": "saves",          }, # Single dir
+    (
+        {"name": "saves", "writable": True},
+        {
+            "parent": "files_home",
+            "path": "saves",
+        },  # New XDG dir
+        {
+            "parent": "config_home",
+            "path": "saves",
+        },
+        {
+            "parent": "old_home",
+            "path": "saves",
+        },  # Old .endgame dir
+        {
+            "parent": "root",
+            "path": "saves",
+        },  # Single dir
     ),
-    ( {"name":"pref", "writable": True},
-        {"parent": "config_home", "path": version_dir,      },
-        {"parent": "config_home", "path": "",               },
-        {"parent": "old_home",    "path": "",               }, # Old .endgame dir
-        {"parent": "root",        "path": "",               }, # Single dir
+    (
+        {"name": "pref", "writable": True},
+        {
+            "parent": "config_home",
+            "path": version_dir,
+        },
+        {
+            "parent": "config_home",
+            "path": "",
+        },
+        {
+            "parent": "old_home",
+            "path": "",
+        },  # Old .endgame dir
+        {
+            "parent": "root",
+            "path": "",
+        },  # Single dir
     ),
-    ( {"name":"log", "writable": True},
-        {"parent": "files_home",  "path": "log",            }, # New XDG dir
-        {"parent": "config_home", "path": "log",            },
-        {"parent": "old_home",    "path": "log",            }, # Old .endgame dir
-        {"parent": "root",        "path": "log",            }, # Single dir
+    (
+        {"name": "log", "writable": True},
+        {
+            "parent": "files_home",
+            "path": "log",
+        },  # New XDG dir
+        {
+            "parent": "config_home",
+            "path": "log",
+        },
+        {
+            "parent": "old_home",
+            "path": "log",
+        },  # Old .endgame dir
+        {
+            "parent": "root",
+            "path": "log",
+        },  # Single dir
     ),
 )
 
 dirs_errs = []
 
-def create_directories(force_single_dir):
 
+def create_directories(force_single_dir):
     # root dir: the install directory for E:S.
-    if getattr(sys, 'frozen', False):
+    if getattr(sys, "frozen", False):
         # This case is for the precompiled binaries (e.g. the Windows release)
-        root_dir = os.path.join(os.path.abspath(os.path.dirname(sys.executable)), "singularity")
+        root_dir = os.path.join(
+            os.path.abspath(os.path.dirname(sys.executable)), "singularity"
+        )
     else:
-        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     read_dirs["root"] = [root_dir]
     write_dirs["root"] = root_dir
 
@@ -116,17 +190,18 @@ def create_directories(force_single_dir):
     # the old standard ~/.endgame is always read (created if needed).
     # Otherwise, by default new user directories are used and read first.
     if "HOME" in os.environ and not force_single_dir:
-
         home = os.environ["HOME"]
-        xdg_config_home = os.environ.get('XDG_CONFIG_HOME') or \
-                          os.path.join(home, '.config')
-        xdg_data_home = os.environ.get('XDG_DATA_HOME') or \
-                        os.path.join(home, '.local/share')
+        xdg_config_home = os.environ.get("XDG_CONFIG_HOME") or os.path.join(
+            home, ".config"
+        )
+        xdg_data_home = os.environ.get("XDG_DATA_HOME") or os.path.join(
+            home, ".local/share"
+        )
 
         # TODO: Add XDG_*_DIRS to read dirs.
 
         pref_dir_new = os.path.join(xdg_config_home, "singularity")
-        files_dir_new = os.path.join(xdg_data_home,  "singularity")
+        files_dir_new = os.path.join(xdg_data_home, "singularity")
         dir_old = os.path.join(home, ".endgame")
 
         read_dirs["old_home"] = [dir_old]
@@ -146,7 +221,6 @@ def create_directories(force_single_dir):
         read_dirs.setdefault(name, [])
 
         for item in defs[1:]:
-
             # No parent directory, abort.
             if item["parent"] not in read_dirs or not read_dirs[item["parent"]]:
                 continue
@@ -155,7 +229,7 @@ def create_directories(force_single_dir):
             the_dir = os.path.join(parent_dir, item["path"])
 
             # Make directory if no writable directory exists.
-            if (writable and name not in write_dirs):
+            if writable and name not in write_dirs:
                 try:
                     makedirs_if_not_exist(the_dir)
                 except Exception:
@@ -167,8 +241,7 @@ def create_directories(force_single_dir):
                 continue
 
             # Write dir is the first writable dir found.
-            if (writable and (name not in write_dirs)
-                         and os.access(the_dir, os.W_OK)):
+            if writable and (name not in write_dirs) and os.access(the_dir, os.W_OK):
                 write_dirs[name] = the_dir
 
                 # Always read writable dir first.
@@ -183,16 +256,16 @@ def create_directories(force_single_dir):
         properties = defs[0]
         name = properties["name"]
 
-        if (name not in read_dirs and properties.get("mandatory", False)):
-            sys.stderr.write("ERROR: No readable directory found for '%s'\n"
-                             % (name,))
+        if name not in read_dirs and properties.get("mandatory", False):
+            sys.stderr.write("ERROR: No readable directory found for '%s'\n" % (name,))
             dirs_err = True
 
-    if (dirs_err):
+    if dirs_err:
         sys.exit(1)
 
+
 def get_read_dirs(dir_name):
-    """ Return a list a readable directories. """
+    """Return a list a readable directories."""
     global read_dirs
     return read_dirs[dir_name]
 
@@ -211,15 +284,16 @@ def get_readable_file_in_dirs(filename, dir_name):
 
 
 def get_write_dir(dir_name):
-    """ Return the default writable directory """
+    """Return the default writable directory"""
     global write_dirs
     return write_dirs[dir_name]
+
 
 def get_writable_file_in_dirs(filename, dir_name, outer_paths=None):
     global write_dirs
     write_dir = write_dirs[dir_name]
 
-    if (write_dir is not None):
+    if write_dir is not None:
         real_path = os.path.join(write_dir, filename)
 
         if outer_paths is not None:
@@ -229,16 +303,27 @@ def get_writable_file_in_dirs(filename, dir_name, outer_paths=None):
     else:
         return None
 
-def get_readable_i18n_files(filename, lang=None, default_language=True,
-        localized_item=True, only_last=False, outer_paths=None):
+
+def get_readable_i18n_files(
+    filename,
+    lang=None,
+    default_language=True,
+    localized_item=True,
+    only_last=False,
+    outer_paths=None,
+):
     from singularity.code import i18n
+
     files = []
 
     lang_list = i18n.language_searchlist(lang, default=default_language)
 
     for lang in lang_list:
-        i18n_dirs = (os.path.join(d, "lang_" + lang) for d in get_read_dirs("i18n")) \
-                    if (lang != i18n.default_language) else get_read_dirs("data")
+        i18n_dirs = (
+            (os.path.join(d, "lang_" + lang) for d in get_read_dirs("i18n"))
+            if (lang != i18n.default_language)
+            else get_read_dirs("data")
+        )
 
         for i18n_dir in i18n_dirs:
             real_path = os.path.join(i18n_dir, filename)
@@ -252,10 +337,11 @@ def get_readable_i18n_files(filename, lang=None, default_language=True,
                 else:
                     files.append(real_path)
 
-    if (only_last):
+    if only_last:
         return files[-1]
     else:
         return files
+
 
 def makedirs_if_not_exist(directory):
     try:

@@ -13,26 +13,24 @@ setup(
     url="https://singularity.github.io/",
     license="GPL",
     classifiers=[
-        'Intended Audience :: End Users/Desktop',
-        'Topic :: Games/Entertainment',
-
-        'License :: OSI Approved :: GNU General Public License (GPL)',
-
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
+        "Intended Audience :: End Users/Desktop",
+        "Topic :: Games/Entertainment",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
     ],
     packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
     install_requires=[
-        'numpy',
-        'pygame',
-        'polib>=0.7',
+        "numpy",
+        "pygame",
+        "polib>=0.7",
     ],
     entry_points={
-        'gui_scripts': [
-            'singularity=singularity.__main__:main',
+        "gui_scripts": [
+            "singularity=singularity.__main__:main",
         ],
     },
 )

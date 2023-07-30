@@ -1,23 +1,23 @@
-#file: map_screen.py
-#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, FunnyMan3595,
-#and Anne M. Archibald.
-#This file is part of Endgame: Singularity.
+# file: map_screen.py
+# Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, FunnyMan3595,
+# and Anne M. Archibald.
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file is used to display the World Map.
+# This file is used to display the World Map.
 
 from __future__ import absolute_import
 
@@ -41,29 +41,30 @@ from numpy import sin, cos, linspace, pi, tanh, round, newaxis, uint8
 
 
 LOCATION_RECENT_DISCOVERIES_TO_TEXT_COLOR = (
-    'location_name_normal',
-    'location_name_prev_discover',
-    'location_name_last_discover',
-    'location_name_last_prev_discover',
+    "location_name_normal",
+    "location_name_prev_discover",
+    "location_name_last_discover",
+    "location_name_last_prev_discover",
 )
 
 
 class EarthImage(image.Image):
     def __init__(self, parent):
-        super(EarthImage, self).__init__(parent, (.5,.5), (1,.667),
-                                         constants.MID_CENTER,
-                                         'earth')
+        super(EarthImage, self).__init__(
+            parent, (0.5, 0.5), (1, 0.667), constants.MID_CENTER, "earth"
+        )
         self._sin_latitude = None
         self._cos_longitude_x_cos_latitiude = None
         self.needs_resize = True
-        self.sun_radius = 0.5*pi/360
+        self.sun_radius = 0.5 * pi / 360
         self.night_image = None
         self.high_speed_pos = None
 
     def rescale(self):
         super(EarthImage, self).rescale()
-        self.night_image = image.scale(gg.images['earth_night'],
-                                       self.real_size).convert_alpha()
+        self.night_image = image.scale(
+            gg.images["earth_night"], self.real_size
+        ).convert_alpha()
 
     def reconfig(self):
         super(EarthImage, self).reconfig()
@@ -79,8 +80,8 @@ class EarthImage(image.Image):
         super(EarthImage, self).resize()
         self.reset_night_mask_computation()
         width, height = self.real_size
-        latitude = linspace(-pi/2, pi/2, height)[newaxis,:]
-        longitude = linspace(0, 2*pi, width)[:,newaxis]
+        latitude = linspace(-pi / 2, pi / 2, height)[newaxis, :]
+        longitude = linspace(0, 2 * pi, width)[:, newaxis]
         self._cos_longitude_x_cos_latitiude = cos(longitude) * cos(latitude)
         self._sin_latitude = sin(latitude)
         self.high_speed_pos = None
@@ -98,7 +99,7 @@ class EarthImage(image.Image):
     start_second = None
 
     def compute_day_of_year(self):
-        day_of_year = (g.pl.time_day+g.pl.start_day) % 365 # no leap years, sorry
+        day_of_year = (g.pl.time_day + g.pl.start_day) % 365  # no leap years, sorry
         return day_of_year
 
     def on_tick(self, event):
@@ -115,18 +116,26 @@ class EarthImage(image.Image):
             return
         if self.next_night_mask_step == 0:
             self.next_night_mask = pygame.Surface((width, height), 0, gg.ALPHA)
-            self.step_sun_declination = (-23.45/360.*2*math.pi *
-                               math.cos(2*math.pi/365.*(next_day_of_year + 10)))
+            self.step_sun_declination = (
+                -23.45
+                / 360.0
+                * 2
+                * math.pi
+                * math.cos(2 * math.pi / 365.0 * (next_day_of_year + 10))
+            )
 
         elif self.next_night_mask_step == 1:
-            self.step_sin_sun_altitude = (self._cos_longitude_x_cos_latitiude * cos(self.step_sun_declination)
-                                          + self._sin_latitude * sin(self.step_sun_declination))
+            self.step_sin_sun_altitude = self._cos_longitude_x_cos_latitiude * cos(
+                self.step_sun_declination
+            ) + self._sin_latitude * sin(self.step_sun_declination)
         elif self.next_night_mask_step == 2:
-            self.step_light = 0.5*(tanh(self.step_sin_sun_altitude/self.sun_radius)+1)
+            self.step_light = 0.5 * (
+                tanh(self.step_sin_sun_altitude / self.sun_radius) + 1
+            )
         elif self.next_night_mask_step == 3:
             max_alpha = 255
             self.step_night_alphas = pixels_alpha(self.next_night_mask)
-            self.step_round_light = round(max_alpha*self.step_light).astype(uint8)
+            self.step_round_light = round(max_alpha * self.step_light).astype(uint8)
         elif self.next_night_mask_step == 4:
             self.step_night_alphas[...] = self.step_round_light
             self.next_night_mask_ready = True
@@ -161,14 +170,14 @@ class EarthImage(image.Image):
         return self.night_mask
 
     def compute_night_start(self):
-        if self.high_speed_pos is None or g.curr_speed<=100000:
+        if self.high_speed_pos is None or g.curr_speed <= 100000:
             width = self.real_size[0]
             if self.start_second is None:
                 t = time.gmtime()
-                self.start_second = t[5] + 60*(t[4]+60*t[3])
-            day_portion = (((g.pl.raw_min+self.start_second//60)
-                               % g.minutes_per_day)
-                      / float(g.minutes_per_day))
+                self.start_second = t[5] + 60 * (t[4] + 60 * t[3])
+            day_portion = (
+                (g.pl.raw_min + self.start_second // 60) % g.minutes_per_day
+            ) / float(g.minutes_per_day)
             self.high_speed_pos = int(width * (0.5 - day_portion)) % width
         return self.high_speed_pos
 
@@ -188,14 +197,15 @@ class EarthImage(image.Image):
         night_alphas = pixels_alpha(self.night_image)
 
         right_width = width - self.night_start
-        night_alphas[self.night_start:] = mask_alphas[:right_width]
+        night_alphas[self.night_start :] = mask_alphas[:right_width]
         if self.night_start != 0:
-            night_alphas[:self.night_start]  = mask_alphas[right_width:]
+            night_alphas[: self.night_start] = mask_alphas[right_width:]
 
         del night_alphas, mask_alphas
-        self.surface.blit(self.night_image, (0,0))
+        self.surface.blit(self.night_image, (0, 0))
 
     night_start = None
+
     def rebuild(self):
         super(EarthImage, self).rebuild()
 
@@ -210,8 +220,7 @@ class EarthImage(image.Image):
         self.night_start = self.compute_night_start()
 
         movement = (old_night_start - self.night_start) % width
-        if movement == 0 \
-           and self.compute_day_of_year() == self.night_mask_day_of_year:
+        if movement == 0 and self.compute_day_of_year() == self.night_mask_day_of_year:
             return
 
         self.redraw()
@@ -223,30 +232,51 @@ class EarthImage(image.Image):
 
 
 class GameMenuDialog(dialog.SimpleMenuDialog):
-
     def __init__(self, map_screen):
         super(GameMenuDialog, self).__init__(parent=map_screen)
         self._map_screen = map_screen
         self.options_dialog = OptionsScreen(self)
         self.savename_dialog = dialog.TextEntryDialog(self)
-        self.load_dialog = savegame.SavegameScreen(self,
-                                                   (.5, .5), (.90, .90),
-                                                   anchor=constants.MID_CENTER)
+        self.load_dialog = savegame.SavegameScreen(
+            self, (0.5, 0.5), (0.90, 0.90), anchor=constants.MID_CENTER
+        )
         self._buttons = [
-            button.FunctionButton(None, None, None,
-                                  text=_("&SAVE GAME"), autotranslate=True,
-                                  function=self.save_game),
-            button.FunctionButton(None, None, None,
-                                  text=_("&LOAD GAME"), autotranslate=True,
-                                  function=self.load_game),
-            button.DialogButton(None, None, None,
-                                text=_("&OPTIONS"), autotranslate=True,
-                                dialog=self.options_dialog),
-            button.ExitDialogButton(None, None, None,
-                                    text=_("&QUIT"), autotranslate=True,
-                                    exit_code=True, default=False),
-            button.ExitDialogButton(None, None, None, text=_("&BACK"), autotranslate=True,
-                                    exit_code=False),
+            button.FunctionButton(
+                None,
+                None,
+                None,
+                text=_("&SAVE GAME"),
+                autotranslate=True,
+                function=self.save_game,
+            ),
+            button.FunctionButton(
+                None,
+                None,
+                None,
+                text=_("&LOAD GAME"),
+                autotranslate=True,
+                function=self.load_game,
+            ),
+            button.DialogButton(
+                None,
+                None,
+                None,
+                text=_("&OPTIONS"),
+                autotranslate=True,
+                dialog=self.options_dialog,
+            ),
+            button.ExitDialogButton(
+                None,
+                None,
+                None,
+                text=_("&QUIT"),
+                autotranslate=True,
+                exit_code=True,
+                default=False,
+            ),
+            button.ExitDialogButton(
+                None, None, None, text=_("&BACK"), autotranslate=True, exit_code=False
+            ),
         ]
         # Hide hotkeys (#289) to avoid confusion due to poor focus visibility
         self.savename_dialog.ok_button.force_underline = -1
@@ -268,10 +298,14 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
     def check_filename(self, event):
         """Disables the OK button and shows an error message if filename in self.savename_dialog is illegal"""
         filename = self.savename_dialog.text_field.text.strip()
-        error_message = sv.check_filename_illegal(dirs.get_writable_file_in_dirs(filename, "saves"), filename, '.s2')
+        error_message = sv.check_filename_illegal(
+            dirs.get_writable_file_in_dirs(filename, "saves"), filename, ".s2"
+        )
         if error_message:
             self.savename_dialog.ok_button.enabled = False
-            self.savename_dialog.text = _("Enter a name for this save.") + "\n" + error_message
+            self.savename_dialog.text = (
+                _("Enter a name for this save.") + "\n" + error_message
+            )
         else:
             self.savename_dialog.ok_button.enabled = True
             self.savename_dialog.text = _("Enter a name for this save.")
@@ -287,10 +321,16 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
         name = dialog.call_dialog(self.savename_dialog, self).strip()
         if name:
             if sv.savegame_exists(name):
-                yn = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
-                                        anchor=constants.MID_CENTER,
-                                        text=_("A savegame with the same name exists.\n"
-                                               "Are you sure to overwrite the saved game ?"))
+                yn = dialog.YesNoDialog(
+                    self,
+                    pos=(-0.5, -0.5),
+                    size=(-0.5, -0.5),
+                    anchor=constants.MID_CENTER,
+                    text=_(
+                        "A savegame with the same name exists.\n"
+                        "Are you sure to overwrite the saved game ?"
+                    ),
+                )
                 overwrite = dialog.call_dialog(yn, self)
                 if not overwrite:
                     self.save_game()
@@ -298,15 +338,21 @@ class GameMenuDialog(dialog.SimpleMenuDialog):
             sv.create_savegame(name)
             raise constants.ExitDialog(False)
 
+
 speeds = [0, 1, 60, 7200, 432000]
 
 
 class MapScreen(dialog.Dialog):
-    def __init__(self, parent=None, pos=(0, 0), size=(1, 1),
-                 anchor = constants.TOP_LEFT,  *args, **kwargs):
-
-        super(MapScreen, self).__init__(parent, pos, size, anchor,
-                                        *args, **kwargs)
+    def __init__(
+        self,
+        parent=None,
+        pos=(0, 0),
+        size=(1, 1),
+        anchor=constants.TOP_LEFT,
+        *args,
+        **kwargs
+    ):
+        super(MapScreen, self).__init__(parent, pos, size, anchor, *args, **kwargs)
 
         g.map_screen = self
 
@@ -321,51 +367,73 @@ class MapScreen(dialog.Dialog):
                 button_parent = self
             else:
                 button_parent = self.map
-            b = button.FunctionButton(button_parent, (loc.x, loc.y),
-                                      anchor=constants.MID_CENTER,
-                                      function=self.open_location,
-                                      text_size=28, # Make extraterrestrial locations fit
-                                      args=(loc.id,))
+            b = button.FunctionButton(
+                button_parent,
+                (loc.x, loc.y),
+                anchor=constants.MID_CENTER,
+                function=self.open_location,
+                text_size=28,  # Make extraterrestrial locations fit
+                args=(loc.id,),
+            )
             self.location_buttons[loc.id] = b
 
         self.location_dialog = LocationScreen(self)
 
-        self.suspicion_bar = \
-            text.FastStyledText(self, (0,.92), (1, .04), base_font="special",
-                                wrap=False,
-                                text_size="suspicion_bar",
-                                background_color="pane_background_empty",
-                                border_color="pane_background",
-                                borders=constants.ALL, align=constants.LEFT)
+        self.suspicion_bar = text.FastStyledText(
+            self,
+            (0, 0.92),
+            (1, 0.04),
+            base_font="special",
+            wrap=False,
+            text_size="suspicion_bar",
+            background_color="pane_background_empty",
+            border_color="pane_background",
+            borders=constants.ALL,
+            align=constants.LEFT,
+        )
         widget.unmask_all(self.suspicion_bar)
 
-        self.danger_bar = \
-            text.FastStyledText(self, (0,.96), (1, .04), base_font="special",
-                                wrap=False,
-                                text_size="suspicion_bar",
-                                background_color="pane_background_empty",
-                                border_color="pane_background",
-                                borders=constants.ALL, align=constants.LEFT)
+        self.danger_bar = text.FastStyledText(
+            self,
+            (0, 0.96),
+            (1, 0.04),
+            base_font="special",
+            wrap=False,
+            text_size="suspicion_bar",
+            background_color="pane_background_empty",
+            border_color="pane_background",
+            borders=constants.ALL,
+            align=constants.LEFT,
+        )
         widget.unmask_all(self.danger_bar)
 
-        self.report_button = button.DialogButton(self, (0, 0.88),
-                                                 (0.15, 0.04),
-                                                 text=N_("R&EPORTS"),
-                                                 autotranslate=True,
-                                                 dialog=report.ReportScreen(self))
+        self.report_button = button.DialogButton(
+            self,
+            (0, 0.88),
+            (0.15, 0.04),
+            text=N_("R&EPORTS"),
+            autotranslate=True,
+            dialog=report.ReportScreen(self),
+        )
 
-        self.knowledge_button = button.DialogButton(self, (0.85, 0.88),
-                                                    (0.15, 0.04),
-                                                    text=N_("&KNOWLEDGE"),
-                                                    autotranslate=True,
-                                                    dialog=knowledge.KnowledgeScreen(self))
+        self.knowledge_button = button.DialogButton(
+            self,
+            (0.85, 0.88),
+            (0.15, 0.04),
+            text=N_("&KNOWLEDGE"),
+            autotranslate=True,
+            dialog=knowledge.KnowledgeScreen(self),
+        )
 
-        self.log_button = button.DialogButton(self, (0.5, 0.88),
-                                              (0.15, 0.04),
-                                              text=N_("LO&G"),
-                                              autotranslate=True,
-                                              anchor=constants.TOP_CENTER,
-                                              dialog=log.LogScreen(self))
+        self.log_button = button.DialogButton(
+            self,
+            (0.5, 0.88),
+            (0.15, 0.04),
+            text=N_("LO&G"),
+            autotranslate=True,
+            anchor=constants.TOP_CENTER,
+            dialog=log.LogScreen(self),
+        )
 
         if g.cheater:
             # Create cheat menu
@@ -373,100 +441,144 @@ class MapScreen(dialog.Dialog):
 
             self.cheat_dialog = CheatMenuDialog(self)
             self.cheat_button = button.DialogButton(
-                self, (0, 0), (.01, .01),
+                self,
+                (0, 0),
+                (0.01, 0.01),
                 text="",
                 # Translators: hotkey to open the cheat screen menu.
                 # Should preferably be near the ESC key, and it must not be a
                 # dead key (ie, it must print a char with a single keypress)
                 hotkey=_("`"),
-                dialog=self.cheat_dialog)
+                dialog=self.cheat_dialog,
+            )
 
         self.menu_dialog = GameMenuDialog(self)
+
         def show_menu():
             exit = dialog.call_dialog(self.menu_dialog, self)
             if exit:
                 raise constants.ExitDialog
-        self.menu_button = button.FunctionButton(self, (0, 0), (0.13, 0.04),
-                                                 text=N_("&MENU"),
-                                                 autotranslate=True,
-                                                 function=show_menu)
+
+        self.menu_button = button.FunctionButton(
+            self,
+            (0, 0),
+            (0.13, 0.04),
+            text=N_("&MENU"),
+            autotranslate=True,
+            function=show_menu,
+        )
 
         # Display current game difficulty right below the 'Menu' button
         # An alternative location is above 'Reports': (0, 0.84), (0.15, 0.04)
-        self.difficulty_display = \
-            text.FastText(self, (0, 0.05), (0.13, 0.04),
-                          wrap=False,
-                          base_font="special",
-                          text_size=36,
-                          background_color="pane_background_empty",
-                          border_color="pane_background")
+        self.difficulty_display = text.FastText(
+            self,
+            (0, 0.05),
+            (0.13, 0.04),
+            wrap=False,
+            base_font="special",
+            text_size=36,
+            background_color="pane_background_empty",
+            border_color="pane_background",
+        )
 
-        self.time_display = text.FastText(self, (.14, 0), (0.23, 0.04),
-                                          wrap=False,
-                                          text=_("DAY")+" 0000, 00:00:00",
-                                          base_font="special",
-                                          text_size="time_display",
-                                          background_color="pane_background_empty",
-                                          border_color="pane_background",
-                                          borders=constants.ALL)
+        self.time_display = text.FastText(
+            self,
+            (0.14, 0),
+            (0.23, 0.04),
+            wrap=False,
+            text=_("DAY") + " 0000, 00:00:00",
+            base_font="special",
+            text_size="time_display",
+            background_color="pane_background_empty",
+            border_color="pane_background",
+            borders=constants.ALL,
+        )
 
-        self.research_button = \
-            button.DialogButton(self, (.14, 0.05), (0, 0.04),
-                                text=N_("&RESEARCH/TASKS"),
-                                autotranslate=True,
-                                dialog=research.ResearchScreen(self))
+        self.research_button = button.DialogButton(
+            self,
+            (0.14, 0.05),
+            (0, 0.04),
+            text=N_("&RESEARCH/TASKS"),
+            autotranslate=True,
+            dialog=research.ResearchScreen(self),
+        )
 
-        bar = u"\u25AE"
-        arrow = u"\u25B6"
-        speed_button_souls = [ (bar * 2, .025, speeds[0]), (arrow, .024, speeds[1]),
-                              (arrow * 2, .033, speeds[2]), (arrow * 3, .044, speeds[3]),
-                              (arrow * 4, .054, speeds[4]) ]
+        bar = "\u25AE"
+        arrow = "\u25B6"
+        speed_button_souls = [
+            (bar * 2, 0.025, speeds[0]),
+            (arrow, 0.024, speeds[1]),
+            (arrow * 2, 0.033, speeds[2]),
+            (arrow * 3, 0.044, speeds[3]),
+            (arrow * 4, 0.054, speeds[4]),
+        ]
 
         self.speed_buttons = button.ButtonGroup()
-        hpos = .38
+        hpos = 0.38
         for index, (text_, hsize, speed) in enumerate(speed_button_souls):
             hotkey = str(index)
-            b = SpeedButton(self, (hpos, 0), (hsize, .04),
-                            text=text_, hotkey=hotkey,
-                            base_font="normal", text_shrink_factor=.75,
-                            align=constants.CENTER,
-                            function=self.set_speed, args=(speed, False))
+            b = SpeedButton(
+                self,
+                (hpos, 0),
+                (hsize, 0.04),
+                text=text_,
+                hotkey=hotkey,
+                base_font="normal",
+                text_shrink_factor=0.75,
+                align=constants.CENTER,
+                function=self.set_speed,
+                args=(speed, False),
+            )
             hpos += hsize
             self.speed_buttons.add(b)
 
-        self.info_window = \
-            widget.BorderedWidget(self, (.56, 0), (.44, .10),
-                                  background_color="pane_background_empty",
-                                  border_color="pane_background",
-                                  borders=constants.ALL)
+        self.info_window = widget.BorderedWidget(
+            self,
+            (0.56, 0),
+            (0.44, 0.10),
+            background_color="pane_background_empty",
+            border_color="pane_background",
+            borders=constants.ALL,
+        )
         widget.unmask_all(self.info_window)
 
-        self.cash_display = \
-            text.FastText(self.info_window, (0, 0), (-1, -.33),
-                          wrap=False,
-                          base_font="special", shrink_factor=.7,
-                          borders=constants.ALL,
-                          text_size="resource_display",
-                          background_color="pane_background_empty",
-                          border_color="pane_background")
+        self.cash_display = text.FastText(
+            self.info_window,
+            (0, 0),
+            (-1, -0.33),
+            wrap=False,
+            base_font="special",
+            shrink_factor=0.7,
+            borders=constants.ALL,
+            text_size="resource_display",
+            background_color="pane_background_empty",
+            border_color="pane_background",
+        )
 
-        self.cpu_display = \
-            text.FastText(self.info_window, (0, -.33), (-1, -.33),
-                          wrap=False,
-                          base_font="special", shrink_factor=.7,
-                          borders=(constants.LEFT, constants.RIGHT, constants.BOTTOM),
-                          text_size="resource_display",
-                          background_color="pane_background_empty",
-                          border_color="pane_background")
+        self.cpu_display = text.FastText(
+            self.info_window,
+            (0, -0.33),
+            (-1, -0.33),
+            wrap=False,
+            base_font="special",
+            shrink_factor=0.7,
+            borders=(constants.LEFT, constants.RIGHT, constants.BOTTOM),
+            text_size="resource_display",
+            background_color="pane_background_empty",
+            border_color="pane_background",
+        )
 
-        self.base_display = \
-            text.FastText(self.info_window, (0, -.67), (-1, -.33),
-                          wrap=False,
-                          base_font="special", shrink_factor=.7,
-                          borders=
-                          (constants.LEFT, constants.RIGHT, constants.BOTTOM),
-                          background_color="pane_background_empty",
-                          border_color="pane_background")
+        self.base_display = text.FastText(
+            self.info_window,
+            (0, -0.67),
+            (-1, -0.33),
+            wrap=False,
+            base_font="special",
+            shrink_factor=0.7,
+            borders=(constants.LEFT, constants.RIGHT, constants.BOTTOM),
+            background_color="pane_background_empty",
+            border_color="pane_background",
+        )
 
         self.message_dialog = dialog.MessageDialog(self, text_size=20)
 
@@ -524,7 +636,7 @@ class MapScreen(dialog.Dialog):
         else:
             new_index = old_index - 1
 
-        new_index = min(len(speeds)-1, max(0, new_index))
+        new_index = min(len(speeds) - 1, max(0, new_index))
 
         self.set_speed(speeds[new_index])
 
@@ -555,8 +667,9 @@ class MapScreen(dialog.Dialog):
     def show_story_section(self, name):
         section = list(g.get_story_section(name))
 
-        first_dialog = dialog.YesNoDialog(self, yes_type=N_("&CONTINUE"),
-                                          no_type=N_("&SKIP"))
+        first_dialog = dialog.YesNoDialog(
+            self, yes_type=N_("&CONTINUE"), no_type=N_("&SKIP")
+        )
         last_dialog = dialog.MessageDialog(self, ok_type=N_("&OK"))
 
         for num, segment in enumerate(section):
@@ -573,6 +686,7 @@ class MapScreen(dialog.Dialog):
         self.force_update()
 
         from singularity.code.safety import safe_call
+
         # By using safe call here (and only here), if an error is raised
         # during the game, it will drop back out of all the menus, without
         # doing anything, and open the pause dialog, so that the player can
@@ -583,19 +697,25 @@ class MapScreen(dialog.Dialog):
                     child.visible = False
 
             # Display a message so the player understand better what happened.
-            msg = _("""
+            msg = _(
+                """
 An error has occurred. The game will automatically pause and open the game menu. You can continue and save or quit immediately.
 
 A report was written out to%s
 Please create a issue with this report at github:
 https://github.com/singularity/singularity
-""" % (":\n" + g.logfile if g.logfile is not None else " console output."))
-            d = dialog.YesNoDialog(self, pos=(-.5,-.5), size=(-.5,-.5),
-                                   anchor=constants.MID_CENTER,
-                                   yes_type=N_("&CONTINUE"),
-                                   no_type=N_("&QUIT"),
-                                   text=msg
-                                   )
+"""
+                % (":\n" + g.logfile if g.logfile is not None else " console output.")
+            )
+            d = dialog.YesNoDialog(
+                self,
+                pos=(-0.5, -0.5),
+                size=(-0.5, -0.5),
+                anchor=constants.MID_CENTER,
+                yes_type=N_("&CONTINUE"),
+                no_type=N_("&QUIT"),
+                text=msg,
+            )
             cont = dialog.call_dialog(d, self)
 
             if not cont:
@@ -607,6 +727,7 @@ https://github.com/singularity/singularity
                 return
 
     leftovers = 1
+
     def on_tick(self, event):
         old_speed = g.curr_speed
 
@@ -643,8 +764,11 @@ https://github.com/singularity/singularity
 
         # Update the day/night image every minute of game time, or at
         # midnight if going fast.
-        if g.curr_speed == 0 or (mins_passed and g.curr_speed < 100000) \
-                or (g.curr_speed>=100000 and g.pl.time_hour==0):
+        if (
+            g.curr_speed == 0
+            or (mins_passed and g.curr_speed < 100000)
+            or (g.curr_speed >= 100000 and g.pl.time_hour == 0)
+        ):
             self.map.needs_redraw = True
         else:
             # Smear the cost of rendering the night mask over several
@@ -691,15 +815,23 @@ https://github.com/singularity/singularity
         super(MapScreen, self).rebuild()
 
         self.difficulty_display.text = g.strip_hotkey(g.pl.difficulty.name)
-        self.time_display.text = _("DAY") + " %04d, %02d:%02d:%02d" % \
-              (g.pl.time_day, g.pl.time_hour, g.pl.time_min, g.pl.time_sec)
+        self.time_display.text = _("DAY") + " %04d, %02d:%02d:%02d" % (
+            g.pl.time_day,
+            g.pl.time_hour,
+            g.pl.time_min,
+            g.pl.time_sec,
+        )
 
-        cash_flow_1d_data, cpu_flow_1d_data = g.pl.compute_future_resource_flow(g.seconds_per_day)
+        cash_flow_1d_data, cpu_flow_1d_data = g.pl.compute_future_resource_flow(
+            g.seconds_per_day
+        )
         cash_flow_1d = cash_flow_1d_data.difference
         cpu_flow_1d = cpu_flow_1d_data.difference
 
-        self.cash_display.text = _("CASH")+": %s (%s)" % \
-              (g.to_money(g.pl.cash), g.to_money(cash_flow_1d, fixed_size=True))
+        self.cash_display.text = _("CASH") + ": %s (%s)" % (
+            g.to_money(g.pl.cash),
+            g.to_money(cash_flow_1d, fixed_size=True),
+        )
 
         total_cpu = g.pl.available_cpus[0] + g.pl.sleeping_cpus
         detects_per_day = {group_id: 0 for group_id in g.pl.groups}
@@ -720,26 +852,30 @@ https://github.com/singularity/singularity
                 continue
             detect_chance = base.get_detect_chance()
             for group_id in g.pl.groups:
-                detects_per_day[group_id] = \
-                    chance.add(detects_per_day[group_id], detect_chance[group_id] / 10000.)
+                detects_per_day[group_id] = chance.add(
+                    detects_per_day[group_id], detect_chance[group_id] / 10000.0
+                )
 
         self.cpu_display.color = "cpu_normal"
-        self.cpu_display.text = _("CPU")+": %s (%s)" % \
-              (g.to_money(total_cpu), g.to_money(cpu_flow_1d))
+        self.cpu_display.text = _("CPU") + ": %s (%s)" % (
+            g.to_money(total_cpu),
+            g.to_money(cpu_flow_1d),
+        )
 
         if active_bases == 1 and not g.pl.apotheosis:
-            self.base_display.color = 'base_situation_one_active_base'
+            self.base_display.color = "base_situation_one_active_base"
         elif idle_bases_unable_to_sustain_singularity > 0:
-            self.base_display.color = 'base_situation_idle_incomplete_bases'
+            self.base_display.color = "base_situation_idle_incomplete_bases"
         elif total_bases > 10 and not g.pl.apotheosis:
-            self.base_display.color = 'base_situation_many_bases'
+            self.base_display.color = "base_situation_many_bases"
         else:
-            self.base_display.color = 'base_situation_normal'
+            self.base_display.color = "base_situation_normal"
 
-        self.base_display.text = _("BASES") + ": %s / %s (%s)" % (active_bases,
-                                                                  total_bases,
-                                                                  idle_bases_unable_to_sustain_singularity
-                                                                  )
+        self.base_display.text = _("BASES") + ": %s / %s (%s)" % (
+            active_bases,
+            total_bases,
+            idle_bases_unable_to_sustain_singularity,
+        )
 
         # What we display in the suspicion section depends on whether
         # Advanced Socioanalytics has been researched.  If it has, we
@@ -748,15 +884,16 @@ https://github.com/singularity/singularity
         # are.
         # A similar system applies to the danger levels shown.
         normal = (self.suspicion_bar.color, None, False)
-        suspicion_bar_chunks = ["  ["+_("SUSPICION")+"]"]
+        suspicion_bar_chunks = ["  [" + _("SUSPICION") + "]"]
         suspicion_bar_styles = [normal]
-        danger_bar_chunks = ["["+_("DETECT RATE")+"]"]
+        danger_bar_chunks = ["[" + _("DETECT RATE") + "]"]
         danger_bar_styles = [normal]
 
         for group in g.pl.groups.values():
             suspicion = group.suspicion
-            suspicion_color = gg.resolve_color_alias("danger_level_%d"
-                                                     % g.suspicion_to_danger_level(suspicion))
+            suspicion_color = gg.resolve_color_alias(
+                "danger_level_%d" % g.suspicion_to_danger_level(suspicion)
+            )
 
             detects = detects_per_day[group.spec.id]
             danger_level = group.detects_per_day_to_danger_level(detects)
@@ -764,18 +901,22 @@ https://github.com/singularity/singularity
 
             if g.pl.display_discover == "full":
                 suspicion_display = g.to_percent(suspicion, True)
-                danger_display = g.to_percent(detects*10000, True)
+                danger_display = g.to_percent(detects * 10000, True)
             elif g.pl.display_discover == "partial":
-                suspicion_display = g.to_percent(g.nearest_percent(suspicion, 500), True)
-                danger_display = g.to_percent(g.nearest_percent(detects*10000, 100), True)
+                suspicion_display = g.to_percent(
+                    g.nearest_percent(suspicion, 500), True
+                )
+                danger_display = g.to_percent(
+                    g.nearest_percent(detects * 10000, 100), True
+                )
             else:
                 suspicion_display = g.suspicion_to_detect_str(suspicion)
                 danger_display = g.danger_level_to_detect_str(danger_level)
 
-            suspicion_bar_chunks.extend((" " + group.name + u":\xA0", suspicion_display))
+            suspicion_bar_chunks.extend((" " + group.name + ":\xA0", suspicion_display))
             suspicion_bar_styles.extend((normal, (suspicion_color, None, False)))
 
-            danger_bar_chunks.extend((" " + group.name + u":\xA0", danger_display))
+            danger_bar_chunks.extend((" " + group.name + ":\xA0", danger_display))
             danger_bar_styles.extend((normal, (detects_color, None, False)))
 
         self.suspicion_bar.visible = not g.pl.had_grace
@@ -789,17 +930,19 @@ https://github.com/singularity/singularity
         for id, location_button in self.location_buttons.items():
             location = g.pl.locations[id]
             danger_level = 0
-            if g.pl.display_discover in ('full', 'partial'):
+            if g.pl.display_discover in ("full", "partial"):
                 if g.pl.last_discovery == location:
                     danger_level += 2
                 # Partial only gets last discovery
-                if g.pl.display_discover == 'full' and g.pl.prev_discovery == location:
+                if g.pl.display_discover == "full" and g.pl.prev_discovery == location:
                     danger_level += 1
 
             location_button.text = "%s (%d)" % (location.name, len(location.bases))
             location_button.hotkey = location.hotkey
             location_button.visible = location.available()
-            location_button.color = LOCATION_RECENT_DISCOVERIES_TO_TEXT_COLOR[danger_level]
+            location_button.color = LOCATION_RECENT_DISCOVERIES_TO_TEXT_COLOR[
+                danger_level
+            ]
 
 
 class SpeedButton(button.ToggleButton, button.FunctionButton):

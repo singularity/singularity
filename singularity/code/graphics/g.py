@@ -1,23 +1,23 @@
-#file: g.py
-#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
+# file: g.py
+# Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
-#This file is part of Endgame: Singularity.
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains all global objects.
+# This file contains all global objects.
 
 from __future__ import absolute_import
 
@@ -34,46 +34,45 @@ desktop_size = ()
 # It will not affect windows smaller than desktop size
 desktop_margin = (70, 70)
 
-#initial screen size. Can be set via command-line option or preferences file
+# initial screen size. Can be set via command-line option or preferences file
 default_screen_size = (1024, 768)
 
-#Current screen size. This size is an abstraction, tightly tied to resolutions.
-#Real window size in windowed mode may be smaller due to desktop_margin
+# Current screen size. This size is an abstraction, tightly tied to resolutions.
+# Real window size in windowed mode may be smaller due to desktop_margin
 screen_size = default_screen_size
 
-#Current real window size. Will be the same as screen_size if fullscreen or
-#if abstracted screen_size is a custom resolution
+# Current real window size. Will be the same as screen_size if fullscreen or
+# if abstracted screen_size is a custom resolution
 real_screen_size = screen_size
 
 min_resolution = (100, 100)
 
 # Available resolutions
 resolutions = [
-    ( 800, 600),
+    (800, 600),
     (1024, 600),
     (1024, 768),
-    (1280,1024),
-
+    (1280, 1024),
     (1280, 800),
     (1366, 768),
     (1440, 900),
-    (1920,1080),
+    (1920, 1080),
 ]
 
 
 # Configurable by the user
 configured_text_sizes = {
-    'default': 20,
-    'button': 36,
-    'suspicion_bar': 32,
-    'time_display': 24,
-    'resource_display': 24,
-    'report_content': 20,
+    "default": 20,
+    "button": 36,
+    "suspicion_bar": 32,
+    "time_display": 24,
+    "resource_display": 24,
+    "report_content": 20,
 }
 
 fullscreen = False
 
-#colors:
+# colors:
 colors = {}
 
 # Cache font dictionary.
@@ -99,10 +98,8 @@ screen_surface = None
 
 
 def init_graphics_system():
-
     global desktop_size
-    width, height = (pygame.display.Info().current_w,
-                     pygame.display.Info().current_h)
+    width, height = (pygame.display.Info().current_w, pygame.display.Info().current_h)
 
     if width > 0 and height > 0:
         desktop_size = (width, height)
@@ -115,6 +112,7 @@ def init_graphics_system():
 
     # Initialize the cache of the current theme.
     from singularity.code.graphics import theme
+
     theme.current.init_cache()
 
     init_alpha()
@@ -133,24 +131,33 @@ def get_screen_size_list():
 
     # Remove resolution inferior to minimal size since we will not allows them.
     if min_resolution:
-        res_list = filter(lambda res: res[0] >= min_resolution[0] and res[1] >= min_resolution[1], res_list)
+        res_list = filter(
+            lambda res: res[0] >= min_resolution[0] and res[1] >= min_resolution[1],
+            res_list,
+        )
 
     # Remove resolution superior to desktop size since we will not allows them.
     if desktop_size:
-        res_list = filter(lambda res: res[0] <= desktop_size[0] and res[1] <= desktop_size[1], res_list)
+        res_list = filter(
+            lambda res: res[0] <= desktop_size[0] and res[1] <= desktop_size[1],
+            res_list,
+        )
 
     return sorted(res_list)
 
+
 # TODO: Allows Fullscreen resolution could be higher than desktop_size when possible.
 def set_screen_size(size=None, fs=None):
-    """ Calculates proper real and abstract screen sizes
-        based on current and given screen size, fullscreen and desktop size
+    """Calculates proper real and abstract screen sizes
+    based on current and given screen size, fullscreen and desktop size
     """
     global screen_size, real_screen_size, fullscreen
 
     # default values for size and fullscreen are current values
-    if size is None: size = screen_size
-    if fs   is None: fs   = fullscreen
+    if size is None:
+        size = screen_size
+    if fs is None:
+        fs = fullscreen
 
     # sets the new values
     screen_size = size
@@ -158,12 +165,15 @@ def set_screen_size(size=None, fs=None):
 
     # Limit screen to minimal value
     if min_resolution:
-        screen_size = (min_resolution[0] if screen_size[0] < min_resolution[0] else screen_size[0],
-                       min_resolution[1] if screen_size[1] < min_resolution[1] else screen_size[1]) 
+        screen_size = (
+            min_resolution[0] if screen_size[0] < min_resolution[0] else screen_size[0],
+            min_resolution[1] if screen_size[1] < min_resolution[1] else screen_size[1],
+        )
 
     # Limit the screen size to desktop size
-    if desktop_size and (screen_size[0] > desktop_size[0] or
-                         screen_size[1] > desktop_size[1]):
+    if desktop_size and (
+        screen_size[0] > desktop_size[0] or screen_size[1] > desktop_size[1]
+    ):
         screen_size = desktop_size
 
     # Default real size is the same as abstract screen size
@@ -175,8 +185,10 @@ def set_screen_size(size=None, fs=None):
     if not fullscreen and desktop_size and screen_size in resolutions:
         # margin is applied independently for width and height
         width, height = screen_size
-        if width  == desktop_size[0]: width  -= desktop_margin[0]
-        if height == desktop_size[1]: height -= desktop_margin[1]
+        if width == desktop_size[0]:
+            width -= desktop_margin[0]
+        if height == desktop_size[1]:
+            height -= desktop_margin[1]
         real_screen_size = (width, height)
 
 
@@ -194,6 +206,7 @@ def set_mode():
 
 def load_font(filename):
     from singularity.code.graphics.font import FontList
+
     return FontList(filename)
 
 
@@ -204,9 +217,10 @@ def load_image(filename):
     image.set_colorkey((255, 0, 255, 255), pygame.RLEACCEL)
     return image.convert_alpha()
 
+
 def init_alpha():
     global ALPHA
-    ALPHA = pygame.Surface((0,0)).convert_alpha()
+    ALPHA = pygame.Surface((0, 0)).convert_alpha()
 
 
 def resolve_image_alias(image):

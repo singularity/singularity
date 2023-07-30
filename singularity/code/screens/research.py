@@ -1,22 +1,22 @@
-#file: research_screen.py
-#Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: research_screen.py
+# Copyright (C) 2005,2006,2008 Evil Mr Henry, Phil Bordelon, and FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the global research screen.
+# This file contains the global research screen.
 
 from __future__ import absolute_import
 
@@ -28,23 +28,27 @@ from singularity.code.graphics import dialog, button, slider, text, constants, l
 
 
 class ResearchScreen(dialog.ChoiceDescriptionDialog):
-    def __init__(self, parent, pos=(.5, .1), size=(.93, .63), *args, **kwargs):
+    def __init__(self, parent, pos=(0.5, 0.1), size=(0.93, 0.63), *args, **kwargs):
         self.dirty_count = True
         super(ResearchScreen, self).__init__(parent, pos, size, *args, **kwargs)
         self.listbox.parent = None
-        self.listbox = listbox.CustomListbox(self, (0,0), (.53, .55),
-                                             list_item_height=0.06,
-                                             remake_func=self.make_item,
-                                             rebuild_func=self.update_item,
-                                             update_func=self.handle_update)
-        self.description_pane.size = (.39, .55)
+        self.listbox = listbox.CustomListbox(
+            self,
+            (0, 0),
+            (0.53, 0.55),
+            list_item_height=0.06,
+            remake_func=self.make_item,
+            rebuild_func=self.update_item,
+            update_func=self.handle_update,
+        )
+        self.description_pane.size = (0.39, 0.55)
 
         self.desc_func = self.on_select
 
         self.help_dialog = dialog.MessageDialog(self)
 
         self.yes_button.parent = None
-        self.no_button.pos = (-.5,-.99)
+        self.no_button.pos = (-0.5, -0.99)
         self.no_button.anchor = constants.BOTTOM_CENTER
 
         self.add_handler(constants.KEY, self._got_key, priority=5)
@@ -70,15 +74,28 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         elif key == "jobs":
             job = task.get_current("jobs")
             profit = job.get_profit()
-            template = "%s\n" + ngettext("%s money per CPU per day.", "%s money per CPU per day.", profit) + "\n---\n%s"
+            template = (
+                "%s\n"
+                + ngettext(
+                    "%s money per CPU per day.", "%s money per CPU per day.", profit
+                )
+                + "\n---\n%s"
+            )
             description = template % (job.name, profit, job.description)
         else:
             description = ""
 
-        text.Text(self.description_pane, (0,0), (-1,-1), text=description,
-                  background_color="pane_background", text_size=18,
-                  align=constants.LEFT, valign=constants.TOP,
-                  borders=constants.ALL)
+        text.Text(
+            self.description_pane,
+            (0, 0),
+            (-1, -1),
+            text=description,
+            background_color="pane_background",
+            text_size=18,
+            align=constants.LEFT,
+            valign=constants.TOP,
+            borders=constants.ALL,
+        )
 
     def make_item(self, canvas):
         # Dirty, underhanded trick to make the canvas into a progress bar.
@@ -86,32 +103,49 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.progress = 0
         canvas.progress_color = "progress_background_progress"
 
-        canvas.research_name = text.Text(canvas, (-.01, -.01), (-.70, -.5),
-                                         align=constants.LEFT,
-                                         background_color="clear")
+        canvas.research_name = text.Text(
+            canvas,
+            (-0.01, -0.01),
+            (-0.70, -0.5),
+            align=constants.LEFT,
+            background_color="clear",
+        )
         canvas.research_name.visible = False
-        canvas.alloc_cpus = text.Text(canvas, (-.99, -.01), (-.21, -.5),
-                                      anchor=constants.TOP_RIGHT,
-                                      text="1,000,000,000",
-                                      align=constants.RIGHT,
-                                      background_color="clear")
+        canvas.alloc_cpus = text.Text(
+            canvas,
+            (-0.99, -0.01),
+            (-0.21, -0.5),
+            anchor=constants.TOP_RIGHT,
+            text="1,000,000,000",
+            align=constants.RIGHT,
+            background_color="clear",
+        )
         canvas.alloc_cpus.visible = False
-        canvas.slider = slider.UpdateSlider(canvas, (-.01, -.55), (-.98, -.40),
-                                            anchor=constants.TOP_LEFT,
-                                            horizontal=True, priority=150)
+        canvas.slider = slider.UpdateSlider(
+            canvas,
+            (-0.01, -0.55),
+            (-0.98, -0.40),
+            anchor=constants.TOP_LEFT,
+            horizontal=True,
+            priority=150,
+        )
         canvas.slider.visible = False
 
-        canvas.help_button = button.FunctionButton(canvas, (-.11, -.55),
-                                                   (0, -.40), text=" ??? ",
-                                                   text_shrink_factor=1,
-                                                   base_font="normal",
-                                                   function=self.show_help)
+        canvas.help_button = button.FunctionButton(
+            canvas,
+            (-0.11, -0.55),
+            (0, -0.40),
+            text=" ??? ",
+            text_shrink_factor=1,
+            base_font="normal",
+            function=self.show_help,
+        )
 
     def cpu_for(self, key):
         return g.pl.get_allocated_cpu_for(key, 0)
 
     def update_item(self, canvas, name, key):
-        visible = (key is not None)
+        visible = key is not None
         canvas.research_name.visible = visible
         canvas.alloc_cpus.visible = visible
         canvas.slider.visible = visible
@@ -133,6 +167,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         def my_slide(new_pos):
             self.handle_slide(key, new_pos)
             self.needs_rebuild = True
+
         canvas.slider.update_func = my_slide
 
         canvas.research_name.text = name
@@ -147,7 +182,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         canvas.slider.slider_pos = cpu
         canvas.slider.slider_max = total_cpu
         canvas.slider.slider_size = ss = g.pl.available_cpus[0] // 10 + 1
-        full_size = -.98
+        full_size = -0.98
         if total_cpu:
             size_fraction = (total_cpu + ss) / float(g.pl.available_cpus[0] + ss)
         else:
@@ -157,18 +192,18 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             # the research screen.  However, that looks odd - especially with
             # a help button, so we special case this here to ensure it looks
             # reasonable.
-            size_fraction = .10
-        canvas.slider.size = (full_size * size_fraction, -.4)
+            size_fraction = 0.10
+        canvas.slider.size = (full_size * size_fraction, -0.4)
         canvas.alloc_cpus.text = g.add_commas(cpu)
 
     def calc_cpu_left(self):
         cpu_count = array(g.pl.available_cpus, int64)
         for task_id, cpu in g.pl.get_cpu_allocations():
             danger = task.danger_for(task_id)
-            cpu_count[:danger+1] -= cpu
+            cpu_count[: danger + 1] -= cpu
 
         for i in range(1, 4):
-            cpu_count[i] = min(cpu_count[i-1:i+1])
+            cpu_count[i] = min(cpu_count[i - 1 : i + 1])
 
         return [int(c) for c in cpu_count]
 
@@ -179,16 +214,19 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
         self.parent.needs_rebuild = True
 
     def show_help(self, danger_level):
-        self.help_dialog.text = _("This technology is too dangerous to research on any of the computers I have. {TEXT}").format(
-                                  TEXT=g.dangers[danger_level].research_desc)
+        self.help_dialog.text = _(
+            "This technology is too dangerous to research on any of the computers I have. {TEXT}"
+        ).format(TEXT=g.dangers[danger_level].research_desc)
         dialog.call_dialog(self.help_dialog, self)
 
     def show(self):
-        techs = [tech for tech in g.pl.techs.values() if tech.available()
-                                                      and not tech.done]
+        techs = [
+            tech for tech in g.pl.techs.values() if tech.available() and not tech.done
+        ]
         techs.sort(key=lambda tech: i18n.lex_sorting_form(tech.spec.name))
-        self.list = [_("CPU Pool"), task.get_current("jobs").name] + \
-                    [_("Research %s") % tech.name for tech in techs]
+        self.list = [_("CPU Pool"), task.get_current("jobs").name] + [
+            _("Research %s") % tech.name for tech in techs
+        ]
         self.key_list = ["cpu_pool", "jobs"] + [tech.id for tech in techs]
         self.listbox.key_list = self.key_list
 

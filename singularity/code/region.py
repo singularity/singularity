@@ -1,29 +1,28 @@
-#file: region.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: region.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the Region class.
+# This file contains the Region class.
 
 import random
 from singularity import g
 
 
 class RegionSpec(object):
-    
     def __init__(self, id, modifiers_list):
         self.id = id
         self.modifiers_list = modifiers_list
@@ -55,20 +54,21 @@ class Region(object):
 
     def serialize_obj(self):
         return {
-            'id': g.to_internal_id('region', self.spec.id),
+            "id": g.to_internal_id("region", self.spec.id),
             # We only store the modifier entry per location as we can trivially get the
             # most recent modifier from that.
-            'modifier_entry_by_location': [
+            "modifier_entry_by_location": [
                 {
-                    'loc_id': k,
-                    'modifier_entry': v,
-                } for k, v in self._modifier_entry_by_location.items()
+                    "loc_id": k,
+                    "modifier_entry": v,
+                }
+                for k, v in self._modifier_entry_by_location.items()
             ],
         }
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        spec_id = g.convert_internal_id('region', obj_data['id'])
+        spec_id = g.convert_internal_id("region", obj_data["id"])
         spec = g.regions[spec_id]
         region = Region(spec, loading_savegame=True)
         modifiers_list = spec.modifiers_list
@@ -76,16 +76,20 @@ class Region(object):
         used_entries = set()
 
         # Load and assign existing entries - data quality permitting
-        for modifier_data in obj_data['modifier_entry_by_location']:
-            loc_id = g.convert_internal_id('location', modifier_data['loc_id'])
+        for modifier_data in obj_data["modifier_entry_by_location"]:
+            loc_id = g.convert_internal_id("location", modifier_data["loc_id"])
             if loc_id not in region_locations:
                 # Location is no longer in this Region
                 continue
 
-            modifier_entry = modifier_data.get('modifier_entry')
+            modifier_entry = modifier_data.get("modifier_entry")
 
             # Check for corrupt data
-            assert modifier_entry is not None and modifier_entry >= 0 and modifier_entry not in used_entries
+            assert (
+                modifier_entry is not None
+                and modifier_entry >= 0
+                and modifier_entry not in used_entries
+            )
 
             used_entries.add(modifier_entry)
             region._modifier_entry_by_location[loc_id] = modifier_entry
@@ -95,8 +99,14 @@ class Region(object):
                 region.modifier_by_location[loc_id] = {}
 
         # Handle new locations being added to the region after the savegame was made.
-        new_locations = [loc_id for loc_id in region_locations if loc_id not in region._modifier_entry_by_location]
-        missing_entries = [entry for entry in range(len(region_locations)) if entry not in used_entries]
+        new_locations = [
+            loc_id
+            for loc_id in region_locations
+            if loc_id not in region._modifier_entry_by_location
+        ]
+        missing_entries = [
+            entry for entry in range(len(region_locations)) if entry not in used_entries
+        ]
         assert len(missing_entries) == len(new_locations)
         region._assign_modifiers(missing_entries, new_locations)
 
@@ -107,7 +117,14 @@ class Region(object):
         # Prior to 1.0 (beta1), there was only one region (URBAN) and we can mostly
         # recreate it by looking at the location modifiers.
         # Only these 6 locations were in the URBAN region prior to 1.0 (beta1)
-        urban_location_ids = {'N AMERICA', 'S AMERICA', 'EUROPE', 'ASIA', 'AFRICA', 'AUSTRALIA'}
+        urban_location_ids = {
+            "N AMERICA",
+            "S AMERICA",
+            "EUROPE",
+            "ASIA",
+            "AFRICA",
+            "AUSTRALIA",
+        }
         modifier_entry_by_location = []
         # We use this set to ensure a modifier is only given once; the deserialize_obj method
         # checks for it.
@@ -120,15 +137,15 @@ class Region(object):
         }
 
         for loc_data in serialized_location_data:
-            raw_loc_id = loc_data['id']
-            loc_id = g.convert_internal_id('location', raw_loc_id)
+            raw_loc_id = loc_data["id"]
+            loc_id = g.convert_internal_id("location", raw_loc_id)
             if loc_id not in urban_location_ids:
                 continue
-            modifier = loc_data.get('_modifiers')
+            modifier = loc_data.get("_modifiers")
             if not modifier:
                 continue
-            cpu_mod = modifier.get('cpu', 1)
-            thrift_mod = modifier.get('thrift', 1)
+            cpu_mod = modifier.get("cpu", 1)
+            thrift_mod = modifier.get("thrift", 1)
             # Actual bonuses were 1.2 and maluses were 0.83 - we use 1.05 and 0.95 here
             # because it is sufficient to detect whether it was a bonus or malus without
             # having to worry about floating point rounding errors.
@@ -144,10 +161,12 @@ class Region(object):
 
             if modifier_entry in remaining_mods:
                 remaining_mods.discard(modifier_entry)
-                modifier_entry_by_location.append({
-                    'loc_id': raw_loc_id,
-                    'modifier_entry': modifier_entry - 1,
-                })
+                modifier_entry_by_location.append(
+                    {
+                        "loc_id": raw_loc_id,
+                        "modifier_entry": modifier_entry - 1,
+                    }
+                )
             # else:
             #   Do nothing - the region deserialization will assign them a random
             #   entry
@@ -155,7 +174,7 @@ class Region(object):
         # Finally, generate what the serialized data should have looked like
         return [
             {
-                'id': g.to_internal_id('region', 'URBAN'),
-                'modifier_entry_by_location': modifier_entry_by_location,
+                "id": g.to_internal_id("region", "URBAN"),
+                "modifier_entry_by_location": modifier_entry_by_location,
             }
         ]

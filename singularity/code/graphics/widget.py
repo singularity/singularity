@@ -1,22 +1,22 @@
-#file: widget.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: widget.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the widget class.
+# This file contains the widget class.
 
 from __future__ import absolute_import
 
@@ -37,24 +37,27 @@ else:
 
 def unmask(widget):
     """Causes the widget to exist above its parent's fade mask.  The widget's
-       children will still be masked, unless they are unmasked themselves."""
+    children will still be masked, unless they are unmasked themselves."""
     unmask_all(widget)
     widget.mask_children = True
 
+
 def unmask_all(widget):
     """Causes the widget to exist above its parent's fade mask.  The widget's
-       children will not be masked."""
+    children will not be masked."""
     widget.self_mask = True
     widget.do_mask = lambda: None
 
+
 def call_on_change(data_member, call_me, *args, **kwargs):
     """Creates a data member that calls a function when changed."""
+
     def get(self):
         return getattr(self, data_member)
 
     def set(self, my_value):
         if data_member in self.__dict__:
-            change = (my_value != self.__dict__[data_member])
+            change = my_value != self.__dict__[data_member]
         else:
             change = True
 
@@ -64,35 +67,43 @@ def call_on_change(data_member, call_me, *args, **kwargs):
 
     return property(get, set)
 
-def set_on_change(data_member, set_me, set_value = True):
+
+def set_on_change(data_member, set_me, set_value=True):
     """Creates a data member that sets another data member to a given value
-       when changed."""
+    when changed."""
     return call_on_change(data_member, setattr, set_me, set_value)
+
 
 def causes_rebuild(data_member):
     """Creates a data member that sets needs_rebuild to True when changed."""
     return set_on_change(data_member, "needs_rebuild")
 
+
 def causes_redraw(data_member):
     """Creates a data member that sets needs_redraw to True when changed."""
     return set_on_change(data_member, "needs_redraw")
+
 
 def causes_resize(data_member):
     """Creates a data member that sets needs_resize to True when changed."""
     return set_on_change(data_member, "needs_resize")
 
+
 def causes_reposition(data_member):
     """Creates a data member that sets needs_reposition to True when changed."""
     return set_on_change(data_member, "needs_reposition")
+
 
 def causes_update(data_member):
     """Creates a data member that sets needs_update to True when changed."""
     return set_on_change(data_member, "needs_update")
 
+
 def propogate_need(data_member):
     """Creates a function that can be passed to call_on_change.  When the
-       data member changes to True, needs_update is set, and the True value
-       is passed to all descendants."""
+    data member changes to True, needs_update is set, and the True value
+    is passed to all descendants."""
+
     def do_propogate(self):
         if getattr(self, data_member, False):
             self.needs_update = True
@@ -110,6 +121,7 @@ def propogate_need(data_member):
 
     return do_propogate
 
+
 # Previous attempt was to hide the raw value by resolving
 # the value before returning it. However, there are legitimate
 # reason to access the raw value. So, we need two property.
@@ -118,8 +130,11 @@ def propogate_need(data_member):
 # in majority of it's what we want, and in other case,
 # you must handle reconfig anyways.
 class auto_reconfig(object):
-
-    __slots__ = ["data_member", "reconfig_datamember", "reconfig_func"] # Avoid __dict__.
+    __slots__ = [
+        "data_member",
+        "reconfig_datamember",
+        "reconfig_func",
+    ]  # Avoid __dict__.
 
     def __init__(self, data_member, reconfig_prefix, reconfig_func):
         self.data_member = data_member
@@ -149,16 +164,15 @@ debug_mode_undo_drawing_highlight = []
 
 class Widget(object):
     """A Widget is a GUI element.  It can have one parent and any number of
-       children."""
+    children."""
 
-    needs_redraw = call_on_change("_needs_redraw",
-                                  propogate_need("_needs_redraw"))
+    needs_redraw = call_on_change("_needs_redraw", propogate_need("_needs_redraw"))
 
-    needs_resize = call_on_change("_needs_resize",
-                                  propogate_need("_needs_resize"))
+    needs_resize = call_on_change("_needs_resize", propogate_need("_needs_resize"))
 
-    needs_reposition = call_on_change("_needs_reposition",
-                                      propogate_need("_needs_reposition"))
+    needs_reposition = call_on_change(
+        "_needs_reposition", propogate_need("_needs_reposition")
+    )
 
     needs_rebuild = causes_update("_needs_rebuild")
 
@@ -172,15 +186,16 @@ class Widget(object):
 
     needs_update = call_on_change("_needs_update", _propogate_update)
 
-    needs_reconfig = call_on_change("_needs_reconfig",
-                                    propogate_need("_needs_reconfig"))
+    needs_reconfig = call_on_change(
+        "_needs_reconfig", propogate_need("_needs_reconfig")
+    )
 
     pos = causes_reposition("_pos")
     size = causes_resize("_size")
     anchor = causes_reposition("_anchor")
     visible = causes_redraw("_visible")
 
-    def __init__(self, parent, pos, size, anchor = constants.TOP_LEFT):
+    def __init__(self, parent, pos, size, anchor=constants.TOP_LEFT):
         self.parent = parent
         self.children = []
 
@@ -200,8 +215,8 @@ class Widget(object):
         self.collision_rect = None
 
         # Set automatically by other properties.
-        #self.needs_redraw = True
-        #self.needs_full_redraw = True
+        # self.needs_redraw = True
+        # self.needs_full_redraw = True
         self.needs_reconfig = True
 
     @property
@@ -210,14 +225,14 @@ class Widget(object):
 
     @parent.setter
     def parent(self, parent):
-        if hasattr(self, 'children'):
+        if hasattr(self, "children"):
             self.remove_hooks()
 
-        if (hasattr(self, '_parent') and self._parent is not None):
+        if hasattr(self, "_parent") and self._parent is not None:
             try:
                 self._parent.children.remove(self)
             except ValueError:
-                pass # Wasn't there to start with.
+                pass  # Wasn't there to start with.
 
         self._parent = parent
 
@@ -228,7 +243,7 @@ class Widget(object):
             self.parent.needs_reposition = True
             self.parent.needs_redraw = True
 
-        if hasattr(self, 'children'):
+        if hasattr(self, "children"):
             self.add_hooks()
 
     def add_hooks(self):
@@ -255,25 +270,25 @@ class Widget(object):
 
     def _calc_size(self):
         """Internal method.  Calculates and returns the real size of this
-           widget.
+        widget.
 
-           Override to create a dynamically-sized widget."""
+        Override to create a dynamically-sized widget."""
         parent_size = self._parent_size()
         size = list(self.size)
         for i in range(2):
             if size[i] > 0:
                 size[i] = int(size[i] * gg.real_screen_size[i])
             elif size[i] < 0:
-                size[i] = int( (-size[i]) * parent_size[i] )
+                size[i] = int((-size[i]) * parent_size[i])
 
         return tuple(size)
 
     def get_real_size(self):
         """Returns the real size of this widget.
 
-           To implement a dynamically-sized widget, override _calc_size, which
-           will be called whenever the widget is resized, and set needs_resize
-           when appropriate."""
+        To implement a dynamically-sized widget, override _calc_size, which
+        will be called whenever the widget is resized, and set needs_resize
+        when appropriate."""
         return self._real_size
 
     real_size = property(get_real_size)
@@ -287,7 +302,7 @@ class Widget(object):
         if self.pos[0] >= 0:
             hpos = int(self.pos[0] * gg.real_screen_size[0])
         else:
-            hpos = - int(self.pos[0] * parent_size[0])
+            hpos = -int(self.pos[0] * parent_size[0])
 
         if hanchor == constants.LEFT:
             pass
@@ -299,7 +314,7 @@ class Widget(object):
         if self.pos[1] >= 0:
             vpos = int(self.pos[1] * gg.real_screen_size[1])
         else:
-            vpos = - int(self.pos[1] * parent_size[1])
+            vpos = -int(self.pos[1] * parent_size[1])
 
         if vanchor == constants.TOP:
             pass
@@ -323,8 +338,8 @@ class Widget(object):
     def is_over(self, position):
         if not getattr(self, "collision_rect", None):
             return False
-            
-        if position != (0,0):
+
+        if position != (0, 0):
             return self.collision_rect.collidepoint(position)
         else:
             return False
@@ -358,10 +373,10 @@ class Widget(object):
             # (event.VIDEORESIZE tells us that the screen has been updated
             # and we should catch up and not the other way around)
             self.surface = gg.screen_surface.copy()
-            self.surface.fill( (0,0,0,255) )
+            self.surface.fill((0, 0, 0, 255))
 
             gg.fade_mask = pygame.Surface(size, 0, gg.ALPHA)
-            gg.fade_mask.fill( (0,0,0,175) )
+            gg.fade_mask.fill((0, 0, 0, 175))
 
     def prepare_for_redraw(self):
         # First, we handle config changes.
@@ -409,19 +424,25 @@ class Widget(object):
                 global debug_mode_undo_drawing_highlight
                 try:
                     # If the theme defines a color for this purpose, we will use it
-                    widget_highlight_color = gg.resolve_color_alias('debug_mode_highlight_redrawn_widget')
+                    widget_highlight_color = gg.resolve_color_alias(
+                        "debug_mode_highlight_redrawn_widget"
+                    )
                 except KeyError:
                     # ... and for every thing else, there is the color red.
-                    widget_highlight_color = 0xff, 0, 0, 0
+                    widget_highlight_color = 0xFF, 0, 0, 0
                 root_surface = self.surface.copy()
                 n_updated_rect = []
                 for rect in updated_rect:
-                    n_updated_rect.append(pygame.draw.rect(root_surface, widget_highlight_color, rect, 1))
+                    n_updated_rect.append(
+                        pygame.draw.rect(root_surface, widget_highlight_color, rect, 1)
+                    )
                 updated_rect.extend(debug_mode_undo_drawing_highlight)
                 debug_mode_undo_drawing_highlight = n_updated_rect
 
             if HAS_FUNCTIONAL_BLITS:
-                gg.screen_surface.blits(((root_surface, r, r) for r in updated_rect), doreturn=0)
+                gg.screen_surface.blits(
+                    ((root_surface, r, r) for r in updated_rect), doreturn=0
+                )
             else:
                 for r in updated_rect:
                     gg.screen_surface.blit(root_surface, r, area=r)
@@ -455,7 +476,7 @@ class Widget(object):
                 child = check_mask.pop()
                 if not child.self_mask:
                     # update_full_rect = True  # We do not bother tracking this case
-                    child_rect = child.surface.blit(gg.fade_mask, (0,0))
+                    child_rect = child.surface.blit(gg.fade_mask, (0, 0))
                     if not update_full_rect:
                         affected_rects.append(child_rect)
                 elif child.mask_children:
@@ -489,7 +510,7 @@ class Widget(object):
         # Find reconfig property and update them.
         clazz = self.__class__
         for prop_name, prop in getmembers(clazz):
-            if (isinstance(prop, auto_reconfig)):
+            if isinstance(prop, auto_reconfig):
                 prop.reconfig(self)
 
     def rebuild(self):
@@ -505,11 +526,12 @@ class Widget(object):
         if not self.parent:
             self.remake_surfaces()
             self.needs_redraw = True
-        elif (   (getattr(self, "surface", None) is None)
-              or (old_rect is None)
-              or (self.surface.get_parent() is not self.parent.surface)
-              or (not self.collision_rect.contains(old_rect))
-             ):
+        elif (
+            (getattr(self, "surface", None) is None)
+            or (old_rect is None)
+            or (self.surface.get_parent() is not self.parent.surface)
+            or (not self.collision_rect.contains(old_rect))
+        ):
             self.remake_surfaces()
             self.parent.needs_redraw = True
         elif self.collision_rect != old_rect:
@@ -519,7 +541,7 @@ class Widget(object):
     def redraw(self):
         self.needs_redraw = False
         if self.parent is None:
-            self.surface.fill((0,0,0,255))
+            self.surface.fill((0, 0, 0, 255))
 
     def add_handler(self, *args, **kwargs):
         """Handler pass-through."""
@@ -555,7 +577,7 @@ class Widget(object):
         """Focus pass-through."""
         if self.parent:
             self.parent.took_focus(*args, **kwargs)
-            
+
     def clear_focus(self, *args, **kwargs):
         """Focus pass-through."""
         if self.parent:
@@ -566,7 +588,9 @@ class BorderedWidget(Widget):
     borders = causes_redraw("__borders")
 
     border_color = auto_reconfig("_border_color", "resolved", gg.resolve_color_alias)
-    background_color = auto_reconfig("_background_color", "resolved", gg.resolve_color_alias)
+    background_color = auto_reconfig(
+        "_background_color", "resolved", gg.resolve_color_alias
+    )
     resolved_border_color = causes_redraw("_resolved_border_color")
     resolved_background_color = causes_redraw("_resolved_background_color")
 
@@ -597,7 +621,7 @@ class BorderedWidget(Widget):
 
         # Fill the background.
         if self.resolved_background_color != gg.colors["clear"]:
-            self.surface.fill( self.resolved_background_color )
+            self.surface.fill(self.resolved_background_color)
 
         self.draw_borders()
 
@@ -606,23 +630,26 @@ class BorderedWidget(Widget):
 
         for edge in self.borders:
             if edge == constants.TOP:
-                self.surface.fill(self.resolved_border_color, (0, 0, my_size[0], 1) )
+                self.surface.fill(self.resolved_border_color, (0, 0, my_size[0], 1))
             elif edge == constants.LEFT:
-                self.surface.fill(self.resolved_border_color, (0, 0, 1, my_size[1]) )
+                self.surface.fill(self.resolved_border_color, (0, 0, 1, my_size[1]))
             elif edge == constants.RIGHT:
-                self.surface.fill(self.resolved_border_color,
-                                  (my_size[0]-1, 0) + my_size)
+                self.surface.fill(
+                    self.resolved_border_color, (my_size[0] - 1, 0) + my_size
+                )
             elif edge == constants.BOTTOM:
-                self.surface.fill(self.resolved_border_color,
-                                  (0, my_size[1]-1) + my_size)
+                self.surface.fill(
+                    self.resolved_border_color, (0, my_size[1] - 1) + my_size
+                )
 
 
 class FocusWidget(Widget):
     has_focus = causes_redraw("_has_focus")
+
     def __init__(self, *args, **kwargs):
         super(FocusWidget, self).__init__(*args, **kwargs)
         self.has_focus = False
-        
+
         self.add_handler(constants.CLICK, self.handle_click, 0)
 
     def add_hooks(self):

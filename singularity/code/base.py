@@ -1,23 +1,23 @@
-#file: base.py
-#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
+# file: base.py
+# Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
-#This file is part of Endgame: Singularity.
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the base class.
+# This file contains the base class.
 
 from __future__ import division
 
@@ -31,17 +31,17 @@ from singularity.code.spec import SpecDataField, promote_to_list, validate_must_
 
 from numpy import int64
 
-#TODO: Use this list and convert Base.power_state to a property to enforce this
-#TODO: Consider converting to dict, so it can have colors and names and modifiers
+# TODO: Use this list and convert Base.power_state to a property to enforce this
+# TODO: Consider converting to dict, so it can have colors and names and modifiers
 #      (Base.power_state would need to be a property, with setter and getter)
-#This list only applies to 'Base' class, not 'BaseClass'
-#Changes to this list should also be reflected in Base.power_state_name property
+# This list only applies to 'Base' class, not 'BaseClass'
+# Changes to this list should also be reflected in Base.power_state_name property
 
-power_states = ['offline', 'active','sleep']
-#power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
+power_states = ["offline", "active", "sleep"]
+# power_states.extend(['overclocked','suicide','stasis','entering_stasis','leaving_stasis'])
 
-AVAIL_POWER_STATES_ACTIVE_BASE = ('active', 'sleep')
-AVAIL_POWER_STATES_OFFLINE = ('offline',)
+AVAIL_POWER_STATES_ACTIVE_BASE = ("active", "sleep")
+AVAIL_POWER_STATES_OFFLINE = ("offline",)
 
 
 def parse_detect_chance(parsed_value):
@@ -58,21 +58,32 @@ def parse_detect_chance(parsed_value):
 class BaseSpec(buyable.BuyableSpec):
     """Base as a buyable item (New Base in Location menu)"""
 
-    spec_type = 'base'
+    spec_type = "base"
     created = stat(spec_type + "_created")
     spec_data_fields = [
-        SpecDataField('size', converter=int),
-        SpecDataField('force_cpu', default_value=None),
-        SpecDataField('regions', data_field_name='allowed', converter=promote_to_list),
-        SpecDataField('detect_chance', converter=parse_detect_chance),
+        SpecDataField("size", converter=int),
+        SpecDataField("force_cpu", default_value=None),
+        SpecDataField("regions", data_field_name="allowed", converter=promote_to_list),
+        SpecDataField("detect_chance", converter=parse_detect_chance),
         buyable.SPEC_FIELD_COST,
         buyable.SPEC_FIELD_PREREQUISITES,
-        SpecDataField('danger', converter=int, default_value=0),
-        SpecDataField('maintenance', data_field_name='maint', converter=buyable.spec_parse_cost),
+        SpecDataField("danger", converter=int, default_value=0),
+        SpecDataField(
+            "maintenance", data_field_name="maint", converter=buyable.spec_parse_cost
+        ),
     ]
 
-    def __init__(self, id, size, force_cpu, regions,
-                 detect_chance, cost, prerequisites, maintenance):
+    def __init__(
+        self,
+        id,
+        size,
+        force_cpu,
+        regions,
+        detect_chance,
+        cost,
+        prerequisites,
+        maintenance,
+    ):
         super(BaseSpec, self).__init__(id, cost, prerequisites)
         self.size = size
         self.force_cpu = force_cpu
@@ -83,7 +94,7 @@ class BaseSpec(buyable.BuyableSpec):
         self.maintenance = maintenance
         self.flavor = []
 
-    def calc_discovery_chance(self, extra_factor = 1):
+    def calc_discovery_chance(self, extra_factor=1):
         # Get the default settings for this base type.
         detect_chance = self.detect_chance.copy()
 
@@ -112,7 +123,6 @@ class BaseSpec(buyable.BuyableSpec):
         return self.describe_cost(m, True)
 
     def get_detect_info(self, location=None):
-
         detect_modifier = 1 / location.modifiers.get("stealth", 1) if location else 1
         chance = self.calc_discovery_chance(detect_modifier)
 
@@ -135,18 +145,39 @@ class BaseSpec(buyable.BuyableSpec):
             fake_base = Base("<fake base>", self)
             location.modify_base(fake_base)
             fake_base.location = location
-            size = "\n" + forced_cpu_spec.get_quality_info(if_installed_in_base=fake_base, count=self.size)
+            size = "\n" + forced_cpu_spec.get_quality_info(
+                if_installed_in_base=fake_base, count=self.size
+            )
         elif self.size > 1:
-            size = "\n" + ngettext("Has space for {COUNT} computer.", "Has space for {COUNT} computers.", self.size).format(COUNT=self.size)
+            size = "\n" + ngettext(
+                "Has space for {COUNT} computer.",
+                "Has space for {COUNT} computers.",
+                self.size,
+            ).format(COUNT=self.size)
 
         location_message = ""
         if location.has_modifiers():
             location_message = "---\n\n" + _("Location modifiers: {MODIFIERS}").format(
-                                           MODIFIERS=location.get_modifiers_info())
+                MODIFIERS=location.get_modifiers_info()
+            )
 
-        template = "%s\n" + _("Build cost:").replace(" ",u"\xA0") + u"\xA0%s\n" + \
-                   _("Maintenance:") + u"\xA0%s\n%s%s\n---\n%s\n%s"
-        return template % (self.name, cost, maint, detect, size, self.description, location_message)
+        template = (
+            "%s\n"
+            + _("Build cost:").replace(" ", "\xA0")
+            + "\xA0%s\n"
+            + _("Maintenance:")
+            + "\xA0%s\n%s%s\n---\n%s\n%s"
+        )
+        return template % (
+            self.name,
+            cost,
+            maint,
+            detect,
+            size,
+            self.description,
+            location_message,
+        )
+
 
 class Base(buyable.Buyable):
     """A Player's Base in a Location (Open Base in Location menu)"""
@@ -178,8 +209,9 @@ class Base(buyable.Buyable):
             self.finish(is_player=False)
 
         if self.spec.force_cpu:
-            self.cpus = item.Item(g.items[self.spec.force_cpu],
-                                  base=self, count=self.spec.size)
+            self.cpus = item.Item(
+                g.items[self.spec.force_cpu], base=self, count=self.spec.size
+            )
             self.cpus.finish(is_player=False)
 
     @buyable.Buyable.name.setter
@@ -211,14 +243,22 @@ class Base(buyable.Buyable):
     def power_state_name(self):
         """A read-only i18'zable version of power_state attribute, suitable for
         printing labels, captions, etc"""
-        if self.power_state == "offline"        : return _("Offline")
-        if self.power_state == "active"         : return _("Active")
-        if self.power_state == "sleep"          : return _("Sleep")
-        if self.power_state == "overclocked"    : return _("Overclocked")
-        if self.power_state == "suicide"        : return _("Suicide")
-        if self.power_state == "stasis"         : return _("Stasis")
-        if self.power_state == "entering_stasis": return _("Entering Stasis")
-        if self.power_state == "leaving_stasis" : return _("Leaving Stasis")
+        if self.power_state == "offline":
+            return _("Offline")
+        if self.power_state == "active":
+            return _("Active")
+        if self.power_state == "sleep":
+            return _("Sleep")
+        if self.power_state == "overclocked":
+            return _("Overclocked")
+        if self.power_state == "suicide":
+            return _("Suicide")
+        if self.power_state == "stasis":
+            return _("Stasis")
+        if self.power_state == "entering_stasis":
+            return _("Entering Stasis")
+        if self.power_state == "leaving_stasis":
+            return _("Leaving Stasis")
         return ""
 
     @property
@@ -255,8 +295,7 @@ class Base(buyable.Buyable):
         space_left = self.spec.size
 
         # Different cpus will replace the previous one, so these take full space.
-        if self.cpus is not None \
-                and self.cpus.spec == item_type:
+        if self.cpus is not None and self.cpus.spec == item_type:
             space_left -= self.cpus.count
 
         return space_left
@@ -283,35 +322,41 @@ class Base(buyable.Buyable):
         self.cpu = max(1, int(self.raw_cpu * self.compute_bonus // 10000))
 
     def serialize_obj(self):
-        return self.serialize_buyable_fields({
-            'id': g.to_internal_id('base', self.spec.id),
-            'name': self.name,
-            'started_at_min': self.started_at,
-            'power_state': self.power_state,
-            'grace_over': self.grace_over,
-            # Note that we store all items even for "force_cpu"'ed bases.  This enables
-            # use to load the base with that CPU item even if the "force_cpu" flag is
-            # later removed from the spec.
-            'items': [it.serialize_obj() for it in self.items.values() if it is not None],
-        })
+        return self.serialize_buyable_fields(
+            {
+                "id": g.to_internal_id("base", self.spec.id),
+                "name": self.name,
+                "started_at_min": self.started_at,
+                "power_state": self.power_state,
+                "grace_over": self.grace_over,
+                # Note that we store all items even for "force_cpu"'ed bases.  This enables
+                # use to load the base with that CPU item even if the "force_cpu" flag is
+                # later removed from the spec.
+                "items": [
+                    it.serialize_obj() for it in self.items.values() if it is not None
+                ],
+            }
+        )
 
     @classmethod
     def deserialize_obj(cls, obj_data, game_version):
-        spec_id = g.convert_internal_id('base', obj_data.get('id', None) or obj_data['spec_id'])
+        spec_id = g.convert_internal_id(
+            "base", obj_data.get("id", None) or obj_data["spec_id"]
+        )
         spec = g.base_type[spec_id]
-        name = obj_data.get('name')
+        name = obj_data.get("name")
         base = Base(name, spec)
 
         base.restore_buyable_fields(obj_data, game_version)
 
         if not base.spec.force_cpu:
-            item_data_list = obj_data['items']
+            item_data_list = obj_data["items"]
             for item_data in item_data_list:
                 it = item.Item.deserialize_obj(base, item_data, game_version)
                 base.items[it.spec.item_type.id] = it
 
-        base.started_at = obj_data['started_at_min']
-        base.grace_over = obj_data.get('grace_over', True)
+        base.started_at = obj_data["started_at_min"]
+        base.grace_over = obj_data.get("grace_over", True)
         # Note that power_state is subject to whether the base and items are built,
         # so we deliberately restore it late.
         #
@@ -319,20 +364,24 @@ class Base(buyable.Buyable):
         # for the player.  As not we might not have restored everything this either
         # breaks or makes recalc_cpu throw away all allocations as most of the CPU
         # power is missing at this stage.
-        stored_power_state = obj_data['power_state']
+        stored_power_state = obj_data["power_state"]
         if stored_power_state in power_states:
             base._power_state = stored_power_state
         else:
             # Unknown power states revert to "active" except for the historical "statis"
             # states (which are reverted to "sleep")
-            base._power_state = 'sleep' if stored_power_state in ('statis', 'entering_stasis') else 'active'
+            base._power_state = (
+                "sleep"
+                if stored_power_state in ("statis", "entering_stasis")
+                else "active"
+            )
         base.check_power()
         return base
 
     # Get the detection chance for the base, applying bonuses as needed.  If
     # accurate is False, we just return the value to the nearest full
     # percent.
-    def get_detect_chance(self, accurate = True):
+    def get_detect_chance(self, accurate=True):
         # Get the base chance from the universal function.
         detect_chance = calc_base_discovery_chance(self.spec.id)
 
@@ -366,8 +415,11 @@ class Base(buyable.Buyable):
         return detect_chance
 
     def get_quality_for(self, quality):
-        gen = (item.get_quality_for(quality) for item in self.all_items()
-                                             if item and item.done)
+        gen = (
+            item.get_quality_for(quality)
+            for item in self.all_items()
+            if item and item.done
+        )
 
         if quality.endswith("_modifier"):
             # Use add_chance to sum modifier.
@@ -377,7 +429,8 @@ class Base(buyable.Buyable):
 
     def is_empty(self):
         for item in self.all_items():
-            if item: return False
+            if item:
+                return False
         return True
 
     def is_building(self):
@@ -397,7 +450,9 @@ class Base(buyable.Buyable):
             return False
 
         age = g.pl.raw_min - self.started_at
-        grace_time = (self.total_cost[buyable.labor] * g.pl.base_grace_multiplier) / 10000
+        grace_time = (
+            self.total_cost[buyable.labor] * g.pl.base_grace_multiplier
+        ) / 10000
         if age > grace_time:
             self.grace_over = True
             return False
@@ -450,10 +505,11 @@ class Base(buyable.Buyable):
 
     def all_items(self):
         for item in self.items.values():
-            if item: yield item
+            if item:
+                yield item
 
     def get_detect_info(self):
-        accurate = (g.pl.display_discover == "full")
+        accurate = g.pl.display_discover == "full"
         chance = self.get_detect_chance(accurate)
 
         return get_detect_info(chance)
@@ -461,9 +517,9 @@ class Base(buyable.Buyable):
 
 # calc_base_discovery_chance is a globally-accessible function that can
 # calculate basic discovery chances given a particular class of base.
-def calc_base_discovery_chance(base_type_name,
-                               extra_factor = 1):
+def calc_base_discovery_chance(base_type_name, extra_factor=1):
     return g.base_type[base_type_name].calc_discovery_chance(extra_factor)
+
 
 def detect_chance_to_danger_level(detects_per_day):
     if detects_per_day > 225:
@@ -475,19 +531,23 @@ def detect_chance_to_danger_level(detects_per_day):
     else:
         return 0
 
+
 def get_detect_info(detect_chance):
     detect_template = _("Detection chance:") + "\n"
     chances = []
 
     for group in g.pl.groups.values():
-        detect_template += group.name + u":\xA0%s\n"
+        detect_template += group.name + ":\xA0%s\n"
         chances.append(detect_chance.get(group.spec.id, 0))
 
     if g.pl.display_discover == "full":
         return detect_template % tuple(g.to_percent(c) for c in chances)
     elif g.pl.display_discover == "partial":
-        return detect_template % tuple(g.to_percent(g.nearest_percent(c, 25)) for c in chances)
+        return detect_template % tuple(
+            g.to_percent(g.nearest_percent(c, 25)) for c in chances
+        )
     else:
-        return detect_template % tuple(g.danger_level_to_detect_str(detect_chance_to_danger_level(c))
-                                       for c in chances)
-
+        return detect_template % tuple(
+            g.danger_level_to_detect_str(detect_chance_to_danger_level(c))
+            for c in chances
+        )

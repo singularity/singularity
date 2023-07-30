@@ -1,22 +1,22 @@
-#file: image.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: image.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the image widget.
+# This file contains the image widget.
 
 from __future__ import absolute_import
 
@@ -31,19 +31,19 @@ def scale(*args, **kwargs):
     except Exception:
         return pygame.transform.scale(*args, **kwargs)
 
+
 class Image(widget.Widget):
     image = widget.auto_reconfig("_image", "resolved", g.resolve_image_alias)
     resolved_image = widget.causes_rebuild("_resolved_image")
 
-    def __init__(self, parent, pos, size = (1, 1),
-                 anchor = constants.TOP_LEFT, image = None):
+    def __init__(self, parent, pos, size=(1, 1), anchor=constants.TOP_LEFT, image=None):
         super(Image, self).__init__(parent, pos, size, anchor)
 
         self.old_size = None
         self.image = image
 
     def _calc_size(self):
-        size = list( super(Image, self)._calc_size() )
+        size = list(super(Image, self)._calc_size())
         if size[0] == size[1] == 0:
             raise ValueError("One image dimension must be specified!")
 
@@ -67,4 +67,4 @@ class Image(widget.Widget):
 
     def redraw(self):
         super(Image, self).redraw()
-        self.surface.blit(self.resolved_scaled_image, (0,0))
+        self.surface.blit(self.resolved_scaled_image, (0, 0))

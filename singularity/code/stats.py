@@ -1,29 +1,28 @@
-#file: statistics.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: statistics.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the Statistic class, used for saving/loading single-game
-#statistics.
+# This file contains the Statistic class, used for saving/loading single-game
+# statistics.
 
 from singularity.code import g
 
 
 class Statistics(object):
-
     def __init__(self):
         super(Statistics, self).__init__()
         self._stats = {}
@@ -34,7 +33,7 @@ class Statistics(object):
     def __getitem__(self, key):
         stat = self._stats.get(key, None)
 
-        if (stat is None):
+        if stat is None:
             stat = Statistic(key)
             self._stats[key] = stat
 
@@ -48,7 +47,7 @@ class Statistics(object):
             self[stat.name].value = 0
 
     def serialize_obj(self):
-        return {stat.name:stat.value for stat in self}
+        return {stat.name: stat.value for stat in self}
 
     def deserialize_obj(self, obj_data, game_version):
         for stat_name, stat_value in obj_data.items():
@@ -62,15 +61,17 @@ class Statistic(object):
         self.value = 0
 
     def display_value(self):
-        if (hasattr(self, "_display") and callable(self._display)):
+        if hasattr(self, "_display") and callable(self._display):
             return g.add_commas(self._display(self.value))
         else:
             return g.add_commas(self.value)
 
+
 itself = Statistics()
 
+
 def observe(name, data_member, display=None):
-    """ Observe a class member and save change in a statistics."""
+    """Observe a class member and save change in a statistics."""
 
     itself[name]._display = display
 
@@ -92,8 +93,9 @@ def observe(name, data_member, display=None):
 
     return property(get, set)
 
+
 def stat(name, display=None):
-    """ Manipulate a statistics with a property."""
+    """Manipulate a statistics with a property."""
 
     itself[name]._display = display
 

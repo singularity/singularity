@@ -1,22 +1,22 @@
-#file: button.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: button.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the Button class.
+# This file contains the Button class.
 
 from __future__ import absolute_import
 
@@ -27,22 +27,21 @@ from singularity.code.pycompat import *
 
 
 class HotkeyText(text.Text):
-
     force_underline = widget.causes_rebuild("_force_underline")
 
     def __init__(self, *args, **kwargs):
         # Force early initialization of _hotkey
         self._hotkey = None
-        self.hotkey_func = kwargs.pop('hotkey_func', False)
-        self.hotkey_target = kwargs.pop('hotkey_target', None)
+        self.hotkey_func = kwargs.pop("hotkey_func", False)
+        self.hotkey_target = kwargs.pop("hotkey_target", None)
 
         # Auto-translatable defaults to auto-hotkey as it is the most sane default in that case
-        self.autohotkey = kwargs.pop('autohotkey', kwargs.get('autotranslate', False))
+        self.autohotkey = kwargs.pop("autohotkey", kwargs.get("autotranslate", False))
 
-        self.force_underline = kwargs.pop('force_underline', None)
-        self.priority = kwargs.pop('priority', 100)
-        
-        hotkey = kwargs.pop('hotkey', False)
+        self.force_underline = kwargs.pop("force_underline", None)
+        self.priority = kwargs.pop("priority", 100)
+
+        hotkey = kwargs.pop("hotkey", False)
 
         super(HotkeyText, self).__init__(*args, **kwargs)
 
@@ -56,7 +55,9 @@ class HotkeyText(text.Text):
         super(text.Text, self).add_hooks()
         if self.parent is not None:
             if self._hotkey:
-                self.parent.add_key_handler(self._hotkey, self.handle_hotkey, self.priority)
+                self.parent.add_key_handler(
+                    self._hotkey, self.handle_hotkey, self.priority
+                )
 
     def remove_hooks(self):
         super(text.Text, self).remove_hooks()
@@ -80,7 +81,7 @@ class HotkeyText(text.Text):
 
     @hotkey.setter
     def hotkey(self, hotkey):
-        if getattr(self, 'autohotkey', False):
+        if getattr(self, "autohotkey", False):
             raise ValueError("Cannot change hotkey with automatic hotkey")
         self._new_hotkey(hotkey)
 
@@ -93,7 +94,9 @@ class HotkeyText(text.Text):
                 if old_hotkey:
                     self.parent.remove_key_handler(old_hotkey, self.handle_hotkey)
                 if hotkey:
-                    self.parent.add_key_handler(hotkey, self.handle_hotkey, self.priority)
+                    self.parent.add_key_handler(
+                        hotkey, self.handle_hotkey, self.priority
+                    )
             elif self.hotkey_target is not None:
                 self.hotkey_target.hotkey = self._hotkey
 
@@ -101,13 +104,18 @@ class HotkeyText(text.Text):
 
     def _extract_and_set_hotkey(self, text_value):
         from singularity.code.g import hotkey
+
         parsed_hotkey = hotkey(text_value)
-        self._new_hotkey(parsed_hotkey['key'])
-        return parsed_hotkey['text']
+        self._new_hotkey(parsed_hotkey["key"])
+        return parsed_hotkey["text"]
 
     def handle_hotkey(self, event):
         if event.type == pygame.KEYDOWN:
-            if self.visible and self.enabled and self.hotkey in (event.unicode, event.key):
+            if (
+                self.visible
+                and self.enabled
+                and self.hotkey in (event.unicode, event.key)
+            ):
                 if self.hotkey_func:
                     self.hotkey_func(event)
 
@@ -120,7 +128,9 @@ class HotkeyText(text.Text):
     @text.Text.text.setter
     def text(self, value):
         if self.autotranslate:
-            raise ValueError("Cannot change text for an automatic translatable text widget")
+            raise ValueError(
+                "Cannot change text for an automatic translatable text widget"
+            )
 
         if self.autohotkey and value is not None:
             value = self._extract_and_set_hotkey(value)
@@ -147,7 +157,6 @@ class HotkeyText(text.Text):
 
 
 class Button(text.SelectableText, HotkeyText):
-
     # Rewrite .hotkey, to update key handlers.
     def _new_hotkey(self, value):
         if self.parent and value != self._hotkey:
@@ -157,11 +166,19 @@ class Button(text.SelectableText, HotkeyText):
                 self.parent.add_key_handler(value, self.handle_event)
         super(Button, self)._new_hotkey(value)
 
-    def __init__(self, parent, pos, size = (0, .045), base_font = None,
-                 borders = constants.ALL, text_shrink_factor = .825, **kwargs):
+    def __init__(
+        self,
+        parent,
+        pos,
+        size=(0, 0.045),
+        base_font=None,
+        borders=constants.ALL,
+        text_shrink_factor=0.825,
+        **kwargs
+    ):
         self.parent = parent
 
-        kwargs.setdefault('text_size', 'button')
+        kwargs.setdefault("text_size", "button")
         super(Button, self).__init__(parent, pos, size, **kwargs)
 
         self.base_font = base_font or "special"
@@ -174,10 +191,10 @@ class Button(text.SelectableText, HotkeyText):
     def add_hooks(self):
         super(Button, self).add_hooks()
         if self.parent:
-            self.parent.add_handler(constants.MOUSEMOTION, self.watch_mouse,
-                                    self.priority)
-            self.parent.add_handler(constants.CLICK, self.handle_event,
-                                self.priority)
+            self.parent.add_handler(
+                constants.MOUSEMOTION, self.watch_mouse, self.priority
+            )
+            self.parent.add_handler(constants.CLICK, self.handle_event, self.priority)
 
     def remove_hooks(self):
         super(Button, self).remove_hooks()
@@ -201,14 +218,15 @@ class Button(text.SelectableText, HotkeyText):
     def activate_with_sound(self, event):
         """Called when the button is pressed or otherwise triggered.
 
-           This method is called directly by the GUI handler, and should be
-           overwritten only to remove the click it plays."""
+        This method is called directly by the GUI handler, and should be
+        overwritten only to remove the click it plays."""
 
         # Sometimes other GUI widgets trigger an activation; ignore
         # it if the button is disabled
         if not self.enabled:
             return
         from singularity.code.mixer import play_sound
+
         play_sound("click")
         self.activated(event)
 
@@ -223,15 +241,18 @@ class Button(text.SelectableText, HotkeyText):
 
 
 class ImageButton(Button):
-
     def __init__(self, *args, **kwargs):
         image_surface = kwargs.pop("image", None)
 
         super(ImageButton, self).__init__(*args, **kwargs)
 
-        self.image = image.Image(self, (-.5, -.5), (-.9, -.9),
-                                 anchor = constants.MID_CENTER,
-                                 image = image_surface)
+        self.image = image.Image(
+            self,
+            (-0.5, -0.5),
+            (-0.9, -0.9),
+            anchor=constants.MID_CENTER,
+            image=image_surface,
+        )
 
 
 class FunctionButton(Button):
@@ -243,7 +264,7 @@ class FunctionButton(Button):
 
     def activated(self, event):
         """FunctionButton's custom activated menu.  Makes the given function
-           call and raises Handled if it returns without incident."""
+        call and raises Handled if it returns without incident."""
         self.function(*self.args, **self.kwargs)
         raise constants.Handled
 
@@ -279,6 +300,7 @@ class ExitDialogButton(FunctionButton):
         else:
             raise constants.ExitDialog(self.exit_code)
 
+
 class DialogButton(FunctionButton):
     def __init__(self, *args, **kwargs):
         self.dialog = kwargs.pop("dialog", None)
@@ -287,11 +309,12 @@ class DialogButton(FunctionButton):
 
     def show_dialog(self):
         """When the assigned dialog exits, raises Handled with the dialog's
-           exit code as a parameter.  Subclass if you care what the code was."""
+        exit code as a parameter.  Subclass if you care what the code was."""
         if not self.dialog:
             raise constants.Handled
         else:
             from singularity.code.graphics import dialog
+
             raise constants.Handled(dialog.call_dialog(self.dialog, self))
 
 
@@ -300,7 +323,6 @@ WIDGET_SELF = object()
 
 
 class _FunctionButtonSupportShim(object):
-
     active = False
     _args = ()
 
@@ -324,12 +346,11 @@ class _FunctionButtonSupportShim(object):
 # "On/Off" button that "stays" in its current activation status until it is
 # clicked/"activated"
 class StickyOnOffButton(Button, _FunctionButtonSupportShim):
-
     def __init__(self, *args, **kwargs):
-        self._active = kwargs.pop('active', False)
-        self._on_text = kwargs.pop('on_text', N_('YES'))
-        self._off_text = kwargs.pop('off_text', N_('NO'))
-        kwargs['text'] = self._on_text if self.active else self._off_text
+        self._active = kwargs.pop("active", False)
+        self._on_text = kwargs.pop("on_text", N_("YES"))
+        self._off_text = kwargs.pop("off_text", N_("NO"))
+        kwargs["text"] = self._on_text if self.active else self._off_text
         super(StickyOnOffButton, self).__init__(*args, **kwargs)
 
     @property

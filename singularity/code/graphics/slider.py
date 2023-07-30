@@ -1,22 +1,22 @@
-#file: slider.py
-#Copyright (C) 2008 FunnyMan3595
-#This file is part of Endgame: Singularity.
+# file: slider.py
+# Copyright (C) 2008 FunnyMan3595
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the slider widget.
+# This file contains the slider widget.
 
 from __future__ import absolute_import
 
@@ -28,20 +28,34 @@ from singularity.code.graphics import g, constants, widget, button
 def calc_max(elements, size):
     return max(elements - size, 0)
 
+
 class Slider(button.Button):
     slider_pos = widget.causes_rebuild("_slider_pos")
     slider_max = widget.causes_rebuild("_slider_max")
     slider_size = widget.causes_rebuild("_slider_size")
     horizontal = widget.causes_rebuild("_horizontal")
 
-    slider_color = widget.auto_reconfig("_slider_color", "resolved", g.resolve_color_alias)
+    slider_color = widget.auto_reconfig(
+        "_slider_color", "resolved", g.resolve_color_alias
+    )
     resolved_slider_color = widget.causes_redraw("_resolved_slider_color")
 
-    def __init__(self, parent, pos = (-1,0), size = (-.1, -1),
-                 anchor = constants.TOP_RIGHT, borders = constants.ALL,
-                 border_color=None, background_color=None, slider_color=None,
-                 slider_pos=0, slider_max=10, slider_size=5, horizontal=False,
-                 **kwargs):
+    def __init__(
+        self,
+        parent,
+        pos=(-1, 0),
+        size=(-0.1, -1),
+        anchor=constants.TOP_RIGHT,
+        borders=constants.ALL,
+        border_color=None,
+        background_color=None,
+        slider_color=None,
+        slider_pos=0,
+        slider_max=10,
+        slider_size=5,
+        horizontal=False,
+        **kwargs
+    ):
         kwargs.setdefault("priority", 80)
         super(Slider, self).__init__(parent, pos, size, anchor=anchor, **kwargs)
 
@@ -62,12 +76,16 @@ class Slider(button.Button):
         self.horizontal = horizontal
 
         self.drag_state = None
-        self.button = button.Button(self, pos = None, size = None,
-                                    anchor = constants.TOP_LEFT,
-                                    border_color = border_color,
-                                    selected_color = slider_color,
-                                    unselected_color = slider_color,
-                                    priority = self.priority - 5)
+        self.button = button.Button(
+            self,
+            pos=None,
+            size=None,
+            anchor=constants.TOP_LEFT,
+            border_color=border_color,
+            selected_color=slider_color,
+            unselected_color=slider_color,
+            priority=self.priority - 5,
+        )
 
     def redraw(self):
         super(Slider, self).redraw()
@@ -128,7 +146,7 @@ class Slider(button.Button):
             return
 
         if self.drag_state == None:
-            self.start_pos = tuple(event.pos[i]-event.rel[i] for i in range(2))
+            self.start_pos = tuple(event.pos[i] - event.rel[i] for i in range(2))
             self.start_slider_pos = self.slider_pos
             if self.button.is_over(self.start_pos):
                 self.drag_state = True
@@ -144,7 +162,7 @@ class Slider(button.Button):
             mouse_pos = pygame.mouse.get_pos()
             rel = mouse_pos[dir] - self.start_pos[dir]
             unit = self._calc_length(1) * self.real_size[dir]
-            movement = int( ( rel + (unit / 2.) ) // unit )
+            movement = int((rel + (unit / 2.0)) // unit)
 
             new_pos = self.safe_pos(self.start_slider_pos + movement)
             self.slider_pos = new_pos
@@ -175,12 +193,17 @@ class Slider(button.Button):
             self.slider_pos = self.safe_pos(self.slider_pos + jump_dist)
 
     def handle_key(self, event):
-        if event.key not in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_KP_PLUS, pygame.K_KP_MINUS):
+        if event.key not in (
+            pygame.K_LEFT,
+            pygame.K_RIGHT,
+            pygame.K_KP_PLUS,
+            pygame.K_KP_MINUS,
+        ):
             return
         go_lower = event.key in (pygame.K_LEFT, pygame.K_KP_MINUS)
         if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
-            big_jump = (event.mod & pygame.KMOD_SHIFT)
-            tiny_jump = (event.mod & pygame.KMOD_CTRL)
+            big_jump = event.mod & pygame.KMOD_SHIFT
+            tiny_jump = event.mod & pygame.KMOD_CTRL
         else:
             tiny_jump = big_jump = False
         self.jump(go_lower, big_jump=big_jump, tiny_jump=tiny_jump)
@@ -191,7 +214,7 @@ class Slider(button.Button):
         if self.horizontal:
             self.jump(go_lower=(event.pos[0] < self.button.collision_rect[0]))
         else:
-            self.jump(go_lower = event.pos[1] < self.button.collision_rect[1])
+            self.jump(go_lower=event.pos[1] < self.button.collision_rect[1])
         raise constants.Handled
 
 

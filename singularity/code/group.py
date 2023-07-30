@@ -1,23 +1,23 @@
-#file: group.py
-#Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
+# file: group.py
+# Copyright (C) 2005,2006,2007,2008 Evil Mr Henry, Phil Bordelon, Brian Reid,
 #                        and FunnyMan3595
-#This file is part of Endgame: Singularity.
+# This file is part of Endgame: Singularity.
 
-#Endgame: Singularity is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# Endgame: Singularity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
-#Endgame: Singularity is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
+# Endgame: Singularity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with Endgame: Singularity; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the GNU General Public License
+# along with Endgame: Singularity; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#This file contains the group class, a group of person which can suspect the singularity.
+# This file contains the group class, a group of person which can suspect the singularity.
 
 from __future__ import absolute_import
 
@@ -26,16 +26,15 @@ from singularity.code.spec import GenericSpec, SpecDataField
 
 
 class GroupSpec(GenericSpec):
-
     spec_data_fields = [
-        SpecDataField('suspicion_decay', converter=int, default_value=100)
+        SpecDataField("suspicion_decay", converter=int, default_value=100)
     ]
 
     def __init__(self, id, suspicion_decay):
         super(GroupSpec, self).__init__(id)
         self.suspicion_decay = suspicion_decay
         self.discover_suspicion = 1000
-        
+
         # String data
         self.name = ""
         self.discover_log = ""
@@ -43,7 +42,6 @@ class GroupSpec(GenericSpec):
 
 
 class Group(object):
-
     def __init__(self, spec, diff):
         self.spec = spec
         self.suspicion = 0
@@ -56,19 +54,21 @@ class Group(object):
 
     def serialize_obj(self):
         return {
-            'id': g.to_internal_id('group', self.spec.id),
-            'suspicion': self.suspicion,
-            'is_actively_discovering_bases': self.is_actively_discovering_bases,
+            "id": g.to_internal_id("group", self.spec.id),
+            "suspicion": self.suspicion,
+            "is_actively_discovering_bases": self.is_actively_discovering_bases,
         }
 
     @classmethod
     def deserialize_obj(cls, diff, obj_data, game_version):
-        spec_id = g.convert_internal_id('group', obj_data['id'])
+        spec_id = g.convert_internal_id("group", obj_data["id"])
         spec = g.groups[spec_id]
         group = Group(spec, diff)
-        
-        group.suspicion = obj_data['suspicion']
-        group.is_actively_discovering_bases = obj_data.get('is_actively_discovering_bases', True)
+
+        group.suspicion = obj_data["suspicion"]
+        group.is_actively_discovering_bases = obj_data.get(
+            "is_actively_discovering_bases", True
+        )
         return group
 
     @property
@@ -91,7 +91,14 @@ class Group(object):
 
     @property
     def discover_suspicion(self):
-        return max(1, (self.spec.discover_suspicion * (self.base_discover_suspicion + self.changed_discover_suspicion)) // 10000)
+        return max(
+            1,
+            (
+                self.spec.discover_suspicion
+                * (self.base_discover_suspicion + self.changed_discover_suspicion)
+            )
+            // 10000,
+        )
 
     @property
     def decay_rate(self):
@@ -122,12 +129,16 @@ class Group(object):
         suspicion_per_day = raw_suspicion_per_day - self.decay_rate
 
         # +1%/day or death within 10 days
-        if suspicion_per_day > 100 \
-           or (self.suspicion + suspicion_per_day * 10) >= 10000:
+        if (
+            suspicion_per_day > 100
+            or (self.suspicion + suspicion_per_day * 10) >= 10000
+        ):
             return 3
         # +0.5%/day or death within 100 days
-        elif suspicion_per_day > 50 \
-           or (self.suspicion + suspicion_per_day * 100) >= 10000:
+        elif (
+            suspicion_per_day > 50
+            or (self.suspicion + suspicion_per_day * 100) >= 10000
+        ):
             return 2
         # Suspicion increasing.
         elif suspicion_per_day > 0:
