@@ -23,6 +23,7 @@ You will need to install the following software to play Endgame: Singularity:
  * Python 3 (https://python.org/download/)
  * pygame (https://www.pygame.org/download.shtml)
  * NumPy (https://www.scipy.org/install.html)
+ * Polib
 
 Remember to install pygame and NumPy for Python 3!  Depending on your
 situation this may involve adding a `3` somewhere (e.g.
@@ -39,7 +40,7 @@ install:
 On some Linux distributions, you can install the dependencies via your
 distribution package manager.  E.g. for Debian/Ubuntu, this would be:
 
-    sudo apt install python3 python3-pygame python3-numpy
+    sudo apt install python3 python3-pygame python3-numpy python3-polib
 
 ### MAC OS X FROM SOURCE
 Macintosh is mostly unsupported, but it should work. You will need to install

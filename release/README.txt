@@ -39,7 +39,7 @@ After cutting the tag:
       * $ git archive --worktree-attributes --prefix=singularity-x.yy/ -o singularity-x.yy.tar.gz vx.yy
    * Generate the py2exe:
       * Extract tarball (if Windows machine lacks ability)
-      * Copy directory to windows computer with python, pygame, numpy and py2exe.
+      * Copy directory to windows computer with python, pygame, numpy, polib and py2exe.
       * Run c:\Python27\Python.exe setup.py py2exe -b 1
       * Copy the 4 files in dist to root dir.
       * Delete dist and build directories. Test.

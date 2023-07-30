@@ -28,14 +28,9 @@ import hashlib
 import gettext
 import os
 import locale
-import sys
+import polib
 
 from singularity.code import g, dirs
-
-try:
-    import polib
-except ImportError:
-    import singularity.code.polib as polib
 
 
 # Used to determine which data files to load.
