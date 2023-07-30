@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9, 3.10, 3.11]
+        python-version: ["3.9", "3.10", "3.11"]
 
     steps:
 
@@ -48,4 +48,4 @@ jobs:
       run: |
         locale -a
         python3 --version || python --version
-        PYTHONPATH=. LC_ALL=C.UTF-8 pytest -v
+        PYTHONPATH=. LC_ALL=C.UTF-8 pytest-3 -v
