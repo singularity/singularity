@@ -21,7 +21,7 @@ _MODIFIERLESS_HOT_KEYS = frozenset(
 )
 
 
-@dataclasses.dataclass(slots=True, frozen=True)
+@dataclasses.dataclass
 class GlobalHotKey:
     modifiers: int
     key: int
