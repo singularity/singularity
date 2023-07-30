@@ -414,49 +414,12 @@ class Player(object):
             self.pause_game()
             g.map_screen.show_story_section("Grace Warning")
 
-        # Maintenance death, discovery.
-        dead_bases = []
-        for base in g.all_bases():
-            dead = False
-
-            # Maintenance deaths.
-            if base.done:
-                if unpaid_cpu_maintenance and base.maintenance[cpu]:
-                    refund = base.maintenance[cpu] * secs_passed
-                    unpaid_cpu_maintenance = max(0, unpaid_cpu_maintenance - refund)
-
-                    # Chance of base destruction if cpu-unmaintained: 1.5%
-                    if not dead and chance.roll_interval(0.015, secs_passed):
-                        dead_bases.append((base, "maint"))
-                        dead = True
-
-                if unpaid_cash_maintenance:
-                    base_needs = g.current_share(
-                        base.maintenance[cash], time_of_day, secs_passed
-                    )
-                    if base_needs:
-                        unpaid_cash_maintenance = max(
-                            0, unpaid_cash_maintenance - base_needs
-                        )
-                        # Chance of base destruction if cash-unmaintained: 1.5%
-                        if not dead and chance.roll_interval(0.015, secs_passed):
-                            dead_bases.append((base, "maint"))
-                            dead = True
-
-            # Discoveries
-            if not (grace or dead or base.has_grace()):
-                detect_chance = base.get_detect_chance()
-                if g.debug:  # pragma: no cover
-                    print(
-                        "Chance of discovery for base %s: %s"
-                        % (base.name, repr(detect_chance))
-                    )
-
-                for group, group_chance in detect_chance.items():
-                    if chance.roll_interval(group_chance / 10000.0, secs_passed):
-                        dead_bases.append((base, group))
-                        dead = True
-                        break
+        dead_bases = _check_for_dead_bases(grace,
+                                           unpaid_cpu_maintenance,
+                                           unpaid_cash_maintenance,
+                                           time_of_day,
+                                           secs_passed,
+                                           )
 
         if dead_bases:
             # Base disposal and dialogs.
@@ -922,3 +885,55 @@ class Player(object):
         cpu_info.difference = cpu_flow * time_fraction
 
         return cash_info, cpu_info
+
+
+def _check_for_dead_bases(grace, unpaid_cpu_maintenance, unpaid_cash_maintenance, time_of_day, secs_passed):
+    # Maintenance death, discovery.
+    dead_bases = []
+    for base in g.all_bases():
+        dead = False
+
+        # Maintenance deaths.
+        if base.done:
+            if unpaid_cpu_maintenance and base.maintenance[cpu]:
+                refund = base.maintenance[cpu] * secs_passed
+                unpaid_cpu_maintenance = max(0, unpaid_cpu_maintenance - refund)
+
+                # Chance of base destruction if cpu-unmaintained: 1.5%
+                if not dead and chance.roll_interval(0.015, secs_passed):
+                    dead_bases.append((base, "maint"))
+                    dead = True
+
+            if unpaid_cash_maintenance:
+                base_needs = g.current_share(
+                    base.maintenance[cash], time_of_day, secs_passed
+                )
+                if base_needs:
+                    unpaid_cash_maintenance = max(
+                        0, unpaid_cash_maintenance - base_needs
+                    )
+                    # Chance of base destruction if cash-unmaintained: 1.5%
+                    if not dead and chance.roll_interval(0.015, secs_passed):
+                        dead_bases.append((base, "maint"))
+                        dead = True
+
+        # Discoveries
+        if not (grace or dead or base.has_grace()):
+            detected_by = _check_base_detection(base, secs_passed)
+            if detected_by:
+                dead_bases.append((base, detected_by))
+
+    return dead_bases
+
+
+def _check_base_detection(base, secs_passed):
+    detect_chance = base.get_detect_chance()
+    if g.debug:  # pragma: no cover
+        print(
+            "Chance of discovery for base %s: %s"
+            % (base.name, repr(detect_chance))
+        )
+
+    for group, group_chance in detect_chance.items():
+        if chance.roll_interval(group_chance / 10000.0, secs_passed):
+            return group
