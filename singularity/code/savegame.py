@@ -25,18 +25,7 @@ import operator
 import re
 import sys
 import time
-
-try:
-    import cPickle as pickle
-
-    PY3 = False
-    assert sys.version_info[0] == 2
-except ImportError:
-    import pickle
-
-    assert sys.version_info[0] >= 3
-    PY3 = True
-
+import pickle
 import collections
 import gzip
 import json
@@ -159,33 +148,16 @@ def convert_string_to_path_name(name):
 
 
 def convert_path_name_to_str(path):
-    if PY3:
-        # Python3 handles this case sanely by default
-        return path
-    # Some filesystems require unicode (e.g. Windows) whereas Linux needs bytes.
-    # Python 2 is rather forgiving which works as long as you work with ASCII,
-    # but some people might like non-ASCII in their savegame names
-    # (https://bugs.debian.org/718447)
-    if os.path.supports_unicode_filenames:
-        return path
-    return path.decode("utf-8", errors="replace")
+    # Python3 handles this case sanely by default
+    return path
 
 
-if PY3:
+def unpickle_instance(fd, find_globals):
+    class RestrictedUnpickler(pickle.Unpickler):
+        def find_class(self, module, name):
+            return find_globals(module, name)
 
-    def unpickle_instance(fd, find_globals):
-        class RestrictedUnpickler(pickle.Unpickler):
-            def find_class(self, module, name):
-                return find_globals(module, name)
-
-        return RestrictedUnpickler(fd, encoding="bytes")
-
-else:
-
-    def unpickle_instance(fd, find_globals):
-        unpickler = pickle.Unpickler(fd)
-        unpickler.find_global = find_globals
-        return unpickler
+    return RestrictedUnpickler(fd, encoding="bytes")
 
 
 def get_savegames():
@@ -303,8 +275,6 @@ def recursive_fix_pickle(the_object, seen):
     # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     # SOFTWARE.
 
-    if not PY3:
-        return the_object
     if isinstance(the_object, bytes):
         try:
             return the_object.decode("utf-8")
@@ -513,7 +483,7 @@ def load_savegame_by_pickle(loadfile):
 
     # check the savefile version
     load_version_string = unpickle.load()
-    if PY3 and isinstance(load_version_string, bytes):
+    if isinstance(load_version_string, bytes):
         load_version_string = load_version_string.decode("utf-8")
     if load_version_string not in savefile_translation:
         raise SavegameVersionException(load_version_string)
