@@ -825,7 +825,8 @@ def check_filename_illegal(directory, filename, extension):
 
 def create_savegame(savegame_name):
     global last_savegame_name
-    last_savegame_name = savegame_name
+    if savegame_name != QUICKSAVE_NAME:
+        last_savegame_name = savegame_name
     save_loc = convert_string_to_path_name(
         dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves")
     )
@@ -835,7 +836,7 @@ def create_savegame(savegame_name):
         write_game_to_fd(savefile, gzipped=gzipped)
 
 
-def write_game_to_fd(fd, gzipped=True, save_type: Optional[str] = None):
+def write_game_to_fd(fd, gzipped=True):
     version_line = "%s\n" % current_save_version
     fd.write(version_line.encode("utf-8"))
     headers = [
