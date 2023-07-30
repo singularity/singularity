@@ -12,7 +12,7 @@ as Debian and Ubuntu.  Here it is a simple matter of running:
     sudo apt install singularity
 
 ### RUNNING FROM SOURCE
-You will need Python 3.7+, pygame (1.9+), and NumPy.
+You will need Python 3.9+, pygame (1.9+), and NumPy.
 This game should work on Linux, Windows, and Mac OS X as long as the preceding
 requirements are met.  However, all development was done in Linux, so glitches
 may be present in OS X and Windows.
