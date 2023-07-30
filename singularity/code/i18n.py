@@ -37,7 +37,6 @@ try:
 except ImportError:
     import singularity.code.polib as polib
 
-PY2 = True if sys.version_info[0] == 2 else False
 
 # Used to determine which data files to load.
 # It is required that default language have all data files and all of them
@@ -249,11 +248,6 @@ def lex_sorting_form(name):
     Use like this:
 
     listdata.sort(key=lambda an_object: i18n.lex_sorting_form(an_object.name))"""
-
-    if PY2:
-        # FIXEME: We get a decode error in locale.strxfrm under python2.  Punt for now
-        # as "ASCII-bethic" sort is better than a crash, plus it works in python3.
-        return name
 
     # Collator returns wrong keys for DE locale
     if language == "de" or language.startswith("de_"):

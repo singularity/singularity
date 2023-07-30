@@ -16,8 +16,6 @@ setup(
         "Intended Audience :: End Users/Desktop",
         "Topic :: Games/Entertainment",
         "License :: OSI Approved :: GNU General Public License (GPL)",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
     ],
     packages=find_packages(),

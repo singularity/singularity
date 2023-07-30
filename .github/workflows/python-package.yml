@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y python-pytest python-numpy python-pygame python-pytest-cov python-coverage python-polib
+        sudo apt-get install -y python3-pytest python3-numpy python3-pygame python3-pytest-cov python3-coverage python3-polib
     - name: Test with pytest
       run: |
         PYTHONPATH=. py.test -v
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.9, 3.10, 3.11]
 
     steps:
 

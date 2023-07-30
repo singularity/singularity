@@ -6,9 +6,6 @@ from singularity.code import g, data, i18n
 from singularity.code.dirs import create_directories
 
 
-IS_PY2 = sys.version_info[0] == 2
-
-
 def setup_module():
     create_directories(True)
     data.load_internal_id()
@@ -45,7 +42,6 @@ def test_nonsense_locale():
     assert _("SHOW") == "SHOW"
 
 
-@pytest.mark.skipif(IS_PY2, reason="Unicode issues under python2")
 def test_data_translation(gd_locale):
     assert data.get_def_translation("Sociology", "name", "Sociology") == "Sòiseo-eòlas"
 
@@ -69,7 +65,6 @@ def test_story_translation():
 # Sorting
 # Fails in github actions (not sure why)
 @pytest.mark.xfail
-@pytest.mark.skipif(IS_PY2, reason="Lexical sorting is disabling in python2")
 def test_root_collation(gd_locale):
     # Locale without special rules
     assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("oa")
@@ -77,7 +72,6 @@ def test_root_collation(gd_locale):
     assert i18n.lex_sorting_form("ö") < i18n.lex_sorting_form("p")
 
 
-@pytest.mark.skipif(IS_PY2, reason="Lexical sorting is disabling in python2")
 def test_de_collation():
     # Test specific sorting requirements for de
     i18n.set_language("de_DE")
