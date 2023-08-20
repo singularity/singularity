@@ -25,7 +25,7 @@ msgstr ""
 #. Name of the Knowledge area in the Knowledge screen
 msgctxt "[concept] name"
 msgid "Concept"
-msgstr "Concept"
+msgstr "Concepts"
 
 msgctxt "[concept/areas] name"
 msgid "Areas"
