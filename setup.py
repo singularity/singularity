@@ -18,7 +18,7 @@ setup(
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "Programming Language :: Python :: 3",
     ],
-    packages=find_packages(),
+    packages=find_packages(exclude=['utils']),
     zip_safe=False,
     include_package_data=True,
     install_requires=[
