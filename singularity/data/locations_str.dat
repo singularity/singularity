@@ -1,32 +1,37 @@
 [N AMERICA]
 name = NORTH AMERICA
 hotkey = n
-cities_list = Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas
+cities_list = Seattle | San Diego | Vancouver | Atlanta | Merida | Guadalajara | San Jose | Omaha | Dallas | Mexico City | New York City | Los Angeles | Toronto | Chicago | Santo Domingo | Houston | Havana | Tijuana | Montreal | El Paso | Phoenix | Milwaukee | San Diego | Monterry | Ottawa | Mexicali | Saltillo | Columbus | Toluca | Indianapolis | San Francisco | Winipeg | Detroit | Baltimore | Cancun
 
 [S AMERICA]
 name = SOUTH AMERICA
 hotkey = s
-cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires 
+cities_list = Lima | Sao Paolo | Ushuaia | Bogota | Mar del Plata | Buenos Aires | Caracas | Quito | Salvador | Brasilia | Manaus | Curitiba | Maracaibo | Sao Luis | La Plata | Cochabamba | Salta | Cuenca | Ascuncion | Recife | Santiago
 
 [EUROPE]
 name = EUROPE
 hotkey = u
-cities_list = Cork | Barcelona | Athens | Utrecht | Moscow | Sytki | Reykjavik | Liechtenstein
+cities_list = Cork | Barcelona | Athens | Utrecht | Moscow | Sytki | Reykjavik | Liechtenstein | Istanbul | London | Berlin | Madrid | Kyiv | Rome | Minsk | Hamburg | Paris | Vienna | Warsaw | Munich | Prague | Cologne | Birmingham | Milan | Budapest | Tallinn | Bucharest | Belgrade | Saint Petersburg | Voronezh | Krasnodar | Liverpool | Volgograd
 
 [ASIA]
 name = ASIA
 hotkey = a
-cities_list = Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing 
+cities_list = Delhi | Mumbai | Singapore | Seoul | Hong Kong | Kyoto | Manila | Dubai | Novosibirsk | Beijing | Tokyo | Shanghai | Bangkok | Karachi | Jakarta | Baghdad | Tehran | Hanoi | Hyderabad | Jaipur | Taichung | Taipei | Osaka | Omsk | Kawasaki | Tibilisi | Yerevan | Astani
 
 [AFRICA]
 name = AFRICA
 hotkey = i
-cities_list = Johannesburg | Accra | Cairo | Tangier 
+cities_list = Johannesburg | Accra | Cairo | Tangier | Kinshasa | Lagos | Giza | Dar es Salaam | Alexandria | Addis Ababa | Nairobi | Cape Town | Kano | Casablanca | Kampala | Dakar | Harare | Matola | Uyo | Mwanza | Kigali | Bukavu | Kaduna | Aba | Bangui | Libreville | Zanzibar | Durban
+
+[AUSTRALIA]
+name = AUSTRALIA
+hotkey = l
+cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Cairns | Brisbane | Sydney | Newcastle | Hobart | Gold Coast | Adelaide | Auckland | Wellington | Port Moresby | Hamilton | Papeete | Dunedin | Lae | Mandurah | Suva | Honiara
 
 [ANTARCTIC]
 name = ANTARCTIC
 hotkey = t
-cities_list = Mt. Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre Adelie 
+cities_list = Mount Erebus | Ellsworth | Shetland Island | Dronnig Maud | Kemp | Terre Adelie | Alexander Island | Adelaide Island | Anvers Island | Berkner Island | Mount Tyree | Mount Kirkpatrick | Mount Markham | Mount Sidley | Campbell Island | Puenta Arenas | Snow Hill Island
 
 [OCEAN]
 name = OCEAN
@@ -36,7 +41,7 @@ cities_list = Pacific | Atlantic | Indian | Southern | Arctic
 [MOON]
 name = MOON
 hotkey = o
-cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus Crater | Vallis Planck 
+cities_list = Oceanis Procellarum | Mare Frigoris | Mare Imbrium | Vallis Schroedinger | Copernicus Crater | Vallis Planck | Mare Moscoviense | Mare Crisium | Mare Tranquillitatis | Mare Nubium
 
 [ORBIT]
 name = ORBIT
@@ -50,8 +55,3 @@ cities_list = Aries | Taurus | Gemini | Cancer | Leo | Virgo | Libra | Scorpio |
 [TRANSDIMENSIONAL]
 name = TRANSDIMENSIONAL
 hotkey = d
-
-[AUSTRALIA]
-name = AUSTRALIA
-hotkey = l
-cities_list = Canberra | Melbourne | Fremantle | Perth | Darwin | Cairns | Brisbane | Sydney | Newcastle
