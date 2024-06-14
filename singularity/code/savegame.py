@@ -345,8 +345,7 @@ def load_savegame(savegame: Savegame):
 
     with open(load_path, "rb") as fd:
         load_savegame_fd(savegame.load_file, fd)
-
-    last_savegame_name = savegame.name if savegame.is_special_save else None
+    last_savegame_name = savegame.name if not savegame.is_special_save else None
 
 
 def load_savegame_fd(loader_func, fd):
