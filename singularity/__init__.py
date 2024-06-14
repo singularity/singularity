@@ -78,6 +78,13 @@ def main():
     # Create all directories first
     dirs.create_directories(g.force_single_dir)
 
+    try:
+        import polib
+    except ImportError:
+        if g.debug:
+            raise
+        raise SystemExit("Endgame: Singularity requires polib.")
+
     # Set language second, so help page and all error messages can be translated
     from singularity.code import i18n
 
