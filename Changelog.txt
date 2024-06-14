@@ -23,17 +23,11 @@ USER-VISIBLE CHANGES:
   be triggered. Additionally, it is possible to trigger events
   that are not active. Cheat menu can also force expire
   active "decay-able" events immediately. (nthykier)
-- The `About` menu now shows the version of `pygame` and `SDL`,
-  which is useful for debugging and bug reports. (nthykier)
 - Restore compatibility with pygame 1.9.4 that had a broken
   `blits` function. Thanks to onpon4 for reporting the issue
   (Closes: #293) (nthykier)
-- Fix a number of typos in the code. (timgates42)
 - Remove support for python2 / python2.7. New baseline is
   python3.9 (nthykier)
-- Stop installing the `utils` python package that was not
-  namespaced under `singularity`. It is only used by developers
-  (Closes: #335) (evertvorster)
 - Update the French translations (didier-devel)
 - Add considerably more location names for use in auto-generated
   names for bases. (UrbanVersis32)
@@ -62,6 +56,13 @@ USER-VISIBLE CHANGES:
   upgrades have completed. Thanks to Wuzzy2 for reporting
   the issue.  (Closes: #241) (nthykier)
 
+OTHER CHANGES:
+- The `About` menu now shows the version of `pygame` and `SDL`,
+  which is useful for debugging and bug reports. (nthykier)
+- Fix a number of typos in the code. (timgates42)
+- Stop installing the `utils` python package that was not
+  namespaced under `singularity`. It is only used by developers
+  (Closes: #335) (evertvorster)
 
 V1.00 (2020.07.02):
 
