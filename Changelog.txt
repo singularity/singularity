@@ -5,17 +5,38 @@ V1.XX (YYYY.YY.YY):
 USER-VISIBLE CHANGES:
 - The game now requires `polib`. Previously, we had an embedded
   copy as fallback. However, it did not work with python3.11.
+  (nthykier)
 - New feature: Quicksaves - save on `F5` (replacing "reload theme")
   and load on `F9`. Loading can only occur on the map screen.
   Note the quicksave currently do not provide feedback on success.
+  (nthykier)
 - The hotkey `F5` is now "quicksave" rather than "reload theme".
-  (Reload theme is now `F6`).
+  (Reload theme is now `F6`). (nthykier)
 - Save games are now ordered by time (most recent first) rather
   than name. This makes it easier to find the latest savegame.
+  (nthykier)
 - There is now an "Auto-build items" button in the base overview.
   It will propose building all the highest value items in each
   empty base slot (provided there is anything buildable for
-  that base).
+  that base). (nthykier)
+- The cheat menu can now show data about events that is or can
+  be triggered. Additionally, it is possible to trigger events
+  that are not active. Cheat menu can also force expire
+  active "decay-able" events immediately. (nthykier)
+- The `About` menu now shows the version of `pygame` and `SDL`,
+  which is useful for debugging and bug reports. (nthykier)
+- Restore compatibility with pygame 1.9.4 that had a broken
+  `blits` function. Thanks to onpon4 for reporting the issue
+  (Closes: #293) (nthykier)
+- Fix a number of typos in the code. (timgates42)
+- Remove support for python2 / python2.7. New baseline is
+  python3.9 (nthykier)
+- Stop installing the `utils` python package that was not
+  namespaced under `singularity`. It is only used by developers
+  (Closes: #335) (evertvorster)
+- Update the French translations (didier-devel)
+- Add considerably more location names for use in auto-generated
+  names for bases. (UrbanVersis32)
 
 V1.00 (2020.07.02):
 
