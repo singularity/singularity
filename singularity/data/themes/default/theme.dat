@@ -40,6 +40,8 @@ simple_menu_border         = white
 # Pane colors
 pane_background          = dark_blue
 pane_background_empty    = black
+research_pane_background = pane_background
+knowledge_pane_background = pane_background
 
 # Dialog colors
 text_dialog_background   = dark_blue

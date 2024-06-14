@@ -231,7 +231,7 @@ class KnowledgeScreen(dialog.FocusDialog):
             (0, 0),
             (-1, -1),
             text=desc_text,
-            background_color="pane_background",
+            background_color="knowledge_pane_background",
             text_size=20,
             align=constants.LEFT,
             valign=constants.TOP,

@@ -90,7 +90,7 @@ class ResearchScreen(dialog.ChoiceDescriptionDialog):
             (0, 0),
             (-1, -1),
             text=description,
-            background_color="pane_background",
+            background_color="research_pane_background",
             text_size=18,
             align=constants.LEFT,
             valign=constants.TOP,
