@@ -50,6 +50,15 @@ from singularity.code.logmessage import (
 from singularity.code.stats import observe
 
 
+AUTO_SAVE_EVERY_X_DAYS = 3
+
+
+def auto_save():
+    # Avoid circular dependency between player.py and savegame.py
+    from .savegame import auto_save as _auto_save # noqa
+    _auto_save()
+
+
 class DryRunInfo(object):
     pass
 
@@ -71,6 +80,7 @@ class Player(object):
 
         self.had_grace = True
         self.apotheosis = False
+        self.last_autosave_day = 0
 
         self.cash = cash
         self.interest_rate = difficulty.starting_interest_rate if difficulty else 1
@@ -562,6 +572,10 @@ class Player(object):
         for event in self.events.values():
             if event.triggered and event.decayable_event:
                 event.new_day()
+        if self.last_autosave_day + AUTO_SAVE_EVERY_X_DAYS < self.time_day + 1 and not self.lost_game():
+            auto_save()
+            print("Autosave for day " + str(self.time_day))
+            self.last_autosave_day = self.time_day
 
     def pause_game(self):
         g.curr_speed = 0
@@ -731,6 +745,7 @@ class Player(object):
             obj.cpu_usage[task_id] = value
 
         obj.update_times()
+        obj.last_autosave_day = obj.time_day
         return obj
 
     def lost_game(self):

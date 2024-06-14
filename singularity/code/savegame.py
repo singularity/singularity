@@ -51,6 +51,7 @@ from singularity.code import (
 from singularity.code.stats import itself as stats
 
 QUICKSAVE_NAME = "quicksave"
+AUTOSAVE_NAME = "autosave"
 
 
 # Filenames that are reserved under Windows
@@ -143,7 +144,7 @@ class Savegame(_Savegame):
 
     @property
     def is_special_save(self) -> bool:
-        return self.name == QUICKSAVE_NAME
+        return self.name in (QUICKSAVE_NAME, AUTOSAVE_NAME)
 
 
 def convert_string_to_path_name(name):
@@ -823,9 +824,13 @@ def check_filename_illegal(directory, filename, extension):
     return None
 
 
+def auto_save():
+    create_savegame(AUTOSAVE_NAME)
+
+
 def create_savegame(savegame_name):
     global last_savegame_name
-    if savegame_name != QUICKSAVE_NAME:
+    if savegame_name not in (QUICKSAVE_NAME, AUTOSAVE_NAME):
         last_savegame_name = savegame_name
     save_loc = convert_string_to_path_name(
         dirs.get_writable_file_in_dirs(savegame_name + ".s2", "saves")
