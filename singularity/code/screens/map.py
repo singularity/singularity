@@ -435,22 +435,23 @@ class MapScreen(dialog.Dialog):
             dialog=log.LogScreen(self),
         )
 
-        if g.cheater:
-            # Create cheat menu
-            # Cheat menu button must be created before menu button to avoid bug.
 
-            self.cheat_dialog = CheatMenuDialog(self)
-            self.cheat_button = button.DialogButton(
-                self,
-                (0, 0),
-                (0.01, 0.01),
-                text="",
-                # Translators: hotkey to open the cheat screen menu.
-                # Should preferably be near the ESC key, and it must not be a
-                # dead key (ie, it must print a char with a single keypress)
-                hotkey=_("`"),
-                dialog=self.cheat_dialog,
-            )
+        # Create cheat menu
+        # Cheat menu button must be created before menu button to avoid bug.
+        self.cheat_dialog = CheatMenuDialog(self)
+        self.cheat_button = button.DialogButton(
+            self,
+            (0, 0),
+            (0.01, 0.01),
+            text="",
+            enabled=g.cheater,
+            # Translators: hotkey to open the cheat screen menu.
+            # Should preferably be near the ESC key, and it must not be a
+            # dead key (ie, it must print a char with a single keypress)
+            hotkey=_("`"),
+            dialog=self.cheat_dialog,
+        )
+        self.cheat_button.visible = g.cheater
 
         self.menu_dialog = GameMenuDialog(self)
 
@@ -796,8 +797,7 @@ https://github.com/singularity/singularity
         self.research_button.dialog.needs_reconfig = True
         self.knowledge_button.dialog.needs_reconfig = True
         self.menu_dialog.needs_reconfig = True
-
-        if g.cheater:
+        if self.cheat_button.enabled:
             self.cheat_dialog.needs_reconfig = True
 
         super(MapScreen, self).reconfig()
@@ -808,8 +808,7 @@ https://github.com/singularity/singularity
         self.research_button.dialog.needs_rebuild = True
         self.knowledge_button.dialog.needs_rebuild = True
         self.menu_dialog.needs_rebuild = True
-
-        if g.cheater:
+        if self.cheat_button.enabled:
             self.cheat_dialog.needs_rebuild = True
 
         super(MapScreen, self).rebuild()

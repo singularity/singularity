@@ -499,9 +499,6 @@ class Widget(object):
             check_mask = [self]
 
         if update_full_rect:
-            size = self.real_size
-            pos = self.real_pos
-
             affected_rects = [self.collision_rect]
 
         return check_mask, affected_rects

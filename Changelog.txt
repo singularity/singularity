@@ -41,7 +41,12 @@ USER-VISIBLE CHANGES:
   at day change every change 3 days in game time.  Thanks to
   EinstokFair for the suggestion. The implementation is not
   exactly 1:1 with their suggestion, but it was better than
-  nothing. (nthykier)
+  nothing to reduce the loss on crashes. (nthykier)
+- Support enabling and disabling the cheat/debug menu at
+  runtime via F11 when on the map screen. Previously, you had
+  to start the game with the commandline option `--cheater`
+  to get access to the cheat/debug menu. (nthykier)
+
 
 V1.00 (2020.07.02):
 

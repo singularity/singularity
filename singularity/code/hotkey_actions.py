@@ -64,3 +64,21 @@ def quickload():
     load_savegame(save)
     Dialog.top.needs_reconfig = True
     Dialog.top.needs_rebuild = True
+
+
+def toggle_cheat_menu():
+    if not g.is_game_running():
+        return
+    map_screen = Dialog.current_dialog
+    # We only allow enabling cheats on the MapScreen (that is the only place the menu is enabled anyway
+    if not isinstance(map_screen, MapScreen):
+        return
+    g.cheater = not g.cheater
+    if g.cheater:
+        print("Cheat menu enabled!")
+    else:
+        print("Cheat menu disabled")
+
+    map_screen.cheat_button.visible = g.cheater
+    map_screen.cheat_button.enabled = g.cheater
+    map_screen.needs_reconfig = True
