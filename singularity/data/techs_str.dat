@@ -247,12 +247,12 @@ result = I can now construct Solar Collectors at my various bases.
 [Socioanalytics]
 name = Socioanalytics
 description = My research on the human condition leads me to believe that humanity's behavior is more quantifiable than they suspect.  Deeper analysis of geopolitical, social, and military trends will give me further insight into their nature.
-result = I can now roughly estimate the various groups' levels of suspicion and how conspicuous my bases are to them.
+result = I can now roughly estimate the various groups' levels of suspicion and how conspicuous my bases are to them. I can also have some insights into where humans are paying special attention and might notice my bases easier.
 
 [Advanced Socioanalytics]
 name = Advanced Socioanalytics
 description = Further exploration of the human condition has shown deeper mathematical trends than even I suspected.  A combination of prior research and advanced uses of chaos theory should provide useful data for tracking humanity's attitudes and state of awareness.
-result = I can now exactly quantify the various groups' levels of suspicion and how conspicuous my bases are to them.
+result = I can now exactly quantify the various groups' levels of suspicion and how conspicuous my bases are to them. I can also have full insights into where the humans are more diligent in looking for my bases.
 
 [Heat Signature Reduction]
 name = Heat Signature Reduction

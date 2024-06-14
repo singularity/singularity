@@ -46,6 +46,9 @@ USER-VISIBLE CHANGES:
   runtime via F11 when on the map screen. Previously, you had
   to start the game with the commandline option `--cheater`
   to get access to the cheat/debug menu. (nthykier)
+- Socioanalytics and its Advanced counterpart now explicitly
+  states in the result that the AI now has insights into
+  "hot" regions.
 
 
 V1.00 (2020.07.02):
