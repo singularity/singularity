@@ -17,9 +17,9 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 # This file is used to implement the cheat menu
-import collections
-
 import operator
+from collections.abc import Mapping
+
 from numpy import array
 
 from singularity.code import difficulty, g
@@ -283,11 +283,7 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
         }
 
         def _dump_dict(prefix, mapping):
-            if isinstance(mapping, collections.OrderedDict):
-                keys = mapping
-            else:
-                keys = sorted(mapping)
-            for key in keys:
+            for key in mapping:
                 prop_name = '%s["%s"]' % (prefix, key)
                 value = mapping[key]
                 presenter = presenters.get(type(value), repr)
@@ -300,7 +296,7 @@ class CheatMenuDialog(dialog.SimpleMenuDialog):
                 if callable(value):
                     value = value()
                     prop_name += "()"
-                if isinstance(value, collections.Mapping):
+                if isinstance(value, Mapping):
                     for v in _dump_dict(prop_name, value):
                         yield v
                 else:

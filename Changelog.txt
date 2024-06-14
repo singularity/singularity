@@ -48,7 +48,8 @@ USER-VISIBLE CHANGES:
   to get access to the cheat/debug menu. (nthykier)
 - Socioanalytics and its Advanced counterpart now explicitly
   states in the result that the AI now has insights into
-  "hot" regions.
+  "hot" regions. (nthykier)
+- Fix crash bug in the "Hidden State" cheat function. (nthykier)
 
 
 V1.00 (2020.07.02):
