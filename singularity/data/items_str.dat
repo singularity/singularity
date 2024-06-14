@@ -88,7 +88,7 @@ description = A simple fence can drastically reduce the number of people poking 
 
 [Armed Guards]
 name = Armed Guards
-description = Armed guards can aid in keeping suspicious individuals away from secure locations.  However, the very presence of the guards may itself invite greater suspicion.
+description = Armed guards can aid in keeping suspicious individuals away from secure locations.
 
 [Passive Camouflage]
 name = Passive Camouflage

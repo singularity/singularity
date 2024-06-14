@@ -50,6 +50,10 @@ USER-VISIBLE CHANGES:
   states in the result that the AI now has insights into
   "hot" regions. (nthykier)
 - Fix crash bug in the "Hidden State" cheat function. (nthykier)
+- Remove consuming remark about the "Armed Guards" item that
+  made it imply that had a negative effect. Thanks to
+  RandomIsocahedron for reporting the issue.  (Closes: #297)
+  (nthykier)
 
 
 V1.00 (2020.07.02):
