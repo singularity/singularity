@@ -54,6 +54,13 @@ USER-VISIBLE CHANGES:
   made it imply that had a negative effect. Thanks to
   RandomIsocahedron for reporting the issue.  (Closes: #297)
   (nthykier)
+- When buying CPUs, clarify that the first number is the "base"
+  CPU for the item (before modifiers) and the second is the
+  "effective" CPU (after modifiers). Show the current modifier
+  next to the effective CPU and, if relevant upgrade are pending,
+  a second line with the effective CPU and modifier when all
+  upgrades have completed. Thanks to Wuzzy2 for reporting
+  the issue.  (Closes: #241) (nthykier)
 
 
 V1.00 (2020.07.02):

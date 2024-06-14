@@ -312,6 +312,18 @@ class Base(buyable.Buyable):
             compute_bonus = compute_bonus * self.location.modifiers["cpu"]
         return compute_bonus
 
+    @property
+    def pending_compute_bonus(self):
+        compute_bonus = 10000
+
+        # Item bonus
+        compute_bonus += self.get_quality_for("cpu_modifier", pending_ok=True)
+
+        # Location modifier
+        if self.location and "cpu" in self.location.modifiers:
+            compute_bonus = compute_bonus * self.location.modifiers["cpu"]
+        return compute_bonus
+
     def recalc_cpu(self):
         self.raw_cpu = self.get_quality_for("cpu")
 
@@ -414,11 +426,11 @@ class Base(buyable.Buyable):
 
         return detect_chance
 
-    def get_quality_for(self, quality):
+    def get_quality_for(self, quality, pending_ok=False):
         gen = (
             item.get_quality_for(quality)
             for item in self.all_items()
-            if item and item.done
+            if item and (pending_ok or item.done)
         )
 
         if quality.endswith("_modifier"):

@@ -134,7 +134,7 @@ class ItemSpec(buyable.BuyableSpec):
         basic_text = super(ItemSpec, self).get_info()
         if self.has_quality_for("cpu"):
             cpu = self.get_quality_for("cpu")
-            cpu_text = ngettext("Generates {0} CPU.", "Generates {0} CPU.", cpu).format(
+            cpu_text = ngettext("Generates {0} CPU (base).", "Generates {0} CPU (base).", cpu).format(
                 g.add_commas(cpu)
             )
             return basic_text.replace("---", cpu_text + "\n---")
@@ -156,12 +156,30 @@ class ItemSpec(buyable.BuyableSpec):
 
         for qual, value in self.item_qual.items():
             if qual == "cpu":
+                current_value = value
+                modifier = 10000
+                pending_modifier = 10000
                 if if_installed_in_base is not None:
-                    value = max(
-                        1, int(value * if_installed_in_base.compute_bonus // 10000)
+                    modifier = if_installed_in_base.compute_bonus
+                    pending_modifier = if_installed_in_base.pending_compute_bonus
+                    current_value = max(
+                        1, int(value * modifier // 10000)
                     )
-                bonus_text += _("CPU per day:") + " "
-                bonus_text += g.add_commas(value * count)
+                    pending_value = max(
+                        1, int(value * pending_modifier // 10000)
+                    )
+
+                current_value *= count
+                pending_value *= count
+                bonus_text += ngettext("CPU per day: {0} ({1})", "CPU per day: {0} ({1})", current_value).format(
+                    g.add_commas(current_value),
+                    g.to_percentage_modifier(modifier, True)
+                )
+                if modifier != pending_modifier:
+                    bonus_text += "\n" + ngettext("CPU per day (pending): {0} ({1})", "CPU per day (pending): {0} ({1})", current_value).format(
+                        g.add_commas(pending_value),
+                        g.to_percentage_modifier(pending_modifier, True)
+                    )
             elif qual == "cpu_modifier":
                 bonus_text += _("CPU bonus:") + " "
                 bonus_text += g.to_percent(value)

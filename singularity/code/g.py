@@ -126,6 +126,18 @@ def to_percent(raw_percent, show_full=False):
         return _("{0}%").format(locale.format_string("%d", raw_percent // 100))
 
 
+# Percentages are internally represented as an int, where 10=0.10% and so on.
+# This converts that format to a human-readable one relative to 100%
+# (Useful to show things as being "-16.67%" effective relative to the baseline rather than
+#  as "83.33%")
+def to_percentage_modifier(raw_percent, show_full=False):
+    plus_sign = "+" if raw_percent > 10000 else ""
+    if raw_percent % 100 != 0 or show_full:
+        return _("{0}%").format(plus_sign + locale.format_string("%.2f", raw_percent / 100.0 - 100))
+    else:
+        return _("{0}%").format(plus_sign + locale.format_string("%d", raw_percent // 100 - 100))
+
+
 # nearest_percent takes values in the internal representation and modifies
 # them so that they only represent the nearest percentage.
 def nearest_percent(value, step=100):
