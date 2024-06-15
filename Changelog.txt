@@ -2,10 +2,17 @@ Endgame: Singularity Changelog
 
 V1.XX (YYYY.YY.YY):
 
-USER-VISIBLE CHANGES:
+DEPENDENCY / BASELINE CHANGES:
 - The game now requires `polib`. Previously, we had an embedded
-  copy as fallback. However, it did not work with python3.11.
-  (nthykier)
+  copy as fallback. However, it did not work with python3.11
+  and has now been removed. (nthykier)
+- Remove support for python2 / python2.7. New baseline is
+  python3.9 (nthykier)
+- Restore compatibility with pygame 1.9.4 that had a broken
+  `blits` function. Thanks to onpon4 for reporting the issue
+  (Closes: #293) (nthykier)
+
+USER-VISIBLE CHANGES:
 - New feature: Quicksaves - save on `F5` (replacing "reload theme")
   and load on `F9`. Loading can only occur on the map screen.
   Note the quicksave currently do not provide feedback on success.
@@ -23,23 +30,20 @@ USER-VISIBLE CHANGES:
   be triggered. Additionally, it is possible to trigger events
   that are not active. Cheat menu can also force expire
   active "decay-able" events immediately. (nthykier)
-- Restore compatibility with pygame 1.9.4 that had a broken
-  `blits` function. Thanks to onpon4 for reporting the issue
-  (Closes: #293) (nthykier)
-- Remove support for python2 / python2.7. New baseline is
-  python3.9 (nthykier)
 - Update the French translations (didier-devel)
 - Add considerably more location names for use in auto-generated
   names for bases. (UrbanVersis32)
 - Add basic auto-save feature that automatically saves the game
-  at day change every change 3 days in game time.  Thanks to
+  at day change every 3 days in game time.  Thanks to
   EinstokFair for the suggestion. The implementation is not
-  exactly 1:1 with their suggestion, but it was better than
-  nothing to reduce the loss on crashes. (nthykier)
+  exactly 1:1 with their suggestion, but it is a starting point
+  to reduce the loss on crashes. (nthykier)
 - Support enabling and disabling the cheat/debug menu at
   runtime via F11 when on the map screen. Previously, you had
   to start the game with the commandline option `--cheater`
-  to get access to the cheat/debug menu. (nthykier)
+  to get access to the cheat/debug menu and restart without it
+  to disable it again. The menu itself is still hidden even when
+  active. (nthykier)
 - Socioanalytics and its Advanced counterpart now explicitly
   states in the result that the AI now has insights into
   "hot" regions. (nthykier)
