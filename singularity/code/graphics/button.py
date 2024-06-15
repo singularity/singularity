@@ -23,7 +23,6 @@ from __future__ import absolute_import
 import pygame
 
 from singularity.code.graphics import constants, widget, text, image
-from singularity.code.pycompat import *
 
 
 class HotkeyText(text.Text):
@@ -139,7 +138,7 @@ class HotkeyText(text.Text):
     def calc_underline(self):
         if self.force_underline is not None:
             self.underline = self.force_underline
-        elif self.text and self.hotkey and type(self.hotkey) in (str, unicode):
+        elif self.text and self.hotkey and isinstance(self.hotkey, str):
             if self.hotkey in self.text:
                 self.underline = self.text.index(self.hotkey)
             elif self.hotkey.lower() in self.text.lower():

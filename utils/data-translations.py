@@ -3,9 +3,9 @@
 
 import sys
 import os.path
+from configparser import RawConfigParser
 from io import open
 import polib
-from singularity.code.pycompat import *
 
 
 

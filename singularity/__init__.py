@@ -26,11 +26,11 @@ from __future__ import print_function
 
 import optparse
 import logging
+from configparser import ConfigParser
 from io import open
 import sys
 
 from singularity.code import g, dirs
-from singularity.code.pycompat import *
 
 
 __version__ = "1.00"
@@ -149,7 +149,7 @@ def main():
     save_loc = dirs.get_readable_file_in_dirs("prefs.dat", "pref")
 
     if save_loc is not None:
-        prefs = SafeConfigParser()
+        prefs = ConfigParser()
         try:
             with open(save_loc, "r", encoding="utf-8") as savefile:
                 prefs.read_file(savefile)

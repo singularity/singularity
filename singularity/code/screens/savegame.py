@@ -25,11 +25,10 @@ import time
 
 import pygame
 
-from singularity.code import i18n, g, savegame as sv, difficulty
+from singularity.code import g, savegame as sv, difficulty
 from singularity.code.graphics import dialog, button, text, constants, listbox
 
 from singularity.code.safety import log_func_exc
-from singularity.code.pycompat import *
 
 
 class SavegameScreen(dialog.ChoiceDialog):
@@ -227,13 +226,7 @@ class SavegameScreen(dialog.ChoiceDialog):
                 try:
                     tm = float(save.headers["time"])
                     # Do not use unicode strings to fix python2 strftime bug. It doesn't work and crash.
-                    tm_f = time.strftime("%c", time.localtime(tm))
-                    # Fix python2 strftime bug: See https://bugs.python.org/issue5398
-                    # Yes, python2 kinda suck with unicode.
-                    try:
-                        tm_str = unicode(tm_f)
-                    except UnicodeDecodeError:
-                        tm_str = tm_f.decode("utf-8")
+                    tm_str = time.strftime("%c", time.localtime(tm))
                 except (KeyError, ValueError):
                     tm_str = ""
 

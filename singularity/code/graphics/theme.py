@@ -22,7 +22,6 @@ from __future__ import absolute_import
 
 import os, sys, collections, numbers, itertools
 from singularity.code.graphics import g, dialog
-from singularity.code.pycompat import *
 
 
 default_theme = "default"
@@ -49,7 +48,7 @@ def set_theme(key, force_reload=False):
         except StopIteration:
             pass
 
-    elif isinstance(key, basestring):
+    elif isinstance(key, str):
         try:
             theme = themes[key]
         except KeyError:

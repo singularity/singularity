@@ -22,6 +22,8 @@ from __future__ import absolute_import
 
 import os
 import sys
+from configparser import ConfigParser
+
 import pygame
 import json
 
@@ -37,7 +39,6 @@ from singularity.code.graphics import (
     g as gg,
 )
 from singularity.code import g, dirs, i18n, mixer, data, warning
-from singularity.code.pycompat import *
 
 
 class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
@@ -754,7 +755,7 @@ def set_language_properly(language):
 
 def save_options():
     # Build a ConfigParser for writing the various preferences out.
-    prefs = SafeConfigParser()
+    prefs = ConfigParser()
     prefs.add_section("Preferences")
     prefs.set("Preferences", "fullscreen", str(bool(gg.fullscreen)))
     prefs.set("Preferences", "nosound", str(bool(mixer.nosound)))

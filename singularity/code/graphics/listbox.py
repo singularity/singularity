@@ -25,7 +25,6 @@ import math
 import pygame
 
 from singularity.code.graphics import g, constants, widget, text, scrollbar
-from singularity.code.pycompat import *
 
 
 class Listbox(widget.FocusWidget, text.SelectableText):
@@ -210,7 +209,7 @@ class Listbox(widget.FocusWidget, text.SelectableText):
 
             # Create the new ones.
             self.display_elements.extend(
-                self.make_element() for _ in xrange(list_size - current_size)
+                self.make_element() for _ in range(list_size - current_size)
             )
 
         if self.item_borders:

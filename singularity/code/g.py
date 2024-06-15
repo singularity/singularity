@@ -30,8 +30,6 @@ import sys
 # are made where needed.
 import locale
 
-from singularity.code.pycompat import *
-
 
 # Useful constants.
 hours_per_day = 24
@@ -108,13 +106,7 @@ def add_commas(number, fixed_size=False):
             raw_with_commas = raw_with_commas.lstrip(locale_test[2]).lstrip(
                 locale_test[1]
             )
-
-    # Fix python2 format bug: See https://bugs.python.org/issue15276
-    # Note: This a crah in some platform, do not remove it because you can't reproduce it.
-    try:
-        return unicode(raw_with_commas)
-    except UnicodeDecodeError:
-        return raw_with_commas.decode("utf-8")
+    return str(raw_with_commas)
 
 
 # Percentages are internally represented as an int, where 10=0.10% and so on.
@@ -382,9 +374,8 @@ def hotkey(string):
 
     def remove_accents(text):
         from unicodedata import normalize, combining
-        from singularity.code.pycompat import unicode
 
-        nfkd_form = normalize("NFKD", unicode(text))
+        nfkd_form = normalize("NFKD", str(text))
         return "".join(c for c in nfkd_form if not combining(c))
 
     text = string

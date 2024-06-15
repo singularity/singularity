@@ -24,6 +24,7 @@ from __future__ import absolute_import
 import os
 import sys
 import collections
+from configparser import RawConfigParser
 from io import open
 
 from singularity.code import g, i18n
@@ -40,8 +41,6 @@ from singularity.code import (
     region,
     warning,
 )
-from singularity.code.pycompat import *
-import singularity.code.graphics.g as gg
 import singularity.code.graphics.theme as theme
 
 

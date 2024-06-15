@@ -22,7 +22,6 @@
 from __future__ import absolute_import
 
 import pygame
-from singularity.code.pycompat import *
 
 # User desktop size. Set at init_graphics_system()
 desktop_size = ()
@@ -224,28 +223,28 @@ def init_alpha():
 
 
 def resolve_image_alias(image):
-    if isinstance(image, basestring):
+    if isinstance(image, str):
         return resolve_color_alias(images[image])
     else:
         return image
 
 
 def resolve_color_alias(color):
-    if isinstance(color, basestring):
+    if isinstance(color, str):
         return resolve_color_alias(colors[color])
     else:
         return color
 
 
 def resolve_font_alias(font):
-    if isinstance(font, basestring):
+    if isinstance(font, str):
         return resolve_color_alias(fonts[font])
     else:
         return font
 
 
 def resolve_text_size(text_size):
-    if isinstance(text_size, basestring):
+    if isinstance(text_size, str):
         return resolve_text_size(configured_text_sizes[text_size])
     else:
         return text_size

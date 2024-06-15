@@ -22,7 +22,6 @@ from __future__ import absolute_import
 
 from operator import truediv
 from singularity.code import g, spec, prerequisite
-from singularity.code.pycompat import *
 
 cash, cpu, labor = range(3)
 
@@ -231,7 +230,7 @@ class Buyable(object):
         if self.done:
             serialized_mapping["done"] = self.done
         else:
-            serialized_mapping["cost_paid"] = [long(x) for x in self.cost_paid]
+            serialized_mapping["cost_paid"] = [int(x) for x in self.cost_paid]
         if self.count != 1:
             serialized_mapping["count"] = self.count
         return serialized_mapping

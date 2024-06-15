@@ -5,26 +5,6 @@
 # little we need.
 
 try:
-    long = long
-except NameError:
-    long = int
-
-try:
-    unicode = unicode
-except NameError:
-    unicode = str
-
-try:
-    basestring = basestring
-except NameError:
-    basestring = str
-
-try:
-    xrange = xrange
-except NameError:
-    xrange = range
-
-try:
     # Python 3
     from configparser import ConfigParser, RawConfigParser
 
