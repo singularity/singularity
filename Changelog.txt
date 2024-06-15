@@ -11,6 +11,8 @@ DEPENDENCY / BASELINE CHANGES:
 - Restore compatibility with pygame 1.9.4 that had a broken
   `blits` function. Thanks to onpon4 for reporting the issue
   (Closes: #293) (nthykier)
+- Add guard to prevent crashing when `locale.getdefaultencoding`
+  is removed in python3.15.
 
 USER-VISIBLE CHANGES:
 - New feature: Quicksaves - save on `F5` (replacing "reload theme")

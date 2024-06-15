@@ -57,7 +57,9 @@ TEXTDOMAIN_PREFIX = "singularity_"
 
 try:
     language = locale.getdefaultlocale()[0] or default_language
-except RuntimeError:
+except (RuntimeError, AttributeError):
+    # locale.getdefaultlocale is slated for removal in 3.15.
+    # With the attribute error, we should at least not crash when the time comes.
     language = default_language
 
 
@@ -73,7 +75,7 @@ def set_language(lang=None, force=False):
     if lang in langs:
         language = lang
     else:
-        # Let's try to be smart: if base language exists for another for another
+        # Let's try to be smart: if base language exists for another
         # country, use it. So es_ES => es_AR, pt_PT => pt_BR, etc
         code = lang.split("_")[0]
         languages = [l for l in langs if code == l.split("_")[0]]
