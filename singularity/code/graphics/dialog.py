@@ -82,6 +82,8 @@ branch_coverage = {
     "branch_1": False,
     "branch_2": False,
     "branch_3": False,
+    "branch_4": False,
+    "branch_5": False,
 }
 
 def fake_click(down):
@@ -214,8 +216,10 @@ class Dialog(text.Text):
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
         if self.parent != None:
+            branch_coverage["branch_4"] = True
             raise ValueError("Dialogs with parents cannot be the top-level dialog.")
         else:
+            branch_coverage["branch_5"] = True
             Dialog.top = self
 
     def remake_surfaces(self):
