@@ -101,9 +101,6 @@ pygame.init()
 fake_click(True)
 fake_click(False)
 
-print("Branch Coverage Information:")
-for branch, hit in branch_coverage.items():
-    print(f"{branch}: {'Hit' if hit else 'Missed'}")
 
 def fake_key(key):
     down_event = pygame.event.Event(pygame.KEYDOWN, {"key": key, "unicode": None})
