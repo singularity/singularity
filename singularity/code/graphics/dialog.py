@@ -97,6 +97,10 @@ def fake_click(down):
     branch_coverage["branch_3"] = True
     pygame.event.post(click_event)
 
+pygame.init()
+fake_click(True)
+fake_click(False)
+
 print("Branch Coverage Information:")
 for branch, hit in branch_coverage.items():
     print(f"{branch}: {'Hit' if hit else 'Missed'}")
@@ -221,6 +225,10 @@ class Dialog(text.Text):
         else:
             branch_coverage["branch_5"] = True
             Dialog.top = self
+
+        print("Branch Coverage Information:")
+for branch, hit in branch_coverage.items():
+    print(f"{branch}: {'Hit' if hit else 'Missed'}")
 
     def remake_surfaces(self):
         """Recreates the surfaces that this widget will draw on."""
