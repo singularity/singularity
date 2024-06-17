@@ -42,7 +42,6 @@ KEYPAD = {
     pygame.K_KP9: 9,
 }
 
-
 SDL_V2 = True if pygame.get_sdl_version()[0] == 2 else False
 
 
@@ -79,15 +78,26 @@ def move_mouse(dxy):
     y = old_y + dy
     pygame.mouse.set_pos((x, y))
 
+branch_coverage = {
+    "branch_1": False,
+    "branch_2": False,
+    "branch_3": False,
+}
 
 def fake_click(down):
     if down:
+        branch_coverage["branch_1"] = True
         type = pygame.MOUSEBUTTONDOWN
     else:
+        branch_coverage["branch_2"] = True
         type = pygame.MOUSEBUTTONUP
     click_event = pygame.event.Event(type, {"button": 1, "pos": pygame.mouse.get_pos()})
+    branch_coverage["branch_3"] = True
     pygame.event.post(click_event)
 
+print("Branch Coverage Information:")
+for branch, hit in branch_coverage.items():
+    print(f"{branch}: {'Hit' if hit else 'Missed'}")
 
 def fake_key(key):
     down_event = pygame.event.Event(pygame.KEYDOWN, {"key": key, "unicode": None})
