@@ -2,7 +2,7 @@ import unittest
 from singularity.code.g import suspicion_to_danger_level, branch_coverage
 
 
-class Test_g(unittest.TestCase):
+class Test_suspicion_to_danger_level(unittest.TestCase):
     
     
     def test_suspicion(self):

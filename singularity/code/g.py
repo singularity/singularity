@@ -86,6 +86,8 @@ branch_coverage = {
     "branch2": False,   
     "branch3": False,  
     "branch4": False,  
+    "branch5": False,  
+    "branch6": False,  
 }
 
 
@@ -138,8 +140,12 @@ def to_percent(raw_percent, show_full=False):
 def nearest_percent(value, step=100):
     sub_percent = value % step
     if 2 * sub_percent <= step:
+        branch_coverage["branch5"] = True 
+        print(f"branch5 was {'hit' if branch_coverage['branch5'] else 'not hit'}") 
         return value - sub_percent
     else:
+        branch_coverage["branch6"] = True 
+        print(f"branch6 was {'hit' if branch_coverage['branch1'] else 'not hit'}") 
         return value + (step - sub_percent)
 
 
@@ -158,8 +164,7 @@ def danger_level_to_detect_str(danger):
 # percent_to_danger_level takes a suspicion level and returns an int in range(5)
 # that represents whether it is low, moderate, high, or critically high.
 def suspicion_to_danger_level(suspicion):
-    global branch_coverage  # Ensure access to the global dictionary
-     
+    global branch_coverage  
     if suspicion < 2500:
         branch_coverage["branch1"] = True
         print(f"branch1 was {'hit' if branch_coverage['branch1'] else 'not hit'}")
