@@ -82,10 +82,10 @@ pl = None  # The Player instance
 map_screen = None
 
 branch_coverage = {
-    "branch1": False,  # if branch for lower
-    "branch2": False,   # else branch
-    "branch3": False,  # if branch for element < self.scroll_pos
-    "branch4": False,   # elif branch for element >= self.scroll_pos + self.window
+    "branch1": False,  
+    "branch2": False,   
+    "branch3": False,  
+    "branch4": False,  
 }
 
 
