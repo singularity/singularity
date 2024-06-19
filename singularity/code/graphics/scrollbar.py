@@ -24,6 +24,12 @@ import pygame
 
 from singularity.code.graphics import g, constants, widget, button, slider
 
+branch_coverage = {
+    "branch1": False,  # if branch for lower
+    "branch2": False,   # else branch
+    "branch3": False,  # if branch for element < self.scroll_pos
+    "branch4": False,   # elif branch for element >= self.scroll_pos + self.window
+}
 
 class _ArrowButton(button.FunctionButton, button.ImageButton):
     def __init__(self, parent, *args, **kwargs):
@@ -142,8 +148,12 @@ class Scrollbar(widget.Widget):
 
     def adjust(self, lower):
         if lower:
+            branch_coverage["branch1"] = True
+            print("Positive")
             self.slider.slider_pos = self.slider.safe_pos(self.scroll_pos - 1)
         else:
+            branch_coverage["branch2"] = True
+            print("Non-Positive")
             self.slider.slider_pos = self.slider.safe_pos(self.scroll_pos + 1)
 
     def center(self, element):
@@ -151,9 +161,17 @@ class Scrollbar(widget.Widget):
 
     def scroll_to(self, element):
         if element < self.scroll_pos:
+            branch_coverage["branch3"] = True
+            print("Positive")
             self.slider.slider_pos = self.slider.safe_pos(element)
         elif element >= self.scroll_pos + self.window:
+            branch_coverage["branch4"] = True
+            print("Positive2")
             self.slider.slider_pos = self.slider.safe_pos(element - self.window + 1)
+        
+    def print_coverage():
+        for branch, hit in branch_coverage.items():
+         print(f"{branch} was {'hit' if hit else 'not hit'}")
 
     def on_change(self, value):
         self.scroll_pos = value
@@ -167,3 +185,4 @@ class UpdateScrollbar(Scrollbar):
     def on_change(self, value):
         self.scroll_pos = value
         self.update_func(value)
+
