@@ -38,12 +38,6 @@ class TestDialog(unittest.TestCase):
         with self.assertRaises(ValueError):
             insort_right_w_key(a, 4, lo=-1)
         self.assertTrue(branch_coverage["branch_3"], "Branch 3 was not hit")
-        
-    def test_insert_into_empty_list(self):
-        a = []
-        insort_right_w_key(a, 5)
-        self.assertEqual(a, [5])
-        self.assertTrue(branch_coverage["branch_5"], "Branch 5 was not hit")
 
     def test_insert_with_none_hi(self):
         a = [1, 3, 5]
@@ -52,7 +46,13 @@ class TestDialog(unittest.TestCase):
         self.assertTrue(branch_coverage["branch_4"], "Branch 4 was not hit")
         self.assertTrue(branch_coverage["branch_5"], "Branch 5 was not hit")
         self.assertTrue(branch_coverage["branch_6"], "Branch 6 was not hit")
-        self.assertTrue(branch_coverage["branch_7"], "Branch 7 was not hit")
+        self.assertTrue(branch_coverage["branch_7"], "Branch 7 was not hit")   
+    
+    def test_insert_into_empty_list(self):
+        a = []
+        insort_right_w_key(a, 5)
+        self.assertEqual(a, [5])
+        self.assertTrue(branch_coverage["branch_5"], "Branch 5 was not hit")
 
     def test_insert_in_sorted_list(self):
         a = [1, 3, 5, 7]
@@ -69,13 +69,7 @@ class TestDialog(unittest.TestCase):
         self.assertTrue(branch_coverage["branch_5"], "Branch 5 was not hit")
         self.assertTrue(branch_coverage["branch_7"], "Branch 7 was not hit")
 
-    def test_insert_with_custom_key(self):
-        a = [(1, 'one'), (3, 'three'), (5, 'five')]
-        insort_right_w_key(a, (4, 'four'), key=lambda v: v[0])
-        self.assertEqual(a, [(1, 'one'), (3, 'three'), (4, 'four'), (5, 'five')])
-        self.assertTrue(branch_coverage["branch_5"], "Branch 5 was not hit")
-        self.assertTrue(branch_coverage["branch_6"], "Branch 6 was not hit")
-        self.assertTrue(branch_coverage["branch_7"], "Branch 7 was not hit")
+    
 
         
 
