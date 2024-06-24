@@ -44,7 +44,15 @@ KEYPAD = {
 
 SDL_V2 = True if pygame.get_sdl_version()[0] == 2 else False
 
-
+branch_coverage = {
+    "branch_1": False,
+    "branch_2": False,
+    "branch_3": False,
+    "branch_4": False,
+    "branch_5": False,
+    "branch_6": False,
+    "branch_7": False,
+}
 def insort_right_w_key(a, x, lo=0, hi=None, key=lambda v: v):
     """Insert item x in list a, and keep it sorted assuming a is sorted.
 
@@ -57,16 +65,21 @@ def insort_right_w_key(a, x, lo=0, hi=None, key=lambda v: v):
     """
 
     if lo < 0:
+        branch_coverage["branch_1"] = True
         raise ValueError("lo must be non-negative")
     if hi is None:
+        branch_coverage["branch_2"] = True
         hi = len(a)
     x_key = key(x)
     while lo < hi:
+        branch_coverage["branch_3"] = True
         mid = (lo + hi) // 2
         mid_key = key(a[mid])
         if x_key < mid_key:
+            branch_coverage["branch_4"] = True
             hi = mid
         else:
+            branch_coverage["branch_5"] = True
             lo = mid + 1
     a.insert(lo, x)
 
@@ -78,28 +91,24 @@ def move_mouse(dxy):
     y = old_y + dy
     pygame.mouse.set_pos((x, y))
 
-branch_coverage = {
-    "branch_1": False,
-    "branch_2": False,
-    "branch_3": False,
-    "branch_4": False,
-    "branch_5": False,
-}
 
 def fake_click(down):
     if down:
-        branch_coverage["branch_1"] = True
+        branch_coverage["branch_6"] = True
         type = pygame.MOUSEBUTTONDOWN
     else:
-        branch_coverage["branch_2"] = True
+        branch_coverage["branch_7"] = True
         type = pygame.MOUSEBUTTONUP
     click_event = pygame.event.Event(type, {"button": 1, "pos": pygame.mouse.get_pos()})
-    branch_coverage["branch_3"] = True
     pygame.event.post(click_event)
 
 pygame.init()
 fake_click(True)
 fake_click(False)
+
+print("Branch Coverage Information:")
+for branch, hit in branch_coverage.items():
+    print(f"{branch}: {'Hit' if hit else 'Missed'}")
 
 
 def fake_key(key):
@@ -217,15 +226,12 @@ class Dialog(text.Text):
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
         if self.parent != None:
-            branch_coverage["branch_4"] = True
+            #branch_coverage["branch_4"] = True
             raise ValueError("Dialogs with parents cannot be the top-level dialog.")
         else:
-            branch_coverage["branch_5"] = True
+            #branch_coverage["branch_5"] = True
             Dialog.top = self
 
-        print("Branch Coverage Information:")
-for branch, hit in branch_coverage.items():
-    print(f"{branch}: {'Hit' if hit else 'Missed'}")
 
     def remake_surfaces(self):
         """Recreates the surfaces that this widget will draw on."""
