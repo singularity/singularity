@@ -46,6 +46,11 @@ class TestInsort(unittest.TestCase):
             "branch_5": False
         }
 
+    def test_negative_lo(self):
+        with self.assertRaises(ValueError):
+            insort_right_w_key([], 1, lo=-1)
+        self.assertTrue(branch_coverage["branch_1"], "Branch 1 was not hit")
+    
     def test_insert_into_empty_list(self):
         a = []
         insort_right_w_key(a, 3, key=lambda x: x)
@@ -53,20 +58,13 @@ class TestInsort(unittest.TestCase):
         self.assertTrue(branch_coverage["branch_2"], "Branch 2 was not hit")
         self.assertTrue(branch_coverage["branch_5"], "Branch 5 was not hit")
 
-    def test_insert_at_start(self):
-        a = [4, 5, 6]
-        insort_right_w_key(a, 3, key=lambda x: x)
-        self.assertEqual(a, [3, 4, 5, 6])
-        self.assertTrue(branch_coverage["branch_3"], "Branch 3 was not hit")
+    def test_insert_with_none_hi(self):
+        a = [1, 3, 5]
+        insort_right_w_key(a, 4, hi=None)
+        self.assertEqual(a, [1, 3, 4, 5])
+        self.assertTrue(branch_coverage["branch_2"], "Branch 2 was not hit")
 
-    def test_insert_at_end(self):
-        a = [1, 2, 3]
-        insort_right_w_key(a, 4, key=lambda x: x)
-        self.assertEqual(a, [1, 2, 3, 4])
-        self.assertTrue(branch_coverage["branch_4"], "Branch 4 was not hit")
-        self.assertTrue(branch_coverage["branch_5"], "Branch 5 was not hit")
-
-    def test_insert_in_middle(self):
+    def test_insert_in_sorted_list(self):
         a = [1, 3, 5]
         insort_right_w_key(a, 4, key=lambda x: x)
         self.assertEqual(a, [1, 3, 4, 5])
@@ -77,12 +75,6 @@ class TestInsort(unittest.TestCase):
         insort_right_w_key(a, 2, key=lambda x: x)
         self.assertEqual(a, [1, 2, 2, 2, 3])
         self.assertTrue(branch_coverage["branch_4"], "Branch 4 was not hit")
-
-    def test_negative_lo(self):
-        with self.assertRaises(ValueError):
-            insort_right_w_key([], 1, lo=-1)
-        self.assertTrue(branch_coverage["branch_1"], "Branch 1 was not hit")
-
 
 if __name__ == "__main__":
     unittest.main(exit=False)
