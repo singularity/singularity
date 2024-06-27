@@ -45,11 +45,6 @@ KEYPAD = {
 SDL_V2 = True if pygame.get_sdl_version()[0] == 2 else False
 
 branch_coverage = {
-    "branch_1": False,
-    "branch_2": False,
-    "branch_3": False,
-    "branch_4": False,
-    "branch_5": False,
     "branch_6": False,
     "branch_7": False,
 }
@@ -65,21 +60,16 @@ def insort_right_w_key(a, x, lo=0, hi=None, key=lambda v: v):
     """
 
     if lo < 0:
-        branch_coverage["branch_1"] = True
         raise ValueError("lo must be non-negative")
     if hi is None:
-        branch_coverage["branch_2"] = True
         hi = len(a)
     x_key = key(x)
     while lo < hi:
-        branch_coverage["branch_3"] = True
         mid = (lo + hi) // 2
         mid_key = key(a[mid])
         if x_key < mid_key:
-            branch_coverage["branch_4"] = True
             hi = mid
         else:
-            branch_coverage["branch_5"] = True
             lo = mid + 1
     a.insert(lo, x)
 
@@ -106,9 +96,7 @@ pygame.init()
 fake_click(True)
 fake_click(False)
 
-print("Branch Coverage Information:")
-for branch, hit in branch_coverage.items():
-    print(f"{branch}: {'Hit' if hit else 'Missed'}")
+
 
 
 def fake_key(key):
