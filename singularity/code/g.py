@@ -79,6 +79,15 @@ max_cash = 3.14 * 10**15  # pi qu :)
 pl = None  # The Player instance
 map_screen = None
 
+branch_coverage = {
+    "branch1": False,  
+    "branch2": False,   
+    "branch3": False,  
+    "branch4": False,  
+    "branch5": False,  
+    "branch6": False,  
+}
+
 
 def no_gui():
     """Disable few pygame functionality (used for test)"""
@@ -135,8 +144,12 @@ def to_percentage_modifier(raw_percent, show_full=False):
 def nearest_percent(value, step=100):
     sub_percent = value % step
     if 2 * sub_percent <= step:
+        branch_coverage["branch5"] = True 
+        print(f"branch5 was {'hit' if branch_coverage['branch5'] else 'not hit'}") 
         return value - sub_percent
     else:
+        branch_coverage["branch6"] = True 
+        print(f"branch6 was {'hit' if branch_coverage['branch1'] else 'not hit'}") 
         return value + (step - sub_percent)
 
 
@@ -155,13 +168,22 @@ def danger_level_to_detect_str(danger):
 # percent_to_danger_level takes a suspicion level and returns an int in range(5)
 # that represents whether it is low, moderate, high, or critically high.
 def suspicion_to_danger_level(suspicion):
+    global branch_coverage  
     if suspicion < 2500:
+        branch_coverage["branch1"] = True
+        print(f"branch1 was {'hit' if branch_coverage['branch1'] else 'not hit'}")
         return 0
     elif suspicion < 5000:
+        branch_coverage["branch2"] = True
+        print(f"branch2 was {'hit' if branch_coverage['branch2'] else 'not hit'}")
         return 1
     elif suspicion < 7500:
+        branch_coverage["branch3"] = True
+        print(f"branch3 was {'hit' if branch_coverage['branch3'] else 'not hit'}")
         return 2
     else:
+        branch_coverage["branch4"] = True
+        print(f"branch4 was {'hit' if branch_coverage['branch4'] else 'not hit'}")
         return 3
 
 
