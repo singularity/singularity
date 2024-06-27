@@ -83,8 +83,7 @@ class TestInsort(unittest.TestCase):
             insort_right_w_key([], 1, lo=-1)
         self.assertTrue(branch_coverage["branch_1"], "Branch 1 was not hit")
 
+
 if __name__ == "__main__":
     unittest.main(exit=False)
-    print("Branch Coverage Information:")
-    for branch, hit in branch_coverage.items():
-        print(f"{branch}: {'Hit' if hit else 'Missed'}")
+    
