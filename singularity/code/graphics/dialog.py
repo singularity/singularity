@@ -42,10 +42,12 @@ KEYPAD = {
     pygame.K_KP9: 9,
 }
 
-
 SDL_V2 = True if pygame.get_sdl_version()[0] == 2 else False
 
-
+branch_coverage = {
+    "branch_6": False,
+    "branch_7": False,
+}
 def insort_right_w_key(a, x, lo=0, hi=None, key=lambda v: v):
     """Insert item x in list a, and keep it sorted assuming a is sorted.
 
@@ -82,11 +84,19 @@ def move_mouse(dxy):
 
 def fake_click(down):
     if down:
+        branch_coverage["branch_6"] = True
         type = pygame.MOUSEBUTTONDOWN
     else:
+        branch_coverage["branch_7"] = True
         type = pygame.MOUSEBUTTONUP
     click_event = pygame.event.Event(type, {"button": 1, "pos": pygame.mouse.get_pos()})
     pygame.event.post(click_event)
+
+pygame.init()
+fake_click(True)
+fake_click(False)
+
+
 
 
 def fake_key(key):
@@ -204,9 +214,12 @@ class Dialog(text.Text):
     def make_top(self):
         """Makes this dialog be the top-level dialog."""
         if self.parent != None:
+            #branch_coverage["branch_4"] = True
             raise ValueError("Dialogs with parents cannot be the top-level dialog.")
         else:
+            #branch_coverage["branch_5"] = True
             Dialog.top = self
+
 
     def remake_surfaces(self):
         """Recreates the surfaces that this widget will draw on."""
