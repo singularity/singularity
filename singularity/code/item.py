@@ -157,6 +157,7 @@ class ItemSpec(buyable.BuyableSpec):
         for qual, value in self.item_qual.items():
             if qual == "cpu":
                 current_value = value
+                pending_value = value
                 modifier = 10000
                 pending_modifier = 10000
                 if if_installed_in_base is not None:
