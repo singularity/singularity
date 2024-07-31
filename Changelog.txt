@@ -13,6 +13,8 @@ DEPENDENCY / BASELINE CHANGES:
   (Closes: #293) (nthykier)
 - Add guard to prevent crashing when `locale.getdefaultencoding`
   is removed in python3.15.
+- Fixed crash with numpy 2. Thanks to hexagonrecursion for
+  reporting the issue. (Closes: #346)
 
 USER-VISIBLE CHANGES:
 - New feature: Quicksaves - save on `F5` (replacing "reload theme")
