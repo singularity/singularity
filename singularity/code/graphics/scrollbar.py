@@ -25,6 +25,7 @@ import pygame
 from singularity.code.graphics import g, constants, widget, button, slider
 
 
+
 class _ArrowButton(button.FunctionButton, button.ImageButton):
     def __init__(self, parent, *args, **kwargs):
         self.first = kwargs.pop("first", True)
@@ -150,7 +151,7 @@ class Scrollbar(widget.Widget):
         self.slider.slider_pos = self.slider.safe_pos(element - self.window // 2)
 
     def scroll_to(self, element):
-        if element < self.scroll_pos:
+        if  element < self.scroll_pos:
             self.slider.slider_pos = self.slider.safe_pos(element)
         elif element >= self.scroll_pos + self.window:
             self.slider.slider_pos = self.slider.safe_pos(element - self.window + 1)
@@ -167,3 +168,4 @@ class UpdateScrollbar(Scrollbar):
     def on_change(self, value):
         self.scroll_pos = value
         self.update_func(value)
+
