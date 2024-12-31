@@ -86,12 +86,17 @@ translations, please:
 
  * Start the game from the git checkout (see the README for
    instructions)
-     * Note that you will need to start the game in cheat mode to verify
-       the cheat translations (cheat mode cannot be enabled later).
+     * You can enable cheats via `F11` in the current version of the
+       game. In earlier versions, cheat mode had to be enabled when
+       the game was launched and could not be enabled once the game
+       was running (that is, before the Main Menu).
  * Navigate to Options, select your language and click OK.  (First
    time only or if you are reviewing multiple translations)
  * Start playing/navigating around to verify that the translations are
    as expected.
+
+It can be useful to have a save game to load, so you can easily verify
+endgame strings.
 
 ### Submitting a new translation or a translation update
 
