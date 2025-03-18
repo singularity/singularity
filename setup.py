@@ -23,7 +23,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "numpy",
-        "pygame",
+        "pygame>=2.5.2",
         "polib>=0.7",
     ],
     entry_points={
