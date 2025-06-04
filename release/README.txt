@@ -36,11 +36,11 @@ To cut the tag:
 
 After cutting the tag:
    * Generate the tarball:
-      * $ git archive --worktree-attributes --prefix=singularity-x.yy/ -o singularity-x.yy.tar.gz vx.yy
+      * $ git archive --worktree-attributes --prefix=singularity-x.y/ -o singularity-x.y.tar.gz vx.y
    * Generate the py2exe:
       * Extract tarball (if Windows machine lacks ability)
       * Copy directory to windows computer with python, pygame, numpy, polib and py2exe.
-      * Run c:\Python27\Python.exe setup.py py2exe -b 1
+      * Run c:\Python3\Python.exe setup.py py2exe -b 1
       * Copy the 4 files in dist to root dir.
       * Delete dist and build directories. Test.
       * Go up one level and choose Send to->Zip. Rename properly (singularity-x.yy-win.zip)

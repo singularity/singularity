@@ -116,6 +116,7 @@ savefile_translation = {
         SavegameFormatDefinition(99.8, "1.0 (alpha1)"),
         SavegameFormatDefinition(100, "1.0 (beta1)"),
         SavegameFormatDefinition(101, "1.00"),
+        SavegameFormatDefinition(102, "1.1"),
     ]
 }
 

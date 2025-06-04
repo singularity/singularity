@@ -1,6 +1,6 @@
 Endgame: Singularity Changelog
 
-V1.XX (YYYY.YY.YY):
+V1.1 (2025.06.04):
 
 DEPENDENCY / BASELINE CHANGES:
 - The game now requires `polib`. Previously, we had an embedded

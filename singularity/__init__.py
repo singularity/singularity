@@ -33,7 +33,7 @@ import sys
 from singularity.code import g, dirs
 
 
-__version__ = "1.00"
+__version__ = "1.1"
 __release_commit__ = "$Format:%H$"
 if __release_commit__[1:-1] == "Format:%H":
     try:
