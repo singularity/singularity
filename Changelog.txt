@@ -15,6 +15,10 @@ DEPENDENCY / BASELINE CHANGES:
   is removed in python3.15.
 - Fixed crash with numpy 2. Thanks to hexagonrecursion for
   reporting the issue. (Closes: #346)
+- Set minimum pygame version to 2.5.2 to avoid a known crashing
+  bug in pygame 2 (up to that version). The pygame-ce fixed it
+  in a release with a lower version and works as an alternative
+  as well in theory.
 
 USER-VISIBLE CHANGES:
 - New feature: Quicksaves - save on `F5` (replacing "reload theme")
