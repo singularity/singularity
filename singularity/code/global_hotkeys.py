@@ -94,3 +94,39 @@ def add_hotkey(key: int, action: HotkeyAction, *, hotkey_modifiers: int = 0) -> 
 
 def detect_global_hotkey(event: pygame.event) -> Optional[HotkeyAction]:
     return _active_hotkeys().detect_hotkey(event)
+
+
+def key_from_name(name: str) -> int:
+    return pygame.key.key_code(name.lower())
+
+def modifier_from_name(name: Optional[str]) -> int:
+    #for now only ctrl can be used for modifier - it is just for future
+    if name is None:
+        return 0
+    name = name.upper()
+    if name == "ALT":
+        return pygame.KMOD_ALT
+    elif name == "CTRL":
+        return pygame.KMOD_CTRL
+    elif name == "SHIFT":
+        return pygame.KMOD_SHIFT
+    return 0  # pre neznáme alebo None
+
+import json
+from pathlib import Path
+
+def load_hotkey_config(config_path: Path, actions_module) -> None:
+    _active_hotkeys().clear_hotkeys()
+
+    with open(config_path, "r") as f:
+        data = json.load(f)
+
+    for action_name, cfg in data.items():
+        key = key_from_name(cfg["key"])
+        mod = modifier_from_name(cfg.get("modifier"))
+        action = getattr(actions_module, action_name, None)
+        if action is None:
+            print(f"[Warning] Action '{action_name}' not found in hotkey_actions")
+            continue
+        add_hotkey(key, action, hotkey_modifiers=mod)
+

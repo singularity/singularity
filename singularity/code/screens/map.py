@@ -204,6 +204,25 @@ class EarthImage(image.Image):
         del night_alphas, mask_alphas
         self.surface.blit(self.night_image, (0, 0))
 
+        from singularity.code.graphics.dialog import Dialog
+
+        cur = getattr(Dialog, "current_dialog", None)
+
+        if cur and getattr(cur, "notification_text", None):
+            import pygame
+            text = cur.notification_text
+            w, h = self.surface.get_size()
+
+            # create canvas
+            overlay = pygame.Surface((w, 60), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 160)) 
+            self.surface.blit(overlay, (0, 0))
+            font = pygame.font.Font(None, 28)
+            text_surf = font.render(text, True, (255, 255, 255))
+            text_rect = text_surf.get_rect(center=(w // 2, 30))
+            self.surface.blit(text_surf, text_rect)
+
+
     night_start = None
 
     def rebuild(self):
@@ -353,7 +372,8 @@ class MapScreen(dialog.Dialog):
         **kwargs
     ):
         super(MapScreen, self).__init__(parent, pos, size, anchor, *args, **kwargs)
-
+        self.notification_text = None
+        self.notification_timer = 0.0
         g.map_screen = self
 
         self.background_color = "map_background"
@@ -592,6 +612,14 @@ class MapScreen(dialog.Dialog):
         self.add_key_handler(constants.XO1_O, self.got_XO1)
         self.add_key_handler(constants.XO1_SQUARE, self.got_XO1)
 
+
+    def show_notification(self, text, duration=2.0):
+        self.notification_text = text
+        self.notification_timer = duration
+        if hasattr(self, "map") and self.map:
+            self.map.needs_redraw = True
+
+
     def got_escape(self, event):
         self.menu_button.activate_with_sound(event)
 
@@ -784,6 +812,25 @@ https://github.com/singularity/singularity
             mixer.play_music("lose")
             self.show_story_section(lost_story[lost])
             raise constants.ExitDialog
+        
+        if self.notification_timer > 0:
+            base_countdown =  2 / float(gg.FPS)
+            # edit by game speed
+            if g.curr_speed == 0:
+                countdown_speed = base_countdown*15
+            elif g.curr_speed == 1:
+                countdown_speed = base_countdown * 10 
+            elif g.curr_speed == 60: 
+                countdown_speed = base_countdown * 5
+            elif g.curr_speed == 7200: 
+                countdown_speed = base_countdown 
+            else:
+                countdown_speed = base_countdown *0.5
+            
+            self.notification_timer -= countdown_speed
+            if self.notification_timer <= 0:
+                self.notification_text = None
+
 
     def on_theme(self):
         """Not a true handler: must be called and propagated manually"""

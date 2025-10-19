@@ -38,7 +38,8 @@ from singularity.code.graphics import (
     theme,
     g as gg,
 )
-from singularity.code import g, dirs, i18n, mixer, data, warning
+from pathlib import Path
+from singularity.code import g, dirs, i18n, mixer, data, warning, global_hotkeys,hotkey_actions as hka
 
 
 class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
@@ -123,6 +124,9 @@ class OptionsScreen(dialog.FocusDialog, dialog.YesNoDialog):
         # YesNoDialog buttons
         self.yes_button.size = (0.15, 0.05)
         self.no_button.size = (0.15, 0.05)
+
+        config_path = Path("singularity/data/hotkeys.json")
+        global_hotkeys.load_hotkey_config(config_path,hka)
 
     def rebuild(self):
         # The tabs do not always have a parent, so the automatic "needs_rebuild" magic
@@ -220,9 +224,7 @@ class GeneralPane(widget.Widget):
         super(GeneralPane, self).__init__(*args, **kwargs)
 
         self.language_label = text.Text(
-            self,
-            (0.01, 0.01),
-            (0.14, 0.05),
+            self, (0.01, 0.01), (0.14, 0.05),
             autotranslate=True,
             text=N_("Language:"),
             align=constants.LEFT,
@@ -231,17 +233,13 @@ class GeneralPane(widget.Widget):
 
         self.languages = get_languages_list()
         self.language_choice = listbox.UpdateListbox(
-            self,
-            (0.16, 0.01),
-            (0.20, 0.25),
+            self, (0.16, 0.01), (0.20, 0.25),
             list=[lang[1] for lang in self.languages],
             update_func=self.set_language,
         )
 
         self.theme_label = text.Text(
-            self,
-            (0.46, 0.01),
-            (0.09, 0.05),
+            self, (0.46, 0.01), (0.09, 0.05),
             autotranslate=True,
             text=N_("Theme:"),
             align=constants.LEFT,
@@ -249,22 +247,111 @@ class GeneralPane(widget.Widget):
         )
 
         self.theme_choice = listbox.UpdateListbox(
-            self,
-            (0.56, 0.01),
-            (0.20, 0.25),
+            self, (0.56, 0.01), (0.20, 0.25),
             update_func=theme.set_theme,
             list_pos=theme.get_theme_pos(),
         )
 
+        self._setup_hotkeys_section()
+
+    def _setup_hotkeys_section(self):
+        self.config_path = Path("singularity/data/hotkeys.json")
+        self.hotkeys = self._load_hotkeys()
+
+        y = 0.3
+        text.Text(
+            self, (0.01, y), (0.3, 0.05),
+            autotranslate=True, text=N_("Hotkeys:"),
+            align=constants.LEFT,
+            background_color="clear"
+        )
+        y += 0.06
+
+        self.hotkey_rows = []
+        for action_name, cfg in self.hotkeys.items():
+            key_str = f"{cfg.get('modifier') + ' + ' if cfg.get('modifier') else ''}{cfg.get('key')}"
+
+            lbl = text.Text(
+                self, (0.03, y), (0.3, 0.05),
+                text=action_name, align=constants.LEFT, background_color="clear"
+            )
+           
+            key_lbl = button.FunctionButton(
+                self, (0.36, y), (0.25, 0.04),
+                text=key_str,
+                align=constants.LEFT,
+                background_color="gray",
+                function=self.simulate_change_click,
+                args=(action_name,)  # iba meno akcie
+            )
+            
+            self.hotkey_rows.append((action_name, key_lbl))
+            y += 0.05
+
+    def simulate_change_click(self, action_name):
+        for name, label in self.hotkey_rows:
+            if name == action_name:
+                self._rebind_hotkey(action_name, label)
+                label.background_color = "gray"
+                break
+
+
+    def _load_hotkeys(self):
+        if not self.config_path.exists():
+            return {}
+        with open(self.config_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    def _save_hotkeys(self):
+        with open(self.config_path, "w", encoding="utf-8") as f:
+            json.dump(self.hotkeys, f, indent=2)
+
+    def _rebind_hotkey(self, action_name, key_label_widget):
+        from singularity.code import global_hotkeys
+        from pathlib import Path
+
+        key_label_widget.text = _("Press new key...")
+        pygame.event.clear()
+
+        waiting = True
+        while waiting:
+            event = pygame.event.wait()
+            if event.type == pygame.KEYDOWN:
+                key_name = pygame.key.name(event.key).upper()
+                mods = pygame.key.get_mods()
+                mod_name = None
+                #not working now / modifier can still be just ctrl
+                if mods & pygame.KMOD_ALT:
+                    mod_name = "ALT"
+                elif mods & pygame.KMOD_CTRL:
+                    mod_name = "CTRL"
+                elif mods & pygame.KMOD_SHIFT:
+                    mod_name = "SHIFT"
+
+                for other_action, cfg in self.hotkeys.items():
+                    if other_action != action_name:
+                        if cfg.get("key") == key_name and cfg.get("modifier") == mod_name:
+                            key_label_widget.text = _("Already used by ") + other_action
+                            key_label_widget.text = f"{mod_name + ' + ' if mod_name else ''}{self.hotkeys[action_name].get('key', '')}"
+                            return  
+
+                self.hotkeys[action_name] = {"key": key_name, "modifier": mod_name}
+                self._save_hotkeys()
+
+                key_label_widget.text = f"{mod_name + ' + ' if mod_name else ''}{key_name}"
+
+                config_path = Path("singularity/data/hotkeys.json")
+                global_hotkeys.load_hotkey_config(config_path, hka)
+
+                waiting = False
+
     def rebuild(self):
         self.theme_choice.list = theme.get_theme_list()
-
         super(GeneralPane, self).rebuild()
 
     def set_options(self, options):
         self.language_choice.list_pos = [
-            i
-            for i, (code, __) in enumerate(self.languages)
+            i for i, (code, __) in enumerate(self.languages)
             if code == options["language"]
         ][0] or 0
         self.set_language(self.language_choice.list_pos)
@@ -277,8 +364,7 @@ class GeneralPane(widget.Widget):
 
     def set_language(self, list_pos):
         if not getattr(self, "language_choice", None):
-            return  # Not yet initialized.
-
+            return
         if 0 <= list_pos < len(self.language_choice.list):
             language = self.languages[list_pos][0]
             if i18n.language != language:
