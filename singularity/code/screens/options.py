@@ -802,7 +802,7 @@ def get_languages_list():
         langcount[language] = langcount.get(language, 0) + 1
 
     # Load languages data
-    with open(dirs.get_readable_file_in_dirs("languages.json", "i18n")) as langdata:
+    with open(dirs.get_readable_file_in_dirs("languages.json", "i18n"), encoding="utf-8") as langdata:
         languages = json.load(langdata)
 
     output = []

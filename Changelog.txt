@@ -1,5 +1,13 @@
 Endgame: Singularity Changelog
 
+V1.1.1 (UNRELEASED):
+
+USER-VISIBLE CHANGES:
+- Fix mojibake in the language list in the options menu on
+  systems where UTF-8 is not the default locale.
+  (Closes: #358) (qubodup)
+
+
 V1.1 (2025.06.04):
 
 DEPENDENCY / BASELINE CHANGES:
