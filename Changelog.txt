@@ -6,7 +6,10 @@ USER-VISIBLE CHANGES:
 - Fix mojibake in the language list in the options menu on
   systems where UTF-8 is not the default locale.
   (Closes: #358) (qubodup)
-
+- Fix color bleed from what was supposed to be the alpha channel
+  color key in images. Noticeable with the up/down arrows in the
+  scrollbars in some resolutions.
+  (Closes: #356) (qubodup)
 
 V1.1 (2025.06.04):
 

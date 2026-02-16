@@ -214,7 +214,9 @@ def load_image(filename):
     # set the proper color key for the game.
     image = pygame.image.load(filename).convert()
     image.set_colorkey((255, 0, 255, 255), pygame.RLEACCEL)
-    return image.convert_alpha()
+    out = pygame.Surface(image.get_size(), pygame.SRCALPHA, 32)
+    out.blit(image, (0, 0))  # colorkey -> alpha 0
+    return out
 
 
 def init_alpha():
