@@ -375,8 +375,26 @@ class Widget(object):
             self.surface = gg.screen_surface.copy()
             self.surface.fill((0, 0, 0, 255))
 
-            gg.fade_mask = pygame.Surface(size, 0, gg.ALPHA)
-            gg.fade_mask.fill((0, 0, 0, 175))
+            # Create a per-pixel alpha surface for the fade mask.
+            # SRCALPHA is required, otherwise RGBA fills ignore alpha and look opaque.
+            gg.fade_mask = pygame.Surface(size, pygame.SRCALPHA, 32)
+
+            # Try to get the theme's main menu background color.
+            # resolve_color_alias lets the theme supply either a direct RGBA
+            # or an alias defined in theme.dat.
+            try:
+                c = gg.resolve_color_alias("main_menu_background")
+            except KeyError:
+                # Fallback if theme does not define it.
+                c = (0, 0, 0, 175)
+
+            # We want a translucent overlay, not a solid fill.
+            # So we keep the RGB from the theme but force our own alpha.
+            c = (c[0], c[1], c[2], 175)
+
+            # Fill the mask; when blitted later this will darken
+            # underlying widgets using theme-consistent color.
+            gg.fade_mask.fill(c)
 
     def prepare_for_redraw(self):
         # First, we handle config changes.

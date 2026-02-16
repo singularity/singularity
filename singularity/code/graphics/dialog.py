@@ -178,7 +178,6 @@ class Dialog(text.Text):
         self.faded = False
         self.is_above_mask = True
         self.self_mask = True
-        self.needs_remask = True
 
         self.needs_timer = None
 

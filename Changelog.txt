@@ -10,6 +10,9 @@ USER-VISIBLE CHANGES:
   color key in images. Noticeable with the up/down arrows in the
   scrollbars in some resolutions.
   (Closes: #356) (qubodup)
+- Fix faded background being hard black rather than the intended
+  fade. This was more noticeable on themes where black was not the
+  primary background color. (Closes: #357) (qubodup)
 
 V1.1 (2025.06.04):
 
