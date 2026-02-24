@@ -1,0 +1,22 @@
+{
+  "toggle_fullscreen": {
+    "key": "T",
+    "modifier": null
+  },
+  "quicksave": {
+    "key": "W",
+    "modifier": null
+  },
+  "reload_theme": {
+    "key": "R",
+    "modifier": null
+  },
+  "quickload": {
+    "key": "G",
+    "modifier": null
+  },
+  "toggle_cheat_menu": {
+    "key": "F",
+    "modifier": null
+  }
+}

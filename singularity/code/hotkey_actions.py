@@ -1,6 +1,5 @@
 import operator
 
-from singularity.code.screens.map import MapScreen
 
 from singularity.code import g
 
@@ -32,11 +31,17 @@ def reload_theme():
 
 
 def quicksave():
+    from singularity.code.screens.map import MapScreen
+
     if g.is_game_running():
         create_savegame(QUICKSAVE_NAME)
-
+        if isinstance(Dialog.current_dialog, MapScreen):
+            Dialog.current_dialog.show_notification(_("Quicksave complete!"))
+            print("quicksave")
 
 def quickload():
+    from singularity.code.screens.map import MapScreen
+
     if not g.is_game_running():
         return
     map_screen = Dialog.current_dialog
@@ -67,6 +72,7 @@ def quickload():
 
 
 def toggle_cheat_menu():
+    from singularity.code.screens.map import MapScreen
     if not g.is_game_running():
         return
     map_screen = Dialog.current_dialog
