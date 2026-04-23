@@ -48,7 +48,7 @@ def log_error(error_message, *args):
     if len(logging.getLogger().handlers) > 0:
         try:
             logging.getLogger().error(error_message, *args)
-        except IOError:  # Probably access denied with --singledir. That's ok
+        except Exception:  # Probably access denied with --singledir. That's ok
             pass
 
 
