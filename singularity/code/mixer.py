@@ -216,9 +216,14 @@ def play_music(musicdir=None):
         delay_time = pygame.time.get_ticks() + int(random.random() * 10000) + 2000
         return
 
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load(random.choice(music_dict[musicdir]))
-    pygame.mixer.music.play()
+    try:
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(random.choice(music_dict[musicdir]))
+        pygame.mixer.music.play()
+    except Exception as reason:
+        sys.stderr.write("Music playback failed; disabling mixer. (%s)\n" % reason)
+        init = False
+        return
     delay_time = 1  # set a (dummy) delay
 
 
