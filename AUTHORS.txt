@@ -1,9 +1,128 @@
+Endgame: Singularity - Authors and Contributors
+===============================================
+
+ORIGINAL AUTHOR
+---------------
 Evil Mr Henry <evilmrhenry@emhsoft.com>
+
+CURRENT MAINTAINER
+------------------
+Niels Thykier <niels@thykier.net>
+
+
+MAJOR CONTRIBUTORS
+------------------
 Phil Bordelon <phil@thenexusproject.org>
+  Original co-author and game designer
+
+FunnyMan3595 (Charlie Nolan) <funnyman3595@gmail.com>
+  Graphics system overhaul, text sizing and font improvements,
+  German translation, bug fixes (crashes, cash jumps, item/build issues)
+
+Xenega
+  Knowledge screen rework, savegame screen improvements, player state
+  and power state system, custom resolution support, statistics screen,
+  UI polish and accessibility improvements
+
+MestreLion (Rodrigo Silva) <singularity@rodrigosilva.com>
+  Linux/AppImage support, music system, cross-platform improvements,
+  Brazilian/Argentine Spanish translations
+
+Ricardo Ardissone <ricardo.ardissone@gmail.com>
+  Python 3 port, project restructuring (singularity package layout),
+  setuptools conversion
+
 Max McCracken <maxstack@gmail.com>
 Brian Reid <brian@lawndartracing.com>
-FunnyMan3595 (Charlie Nolan) <funnyman3595@gmail.com>
-MestreLion (Rodrigo Silva) <singularity@rodrigosilva.com>
-Xenega <xenega@gmx.com>
-Niels Thykier <niels@thykier.net>
-Rardiol (Ricardo Ardissone) <ricardo.ardissone@gmail.com>
+  Early contributions
+
+
+CONTRIBUTION AREAS
+------------------
+Code / Architecture
+  Niels Thykier, FunnyMan3595, Xenega, Ricardo Ardissone,
+  Phil Bordelon, Evil Mr Henry, Betacentury
+
+Bug Fixes
+  Niels Thykier, FunnyMan3595, Xenega, Jozef Behran, Jude Hungerford,
+  qubodup, Wuzzy2, hexagonrecursion, RandomIsocahedron, onpon4
+
+UI / Screens
+  FunnyMan3595, Xenega, Timothy Rice (nightmode theme)
+
+Themes
+  Timothy Rice (nightmode theme), Vasiliy Makarov (Russian font)
+
+Build / Release
+  Niels Thykier, MestreLion, Evil Mr Henry, Evert Vorster,
+  Matthias Mailänder (desktop file)
+
+Translations
+  See singularity/i18n/AUTHORS.txt for full translator list
+
+
+TRANSLATORS (from singularity/i18n/AUTHORS.txt)
+----------------------------------------------
+Brazilian Portuguese
+  MestreLion (Rodrigo Silva), Dafne Saqueti, maximozsec
+
+Mexican Spanish
+  Eleazar Castellanos, MestreLion, Guga, eaglexboy
+
+Argentine Spanish
+  justapawn, MestreLion
+
+French
+  Didier Vidal, Philippe Grenard, Syl
+
+German
+  Thomas, scotty007, Quix0r, Wuzzy, FunnyMan3595
+
+Italian
+  Betacentury
+
+Spanish
+  Borg[MDQ], Daniele Sapino
+
+Swedish
+  Anders Andersson
+
+Russian
+  Vasiliy Makarov
+
+
+THIRD-PARTY ASSET ATTRIBUTION
+-----------------------------
+NASA Visible Earth
+  Default theme day/night Earth images sourced from NASA's
+  "Blue Marble" collection.
+  http://visibleearth.nasa.gov/view_set.php?categoryID=2364
+  See LICENSE.txt for full NASA Terms of Use.
+
+Other Assets
+  Click sound: originally contributed by community member
+  (see git history for specific attributions)
+
+
+MINOR / SINGLE-CONTRIBUTION AUTHORS
+------------------------------------
+Dan Haiduc          - Click sound replacement
+Dan Haiduc          - Softer click sound
+Didier Vidal        - Complete French translation
+Eleazar Castellanos - Mexican Spanish (es_MX) translation
+Evert Vorster       - setup.py improvements
+Iwan Gabovitch (qubodup) - Background fade fix, color bleed fixes,
+                          mojibake fix in language list
+Jozef Behran        - Base construction fix
+Jude Hungerford     - CPU usage recalculation on sleep/wake state
+Matthias Mailänder  - singularity.desktop file
+Scotty              - German translation fix
+Tim Gates           - Documentation typo fixes
+Timothy Rice        - Nightmode theme
+Urban Versis 32     - Additional location names for base generation
+Vasiliy Makarov     - Russian localization and font
+Wingman4l7          - Sri Lanka fix in vector background
+
+
+For the full commit history, see: git log --format="%aN <%aE>"
+For translator details, see: singularity/i18n/AUTHORS.txt
