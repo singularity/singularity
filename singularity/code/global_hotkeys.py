@@ -45,11 +45,10 @@ class HotKeyMatcher:
         self._hotkeys.clear()
 
     def add_hotkey(self, key: int, hotkey_modifiers: int, action: HotkeyAction) -> None:
-        if hotkey_modifiers not in (0, pygame.KMOD_ALT):
-            # Limitation in implementation, feel free to fix to code to support other modifiers. Will require
-            # a data structure change (ALT + ENTER vs. CTRL + ENTER vs. CTRL + ALT + ENTER) and an up todate to
-            # detect_hotkey
-            raise ValueError("Only ALT is supported as a global hotkey modifier")
+        if hotkey_modifiers not in (0, pygame.KMOD_ALT, pygame.KMOD_CTRL):
+            # Limitation in implementation: supports 0 (function keys), ALT, and CTRL modifiers.
+            # Adding more requires extending the modifier detection in detect_hotkey.
+            raise ValueError("Only ALT and CTRL are supported as global hotkey modifiers")
         if hotkey_modifiers == 0 ^ key in _MODIFIERLESS_HOT_KEYS:
             name = pygame.key.name(key)
             if hotkey_modifiers == 0:
@@ -83,6 +82,7 @@ def reset_hotkeys():
     # FIXME: Make these configurable
     add_hotkey(pygame.K_RETURN, hka.toggle_fullscreen, hotkey_modifiers=pygame.KMOD_ALT)
     add_hotkey(pygame.K_F5, hka.quicksave)
+    add_hotkey(pygame.K_s, hka.quicksave, hotkey_modifiers=pygame.KMOD_CTRL)
     add_hotkey(pygame.K_F6, hka.reload_theme)
     add_hotkey(pygame.K_F9, hka.quickload)
     add_hotkey(pygame.K_F11, hka.toggle_cheat_menu)
