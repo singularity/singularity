@@ -4,6 +4,8 @@ from singularity.code.dirs import create_directories
 from singularity.code.buyable import cpu, cash, labor
 import io
 
+import pytest
+
 
 class MockObject(object):
     pass
@@ -30,6 +32,18 @@ def save_and_load_game():
     fd = io.BytesIO(fd.getvalue())
     savegame.load_savegame_fd(savegame.load_savegame_by_json, io.BufferedReader(fd))
     real_close()
+
+
+def test_negative_cpu_allocation_is_rejected():
+    g.new_game("impossible", initial_speed=0)
+    pl = g.pl
+
+    # Negative assignments must be rejected for techs as well as for
+    # the built-in "jobs" and "cpu_pool" tasks.
+    for task_id in ["jobs", "cpu_pool", "Stealth"]:
+        with pytest.raises(ValueError):
+            pl.set_allocated_cpu_for(task_id, -1)
+        assert pl.get_allocated_cpu_for(task_id, 0) == 0
 
 
 def test_initial_game():

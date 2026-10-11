@@ -248,7 +248,7 @@ class Player(object):
             )
         elif task_id not in ["jobs", "cpu_pool"]:
             raise ValueError("Unknown task %s" % task_id)
-        elif new_cpu_assignment < 0:
+        if new_cpu_assignment < 0:
             raise ValueError("Cannot assign negative CPU units to %s" % task_id)
         self.cpu_usage[task_id] = new_cpu_assignment
 
