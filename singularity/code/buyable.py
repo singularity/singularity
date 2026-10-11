@@ -36,7 +36,7 @@ def spec_parse_cost(value):
     spec.validate_must_be_list(value)
     if len(value) != 3:  # pragma: no cover
         raise ValueError(
-            "Cost must have exactly 3 values (CPU, money, time), got %d items (value: %s)"
+            "Cost must have exactly 3 values (money, CPU, time), got %d items (value: %s)"
             % (len(value), repr(value))
         )
     return [int(x) for x in value]
